@@ -9,8 +9,8 @@ title: "Challenge 20: Storage Encryption & Data Protection"
 
 **60-75 minutes** | **Estimated cost**: ~$1.00 (Key Vault + storage) | **Exam Weight: 15-20%**
 
-:::
 
+:::
 ## Scenario
 
 Contoso Ltd.'s compliance team has flagged a regulatory requirement: all storage containing financial or healthcare data must use customer-managed encryption keys (CMK) for audit trail purposes. Additionally, regulatory data (such as financial records and audit logs) must be stored in immutable (WORM | Write Once, Read Many) containers where data cannot be modified or deleted for a specified retention period. You are tasked with implementing these encryption and data protection controls.
@@ -91,8 +91,8 @@ When creating a storage account in the portal:
 2. Under **Encryption**, check **Enable infrastructure encryption**
 3. Note: This cannot be changed after account creation
 
-:::
 
+:::
 ### Task 3: Create a Key in Azure Key Vault
 
 ```bash
@@ -192,8 +192,8 @@ An immutability policy starts in an **unlocked** state. While unlocked, you can 
 
 Only lock a policy when you are certain about the retention requirements.
 
-:::
 
+:::
 ### Task 6: Configure Legal Hold
 
 ```bash

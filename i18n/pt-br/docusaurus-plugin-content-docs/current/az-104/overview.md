@@ -45,8 +45,8 @@ Cada desafio segue um formato consistente:
 :::tip Dica
 
 Laboratório com um clique | Sem necessidade de configuração! [Abra no GitHub Codespaces](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1) e tenha Azure CLI, Bicep e PowerShell prontos em minutos. Gratuito por 60h/mês.
-:::
 
+:::
 ## Recursos de Estudo
 
 | Recurso | Link |

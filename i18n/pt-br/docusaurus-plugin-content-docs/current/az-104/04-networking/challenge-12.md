@@ -8,8 +8,8 @@ title: "Challenge 12 | Network Security"
 :::info Tempo Estimado & Custo
 
 **60 minutos** | **~$0,30** (Azure Bastion gera cobranças por hora | exclua rapidamente) | 📊 **Peso no exame: 15–20%**
-:::
 
+:::
 ## Cenário
 
 A equipe de segurança da Contoso concluiu uma revisão e emitiu diretrizes: todo tráfego de rede deve ser explicitamente permitido, o acesso administrativo deve passar por um bastion host (sem IPs públicos nas VMs), e conexões de banco de dados devem usar private endpoints. Seu trabalho é bloquear tudo mantendo a aplicação funcional.

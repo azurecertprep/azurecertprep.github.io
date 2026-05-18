@@ -9,8 +9,8 @@ title: "Challenge 22: VM Disks & Encryption"
 
 **60-75 minutes** | **Estimated cost**: ~$3.00 (VMs + managed disks) | **Exam Weight: 15-20%**
 
-:::
 
+:::
 ## Scenario
 
 Contoso Ltd. is standardizing disk management across their VM fleet. The security team requires all disks to be encrypted, the operations team needs a reliable snapshot and imaging strategy for disaster recovery, and the development team wants faster disk performance for their database workloads. You are tasked with implementing a comprehensive disk management strategy that covers disk types, encryption, snapshots, and custom images.
@@ -179,8 +179,8 @@ az vm encryption show \
 
 Azure Disk Encryption can take 15-30 minutes to complete, depending on disk size. The VM remains operational during encryption. Monitor progress with `az vm encryption show`.
 
-:::
 
+:::
 ### Task 5: Create Disk Snapshots
 
 Create point-in-time snapshots for backup purposes:
@@ -343,8 +343,8 @@ az disk list \
 | Premium SSD (Premium_LRS) | 20,000 | 900 MB/s | Production databases, I/O intensive |
 | Ultra Disk (UltraSSD_LRS) | 160,000 | 4,000 MB/s | SAP HANA, top-tier databases |
 
-:::
 
+:::
 ## Success Criteria
 
 - [ ] VM has an OS disk and at least two data disks (different SKUs) attached

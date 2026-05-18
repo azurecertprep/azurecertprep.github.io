@@ -45,8 +45,8 @@ Each challenge follows a consistent format:
 :::tip One-Click Lab
 
 No setup needed! [Open in GitHub Codespaces](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1) and get Azure CLI, Bicep, and PowerShell ready in minutes. Free for 60h/month.
-:::
 
+:::
 ## Study Resources
 
 | Resource | Link |

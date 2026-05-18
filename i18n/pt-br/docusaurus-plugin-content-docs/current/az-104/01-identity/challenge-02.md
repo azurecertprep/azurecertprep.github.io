@@ -57,8 +57,8 @@ RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armaz
 :::warning Atenção
 
 Para estas tarefas, você precisará de um grupo de recursos. Crie um chamado `rg-rbac-challenge` na sua assinatura primeiro.
-:::
 
+:::
 3. Criar um grupo de recursos para este desafio:
 
 ```bash

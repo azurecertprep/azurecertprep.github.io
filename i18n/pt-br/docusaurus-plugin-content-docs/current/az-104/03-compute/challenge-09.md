@@ -8,8 +8,8 @@ title: "Challenge 09 | Containers in Azure"
 :::info Informação
 
 **Tempo estimado: 45–60 minutos** | **Custo estimado: ~$0.30** | 📊 **Peso no exame: 20–25%**
-:::
 
+:::
 ## Cenário
 
 A equipe de desenvolvimento da Contoso containerizou sua aplicação de dashboard interno. O Dockerfile está pronto, mas a equipe tem executado contêineres no laptop de um desenvolvedor. Você precisa configurar a infraestrutura adequada de contêineres no Azure: um registro privado para armazenar imagens e uma plataforma de hospedagem para executá-las em escala.

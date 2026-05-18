@@ -8,8 +8,8 @@ title: "Challenge 09: Containers in Azure"
 :::info Estimated Time & Cost
 
 **45–60 minutes** | **~$0.30** | **Exam Weight: 20–25%**
-:::
 
+:::
 ## Scenario
 
 Contoso's development team has containerized their internal dashboard application. The Dockerfile is ready, but the team has been running containers on a developer's laptop. You need to set up proper container infrastructure in Azure: a private registry to store images, and a hosting platform to run them at scale.

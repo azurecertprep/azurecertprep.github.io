@@ -57,8 +57,8 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
 :::warning
 
 For these tasks, you'll need a resource group. Create one called `rg-rbac-challenge` in your subscription first.
-:::
 
+:::
 3. Create a resource group for this challenge:
 
 ```bash

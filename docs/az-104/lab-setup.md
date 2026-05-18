@@ -70,8 +70,8 @@ You need an Azure subscription for all challenges except Challenge 07 (ARM/Bicep
 :::warning Cost Management
 
 All challenges include cleanup scripts. **Always run cleanup after each challenge** to avoid unexpected charges. Total cost for all 28 challenges is estimated at ~$5 with proper cleanup.
-:::
 
+:::
 ## Resource Naming Convention
 
 We use a consistent naming convention across all challenges:
@@ -105,8 +105,8 @@ $Location = "eastus"
 New-AzResourceGroup -Name "rg-az104-shared" -Location $Location
 Get-AzResourceGroup | Format-Table
 ```
-:::
 
+:::
 ---
 
 **Setup complete?** Start with [Challenge 01: Entra ID Users & Groups](/docs/az-104/identity/challenge-01).

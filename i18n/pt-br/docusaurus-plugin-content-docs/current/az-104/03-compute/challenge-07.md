@@ -8,8 +8,8 @@ title: "Challenge 07 | ARM Templates & Bicep"
 :::info Informação
 
 **Tempo estimado: 60 minutos** | **Custo estimado: Gratuito** (templates + storage account apenas) | 📊 **Peso no exame: 20–25%**
-:::
 
+:::
 ## Cenário
 
 O CTO da Contoso se cansou de deploys do tipo "funciona no meu portal". Depois que um administrador júnior acidentalmente excluiu uma conta de armazenamento de produção clicando pelo Portal do Azure, a diretriz é clara: **tudo deve ser infraestrutura como código**. Nada mais de cliques no portal para provisionamento | cada recurso deve ser repetível, versionado e auditável.

@@ -56,8 +56,8 @@ az network dns zone create \
 :::tip
 
 You don't need to own the domain to create a DNS zone in Azure | you just won't be able to resolve it publicly unless you delegate NS records from the parent domain.
-:::
 
+:::
 ### Task 2: Add DNS Records
 
 Add the following record types to your DNS zone:

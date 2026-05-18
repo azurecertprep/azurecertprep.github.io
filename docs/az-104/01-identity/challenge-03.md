@@ -149,8 +149,8 @@ az consumption budget create \
 :::note
 
 Budget alerts via CLI require additional configuration for notification thresholds. It's easier to set these up in the Portal under **Cost Management + Billing** → **Budgets**.
-:::
 
+:::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
@@ -212,8 +212,8 @@ az policy assignment create \
 :::tip
 
 Policy assignments can take **5-15 minutes** to take effect. Be patient when testing!
-:::
 
+:::
 </details>
 
 <details>

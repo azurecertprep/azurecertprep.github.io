@@ -75,8 +75,8 @@ Habilite o VM Insights pelo Portal do Azure: **VM → Insights → Habilitar**.
 :::tip Dica
 
 O VM Insights instala automaticamente o Azure Monitor Agent e configura uma regra de coleta de dados (DCR).
-:::
 
+:::
 ### Tarefa 3: Explorar Métricas do Azure Monitor
 
 Navegue até **Azure Monitor → Métricas** (ou a aba Métricas da VM) e explore:
@@ -114,8 +114,8 @@ az monitor diagnostic-settings create \
 :::note
 
 Pode levar **15–30 minutos** para os dados de log aparecerem no Log Analytics após habilitar as configurações de diagnóstico. Isso é normal.
-:::
 
+:::
 ### Tarefa 5: Escrever Consultas KQL
 
 Abra **Log Analytics → Logs** e execute estas consultas:

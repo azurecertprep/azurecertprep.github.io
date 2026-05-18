@@ -8,8 +8,8 @@ title: "Challenge 10: Azure App Service"
 :::info Estimated Time & Cost
 
 **60–75 minutes** | **~$0.20** (S1 tier, delete promptly) | **Exam Weight: 20–25%**
-:::
 
+:::
 ## Scenario
 
 Contoso's marketing team needs a web application deployed for an upcoming campaign. The site must support zero-downtime deployments, auto-scaling during traffic spikes, and regular backups. You'll deploy it to Azure App Service with production best practices | deployment slots, autoscale, and networking controls.

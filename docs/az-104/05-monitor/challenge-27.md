@@ -84,8 +84,8 @@ The PerGB2018 SKU charges per GB ingested. For the exam, know these options:
 - **Per-GB**: Pay per GB ingested, 30-730 day configurable retention
 - **Commitment tiers**: 100/200/300/400/500 GB/day for discounts
 - **Daily cap**: Can set a daily ingestion cap to control costs
-:::
 
+:::
 ### Task 2: Deploy Target VMs for Monitoring
 
 ```bash
@@ -218,8 +218,8 @@ AMA replaces the legacy Log Analytics agent (MMA/OMS) and Diagnostics extension:
 - **AMA**: Uses Data Collection Rules (DCR), supports multi-homing, uses managed identity
 - **Legacy MMA**: Uses workspace configuration, being deprecated
 - For the AZ-104 exam, focus on AMA + DCR (the modern approach)
-:::
 
+:::
 ### Task 5: Configure Diagnostic Settings for Azure Resources
 
 ```bash
@@ -257,8 +257,8 @@ az monitor diagnostic-settings categories list \
 :::tip KQL Basics
 
 Wait 10-15 minutes after configuring data collection for logs to appear. Use the Portal Log Analytics query editor for interactive testing.
-:::
 
+:::
 **Portal: Navigate to Log Analytics workspace > Logs**
 
 ```kusto

@@ -96,8 +96,8 @@ az storage account keys list --account-name $STORAGE_NAME --resource-group $RG -
 :::warning
 
 Access keys grant **full control** over the storage account. Treat them like passwords | never commit them to source control or share them in plain text.
-:::
 
+:::
 7. Create a blob container and upload a test file:
 
 ```bash
@@ -167,8 +167,8 @@ az storage container generate-sas \
 :::tip
 
 **Why use stored access policies?** If you need to revoke a SAS token, you can't invalidate a standalone SAS without rotating the access key. But if the SAS references a stored access policy, you can modify or delete the policy to revoke access instantly.
-:::
 
+:::
 ### Part 5: Storage Firewall
 
 12. Configure the storage account firewall to allow access only from your IP:
@@ -211,8 +211,8 @@ az storage account keys renew --account-name $STORAGE_NAME --resource-group $RG 
 :::warning
 
 After rotating a key, any application or SAS token using that key will **immediately stop working**. Always update your applications before rotating keys in production.
-:::
 
+:::
 ### Part 7: AzCopy
 
 15. Use AzCopy to upload multiple files:
@@ -307,8 +307,8 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --default-ac
 :::info
 
 Azure Cloud Shell and trusted Azure services can always access storage accounts regardless of firewall rules, as long as the **"Allow trusted Microsoft services"** checkbox is enabled.
-:::
 
+:::
 </details>
 
 <details>

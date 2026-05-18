@@ -58,8 +58,8 @@ Considere estes recursos antes de começar:
 :::tip Dica
 
 Nenhuma experiência com o Azure? Tudo bem! A certificação AZ-900 (Azure Fundamentals) é um excelente ponto de partida. É um exame mais leve que constrói a base necessária para o AZ-104. Muitas pessoas fazem o AZ-900 primeiro e depois o AZ-104.
-:::
 
+:::
 ## Expectativas de Experiência
 
 De acordo com a Microsoft, candidatos ao AZ-104 devem ter:
@@ -73,8 +73,8 @@ De acordo com a Microsoft, candidatos ao AZ-104 devem ter:
 :::note Nota
 
 Não tem 6 meses de experiência? Estes desafios foram projetados para acelerar seu aprendizado. Se você estiver motivado e dedicar tempo focado, poderá construir experiência prática equivalente completando todos os 28 desafios. Muitos candidatos aprovados passaram com menos de 6 meses de experiência estudando intensivamente.
-:::
 
+:::
 ---
 
 **Pronto para começar?** Vá para a [Configuração do Laboratório](/docs/az-104/lab-setup) para configurar seu ambiente.

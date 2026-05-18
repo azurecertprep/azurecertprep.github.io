@@ -8,8 +8,8 @@ title: "Challenge 11 | Virtual Networks & Subnets"
 :::info Tempo Estimado & Custo
 
 **45–60 minutos** | **~$0,10** (VMs para teste, desaloque rapidamente) | 📊 **Peso no exame: 15–20%**
-:::
 
+:::
 ## Cenário
 
 A Contoso está construindo uma arquitetura multi-camada com uma topologia de rede hub-spoke. A VNet hub contém serviços compartilhados (firewalls, DNS), enquanto as VNets spoke hospedam cargas de trabalho de aplicações. Você precisa projetar a rede com segmentação adequada, peering e roteamento | e depois provar que tudo funciona com testes de conectividade.

@@ -308,8 +308,8 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 :::info
 
 **Early deletion penalty**: If you delete or move a blob from Cool/Archive before the minimum retention period, you're charged as if you kept it for the full period. For example, deleting a blob from Cool after 10 days = charged for 30 days.
-:::
 
+:::
 </details>
 
 <details>

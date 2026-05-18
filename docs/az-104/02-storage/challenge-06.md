@@ -112,8 +112,8 @@ az storage blob upload --container-name replicated-data --file repl-test.txt --n
 :::info
 
 **Lifecycle management** automatically transitions blobs between tiers and deletes them based on age. This is the primary tool for controlling storage costs at scale.
-:::
 
+:::
 <Tabs>
 <TabItem value="cli" label="Azure CLI">
 
@@ -240,8 +240,8 @@ az storage account management-policy show \
 :::tip
 
 Identity-based access lets users authenticate to Azure File shares using their Entra ID credentials instead of storage account keys. This is more secure and allows per-user/group NTFS-like permissions.
-:::
 
+:::
 6. Create a file share for identity-based access:
 
 ```bash
@@ -268,8 +268,8 @@ az storage account update \
 :::note
 
 Full Entra ID Kerberos authentication for Azure Files requires additional setup including configuring the Kerberos ticket-granting-ticket and setting up share-level and directory/file-level permissions. For this challenge, enabling the feature flag is sufficient.
-:::
 
+:::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
@@ -303,8 +303,8 @@ Azure Files identity-based access uses a **two-layer permission model**:
 2. **Directory/file-level permissions**: Configured using Windows NTFS ACLs after mounting the share
 
 The effective permission is the **intersection** of both layers | a user needs both share-level and directory-level access.
-:::
 
+:::
 ### Part 4: Object Replication
 
 9. Set up object replication from the primary account to the secondary account:
@@ -375,8 +375,8 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
 :::warning
 
 Object replication is **asynchronous**. It may take several minutes for blobs to appear in the destination account. There is no SLA on replication time for standard accounts.
-:::
 
+:::
 ### Part 5: Stored Access Policies (Revisited)
 
 12. Create stored access policies for fine-grained control:
@@ -463,8 +463,8 @@ az storage account blob-service-properties update \
   --account-name $STORAGE_PRIMARY --resource-group $RG \
   --enable-last-access-tracking true
 ```
-:::
 
+:::
 </details>
 
 <details>

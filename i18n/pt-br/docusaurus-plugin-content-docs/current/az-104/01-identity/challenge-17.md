@@ -9,8 +9,8 @@ title: "Desafio 17: Grupos de Gerenciamento & Assinaturas"
 
 **60-75 minutos** | **Custo estimado**: Gratuito (operações do plano de gerenciamento) | **Peso no Exame: 20-25%**
 
-:::
 
+:::
 ## Cenário
 
 A Contoso Ltd. está crescendo rápido. O que começou como uma única assinatura do Azure se transformou em seis assinaturas distribuídas em três departamentos (TI, Finanças e Engenharia). O CTO quer uma hierarquia de governança que aplique políticas de forma consistente em todas as assinaturas sem duplicar esforço. Seu trabalho é projetar e implementar uma estrutura de grupos de gerenciamento que reflita o organograma da empresa e aplicar governança nos níveis adequados.
@@ -96,8 +96,8 @@ az account management-group create \
 
 Navegue até **Portal do Azure** > **Grupos de gerenciamento**. Clique em **+ Criar** e especifique o grupo pai, ID e nome de exibição para cada grupo.
 
-:::
 
+:::
 ### Tarefa 2: Mover uma Assinatura para um Grupo de Gerenciamento
 
 Mova sua assinatura atual para o grupo de gerenciamento `mg-dev`:

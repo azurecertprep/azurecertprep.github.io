@@ -9,8 +9,8 @@ title: "Desafio 21: Extensões de VM & Automação"
 
 **60-75 minutos** | **Custo estimado**: ~$2,00 (VM + Automation Account) | **Peso no Exame: 15-20%**
 
-:::
 
+:::
 ## Cenário
 
 A Contoso Ltd. tem uma frota de 50 VMs distribuídas em ambientes de desenvolvimento, staging e produção. A equipe de operações está cansada de fazer SSH manualmente em cada VM para instalar agentes de monitoramento, configurar software e executar scripts de manutenção. Toda vez que uma nova VM é provisionada, alguém esquece uma etapa de configuração, levando a inconsistências. Você foi encarregado de automatizar a configuração pós-implantação usando extensões de VM, Custom Script Extension, Run Command e Azure Automation.

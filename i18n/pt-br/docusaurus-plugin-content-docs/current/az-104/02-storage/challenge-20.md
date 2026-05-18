@@ -9,8 +9,8 @@ title: "Desafio 20: Criptografia de Armazenamento & Proteção de Dados"
 
 **60-75 minutos** | **Custo estimado**: ~$1,00 (Key Vault + armazenamento) | **Peso no Exame: 15-20%**
 
-:::
 
+:::
 ## Cenário
 
 A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo armazenamento contendo dados financeiros ou de saúde deve usar chaves de criptografia gerenciadas pelo cliente (CMK) para fins de trilha de auditoria. Além disso, dados regulatórios (como registros financeiros e logs de auditoria) devem ser armazenados em contêineres imutáveis (WORM | Write Once, Read Many) onde os dados não podem ser modificados ou excluídos por um período de retenção especificado. Você foi encarregado de implementar esses controles de criptografia e proteção de dados.
@@ -91,8 +91,8 @@ Ao criar uma conta de armazenamento no portal:
 2. Em **Criptografia**, marque **Habilitar criptografia de infraestrutura**
 3. Nota: Isso não pode ser alterado após a criação da conta
 
-:::
 
+:::
 ### Tarefa 3: Criar uma Chave no Azure Key Vault
 
 ```bash
@@ -192,8 +192,8 @@ Uma política de imutabilidade começa em estado **desbloqueado**. Enquanto desb
 
 Só bloqueie uma política quando tiver certeza sobre os requisitos de retenção.
 
-:::
 
+:::
 ### Tarefa 6: Configurar Retenção Legal
 
 ```bash

@@ -135,8 +135,8 @@ Para que uma VM do Azure funcione como roteador/NVA, o encaminhamento de IP deve
 2. Nível do SO (`sysctl net.ipv4.ip_forward=1`)
 
 Sem ambos, os pacotes encaminhados serão descartados.
-:::
 
+:::
 ### Tarefa 3: Criar uma Tabela de Rotas
 
 ```bash
@@ -156,8 +156,8 @@ az network route-table show \
 :::tip Dica
 
 Definir `--disable-bgp-route-propagation true` impede que rotas aprendidas via BGP (de gateways VPN/ExpressRoute) sejam injetadas na tabela de rotas. Isso lhe dá controle total sobre o roteamento para aquela sub-rede.
-:::
 
+:::
 ### Tarefa 4: Criar Rotas Definidas pelo Usuário
 
 ```bash
@@ -310,8 +310,8 @@ az network route-table route list \
 :::tip Dica
 
 O túnel forçado redireciona todo o tráfego destinado à internet (0.0.0.0/0) do Azure de volta para on-premises via um gateway VPN ou através de um NVA. Isso garante que todo o tráfego seja inspecionado antes de alcançar a internet.
-:::
 
+:::
 ```bash
 # Forced tunneling via UDR is already in place (Task 4):
 # route-to-internet: 0.0.0.0/0 -> VirtualAppliance (10.0.1.4)

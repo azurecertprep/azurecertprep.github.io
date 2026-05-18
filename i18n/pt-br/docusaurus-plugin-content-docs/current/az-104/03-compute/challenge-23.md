@@ -76,8 +76,8 @@ echo "App URL: https://$APP_NAME.azurewebsites.net"
 :::tip Dica
 
 O Azure requer verificação de propriedade do domínio antes do mapeamento. Você pode usar um registro TXT (verificação asuid) ou um registro CNAME. Para fins de laboratório, criamos a zona DNS no Azure.
-:::
 
+:::
 ```bash
 # Create a DNS zone (simulating domain ownership)
 az network dns zone create \
@@ -245,8 +245,8 @@ az webapp config appsettings set \
 :::tip Dica
 
 A sub-rede de integração deve ser delegada a Microsoft.Web/serverFarms e não deve conter outros recursos. Use uma sub-rede /24 ou /26 dedicada à integração com App Service.
-:::
 
+:::
 ### Tarefa 6: Configurar Restrições de Acesso (Regras de Permitir/Negar IP)
 
 ```bash
@@ -301,8 +301,8 @@ az webapp config access-restriction show \
 :::tip Dica
 
 Hybrid Connections fornecem conectividade do App Service para recursos on-premises sem exigir VPN ou ExpressRoute. Utiliza um agente de relay (Hybrid Connection Manager) instalado on-premises.
-:::
 
+:::
 **Passos no Portal (Hybrid Connections requerem configuração pelo Portal):**
 1. Navegue até App Service > **Networking** > **Hybrid connections**
 2. Clique em **Add hybrid connection**

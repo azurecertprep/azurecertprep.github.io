@@ -9,8 +9,8 @@ title: "Challenge 18: Cost Management & Azure Advisor"
 
 **45-60 minutes** | **Estimated cost**: Free (management plane operations) | **Exam Weight: 10-15%**
 
-:::
 
+:::
 ## Scenario
 
 Contoso Ltd.'s monthly Azure bill has grown from $5,000 to $45,000 in six months, and the CFO is demanding answers. Nobody knows which department is spending what, there are no alerts when budgets are exceeded, and the CTO suspects there are idle resources burning money. You have been tasked with implementing a comprehensive cost management strategy using Azure Cost Management, budgets, alerts, and Azure Advisor recommendations.
@@ -97,8 +97,8 @@ az consumption budget create \
    - **110% forecasted** | proactive forecast warning
 6. Configure action group or email recipients for each threshold
 
-:::
 
+:::
 ### Task 3: Configure Cost Analysis Views
 
 Explore cost analysis in the Azure Portal:
@@ -184,8 +184,8 @@ Navigate to **Azure Advisor** > **Cost** tab to see:
 - Reserved Instance purchase recommendations
 - Unused App Service plans
 
-:::
 
+:::
 ### Task 6: Implement Spending Notifications with Action Groups
 
 ```bash

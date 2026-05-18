@@ -308,8 +308,8 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 :::info Informação
 
 **Penalidade por exclusão antecipada**: Se você excluir ou mover um blob de Cool/Archive antes do período mínimo de retenção, será cobrado como se o mantivesse pelo período completo. Por exemplo, excluir um blob de Cool após 10 dias = cobrado por 30 dias.
-:::
 
+:::
 </details>
 
 <details>

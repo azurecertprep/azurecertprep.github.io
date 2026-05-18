@@ -152,8 +152,8 @@ SSPR configuration is best done through the Azure Portal:
 3. Select the **IT-Team** group
 4. Under **Authentication methods**, set **Number of methods required** to 1
 5. Check **Email** as an allowed method
-:::
 
+:::
 </details>
 
 ## Learning Resources

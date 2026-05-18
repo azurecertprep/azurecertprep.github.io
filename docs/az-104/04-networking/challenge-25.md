@@ -140,8 +140,8 @@ az storage account network-rule list \
 :::tip Service Endpoints
 
 Service endpoints keep traffic on the Azure backbone network and restrict PaaS access to specific VNet subnets. The PaaS service's public IP is still used for communication, but the source is identified by the VNet/subnet rather than a public IP.
-:::
 
+:::
 ### Task 3: Configure Private Endpoint for Storage
 
 ```bash
@@ -208,8 +208,8 @@ az network private-dns record-set a list \
 :::tip Private DNS Zones
 
 When you create a private endpoint, you need a Private DNS Zone so that the FQDN (e.g., `contososa12345.blob.core.windows.net`) resolves to the private IP (e.g., `10.0.2.4`) instead of the public IP. The zone name must match the service's privatelink zone (e.g., `privatelink.blob.core.windows.net`).
-:::
 
+:::
 ### Task 5: Configure Private Endpoint for Key Vault
 
 ```bash

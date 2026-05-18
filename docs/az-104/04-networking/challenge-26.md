@@ -182,8 +182,8 @@ az network watcher test-ip-flow \
 :::tip IP Flow Verify
 
 IP Flow Verify tells you which NSG rule (name and priority) is allowing or denying traffic. It checks both the NIC-level NSG and subnet-level NSG. This is the fastest way to diagnose "why can't I connect?" issues.
-:::
 
+:::
 ### Task 3: Next Hop Analysis
 
 Determine the next hop for traffic from a VM:
@@ -260,8 +260,8 @@ az network watcher packet-capture delete \
 :::tip Packet Capture
 
 Packet captures are stored as .cap files in the storage account. You can download and analyze them with Wireshark. The Network Watcher agent must be installed on the VM (automatically installed when you create a capture).
-:::
 
+:::
 ### Task 5: Connection Monitor
 
 ```bash

@@ -96,8 +96,8 @@ az storage account keys list --account-name $STORAGE_NAME --resource-group $RG -
 :::warning Atenção
 
 Chaves de acesso concedem **controle total** sobre a storage account. Trate-as como senhas | nunca as envie para controle de versão nem as compartilhe em texto simples.
-:::
 
+:::
 7. Criar um container de blob e fazer upload de um arquivo de teste:
 
 ```bash
@@ -167,8 +167,8 @@ az storage container generate-sas \
 :::tip Dica
 
 **Por que usar políticas de acesso armazenadas?** Se você precisar revogar um token SAS, não é possível invalidar um SAS autônomo sem rotacionar a chave de acesso. Mas se o SAS faz referência a uma política de acesso armazenada, você pode modificar ou excluir a política para revogar o acesso instantaneamente.
-:::
 
+:::
 ### Parte 5: Firewall de Storage
 
 12. Configurar o firewall da storage account para permitir acesso apenas do seu IP:
@@ -211,8 +211,8 @@ az storage account keys renew --account-name $STORAGE_NAME --resource-group $RG 
 :::warning Atenção
 
 Após rotacionar uma chave, qualquer aplicação ou token SAS usando essa chave **parará de funcionar imediatamente**. Sempre atualize suas aplicações antes de rotacionar chaves em produção.
-:::
 
+:::
 ### Parte 7: AzCopy
 
 15. Usar AzCopy para fazer upload de múltiplos arquivos:
@@ -307,8 +307,8 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --default-ac
 :::info Informação
 
 Azure Cloud Shell e serviços confiáveis do Azure sempre podem acessar storage accounts independentemente das regras de firewall, desde que a opção **"Allow trusted Microsoft services"** esteja habilitada.
-:::
 
+:::
 </details>
 
 <details>

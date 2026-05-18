@@ -35,16 +35,16 @@ A multi-page scenario with 4-7 questions. You can navigate between questions wit
 :::warning Case Study Strategy
 
 Read the **requirements** tab first, then the scenario. Many case study questions only need specific details | don't try to memorize everything.
-:::
 
+:::
 ### Active Lab
 A real Azure Portal environment where you complete tasks. You have limited time and a restricted set of actions.
 
 :::tip Lab Strategy
 
 Labs are scored on the **end state**, not the steps you take. If the CLI fails, use the Portal. If you make a mistake, just redo it. The evaluator checks the final configuration.
-:::
 
+:::
 ## Time Management
 
 | Section | Suggested Time |
@@ -84,8 +84,8 @@ Monitoring is 10-15% but the concepts (Azure Monitor, KQL, alerts) connect every
 6. **Azure Advisor** shows recommendations but does NOT auto-apply them
 7. **Management groups** can be nested up to 6 levels deep (root + 5 levels)
 8. **Custom DNS names** for App Service require a CNAME or A record + TXT verification
-:::
 
+:::
 ## Useful Links
 
 | Resource | Link |

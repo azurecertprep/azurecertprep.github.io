@@ -9,8 +9,8 @@ title: "Challenge 19: AzCopy & Storage Migration"
 
 **60-75 minutes** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%**
 
-:::
 
+:::
 ## Scenario
 
 Contoso Ltd. is consolidating storage after acquiring a smaller company. You need to migrate terabytes of blob data between storage accounts, copy data across regions for disaster recovery, and set up ongoing synchronization for a file share. The operations team has been using the Azure Portal to download and re-upload files manually | which takes days. You will introduce them to AzCopy and Storage Explorer for efficient, high-performance data movement.
@@ -117,8 +117,8 @@ If AzCopy is not installed:
 - **Windows**: Download from https://aka.ms/downloadazcopy-v10-windows
 - **macOS**: `brew install azcopy`
 
-:::
 
+:::
 ### Task 3: Copy Blobs Between Containers (Same Account)
 
 ```bash

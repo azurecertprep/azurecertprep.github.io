@@ -8,8 +8,8 @@ title: "Challenge 10 | Azure App Service"
 :::info Informação
 
 **Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.20** (tier S1, exclua rapidamente) | 📊 **Peso no exame: 20–25%**
-:::
 
+:::
 ## Cenário
 
 A equipe de marketing da Contoso precisa de uma aplicação web implantada para uma campanha futura. O site deve suportar implantações sem tempo de inatividade, auto-scaling durante picos de tráfego e backups regulares. Você vai implantá-lo no Azure App Service com boas práticas de produção | deployment slots, autoscale e controles de rede.

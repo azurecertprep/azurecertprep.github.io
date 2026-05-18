@@ -149,8 +149,8 @@ az consumption budget create \
 :::note
 
 Alertas de orçamento via CLI requerem configuração adicional para limites de notificação. É mais fácil configurá-los no Portal em **Cost Management + Billing** → **Budgets**.
-:::
 
+:::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
@@ -212,8 +212,8 @@ az policy assignment create \
 :::tip Dica
 
 Atribuições de política podem levar **5-15 minutos** para entrar em vigor. Tenha paciência ao testar!
-:::
 
+:::
 </details>
 
 <details>

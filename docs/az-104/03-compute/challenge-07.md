@@ -8,8 +8,8 @@ title: "Challenge 07: ARM Templates & Bicep"
 :::info Estimated Time & Cost
 
 **60 minutes** | **Free** (templates + storage account only) | **Exam Weight: 20–25%**
-:::
 
+:::
 ## Scenario
 
 Contoso's CTO has had enough of "it works on my portal" deployments. After a junior admin accidentally deleted a production storage account while clicking through the Azure Portal, the mandate is clear: **everything must be infrastructure as code**. No more portal clicks for provisioning | every resource must be repeatable, version-controlled, and auditable.

@@ -9,8 +9,8 @@ title: "Desafio 18: Gerenciamento de Custos & Azure Advisor"
 
 **45-60 minutos** | **Custo estimado**: Gratuito (operações do plano de gerenciamento) | **Peso no Exame: 10-15%**
 
-:::
 
+:::
 ## Cenário
 
 A conta mensal do Azure da Contoso Ltd. cresceu de $5.000 para $45.000 em seis meses, e o CFO está exigindo respostas. Ninguém sabe qual departamento está gastando o quê, não há alertas quando os orçamentos são excedidos, e o CTO suspeita que existem recursos ociosos queimando dinheiro. Você foi encarregado de implementar uma estratégia abrangente de gerenciamento de custos usando Azure Cost Management, orçamentos, alertas e recomendações do Azure Advisor.
@@ -97,8 +97,8 @@ az consumption budget create \
    - **110% previsto** | aviso proativo de previsão
 6. Configure o grupo de ação ou destinatários de email para cada limite
 
-:::
 
+:::
 ### Tarefa 3: Configurar Visualizações de Análise de Custos
 
 Explore a análise de custos no Portal do Azure:
@@ -184,8 +184,8 @@ Navegue até **Azure Advisor** > aba **Custo** para ver:
 - Recomendações de compra de Reserved Instances
 - Planos de App Service não utilizados
 
-:::
 
+:::
 ### Tarefa 6: Implementar Notificações de Gastos com Action Groups
 
 ```bash

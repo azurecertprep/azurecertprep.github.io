@@ -135,8 +135,8 @@ For an Azure VM to act as a router/NVA, IP forwarding must be enabled at TWO lev
 2. OS level (`sysctl net.ipv4.ip_forward=1`)
 
 Without both, forwarded packets will be dropped.
-:::
 
+:::
 ### Task 3: Create a Route Table
 
 ```bash
@@ -156,8 +156,8 @@ az network route-table show \
 :::tip BGP Route Propagation
 
 Setting `--disable-bgp-route-propagation true` prevents routes learned via BGP (from VPN/ExpressRoute gateways) from being injected into the route table. This gives you full control over routing for that subnet.
-:::
 
+:::
 ### Task 4: Create User-Defined Routes
 
 ```bash
@@ -310,8 +310,8 @@ az network route-table route list \
 :::tip Forced Tunneling
 
 Forced tunneling redirects all internet-bound traffic (0.0.0.0/0) from Azure back to on-premises via a VPN gateway or through an NVA. This ensures all traffic is inspected before reaching the internet.
-:::
 
+:::
 ```bash
 # Forced tunneling via UDR is already in place (Task 4):
 # route-to-internet: 0.0.0.0/0 -> VirtualAppliance (10.0.1.4)

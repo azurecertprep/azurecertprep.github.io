@@ -8,8 +8,8 @@ title: "Challenge 12: Network Security"
 :::info Estimated Time & Cost
 
 **60 minutes** | **~$0.30** (Bastion incurs hourly charges | delete promptly) | **Exam Weight: 15–20%**
-:::
 
+:::
 ## Scenario
 
 Contoso's security team has completed a review and issued mandates: all network traffic must be explicitly allowed, admin access must go through a bastion host (no public IPs on VMs), and database connections must use private endpoints. Your job is to lock everything down while keeping the application functional.

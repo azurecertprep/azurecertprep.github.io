@@ -14,8 +14,8 @@ This document contains **complete solutions** for all 28 challenges. Students sh
 - Use the "Common Mistakes" sections to anticipate where students get stuck
 - Share individual hints from the challenge pages before revealing full solutions
 - Use the time estimates to pace your workshop sessions
-:::
 
+:::
 ---
 
 ## Challenge 01: Entra ID: Users & Groups

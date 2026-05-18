@@ -52,8 +52,8 @@ az group create --name $RG --location $LOCATION
 :::tip No Infrastructure Needed
 
 This challenge primarily uses Azure Advisor and Service Health, which analyze your existing subscription resources. You do not need to deploy VMs or services for this lab | Advisor analyzes whatever already exists in your subscription.
-:::
 
+:::
 ## Tasks
 
 ### Task 1: Review Azure Advisor Recommendations
@@ -120,8 +120,8 @@ Advisor Score represents the percentage of Advisor recommendations that have bee
 - Track improvement over time
 - Compare across subscriptions
 - Set organizational targets (e.g., maintain above 80%)
-:::
 
+:::
 ### Task 3: Suppress or Postpone Recommendations
 
 ```bash
@@ -155,8 +155,8 @@ Suppress recommendations when:
 - You have compensating controls in place
 - The risk is acknowledged and accepted
 - The recommendation is a false positive for your workload
-:::
 
+:::
 ### Task 4: Configure Advisor Alerts
 
 ```bash

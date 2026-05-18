@@ -60,8 +60,8 @@ az backup vault create \
 :::tip Dica
 
 Recovery Services vaults são usados para backup de VM e Azure Site Recovery. O vault deve estar na **mesma região** das VMs que você deseja fazer backup.
-:::
 
+:::
 ### Tarefa 2: Criar uma Política de Backup
 
 Crie uma política de backup personalizada: backups diários às 2:00 da manhã, retenção de 30 dias.
@@ -124,8 +124,8 @@ az backup protection backup-now \
 :::note
 
 O primeiro backup pode levar **30–60 minutos** dependendo do tamanho da VM. Você pode acompanhar o progresso na aba **Backup Jobs** do vault.
-:::
 
+:::
 ### Tarefa 5: Restaurar uma VM a partir do Backup
 
 Quando o backup for concluído, restaure-o para uma nova VM:
@@ -195,8 +195,8 @@ Habilite a replicação para uma VM em uma região secundária:
 :::tip Dica
 
 O Site Recovery replica os discos da VM de forma assíncrona para a região de destino. A replicação inicial pode levar 30–60 minutos dependendo do tamanho do disco.
-:::
 
+:::
 ### Tarefa 9: Executar um Test Failover
 
 Após a replicação inicial ser concluída:
@@ -210,8 +210,8 @@ Após a replicação inicial ser concluída:
 :::warning Atenção
 
 Sempre limpe os recursos do test failover | eles continuam gerando cobranças até serem removidos.
-:::
 
+:::
 ### Tarefa 10: Configurar Relatórios de Backup
 
 1. Vá para **Backup center → Relatórios de backup**
@@ -273,8 +273,8 @@ Se a exclusão do vault falhar, siga esta ordem:
 2. Remova os itens replicados do Site Recovery
 3. Exclua o vault
 4. Exclua o grupo de recursos
-:::
 
+:::
 ## ✅ Critérios de Sucesso
 
 - [ ] Recovery Services vault criado

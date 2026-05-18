@@ -76,8 +76,8 @@ echo "App URL: https://$APP_NAME.azurewebsites.net"
 :::tip Custom Domain Verification
 
 Azure requires domain ownership verification before mapping. You can use either a TXT record (asuid verification) or a CNAME record. For lab purposes, we create the DNS zone in Azure.
-:::
 
+:::
 ```bash
 # Create a DNS zone (simulating domain ownership)
 az network dns zone create \
@@ -245,8 +245,8 @@ az webapp config appsettings set \
 :::tip VNet Integration Subnet
 
 The integration subnet must be delegated to Microsoft.Web/serverFarms and should not contain any other resources. Use a /24 or /26 subnet dedicated to App Service integration.
-:::
 
+:::
 ### Task 6: Configure Access Restrictions (IP Allow/Deny Rules)
 
 ```bash
@@ -301,8 +301,8 @@ az webapp config access-restriction show \
 :::tip Hybrid Connections
 
 Hybrid Connections provide connectivity from App Service to on-premises resources without requiring a VPN or ExpressRoute. It uses a relay agent (Hybrid Connection Manager) installed on-premises.
-:::
 
+:::
 **Portal Steps (Hybrid Connections require Portal configuration):**
 1. Navigate to App Service > **Networking** > **Hybrid connections**
 2. Click **Add hybrid connection**

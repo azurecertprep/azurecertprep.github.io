@@ -9,8 +9,8 @@ title: "Challenge 17: Management Groups & Subscriptions"
 
 **60-75 minutes** | **Estimated cost**: Free (management plane operations) | **Exam Weight: 20-25%**
 
-:::
 
+:::
 ## Scenario
 
 Contoso Ltd. is growing fast. What started as a single Azure subscription has ballooned into six subscriptions across three departments (IT, Finance, and Engineering). The CTO wants a governance hierarchy that enforces policies consistently across all subscriptions without duplicating effort. Your job is to design and implement a management group structure that mirrors the company's organizational chart and apply governance at the right levels.
@@ -96,8 +96,8 @@ az account management-group create \
 
 Navigate to **Azure Portal** > **Management groups**. Click **+ Create** and specify parent group, ID, and display name for each group.
 
-:::
 
+:::
 ### Task 2: Move a Subscription into a Management Group
 
 Move your current subscription into the `mg-dev` management group:

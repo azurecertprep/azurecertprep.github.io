@@ -9,8 +9,8 @@ title: "Desafio 22: Discos de VM & Criptografia"
 
 **60-75 minutos** | **Custo estimado**: ~$3,00 (VMs + managed disks) | **Peso no Exame: 15-20%**
 
-:::
 
+:::
 ## Cenário
 
 A Contoso Ltd. está padronizando o gerenciamento de discos em sua frota de VMs. A equipe de segurança exige que todos os discos sejam criptografados, a equipe de operações precisa de uma estratégia confiável de snapshots e imagens para recuperação de desastres, e a equipe de desenvolvimento quer desempenho de disco mais rápido para seus workloads de banco de dados. Você foi encarregado de implementar uma estratégia abrangente de gerenciamento de discos que cobre tipos de disco, criptografia, snapshots e imagens personalizadas.
@@ -179,8 +179,8 @@ az vm encryption show \
 
 O Azure Disk Encryption pode levar de 15 a 30 minutos para ser concluído, dependendo do tamanho do disco. A VM permanece operacional durante a criptografia. Monitore o progresso com `az vm encryption show`.
 
-:::
 
+:::
 ### Tarefa 5: Criar Snapshots de Disco
 
 Crie snapshots point-in-time para fins de backup:
@@ -343,8 +343,8 @@ az disk list \
 | Premium SSD (Premium_LRS) | 20.000 | 900 MB/s | Bancos em produção, I/O intensivo |
 | Ultra Disk (UltraSSD_LRS) | 160.000 | 4.000 MB/s | SAP HANA, bancos de alto desempenho |
 
-:::
 
+:::
 ## Critérios de Sucesso
 
 - [ ] VM tem um disco de SO e pelo menos dois discos de dados (SKUs diferentes) anexados

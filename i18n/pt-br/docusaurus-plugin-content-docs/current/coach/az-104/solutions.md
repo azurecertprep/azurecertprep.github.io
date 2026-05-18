@@ -14,8 +14,8 @@ Este documento contém **soluções completas** para todos os 28 desafios. Os al
 - Use as seções de "Erros Comuns" para antecipar onde os alunos ficam travados
 - Compartilhe dicas individuais das páginas de desafio antes de revelar soluções completas
 - Use as estimativas de tempo para ritmar suas sessões de workshop
-:::
 
+:::
 ---
 
 ## Desafio 01: Entra ID: Usuários & Grupos

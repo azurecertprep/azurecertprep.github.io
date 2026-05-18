@@ -14,8 +14,8 @@ title: "Challenge 16: Capstone: Day in the Life of an Azure Admin"
 :::info Capstone Challenge
 
 This challenge spans **all five AZ-104 exam domains**. It simulates a real workday where you troubleshoot issues using skills from every domain. Treat this as your final exam rehearsal.
-:::
 
+:::
 ## Scenario
 
 You arrive at work Monday morning at Contoso to find **five urgent tickets** in your queue. Each ticket tests knowledge from a different exam domain. No one else is available | it's all on you.
@@ -442,4 +442,5 @@ done
 :::tip You've Completed the AZ-104 Challenge Series!
 
 If you've worked through all 28 challenges, you've covered every major skill measured on the AZ-104 exam. Review any areas where you struggled, then schedule your exam with confidence. Good luck!
+
 :::

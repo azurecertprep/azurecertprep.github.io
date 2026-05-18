@@ -70,8 +70,8 @@ Você precisa de uma assinatura do Azure para todos os desafios, exceto o Desafi
 :::warning Atenção
 
 Gerenciamento de custos | Todos os desafios incluem scripts de limpeza. **Sempre execute a limpeza após cada desafio** para evitar cobranças inesperadas. O custo total para todos os 28 desafios é estimado em ~$5 com a limpeza adequada.
-:::
 
+:::
 ## Convenção de Nomenclatura de Recursos
 
 Usamos uma convenção de nomenclatura consistente em todos os desafios:
@@ -106,8 +106,8 @@ $Location = "eastus"
 New-AzResourceGroup -Name "rg-az104-shared" -Location $Location
 Get-AzResourceGroup | Format-Table
 ```
-:::
 
+:::
 ---
 
 **Configuração completa?** Comece com o [Desafio 01: Usuários e Grupos do Entra ID](/docs/az-104/identity/challenge-01).

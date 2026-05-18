@@ -52,8 +52,8 @@ az group create --name $RG --location $LOCATION
 :::tip Dica
 
 Este desafio utiliza principalmente o Azure Advisor e Service Health, que analisam os recursos existentes na sua assinatura. Você não precisa implantar VMs ou serviços para este laboratório | o Advisor analisa o que já existe na sua assinatura.
-:::
 
+:::
 ## Tarefas
 
 ### Tarefa 1: Revisar Recomendações do Azure Advisor
@@ -120,8 +120,8 @@ O Advisor Score representa a porcentagem de recomendações do Advisor que foram
 - Acompanhar melhorias ao longo do tempo
 - Comparar entre assinaturas
 - Definir metas organizacionais (ex.: manter acima de 80%)
-:::
 
+:::
 ### Tarefa 3: Suprimir ou Adiar Recomendações
 
 ```bash
@@ -155,8 +155,8 @@ Suprima recomendações quando:
 - Você tem controles compensatórios em vigor
 - O risco é reconhecido e aceito
 - A recomendação é um falso positivo para sua carga de trabalho
-:::
 
+:::
 ### Tarefa 4: Configurar Alertas do Advisor
 
 ```bash

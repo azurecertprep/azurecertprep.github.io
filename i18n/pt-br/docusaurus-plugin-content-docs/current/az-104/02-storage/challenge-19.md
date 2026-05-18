@@ -9,8 +9,8 @@ title: "Desafio 19: AzCopy & Migração de Armazenamento"
 
 **60-75 minutos** | **Custo estimado**: ~$0,50 | **Peso no Exame: 15-20%**
 
-:::
 
+:::
 ## Cenário
 
 A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor. Você precisa migrar terabytes de dados blob entre contas de armazenamento, copiar dados entre regiões para recuperação de desastres e configurar sincronização contínua para um file share. A equipe de operações tem usado o Portal do Azure para baixar e re-enviar arquivos manualmente | o que leva dias. Você vai apresentar a eles o AzCopy e o Storage Explorer para movimentação de dados eficiente e de alto desempenho.
@@ -117,8 +117,8 @@ Se o AzCopy não estiver instalado:
 - **Windows**: Baixe de https://aka.ms/downloadazcopy-v10-windows
 - **macOS**: `brew install azcopy`
 
-:::
 
+:::
 ### Tarefa 3: Copiar Blobs Entre Contêineres (Mesma Conta)
 
 ```bash

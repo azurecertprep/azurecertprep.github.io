@@ -8,13 +8,13 @@ title: "Challenge 08 | Virtual Machines & Scale Sets"
 :::info Informação
 
 **Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.50** (desaloque rapidamente!) | 📊 **Peso no exame: 20–25%**
-:::
 
+:::
 :::danger Aviso de Custo
 
 Máquinas virtuais geram cobranças enquanto estão em execução. **Desaloque todas as VMs** assim que terminar cada tarefa. O script de limpeza no final exclui tudo | execute-o quando terminar.
-:::
 
+:::
 ## Cenário
 
 A Contoso precisa implantar uma frota de servidores web para sua aplicação voltada ao cliente. Comece com uma única VM Linux para validar a configuração, depois escale para um VM Scale Set (VMSS) para a carga de trabalho de produção. A infraestrutura deve suportar falhas de zona de disponibilidade e escalar automaticamente durante picos de tráfego.

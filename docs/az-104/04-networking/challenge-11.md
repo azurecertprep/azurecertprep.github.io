@@ -8,8 +8,8 @@ title: "Challenge 11: Virtual Networks & Subnets"
 :::info Estimated Time & Cost
 
 **45–60 minutes** | **~$0.10** (VMs for testing, deallocate promptly) | **Exam Weight: 15–20%**
-:::
 
+:::
 ## Scenario
 
 Contoso is building a multi-tier architecture with a hub-spoke network topology. The hub VNet contains shared services (firewalls, DNS), while spoke VNets host application workloads. You need to design the network with proper segmentation, peering, and routing | then prove it all works with connectivity tests.

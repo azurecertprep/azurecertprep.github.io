@@ -8,13 +8,13 @@ title: "Challenge 08: Virtual Machines & Scale Sets"
 :::info Estimated Time & Cost
 
 **60–75 minutes** | **~$0.50** (deallocate promptly!) | **Exam Weight: 20–25%**
-:::
 
+:::
 :::danger Cost Warning
 
 Virtual machines incur charges while running. **Deallocate all VMs** as soon as you finish each task. The cleanup script at the bottom deletes everything | run it when done.
-:::
 
+:::
 ## Scenario
 
 Contoso needs to deploy a web server fleet for their customer-facing application. Start with a single Linux VM to validate the configuration, then scale out to a VM Scale Set (VMSS) for the production workload. The infrastructure must handle availability zone failures and scale automatically during traffic spikes.

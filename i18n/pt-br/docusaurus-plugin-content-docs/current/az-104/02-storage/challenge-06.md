@@ -112,8 +112,8 @@ az storage blob upload --container-name replicated-data --file repl-test.txt --n
 :::info Informação
 
 **Gerenciamento de ciclo de vida** transiciona automaticamente blobs entre camadas e os exclui com base na idade. Esta é a principal ferramenta para controlar custos de armazenamento em escala.
-:::
 
+:::
 <Tabs>
 <TabItem value="cli" label="Azure CLI">
 
@@ -240,8 +240,8 @@ az storage account management-policy show \
 :::tip Dica
 
 O acesso baseado em identidade permite que usuários se autentiquem em compartilhamentos Azure Files usando suas credenciais do Entra ID em vez de chaves de storage account. Isso é mais seguro e permite permissões por usuário/grupo no estilo NTFS.
-:::
 
+:::
 6. Criar um compartilhamento de arquivos para acesso baseado em identidade:
 
 ```bash
@@ -268,8 +268,8 @@ az storage account update \
 :::note
 
 A autenticação completa via Entra ID Kerberos para Azure Files requer configuração adicional incluindo a configuração do ticket de concessão de ticket Kerberos e a configuração de permissões no nível de compartilhamento e no nível de diretório/arquivo. Para este desafio, habilitar o sinalizador de recurso é suficiente.
-:::
 
+:::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
@@ -303,8 +303,8 @@ O acesso baseado em identidade do Azure Files usa um **modelo de permissão de d
 2. **Permissões no nível de diretório/arquivo**: Configuradas usando ACLs NTFS do Windows após montar o compartilhamento
 
 A permissão efetiva é a **interseção** de ambas as camadas | um usuário precisa de acesso tanto no nível do compartilhamento quanto no nível do diretório.
-:::
 
+:::
 ### Parte 4: Replicação de Objetos
 
 9. Configurar replicação de objetos da conta primária para a conta secundária:
@@ -375,8 +375,8 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
 :::warning Atenção
 
 A replicação de objetos é **assíncrona**. Pode levar vários minutos para os blobs aparecerem na conta de destino. Não há SLA sobre o tempo de replicação para contas padrão.
-:::
 
+:::
 ### Parte 5: Políticas de Acesso Armazenadas (Revisitadas)
 
 12. Criar políticas de acesso armazenadas para controle granular:
@@ -463,8 +463,8 @@ az storage account blob-service-properties update \
   --account-name $STORAGE_PRIMARY --resource-group $RG \
   --enable-last-access-tracking true
 ```
-:::
 
+:::
 </details>
 
 <details>

@@ -56,8 +56,8 @@ az network dns zone create \
 :::tip Dica
 
 Você não precisa ser dono do domínio para criar uma zona DNS no Azure | você só não conseguirá resolvê-lo publicamente a menos que delegue os registros NS do domínio pai.
-:::
 
+:::
 ### Tarefa 2: Adicionar Registros DNS
 
 Adicione os seguintes tipos de registro à sua zona DNS:

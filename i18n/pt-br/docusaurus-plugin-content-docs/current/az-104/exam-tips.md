@@ -35,16 +35,16 @@ Um cenário de várias páginas com 4-7 questões. Você pode navegar entre as q
 :::warning Atenção
 
 Estratégia para Estudo de Caso | Leia a aba de **requisitos** primeiro, depois o cenário. Muitas questões de estudo de caso precisam apenas de detalhes específicos | não tente memorizar tudo.
-:::
 
+:::
 ### Laboratório Ativo
 Um ambiente real do Azure Portal onde você completa tarefas. Você tem tempo limitado e um conjunto restrito de ações.
 
 :::tip Dica
 
 Estratégia para o Laboratório | Os laboratórios são avaliados pelo **estado final**, não pelos passos que você executou. Se o CLI falhar, use o Portal. Se você cometer um erro, simplesmente refaça. O avaliador verifica a configuração final.
-:::
 
+:::
 ## Gestão de Tempo
 
 | Seção | Tempo Sugerido |
@@ -85,8 +85,8 @@ Coisas que pegam as pessoas de surpresa:
 6. **Azure Advisor** mostra recomendações, mas NÃO as aplica automaticamente
 7. **Grupos de gerenciamento** podem ser aninhados em até 6 níveis de profundidade (raiz + 5 níveis)
 8. **Nomes DNS personalizados** para App Service requerem um registro CNAME ou A + verificação TXT
-:::
 
+:::
 ## Links Úteis
 
 | Recurso | Link |
