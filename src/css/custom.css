@@ -152,12 +152,22 @@
 .domain-badge--compute { background: #d6eaf8; color: #2471a3; }
 .domain-badge--networking { background: #fdebd0; color: #ca6f1e; }
 .domain-badge--monitor { background: #fadbd8; color: #c0392b; }
+.domain-badge--identity-gov { background: #e8daef; color: #6c3483; }
+.domain-badge--data { background: #d5f5e3; color: #1e8449; }
+.domain-badge--bcdr { background: #fdebd0; color: #ca6f1e; }
+.domain-badge--infra { background: #d6eaf8; color: #2471a3; }
+.domain-badge--capstone { background: #f9e79f; color: #7d6608; }
 
 [data-theme='dark'] .domain-badge--identity { background: #4a235a; color: #d7bde2; }
 [data-theme='dark'] .domain-badge--storage { background: #1e4d2b; color: #abebc6; }
 [data-theme='dark'] .domain-badge--compute { background: #1b3a5c; color: #aed6f1; }
 [data-theme='dark'] .domain-badge--networking { background: #5b3a1a; color: #f5cba7; }
 [data-theme='dark'] .domain-badge--monitor { background: #5b1a1a; color: #f5b7b1; }
+[data-theme='dark'] .domain-badge--identity-gov { background: #4a235a; color: #d7bde2; }
+[data-theme='dark'] .domain-badge--data { background: #1e4d2b; color: #abebc6; }
+[data-theme='dark'] .domain-badge--bcdr { background: #5b3a1a; color: #f5cba7; }
+[data-theme='dark'] .domain-badge--infra { background: #1b3a5c; color: #aed6f1; }
+[data-theme='dark'] .domain-badge--capstone { background: #4a3f0a; color: #f9e79f; }
 
 /* Reference table */
 .reference-table {
