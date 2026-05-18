@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 15: Backup & Recovery"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 15: Backup & Recovery
 
 :::info Estimated Time and Cost
@@ -277,15 +279,20 @@ If vault deletion fails, follow this order:
 :::
 ## Success Criteria
 
-- [ ] Recovery Services vault created
-- [ ] Custom backup policy configured (daily, 30-day retention)
-- [ ] VM backup enabled and on-demand backup triggered
-- [ ] VM restored from backup to a new VM
-- [ ] Azure Backup vault created for blob backup
-- [ ] Blob operational backup configured
-- [ ] Azure Site Recovery enabled (VM replication to secondary region)
-- [ ] Test failover executed and cleaned up
-- [ ] Backup reports configured in Backup center
-- [ ] Backup failure alerts configured
-- [ ] Break & Fix scenarios completed
-- [ ] Resources cleaned up (in correct order!)
+<SuccessChecklist
+  storageKey="az104-challenge-15"
+  items={[
+    "Recovery Services vault created",
+    "Custom backup policy configured (daily, 30-day retention)",
+    "VM backup enabled and on-demand backup triggered",
+    "VM restored from backup to a new VM",
+    "Azure Backup vault created for blob backup",
+    "Blob operational backup configured",
+    "Azure Site Recovery enabled (VM replication to secondary region)",
+    "Test failover executed and cleaned up",
+    "Backup reports configured in Backup center",
+    "Backup failure alerts configured",
+    "Break & Fix scenarios completed",
+    "Resources cleaned up (in correct order!)"
+  ]}
+/>

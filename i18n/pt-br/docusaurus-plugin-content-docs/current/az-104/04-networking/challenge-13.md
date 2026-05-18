@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 13: DNS & Load Balancing"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 13: DNS & Load Balancing
 
 :::info Tempo e Custo Estimados
@@ -266,10 +268,15 @@ az group delete --name $RG --yes --no-wait
 
 ## Critérios de Sucesso
 
-- [ ] Zona Azure DNS criada com registros A, CNAME e TXT
-- [ ] Load Balancer público Standard criado com 2 VMs no backend
-- [ ] Health probe monitorando a porta 80
-- [ ] Regra de balanceamento de carga distribuindo tráfego
-- [ ] Load balancer interno criado para serviços backend
-- [ ] Cenários de Quebre & Conserte concluídos
-- [ ] Recursos limpos
+<SuccessChecklist
+  storageKey="az104-challenge-13"
+  items={[
+    "Zona Azure DNS criada com registros A, CNAME e TXT",
+    "Load Balancer público Standard criado com 2 VMs no backend",
+    "Health probe monitorando a porta 80",
+    "Regra de balanceamento de carga distribuindo tráfego",
+    "Load balancer interno criado para serviços backend",
+    "Cenários de Quebre & Conserte concluídos",
+    "Recursos limpos"
+  ]}
+/>

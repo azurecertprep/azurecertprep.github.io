@@ -3,6 +3,8 @@ sidebar_position: 22
 title: "Desafio 22: Discos de VM & Criptografia"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 22: Discos de VM & Criptografia
 
 :::info Tempo Estimado e Custo
@@ -347,15 +349,19 @@ az disk list \
 :::
 ## Critérios de Sucesso
 
-- [ ] VM tem um disco de SO e pelo menos dois discos de dados (SKUs diferentes) anexados
-- [ ] Discos de dados estão formatados, montados e persistem entre reboots (fstab)
-- [ ] Azure Disk Encryption está habilitado em todos os volumes
-- [ ] Pelo menos dois snapshots existem (disco de SO e disco de dados)
-- [ ] Um novo disco foi criado a partir de um snapshot
-- [ ] Uma imagem personalizada de VM existe a partir de uma VM generalizada
-- [ ] Uma nova VM foi implantada com sucesso a partir da imagem personalizada
-- [ ] Um managed disk foi redimensionado e o filesystem expandido
-
+<SuccessChecklist
+  storageKey="az104-challenge-22"
+  items={[
+    "VM tem um disco de SO e pelo menos dois discos de dados (SKUs diferentes) anexados",
+    "Discos de dados estão formatados, montados e persistem entre reboots (fstab)",
+    "Azure Disk Encryption está habilitado em todos os volumes",
+    "Pelo menos dois snapshots existem (disco de SO e disco de dados)",
+    "Um novo disco foi criado a partir de um snapshot",
+    "Uma imagem personalizada de VM existe a partir de uma VM generalizada",
+    "Uma nova VM foi implantada com sucesso a partir da imagem personalizada",
+    "Um managed disk foi redimensionado e o filesystem expandido"
+  ]}
+/>
 ## Dicas
 
 <details>

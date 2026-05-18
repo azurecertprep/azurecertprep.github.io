@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 12: Network Security"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 12: Network Security
 
 :::info Estimated Time and Cost
@@ -397,16 +399,20 @@ echo "From vm-db, run: nslookup $STORAGE_NAME.blob.core.windows.net"
 
 ## Success Criteria
 
-- [ ] NSG created with HTTP/HTTPS allow rules and deny-all
-- [ ] NSG associated with the frontend subnet
-- [ ] ASGs created for web servers and database servers
-- [ ] NSG rules use ASGs as source/destination
-- [ ] Effective security rules show combined NIC + subnet rules
-- [ ] Azure Bastion deployed | VMs accessible without public IPs
-- [ ] Service endpoint enabled for Storage on the backend subnet
-- [ ] Private endpoint created for the storage account
-- [ ] DNS zone resolves storage FQDN to private IP within the VNet
-
+<SuccessChecklist
+  storageKey="az104-challenge-12"
+  items={[
+    "NSG created with HTTP/HTTPS allow rules and deny-all",
+    "NSG associated with the frontend subnet",
+    "ASGs created for web servers and database servers",
+    "NSG rules use ASGs as source/destination",
+    "Effective security rules show combined NIC + subnet rules",
+    "Azure Bastion deployed | VMs accessible without public IPs",
+    "Service endpoint enabled for Storage on the backend subnet",
+    "Private endpoint created for the storage account",
+    "DNS zone resolves storage FQDN to private IP within the VNet"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Conflicting NSG Rules

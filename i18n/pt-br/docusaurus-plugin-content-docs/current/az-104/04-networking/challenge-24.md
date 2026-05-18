@@ -3,6 +3,8 @@ sidebar_position: 24
 title: "Desafio 24: Rotas Definidas pelo Usuário & Controle de Tráfego"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 24: Rotas Definidas pelo Usuário & Controle de Tráfego
 
 :::info Tempo e Custo Estimados
@@ -330,16 +332,20 @@ az network nic show-effective-route-table \
 
 ## Critérios de Sucesso
 
-- [ ] Topologia de VNet hub-spoke criada com peering
-- [ ] VM NVA implantada com encaminhamento de IP habilitado (NIC + nível do SO)
-- [ ] Tabela de rotas criada com propagação BGP desabilitada
-- [ ] UDR para tráfego de internet (0.0.0.0/0) apontando para NVA
-- [ ] UDR para tráfego cross-VNet apontando para NVA
-- [ ] Rota black hole (próximo salto None) configurada
-- [ ] Tabela de rotas associada à sub-rede spoke
-- [ ] Rotas efetivas mostram UDRs substituindo rotas de sistema
-- [ ] Todos os tipos de próximo salto compreendidos e demonstrados
-
+<SuccessChecklist
+  storageKey="az104-challenge-24"
+  items={[
+    "Topologia de VNet hub-spoke criada com peering",
+    "VM NVA implantada com encaminhamento de IP habilitado (NIC + nível do SO)",
+    "Tabela de rotas criada com propagação BGP desabilitada",
+    "UDR para tráfego de internet (0.0.0.0/0) apontando para NVA",
+    "UDR para tráfego cross-VNet apontando para NVA",
+    "Rota black hole (próximo salto None) configurada",
+    "Tabela de rotas associada à sub-rede spoke",
+    "Rotas efetivas mostram UDRs substituindo rotas de sistema",
+    "Todos os tipos de próximo salto compreendidos e demonstrados"
+  ]}
+/>
 ## Cenários de Quebrar & Consertar
 
 ### Cenário A: Encaminhamento de IP do NVA Ausente

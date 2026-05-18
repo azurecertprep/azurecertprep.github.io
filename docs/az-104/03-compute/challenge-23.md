@@ -3,6 +3,8 @@ sidebar_position: 23
 title: "Challenge 23: App Service Advanced Configuration"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 23: App Service Advanced Configuration
 
 :::info Estimated Time and Cost
@@ -320,15 +322,19 @@ az relay namespace list --resource-group $RG -o table
 
 ## Success Criteria
 
-- [ ] App Service plan created on Standard (S1) tier or higher
-- [ ] Custom domain DNS records configured (TXT verification + CNAME)
-- [ ] HTTPS-only mode enabled with minimum TLS 1.2
-- [ ] Scheduled backup configured to storage account (daily, 30-day retention)
-- [ ] VNet integration enabled with dedicated subnet
-- [ ] Access restrictions configured (allow specific IPs, deny all others)
-- [ ] SCM site access restrictions configured separately
-- [ ] Hybrid connection concept understood
-
+<SuccessChecklist
+  storageKey="az104-challenge-23"
+  items={[
+    "App Service plan created on Standard (S1) tier or higher",
+    "Custom domain DNS records configured (TXT verification + CNAME)",
+    "HTTPS-only mode enabled with minimum TLS 1.2",
+    "Scheduled backup configured to storage account (daily, 30-day retention)",
+    "VNet integration enabled with dedicated subnet",
+    "Access restrictions configured (allow specific IPs, deny all others)",
+    "SCM site access restrictions configured separately",
+    "Hybrid connection concept understood"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Backup Fails with Storage Error

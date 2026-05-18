@@ -3,6 +3,8 @@ sidebar_position: 4
 title: "Challenge 10: Azure App Service"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 10: Azure App Service
 
 :::info Estimated Time and Cost
@@ -286,14 +288,18 @@ az webapp config access-restriction show \
 
 ## Success Criteria
 
-- [ ] App Service plan (Standard S1) created
-- [ ] Web app deployed and accessible via HTTPS
-- [ ] Staging deployment slot created and receives v2
-- [ ] Slot swap executed | production runs v2
-- [ ] Autoscale configured with CPU-based rules
-- [ ] Backup schedule configured with storage account
-- [ ] Access restrictions configured on the web app
-
+<SuccessChecklist
+  storageKey="az104-challenge-10"
+  items={[
+    "App Service plan (Standard S1) created",
+    "Web app deployed and accessible via HTTPS",
+    "Staging deployment slot created and receives v2",
+    "Slot swap executed | production runs v2",
+    "Autoscale configured with CPU-based rules",
+    "Backup schedule configured with storage account",
+    "Access restrictions configured on the web app"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Deploying to the Wrong Slot

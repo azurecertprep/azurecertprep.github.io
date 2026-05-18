@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 09: Containers in Azure"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 09: Containers in Azure
 
 :::info Estimated Time and Cost
@@ -215,13 +217,17 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 
 ## Success Criteria
 
-- [ ] ACR created and contains the `contoso-dashboard:v1` image
-- [ ] ACI running and accessible via HTTP
-- [ ] Container Apps environment created
-- [ ] Container App deployed and accessible via HTTPS
-- [ ] Scaling rules configured on Container Apps
-- [ ] Can articulate when to use ACI vs Container Apps vs AKS
-
+<SuccessChecklist
+  storageKey="az104-challenge-09"
+  items={[
+    "ACR created and contains the contoso-dashboard:v1 image",
+    "ACI running and accessible via HTTP",
+    "Container Apps environment created",
+    "Container App deployed and accessible via HTTPS",
+    "Scaling rules configured on Container Apps",
+    "Can articulate when to use ACI vs Container Apps vs AKS"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Wrong Image Name

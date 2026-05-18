@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 08: Virtual Machines & Scale Sets"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 08: Virtual Machines & Scale Sets
 
 :::info Estimated Time and Cost
@@ -258,15 +260,19 @@ az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 
 ## Success Criteria
 
-- [ ] Linux VM created with SSH key authentication
-- [ ] 128 GB data disk attached, formatted, and mounted
-- [ ] VM resized to a different SKU
-- [ ] VM moved to a different resource group
-- [ ] Availability set created with correct fault/update domains
-- [ ] VMSS running with 2 instances behind a load balancer
-- [ ] Autoscale rules configured (CPU-based scale-out and scale-in)
-- [ ] All VMs deallocated when finished
-
+<SuccessChecklist
+  storageKey="az104-challenge-08"
+  items={[
+    "Linux VM created with SSH key authentication",
+    "128 GB data disk attached, formatted, and mounted",
+    "VM resized to a different SKU",
+    "VM moved to a different resource group",
+    "Availability set created with correct fault/update domains",
+    "VMSS running with 2 instances behind a load balancer",
+    "Autoscale rules configured (CPU-based scale-out and scale-in)",
+    "All VMs deallocated when finished"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Unavailable VM Size

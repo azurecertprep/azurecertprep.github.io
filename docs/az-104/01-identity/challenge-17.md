@@ -3,6 +3,8 @@ sidebar_position: 17
 title: "Challenge 17: Management Groups & Subscriptions"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 17: Management Groups & Subscriptions
 
 :::info Estimated Time and Cost
@@ -194,13 +196,17 @@ az account management-group show \
 
 ## Success Criteria
 
-- [ ] Management group hierarchy matches the specified structure (5 groups under mg-contoso)
-- [ ] At least one subscription is placed under a management group
-- [ ] Azure Policy is assigned at the `mg-production` scope
-- [ ] RBAC role assignment exists at the `mg-contoso` scope
-- [ ] Subscription was successfully moved between management groups
-- [ ] You can query and display the full hierarchy
-
+<SuccessChecklist
+  storageKey="az104-challenge-17"
+  items={[
+    "Management group hierarchy matches the specified structure (5 groups under mg-contoso)",
+    "At least one subscription is placed under a management group",
+    "Azure Policy is assigned at the mg-production scope",
+    "RBAC role assignment exists at the mg-contoso scope",
+    "Subscription was successfully moved between management groups",
+    "You can query and display the full hierarchy"
+  ]}
+/>
 ## Hints
 
 <details>

@@ -3,6 +3,8 @@ sidebar_position: 21
 title: "Challenge 21: VM Extensions & Automation"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 21: VM Extensions & Automation
 
 :::info Estimated Time and Cost
@@ -343,15 +345,19 @@ az automation job-schedule create \
 
 ## Success Criteria
 
-- [ ] Custom Script Extension installs Nginx on the Linux VM
-- [ ] Custom Script Extension installs IIS on the Windows VM
-- [ ] External script from storage account executed via Custom Script Extension
-- [ ] Run Command successfully executes ad-hoc commands on both VMs
-- [ ] All installed extensions are visible via `az vm extension list`
-- [ ] Azure Automation Account exists with a published runbook
-- [ ] Runbook is linked to a daily schedule
-- [ ] Runbook logic correctly identifies VMs by tag
-
+<SuccessChecklist
+  storageKey="az104-challenge-21"
+  items={[
+    "Custom Script Extension installs Nginx on the Linux VM",
+    "Custom Script Extension installs IIS on the Windows VM",
+    "External script from storage account executed via Custom Script Extension",
+    "Run Command successfully executes ad-hoc commands on both VMs",
+    "All installed extensions are visible via az vm extension list",
+    "Azure Automation Account exists with a published runbook",
+    "Runbook is linked to a daily schedule",
+    "Runbook logic correctly identifies VMs by tag"
+  ]}
+/>
 ## Hints
 
 <details>

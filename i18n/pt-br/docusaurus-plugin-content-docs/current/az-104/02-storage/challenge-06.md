@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 06 | Storage Security & Lifecycle"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -436,15 +438,19 @@ az storage container policy delete \
 
 ## Critérios de Sucesso
 
-- [ ] Duas storage accounts existem em regiões diferentes com versionamento habilitado
-- [ ] Política de gerenciamento de ciclo de vida tem 4 regras: Cool após 30d, Archive após 90d, Excluir após 365d, Limpar snapshots após 90d
-- [ ] Política de ciclo de vida tem como alvo o prefixo `app-logs/`
-- [ ] Compartilhamento de arquivos `secure-share` existe com Entra ID Kerberos habilitado
-- [ ] Replicação de objetos está configurada da primária para a secundária para o container `replicated-data`
-- [ ] Replicação pode ser verificada (blob aparece no destino)
-- [ ] Políticas de acesso armazenadas criadas e testadas
-- [ ] Revogação de SAS via exclusão de política demonstrada
-
+<SuccessChecklist
+  storageKey="az104-challenge-06"
+  items={[
+    "Duas storage accounts existem em regiões diferentes com versionamento habilitado",
+    "Política de gerenciamento de ciclo de vida tem 4 regras: Cool após 30d, Archive após 90d, Excluir após 365d, Limpar snapshots após 90d",
+    "Política de ciclo de vida tem como alvo o prefixo app-logs/",
+    "Compartilhamento de arquivos secure-share existe com Entra ID Kerberos habilitado",
+    "Replicação de objetos está configurada da primária para a secundária para o container replicated-data",
+    "Replicação pode ser verificada (blob aparece no destino)",
+    "Políticas de acesso armazenadas criadas e testadas",
+    "Revogação de SAS via exclusão de política demonstrada"
+  ]}
+/>
 ## Dicas
 
 <details>

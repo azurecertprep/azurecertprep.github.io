@@ -3,6 +3,8 @@ sidebar_position: 27
 title: "Challenge 27: Log Analytics & KQL Deep Dive"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 27: Log Analytics & KQL Deep Dive
 
 :::info Estimated Time and Cost
@@ -421,16 +423,20 @@ az monitor log-analytics workspace show \
 
 ## Success Criteria
 
-- [ ] Log Analytics workspace created with appropriate SKU and retention
-- [ ] Data Collection Rules created for Linux (perf + syslog) and Windows (perf + events)
-- [ ] Azure Monitor Agent installed on both Linux and Windows VMs
-- [ ] DCR associations created (VMs linked to their respective DCRs)
-- [ ] Diagnostic settings configured for Azure resources
-- [ ] KQL queries written and tested (where, summarize, join, render)
-- [ ] Saved queries or functions created
-- [ ] Workbook created with multiple visualizations
-- [ ] Workspace daily cap and retention configured
-
+<SuccessChecklist
+  storageKey="az104-challenge-27"
+  items={[
+    "Log Analytics workspace created with appropriate SKU and retention",
+    "Data Collection Rules created for Linux (perf + syslog) and Windows (perf + events)",
+    "Azure Monitor Agent installed on both Linux and Windows VMs",
+    "DCR associations created (VMs linked to their respective DCRs)",
+    "Diagnostic settings configured for Azure resources",
+    "KQL queries written and tested (where, summarize, join, render)",
+    "Saved queries or functions created",
+    "Workbook created with multiple visualizations",
+    "Workspace daily cap and retention configured"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: No Data Appearing in Log Analytics

@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 05: Blob Storage & Azure Files"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -284,19 +286,23 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 
 ## Success Criteria
 
-- [ ] Three blob containers exist: `app-data`, `logs`, `archive`
-- [ ] Blobs uploaded with correct virtual directory structure (profiles/, 2025/01/)
-- [ ] Log blob tier changed from Hot to Cool
-- [ ] Archive blob uploaded directly to Archive tier
-- [ ] Blob soft delete enabled (14-day retention)
-- [ ] Container soft delete enabled (14-day retention)
-- [ ] Successfully deleted and recovered a blob using soft delete
-- [ ] Blob versioning enabled and multiple versions of a blob exist
-- [ ] A blob snapshot has been created
-- [ ] Azure File share `finance-share` exists with directories and files
-- [ ] File share snapshot created
-- [ ] Azure Files soft delete enabled
-
+<SuccessChecklist
+  storageKey="az104-challenge-05"
+  items={[
+    "Three blob containers exist: app-data, logs, archive",
+    "Blobs uploaded with correct virtual directory structure (profiles/, 2025/01/)",
+    "Log blob tier changed from Hot to Cool",
+    "Archive blob uploaded directly to Archive tier",
+    "Blob soft delete enabled (14-day retention)",
+    "Container soft delete enabled (14-day retention)",
+    "Successfully deleted and recovered a blob using soft delete",
+    "Blob versioning enabled and multiple versions of a blob exist",
+    "A blob snapshot has been created",
+    "Azure File share finance-share exists with directories and files",
+    "File share snapshot created",
+    "Azure Files soft delete enabled"
+  ]}
+/>
 ## Hints
 
 <details>

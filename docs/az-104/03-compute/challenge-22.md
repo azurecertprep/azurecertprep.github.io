@@ -3,6 +3,8 @@ sidebar_position: 22
 title: "Challenge 22: VM Disks & Encryption"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 22: VM Disks & Encryption
 
 :::info Estimated Time and Cost
@@ -347,15 +349,19 @@ az disk list \
 :::
 ## Success Criteria
 
-- [ ] VM has an OS disk and at least two data disks (different SKUs) attached
-- [ ] Data disks are formatted, mounted, and persist across reboots (fstab)
-- [ ] Azure Disk Encryption is enabled on all volumes
-- [ ] At least two snapshots exist (OS disk and data disk)
-- [ ] A new disk was created from a snapshot
-- [ ] A custom VM image exists from a generalized VM
-- [ ] A new VM was successfully deployed from the custom image
-- [ ] A managed disk was resized and the filesystem expanded
-
+<SuccessChecklist
+  storageKey="az104-challenge-22"
+  items={[
+    "VM has an OS disk and at least two data disks (different SKUs) attached",
+    "Data disks are formatted, mounted, and persist across reboots (fstab)",
+    "Azure Disk Encryption is enabled on all volumes",
+    "At least two snapshots exist (OS disk and data disk)",
+    "A new disk was created from a snapshot",
+    "A custom VM image exists from a generalized VM",
+    "A new VM was successfully deployed from the custom image",
+    "A managed disk was resized and the filesystem expanded"
+  ]}
+/>
 ## Hints
 
 <details>

@@ -3,6 +3,8 @@ sidebar_position: 26
 title: "Challenge 26: Network Watcher & Diagnostics"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 26: Network Watcher & Diagnostics
 
 :::info Estimated Time and Cost
@@ -409,16 +411,20 @@ az network nic list-effective-nsg \
 
 ## Success Criteria
 
-- [ ] Network Watcher enabled in the target region
-- [ ] IP Flow Verify used to test allowed/denied traffic (port 80 allowed, port 22 denied)
-- [ ] Next Hop analysis performed for internet, internal, and unreachable destinations
-- [ ] Packet capture created, traffic captured, and capture stopped
-- [ ] Connection Monitor configured for external and internal connectivity tests
-- [ ] NSG flow logs enabled with Traffic Analytics
-- [ ] Connection Troubleshoot used to verify connectivity
-- [ ] Topology view examined
-- [ ] Effective security rules reviewed for combined NIC + subnet NSG impact
-
+<SuccessChecklist
+  storageKey="az104-challenge-26"
+  items={[
+    "Network Watcher enabled in the target region",
+    "IP Flow Verify used to test allowed/denied traffic (port 80 allowed, port 22 denied)",
+    "Next Hop analysis performed for internet, internal, and unreachable destinations",
+    "Packet capture created, traffic captured, and capture stopped",
+    "Connection Monitor configured for external and internal connectivity tests",
+    "NSG flow logs enabled with Traffic Analytics",
+    "Connection Troubleshoot used to verify connectivity",
+    "Topology view examined",
+    "Effective security rules reviewed for combined NIC + subnet NSG impact"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: VM Cannot Reach Internet

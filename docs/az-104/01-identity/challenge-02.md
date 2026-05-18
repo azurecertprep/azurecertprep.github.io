@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 02: RBAC & Access Management"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -95,14 +97,18 @@ az group create --name rg-rbac-challenge --location eastus
 
 ## Success Criteria
 
-- [ ] Can explain the difference between the 4 fundamental built-in roles
-- [ ] Alice has Reader role at subscription scope
-- [ ] IT-Team group has Contributor role at resource group scope
-- [ ] Bob has Virtual Machine Contributor role at resource group scope
-- [ ] Custom role `VM-Reader` exists with read-only VM permissions
-- [ ] Carol has the `VM-Reader` custom role assigned
-- [ ] Can list and interpret role assignments using CLI or Portal
-
+<SuccessChecklist
+  storageKey="az104-challenge-02"
+  items={[
+    "Can explain the difference between the 4 fundamental built-in roles",
+    "Alice has Reader role at subscription scope",
+    "IT-Team group has Contributor role at resource group scope",
+    "Bob has Virtual Machine Contributor role at resource group scope",
+    "Custom role VM-Reader exists with read-only VM permissions",
+    "Carol has the VM-Reader custom role assigned",
+    "Can list and interpret role assignments using CLI or Portal"
+  ]}
+/>
 ## Hints
 
 <details>

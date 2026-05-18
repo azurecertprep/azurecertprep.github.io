@@ -3,6 +3,8 @@ sidebar_position: 23
 title: "Desafio 23: Configuração Avançada do App Service"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 23: Configuração Avançada do App Service
 
 :::info Tempo e Custo Estimados
@@ -320,15 +322,19 @@ az relay namespace list --resource-group $RG -o table
 
 ## Critérios de Sucesso
 
-- [ ] Plano do App Service criado no tier Standard (S1) ou superior
-- [ ] Registros DNS de domínio personalizado configurados (verificação TXT + CNAME)
-- [ ] Modo somente HTTPS habilitado com TLS mínimo 1.2
-- [ ] Backup agendado configurado para conta de armazenamento (diário, retenção de 30 dias)
-- [ ] Integração com VNet habilitada com sub-rede dedicada
-- [ ] Restrições de acesso configuradas (permitir IPs específicos, negar todos os outros)
-- [ ] Restrições de acesso do site SCM configuradas separadamente
-- [ ] Conceito de Hybrid Connection compreendido
-
+<SuccessChecklist
+  storageKey="az104-challenge-23"
+  items={[
+    "Plano do App Service criado no tier Standard (S1) ou superior",
+    "Registros DNS de domínio personalizado configurados (verificação TXT + CNAME)",
+    "Modo somente HTTPS habilitado com TLS mínimo 1.2",
+    "Backup agendado configurado para conta de armazenamento (diário, retenção de 30 dias)",
+    "Integração com VNet habilitada com sub-rede dedicada",
+    "Restrições de acesso configuradas (permitir IPs específicos, negar todos os outros)",
+    "Restrições de acesso do site SCM configuradas separadamente",
+    "Conceito de Hybrid Connection compreendido"
+  ]}
+/>
 ## Cenários de Quebrar & Consertar
 
 ### Cenário A: Backup Falha com Erro de Armazenamento

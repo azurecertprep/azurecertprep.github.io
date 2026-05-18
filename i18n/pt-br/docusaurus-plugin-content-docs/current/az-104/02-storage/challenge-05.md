@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 05 | Blob Storage & Azure Files"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -284,19 +286,23 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 
 ## Critérios de Sucesso
 
-- [ ] Três containers de blob existem: `app-data`, `logs`, `archive`
-- [ ] Blobs enviados com estrutura de diretório virtual correta (profiles/, 2025/01/)
-- [ ] Camada do blob de log alterada de Hot para Cool
-- [ ] Blob de arquivo enviado diretamente na camada Archive
-- [ ] Exclusão reversível de blob habilitada (retenção de 14 dias)
-- [ ] Exclusão reversível de container habilitada (retenção de 14 dias)
-- [ ] Blob excluído e recuperado com sucesso usando exclusão reversível
-- [ ] Versionamento de blob habilitado e múltiplas versões de um blob existem
-- [ ] Um snapshot de blob foi criado
-- [ ] Compartilhamento Azure Files `finance-share` existe com diretórios e arquivos
-- [ ] Snapshot de compartilhamento de arquivos criado
-- [ ] Exclusão reversível do Azure Files habilitada
-
+<SuccessChecklist
+  storageKey="az104-challenge-05"
+  items={[
+    "Três containers de blob existem: app-data, logs, archive",
+    "Blobs enviados com estrutura de diretório virtual correta (profiles/, 2025/01/)",
+    "Camada do blob de log alterada de Hot para Cool",
+    "Blob de arquivo enviado diretamente na camada Archive",
+    "Exclusão reversível de blob habilitada (retenção de 14 dias)",
+    "Exclusão reversível de container habilitada (retenção de 14 dias)",
+    "Blob excluído e recuperado com sucesso usando exclusão reversível",
+    "Versionamento de blob habilitado e múltiplas versões de um blob existem",
+    "Um snapshot de blob foi criado",
+    "Compartilhamento Azure Files finance-share existe com diretórios e arquivos",
+    "Snapshot de compartilhamento de arquivos criado",
+    "Exclusão reversível do Azure Files habilitada"
+  ]}
+/>
 ## Dicas
 
 <details>

@@ -3,6 +3,8 @@ sidebar_position: 19
 title: "Desafio 19: AzCopy & Migração de Armazenamento"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 19: AzCopy & Migração de Armazenamento
 
 :::info Tempo Estimado e Custo
@@ -250,15 +252,19 @@ azcopy env
 
 ## Critérios de Sucesso
 
-- [ ] Duas contas de armazenamento existem em regiões diferentes
-- [ ] AzCopy está instalado e autenticado
-- [ ] Blobs foram copiados entre contêineres na mesma conta
-- [ ] Blobs foram copiados entre contas usando tokens SAS
-- [ ] Operação de sync detectou e copiou apenas arquivos novos/modificados
-- [ ] Benchmark foi concluído e métricas de throughput foram observadas
-- [ ] Filtragem baseada em padrões (include/exclude) foi usada com sucesso
-- [ ] Histórico de jobs do AzCopy mostra transferências concluídas
-
+<SuccessChecklist
+  storageKey="az104-challenge-19"
+  items={[
+    "Duas contas de armazenamento existem em regiões diferentes",
+    "AzCopy está instalado e autenticado",
+    "Blobs foram copiados entre contêineres na mesma conta",
+    "Blobs foram copiados entre contas usando tokens SAS",
+    "Operação de sync detectou e copiou apenas arquivos novos/modificados",
+    "Benchmark foi concluído e métricas de throughput foram observadas",
+    "Filtragem baseada em padrões (include/exclude) foi usada com sucesso",
+    "Histórico de jobs do AzCopy mostra transferências concluídas"
+  ]}
+/>
 ## Dicas
 
 <details>

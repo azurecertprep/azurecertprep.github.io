@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 02 | RBAC & Access Management"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -95,14 +97,18 @@ az group create --name rg-rbac-challenge --location eastus
 
 ## Critérios de Sucesso
 
-- [ ] Consegue explicar a diferença entre as 4 funções internas fundamentais
-- [ ] Alice tem a função Reader no escopo da assinatura
-- [ ] O grupo IT-Team tem a função Contributor no escopo do grupo de recursos
-- [ ] Bob tem a função Virtual Machine Contributor no escopo do grupo de recursos
-- [ ] A função personalizada `VM-Reader` existe com permissões somente leitura para VMs
-- [ ] Carol tem a função personalizada `VM-Reader` atribuída
-- [ ] Consegue listar e interpretar atribuições de função usando CLI ou Portal
-
+<SuccessChecklist
+  storageKey="az104-challenge-02"
+  items={[
+    "Consegue explicar a diferença entre as 4 funções internas fundamentais",
+    "Alice tem a função Reader no escopo da assinatura",
+    "O grupo IT-Team tem a função Contributor no escopo do grupo de recursos",
+    "Bob tem a função Virtual Machine Contributor no escopo do grupo de recursos",
+    "A função personalizada VM-Reader existe com permissões somente leitura para VMs",
+    "Carol tem a função personalizada VM-Reader atribuída",
+    "Consegue listar e interpretar atribuições de função usando CLI ou Portal"
+  ]}
+/>
 ## Dicas
 
 <details>

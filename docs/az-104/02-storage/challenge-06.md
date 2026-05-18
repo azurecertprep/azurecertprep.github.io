@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 06: Storage Security & Lifecycle"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -436,15 +438,19 @@ az storage container policy delete \
 
 ## Success Criteria
 
-- [ ] Two storage accounts exist in different regions with versioning enabled
-- [ ] Lifecycle management policy has 4 rules: Cool after 30d, Archive after 90d, Delete after 365d, Cleanup snapshots after 90d
-- [ ] Lifecycle policy targets the `app-logs/` prefix
-- [ ] File share `secure-share` exists with Entra ID Kerberos enabled
-- [ ] Object replication is configured from primary to secondary for `replicated-data` container
-- [ ] Replication can be verified (blob appears in destination)
-- [ ] Stored access policies created and tested
-- [ ] SAS revocation via policy deletion demonstrated
-
+<SuccessChecklist
+  storageKey="az104-challenge-06"
+  items={[
+    "Two storage accounts exist in different regions with versioning enabled",
+    "Lifecycle management policy has 4 rules: Cool after 30d, Archive after 90d, Delete after 365d, Cleanup snapshots after 90d",
+    "Lifecycle policy targets the app-logs/ prefix",
+    "File share secure-share exists with Entra ID Kerberos enabled",
+    "Object replication is configured from primary to secondary for replicated-data container",
+    "Replication can be verified (blob appears in destination)",
+    "Stored access policies created and tested",
+    "SAS revocation via policy deletion demonstrated"
+  ]}
+/>
 ## Hints
 
 <details>

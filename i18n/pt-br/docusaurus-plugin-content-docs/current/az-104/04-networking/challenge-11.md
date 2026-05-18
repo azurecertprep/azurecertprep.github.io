@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 11 | Virtual Networks & Subnets"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 11: Virtual Networks & Subnets
 
 :::info Tempo Estimado & Custo
@@ -252,14 +254,18 @@ az network nic show-effective-route-table \
 
 ## Critérios de Sucesso
 
-- [ ] VNet Hub (10.0.0.0/16) com subnets frontend e backend
-- [ ] VNet Spoke (10.1.0.0/16) com subnet de workloads
-- [ ] VNet peering bidirecional mostrando status "Connected"
-- [ ] VMs conseguem fazer ping entre si por IPs privados através do peering
-- [ ] IP público estático criado
-- [ ] UDR força o tráfego spoke-para-hub a passar por um IP de appliance virtual
-- [ ] Network Watcher IP flow verify e next hop retornam resultados esperados
-
+<SuccessChecklist
+  storageKey="az104-challenge-11"
+  items={[
+    "VNet Hub (10.0.0.0/16) com subnets frontend e backend",
+    "VNet Spoke (10.1.0.0/16) com subnet de workloads",
+    "VNet peering bidirecional mostrando status \"Connected\"",
+    "VMs conseguem fazer ping entre si por IPs privados através do peering",
+    "IP público estático criado",
+    "UDR força o tráfego spoke-para-hub a passar por um IP de appliance virtual",
+    "Network Watcher IP flow verify e next hop retornam resultados esperados"
+  ]}
+/>
 ## Cenários de Quebre & Conserte
 
 ### Cenário A: Espaços de Endereço Sobrepostos

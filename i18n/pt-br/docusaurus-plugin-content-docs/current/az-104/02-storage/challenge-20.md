@@ -3,6 +3,8 @@ sidebar_position: 20
 title: "Desafio 20: Criptografia de Armazenamento & Proteção de Dados"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 20: Criptografia de Armazenamento & Proteção de Dados
 
 :::info Tempo Estimado e Custo
@@ -277,14 +279,18 @@ az storage account show \
 
 ## Critérios de Sucesso
 
-- [ ] Conta de armazenamento tem criptografia de infraestrutura (criptografia dupla) habilitada
-- [ ] Azure Key Vault existe com uma chave RSA para criptografia
-- [ ] Conta de armazenamento usa chaves gerenciadas pelo cliente (CMK) do Key Vault
-- [ ] Política de imutabilidade baseada em tempo (30 dias) está definida no contêiner regulatory-data
-- [ ] Retenção legal está aplicada no contêiner litigation-docs
-- [ ] Exclusão de blob falha em contêineres com retenção legal ativa ou retenção não expirada
-- [ ] Rotação de chave foi realizada e verificada
-
+<SuccessChecklist
+  storageKey="az104-challenge-20"
+  items={[
+    "Conta de armazenamento tem criptografia de infraestrutura (criptografia dupla) habilitada",
+    "Azure Key Vault existe com uma chave RSA para criptografia",
+    "Conta de armazenamento usa chaves gerenciadas pelo cliente (CMK) do Key Vault",
+    "Política de imutabilidade baseada em tempo (30 dias) está definida no contêiner regulatory-data",
+    "Retenção legal está aplicada no contêiner litigation-docs",
+    "Exclusão de blob falha em contêineres com retenção legal ativa ou retenção não expirada",
+    "Rotação de chave foi realizada e verificada"
+  ]}
+/>
 ## Dicas
 
 <details>

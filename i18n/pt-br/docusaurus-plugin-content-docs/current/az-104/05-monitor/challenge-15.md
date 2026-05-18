@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 15: Backup & Recovery"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 15: Backup & Recovery
 
 :::info Tempo e Custo Estimados
@@ -277,15 +279,20 @@ Se a exclusão do vault falhar, siga esta ordem:
 :::
 ## Critérios de Sucesso
 
-- [ ] Recovery Services vault criado
-- [ ] Política de backup personalizada configurada (diária, retenção de 30 dias)
-- [ ] Backup de VM habilitado e backup sob demanda acionado
-- [ ] VM restaurada a partir do backup para uma nova VM
-- [ ] Azure Backup vault criado para backup de blob
-- [ ] Backup operacional de blob configurado
-- [ ] Azure Site Recovery habilitado (replicação de VM para região secundária)
-- [ ] Test failover executado e limpo
-- [ ] Relatórios de backup configurados no Backup center
-- [ ] Alertas de falha de backup configurados
-- [ ] Cenários de Quebre & Conserte concluídos
-- [ ] Recursos limpos (na ordem correta!)
+<SuccessChecklist
+  storageKey="az104-challenge-15"
+  items={[
+    "Recovery Services vault criado",
+    "Política de backup personalizada configurada (diária, retenção de 30 dias)",
+    "Backup de VM habilitado e backup sob demanda acionado",
+    "VM restaurada a partir do backup para uma nova VM",
+    "Azure Backup vault criado para backup de blob",
+    "Backup operacional de blob configurado",
+    "Azure Site Recovery habilitado (replicação de VM para região secundária)",
+    "Test failover executado e limpo",
+    "Relatórios de backup configurados no Backup center",
+    "Alertas de falha de backup configurados",
+    "Cenários de Quebre & Conserte concluídos",
+    "Recursos limpos (na ordem correta!)"
+  ]}
+/>

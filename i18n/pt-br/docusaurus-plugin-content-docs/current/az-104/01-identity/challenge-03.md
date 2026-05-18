@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 03 | Azure Policy & Governance"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -169,16 +171,20 @@ Alertas de orçamento via CLI requerem configuração adicional para limites de 
 
 ## Critérios de Sucesso
 
-- [ ] Dois grupos de recursos existem com tags adequadas (Environment, CostCenter, Owner)
-- [ ] Política "Require CostCenter tag" está atribuída ao `rg-policy-prod` com efeito Deny
-- [ ] Implantar um recurso sem a tag falha no `rg-policy-prod`
-- [ ] Implantar um recurso com a tag tem sucesso
-- [ ] Política de localizações permitidas restringe implantações para East US e West US 2
-- [ ] Iniciativa de política `Contoso-Governance` foi criada com 3 políticas e atribuída ao `rg-policy-dev`
-- [ ] Bloqueio CanNotDelete existe no `rg-policy-prod`
-- [ ] Tentativa de excluir o grupo de recursos bloqueado falha
-- [ ] Recomendações do Azure Advisor foram revisadas
-
+<SuccessChecklist
+  storageKey="az104-challenge-03"
+  items={[
+    "Dois grupos de recursos existem com tags adequadas (Environment, CostCenter, Owner)",
+    "Política \"Require CostCenter tag\" está atribuída ao rg-policy-prod com efeito Deny",
+    "Implantar um recurso sem a tag falha no rg-policy-prod",
+    "Implantar um recurso com a tag tem sucesso",
+    "Política de localizações permitidas restringe implantações para East US e West US 2",
+    "Iniciativa de política Contoso-Governance foi criada com 3 políticas e atribuída ao rg-policy-dev",
+    "Bloqueio CanNotDelete existe no rg-policy-prod",
+    "Tentativa de excluir o grupo de recursos bloqueado falha",
+    "Recomendações do Azure Advisor foram revisadas"
+  ]}
+/>
 ## Dicas
 
 <details>

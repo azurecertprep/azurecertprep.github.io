@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 01: Entra ID: Users & Groups"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 01: Entra ID: Users & Groups
 
 :::info Estimated Time and Cost
@@ -75,15 +77,19 @@ Your mission is to:
 
 ## Success Criteria
 
-- [ ] 3 internal users exist with correct display names, departments, and job titles
-- [ ] Alice has a temporary password requiring change on first login
-- [ ] 3 security groups exist with correct membership
-- [ ] `All-Employees` uses dynamic membership (bonus) or static membership
-- [ ] Bob's usage location is set to "US"
-- [ ] Carol's account is disabled
-- [ ] 1 external (guest) user has been invited
-- [ ] SSPR is enabled for the IT-Team group
-
+<SuccessChecklist
+  storageKey="az104-challenge-01"
+  items={[
+    "3 internal users exist with correct display names, departments, and job titles",
+    "Alice has a temporary password requiring change on first login",
+    "3 security groups exist with correct membership",
+    "All-Employees uses dynamic membership (bonus) or static membership",
+    "Bob's usage location is set to \"US\"",
+    "Carol's account is disabled",
+    "1 external (guest) user has been invited",
+    "SSPR is enabled for the IT-Team group"
+  ]}
+/>
 ## Hints
 
 <details>

@@ -3,6 +3,8 @@ sidebar_position: 28
 title: "Desafio 28: Azure Advisor & Service Health"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 28: Azure Advisor & Service Health
 
 :::info Tempo e Custo Estimados
@@ -346,16 +348,20 @@ az advisor recommendation list --category Cost -o table
 
 ## Critérios de Sucesso
 
-- [ ] Recomendações do Advisor revisadas em todas as cinco categorias
-- [ ] Advisor Score visualizado e compreendido
-- [ ] Pelo menos uma recomendação suprimida/adiada com motivo
-- [ ] Alerta do Advisor configurado para novas recomendações
-- [ ] Alertas de Service Health configurados para: problemas de serviço, manutenção planejada e avisos de saúde
-- [ ] Resource Health verificado para recursos específicos
-- [ ] Action groups criados com notificações por email (e opcionalmente SMS/webhook)
-- [ ] Painel de Service Health explorado (problemas, manutenção, avisos)
-- [ ] Pelo menos uma recomendação do Advisor implementada ou reconhecida
-
+<SuccessChecklist
+  storageKey="az104-challenge-28"
+  items={[
+    "Recomendações do Advisor revisadas em todas as cinco categorias",
+    "Advisor Score visualizado e compreendido",
+    "Pelo menos uma recomendação suprimida/adiada com motivo",
+    "Alerta do Advisor configurado para novas recomendações",
+    "Alertas de Service Health configurados para: problemas de serviço, manutenção planejada e avisos de saúde",
+    "Resource Health verificado para recursos específicos",
+    "Action groups criados com notificações por email (e opcionalmente SMS/webhook)",
+    "Painel de Service Health explorado (problemas, manutenção, avisos)",
+    "Pelo menos uma recomendação do Advisor implementada ou reconhecida"
+  ]}
+/>
 ## Cenários de Quebrar & Consertar
 
 ### Cenário A: Alerta Não Disparando

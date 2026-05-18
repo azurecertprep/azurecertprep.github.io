@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 07: ARM Templates & Bicep"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 07: ARM Templates & Bicep
 
 :::info Estimated Time and Cost
@@ -251,12 +253,16 @@ az deployment group what-if \
 
 ## Success Criteria
 
-- [ ] ARM template deploys a storage account with tags
-- [ ] Exported template matches the deployed resources
-- [ ] ARM template successfully converted to Bicep
-- [ ] Bicep file deploys a storage account **and** blob container
-- [ ] What-if shows expected changes without deploying
-
+<SuccessChecklist
+  storageKey="az104-challenge-07"
+  items={[
+    "ARM template deploys a storage account with tags",
+    "Exported template matches the deployed resources",
+    "ARM template successfully converted to Bicep",
+    "Bicep file deploys a storage account **and** blob container",
+    "What-if shows expected changes without deploying"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Syntax Error

@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 09 | Containers in Azure"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 09: Contêineres no Azure
 
 :::info Informação
@@ -215,13 +217,17 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 
 ## Critérios de Sucesso
 
-- [ ] ACR criado e contém a imagem `contoso-dashboard:v1`
-- [ ] ACI em execução e acessível via HTTP
-- [ ] Ambiente de Container Apps criado
-- [ ] Container App implantado e acessível via HTTPS
-- [ ] Regras de escalabilidade configuradas no Container Apps
-- [ ] Consegue articular quando usar ACI vs Container Apps vs AKS
-
+<SuccessChecklist
+  storageKey="az104-challenge-09"
+  items={[
+    "ACR criado e contém a imagem contoso-dashboard:v1",
+    "ACI em execução e acessível via HTTP",
+    "Ambiente de Container Apps criado",
+    "Container App implantado e acessível via HTTPS",
+    "Regras de escalabilidade configuradas no Container Apps",
+    "Consegue articular quando usar ACI vs Container Apps vs AKS"
+  ]}
+/>
 ## Cenários Quebre & Conserte
 
 ### Cenário A: Nome de Imagem Incorreto

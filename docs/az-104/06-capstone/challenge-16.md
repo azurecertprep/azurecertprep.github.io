@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 16: Capstone: Day in the Life of an Azure Admin"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 16: Capstone: Day in the Life of an Azure Admin
 
 :::info Estimated Time and Cost
@@ -429,14 +431,18 @@ done
 
 ## Success Criteria
 
-- [ ] **Ticket 1** | Identity Crisis resolved (account enabled, password reset, group membership fixed)
-- [ ] **Ticket 2** | Storage SOS resolved (new SAS token or firewall rules updated)
-- [ ] **Ticket 3** | VM Down resolved (VM started, auto-shutdown removed, root cause identified)
-- [ ] **Ticket 4** | Network Lockout resolved (NSG rule added, traffic flowing)
-- [ ] **Ticket 5** | Alerts fixed (action group corrected, alert enabled, backup alerts configured)
-- [ ] Each ticket: diagnosis steps documented, root cause identified, fix applied
-- [ ] All resource groups cleaned up
-
+<SuccessChecklist
+  storageKey="az104-challenge-16"
+  items={[
+    "**Ticket 1** | Identity Crisis resolved (account enabled, password reset, group membership fixed)",
+    "**Ticket 2** | Storage SOS resolved (new SAS token or firewall rules updated)",
+    "**Ticket 3** | VM Down resolved (VM started, auto-shutdown removed, root cause identified)",
+    "**Ticket 4** | Network Lockout resolved (NSG rule added, traffic flowing)",
+    "**Ticket 5** | Alerts fixed (action group corrected, alert enabled, backup alerts configured)",
+    "Each ticket: diagnosis steps documented, root cause identified, fix applied",
+    "All resource groups cleaned up"
+  ]}
+/>
 ---
 
 :::tip You've Completed the AZ-104 Challenge Series!

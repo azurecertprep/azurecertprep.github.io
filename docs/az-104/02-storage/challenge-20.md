@@ -3,6 +3,8 @@ sidebar_position: 20
 title: "Challenge 20: Storage Encryption & Data Protection"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 20: Storage Encryption & Data Protection
 
 :::info Estimated Time and Cost
@@ -277,14 +279,18 @@ az storage account show \
 
 ## Success Criteria
 
-- [ ] Storage account has infrastructure encryption (double encryption) enabled
-- [ ] Azure Key Vault exists with an RSA key for encryption
-- [ ] Storage account uses customer-managed keys (CMK) from Key Vault
-- [ ] A time-based immutability policy (30 days) is set on the regulatory-data container
-- [ ] Legal hold is applied to the litigation-docs container
-- [ ] Blob deletion fails on containers with active legal hold or unexpired retention
-- [ ] Key rotation was performed and verified
-
+<SuccessChecklist
+  storageKey="az104-challenge-20"
+  items={[
+    "Storage account has infrastructure encryption (double encryption) enabled",
+    "Azure Key Vault exists with an RSA key for encryption",
+    "Storage account uses customer-managed keys (CMK) from Key Vault",
+    "A time-based immutability policy (30 days) is set on the regulatory-data container",
+    "Legal hold is applied to the litigation-docs container",
+    "Blob deletion fails on containers with active legal hold or unexpired retention",
+    "Key rotation was performed and verified"
+  ]}
+/>
 ## Hints
 
 <details>

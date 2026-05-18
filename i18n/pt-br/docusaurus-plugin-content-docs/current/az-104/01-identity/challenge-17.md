@@ -3,6 +3,8 @@ sidebar_position: 17
 title: "Desafio 17: Grupos de Gerenciamento & Assinaturas"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 17: Grupos de Gerenciamento & Assinaturas
 
 :::info Tempo Estimado e Custo
@@ -194,13 +196,17 @@ az account management-group show \
 
 ## Critérios de Sucesso
 
-- [ ] A hierarquia de grupos de gerenciamento corresponde à estrutura especificada (5 grupos sob mg-contoso)
-- [ ] Pelo menos uma assinatura está posicionada dentro de um grupo de gerenciamento
-- [ ] Azure Policy está atribuída no escopo `mg-production`
-- [ ] Atribuição de função RBAC existe no escopo `mg-contoso`
-- [ ] A assinatura foi movida com sucesso entre grupos de gerenciamento
-- [ ] Você consegue consultar e exibir a hierarquia completa
-
+<SuccessChecklist
+  storageKey="az104-challenge-17"
+  items={[
+    "A hierarquia de grupos de gerenciamento corresponde à estrutura especificada (5 grupos sob mg-contoso)",
+    "Pelo menos uma assinatura está posicionada dentro de um grupo de gerenciamento",
+    "Azure Policy está atribuída no escopo mg-production",
+    "Atribuição de função RBAC existe no escopo mg-contoso",
+    "A assinatura foi movida com sucesso entre grupos de gerenciamento",
+    "Você consegue consultar e exibir a hierarquia completa"
+  ]}
+/>
 ## Dicas
 
 <details>

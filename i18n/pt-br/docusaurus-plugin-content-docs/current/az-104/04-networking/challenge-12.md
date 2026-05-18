@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 12 | Network Security"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 12: Network Security
 
 :::info Tempo Estimado & Custo
@@ -397,16 +399,20 @@ echo "From vm-db, run: nslookup $STORAGE_NAME.blob.core.windows.net"
 
 ## Critérios de Sucesso
 
-- [ ] NSG criado com regras de permissão HTTP/HTTPS e deny-all
-- [ ] NSG associado à subnet frontend
-- [ ] ASGs criados para servidores web e servidores de banco de dados
-- [ ] Regras NSG usam ASGs como origem/destino
-- [ ] Regras de segurança efetivas mostram regras combinadas de NIC + subnet
-- [ ] Azure Bastion implantado | VMs acessíveis sem IPs públicos
-- [ ] Service endpoint habilitado para Storage na subnet backend
-- [ ] Private endpoint criado para a conta de armazenamento
-- [ ] Zona DNS resolve o FQDN do armazenamento para IP privado dentro da VNet
-
+<SuccessChecklist
+  storageKey="az104-challenge-12"
+  items={[
+    "NSG criado com regras de permissão HTTP/HTTPS e deny-all",
+    "NSG associado à subnet frontend",
+    "ASGs criados para servidores web e servidores de banco de dados",
+    "Regras NSG usam ASGs como origem/destino",
+    "Regras de segurança efetivas mostram regras combinadas de NIC + subnet",
+    "Azure Bastion implantado | VMs acessíveis sem IPs públicos",
+    "Service endpoint habilitado para Storage na subnet backend",
+    "Private endpoint criado para a conta de armazenamento",
+    "Zona DNS resolve o FQDN do armazenamento para IP privado dentro da VNet"
+  ]}
+/>
 ## Cenários de Quebre & Conserte
 
 ### Cenário A: Regras NSG Conflitantes

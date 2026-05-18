@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 16: Capstone | Day in the Life of an Azure Admin"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 16: Capstone | Um Dia na Vida de um Administrador Azure
 
 :::info Tempo e Custo Estimados
@@ -429,14 +431,18 @@ done
 
 ## Critérios de Sucesso
 
-- [ ] **Ticket 1** | Crise de Identidade resolvida (conta habilitada, senha redefinida, associação ao grupo corrigida)
-- [ ] **Ticket 2** | SOS de Storage resolvido (novo token SAS ou regras de firewall atualizadas)
-- [ ] **Ticket 3** | VM Fora do Ar resolvida (VM iniciada, desligamento automático removido, causa raiz identificada)
-- [ ] **Ticket 4** | Bloqueio de Rede resolvido (regra NSG adicionada, tráfego fluindo)
-- [ ] **Ticket 5** | Alertas corrigidos (grupo de ação corrigido, alerta habilitado, alertas de backup configurados)
-- [ ] Cada ticket: passos de diagnóstico documentados, causa raiz identificada, correção aplicada
-- [ ] Todos os grupos de recursos limpos
-
+<SuccessChecklist
+  storageKey="az104-challenge-16"
+  items={[
+    "**Ticket 1** | Crise de Identidade resolvida (conta habilitada, senha redefinida, associação ao grupo corrigida)",
+    "**Ticket 2** | SOS de Storage resolvido (novo token SAS ou regras de firewall atualizadas)",
+    "**Ticket 3** | VM Fora do Ar resolvida (VM iniciada, desligamento automático removido, causa raiz identificada)",
+    "**Ticket 4** | Bloqueio de Rede resolvido (regra NSG adicionada, tráfego fluindo)",
+    "**Ticket 5** | Alertas corrigidos (grupo de ação corrigido, alerta habilitado, alertas de backup configurados)",
+    "Cada ticket: passos de diagnóstico documentados, causa raiz identificada, correção aplicada",
+    "Todos os grupos de recursos limpos"
+  ]}
+/>
 ---
 
 :::tip Dica Você Completou a Série de Desafios AZ-104!

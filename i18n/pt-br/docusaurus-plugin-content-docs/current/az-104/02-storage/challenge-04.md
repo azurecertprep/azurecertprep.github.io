@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 04 | Storage Accounts & Access"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -239,15 +241,19 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 
 ## Critérios de Sucesso
 
-- [ ] Storage account existe com tipo StorageV2, camada de acesso Hot, TLS 1.2
-- [ ] Redundância foi alterada de LRS para GRS
-- [ ] Container de blob `testcontainer` existe com um arquivo enviado
-- [ ] Tokens Account SAS e Service SAS foram gerados
-- [ ] Política de acesso armazenada `ReadPolicy` existe no container
-- [ ] Firewall de storage está configurado com Deny padrão e seu IP permitido
-- [ ] Chave de acesso foi rotacionada (key1 regenerada)
-- [ ] AzCopy foi usado para fazer upload de arquivos
-
+<SuccessChecklist
+  storageKey="az104-challenge-04"
+  items={[
+    "Storage account existe com tipo StorageV2, camada de acesso Hot, TLS 1.2",
+    "Redundância foi alterada de LRS para GRS",
+    "Container de blob testcontainer existe com um arquivo enviado",
+    "Tokens Account SAS e Service SAS foram gerados",
+    "Política de acesso armazenada ReadPolicy existe no container",
+    "Firewall de storage está configurado com Deny padrão e seu IP permitido",
+    "Chave de acesso foi rotacionada (key1 regenerada)",
+    "AzCopy foi usado para fazer upload de arquivos"
+  ]}
+/>
 ## Dicas
 
 <details>

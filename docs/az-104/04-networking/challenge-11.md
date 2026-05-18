@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 11: Virtual Networks & Subnets"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 11: Virtual Networks & Subnets
 
 :::info Estimated Time and Cost
@@ -252,14 +254,18 @@ az network nic show-effective-route-table \
 
 ## Success Criteria
 
-- [ ] Hub VNet (10.0.0.0/16) with frontend and backend subnets
-- [ ] Spoke VNet (10.1.0.0/16) with workloads subnet
-- [ ] Bidirectional VNet peering showing "Connected" status
-- [ ] VMs can ping each other over private IPs through peering
-- [ ] Static public IP created
-- [ ] UDR forces spoke-to-hub traffic through a virtual appliance IP
-- [ ] Network Watcher IP flow verify and next hop return expected results
-
+<SuccessChecklist
+  storageKey="az104-challenge-11"
+  items={[
+    "Hub VNet (10.0.0.0/16) with frontend and backend subnets",
+    "Spoke VNet (10.1.0.0/16) with workloads subnet",
+    "Bidirectional VNet peering showing \"Connected\" status",
+    "VMs can ping each other over private IPs through peering",
+    "Static public IP created",
+    "UDR forces spoke-to-hub traffic through a virtual appliance IP",
+    "Network Watcher IP flow verify and next hop return expected results"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Overlapping Address Spaces

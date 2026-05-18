@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 01 | Entra ID: Users & Groups"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 01: Entra ID: Usuários & Grupos
 
 :::info Tempo e Custo Estimados
@@ -75,15 +77,19 @@ Sua missão é:
 
 ## Critérios de Sucesso
 
-- [ ] 3 usuários internos existem com nomes de exibição, departamentos e cargos corretos
-- [ ] Alice tem uma senha temporária que exige alteração no primeiro login
-- [ ] 3 grupos de segurança existem com a associação correta
-- [ ] `All-Employees` usa associação dinâmica (bônus) ou associação estática
-- [ ] A localização de uso do Bob está definida como "US"
-- [ ] A conta da Carol está desabilitada
-- [ ] 1 usuário externo (convidado) foi convidado
-- [ ] SSPR está habilitado para o grupo IT-Team
-
+<SuccessChecklist
+  storageKey="az104-challenge-01"
+  items={[
+    "3 usuários internos existem com nomes de exibição, departamentos e cargos corretos",
+    "Alice tem uma senha temporária que exige alteração no primeiro login",
+    "3 grupos de segurança existem com a associação correta",
+    "All-Employees usa associação dinâmica (bônus) ou associação estática",
+    "A localização de uso do Bob está definida como \"US\"",
+    "A conta da Carol está desabilitada",
+    "1 usuário externo (convidado) foi convidado",
+    "SSPR está habilitado para o grupo IT-Team"
+  ]}
+/>
 ## Dicas
 
 <details>

@@ -3,6 +3,8 @@ sidebar_position: 2
 title: "Challenge 08 | Virtual Machines & Scale Sets"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 08: Virtual Machines & Scale Sets
 
 :::info Informação
@@ -258,15 +260,19 @@ az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 
 ## Critérios de Sucesso
 
-- [ ] VM Linux criada com autenticação por chave SSH
-- [ ] Disco de dados de 128 GB anexado, formatado e montado
-- [ ] VM redimensionada para um SKU diferente
-- [ ] VM movida para um grupo de recursos diferente
-- [ ] Availability set criado com domínios de falha/atualização corretos
-- [ ] VMSS em execução com 2 instâncias atrás de um load balancer
-- [ ] Regras de autoscale configuradas (scale-out e scale-in baseados em CPU)
-- [ ] Todas as VMs desalocadas ao terminar
-
+<SuccessChecklist
+  storageKey="az104-challenge-08"
+  items={[
+    "VM Linux criada com autenticação por chave SSH",
+    "Disco de dados de 128 GB anexado, formatado e montado",
+    "VM redimensionada para um SKU diferente",
+    "VM movida para um grupo de recursos diferente",
+    "Availability set criado com domínios de falha/atualização corretos",
+    "VMSS em execução com 2 instâncias atrás de um load balancer",
+    "Regras de autoscale configuradas (scale-out e scale-in baseados em CPU)",
+    "Todas as VMs desalocadas ao terminar"
+  ]}
+/>
 ## Cenários Quebre & Conserte
 
 ### Cenário A: Tamanho de VM Indisponível

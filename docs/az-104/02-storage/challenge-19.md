@@ -3,6 +3,8 @@ sidebar_position: 19
 title: "Challenge 19: AzCopy & Storage Migration"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 19: AzCopy & Storage Migration
 
 :::info Estimated Time and Cost
@@ -250,15 +252,19 @@ azcopy env
 
 ## Success Criteria
 
-- [ ] Two storage accounts exist in different regions
-- [ ] AzCopy is installed and authenticated
-- [ ] Blobs were copied between containers within the same account
-- [ ] Blobs were copied between accounts using SAS tokens
-- [ ] Sync operation detected and copied only new/modified files
-- [ ] Benchmark completed and throughput metrics were observed
-- [ ] Pattern-based filtering (include/exclude) was used successfully
-- [ ] AzCopy job history shows completed transfers
-
+<SuccessChecklist
+  storageKey="az104-challenge-19"
+  items={[
+    "Two storage accounts exist in different regions",
+    "AzCopy is installed and authenticated",
+    "Blobs were copied between containers within the same account",
+    "Blobs were copied between accounts using SAS tokens",
+    "Sync operation detected and copied only new/modified files",
+    "Benchmark completed and throughput metrics were observed",
+    "Pattern-based filtering (include/exclude) was used successfully",
+    "AzCopy job history shows completed transfers"
+  ]}
+/>
 ## Hints
 
 <details>

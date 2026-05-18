@@ -3,6 +3,8 @@ sidebar_position: 4
 title: "Challenge 10 | Azure App Service"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 10: Azure App Service
 
 :::info Informação
@@ -286,14 +288,18 @@ az webapp config access-restriction show \
 
 ## Critérios de Sucesso
 
-- [ ] Plano do App Service (Standard S1) criado
-- [ ] Web app implantado e acessível via HTTPS
-- [ ] Deployment slot de staging criado e recebe a v2
-- [ ] Swap de slot executado | produção executa a v2
-- [ ] Autoscale configurado com regras baseadas em CPU
-- [ ] Agenda de backup configurada com conta de armazenamento
-- [ ] Restrições de acesso configuradas no web app
-
+<SuccessChecklist
+  storageKey="az104-challenge-10"
+  items={[
+    "Plano do App Service (Standard S1) criado",
+    "Web app implantado e acessível via HTTPS",
+    "Deployment slot de staging criado e recebe a v2",
+    "Swap de slot executado | produção executa a v2",
+    "Autoscale configurado com regras baseadas em CPU",
+    "Agenda de backup configurada com conta de armazenamento",
+    "Restrições de acesso configuradas no web app"
+  ]}
+/>
 ## Cenários Quebre & Conserte
 
 ### Cenário A: Implantando no Slot Errado

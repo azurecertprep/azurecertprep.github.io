@@ -3,6 +3,8 @@ sidebar_position: 25
 title: "Challenge 25: Private Endpoints & Service Endpoints"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 25: Private Endpoints & Service Endpoints
 
 :::info Estimated Time and Cost
@@ -376,17 +378,21 @@ echo "
 
 ## Success Criteria
 
-- [ ] Storage account created with public access denied
-- [ ] Service endpoint enabled on subnet for Microsoft.Storage
-- [ ] Storage firewall configured to allow VNet traffic via service endpoint
-- [ ] Private endpoint created for Storage (blob) with private IP
-- [ ] Private DNS zone created and linked to VNet for blob storage
-- [ ] DNS resolves storage FQDN to private IP from within VNet
-- [ ] Private endpoint created for Key Vault with private DNS
-- [ ] Key Vault public access disabled
-- [ ] Network policies (NSG) configured for private endpoint subnet
-- [ ] Differences between service endpoints and private endpoints understood
-
+<SuccessChecklist
+  storageKey="az104-challenge-25"
+  items={[
+    "Storage account created with public access denied",
+    "Service endpoint enabled on subnet for Microsoft.Storage",
+    "Storage firewall configured to allow VNet traffic via service endpoint",
+    "Private endpoint created for Storage (blob) with private IP",
+    "Private DNS zone created and linked to VNet for blob storage",
+    "DNS resolves storage FQDN to private IP from within VNet",
+    "Private endpoint created for Key Vault with private DNS",
+    "Key Vault public access disabled",
+    "Network policies (NSG) configured for private endpoint subnet",
+    "Differences between service endpoints and private endpoints understood"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: DNS Not Resolving to Private IP

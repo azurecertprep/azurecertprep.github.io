@@ -3,6 +3,8 @@ sidebar_position: 18
 title: "Desafio 18: Gerenciamento de Custos & Azure Advisor"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 18: Gerenciamento de Custos & Azure Advisor
 
 :::info Tempo Estimado e Custo
@@ -228,14 +230,18 @@ az storage account create \
 
 ## Critérios de Sucesso
 
-- [ ] Recursos estão tagueados com tags Department, Environment, CostCenter e Owner
-- [ ] Um orçamento mensal existe com pelo menos dois limites de alerta (50% e 100%)
-- [ ] Visualizações de análise de custos mostram gastos agrupados por tag, tipo de recurso e localização
-- [ ] Uma exportação automatizada de custos está configurada para uma conta de armazenamento
-- [ ] Recomendações de custo do Azure Advisor foram revisadas
-- [ ] Um grupo de ação existe para notificações de alertas de custo
-- [ ] Uma política de tagging está atribuída que exige a tag CostCenter
-
+<SuccessChecklist
+  storageKey="az104-challenge-18"
+  items={[
+    "Recursos estão tagueados com tags Department, Environment, CostCenter e Owner",
+    "Um orçamento mensal existe com pelo menos dois limites de alerta (50% e 100%)",
+    "Visualizações de análise de custos mostram gastos agrupados por tag, tipo de recurso e localização",
+    "Uma exportação automatizada de custos está configurada para uma conta de armazenamento",
+    "Recomendações de custo do Azure Advisor foram revisadas",
+    "Um grupo de ação existe para notificações de alertas de custo",
+    "Uma política de tagging está atribuída que exige a tag CostCenter"
+  ]}
+/>
 ## Dicas
 
 <details>

@@ -3,6 +3,8 @@ sidebar_position: 3
 title: "Challenge 03: Azure Policy & Governance"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -169,16 +171,20 @@ Budget alerts via CLI require additional configuration for notification threshol
 
 ## Success Criteria
 
-- [ ] Two resource groups exist with proper tags (Environment, CostCenter, Owner)
-- [ ] Policy "Require CostCenter tag" is assigned to `rg-policy-prod` with Deny effect
-- [ ] Deploying a resource without the tag fails in `rg-policy-prod`
-- [ ] Deploying a resource with the tag succeeds
-- [ ] Allowed locations policy restricts deployments to East US and West US 2
-- [ ] Policy initiative `Contoso-Governance` is created with 3 policies and assigned to `rg-policy-dev`
-- [ ] CanNotDelete lock exists on `rg-policy-prod`
-- [ ] Attempting to delete the locked resource group fails
-- [ ] Azure Advisor recommendations have been reviewed
-
+<SuccessChecklist
+  storageKey="az104-challenge-03"
+  items={[
+    "Two resource groups exist with proper tags (Environment, CostCenter, Owner)",
+    "Policy \"Require CostCenter tag\" is assigned to rg-policy-prod with Deny effect",
+    "Deploying a resource without the tag fails in rg-policy-prod",
+    "Deploying a resource with the tag succeeds",
+    "Allowed locations policy restricts deployments to East US and West US 2",
+    "Policy initiative Contoso-Governance is created with 3 policies and assigned to rg-policy-dev",
+    "CanNotDelete lock exists on rg-policy-prod",
+    "Attempting to delete the locked resource group fails",
+    "Azure Advisor recommendations have been reviewed"
+  ]}
+/>
 ## Hints
 
 <details>

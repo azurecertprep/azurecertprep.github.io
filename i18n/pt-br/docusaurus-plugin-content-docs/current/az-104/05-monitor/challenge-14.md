@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 14: Azure Monitor & Alerts"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 14: Azure Monitor & Alerts
 
 :::info Tempo e Custo Estimados
@@ -277,15 +279,20 @@ az group delete --name $RG --yes --no-wait
 
 ## Critérios de Sucesso
 
-- [ ] Log Analytics workspace criado
-- [ ] VM Insights habilitado e coletando dados
-- [ ] Métricas do Azure Monitor exploradas e compreendidas
-- [ ] Configurações de diagnóstico configuradas
-- [ ] Consultas KQL executadas com sucesso
-- [ ] Grupo de ação criado com notificação por email
-- [ ] Alerta de métrica criado (CPU > 80%)
-- [ ] Alerta de log criado para padrões de erro
-- [ ] Storage Insights explorado
-- [ ] Ferramentas do Network Watcher usadas (topologia, IP flow verify, connection troubleshoot)
-- [ ] Cenários de Quebre & Conserte concluídos
-- [ ] Recursos limpos
+<SuccessChecklist
+  storageKey="az104-challenge-14"
+  items={[
+    "Log Analytics workspace criado",
+    "VM Insights habilitado e coletando dados",
+    "Métricas do Azure Monitor exploradas e compreendidas",
+    "Configurações de diagnóstico configuradas",
+    "Consultas KQL executadas com sucesso",
+    "Grupo de ação criado com notificação por email",
+    "Alerta de métrica criado (CPU > 80%)",
+    "Alerta de log criado para padrões de erro",
+    "Storage Insights explorado",
+    "Ferramentas do Network Watcher usadas (topologia, IP flow verify, connection troubleshoot)",
+    "Cenários de Quebre & Conserte concluídos",
+    "Recursos limpos"
+  ]}
+/>

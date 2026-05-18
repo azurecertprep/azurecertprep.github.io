@@ -3,6 +3,8 @@ sidebar_position: 28
 title: "Challenge 28: Azure Advisor & Service Health"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 28: Azure Advisor & Service Health
 
 :::info Estimated Time and Cost
@@ -346,16 +348,20 @@ az advisor recommendation list --category Cost -o table
 
 ## Success Criteria
 
-- [ ] Advisor recommendations reviewed across all five categories
-- [ ] Advisor Score viewed and understood
-- [ ] At least one recommendation suppressed/postponed with reason
-- [ ] Advisor alert configured for new recommendations
-- [ ] Service Health alerts configured for: service issues, planned maintenance, and health advisories
-- [ ] Resource Health checked for specific resources
-- [ ] Action groups created with email (and optionally SMS/webhook) notifications
-- [ ] Service Health dashboard explored (issues, maintenance, advisories)
-- [ ] At least one Advisor recommendation implemented or acknowledged
-
+<SuccessChecklist
+  storageKey="az104-challenge-28"
+  items={[
+    "Advisor recommendations reviewed across all five categories",
+    "Advisor Score viewed and understood",
+    "At least one recommendation suppressed/postponed with reason",
+    "Advisor alert configured for new recommendations",
+    "Service Health alerts configured for: service issues, planned maintenance, and health advisories",
+    "Resource Health checked for specific resources",
+    "Action groups created with email (and optionally SMS/webhook) notifications",
+    "Service Health dashboard explored (issues, maintenance, advisories)",
+    "At least one Advisor recommendation implemented or acknowledged"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: Alert Not Firing

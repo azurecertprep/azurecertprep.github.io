@@ -3,6 +3,8 @@ sidebar_position: 24
 title: "Challenge 24: User-Defined Routes & Traffic Control"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Challenge 24: User-Defined Routes & Traffic Control
 
 :::info Estimated Time and Cost
@@ -330,16 +332,20 @@ az network nic show-effective-route-table \
 
 ## Success Criteria
 
-- [ ] Hub-spoke VNet topology created with peering
-- [ ] NVA VM deployed with IP forwarding enabled (NIC + OS level)
-- [ ] Route table created with BGP propagation disabled
-- [ ] UDR for internet traffic (0.0.0.0/0) pointing to NVA
-- [ ] UDR for cross-VNet traffic pointing to NVA
-- [ ] Black hole route (next-hop None) configured
-- [ ] Route table associated with spoke subnet
-- [ ] Effective routes show UDRs overriding system routes
-- [ ] All next-hop types understood and demonstrated
-
+<SuccessChecklist
+  storageKey="az104-challenge-24"
+  items={[
+    "Hub-spoke VNet topology created with peering",
+    "NVA VM deployed with IP forwarding enabled (NIC + OS level)",
+    "Route table created with BGP propagation disabled",
+    "UDR for internet traffic (0.0.0.0/0) pointing to NVA",
+    "UDR for cross-VNet traffic pointing to NVA",
+    "Black hole route (next-hop None) configured",
+    "Route table associated with spoke subnet",
+    "Effective routes show UDRs overriding system routes",
+    "All next-hop types understood and demonstrated"
+  ]}
+/>
 ## Break & Fix Scenarios
 
 ### Scenario A: NVA IP Forwarding Missing

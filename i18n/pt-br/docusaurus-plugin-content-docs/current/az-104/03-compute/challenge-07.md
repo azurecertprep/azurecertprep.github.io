@@ -3,6 +3,8 @@ sidebar_position: 1
 title: "Challenge 07 | ARM Templates & Bicep"
 ---
 
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
 # Desafio 07: ARM Templates & Bicep
 
 :::info Informação
@@ -251,12 +253,16 @@ az deployment group what-if \
 
 ## Critérios de Sucesso
 
-- [ ] ARM template implanta uma conta de armazenamento com tags
-- [ ] Template exportado corresponde aos recursos implantados
-- [ ] ARM template convertido com sucesso para Bicep
-- [ ] Arquivo Bicep implanta uma conta de armazenamento **e** contêiner de blob
-- [ ] What-if mostra as alterações esperadas sem implantar
-
+<SuccessChecklist
+  storageKey="az104-challenge-07"
+  items={[
+    "ARM template implanta uma conta de armazenamento com tags",
+    "Template exportado corresponde aos recursos implantados",
+    "ARM template convertido com sucesso para Bicep",
+    "Arquivo Bicep implanta uma conta de armazenamento **e** contêiner de blob",
+    "What-if mostra as alterações esperadas sem implantar"
+  ]}
+/>
 ## Cenários Quebre & Conserte
 
 ### Cenário A: Erro de Sintaxe
