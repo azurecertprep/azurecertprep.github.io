@@ -170,54 +170,50 @@ function CertificationCoverage() {
   return (
     <section style={{padding: '2rem 0'}}>
       <div className="container">
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <div className="section-heading" style={{width: '100%', maxWidth: '650px'}}>
-            <Heading as="h2">100% Certification Coverage</Heading>
-            <p>Every exam domain from the AZ-104 study guide mapped to hands-on challenges.</p>
-          </div>
-          <div style={{width: '100%', maxWidth: '650px'}}>
-            <table style={{width: '100%'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domain</th>
-                  <th style={{textAlign: 'center'}}>Exam Weight</th>
-                  <th style={{textAlign: 'center'}}>Challenges</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identity & Governance</span></td>
-                  <td style={{textAlign: 'center'}}>20–25%</td>
-                  <td style={{textAlign: 'center'}}>01, 02, 03, 17, 18</td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--storage">Storage</span></td>
-                  <td style={{textAlign: 'center'}}>15–20%</td>
-                  <td style={{textAlign: 'center'}}>04, 05, 06, 19, 20</td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Compute</span></td>
-                  <td style={{textAlign: 'center'}}>20–25%</td>
-                  <td style={{textAlign: 'center'}}>07, 08, 09, 10, 21, 22, 23</td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Networking</span></td>
-                  <td style={{textAlign: 'center'}}>15–20%</td>
-                  <td style={{textAlign: 'center'}}>11, 12, 13, 24, 25, 26</td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitor">Monitor & Maintain</span></td>
-                  <td style={{textAlign: 'center'}}>10–15%</td>
-                  <td style={{textAlign: 'center'}}>14, 15, 27, 28</td>
-                </tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
-              Aligned with the <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104">official AZ-104 study guide</a> as of April 2026.
-              Challenge 16 is a cross-domain capstone. Challenges 17-28 provide deep dives into advanced topics.
-            </p>
-          </div>
+        <div className="section-heading">
+          <Heading as="h2">100% Certification Coverage</Heading>
+          <p>Every exam domain from the AZ-104 study guide mapped to hands-on challenges.</p>
         </div>
+        <table style={{width: '100%', maxWidth: '650px', margin: '0 auto'}}>
+          <thead>
+            <tr>
+              <th style={{textAlign: 'center'}}>Domain</th>
+              <th style={{textAlign: 'center'}}>Exam Weight</th>
+              <th style={{textAlign: 'center'}}>Challenges</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identity & Governance</span></td>
+              <td style={{textAlign: 'center'}}>20–25%</td>
+              <td style={{textAlign: 'center'}}>01, 02, 03, 17, 18</td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--storage">Storage</span></td>
+              <td style={{textAlign: 'center'}}>15–20%</td>
+              <td style={{textAlign: 'center'}}>04, 05, 06, 19, 20</td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Compute</span></td>
+              <td style={{textAlign: 'center'}}>20–25%</td>
+              <td style={{textAlign: 'center'}}>07, 08, 09, 10, 21, 22, 23</td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Networking</span></td>
+              <td style={{textAlign: 'center'}}>15–20%</td>
+              <td style={{textAlign: 'center'}}>11, 12, 13, 24, 25, 26</td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitor">Monitor & Maintain</span></td>
+              <td style={{textAlign: 'center'}}>10–15%</td>
+              <td style={{textAlign: 'center'}}>14, 15, 27, 28</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
+          Aligned with the <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104">official AZ-104 study guide</a> as of April 2026.
+          Challenge 16 is a cross-domain capstone. Challenges 17-28 provide deep dives into advanced topics.
+        </p>
       </div>
     </section>
   );
