@@ -1,0 +1,62 @@
+{
+  "version.label": {
+    "message": "Atual",
+    "description": "The label for version current"
+  },
+  "sidebar.az104Sidebar.category.🔐 Identity & Governance (20-25%)": {
+    "message": "🔐 Identidade & Governança (20-25%)",
+    "description": "The label for category '🔐 Identity & Governance (20-25%)' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.💾 Storage (15-20%)": {
+    "message": "💾 Armazenamento (15-20%)",
+    "description": "The label for category '💾 Storage (15-20%)' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.⚙️ Compute (20-25%)": {
+    "message": "⚙️ Computação (20-25%)",
+    "description": "The label for category '⚙️ Compute (20-25%)' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.🌐 Networking (15-20%)": {
+    "message": "🌐 Rede (15-20%)",
+    "description": "The label for category '🌐 Networking (15-20%)' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.📊 Monitor & Maintain (10-15%)": {
+    "message": "📊 Monitorar & Manter (10-15%)",
+    "description": "The label for category '📊 Monitor & Maintain (10-15%)' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.🏆 Capstone": {
+    "message": "🏆 Capstone",
+    "description": "The label for category '🏆 Capstone' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.🎓 Coach Guide": {
+    "message": "🎓 Guia do Instrutor",
+    "description": "The label for category '🎓 Coach Guide' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.category.AZ-104 Solutions": {
+    "message": "Soluções AZ-104",
+    "description": "The label for category 'AZ-104 Solutions' in sidebar 'az104Sidebar'"
+  },
+  "sidebar.az104Sidebar.doc.📋 Exam Overview": {
+    "message": "📋 Visão Geral do Exame",
+    "description": "The label for the doc item '📋 Exam Overview' in sidebar 'az104Sidebar', linking to the doc az-104/overview"
+  },
+  "sidebar.az104Sidebar.doc.🧭 Am I Ready?": {
+    "message": "🧭 Estou Pronto?",
+    "description": "The label for the doc item '🧭 Am I Ready?' in sidebar 'az104Sidebar', linking to the doc az-104/self-assessment"
+  },
+  "sidebar.az104Sidebar.doc.🖥️ Lab Setup": {
+    "message": "🖥️ Configuração do Lab",
+    "description": "The label for the doc item '🖥️ Lab Setup' in sidebar 'az104Sidebar', linking to the doc az-104/lab-setup"
+  },
+  "sidebar.az104Sidebar.doc.💡 Exam Tips & Strategy": {
+    "message": "💡 Dicas & Estratégia para o Exame",
+    "description": "The label for the doc item '💡 Exam Tips & Strategy' in sidebar 'az104Sidebar', linking to the doc az-104/exam-tips"
+  },
+  "sidebar.az104Sidebar.doc.📝 Azure CLI Cheat Sheet": {
+    "message": "📝 Folha de Referência Azure CLI",
+    "description": "The label for the doc item '📝 Azure CLI Cheat Sheet' in sidebar 'az104Sidebar', linking to the doc az-104/cheat-sheet"
+  },
+  "sidebar.az104Sidebar.doc.✅ Coverage Matrix": {
+    "message": "✅ Matriz de Cobertura",
+    "description": "The label for the doc item '✅ Coverage Matrix' in sidebar 'az104Sidebar', linking to the doc az-104/coverage-matrix"
+  }
+}

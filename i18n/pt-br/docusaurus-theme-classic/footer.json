@@ -1,0 +1,58 @@
+{
+  "link.title.Exams": {
+    "message": "Exames",
+    "description": "The title of the footer links column with title=Exams in the footer"
+  },
+  "link.title.Resources": {
+    "message": "Recursos",
+    "description": "The title of the footer links column with title=Resources in the footer"
+  },
+  "link.title.Community": {
+    "message": "Comunidade",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.Related Projects": {
+    "message": "Projetos Relacionados",
+    "description": "The title of the footer links column with title=Related Projects in the footer"
+  },
+  "link.item.label.AZ-104: Azure Administrator": {
+    "message": "AZ-104: Administrador Azure",
+    "description": "The label of footer link with label=AZ-104: Azure Administrator linking to /docs/az-104/overview"
+  },
+  "link.item.label.Microsoft Learn — AZ-104": {
+    "message": "Microsoft Learn — AZ-104",
+    "description": "The label of footer link with label=Microsoft Learn — AZ-104 linking to https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/"
+  },
+  "link.item.label.Free Practice Assessment": {
+    "message": "Simulado Gratuito",
+    "description": "The label of footer link with label=Free Practice Assessment linking to https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104/practice/assessment?assessment-type=practice&assessmentId=21"
+  },
+  "link.item.label.Exam Sandbox": {
+    "message": "Sandbox do Exame",
+    "description": "The label of footer link with label=Exam Sandbox linking to https://aka.ms/examdemo"
+  },
+  "link.item.label.GitHub Discussions": {
+    "message": "Discussões no GitHub",
+    "description": "The label of footer link with label=GitHub Discussions linking to https://github.com/azurecertprep/azurecertprep.github.io/discussions"
+  },
+  "link.item.label.Report an Issue": {
+    "message": "Reportar um Problema",
+    "description": "The label of footer link with label=Report an Issue linking to https://github.com/azurecertprep/azurecertprep.github.io/issues"
+  },
+  "link.item.label.☸️ Kubernetes Hackathon": {
+    "message": "☸️ Kubernetes Hackathon",
+    "description": "The label of footer link with label=☸️ Kubernetes Hackathon linking to https://k8shackathon.com"
+  },
+  "link.item.label.🐧 Linux Hackathon": {
+    "message": "🐧 Linux Hackathon",
+    "description": "The label of footer link with label=🐧 Linux Hackathon linking to https://linuxhackathon.com"
+  },
+  "link.item.label.☁️ AKS Learning": {
+    "message": "☁️ AKS Learning",
+    "description": "The label of footer link with label=☁️ AKS Learning linking to https://aks-learning.github.io"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Azure Cert Prep. Não afiliado à Microsoft. Construído com Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "Azure Cert Prep",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Logo Azure Cert Prep",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.AZ-104": {
+    "message": "AZ-104",
+    "description": "Navbar item with label AZ-104"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.🖥️ Open Lab": {
+    "message": "🖥️ Abrir Lab",
+    "description": "Navbar item with label 🖥️ Open Lab"
+  }
+}
