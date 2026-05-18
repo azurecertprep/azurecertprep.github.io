@@ -214,7 +214,7 @@ az monitor activity-log alert create \
 az monitor activity-log alert create \
   --resource-group $RG \
   --name "alert-health-advisories" \
-  --description "Alert for health advisories and security bulletins" \
+  --description "Alert for action-required service health events" \
   --action-group ag-advisor-notifications \
   --condition category=ServiceHealth \
   --condition "properties.incidentType=ActionRequired"

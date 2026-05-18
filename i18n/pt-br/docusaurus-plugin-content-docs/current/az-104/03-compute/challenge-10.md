@@ -247,7 +247,7 @@ SAS_URL=$(az storage container generate-sas \
 CONTAINER_URL="https://$BACKUP_STORAGE.blob.core.windows.net/webapp-backups?$SAS_URL"
 
 # Configurar backup
-az webapp config backup create \
+az webapp config backup update \
   --resource-group rg-appservice-lab \
   --webapp-name $APP_NAME \
   --container-url "$CONTAINER_URL" \

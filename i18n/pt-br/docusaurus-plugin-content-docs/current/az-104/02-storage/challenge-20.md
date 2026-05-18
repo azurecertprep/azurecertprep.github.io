@@ -215,7 +215,7 @@ az storage blob upload \
 az storage container legal-hold set \
   --account-name $STORAGE_NAME \
   --container-name litigation-docs \
-  --tags "case-2024-001" "litigation-hold"
+  --tags "case2024001" "litigationhold"
 
 # Verificar retenção legal
 az storage container show \
@@ -389,7 +389,7 @@ STORAGE_NAME=$(az storage account list -g rg-encryption-lab --query "[?contains(
 az storage container legal-hold clear \
   --account-name $STORAGE_NAME \
   --container-name litigation-docs \
-  --tags "case-2024-001" "litigation-hold" 2>/dev/null
+  --tags "case2024001" "litigationhold" 2>/dev/null
 
 # Excluir política de imutabilidade (apenas se desbloqueada)
 az storage container immutability-policy delete \

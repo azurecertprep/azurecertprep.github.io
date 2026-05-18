@@ -102,9 +102,13 @@ az ad user create \
   --display-name "Alice Johnson" \
   --user-principal-name "alice@$DOMAIN" \
   --password "TempP@ss123!" \
-  --force-change-password-next-sign-in true \
-  --department "IT" \
-  --job-title "Cloud Engineer"
+  --force-change-password-next-sign-in true
+
+# Set department and job title via Microsoft Graph
+ALICE_ID=$(az ad user show --id "alice@$DOMAIN" --query id -o tsv)
+az rest --method patch \
+  --url "https://graph.microsoft.com/v1.0/users/$ALICE_ID" \
+  --body '{"department":"IT","jobTitle":"Cloud Engineer"}'
 ```
 
 </details>

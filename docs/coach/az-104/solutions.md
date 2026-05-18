@@ -39,25 +39,32 @@ az ad user create \
   --display-name "Alice Johnson" \
   --user-principal-name "alice@$DOMAIN" \
   --password "TempP@ss123!" \
-  --force-change-password-next-sign-in true \
-  --department "IT" \
-  --job-title "Cloud Engineer"
+  --force-change-password-next-sign-in true
 
 az ad user create \
   --display-name "Bob Smith" \
   --user-principal-name "bob@$DOMAIN" \
   --password "TempP@ss456!" \
-  --force-change-password-next-sign-in true \
-  --department "Finance" \
-  --job-title "Financial Analyst"
+  --force-change-password-next-sign-in true
 
 az ad user create \
   --display-name "Carol Williams" \
   --user-principal-name "carol@$DOMAIN" \
   --password "TempP@ss789!" \
-  --force-change-password-next-sign-in true \
-  --department "IT" \
-  --job-title "Security Admin"
+  --force-change-password-next-sign-in true
+
+# Set department and job title via Microsoft Graph
+ALICE_ID=$(az ad user show --id "alice@$DOMAIN" --query id -o tsv)
+az rest --method patch --url "https://graph.microsoft.com/v1.0/users/$ALICE_ID" \
+  --body '{"department":"IT","jobTitle":"Cloud Engineer"}'
+
+BOB_ID=$(az ad user show --id "bob@$DOMAIN" --query id -o tsv)
+az rest --method patch --url "https://graph.microsoft.com/v1.0/users/$BOB_ID" \
+  --body '{"department":"Finance","jobTitle":"Financial Analyst"}'
+
+CAROL_ID=$(az ad user show --id "carol@$DOMAIN" --query id -o tsv)
+az rest --method patch --url "https://graph.microsoft.com/v1.0/users/$CAROL_ID" \
+  --body '{"department":"IT","jobTitle":"Security Admin"}'
 ```
 
 **Why**: `--force-change-password-next-sign-in true` is the secure default | users must set their own password. The exam tests whether you know this flag exists. Passwords must meet complexity requirements (uppercase, lowercase, number, special char, 8+ chars).
@@ -1560,7 +1567,7 @@ az costmanagement export create \
   --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
   --storage-container cost-exports \
   --storage-directory "exports" \
-  --schedule-recurrence Daily \
+  --recurrence Daily \
   --schedule-status Active
 
 # Enforce tagging with Azure Policy
@@ -1694,7 +1701,7 @@ azcopy copy \
   --include-pattern "*.txt"
 
 # Benchmark performance
-azcopy benchmark \
+azcopy bench \
   "https://$DEST_ACCOUNT.blob.core.windows.net/archives" \
   --file-count 100 \
   --size-per-file 1M
@@ -1813,7 +1820,7 @@ az storage container create \
 az storage container legal-hold set \
   --account-name $STORAGE_NAME \
   --container-name litigation-docs \
-  --tags "case-2024-001" "litigation-hold"
+  --tags "case2024001" "litigationhold"
 
 # Rotate the CMK (create new key version)
 az keyvault key create \
@@ -2184,14 +2191,14 @@ SAS_TOKEN=$(az storage container generate-sas \
   -o tsv)
 CONTAINER_URL="https://$STORAGE_NAME.blob.core.windows.net/app-backups?$SAS_TOKEN"
 
-az webapp config backup create \
+az webapp config backup update \
   --resource-group $RG \
   --webapp-name $APP_NAME \
   --container-url "$CONTAINER_URL" \
   --backup-name "contoso-daily" \
   --frequency 1d \
   --retain-one true \
-  --retention-period-in-days 30
+  --retention 30
 
 # VNet integration
 az network vnet create -g $RG --name vnet-contoso \
@@ -2611,7 +2618,7 @@ az network watcher connection-monitor create \
   --endpoint-dest-address "8.8.8.8" \
   --test-config-name "tcp-443" \
   --protocol Tcp --tcp-port 443 \
-  --test-config-frequency 30
+  --frequency 30
 
 # NSG Flow Logs with Traffic Analytics
 WORKSPACE_ID=$(az monitor log-analytics workspace create -g $RG \

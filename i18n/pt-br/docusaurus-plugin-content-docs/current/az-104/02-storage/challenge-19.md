@@ -205,13 +205,13 @@ rm -f newfile.txt
 
 ```bash
 # Benchmark de desempenho de upload para a conta de destino
-azcopy benchmark \
+azcopy bench \
   "https://$DEST_ACCOUNT.blob.core.windows.net/archives" \
   --file-count 100 \
   --size-per-file 1M
 
 # Benchmark com arquivos maiores
-azcopy benchmark \
+azcopy bench \
   "https://$DEST_ACCOUNT.blob.core.windows.net/archives" \
   --file-count 5 \
   --size-per-file 100M

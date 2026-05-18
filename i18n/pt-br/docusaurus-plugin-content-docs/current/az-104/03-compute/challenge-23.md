@@ -188,14 +188,14 @@ SAS_TOKEN=$(az storage container generate-sas \
 CONTAINER_URL="https://$STORAGE_NAME.blob.core.windows.net/app-backups?$SAS_TOKEN"
 
 # Configure scheduled backup (every 24 hours, retain 30 days)
-az webapp config backup create \
+az webapp config backup update \
   --resource-group $RG \
   --webapp-name $APP_NAME \
   --container-url "$CONTAINER_URL" \
   --backup-name "contoso-daily" \
   --frequency 1d \
   --retain-one true \
-  --retention-period-in-days 30
+  --retention 30
 
 # Verify backup configuration
 az webapp config backup show \

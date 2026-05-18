@@ -122,12 +122,10 @@ Explore a análise de custos no Portal do Azure:
 - Tipo de gráfico: Rosca
 
 ```bash
-# Consulta de custo via CLI (preview) - visualizar custos por tag
-az costmanagement query \
-  --type ActualCost \
-  --scope "subscriptions/$(az account show --query id -o tsv)" \
-  --timeframe MonthToDate \
-  --dataset-grouping name=Department type=TagKey
+# Consulta de custo via REST API (sem subcomando CLI disponível)
+az rest --method post \
+  --url "https://management.azure.com/subscriptions/$(az account show --query id -o tsv)/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
+  --body '{"type":"ActualCost","timeframe":"MonthToDate","dataset":{"granularity":"None","grouping":[{"type":"TagKey","name":"Department"}]}}'
 ```
 
 ### Tarefa 4: Configurar Exportações de Custos
@@ -153,7 +151,7 @@ az costmanagement export create \
   --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
   --storage-container cost-exports \
   --storage-directory "exports" \
-  --schedule-recurrence Daily \
+  --recurrence Daily \
   --schedule-status Active
 ```
 

@@ -277,7 +277,7 @@ az network watcher connection-monitor create \
   --test-config-name "tcp-443" \
   --protocol Tcp \
   --tcp-port 443 \
-  --test-config-frequency 30
+  --frequency 30
 
 # Create a second test for internal connectivity
 VM_DB_ID=$(az vm show -g $RG -n vm-db --query "id" -o tsv)
@@ -292,7 +292,7 @@ az network watcher connection-monitor create \
   --test-config-name "tcp-5432" \
   --protocol Tcp \
   --tcp-port 5432 \
-  --test-config-frequency 60
+  --frequency 60
 
 # Check connection monitor status
 az network watcher connection-monitor list --location $LOCATION -o table

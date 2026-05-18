@@ -122,12 +122,10 @@ Explore cost analysis in the Azure Portal:
 - Chart type: Donut
 
 ```bash
-# CLI cost query (preview) - view costs by tag
-az costmanagement query \
-  --type ActualCost \
-  --scope "subscriptions/$(az account show --query id -o tsv)" \
-  --timeframe MonthToDate \
-  --dataset-grouping name=Department type=TagKey
+# Cost query via REST API (no CLI subcommand available)
+az rest --method post \
+  --url "https://management.azure.com/subscriptions/$(az account show --query id -o tsv)/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
+  --body '{"type":"ActualCost","timeframe":"MonthToDate","dataset":{"granularity":"None","grouping":[{"type":"TagKey","name":"Department"}]}}'
 ```
 
 ### Task 4: Configure Cost Exports
@@ -153,7 +151,7 @@ az costmanagement export create \
   --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
   --storage-container cost-exports \
   --storage-directory "exports" \
-  --schedule-recurrence Daily \
+  --recurrence Daily \
   --schedule-status Active
 ```
 
