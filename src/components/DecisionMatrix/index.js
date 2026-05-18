@@ -93,7 +93,7 @@ export default function DecisionMatrix({ title, headers, rows, storageKey }) {
     } catch {}
   };
 
-  const totalCells = rows.length * (headers.length - 1);
+  const totalCells = rows.length * headers.length;
   const revealedCount = Object.values(revealed).filter(Boolean).length;
 
   return (
@@ -111,8 +111,9 @@ export default function DecisionMatrix({ title, headers, rows, storageKey }) {
         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '4px' }}>
           <thead>
             <tr>
+              <th style={cellStyles.criteria}></th>
               {headers.map((h, idx) => (
-                <th key={idx} style={idx === 0 ? cellStyles.criteria : cellStyles.header}>
+                <th key={idx} style={cellStyles.header}>
                   {h}
                 </th>
               ))}
