@@ -5,7 +5,11 @@ title: "AZ-104: Azure Administrator"
 
 # AZ-104: Azure Administrator | Visão Geral do Exame
 
-> **Versão do exame**: Habilidades medidas a partir de 17 de abril de 2026 | **Nota de aprovação**: 700/1000 | **Duração**: ~100-120 minutos
+:::info Detalhes do Exame
+
+**Versão do exame**: Habilidades medidas a partir de 17 de abril de 2026 | **Nota de aprovação**: 700/1000 | **Duração**: ~100-120 minutos
+
+:::
 
 ## Para quem é este exame?
 

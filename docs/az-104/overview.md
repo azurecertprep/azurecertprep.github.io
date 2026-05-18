@@ -5,7 +5,11 @@ title: "AZ-104: Azure Administrator"
 
 # AZ-104: Azure Administrator
 
-> **Exam version**: Skills measured as of April 17, 2026 | **Passing score**: 700/1000 | **Duration**: ~100-120 minutes
+:::info Exam Details
+
+**Exam version**: Skills measured as of April 17, 2026 | **Passing score**: 700/1000 | **Duration**: ~100-120 minutes
+
+:::
 
 ## Who is this for?
 
