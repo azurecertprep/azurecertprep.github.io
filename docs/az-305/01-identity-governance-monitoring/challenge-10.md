@@ -143,18 +143,61 @@ In Terraform, use a `default_tags` block in the provider configuration to automa
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge10 --location eastus --tags "Environment=Lab"
+```
+
+2. Assign a built-in policy that requires a "CostCenter" tag on resource groups:
+
+```bash
+SUB_ID=$(az account show --query id -o tsv)
+az policy assignment create \
+  --name "require-costcenter-tag-lab" \
+  --display-name "Require CostCenter tag on resource groups" \
+  --policy "/providers/Microsoft.Authorization/policyDefinitions/96670d01-0a4d-4649-9c89-2d3abc0a5025" \
+  --scope "/subscriptions/$SUB_ID" \
+  --params '{"tagName":{"value":"CostCenter"}}'
+```
+
+3. Wait for the policy to take effect, then test by creating a resource group without the tag (should be denied):
+
+```bash
+sleep 30
+az group create --name rg-az305-tag-test-noncompliant --location eastus 2>&1 || echo "Policy denied creation as expected"
+```
+
+4. Test creating a compliant resource group with the required tag:
+
+```bash
+az group create --name rg-az305-tag-test-compliant --location eastus --tags "CostCenter=12345"
+```
+
+5. Verify the policy assignment is active:
+
+```bash
+az policy assignment show \
+  --name "require-costcenter-tag-lab" \
+  --query "{name:displayName, enforcement:enforcementMode, scope:scope}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Remove policy assignments created for this challenge
-az policy assignment delete --name "require-costcenter-tag" --scope "/subscriptions/<subscription-id>"
-az policy assignment delete --name "inherit-env-tag" --scope "/subscriptions/<subscription-id>"
-
-# Remove custom policy definitions if created
-az policy definition delete --name "require-mandatory-tags-custom"
-
-# Remove any test resource groups
-az group delete --name rg-tagging-test --yes --no-wait
+SUB_ID=$(az account show --query id -o tsv)
+az policy assignment delete --name "require-costcenter-tag-lab" --scope "/subscriptions/$SUB_ID"
+az group delete --name rg-az305-tag-test-compliant --yes --no-wait 2>/dev/null || true
+az group delete --name rg-az305-tag-test-noncompliant --yes --no-wait 2>/dev/null || true
+az group delete --name rg-az305-challenge10 --yes --no-wait
 ```
 
 ---

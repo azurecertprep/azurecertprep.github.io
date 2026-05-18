@@ -307,19 +307,65 @@ On-premises deployment requires:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge05 --location eastus
+```
+
+2. Create a security group to simulate a privileged access group:
+
+```bash
+az ad group create \
+  --display-name "sg-az305-challenge05-admins" \
+  --mail-nickname "sg-az305-challenge05-admins"
+```
+
+3. Get the group object ID:
+
+```bash
+GROUP_ID=$(az ad group show \
+  --group "sg-az305-challenge05-admins" \
+  --query id -o tsv)
+```
+
+4. Assign the Reader role to the group scoped to the resource group with a description:
+
+```bash
+az role assignment create \
+  --assignee-object-id "$GROUP_ID" \
+  --assignee-principal-type Group \
+  --role "Reader" \
+  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-az305-challenge05" \
+  --description "Lab: Simulated PIM-eligible assignment for challenge 05"
+```
+
+5. Verify the role assignment:
+
+```bash
+az role assignment list \
+  --resource-group rg-az305-challenge05 \
+  --query "[?principalId=='$GROUP_ID'].{role:roleDefinitionName, scope:scope}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Remove PIM eligible assignments (via Graph API)
-# az rest --method post --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleRequests" --body '{"action":"adminRemove",...}'
-
-# Remove custom banned password list (Portal: Entra ID > Security > Authentication Methods > Password Protection)
-
-# If any test users were created:
-az ad user delete --id testuser@yourtenant.onmicrosoft.com
-
-# Delete resource groups if any Azure resources were deployed
-az group delete --name rg-identity-poc --yes --no-wait
+GROUP_ID=$(az ad group show --group "sg-az305-challenge05-admins" --query id -o tsv)
+az role assignment delete \
+  --assignee "$GROUP_ID" \
+  --role "Reader" \
+  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-az305-challenge05"
+az ad group delete --group "sg-az305-challenge05-admins"
+az group delete --name rg-az305-challenge05 --yes --no-wait
 ```
 
 ---

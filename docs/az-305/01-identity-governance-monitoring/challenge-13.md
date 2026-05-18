@@ -158,31 +158,72 @@ The offboarding sequence must be ordered: (1) Notify all team members that acces
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge13 --location eastus
+```
+
+2. Deploy a Log Analytics workspace (centralized logging):
+
+```bash
+az monitor log-analytics workspace create \
+  --resource-group rg-az305-challenge13 \
+  --workspace-name law-capstone-lab \
+  --retention-time 30
+```
+
+3. Deploy a Key Vault (secrets management):
+
+```bash
+az keyvault create \
+  --name kv-az305-cap-$RANDOM \
+  --resource-group rg-az305-challenge13 \
+  --location eastus \
+  --enable-rbac-authorization true
+```
+
+4. Assign a policy requiring a tag on resources in the resource group:
+
+```bash
+RG_ID=$(az group show --name rg-az305-challenge13 --query id -o tsv)
+az policy assignment create \
+  --name "require-env-tag-capstone" \
+  --display-name "Require Environment tag (Capstone Lab)" \
+  --policy "/providers/Microsoft.Authorization/policyDefinitions/871b6d14-10aa-478d-b590-94f262ecfa99" \
+  --scope "$RG_ID" \
+  --params '{"tagName":{"value":"Environment"},"tagValue":{"value":"Lab"}}' \
+  --enforcement-mode DoNotEnforce
+```
+
+5. Verify all resources are deployed:
+
+```bash
+az resource list \
+  --resource-group rg-az305-challenge13 \
+  --query "[].{name:name, type:type}" -o table
+az policy assignment show \
+  --name "require-env-tag-capstone" \
+  --scope "$RG_ID" \
+  --query "{name:displayName, scope:scope}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# This capstone challenge creates significant infrastructure. Clean up in order:
-
-# 1. Remove access packages and catalogs (via Portal or Graph API)
-# az rest --method DELETE --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages/<package-id>"
-
-# 2. Remove policy assignments from management groups
-az policy assignment delete --name "hipaa-initiative" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso-healthcare"
-az policy assignment delete --name "pcidss-initiative" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso-financial"
-az policy assignment delete --name "retail-privacy" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso-retail"
-
-# 3. Remove test resource groups
-az group delete --name rg-engagement-demo --yes --no-wait
-az group delete --name rg-contoso-platform --yes --no-wait
-
-# 4. Remove management groups (must remove child subscriptions/MGs first)
-az account management-group delete --name "mg-contoso-decommissioned"
-az account management-group delete --name "mg-contoso-sandbox"
-az account management-group delete --name "mg-contoso-healthcare"
-az account management-group delete --name "mg-contoso-financial"
-az account management-group delete --name "mg-contoso-retail"
-az account management-group delete --name "mg-contoso-platform"
-az account management-group delete --name "mg-contoso-root"
+RG_ID=$(az group show --name rg-az305-challenge13 --query id -o tsv)
+az policy assignment delete --name "require-env-tag-capstone" --scope "$RG_ID"
+KV_NAME=$(az keyvault list --resource-group rg-az305-challenge13 --query "[0].name" -o tsv)
+az group delete --name rg-az305-challenge13 --yes --no-wait
+az keyvault purge --name "$KV_NAME" --no-wait 2>/dev/null || true
 ```
 
 ---

@@ -251,18 +251,69 @@ az storage account management-policy create \
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge02 --location eastus
+```
+
+2. Deploy a Log Analytics workspace as the primary sink:
+
+```bash
+az monitor log-analytics workspace create \
+  --resource-group rg-az305-challenge02 \
+  --workspace-name law-routing-lab \
+  --retention-time 30
+```
+
+3. Deploy an Event Hub namespace as a secondary routing target:
+
+```bash
+az eventhubs namespace create \
+  --resource-group rg-az305-challenge02 \
+  --name eh-routing-lab-$RANDOM \
+  --sku Standard
+```
+
+4. Create a diagnostic setting on the resource group to route Activity Logs:
+
+```bash
+WORKSPACE_ID=$(az monitor log-analytics workspace show \
+  --resource-group rg-az305-challenge02 \
+  --workspace-name law-routing-lab \
+  --query id -o tsv)
+SUB_ID=$(az account show --query id -o tsv)
+az monitor diagnostic-settings create \
+  --name "route-to-law" \
+  --resource "/subscriptions/$SUB_ID" \
+  --workspace "$WORKSPACE_ID" \
+  --logs '[{"category":"Administrative","enabled":true},{"category":"Security","enabled":true}]'
+```
+
+5. Verify the diagnostic setting is active:
+
+```bash
+az monitor diagnostic-settings list \
+  --resource "/subscriptions/$SUB_ID" \
+  --query "[?name=='route-to-law'].{name:name, workspace:workspaceId}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete resource groups
-az group delete --name rg-logging --yes --no-wait
-
-# If resources were created in existing groups, delete individually:
-az monitor diagnostic-settings delete --name "security-routing" --resource "$KV_ID"
-az monitor diagnostic-settings delete --name "ops-routing" --resource "$KV_ID"
-az monitor data-collection rule delete --name "dcr-filter-healthchecks" --resource-group rg-logging
-az eventhubs namespace delete --name eh-contoso-security --resource-group rg-logging
-az storage account delete --name stcontosologarchive --resource-group rg-logging --yes
+SUB_ID=$(az account show --query id -o tsv)
+az monitor diagnostic-settings delete \
+  --name "route-to-law" \
+  --resource "/subscriptions/$SUB_ID"
+az group delete --name rg-az305-challenge02 --yes --no-wait
 ```
 
 ---

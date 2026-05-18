@@ -318,22 +318,61 @@ Configure in Portal: Entra ID > Privileged Identity Management > Azure Resources
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge06 --location eastus
+```
+
+2. Create a custom RBAC role definition scoped to the resource group:
+
+```bash
+SUB_ID=$(az account show --query id -o tsv)
+az role definition create --role-definition '{
+  "Name": "AZ305 Lab Operator",
+  "Description": "Custom role for challenge 06 - read compute and restart VMs only",
+  "Actions": [
+    "Microsoft.Compute/virtualMachines/read",
+    "Microsoft.Compute/virtualMachines/start/action",
+    "Microsoft.Compute/virtualMachines/restart/action",
+    "Microsoft.Resources/subscriptions/resourceGroups/read"
+  ],
+  "NotActions": [],
+  "AssignableScopes": [
+    "/subscriptions/'"$SUB_ID"'/resourceGroups/rg-az305-challenge06"
+  ]
+}'
+```
+
+3. Verify the custom role was created:
+
+```bash
+az role definition list \
+  --custom-role-only true \
+  --query "[?roleName=='AZ305 Lab Operator'].{name:roleName, id:name}" -o table
+```
+
+4. List the permissions assigned to the role:
+
+```bash
+az role definition list \
+  --name "AZ305 Lab Operator" \
+  --query "[0].permissions[0].actions" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete custom role definition
-az role definition delete --name "Product Team Engineer"
-az role definition delete --name "Incident Responder"
-
-# Remove role assignments
-az role assignment delete --assignee "<group-id>" --role "Product Team Engineer" --scope "/subscriptions/{sub-id}/resourceGroups/team-alpha-compute-dev"
-
-# Remove resource locks
-az lock delete --name "protect-prod-sql" --resource-group rg-team-alpha-data-prod --resource-name sql-fabrikam-prod --resource-type Microsoft.Sql/servers
-az lock delete --name "protect-prod-nsg" --resource-group rg-shared-networking-prod --resource-name nsg-prod-default --resource-type Microsoft.Network/networkSecurityGroups
-
-# Delete test resource groups if created
-az group delete --name rg-rbac-poc --yes --no-wait
+az role definition delete --name "AZ305 Lab Operator"
+az group delete --name rg-az305-challenge06 --yes --no-wait
 ```
 
 ---

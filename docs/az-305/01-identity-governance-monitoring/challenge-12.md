@@ -144,21 +144,73 @@ For contractors without an HR system signal: (1) Require a "sponsor" (internal e
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge12 --location eastus
+```
+
+2. Create an access package catalog using Microsoft Graph:
+
+```bash
+az rest --method POST \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/catalogs" \
+  --headers "Content-Type=application/json" \
+  --body '{"displayName":"AZ305 Challenge 12 Lab Catalog","description":"Lab catalog for testing access packages","isExternallyVisible":false}'
+```
+
+3. Retrieve the catalog ID:
+
+```bash
+CATALOG_ID=$(az rest --method GET \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/catalogs?\$filter=displayName eq 'AZ305 Challenge 12 Lab Catalog'" \
+  --query "value[0].id" -o tsv)
+echo "Catalog ID: $CATALOG_ID"
+```
+
+4. Create an access package in the catalog:
+
+```bash
+az rest --method POST \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages" \
+  --headers "Content-Type=application/json" \
+  --body "{\"displayName\":\"Lab Developer Access\",\"description\":\"Access package for development resources\",\"catalog\":{\"id\":\"$CATALOG_ID\"},\"isHidden\":false}"
+```
+
+5. Verify the catalog and access package were created:
+
+```bash
+az rest --method GET \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/catalogs?\$filter=displayName eq 'AZ305 Challenge 12 Lab Catalog'" \
+  --query "value[].{name:displayName, id:id, state:state}" -o table
+az rest --method GET \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages?\$filter=displayName eq 'Lab Developer Access'" \
+  --query "value[].{name:displayName, id:id, isHidden:isHidden}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Remove PIM role settings (done via Portal or PowerShell/Graph)
-# Remove access reviews
-# Remove access packages and catalogs
-# These are Entra ID configurations - use the Portal or Microsoft Graph:
-
-# Example: Remove test groups created for this challenge
-az ad group delete --group "sg-production-contributors"
-az ad group delete --group "sg-engineering-team"
-az ad group delete --group "sg-data-analysts"
-
-# Remove any test guest users
-az ad user delete --id "contractor@externaldomain.com"
+# Delete the access package first, then the catalog
+AP_ID=$(az rest --method GET \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages?\$filter=displayName eq 'Lab Developer Access'" \
+  --query "value[0].id" -o tsv)
+az rest --method DELETE \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages/$AP_ID"
+CATALOG_ID=$(az rest --method GET \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/catalogs?\$filter=displayName eq 'AZ305 Challenge 12 Lab Catalog'" \
+  --query "value[0].id" -o tsv)
+az rest --method DELETE \
+  --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/catalogs/$CATALOG_ID"
+az group delete --name rg-az305-challenge12 --yes --no-wait
 ```
 
 ---

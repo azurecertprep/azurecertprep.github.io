@@ -141,18 +141,53 @@ Sandbox subscriptions need special treatment: place them in a dedicated manageme
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge09 --location eastus
+```
+
+2. Create a test management group to simulate your hierarchy:
+
+```bash
+az account management-group create \
+  --name "mg-az305-challenge09-lab" \
+  --display-name "AZ-305 Challenge 09 Lab"
+```
+
+3. Create a child management group under the test group:
+
+```bash
+az account management-group create \
+  --name "mg-az305-ch09-workloads" \
+  --display-name "Workloads" \
+  --parent "mg-az305-challenge09-lab"
+```
+
+4. Verify the management group hierarchy:
+
+```bash
+az account management-group show \
+  --name "mg-az305-challenge09-lab" \
+  --expand \
+  --recurse \
+  --query "{name:displayName, children:children[].displayName}" -o json
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Management groups and subscriptions are not typically deleted in a lab exercise.
-# If you created test management groups:
-az account management-group delete --name "mg-northwind-sandbox"
-az account management-group delete --name "mg-northwind-landing-zones"
-az account management-group delete --name "mg-northwind-platform"
-
-# Note: You cannot delete a management group that has child subscriptions or MGs.
-# Move subscriptions out first:
-# az account management-group subscription add --name "yourTargetMG" --subscription "sub-id"
+az account management-group delete --name "mg-az305-ch09-workloads"
+az account management-group delete --name "mg-az305-challenge09-lab"
+az group delete --name rg-az305-challenge09 --yes --no-wait
 ```
 
 ---

@@ -142,16 +142,70 @@ Private endpoints provide the strongest network isolation (traffic stays on the 
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge08 --location eastus
+```
+
+2. Deploy a Key Vault with soft delete and purge protection:
+
+```bash
+az keyvault create \
+  --name kv-az305-ch08-$RANDOM \
+  --resource-group rg-az305-challenge08 \
+  --location eastus \
+  --enable-rbac-authorization false \
+  --retention-days 7
+```
+
+3. Add a secret to the Key Vault:
+
+```bash
+KV_NAME=$(az keyvault list --resource-group rg-az305-challenge08 --query "[0].name" -o tsv)
+az keyvault secret set \
+  --vault-name "$KV_NAME" \
+  --name "DatabaseConnectionString" \
+  --value "Server=tcp:myserver.database.windows.net;Database=mydb;"
+```
+
+4. Create a user-assigned managed identity and grant it Key Vault access:
+
+```bash
+az identity create \
+  --name id-az305-challenge08 \
+  --resource-group rg-az305-challenge08
+IDENTITY_OID=$(az identity show \
+  --name id-az305-challenge08 \
+  --resource-group rg-az305-challenge08 \
+  --query principalId -o tsv)
+az keyvault set-policy \
+  --name "$KV_NAME" \
+  --object-id "$IDENTITY_OID" \
+  --secret-permissions get list
+```
+
+5. Verify the managed identity can access secrets (via policy listing):
+
+```bash
+az keyvault show --name "$KV_NAME" \
+  --query "properties.accessPolicies[?objectId=='$IDENTITY_OID'].{objectId:objectId, secrets:permissions.secrets}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete resource groups created for this challenge
-az group delete --name rg-keyvault-prod --yes --no-wait
-az group delete --name rg-keyvault-dev --yes --no-wait
-az group delete --name rg-keyvault-hsm --yes --no-wait
-
-# If you created a Managed HSM (note: HSM deletion has a purge protection period)
-# az keyvault purge --hsm-name meridian-payment-hsm
+KV_NAME=$(az keyvault list --resource-group rg-az305-challenge08 --query "[0].name" -o tsv)
+az group delete --name rg-az305-challenge08 --yes --no-wait
+az keyvault purge --name "$KV_NAME" --no-wait 2>/dev/null || true
 ```
 
 ---

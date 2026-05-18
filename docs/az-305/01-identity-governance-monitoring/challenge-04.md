@@ -268,18 +268,59 @@ For Relecloud's customer platform, **user flows** are sufficient because the req
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge04 --location eastus
+```
+
+2. Create an Entra ID app registration:
+
+```bash
+az ad app create \
+  --display-name "az305-challenge04-lab-app" \
+  --sign-in-audience AzureADMyOrg \
+  --web-redirect-uris "https://localhost:3000/auth/callback"
+```
+
+3. Store the App ID and add an API permission (Microsoft Graph User.Read):
+
+```bash
+APP_ID=$(az ad app list --display-name "az305-challenge04-lab-app" --query "[0].appId" -o tsv)
+az ad app permission add \
+  --id "$APP_ID" \
+  --api 00000003-0000-0000-c000-000000000000 \
+  --api-permissions e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope
+```
+
+4. Create a service principal for the app:
+
+```bash
+az ad sp create --id "$APP_ID"
+```
+
+5. Verify the app registration and its permissions:
+
+```bash
+az ad app show --id "$APP_ID" \
+  --query "{name:displayName, appId:appId, signInAudience:signInAudience}" -o table
+az ad app permission list --id "$APP_ID" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete app registration
-APP_ID=$(az ad app list --display-name "Relecloud Internal Portal" --query "[0].appId" -o tsv)
-az ad app delete --id $APP_ID
-
-# Remove managed identity Key Vault access
-az keyvault delete-policy --name kv-relecloud-prod --object-id $IDENTITY_ID
-
-# If App Service was created for this challenge:
-az group delete --name rg-relecloud --yes --no-wait
+APP_ID=$(az ad app list --display-name "az305-challenge04-lab-app" --query "[0].appId" -o tsv)
+az ad app delete --id "$APP_ID"
+az group delete --name rg-az305-challenge04 --yes --no-wait
 ```
 
 ---

@@ -229,12 +229,70 @@ Use multiple workspaces when: (1) Data sovereignty/residency requirements mandat
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge01 --location eastus
+```
+
+2. Deploy a Log Analytics workspace:
+
+```bash
+az monitor log-analytics workspace create \
+  --resource-group rg-az305-challenge01 \
+  --workspace-name law-centralized-lab \
+  --retention-time 90
+```
+
+3. Configure workspace daily cap to control costs:
+
+```bash
+az monitor log-analytics workspace update \
+  --resource-group rg-az305-challenge01 \
+  --workspace-name law-centralized-lab \
+  --quota 1
+```
+
+4. Send a test log entry using the Activity Log diagnostic setting:
+
+```bash
+SUB_ID=$(az account show --query id -o tsv)
+WORKSPACE_ID=$(az monitor log-analytics workspace show \
+  --resource-group rg-az305-challenge01 \
+  --workspace-name law-centralized-lab \
+  --query id -o tsv)
+az monitor diagnostic-settings create \
+  --name "activity-to-law" \
+  --resource "/subscriptions/$SUB_ID" \
+  --workspace "$WORKSPACE_ID" \
+  --logs '[{"category":"Administrative","enabled":true}]'
+```
+
+5. Verify the workspace is receiving data (may take a few minutes):
+
+```bash
+az monitor log-analytics workspace show \
+  --resource-group rg-az305-challenge01 \
+  --workspace-name law-centralized-lab \
+  --query "retentionInDays"
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete resource groups containing Log Analytics workspaces
-az group delete --name rg-logging-centralus --yes --no-wait
-az group delete --name rg-logging-westeurope --yes --no-wait
+SUB_ID=$(az account show --query id -o tsv)
+az monitor diagnostic-settings delete \
+  --name "activity-to-law" \
+  --resource "/subscriptions/$SUB_ID"
+az group delete --name rg-az305-challenge01 --yes --no-wait
 ```
 
 ---

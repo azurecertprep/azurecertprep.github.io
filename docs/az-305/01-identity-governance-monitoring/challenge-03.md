@@ -285,17 +285,79 @@ For the Redis exhaustion scenario, an Automation Runbook could:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge03 --location eastus
+```
+
+2. Deploy an Application Insights resource:
+
+```bash
+az monitor app-insights component create \
+  --app appi-monitoring-lab \
+  --location eastus \
+  --resource-group rg-az305-challenge03 \
+  --kind web \
+  --application-type web
+```
+
+3. Create an availability (ping) test:
+
+```bash
+APPI_ID=$(az monitor app-insights component show \
+  --app appi-monitoring-lab \
+  --resource-group rg-az305-challenge03 \
+  --query id -o tsv)
+az monitor app-insights web-test create \
+  --resource-group rg-az305-challenge03 \
+  --name "availability-test-lab" \
+  --defined-web-test-name "Homepage Ping" \
+  --location eastus \
+  --kind ping \
+  --frequency 300 \
+  --timeout 30 \
+  --web-test-kind standard \
+  --request-url "https://azure.microsoft.com" \
+  --expected-status-code 200 \
+  --locations '[{"Id":"us-il-ch1-azr"}]' \
+  --tags "hidden-link:$APPI_ID=Resource"
+```
+
+4. Create a metric alert rule on failed availability:
+
+```bash
+az monitor metrics alert create \
+  --name "alert-availability-failed" \
+  --resource-group rg-az305-challenge03 \
+  --scopes "$APPI_ID" \
+  --condition "avg availabilityResults/availabilityPercentage < 90" \
+  --description "Availability dropped below 90 percent" \
+  --evaluation-frequency 5m \
+  --window-size 15m \
+  --severity 2
+```
+
+5. Verify the alert rule was created:
+
+```bash
+az monitor metrics alert list \
+  --resource-group rg-az305-challenge03 \
+  --query "[].{name:name, severity:severity, enabled:enabled}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete monitoring resources
-az group delete --name rg-monitoring --yes --no-wait
-
-# If autoscale was configured on existing resources:
-az monitor autoscale delete --resource-group rg-app --name autoscale-tailspin
-
-# Delete alert rules if created in other resource groups:
-az monitor metrics alert delete --name "alert-response-time-p95" --resource-group rg-monitoring
+az group delete --name rg-az305-challenge03 --yes --no-wait
 ```
 
 ---

@@ -148,22 +148,65 @@ Combine three data sources for comprehensive reporting: (1) Azure Policy complia
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge11 --location eastus
+```
+
+2. Assign the Azure Security Benchmark initiative to the resource group:
+
+```bash
+RG_ID=$(az group show --name rg-az305-challenge11 --query id -o tsv)
+az policy assignment create \
+  --name "asb-initiative-lab" \
+  --display-name "Azure Security Benchmark (Lab)" \
+  --policy-set-definition "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8" \
+  --scope "$RG_ID" \
+  --enforcement-mode DoNotEnforce
+```
+
+3. Deploy a storage account to evaluate compliance against:
+
+```bash
+az storage account create \
+  --name staz305ch11$RANDOM \
+  --resource-group rg-az305-challenge11 \
+  --location eastus \
+  --sku Standard_LRS \
+  --min-tls-version TLS1_2 \
+  --allow-blob-public-access false
+```
+
+4. Trigger a compliance evaluation (results take 10-15 minutes):
+
+```bash
+az policy state trigger-scan --resource-group rg-az305-challenge11 --no-wait
+```
+
+5. Verify the initiative assignment is active:
+
+```bash
+az policy assignment show \
+  --name "asb-initiative-lab" \
+  --scope "$RG_ID" \
+  --query "{name:displayName, enforcement:enforcementMode, scope:scope}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Remove policy assignments
-az policy assignment delete --name "hipaa-initiative" --scope "/subscriptions/<subscription-id>"
-az policy assignment delete --name "internal-standards" --scope "/subscriptions/<subscription-id>"
-
-# Remove custom policy definitions (must remove assignments first)
-az policy set-definition delete --name "healthbridge-internal-standards"
-az policy definition delete --name "deny-anonymous-blob-access-custom"
-
-# Remove exemptions
-az policy exemption delete --name "telehealth-public-ip" --scope "/subscriptions/<subscription-id>/resourceGroups/rg-telehealth"
-
-# Remove test resources
-az group delete --name rg-compliance-test --yes --no-wait
+RG_ID=$(az group show --name rg-az305-challenge11 --query id -o tsv)
+az policy assignment delete --name "asb-initiative-lab" --scope "$RG_ID"
+az group delete --name rg-az305-challenge11 --yes --no-wait
 ```
 
 ---

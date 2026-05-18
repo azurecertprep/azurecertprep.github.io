@@ -314,22 +314,70 @@ az storagesync sync-group create \
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge07 --location eastus
+```
+
+2. Deploy a storage account with Azure Files enabled:
+
+```bash
+az storage account create \
+  --name staz305challenge07$RANDOM \
+  --resource-group rg-az305-challenge07 \
+  --location eastus \
+  --sku Standard_LRS \
+  --kind StorageV2
+```
+
+3. Create an Azure Files share:
+
+```bash
+ST_NAME=$(az storage account list --resource-group rg-az305-challenge07 --query "[0].name" -o tsv)
+az storage share-rm create \
+  --storage-account "$ST_NAME" \
+  --resource-group rg-az305-challenge07 \
+  --name "department-share" \
+  --quota 5
+```
+
+4. Assign the Storage File Data SMB Share Contributor role to your identity:
+
+```bash
+CURRENT_USER=$(az ad signed-in-user show --query id -o tsv)
+STORAGE_ID=$(az storage account show --name "$ST_NAME" --resource-group rg-az305-challenge07 --query id -o tsv)
+az role assignment create \
+  --assignee-object-id "$CURRENT_USER" \
+  --assignee-principal-type User \
+  --role "Storage File Data SMB Share Contributor" \
+  --scope "$STORAGE_ID"
+```
+
+5. Verify the share and RBAC assignment:
+
+```bash
+az storage share-rm list \
+  --storage-account "$ST_NAME" \
+  --resource-group rg-az305-challenge07 \
+  --query "[].{name:name, quota:shareQuota}" -o table
+az role assignment list \
+  --scope "$STORAGE_ID" \
+  --query "[?roleDefinitionName=='Storage File Data SMB Share Contributor'].{principal:principalName, role:roleDefinitionName}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete Azure Files resources
-az storage account delete --name stadventureworksfiles --resource-group rg-files --yes
-az storagesync delete --name sync-adventureworks --resource-group rg-files --yes
-
-# Delete resource group
-az group delete --name rg-files --yes --no-wait
-
-# Note: Application Proxy connectors are uninstalled from the on-premises server
-# Entra Domain Services deletion is done via the portal:
-# Entra ID > Domain Services > Select domain > Delete
-
-# Delete any published enterprise applications
-az ad app delete --id $(az ad app list --display-name "HR Portal - App Proxy" --query "[0].appId" -o tsv)
+az group delete --name rg-az305-challenge07 --yes --no-wait
 ```
 
 ---
