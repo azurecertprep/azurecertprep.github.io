@@ -67,7 +67,7 @@ Recovery Services vaults são usados para backup de VM e Azure Site Recovery. O 
 Crie uma política de backup personalizada: backups diários às 2:00 da manhã, retenção de 30 dias.
 
 <details>
-<summary>💡 Dica</summary>
+<summary>Dica</summary>
 
 O jeito mais fácil é pelo Portal do Azure:
 
@@ -136,7 +136,7 @@ Quando o backup for concluído, restaure-o para uma nova VM:
 4. Selecione o ponto de restauração e a VNet/subnet de destino
 
 <details>
-<summary>💡 Dica CLI</summary>
+<summary>Dica CLI</summary>
 
 ```bash
 # List recovery points
@@ -169,7 +169,7 @@ az dataprotection backup-vault create \
 2. Configure backup operacional para blobs (restauração point-in-time)
 
 <details>
-<summary>💡 Dica</summary>
+<summary>Dica</summary>
 
 Pelo Portal do Azure:
 1. Vá ao seu Backup vault → **+ Backup**
@@ -226,7 +226,7 @@ Configure alertas para jobs de backup com falha:
 2. Crie uma regra de alerta para **Falha de backup**
 3. Anexe um grupo de ação para notificação por email
 
-## 🔨 Quebre & Conserte
+## Quebre & Conserte
 
 ### Quebre
 1. **Excluir um vault com itens protegidos** | Tente excluir o Recovery Services vault enquanto ele ainda tem itens de backup. Observe o erro: *"O vault não pode ser excluído pois existem recursos dentro do vault."*
@@ -236,7 +236,7 @@ Configure alertas para jobs de backup com falha:
 - Para excluir um vault: primeiro pare a proteção de backup, exclua os dados de backup, depois exclua o vault
 - Mova ou recrie o vault na mesma região da VM
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 1. **Recovery Services vault vs Azure Backup vault?**
    - Recovery Services vault: VMs, SQL em Azure VM, Azure Files, Azure Site Recovery
@@ -255,7 +255,7 @@ Configure alertas para jobs de backup com falha:
    - Test failover | valida a replicação sem afetar a produção; cria recursos de teste
    - Failover | recuperação de desastre real; transfere a produção para a região secundária
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # IMPORTANT: Must stop protection before deleting vault
@@ -275,7 +275,7 @@ Se a exclusão do vault falhar, siga esta ordem:
 4. Exclua o grupo de recursos
 
 :::
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] Recovery Services vault criado
 - [ ] Política de backup personalizada configurada (diária, retenção de 30 dias)

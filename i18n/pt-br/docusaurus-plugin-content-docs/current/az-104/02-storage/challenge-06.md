@@ -18,10 +18,10 @@ Sua missão: implementar políticas de gerenciamento de ciclo de vida para contr
 
 ## Habilidades do Exame Cobertas
 
-- ✅ Configurar acesso baseado em identidade para Azure Files
-- ✅ Criar e configurar políticas de acesso armazenadas
-- ✅ Configurar políticas de gerenciamento de ciclo de vida
-- ✅ Configurar replicação de objetos entre storage accounts
+- Configurar acesso baseado em identidade para Azure Files
+- Criar e configurar políticas de acesso armazenadas
+- Configurar políticas de gerenciamento de ciclo de vida
+- Configurar replicação de objetos entre storage accounts
 
 ## Referência Sysadmin ↔ Azure
 

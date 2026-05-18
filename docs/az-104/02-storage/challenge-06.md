@@ -18,10 +18,10 @@ Your mission: implement lifecycle management policies to control costs, configur
 
 ## Exam Skills Covered
 
-- ✅ Configure identity-based access for Azure Files
-- ✅ Create and configure stored access policies
-- ✅ Configure lifecycle management policies
-- ✅ Configure object replication between storage accounts
+- Configure identity-based access for Azure Files
+- Create and configure stored access policies
+- Configure lifecycle management policies
+- Configure object replication between storage accounts
 
 ## Sysadmin ↔ Azure Reference
 

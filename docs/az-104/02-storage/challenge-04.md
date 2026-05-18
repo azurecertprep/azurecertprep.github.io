@@ -18,15 +18,15 @@ Storage accounts are one of the most tested topics on the AZ-104 exam. You'll ne
 
 ## Exam Skills Covered
 
-- ✅ Create and configure storage accounts
-- ✅ Configure Azure Storage redundancy
-- ✅ Configure storage account encryption (Microsoft-managed and customer-managed keys)
-- ✅ Configure storage account firewalls and virtual networks
-- ✅ Generate shared access signatures (SAS)
-- ✅ Configure stored access policies
-- ✅ Manage access keys
-- ✅ Upload and manage data with AzCopy
-- ✅ Configure Azure Storage Explorer
+- Create and configure storage accounts
+- Configure Azure Storage redundancy
+- Configure storage account encryption (Microsoft-managed and customer-managed keys)
+- Configure storage account firewalls and virtual networks
+- Generate shared access signatures (SAS)
+- Configure stored access policies
+- Manage access keys
+- Upload and manage data with AzCopy
+- Configure Azure Storage Explorer
 
 ## Sysadmin ↔ Azure Reference
 

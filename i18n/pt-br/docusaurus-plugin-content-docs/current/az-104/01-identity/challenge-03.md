@@ -18,14 +18,14 @@ Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para 
 
 ## Habilidades do Exame Cobertas
 
-- ✅ Criar e gerenciar atribuições de Azure Policy
-- ✅ Criar e gerenciar definições e iniciativas de política
-- ✅ Gerenciar bloqueios de recursos
-- ✅ Gerenciar tags de recursos
-- ✅ Gerenciar grupos de recursos
-- ✅ Gerenciar assinaturas e grupos de gerenciamento
-- ✅ Configurar e gerenciar recomendações do Azure Advisor
-- ✅ Configurar e gerenciar orçamentos e alertas de custo
+- Criar e gerenciar atribuições de Azure Policy
+- Criar e gerenciar definições e iniciativas de política
+- Gerenciar bloqueios de recursos
+- Gerenciar tags de recursos
+- Gerenciar grupos de recursos
+- Gerenciar assinaturas e grupos de gerenciamento
+- Configurar e gerenciar recomendações do Azure Advisor
+- Configurar e gerenciar orçamentos e alertas de custo
 
 ## Referência Sysadmin ↔ Azure
 

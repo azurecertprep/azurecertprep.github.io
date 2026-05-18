@@ -67,7 +67,7 @@ Add the following record types to your DNS zone:
 3. **TXT Record** | Add a verification TXT record
 
 <details>
-<summary>💡 Hint</summary>
+<summary>Hint</summary>
 
 ```bash
 # A record
@@ -113,7 +113,7 @@ az network lb create \
 Deploy two VMs and add them to the load balancer's backend pool.
 
 <details>
-<summary>💡 Hint | Create VMs with a web server</summary>
+<summary>Hint | Create VMs with a web server</summary>
 
 ```bash
 # Create a VNet and subnet
@@ -193,7 +193,7 @@ echo "Load Balancer IP: $LB_IP"
 Create a second load balancer for internal (private) backend services.
 
 <details>
-<summary>💡 Hint</summary>
+<summary>Hint</summary>
 
 ```bash
 az network lb create \
@@ -229,7 +229,7 @@ az vm get-instance-view \
   --query instanceView.statuses
 ```
 
-## 🔨 Break & Fix
+## Break & Fix
 
 ### Break It
 1. **Misconfigure the health probe** | Change the probe to check port 8080 instead of 80 (or use path `/healthz` when the web server doesn't have that endpoint). Observe that all backend instances show as unhealthy.
@@ -240,7 +240,7 @@ az vm get-instance-view \
 - Verify backend health returns to normal
 - Observe that the LB automatically stops sending traffic to unhealthy instances
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 1. **What are the key differences between Basic and Standard Load Balancer SKUs?**
    - Standard supports availability zones, has an SLA, and is zone-redundant by default
@@ -258,13 +258,13 @@ az vm get-instance-view \
 4. **Which DNS record types should you know for the exam?**
    - A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), TXT (verification), NS (name server), SOA (start of authority), SRV (service location)
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 az group delete --name $RG --yes --no-wait
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] Azure DNS zone created with A, CNAME, and TXT records
 - [ ] Public Standard Load Balancer created with 2 backend VMs

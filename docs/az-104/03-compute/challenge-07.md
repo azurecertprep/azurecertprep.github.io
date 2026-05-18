@@ -105,7 +105,7 @@ az deployment group validate \
 ```
 
 <details>
-<summary>💡 Hint | Where to add the tag parameter</summary>
+<summary>Hint | Where to add the tag parameter</summary>
 
 Add a new parameter:
 ```json
@@ -178,7 +178,7 @@ az bicep build --file storage.bicep
 ```
 
 <details>
-<summary>💡 Hint | Bicep blob container resource</summary>
+<summary>Hint | Bicep blob container resource</summary>
 
 ```bicep
 param storagePrefix string
@@ -249,7 +249,7 @@ az deployment group what-if \
   --parameters storagePrefix=contoso environment=staging
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] ARM template deploys a storage account with tags
 - [ ] Exported template matches the deployed resources
@@ -291,7 +291,7 @@ az deployment group what-if \
 # Compare the what-if output between Incremental and Complete modes
 ```
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 **1. What is the key difference between ARM templates and Bicep?**
 
@@ -326,7 +326,7 @@ It converts an ARM JSON template into a Bicep (.bicep) file. The conversion is b
 Storage account names must be globally unique across all of Azure (3–24 chars, lowercase + numbers only). `uniqueString()` generates a deterministic 13-character hash based on the input (e.g., `resourceGroup().id`), ensuring unique but repeatable names per resource group.
 </details>
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # Remove all resources created in this challenge

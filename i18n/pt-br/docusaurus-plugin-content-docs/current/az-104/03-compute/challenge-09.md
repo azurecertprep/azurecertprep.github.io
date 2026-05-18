@@ -201,7 +201,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 ```
 
 <details>
-<summary>💡 Dica | Quando usar ACI vs Container Apps vs AKS</summary>
+<summary>Dica | Quando usar ACI vs Container Apps vs AKS</summary>
 
 | Recurso | ACI | Container Apps | AKS |
 |---------|-----|---------------|-----|
@@ -213,7 +213,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 | **Complexidade** | Muito baixa | Baixa | Alta |
 </details>
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] ACR criado e contém a imagem `contoso-dashboard:v1`
 - [ ] ACI em execução e acessível via HTTP
@@ -267,7 +267,7 @@ az containerapp create \
 # A aplicação roda mas retorna erros 502. Por quê?
 ```
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 **1. Quais são as diferenças entre os SKUs do ACR?**
 
@@ -311,7 +311,7 @@ az containerapp create \
 `az acr build` executa o build **na nuvem** usando ACR Tasks. Ele faz upload do contexto de build para o Azure, compila a imagem em computação do Azure e envia o resultado diretamente para o registro. Você não precisa ter o Docker instalado localmente. Isso é ideal para pipelines de CI/CD e desenvolvedores sem Docker Desktop.
 </details>
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Excluir todos os recursos

@@ -18,15 +18,15 @@ Storage accounts são um dos tópicos mais testados no exame AZ-104. Você preci
 
 ## Habilidades do Exame Cobertas
 
-- ✅ Criar e configurar storage accounts
-- ✅ Configurar redundância do Azure Storage
-- ✅ Configurar criptografia de storage account (chaves gerenciadas pela Microsoft e chaves gerenciadas pelo cliente)
-- ✅ Configurar firewalls e redes virtuais de storage account
-- ✅ Gerar assinaturas de acesso compartilhado (SAS)
-- ✅ Configurar políticas de acesso armazenadas
-- ✅ Gerenciar chaves de acesso
-- ✅ Fazer upload e gerenciar dados com AzCopy
-- ✅ Configurar o Azure Storage Explorer
+- Criar e configurar storage accounts
+- Configurar redundância do Azure Storage
+- Configurar criptografia de storage account (chaves gerenciadas pela Microsoft e chaves gerenciadas pelo cliente)
+- Configurar firewalls e redes virtuais de storage account
+- Gerar assinaturas de acesso compartilhado (SAS)
+- Configurar políticas de acesso armazenadas
+- Gerenciar chaves de acesso
+- Fazer upload e gerenciar dados com AzCopy
+- Configurar o Azure Storage Explorer
 
 ## Referência Sysadmin ↔ Azure
 

@@ -148,7 +148,7 @@ Heartbeat
 ```
 
 <details>
-<summary>💡 Mais padrões KQL úteis</summary>
+<summary>Mais padrões KQL úteis</summary>
 
 ```kusto
 // Count events by severity over time (for charting)
@@ -202,7 +202,7 @@ az monitor metrics alert create \
 Crie um alerta baseado em uma consulta KQL | por exemplo, detectar um padrão específico de erro nos logs:
 
 <details>
-<summary>💡 Dica</summary>
+<summary>Dica</summary>
 
 Use o Portal do Azure: **Monitor → Alertas → Criar → Regra de alerta de log**
 
@@ -239,7 +239,7 @@ az network watcher test-ip-flow \
   --resource-group $RG
 ```
 
-## 🔨 Quebre & Conserte
+## Quebre & Conserte
 
 ### Quebre
 1. **Alerta sem ação** | Crie uma regra de alerta mas não anexe um grupo de ação. Acione a condição. Observe: o alerta dispara no portal mas nenhuma notificação é enviada. Por quê?
@@ -250,7 +250,7 @@ az network watcher test-ip-flow \
 - Entenda que a ingestão de logs tem um atraso (15–30 min) | isso é comportamento esperado, não um bug
 - Use a tabela **Heartbeat** para verificar que o agente está conectado
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 1. **Qual é a diferença entre Métricas e Logs no Azure Monitor?**
    - Métricas = dados numéricos de séries temporais, quase em tempo real, armazenados em um banco de dados de séries temporais
@@ -269,13 +269,13 @@ az network watcher test-ip-flow \
 4. **O que são regras de processamento de alertas?**
    - Regras que modificam o comportamento de alertas disparados (ex: suprimir notificações durante janelas de manutenção, adicionar grupos de ação a todos os alertas em um escopo)
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 az group delete --name $RG --yes --no-wait
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] Log Analytics workspace criado
 - [ ] VM Insights habilitado e coletando dados

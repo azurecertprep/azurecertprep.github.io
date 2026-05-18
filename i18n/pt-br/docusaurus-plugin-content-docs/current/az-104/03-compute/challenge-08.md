@@ -88,7 +88,7 @@ az vm show -g rg-vm-lab -n vm-web-01 \
 ```
 
 <details>
-<summary>💡 Dica | Formatar e montar o disco dentro da VM</summary>
+<summary>Dica | Formatar e montar o disco dentro da VM</summary>
 
 Conecte via SSH na VM e execute:
 ```bash
@@ -148,7 +148,7 @@ az resource list -g rg-vm-lab --query "[].id" -o tsv
 ```
 
 <details>
-<summary>💡 Dica | Movendo todos os recursos dependentes</summary>
+<summary>Dica | Movendo todos os recursos dependentes</summary>
 
 Você deve mover a VM e todos os seus recursos dependentes juntos:
 ```bash
@@ -256,7 +256,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] VM Linux criada com autenticação por chave SSH
 - [ ] Disco de dados de 128 GB anexado, formatado e montado
@@ -292,7 +292,7 @@ az monitor autoscale update \
   --min-count 10 --max-count 5
 ```
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 **1. Qual é a diferença entre parar e desalocar uma VM?**
 
@@ -330,7 +330,7 @@ az monitor autoscale update \
 - **Flexible**: As instâncias podem misturar tamanhos e configurações de VM. Melhor para cargas de trabalho mistas. Suporta availability zones nativamente. Este é o modo mais novo e recomendado.
 </details>
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Excluir todos os recursos: execute quando terminar completamente

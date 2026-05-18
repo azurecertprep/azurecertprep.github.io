@@ -150,7 +150,7 @@ echo "Then ping spoke: ping $SPOKE_PRIVATE_IP"
 ```
 
 <details>
-<summary>💡 Hint | If ping doesn't work</summary>
+<summary>Hint | If ping doesn't work</summary>
 
 ICMP (ping) may be blocked by the default NSG. Allow ICMP:
 ```bash
@@ -250,7 +250,7 @@ az network nic show-effective-route-table \
   --ids $SPOKE_NIC -o table
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] Hub VNet (10.0.0.0/16) with frontend and backend subnets
 - [ ] Spoke VNet (10.1.0.0/16) with workloads subnet
@@ -300,7 +300,7 @@ az network vnet peering show -g rg-network-lab \
 # What state is it in? Can traffic still flow?
 ```
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 **1. What is the difference between VNet peering and a VPN gateway?**
 
@@ -360,7 +360,7 @@ IP flow verify checks whether a packet is allowed or denied by simulating the NS
 It does **not** check UDRs, firewalls, or NVAs | only NSG rules. For routing issues, use "Next Hop" instead.
 </details>
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # Delete all resources

@@ -18,13 +18,13 @@ Understanding the difference between Blob Storage and Azure Files | and when to 
 
 ## Exam Skills Covered
 
-- ✅ Create and configure blob containers
-- ✅ Create and configure file shares
-- ✅ Configure storage tiers (Hot, Cool, Archive)
-- ✅ Configure soft delete for blobs and containers
-- ✅ Configure blob snapshots and versioning
-- ✅ Configure soft delete for Azure Files
-- ✅ Configure file share snapshots
+- Create and configure blob containers
+- Create and configure file shares
+- Configure storage tiers (Hot, Cool, Archive)
+- Configure soft delete for blobs and containers
+- Configure blob snapshots and versioning
+- Configure soft delete for Azure Files
+- Configure file share snapshots
 
 ## Sysadmin ↔ Azure Reference
 

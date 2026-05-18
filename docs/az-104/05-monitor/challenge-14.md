@@ -148,7 +148,7 @@ Heartbeat
 ```
 
 <details>
-<summary>💡 More useful KQL patterns</summary>
+<summary>More useful KQL patterns</summary>
 
 ```kusto
 // Count events by severity over time (for charting)
@@ -202,7 +202,7 @@ az monitor metrics alert create \
 Create an alert based on a KQL query | e.g., detect a specific error pattern in logs:
 
 <details>
-<summary>💡 Hint</summary>
+<summary>Hint</summary>
 
 Use the Azure Portal: **Monitor → Alerts → Create → Log alert rule**
 
@@ -239,7 +239,7 @@ az network watcher test-ip-flow \
   --resource-group $RG
 ```
 
-## 🔨 Break & Fix
+## Break & Fix
 
 ### Break It
 1. **Alert without action** | Create an alert rule but don't attach an action group. Trigger the condition. Notice: the alert fires in the portal but no notification is sent. Why?
@@ -250,7 +250,7 @@ az network watcher test-ip-flow \
 - Understand that log ingestion has a delay (15–30 min) | this is expected behavior, not a bug
 - Use **Heartbeat** table to verify the agent is connected
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 1. **What is the difference between Metrics and Logs in Azure Monitor?**
    - Metrics = numeric time-series data, near real-time, stored in a time-series database
@@ -269,13 +269,13 @@ az network watcher test-ip-flow \
 4. **What are alert processing rules?**
    - Rules that modify the behavior of fired alerts (e.g., suppress notifications during maintenance windows, add action groups to all alerts in a scope)
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 az group delete --name $RG --yes --no-wait
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] Log Analytics workspace created
 - [ ] VM Insights enabled and collecting data

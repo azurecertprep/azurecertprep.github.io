@@ -18,13 +18,13 @@ Entender a diferença entre Blob Storage e Azure Files | e quando usar cada um |
 
 ## Habilidades do Exame Cobertas
 
-- ✅ Criar e configurar containers de blob
-- ✅ Criar e configurar compartilhamentos de arquivos
-- ✅ Configurar camadas de armazenamento (Hot, Cool, Archive)
-- ✅ Configurar exclusão reversível para blobs e containers
-- ✅ Configurar snapshots e versionamento de blobs
-- ✅ Configurar exclusão reversível para Azure Files
-- ✅ Configurar snapshots de compartilhamento de arquivos
+- Criar e configurar containers de blob
+- Criar e configurar compartilhamentos de arquivos
+- Configurar camadas de armazenamento (Hot, Cool, Archive)
+- Configurar exclusão reversível para blobs e containers
+- Configurar snapshots e versionamento de blobs
+- Configurar exclusão reversível para Azure Files
+- Configurar snapshots de compartilhamento de arquivos
 
 ## Referência Sysadmin ↔ Azure
 

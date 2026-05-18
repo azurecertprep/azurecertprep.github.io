@@ -31,7 +31,7 @@ done
 
 ---
 
-## 🎫 Ticket 1: Crise de Identidade
+## Ticket 1: Crise de Identidade
 
 **Domínio: Gerenciar Identidades e Governança do Microsoft Entra ID**
 
@@ -44,7 +44,7 @@ done
 3. Verifique a associação ao grupo | Jordan está no grupo "Developers"?
 
 <details>
-<summary>💡 Passos de Diagnóstico</summary>
+<summary>Passos de Diagnóstico</summary>
 
 ```bash
 # Check if user account is enabled
@@ -65,7 +65,7 @@ az ad group member check \
 3. **Adicionar Jordan ao grupo Developers**
 
 <details>
-<summary>💡 Comandos de Correção</summary>
+<summary>Comandos de Correção</summary>
 
 ```bash
 # Enable account
@@ -87,7 +87,7 @@ O usuário foi provisionado por um script automatizado que falhou no meio do pro
 
 ---
 
-## 🎫 Ticket 2: SOS de Storage
+## Ticket 2: SOS de Storage
 
 **Domínio: Implementar e Gerenciar Armazenamento**
 
@@ -100,7 +100,7 @@ O usuário foi provisionado por um script automatizado que falhou no meio do pro
 3. Verifique se as **chaves de acesso foram rotacionadas**
 
 <details>
-<summary>💡 Passos de Diagnóstico</summary>
+<summary>Passos de Diagnóstico</summary>
 
 ```bash
 # Check storage account network rules
@@ -126,7 +126,7 @@ azcopy list "https://stcontoso.blob.core.windows.net/data?<SAS_TOKEN>"
 Gere um novo token SAS ou atualize as regras de firewall para permitir o IP da equipe de analytics.
 
 <details>
-<summary>💡 Comandos de Correção</summary>
+<summary>Comandos de Correção</summary>
 
 ```bash
 # Option A: Generate a new SAS token
@@ -153,7 +153,7 @@ O token SAS gerado na semana passada tinha validade de 7 dias e expirou durante 
 
 ---
 
-## 🎫 Ticket 3: VM Fora do Ar
+## Ticket 3: VM Fora do Ar
 
 **Domínio: Implantar e Gerenciar Recursos de Computação do Azure**
 
@@ -166,7 +166,7 @@ O token SAS gerado na semana passada tinha validade de 7 dias e expirou durante 
 3. Verifique o **estado de energia** atual da VM
 
 <details>
-<summary>💡 Passos de Diagnóstico</summary>
+<summary>Passos de Diagnóstico</summary>
 
 ```bash
 # Check activity log for Stop/Deallocate events
@@ -196,7 +196,7 @@ az vm get-instance-view \
 3. **Remover o desligamento automático** se estiver mal configurado
 
 <details>
-<summary>💡 Comandos de Correção</summary>
+<summary>Comandos de Correção</summary>
 
 ```bash
 # Start the VM
@@ -218,7 +218,7 @@ Um desenvolvedor habilitou o desligamento automático às 19:00 para sua VM de d
 
 ---
 
-## 🎫 Ticket 4: Bloqueio de Rede
+## Ticket 4: Bloqueio de Rede
 
 **Domínio: Configurar e Gerenciar Redes Virtuais**
 
@@ -231,7 +231,7 @@ Um desenvolvedor habilitou o desligamento automático às 19:00 para sua VM de d
 3. Verifique se a **NIC da VM ainda tem o NSG correto** associado
 
 <details>
-<summary>💡 Passos de Diagnóstico</summary>
+<summary>Passos de Diagnóstico</summary>
 
 ```bash
 # List NSG rules
@@ -268,7 +268,7 @@ az network watcher test-ip-flow \
 Adicione uma regra NSG de permissão adequada para tráfego HTTPS e verifique a configuração do health probe.
 
 <details>
-<summary>💡 Comandos de Correção</summary>
+<summary>Comandos de Correção</summary>
 
 ```bash
 # Add NSG rule to allow HTTPS
@@ -297,7 +297,7 @@ A equipe de segurança adicionou uma regra `DenyAllInbound` com prioridade 200, 
 
 ---
 
-## 🎫 Ticket 5: Cadê Meus Alertas?
+## Ticket 5: Cadê Meus Alertas?
 
 **Domínio: Monitorar e Manter Recursos do Azure**
 
@@ -310,7 +310,7 @@ A equipe de segurança adicionou uma regra `DenyAllInbound` com prioridade 200, 
 3. Verifique as **configurações de alerta de backup** no Recovery Services vault
 
 <details>
-<summary>💡 Passos de Diagnóstico</summary>
+<summary>Passos de Diagnóstico</summary>
 
 ```bash
 # List alert rules and their status
@@ -339,7 +339,7 @@ az monitor metrics alert show \
 3. **Configurar alertas de falha de backup**
 
 <details>
-<summary>💡 Comandos de Correção</summary>
+<summary>Comandos de Correção</summary>
 
 ```bash
 # Update action group with correct email
@@ -364,7 +364,7 @@ O grupo de ação tinha o email errado (um erro de digitação | `ops@contso.com
 
 ---
 
-## 📝 Teste seus Conhecimentos: Questões Estilo Exame
+## Teste seus Conhecimentos: Questões Estilo Exame
 
 **Questão 1** *(Identidade)*
 Um usuário relata que não consegue fazer login no Portal do Azure. A conta dele existe no Microsoft Entra ID. O que você deve verificar PRIMEIRO?
@@ -418,7 +418,7 @@ Uma regra de alerta está configurada com a condição correta, mas a equipe nun
 
 ---
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Delete all capstone resource groups
@@ -427,7 +427,7 @@ for i in identity storage compute network monitor; do
 done
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] **Ticket 1** | Crise de Identidade resolvida (conta habilitada, senha redefinida, associação ao grupo corrigida)
 - [ ] **Ticket 2** | SOS de Storage resolvido (novo token SAS ou regras de firewall atualizadas)

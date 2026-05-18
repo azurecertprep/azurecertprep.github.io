@@ -88,7 +88,7 @@ az vm show -g rg-vm-lab -n vm-web-01 \
 ```
 
 <details>
-<summary>💡 Hint | Format and mount the disk inside the VM</summary>
+<summary>Hint | Format and mount the disk inside the VM</summary>
 
 SSH into the VM, then:
 ```bash
@@ -148,7 +148,7 @@ az resource list -g rg-vm-lab --query "[].id" -o tsv
 ```
 
 <details>
-<summary>💡 Hint | Moving all dependent resources</summary>
+<summary>Hint | Moving all dependent resources</summary>
 
 You must move the VM and all its dependent resources together:
 ```bash
@@ -256,7 +256,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] Linux VM created with SSH key authentication
 - [ ] 128 GB data disk attached, formatted, and mounted
@@ -292,7 +292,7 @@ az monitor autoscale update \
   --min-count 10 --max-count 5
 ```
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 **1. What is the difference between stopping and deallocating a VM?**
 
@@ -330,7 +330,7 @@ az monitor autoscale update \
 - **Flexible**: Instances can mix VM sizes and configurations. Better for mixed workloads. Supports availability zones natively. This is the newer, recommended mode.
 </details>
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # Delete all resources: run this when completely finished

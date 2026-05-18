@@ -18,11 +18,11 @@ RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armaz
 
 ## Habilidades do Exame Cobertas
 
-- ✅ Gerenciar funções internas do Azure
-- ✅ Atribuir funções em diferentes escopos (grupo de gerenciamento, assinatura, grupo de recursos, recurso)
-- ✅ Interpretar atribuições de acesso
-- ✅ Criar e atribuir funções personalizadas
-- ✅ Gerenciar atribuições de funções do Microsoft Entra
+- Gerenciar funções internas do Azure
+- Atribuir funções em diferentes escopos (grupo de gerenciamento, assinatura, grupo de recursos, recurso)
+- Interpretar atribuições de acesso
+- Criar e atribuir funções personalizadas
+- Gerenciar atribuições de funções do Microsoft Entra
 
 ## Referência Sysadmin ↔ Azure
 

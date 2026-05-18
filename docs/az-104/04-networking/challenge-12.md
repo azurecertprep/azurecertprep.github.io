@@ -277,7 +277,7 @@ az network bastion show -g rg-netsec-lab -n bastion-secure \
 ```
 
 <details>
-<summary>💡 Hint | Connect using Bastion via CLI</summary>
+<summary>Hint | Connect using Bastion via CLI</summary>
 
 For SSH via Bastion from the CLI (requires the Bastion tunnel):
 ```bash
@@ -395,7 +395,7 @@ echo "Storage account $STORAGE_NAME.blob.core.windows.net now resolves to $PE_IP
 echo "From vm-db, run: nslookup $STORAGE_NAME.blob.core.windows.net"
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] NSG created with HTTP/HTTPS allow rules and deny-all
 - [ ] NSG associated with the frontend subnet
@@ -437,7 +437,7 @@ az network vnet subnet create -g rg-netsec-lab \
 # Bastion requires the subnet to be named EXACTLY "AzureBastionSubnet"
 ```
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 **1. How does NSG rule priority work?**
 
@@ -511,7 +511,7 @@ This means the most restrictive combination applies. If the subnet NSG allows po
 - NSG on AzureBastionSubnet must allow specific inbound/outbound rules (Azure manages this with Basic SKU)
 </details>
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # Delete all resources: Bastion incurs hourly charges so clean up promptly!

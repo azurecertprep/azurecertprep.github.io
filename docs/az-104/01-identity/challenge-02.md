@@ -18,11 +18,11 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
 
 ## Exam Skills Covered
 
-- ✅ Manage built-in Azure roles
-- ✅ Assign roles at different scopes (management group, subscription, resource group, resource)
-- ✅ Interpret access assignments
-- ✅ Create and assign custom roles
-- ✅ Manage Microsoft Entra role assignments
+- Manage built-in Azure roles
+- Assign roles at different scopes (management group, subscription, resource group, resource)
+- Interpret access assignments
+- Create and assign custom roles
+- Manage Microsoft Entra role assignments
 
 ## Sysadmin ↔ Azure Reference
 

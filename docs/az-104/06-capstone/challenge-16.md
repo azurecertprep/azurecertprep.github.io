@@ -31,7 +31,7 @@ done
 
 ---
 
-## 🎫 Ticket 1: Identity Crisis
+## Ticket 1: Identity Crisis
 
 **Domain: Manage Microsoft Entra ID Identities and Governance**
 
@@ -44,7 +44,7 @@ done
 3. Verify group membership | is Jordan in the "Developers" group?
 
 <details>
-<summary>💡 Diagnosis Steps</summary>
+<summary>Diagnosis Steps</summary>
 
 ```bash
 # Check if user account is enabled
@@ -65,7 +65,7 @@ az ad group member check \
 3. **Add Jordan to the Developers group**
 
 <details>
-<summary>💡 Fix Commands</summary>
+<summary>Fix Commands</summary>
 
 ```bash
 # Enable account
@@ -87,7 +87,7 @@ The user was provisioned by an automated script that failed partway through | th
 
 ---
 
-## 🎫 Ticket 2: Storage SOS
+## Ticket 2: Storage SOS
 
 **Domain: Implement and Manage Storage**
 
@@ -100,7 +100,7 @@ The user was provisioned by an automated script that failed partway through | th
 3. Check if **access keys were rotated**
 
 <details>
-<summary>💡 Diagnosis Steps</summary>
+<summary>Diagnosis Steps</summary>
 
 ```bash
 # Check storage account network rules
@@ -126,7 +126,7 @@ azcopy list "https://stcontoso.blob.core.windows.net/data?<SAS_TOKEN>"
 Generate a new SAS token or update firewall rules to allow the analytics team's IP.
 
 <details>
-<summary>💡 Fix Commands</summary>
+<summary>Fix Commands</summary>
 
 ```bash
 # Option A: Generate a new SAS token
@@ -153,7 +153,7 @@ The SAS token generated last week had a 7-day expiry and expired overnight. Addi
 
 ---
 
-## 🎫 Ticket 3: VM Down
+## Ticket 3: VM Down
 
 **Domain: Deploy and Manage Azure Compute Resources**
 
@@ -166,7 +166,7 @@ The SAS token generated last week had a 7-day expiry and expired overnight. Addi
 3. Check the VM's current **power state**
 
 <details>
-<summary>💡 Diagnosis Steps</summary>
+<summary>Diagnosis Steps</summary>
 
 ```bash
 # Check activity log for Stop/Deallocate events
@@ -196,7 +196,7 @@ az vm get-instance-view \
 3. **Remove auto-shutdown** if it was misconfigured
 
 <details>
-<summary>💡 Fix Commands</summary>
+<summary>Fix Commands</summary>
 
 ```bash
 # Start the VM
@@ -218,7 +218,7 @@ A developer enabled auto-shutdown at 7:00 PM for their dev VM but accidentally a
 
 ---
 
-## 🎫 Ticket 4: Network Lockout
+## Ticket 4: Network Lockout
 
 **Domain: Configure and Manage Virtual Networking**
 
@@ -231,7 +231,7 @@ A developer enabled auto-shutdown at 7:00 PM for their dev VM but accidentally a
 3. Check if the **VM NIC still has the correct NSG** associated
 
 <details>
-<summary>💡 Diagnosis Steps</summary>
+<summary>Diagnosis Steps</summary>
 
 ```bash
 # List NSG rules
@@ -268,7 +268,7 @@ az network watcher test-ip-flow \
 Add a proper NSG allow rule for HTTPS traffic and verify the health probe configuration.
 
 <details>
-<summary>💡 Fix Commands</summary>
+<summary>Fix Commands</summary>
 
 ```bash
 # Add NSG rule to allow HTTPS
@@ -297,7 +297,7 @@ The security team added a `DenyAllInbound` rule at priority 200, which overrides
 
 ---
 
-## 🎫 Ticket 5: Where Are My Alerts?
+## Ticket 5: Where Are My Alerts?
 
 **Domain: Monitor and Maintain Azure Resources**
 
@@ -310,7 +310,7 @@ The security team added a `DenyAllInbound` rule at priority 200, which overrides
 3. Check **backup alert settings** in the Recovery Services vault
 
 <details>
-<summary>💡 Diagnosis Steps</summary>
+<summary>Diagnosis Steps</summary>
 
 ```bash
 # List alert rules and their status
@@ -339,7 +339,7 @@ az monitor metrics alert show \
 3. **Configure backup failure alerts**
 
 <details>
-<summary>💡 Fix Commands</summary>
+<summary>Fix Commands</summary>
 
 ```bash
 # Update action group with correct email
@@ -364,7 +364,7 @@ The action group had the wrong email (a typo | `ops@contso.com` instead of `ops@
 
 ---
 
-## 📝 Knowledge Check: Exam-Style Questions
+## Knowledge Check: Exam-Style Questions
 
 **Question 1** *(Identity)*
 A user reports they cannot sign in to the Azure Portal. Their account exists in Microsoft Entra ID. Which should you check FIRST?
@@ -418,7 +418,7 @@ An alert rule is configured with the correct condition but the team never receiv
 
 ---
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # Delete all capstone resource groups
@@ -427,7 +427,7 @@ for i in identity storage compute network monitor; do
 done
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] **Ticket 1** | Identity Crisis resolved (account enabled, password reset, group membership fixed)
 - [ ] **Ticket 2** | Storage SOS resolved (new SAS token or firewall rules updated)

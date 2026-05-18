@@ -19,7 +19,7 @@ Seu Codespace vem pré-configurado com:
 - **jq** e **yq** para manipulação de JSON/YAML
 - **Git** e **GitHub CLI**
 
-> 💡 Contas GitHub Free oferecem **60 horas/mês** de Codespaces | mais que suficiente para completar todos os desafios.
+> Contas GitHub Free oferecem **60 horas/mês** de Codespaces | mais que suficiente para completar todos os desafios.
 
 ### Após abrir o Codespaces, faça login no Azure:
 

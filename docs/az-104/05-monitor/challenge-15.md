@@ -67,7 +67,7 @@ Recovery Services vaults are used for VM backup and Azure Site Recovery. The vau
 Create a custom backup policy: daily backups at 2:00 AM, 30-day retention.
 
 <details>
-<summary>💡 Hint</summary>
+<summary>Hint</summary>
 
 The easiest way is via the Azure Portal:
 
@@ -136,7 +136,7 @@ Once the backup completes, restore it to a new VM:
 4. Select the restore point and target VNet/subnet
 
 <details>
-<summary>💡 CLI Hint</summary>
+<summary>CLI Hint</summary>
 
 ```bash
 # List recovery points
@@ -169,7 +169,7 @@ az dataprotection backup-vault create \
 2. Configure operational backup for blobs (point-in-time restore)
 
 <details>
-<summary>💡 Hint</summary>
+<summary>Hint</summary>
 
 Via the Azure Portal:
 1. Go to your Backup vault → **+ Backup**
@@ -226,7 +226,7 @@ Configure alerts for failed backup jobs:
 2. Create an alert rule for **Backup failure**
 3. Attach an action group for email notification
 
-## 🔨 Break & Fix
+## Break & Fix
 
 ### Break It
 1. **Delete a vault with protected items** | Try to delete the Recovery Services vault while it still has backup items. Observe the error: *"Vault cannot be deleted as there are existing resources within the vault."*
@@ -236,7 +236,7 @@ Configure alerts for failed backup jobs:
 - To delete a vault: first stop backup protection, delete backup data, then delete the vault
 - Move or recreate the vault in the same region as the VM
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 1. **Recovery Services vault vs Azure Backup vault?**
    - Recovery Services vault: VMs, SQL in Azure VM, Azure Files, Azure Site Recovery
@@ -255,7 +255,7 @@ Configure alerts for failed backup jobs:
    - Test failover | validates replication without affecting production; creates test resources
    - Failover | actual disaster recovery; shifts production to secondary region
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # IMPORTANT: Must stop protection before deleting vault
@@ -275,7 +275,7 @@ If vault deletion fails, follow this order:
 4. Delete the resource group
 
 :::
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] Recovery Services vault created
 - [ ] Custom backup policy configured (daily, 30-day retention)

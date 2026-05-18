@@ -284,7 +284,7 @@ az webapp config access-restriction show \
   -g rg-appservice-lab -n $APP_NAME -o table
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] Plano do App Service (Standard S1) criado
 - [ ] Web app implantado e acessível via HTTPS
@@ -326,7 +326,7 @@ az webapp deployment slot create -g rg-appservice-lab --name free-app-$RANDOM --
 # Qual erro você recebe? Quais tiers suportam deployment slots?
 ```
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 **1. Quais tiers do plano do App Service suportam deployment slots?**
 
@@ -378,7 +378,7 @@ O swap é atômico da perspectiva do usuário | sem tempo de inatividade.
 - **Scale-out** (horizontal): Adiciona mais instâncias do mesmo tamanho. O App Service faz balanceamento de carga entre as instâncias. Pode ser manual ou automático (regras de autoscale). Sem tempo de inatividade.
 </details>
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Excluir todos os recursos

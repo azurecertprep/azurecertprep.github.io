@@ -150,7 +150,7 @@ echo "Then ping spoke: ping $SPOKE_PRIVATE_IP"
 ```
 
 <details>
-<summary>💡 Dica | Se o ping não funcionar</summary>
+<summary>Dica | Se o ping não funcionar</summary>
 
 ICMP (ping) pode estar bloqueado pelo NSG padrão. Permita ICMP:
 ```bash
@@ -250,7 +250,7 @@ az network nic show-effective-route-table \
   --ids $SPOKE_NIC -o table
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] VNet Hub (10.0.0.0/16) com subnets frontend e backend
 - [ ] VNet Spoke (10.1.0.0/16) com subnet de workloads
@@ -300,7 +300,7 @@ az network vnet peering show -g rg-network-lab \
 # What state is it in? Can traffic still flow?
 ```
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 **1. Qual é a diferença entre VNet peering e um VPN gateway?**
 
@@ -360,7 +360,7 @@ O IP flow verify verifica se um pacote é permitido ou negado simulando as regra
 Ele **não** verifica UDRs, firewalls ou NVAs | apenas regras NSG. Para problemas de roteamento, use "Next Hop".
 </details>
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Delete all resources

@@ -15,11 +15,11 @@ Este desafio cobre a base de tudo no Azure | identidade. Sem usuários, grupos e
 
 ## Habilidades do Exame Cobertas
 
-- ✅ Criar usuários e grupos
-- ✅ Gerenciar propriedades de usuários e grupos
-- ✅ Gerenciar licenças no Microsoft Entra ID
-- ✅ Gerenciar usuários externos
-- ✅ Configurar redefinição de senha por autoatendimento (SSPR)
+- Criar usuários e grupos
+- Gerenciar propriedades de usuários e grupos
+- Gerenciar licenças no Microsoft Entra ID
+- Gerenciar usuários externos
+- Configurar redefinição de senha por autoatendimento (SSPR)
 
 ## Referência Sysadmin ↔ Azure
 

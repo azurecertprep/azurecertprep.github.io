@@ -18,14 +18,14 @@ Azure Policy is your enforcement engine. Think of it as Group Policy for the clo
 
 ## Exam Skills Covered
 
-- ✅ Create and manage Azure Policy assignments
-- ✅ Create and manage policy definitions and initiatives
-- ✅ Manage resource locks
-- ✅ Manage resource tags
-- ✅ Manage resource groups
-- ✅ Manage subscriptions and management groups
-- ✅ Configure and manage Azure Advisor recommendations
-- ✅ Configure and manage budgets and cost alerts
+- Create and manage Azure Policy assignments
+- Create and manage policy definitions and initiatives
+- Manage resource locks
+- Manage resource tags
+- Manage resource groups
+- Manage subscriptions and management groups
+- Configure and manage Azure Advisor recommendations
+- Configure and manage budgets and cost alerts
 
 ## Sysadmin ↔ Azure Reference
 

@@ -284,7 +284,7 @@ az webapp config access-restriction show \
   -g rg-appservice-lab -n $APP_NAME -o table
 ```
 
-## ✅ Success Criteria
+## Success Criteria
 
 - [ ] App Service plan (Standard S1) created
 - [ ] Web app deployed and accessible via HTTPS
@@ -326,7 +326,7 @@ az webapp deployment slot create -g rg-appservice-lab --name free-app-$RANDOM --
 # What error do you get? Which tiers support deployment slots?
 ```
 
-## 📝 Knowledge Check
+## Knowledge Check
 
 **1. What App Service plan tiers support deployment slots?**
 
@@ -378,7 +378,7 @@ The swap is atomic from the user's perspective | no downtime.
 - **Scale-out** (horizontal): Add more instances of the same size. App Service load balances across instances. Can be manual or automatic (autoscale rules). No downtime.
 </details>
 
-## 🧹 Cleanup
+## Cleanup
 
 ```bash
 # Delete all resources

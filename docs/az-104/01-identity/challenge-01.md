@@ -15,11 +15,11 @@ This challenge covers the foundation of everything in Azure | identity. Without 
 
 ## Exam Skills Covered
 
-- ✅ Create users and groups
-- ✅ Manage user and group properties
-- ✅ Manage licenses in Microsoft Entra ID
-- ✅ Manage external users
-- ✅ Configure self-service password reset (SSPR)
+- Create users and groups
+- Manage user and group properties
+- Manage licenses in Microsoft Entra ID
+- Manage external users
+- Configure self-service password reset (SSPR)
 
 ## Sysadmin ↔ Azure Reference
 

@@ -277,7 +277,7 @@ az network bastion show -g rg-netsec-lab -n bastion-secure \
 ```
 
 <details>
-<summary>💡 Dica | Conectar usando Bastion via CLI</summary>
+<summary>Dica | Conectar usando Bastion via CLI</summary>
 
 Para SSH via Bastion pela CLI (requer o túnel Bastion):
 ```bash
@@ -395,7 +395,7 @@ echo "Storage account $STORAGE_NAME.blob.core.windows.net now resolves to $PE_IP
 echo "From vm-db, run: nslookup $STORAGE_NAME.blob.core.windows.net"
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] NSG criado com regras de permissão HTTP/HTTPS e deny-all
 - [ ] NSG associado à subnet frontend
@@ -437,7 +437,7 @@ az network vnet subnet create -g rg-netsec-lab \
 # Bastion requires the subnet to be named EXACTLY "AzureBastionSubnet"
 ```
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 **1. Como funciona a prioridade de regras NSG?**
 
@@ -511,7 +511,7 @@ Isso significa que a combinação mais restritiva se aplica. Se o NSG da subnet 
 - O NSG na AzureBastionSubnet deve permitir regras específicas de entrada/saída (o Azure gerencia isso com o SKU Basic)
 </details>
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Delete all resources: Bastion incurs hourly charges so clean up promptly!

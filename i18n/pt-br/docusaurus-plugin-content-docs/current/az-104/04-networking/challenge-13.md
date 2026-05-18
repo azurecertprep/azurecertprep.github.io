@@ -67,7 +67,7 @@ Adicione os seguintes tipos de registro à sua zona DNS:
 3. **Registro TXT** | Adicionar um registro TXT de verificação
 
 <details>
-<summary>💡 Dica</summary>
+<summary>Dica</summary>
 
 ```bash
 # A record
@@ -113,7 +113,7 @@ az network lb create \
 Implante duas VMs e adicione-as ao backend pool do load balancer.
 
 <details>
-<summary>💡 Dica | Criar VMs com um servidor web</summary>
+<summary>Dica | Criar VMs com um servidor web</summary>
 
 ```bash
 # Create a VNet and subnet
@@ -193,7 +193,7 @@ echo "Load Balancer IP: $LB_IP"
 Crie um segundo load balancer para serviços backend internos (privados).
 
 <details>
-<summary>💡 Dica</summary>
+<summary>Dica</summary>
 
 ```bash
 az network lb create \
@@ -229,7 +229,7 @@ az vm get-instance-view \
   --query instanceView.statuses
 ```
 
-## 🔨 Quebre & Conserte
+## Quebre & Conserte
 
 ### Quebre
 1. **Configuração errada do health probe** | Altere o probe para verificar a porta 8080 em vez da 80 (ou use o caminho `/healthz` quando o servidor web não tem esse endpoint). Observe que todas as instâncias do backend aparecem como não saudáveis.
@@ -240,7 +240,7 @@ az vm get-instance-view \
 - Verifique que a integridade do backend volta ao normal
 - Observe que o LB automaticamente para de enviar tráfego para instâncias não saudáveis
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 1. **Quais são as principais diferenças entre os SKUs Basic e Standard do Load Balancer?**
    - Standard suporta zonas de disponibilidade, tem um SLA e é com redundância de zona por padrão
@@ -258,13 +258,13 @@ az vm get-instance-view \
 4. **Quais tipos de registro DNS você deve conhecer para o exame?**
    - A (IPv4), AAAA (IPv6), CNAME (alias), MX (correio), TXT (verificação), NS (servidor de nomes), SOA (início de autoridade), SRV (localização de serviço)
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 az group delete --name $RG --yes --no-wait
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] Zona Azure DNS criada com registros A, CNAME e TXT
 - [ ] Load Balancer público Standard criado com 2 VMs no backend

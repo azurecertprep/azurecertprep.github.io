@@ -105,7 +105,7 @@ az deployment group validate \
 ```
 
 <details>
-<summary>💡 Dica | Onde adicionar o parâmetro de tag</summary>
+<summary>Dica | Onde adicionar o parâmetro de tag</summary>
 
 Adicione um novo parâmetro:
 ```json
@@ -178,7 +178,7 @@ az bicep build --file storage.bicep
 ```
 
 <details>
-<summary>💡 Dica | Recurso de contêiner de blob no Bicep</summary>
+<summary>Dica | Recurso de contêiner de blob no Bicep</summary>
 
 ```bicep
 param storagePrefix string
@@ -249,7 +249,7 @@ az deployment group what-if \
   --parameters storagePrefix=contoso environment=staging
 ```
 
-## ✅ Critérios de Sucesso
+## Critérios de Sucesso
 
 - [ ] ARM template implanta uma conta de armazenamento com tags
 - [ ] Template exportado corresponde aos recursos implantados
@@ -291,7 +291,7 @@ az deployment group what-if \
 # Compare a saída do what-if entre os modos Incremental e Completo
 ```
 
-## 📝 Teste seus Conhecimentos
+## Teste seus Conhecimentos
 
 **1. Qual é a diferença principal entre ARM templates e Bicep?**
 
@@ -326,7 +326,7 @@ Ele converte um ARM template JSON em um arquivo Bicep (.bicep). A conversão é 
 Nomes de contas de armazenamento devem ser globalmente únicos em todo o Azure (3–24 caracteres, apenas letras minúsculas + números). `uniqueString()` gera um hash determinístico de 13 caracteres baseado na entrada (ex: `resourceGroup().id`), garantindo nomes únicos mas repetíveis por grupo de recursos.
 </details>
 
-## 🧹 Limpeza
+## Limpeza
 
 ```bash
 # Remover todos os recursos criados neste desafio
