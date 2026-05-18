@@ -72,13 +72,50 @@ The official Microsoft Learn self-paced content for AZ-104:
 
 ## Learning Path
 
-```mermaid
-flowchart LR
-    A["AZ-900\nFundamentals"] --> B["AZ-104\nAdministrator"]
-    B --> C["AZ-305\nSolutions Architect"]
-    B --> D["AZ-500\nSecurity Engineer"]
-    B --> E["AZ-400\nDevOps Engineer"]
-```
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260" font-family="Segoe UI, Arial, sans-serif" style={{maxWidth: '680px', width: '100%'}}>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  {/* AZ-900 */}
+  <rect x="20" y="100" width="150" height="60" rx="8" fill="#d5e8d4" stroke="#82b366" strokeWidth="2"/>
+  <text x="95" y="125" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#1b5e20">AZ-900</text>
+  <text x="95" y="145" textAnchor="middle" fontSize="11" fill="#555">Fundamentals</text>
+
+  {/* Arrow AZ-900 → AZ-104 */}
+  <line x1="170" y1="130" x2="230" y2="130" stroke="#666" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+  {/* AZ-104 */}
+  <rect x="235" y="100" width="150" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="2"/>
+  <text x="310" y="125" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#1a3a5c">AZ-104</text>
+  <text x="310" y="145" textAnchor="middle" fontSize="11" fill="#555">Administrator</text>
+
+  {/* Arrow AZ-104 → AZ-305 */}
+  <line x1="385" y1="115" x2="490" y2="55" stroke="#666" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+  {/* Arrow AZ-104 → AZ-500 */}
+  <line x1="385" y1="130" x2="490" y2="130" stroke="#666" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+  {/* Arrow AZ-104 → AZ-400 */}
+  <line x1="385" y1="145" x2="490" y2="205" stroke="#666" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+
+  {/* AZ-305 */}
+  <rect x="495" y="25" width="165" height="60" rx="8" fill="#e1d5e7" stroke="#9673a6" strokeWidth="2"/>
+  <text x="577" y="50" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#4a235a">AZ-305</text>
+  <text x="577" y="70" textAnchor="middle" fontSize="11" fill="#555">Solutions Architect</text>
+
+  {/* AZ-500 */}
+  <rect x="495" y="100" width="165" height="60" rx="8" fill="#e1d5e7" stroke="#9673a6" strokeWidth="2"/>
+  <text x="577" y="125" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#4a235a">AZ-500</text>
+  <text x="577" y="145" textAnchor="middle" fontSize="11" fill="#555">Security Engineer</text>
+
+  {/* AZ-400 */}
+  <rect x="495" y="175" width="165" height="60" rx="8" fill="#e1d5e7" stroke="#9673a6" strokeWidth="2"/>
+  <text x="577" y="200" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#4a235a">AZ-400</text>
+  <text x="577" y="220" textAnchor="middle" fontSize="11" fill="#555">DevOps Engineer</text>
+</svg>
 
 ---
 
