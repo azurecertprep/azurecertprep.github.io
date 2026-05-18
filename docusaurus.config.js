@@ -7,15 +7,9 @@ const config = {
   tagline: "Don't just study — build it.",
   favicon: 'img/logo.svg',
 
-  future: {
-    v4: true,
-  },
-
   markdown: {
+    format: 'mdx',
     mermaid: true,
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
   },
   themes: ['@docusaurus/theme-mermaid'],
 
