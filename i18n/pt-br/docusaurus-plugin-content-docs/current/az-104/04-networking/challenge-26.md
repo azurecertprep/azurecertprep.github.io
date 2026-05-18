@@ -476,7 +476,7 @@ az network watcher show-next-hop \
 
 ```bash
 # Check Connection Monitor for failures
-az network watcher connection-monitor query \
+az network watcher connection-monitor show \
   --location $LOCATION \
   --name cm-web-to-db
 

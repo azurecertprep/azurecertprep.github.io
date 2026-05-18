@@ -334,7 +334,7 @@ az automation schedule create \
   --description "Runs every weekday at 7 PM ET to stop dev VMs"
 
 # Vincular o agendamento ao runbook
-az automation job schedule create \
+az automation job-schedule create \
   --resource-group rg-automation-lab \
   --automation-account-name auto-contoso-ops \
   --runbook-name "Stop-DevVMs" \

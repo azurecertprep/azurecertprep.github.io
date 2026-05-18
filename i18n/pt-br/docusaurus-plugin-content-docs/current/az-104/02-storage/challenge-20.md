@@ -53,7 +53,6 @@ az keyvault create \
   --resource-group rg-encryption-lab \
   --location eastus \
   --enable-purge-protection true \
-  --enable-soft-delete true \
   --retention-days 7
 
 # Armazenar nome do Key Vault

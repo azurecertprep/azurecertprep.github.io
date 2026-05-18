@@ -170,11 +170,11 @@ function CertificationCoverage() {
   return (
     <section style={{padding: '2rem 0'}}>
       <div className="container">
-        <div className="section-heading">
-          <Heading as="h2">100% Certification Coverage</Heading>
-          <p>Every exam domain from the AZ-104 study guide mapped to hands-on challenges.</p>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <div className="section-heading" style={{width: '100%', maxWidth: '650px'}}>
+            <Heading as="h2">100% Certification Coverage</Heading>
+            <p>Every exam domain from the AZ-104 study guide mapped to hands-on challenges.</p>
+          </div>
           <div style={{width: '100%', maxWidth: '650px'}}>
             <table style={{width: '100%'}}>
               <thead>

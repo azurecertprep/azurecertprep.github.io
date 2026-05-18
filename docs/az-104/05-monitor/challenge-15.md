@@ -118,7 +118,7 @@ az backup protection backup-now \
   --vault-name rsv-contoso \
   --container-name "IaasVMContainer;iaasvmcontainerv2;$RG;vm-backup-test" \
   --item-name "VM;iaasvmcontainerv2;$RG;vm-backup-test" \
-  --retain-until "2025-12-31"
+  --retain-until "31-12-2027"
 ```
 
 :::note

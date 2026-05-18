@@ -194,7 +194,7 @@ az vm create \
   --admin-username azureuser \
   --generate-ssh-keys \
   --public-ip-address "" \
-  --asg asg-webservers \
+  --asgs asg-webservers \
   --no-wait
 
 # Deploy a VM and assign it to the database ASG
@@ -208,7 +208,7 @@ az vm create \
   --admin-username azureuser \
   --generate-ssh-keys \
   --public-ip-address "" \
-  --asg asg-dbservers \
+  --asgs asg-dbservers \
   --no-wait
 ```
 

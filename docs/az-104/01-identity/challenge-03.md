@@ -204,9 +204,9 @@ RG_ID=$(az group show --name rg-policy-prod --query id -o tsv)
 az policy assignment create \
   --name "require-costcenter-tag" \
   --display-name "Require CostCenter tag" \
-  --policy "1e30110a-5ceb-460c-a204-c1c3969c6d62" \
+  --policy "871b6d14-10aa-478d-b466-ef6698f3ef28" \
   --scope "$RG_ID" \
-  --params '{"tagName":{"value":"CostCenter"},"tagValue":{"value":"*"}}'
+  --params '{"tagName":{"value":"CostCenter"}}'
 ```
 
 :::tip

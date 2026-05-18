@@ -410,7 +410,7 @@ az monitor log-analytics workspace table update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
   --name Syslog \
-  --retention-time 90
+  --retention-in-days 90
 
 # Show workspace configuration
 az monitor log-analytics workspace show \

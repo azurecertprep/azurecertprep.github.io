@@ -1247,7 +1247,7 @@ az backup protection enable-for-vm -g $RG --vault-name rsv-contoso \
 az backup protection backup-now -g $RG --vault-name rsv-contoso \
   --container-name "IaasVMContainer;iaasvmcontainerv2;$RG;vm-backup-test" \
   --item-name "VM;iaasvmcontainerv2;$RG;vm-backup-test" \
-  --retain-until "2025-12-31"
+  --retain-until "31-12-2027"
 
 # Azure Backup vault (for blobs)
 az dataprotection backup-vault create -g $RG --vault-name bv-contoso \
@@ -1554,7 +1554,7 @@ az storage container create \
 
 az costmanagement export create \
   --name "daily-cost-export" \
-  --scope "subscriptions/$(az account show --query id -o tsv)" \
+  --scope "/subscriptions/$(az account show --query id -o tsv)" \
   --type ActualCost \
   --timeframe MonthToDate \
   --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
@@ -2422,7 +2422,7 @@ az storage account update -g $RG --name $STORAGE_NAME --default-action Deny
 # Configure PRIVATE ENDPOINT for storage
 az network vnet subnet update -g $RG \
   --vnet-name vnet-contoso --name subnet-privateendpoints \
-  --disable-private-endpoint-network-policies true
+  --private-endpoint-network-policies Disabled
 
 STORAGE_ID=$(az storage account show -g $RG -n $STORAGE_NAME --query id -o tsv)
 

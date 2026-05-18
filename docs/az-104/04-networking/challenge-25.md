@@ -150,7 +150,7 @@ az network vnet subnet update \
   --resource-group $RG \
   --vnet-name vnet-contoso \
   --name subnet-privateendpoints \
-  --disable-private-endpoint-network-policies true
+  --private-endpoint-network-policies Disabled
 
 # Get storage account resource ID
 STORAGE_ID=$(az storage account show \
@@ -304,7 +304,7 @@ az network vnet subnet update \
   --resource-group $RG \
   --vnet-name vnet-contoso \
   --name subnet-privateendpoints \
-  --disable-private-endpoint-network-policies false
+  --private-endpoint-network-policies Enabled
 
 # Create an NSG with rules for private endpoint subnet
 az network nsg create \

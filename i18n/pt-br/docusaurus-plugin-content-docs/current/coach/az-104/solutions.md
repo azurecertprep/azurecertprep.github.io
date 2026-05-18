@@ -1247,7 +1247,7 @@ az backup protection enable-for-vm -g $RG --vault-name rsv-contoso \
 az backup protection backup-now -g $RG --vault-name rsv-contoso \
   --container-name "IaasVMContainer;iaasvmcontainerv2;$RG;vm-backup-test" \
   --item-name "VM;iaasvmcontainerv2;$RG;vm-backup-test" \
-  --retain-until "2025-12-31"
+  --retain-until "31-12-2027"
 
 # Azure Backup vault (for blobs)
 az dataprotection backup-vault create -g $RG --vault-name bv-contoso \
