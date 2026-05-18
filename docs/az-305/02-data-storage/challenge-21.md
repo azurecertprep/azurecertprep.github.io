@@ -162,10 +162,75 @@ With GRS/GZRS, failover to the secondary region is customer-initiated (not autom
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge21 --location eastus
+```
+
+2. Deploy a storage account with soft delete and versioning enabled:
+
+```bash
+az storage account create \
+  --name staz305ch21$RANDOM \
+  --resource-group rg-az305-challenge21 \
+  --sku Standard_LRS \
+  --kind StorageV2
+
+az storage account blob-service-properties update \
+  --account-name <your-account-name> \
+  --resource-group rg-az305-challenge21 \
+  --enable-delete-retention true \
+  --delete-retention-days 30 \
+  --enable-versioning true \
+  --enable-container-delete-retention true \
+  --container-delete-retention-days 14
+```
+
+3. Upload a test blob, delete it, then recover it:
+
+```bash
+az storage container create --name testcontainer --account-name <your-account-name>
+
+az storage blob upload \
+  --account-name <your-account-name> \
+  --container-name testcontainer \
+  --name testfile.txt \
+  --data "This is a recovery test" \
+  --type block
+
+az storage blob delete \
+  --account-name <your-account-name> \
+  --container-name testcontainer \
+  --name testfile.txt
+
+az storage blob undelete \
+  --account-name <your-account-name> \
+  --container-name testcontainer \
+  --name testfile.txt
+```
+
+4. Verify the blob was recovered:
+
+```bash
+az storage blob show \
+  --account-name <your-account-name> \
+  --container-name testcontainer \
+  --name testfile.txt \
+  --query "properties.deletedTime"
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge21 --yes --no-wait
 ```
 

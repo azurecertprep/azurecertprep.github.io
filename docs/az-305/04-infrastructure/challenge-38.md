@@ -239,11 +239,55 @@ Design your DLQ strategy:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge38 --location eastus
+```
+
+2. Create a Service Bus namespace (Standard tier for queues and topics):
+
+```bash
+az servicebus namespace create --resource-group rg-az305-challenge38 \
+  --name sb-challenge38-$RANDOM --sku Standard --location eastus
+```
+
+3. Create a queue with sessions enabled:
+
+```bash
+az servicebus queue create --resource-group rg-az305-challenge38 \
+  --namespace-name $(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv) \
+  --name orders-queue --enable-partitioning false
+```
+
+4. Send a test message to the queue:
+
+```bash
+az servicebus queue send --resource-group rg-az305-challenge38 \
+  --namespace-name $(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv) \
+  --queue-name orders-queue --body "Test order message"
+```
+
+5. Peek at the message to confirm delivery:
+
+```bash
+az servicebus queue peek --resource-group rg-az305-challenge38 \
+  --namespace-name $(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv) \
+  --queue-name orders-queue
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# If you created Service Bus resources for testing:
-az group delete --name rg-messaging-design --yes --no-wait
+az group delete --name rg-az305-challenge38 --yes --no-wait
 ```
 
 ---

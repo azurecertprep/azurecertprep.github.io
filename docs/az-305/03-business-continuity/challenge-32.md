@@ -299,17 +299,73 @@ This is the highest SLA of any Azure database service. Compare:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge32 --location eastus
+```
+
+2. Deploy a Cosmos DB account with multi-region writes enabled:
+
+```bash
+az cosmosdb create \
+  --resource-group rg-az305-challenge32 \
+  --name cosmos-challenge32-$RANDOM \
+  --locations regionName=eastus failoverPriority=0 isZoneRedundant=false \
+  --locations regionName=westus failoverPriority=1 isZoneRedundant=false \
+  --enable-multiple-write-locations true \
+  --default-consistency-level Session
+```
+
+3. Create a database and container with a partition key:
+
+```bash
+COSMOS_NAME=$(az cosmosdb list --resource-group rg-az305-challenge32 --query "[0].name" -o tsv)
+
+az cosmosdb sql database create \
+  --resource-group rg-az305-challenge32 \
+  --account-name $COSMOS_NAME \
+  --name gamedb
+
+az cosmosdb sql container create \
+  --resource-group rg-az305-challenge32 \
+  --account-name $COSMOS_NAME \
+  --database-name gamedb \
+  --name profiles \
+  --partition-key-path "/userId" \
+  --throughput 400
+```
+
+4. Verify multi-region write is enabled and regions are active:
+
+```bash
+az cosmosdb show \
+  --resource-group rg-az305-challenge32 \
+  --name $COSMOS_NAME \
+  --query "{MultiRegionWrites:enableMultipleWriteLocations, Regions:writeLocations[].locationName}" -o table
+```
+
+5. Confirm the account exposes write endpoints in both regions:
+
+```bash
+az cosmosdb show \
+  --resource-group rg-az305-challenge32 \
+  --name $COSMOS_NAME \
+  --query "writeLocations[].[locationName, documentEndpoint]" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete Cosmos DB account (all regions deleted together)
-az cosmosdb delete \
-  --resource-group rg-battleforge \
-  --name cosmos-battleforge \
-  --yes
-
-# Delete storage and CDN resources
-az group delete --name rg-battleforge --yes --no-wait
+az group delete --name rg-az305-challenge32 --yes --no-wait
 ```
 
 ---

@@ -236,11 +236,50 @@ Lifecycle management policy automates tier transitions. Total estimated cost: ap
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge39 --location eastus
+```
+
+2. Create an Event Grid topic:
+
+```bash
+az eventgrid topic create --resource-group rg-az305-challenge39 \
+  --name egt-challenge39 --location eastus
+```
+
+3. Create a webhook subscription (using a public test endpoint):
+
+```bash
+az eventgrid event-subscription create \
+  --source-resource-id $(az eventgrid topic show --resource-group rg-az305-challenge39 --name egt-challenge39 --query "id" -o tsv) \
+  --name sub-test --endpoint-type webhook \
+  --endpoint https://httpbin.org/post
+```
+
+4. Publish a test event to the topic:
+
+```bash
+TOPIC_ENDPOINT=$(az eventgrid topic show --resource-group rg-az305-challenge39 --name egt-challenge39 --query "endpoint" -o tsv)
+TOPIC_KEY=$(az eventgrid topic key list --resource-group rg-az305-challenge39 --name egt-challenge39 --query "key1" -o tsv)
+curl -X POST "$TOPIC_ENDPOINT" -H "aeg-sas-key: $TOPIC_KEY" \
+  -H "Content-Type: application/json" \
+  -d '[{"id":"1","eventType":"test","subject":"challenge39","dataVersion":"1.0","data":{"message":"hello"}}]'
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# If you deployed event-driven resources for testing:
-az group delete --name rg-events-design --yes --no-wait
+az group delete --name rg-az305-challenge39 --yes --no-wait
 ```
 
 ---

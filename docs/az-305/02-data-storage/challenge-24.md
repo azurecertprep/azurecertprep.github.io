@@ -223,14 +223,87 @@ Use events and change feeds to keep tiers synchronized without tight coupling: (
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge24 --location eastus
+```
+
+2. Deploy a storage account (media layer) and an Azure SQL Database (transactional layer):
+
+```bash
+az storage account create \
+  --name staz305ch24$RANDOM \
+  --resource-group rg-az305-challenge24 \
+  --sku Standard_LRS \
+  --kind StorageV2
+
+az sql server create \
+  --name sql-az305-ch24 \
+  --resource-group rg-az305-challenge24 \
+  --location eastus \
+  --admin-user sqladmin \
+  --admin-password "P@ssw0rd2024!"
+
+az sql db create \
+  --name orders-db \
+  --resource-group rg-az305-challenge24 \
+  --server sql-az305-ch24 \
+  --service-objective Basic
+```
+
+3. Deploy a Data Factory and create linked services connecting both data stores:
+
+```bash
+az datafactory create \
+  --name adf-az305-ch24 \
+  --resource-group rg-az305-challenge24 \
+  --location eastus
+
+az datafactory linked-service create \
+  --factory-name adf-az305-ch24 \
+  --resource-group rg-az305-challenge24 \
+  --name BlobStorageLS \
+  --properties '{
+    "type": "AzureBlobStorage",
+    "typeProperties": {
+      "connectionString": "'$(az storage account show-connection-string --name <your-account-name> --resource-group rg-az305-challenge24 --query connectionString -o tsv)'"
+    }
+  }'
+
+az datafactory linked-service create \
+  --factory-name adf-az305-ch24 \
+  --resource-group rg-az305-challenge24 \
+  --name SqlDatabaseLS \
+  --properties '{
+    "type": "AzureSqlDatabase",
+    "typeProperties": {
+      "connectionString": "Server=tcp:sql-az305-ch24.database.windows.net,1433;Database=orders-db;User ID=sqladmin;Password=P@ssw0rd2024!;Encrypt=true;"
+    }
+  }'
+```
+
+4. Verify both linked services are registered:
+
+```bash
+az datafactory linked-service list \
+  --factory-name adf-az305-ch24 \
+  --resource-group rg-az305-challenge24 \
+  --query "[].name" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge24 --yes --no-wait
-
-# If you created additional resource groups for specific services:
-# az group delete --name rg-az305-challenge24-analytics --yes --no-wait
 ```
 
 ---

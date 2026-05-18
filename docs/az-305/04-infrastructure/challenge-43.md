@@ -140,10 +140,62 @@ For zero-downtime database changes: (1) Expand phase: add new columns/tables wit
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge43 --location eastus
+```
+
+2. Create a Bicep template inline and deploy it:
+
+```bash
+cat <<'EOF' > main.bicep
+param location string = resourceGroup().location
+param storagePrefix string = 'staz305c43'
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+  name: '${storagePrefix}${uniqueString(resourceGroup().id)}'
+  location: location
+  sku: { name: 'Standard_LRS' }
+  kind: 'StorageV2'
+}
+
+output storageAccountName string = storageAccount.name
+EOF
+```
+
+3. Deploy the Bicep template:
+
+```bash
+az deployment group create --resource-group rg-az305-challenge43 \
+  --template-file main.bicep --query "properties.outputs" --output table
+```
+
+4. Verify the deployment succeeded and the storage account exists:
+
+```bash
+az deployment group list --resource-group rg-az305-challenge43 \
+  --query "[].{Name:name, State:properties.provisioningState, Timestamp:properties.timestamp}" --output table
+```
+
+5. Confirm the storage account was created:
+
+```bash
+az storage account list --resource-group rg-az305-challenge43 \
+  --query "[].{Name:name, Kind:kind, SKU:sku.name}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge43 --yes --no-wait
 ```
 

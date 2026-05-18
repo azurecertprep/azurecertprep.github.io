@@ -202,11 +202,47 @@ For 100+ VMs in a PPG, use intent-based placement: specify VM sizes upfront so A
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge35 --location eastus
+```
+
+2. Create a proximity placement group:
+
+```bash
+az ppg create --resource-group rg-az305-challenge35 --name ppg-finance \
+  --intent-vm-sizes Standard_D2s_v3
+```
+
+3. Deploy a VMSS with 2 instances in the proximity placement group:
+
+```bash
+az vmss create --resource-group rg-az305-challenge35 --name vmss-finance \
+  --image Ubuntu2204 --instance-count 2 --vm-sku Standard_D2s_v3 \
+  --ppg ppg-finance --admin-username azureuser --generate-ssh-keys \
+  --upgrade-policy-mode Automatic
+```
+
+4. Verify the scale set instances are running:
+
+```bash
+az vmss list-instances --resource-group rg-az305-challenge35 \
+  --name vmss-finance --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# If you deployed any resources for validation:
-az group delete --name rg-vmss-finance --yes --no-wait
+az group delete --name rg-az305-challenge35 --yes --no-wait
 ```
 
 ---

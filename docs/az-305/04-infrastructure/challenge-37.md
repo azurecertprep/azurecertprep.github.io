@@ -225,11 +225,48 @@ Functions is preferred because: per-execution pricing is cheaper for short tasks
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge37 --location eastus
+```
+
+2. Create a storage account (required by Functions runtime):
+
+```bash
+az storage account create --resource-group rg-az305-challenge37 \
+  --name stfunc37$RANDOM --sku Standard_LRS
+```
+
+3. Create a Function App on the Consumption plan with an HTTP trigger:
+
+```bash
+az functionapp create --resource-group rg-az305-challenge37 \
+  --name func-challenge37-$RANDOM --consumption-plan-location eastus \
+  --runtime node --runtime-version 20 --functions-version 4 \
+  --storage-account $(az storage account list --resource-group rg-az305-challenge37 --query "[0].name" -o tsv)
+```
+
+4. Verify the Function App is running:
+
+```bash
+az functionapp show --resource-group rg-az305-challenge37 \
+  --name $(az functionapp list --resource-group rg-az305-challenge37 --query "[0].name" -o tsv) \
+  --query "{State:state, HostName:defaultHostName, Plan:sku.tier}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# If you deployed serverless resources for testing:
-az group delete --name rg-serverless-design --yes --no-wait
+az group delete --name rg-az305-challenge37 --yes --no-wait
 ```
 
 ---

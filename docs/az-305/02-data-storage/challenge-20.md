@@ -153,10 +153,69 @@ Premium block blob storage accounts use SSDs and are optimized for workloads req
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge20 --location eastus
+```
+
+2. Deploy a storage account with access tracking enabled:
+
+```bash
+az storage account create \
+  --name staz305ch20$RANDOM \
+  --resource-group rg-az305-challenge20 \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --enable-last-access-tracking true
+```
+
+3. Apply a lifecycle management policy with tier transitions:
+
+```bash
+az storage account management-policy create \
+  --account-name <your-account-name> \
+  --resource-group rg-az305-challenge20 \
+  --policy '{
+    "rules": [
+      {
+        "enabled": true,
+        "name": "auto-tier-rule",
+        "type": "Lifecycle",
+        "definition": {
+          "actions": {
+            "baseBlob": {
+              "tierToCool": {"daysAfterLastAccessTimeGreaterThan": 30},
+              "tierToCold": {"daysAfterLastAccessTimeGreaterThan": 90},
+              "tierToArchive": {"daysAfterLastAccessTimeGreaterThan": 180}
+            }
+          },
+          "filters": {"blobTypes": ["blockBlob"]}
+        }
+      }
+    ]
+  }'
+```
+
+4. Verify the policy is applied:
+
+```bash
+az storage account management-policy show \
+  --account-name <your-account-name> \
+  --resource-group rg-az305-challenge20
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge20 --yes --no-wait
 ```
 

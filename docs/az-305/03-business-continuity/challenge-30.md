@@ -284,11 +284,66 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge30 --location eastus
+```
+
+2. Deploy a Virtual Machine Scale Set spread across availability zones:
+
+```bash
+az vmss create \
+  --resource-group rg-az305-challenge30 \
+  --name vmss-ha-lab \
+  --image Ubuntu2204 \
+  --vm-sku Standard_B1s \
+  --instance-count 3 \
+  --zones 1 2 3 \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --load-balancer lb-ha-lab
+```
+
+3. Verify instances are distributed across zones:
+
+```bash
+az vmss list-instances \
+  --resource-group rg-az305-challenge30 \
+  --name vmss-ha-lab \
+  --query "[].{Instance:instanceId, Zone:zones[0]}" -o table
+```
+
+4. Confirm the load balancer is using a zone-redundant frontend:
+
+```bash
+az network lb show \
+  --resource-group rg-az305-challenge30 \
+  --name lb-ha-lab \
+  --query "frontendIPConfigurations[0].zones" -o table
+```
+
+5. Verify all three zones are in use (validates zone-spreading for 99.99% SLA):
+
+```bash
+az vmss list-instances \
+  --resource-group rg-az305-challenge30 \
+  --name vmss-ha-lab \
+  --query "unique([].zones[0])" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all compute resources
-az group delete --name rg-fedbenefits --yes --no-wait
+az group delete --name rg-az305-challenge30 --yes --no-wait
 ```
 
 ---

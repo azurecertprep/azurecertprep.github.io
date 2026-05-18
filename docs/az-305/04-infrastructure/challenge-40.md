@@ -280,14 +280,52 @@ For billing integration, export usage data from APIM Built-in Analytics or Log A
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge40 --location eastus
+```
+
+2. Create an API Management instance (Consumption tier deploys in seconds):
+
+```bash
+az apim create --resource-group rg-az305-challenge40 --name apim-challenge40-$RANDOM \
+  --publisher-name "AZ305 Lab" --publisher-email "lab@example.com" \
+  --sku-name Consumption --location eastus
+```
+
+3. Import a mock API using the Petstore OpenAPI spec:
+
+```bash
+az apim api import --resource-group rg-az305-challenge40 \
+  --service-name $(az apim list --resource-group rg-az305-challenge40 --query "[0].name" -o tsv) \
+  --api-id petstore --path pet --specification-format OpenApi \
+  --specification-url "https://petstore3.swagger.io/api/v3/openapi.json" \
+  --display-name "Pet Store"
+```
+
+4. Verify the API was created and list its operations:
+
+```bash
+az apim api operation list --resource-group rg-az305-challenge40 \
+  --service-name $(az apim list --resource-group rg-az305-challenge40 --query "[0].name" -o tsv) \
+  --api-id petstore --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# If you deployed APIM resources for testing:
-# Note: APIM deletion can take 30+ minutes
-az group delete --name rg-api-design --yes --no-wait
+az group delete --name rg-az305-challenge40 --yes --no-wait
 ```
 
 ---
 
-**Congratulations!** You have completed all challenges in Domain 4: Infrastructure Solutions. Review the [AZ-305 Overview](/docs/az-305/overview) for the complete certification preparation path.
+**Next**: [Challenge 41: Design a Caching Strategy](/docs/az-305/infrastructure/challenge-41)

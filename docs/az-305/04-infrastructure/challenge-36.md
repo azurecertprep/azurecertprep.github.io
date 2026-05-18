@@ -201,11 +201,48 @@ For this scenario, **Premium** is recommended because:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge36 --location eastus
+```
+
+2. Create a Container Apps environment:
+
+```bash
+az containerapp env create --resource-group rg-az305-challenge36 \
+  --name cae-challenge36 --location eastus
+```
+
+3. Deploy a simple HTTP container with scale-to-zero enabled:
+
+```bash
+az containerapp create --resource-group rg-az305-challenge36 \
+  --name ca-hello --environment cae-challenge36 \
+  --image mcr.microsoft.com/k8se/quickstart:latest \
+  --target-port 80 --ingress external \
+  --min-replicas 0 --max-replicas 3
+```
+
+4. Verify the app is responding and check the replica count:
+
+```bash
+az containerapp show --resource-group rg-az305-challenge36 --name ca-hello \
+  --query "{FQDN:properties.configuration.ingress.fqdn, Replicas:properties.runningStatus}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# If you deployed container resources for testing:
-az group delete --name rg-containers-design --yes --no-wait
+az group delete --name rg-az305-challenge36 --yes --no-wait
 ```
 
 ---

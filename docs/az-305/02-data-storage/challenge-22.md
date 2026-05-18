@@ -187,10 +187,73 @@ Data Factory provides built-in monitoring through Azure Monitor with metrics lik
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge22 --location eastus
+```
+
+2. Deploy a Data Factory and a storage account with source and sink containers:
+
+```bash
+az storage account create \
+  --name staz305ch22$RANDOM \
+  --resource-group rg-az305-challenge22 \
+  --sku Standard_LRS \
+  --kind StorageV2
+
+az storage container create --name source --account-name <your-account-name>
+az storage container create --name sink --account-name <your-account-name>
+
+az storage blob upload \
+  --account-name <your-account-name> \
+  --container-name source \
+  --name sales-data.csv \
+  --data "store_id,date,revenue\n1,2024-01-01,5000\n2,2024-01-01,7500" \
+  --type block
+
+az datafactory create \
+  --name adf-az305-ch22 \
+  --resource-group rg-az305-challenge22 \
+  --location eastus
+```
+
+3. Create a linked service and run a copy pipeline:
+
+```bash
+az datafactory linked-service create \
+  --factory-name adf-az305-ch22 \
+  --resource-group rg-az305-challenge22 \
+  --name BlobStorageLS \
+  --properties '{
+    "type": "AzureBlobStorage",
+    "typeProperties": {
+      "connectionString": "'$(az storage account show-connection-string --name <your-account-name> --resource-group rg-az305-challenge22 --query connectionString -o tsv)'"
+    }
+  }'
+```
+
+4. Verify the Data Factory and linked service were created:
+
+```bash
+az datafactory linked-service show \
+  --factory-name adf-az305-ch22 \
+  --resource-group rg-az305-challenge22 \
+  --name BlobStorageLS \
+  --query "name"
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge22 --yes --no-wait
 ```
 

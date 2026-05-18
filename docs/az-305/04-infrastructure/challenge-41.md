@@ -148,10 +148,47 @@ Calculate memory needs considering: serialization overhead (JSON is 2-3x larger 
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge41 --location eastus
+```
+
+2. Deploy a Redis Cache (Basic C0 tier, smallest available):
+
+```bash
+az redis create --resource-group rg-az305-challenge41 --name redis-challenge41-$RANDOM \
+  --sku Basic --vm-size c0 --location eastus
+```
+
+3. Wait for provisioning and retrieve the access key:
+
+```bash
+az redis show --resource-group rg-az305-challenge41 \
+  --name $(az redis list --resource-group rg-az305-challenge41 --query "[0].name" -o tsv) \
+  --query "{HostName:hostName, Port:sslPort, ProvisioningState:provisioningState}" --output table
+```
+
+4. Test a SET and GET operation using redis-cli:
+
+```bash
+REDIS_HOST=$(az redis list --resource-group rg-az305-challenge41 --query "[0].hostName" -o tsv)
+REDIS_KEY=$(az redis list-keys --resource-group rg-az305-challenge41 --name $(az redis list --resource-group rg-az305-challenge41 --query "[0].name" -o tsv) --query "primaryKey" -o tsv)
+redis-cli -h $REDIS_HOST -p 6380 --tls -a $REDIS_KEY SET testkey "hello-az305" && \
+redis-cli -h $REDIS_HOST -p 6380 --tls -a $REDIS_KEY GET testkey
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge41 --yes --no-wait
 ```
 

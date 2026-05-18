@@ -189,12 +189,47 @@ If GPU requirements are larger (e.g., NC24s_v3 with 4 GPUs), costs increase sign
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge34 --location eastus
+```
+
+2. Deploy a B2ms VM (burstable, 2 vCPUs, 8 GB RAM):
+
+```bash
+az vm create --resource-group rg-az305-challenge34 --name vm-burst-test \
+  --image Ubuntu2204 --size Standard_B2ms \
+  --admin-username azureuser --generate-ssh-keys
+```
+
+3. Check the VM's CPU credit balance:
+
+```bash
+az monitor metrics list --resource-type "Microsoft.Compute/virtualMachines" \
+  --resource vm-burst-test --resource-group rg-az305-challenge34 \
+  --metric "CPU Credits Remaining" --output table
+```
+
+4. Verify the VM is running and accessible:
+
+```bash
+az vm show --resource-group rg-az305-challenge34 --name vm-burst-test \
+  --query "{Status:provisioningState, Size:hardwareProfile.vmSize}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# This challenge is primarily design-focused
-# If you created any VMs for pricing validation:
-az group delete --name rg-compute-design --yes --no-wait
+az group delete --name rg-az305-challenge34 --yes --no-wait
 ```
 
 ---

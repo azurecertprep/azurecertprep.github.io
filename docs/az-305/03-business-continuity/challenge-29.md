@@ -275,17 +275,70 @@ For ShopStream's 5-minute web tier RTO: Front Door is preferred (faster detectio
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge29 --location eastus
+```
+
+2. Deploy a VM to use as the ASR replication source:
+
+```bash
+az vm create \
+  --resource-group rg-az305-challenge29 \
+  --name vm-asr-source \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --zone 1 \
+  --admin-username azureuser \
+  --generate-ssh-keys
+```
+
+3. Create a Recovery Services vault and set the replication policy:
+
+```bash
+az backup vault create \
+  --resource-group rg-az305-challenge29 \
+  --name vault-az305-challenge29 \
+  --location eastus
+
+az backup policy list \
+  --resource-group rg-az305-challenge29 \
+  --vault-name vault-az305-challenge29 \
+  --query "[].name" -o table
+```
+
+4. Enable backup on the VM to validate vault integration:
+
+```bash
+az backup protection enable-for-vm \
+  --resource-group rg-az305-challenge29 \
+  --vault-name vault-az305-challenge29 \
+  --vm vm-asr-source \
+  --policy-name DefaultPolicy
+```
+
+5. Verify the VM is registered for protection:
+
+```bash
+az backup item list \
+  --resource-group rg-az305-challenge29 \
+  --vault-name vault-az305-challenge29 \
+  --query "[].{Name:name, Status:properties.protectionStatus}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete DR infrastructure
-az group delete --name rg-shopstream-dr --yes --no-wait
-
-# Disable ASR replication (must be done before deleting source resources)
-# az site-recovery protected-item remove (per VM)
-
-# Delete primary test resources
-az group delete --name rg-shopstream --yes --no-wait
+az group delete --name rg-az305-challenge29 --yes --no-wait
 ```
 
 ---

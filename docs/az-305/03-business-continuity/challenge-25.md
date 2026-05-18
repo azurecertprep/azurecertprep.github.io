@@ -208,12 +208,78 @@ To convert RTO to minimum uptime percentage:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge25 --location eastus
+```
+
+2. Deploy two VMs in different availability zones to observe SLA composition:
+
+```bash
+az vm create \
+  --resource-group rg-az305-challenge25 \
+  --name vm-zone1 \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --zone 1 \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --no-wait
+
+az vm create \
+  --resource-group rg-az305-challenge25 \
+  --name vm-zone2 \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --zone 2 \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --no-wait
+```
+
+3. Verify zone placement for each VM:
+
+```bash
+az vm show \
+  --resource-group rg-az305-challenge25 \
+  --name vm-zone1 \
+  --query "{name:name, zone:zones[0]}" -o table
+
+az vm show \
+  --resource-group rg-az305-challenge25 \
+  --name vm-zone2 \
+  --query "{name:name, zone:zones[0]}" -o table
+```
+
+4. Confirm the SLA tier by listing availability zone assignments:
+
+```bash
+az vm list \
+  --resource-group rg-az305-challenge25 \
+  --query "[].{Name:name, Zone:zones[0]}" -o table
+```
+
+5. Verify both VMs are running in separate zones (this configuration qualifies for 99.99% SLA):
+
+```bash
+az vm list \
+  --resource-group rg-az305-challenge25 \
+  --query "length(unique([].zones[0]))" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# This challenge is primarily design-focused with minimal Azure resources
-# If you created any resources for SLA validation:
-az group delete --name rg-bcdr-design --yes --no-wait
+az group delete --name rg-az305-challenge25 --yes --no-wait
 ```
 
 ---

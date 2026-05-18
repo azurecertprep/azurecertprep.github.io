@@ -313,19 +313,75 @@ For the < 50ms requirement to be met globally, the CDN is not optional - it's ar
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge33 --location eastus
+```
+
+2. Deploy a Traffic Manager profile with performance routing:
+
+```bash
+az network traffic-manager profile create \
+  --resource-group rg-az305-challenge33 \
+  --name tm-multiregion-lab \
+  --routing-method Performance \
+  --unique-dns-name tm-az305-challenge33-$RANDOM \
+  --monitor-protocol HTTP \
+  --monitor-port 80 \
+  --monitor-path "/"
+```
+
+3. Add two external endpoints simulating multi-region origins:
+
+```bash
+az network traffic-manager endpoint create \
+  --resource-group rg-az305-challenge33 \
+  --profile-name tm-multiregion-lab \
+  --name endpoint-eastus \
+  --type externalEndpoints \
+  --target "www.microsoft.com" \
+  --endpoint-location eastus
+
+az network traffic-manager endpoint create \
+  --resource-group rg-az305-challenge33 \
+  --profile-name tm-multiregion-lab \
+  --name endpoint-westeurope \
+  --type externalEndpoints \
+  --target "www.microsoft.com" \
+  --endpoint-location westeurope
+```
+
+4. Verify the profile is active and endpoints are monitored:
+
+```bash
+az network traffic-manager profile show \
+  --resource-group rg-az305-challenge33 \
+  --name tm-multiregion-lab \
+  --query "{Status:profileStatus, Routing:trafficRoutingMethod, FQDN:dnsConfig.fqdn}" -o table
+```
+
+5. Confirm both endpoints are online and responding to health checks:
+
+```bash
+az network traffic-manager endpoint list \
+  --resource-group rg-az305-challenge33 \
+  --profile-name tm-multiregion-lab \
+  --query "[].{Name:name, Status:endpointMonitorStatus, Location:endpointLocation}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all StreamFlix resources across regions
-az group delete --name rg-streamflix-eastus2 --yes --no-wait
-az group delete --name rg-streamflix-northeurope --yes --no-wait
-az group delete --name rg-streamflix-japaneast --yes --no-wait
-
-# Delete global resources
-az group delete --name rg-streamflix-global --yes --no-wait
-
-# Note: Cosmos DB multi-region accounts take several minutes to fully delete
-# Front Door profiles should be deleted before origin resources
+az group delete --name rg-az305-challenge33 --yes --no-wait
 ```
 
 ---

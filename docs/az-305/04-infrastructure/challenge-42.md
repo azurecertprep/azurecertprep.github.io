@@ -151,10 +151,51 @@ App Configuration snapshots create an immutable, point-in-time copy of key-value
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge42 --location eastus
+```
+
+2. Create an App Configuration store:
+
+```bash
+az appconfig create --resource-group rg-az305-challenge42 \
+  --name appconfig-challenge42-$RANDOM --location eastus --sku Free
+```
+
+3. Add a key-value pair and a feature flag:
+
+```bash
+APPCONFIG_NAME=$(az appconfig list --resource-group rg-az305-challenge42 --query "[0].name" -o tsv)
+az appconfig kv set --name $APPCONFIG_NAME --key "App:Settings/FontSize" --value "24" --yes
+az appconfig feature set --name $APPCONFIG_NAME --feature "Beta" --yes
+```
+
+4. Enable the feature flag and verify configuration:
+
+```bash
+az appconfig feature enable --name $APPCONFIG_NAME --feature "Beta" --yes
+az appconfig kv list --name $APPCONFIG_NAME --output table
+```
+
+5. Verify the feature flag state:
+
+```bash
+az appconfig feature list --name $APPCONFIG_NAME --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge42 --yes --no-wait
 ```
 

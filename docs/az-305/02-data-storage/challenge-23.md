@@ -185,14 +185,63 @@ Bronze zone: raw data as-is from sources (JSON, CSV, raw Parquet). Silver zone: 
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group and a storage account for the Synapse workspace:
+
+```bash
+az group create --name rg-az305-challenge23 --location eastus
+
+az storage account create \
+  --name staz305ch23$RANDOM \
+  --resource-group rg-az305-challenge23 \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --enable-hierarchical-namespace true
+```
+
+2. Deploy a Synapse workspace with a serverless SQL endpoint:
+
+```bash
+az synapse workspace create \
+  --name synw-az305-ch23 \
+  --resource-group rg-az305-challenge23 \
+  --storage-account <your-account-name> \
+  --file-system synapsefs \
+  --sql-admin-login sqladmin \
+  --sql-admin-login-password "P@ssw0rd2024!" \
+  --location eastus
+```
+
+3. Open the firewall to allow your client IP:
+
+```bash
+az synapse workspace firewall-rule create \
+  --name AllowClient \
+  --resource-group rg-az305-challenge23 \
+  --workspace-name synw-az305-ch23 \
+  --start-ip-address 0.0.0.0 \
+  --end-ip-address 255.255.255.255
+```
+
+4. Run a sample query against the built-in serverless SQL pool to verify connectivity:
+
+```bash
+az synapse sql query \
+  --workspace-name synw-az305-ch23 \
+  --query "SELECT TOP 10 * FROM OPENROWSET(BULK 'https://azureopendatastorage.blob.core.windows.net/nyctlc/yellow/puYear=2019/puMonth=1/*.parquet', FORMAT='PARQUET') AS r"
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
 az group delete --name rg-az305-challenge23 --yes --no-wait
-
-# If using Databricks, also delete the workspace
-# az databricks workspace delete --name dbw-transglobal --resource-group rg-az305-challenge23
 ```
 
 ---
