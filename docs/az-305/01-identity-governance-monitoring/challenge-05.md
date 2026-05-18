@@ -4,6 +4,7 @@ title: "Challenge 05: Design Identity Management"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 05: Design Identity Management
 
@@ -38,11 +39,16 @@ Your task is to design a hybrid identity management solution that synchronizes i
 
 1. Evaluate and recommend the appropriate synchronization method for Woodgrove Bank:
 
-| Method | Description | When to Use |
-|--------|-------------|-------------|
-| Microsoft Entra Connect Sync | Traditional sync engine | |
-| Microsoft Entra Cloud Sync | Cloud-based lightweight agent | |
-| Federation (AD FS) | On-prem federation service | |
+<DecisionMatrix
+  title="Hybrid Identity Synchronization"
+  headers={["Description", "When to Use"]}
+  rows={[
+    {criteria: "Microsoft Entra Connect Sync", values: ["Traditional sync engine installed on-prem. Full-featured with support for complex topologies, device writeback, group writeback, and custom sync rules.", "Multi-forest environments, complex filtering/transformation needs, device writeback required, organizations needing granular control over sync behavior and custom attribute mappings."]},
+    {criteria: "Microsoft Entra Cloud Sync", values: ["Lightweight cloud-managed agent. No heavy infrastructure, auto-updates, supports multiple disconnected forests from a single config.", "Disconnected forests, simple sync scenarios, organizations wanting minimal on-prem footprint, multi-forest mergers where a single Connect Sync server cannot reach all forests."]},
+    {criteria: "Federation (AD FS)", values: ["On-prem federation service that redirects authentication to local AD. Tokens issued locally, no password hashes in the cloud.", "Strict regulatory requirements prohibiting password hashes in cloud, smart card/certificate-based auth required, third-party MFA that cannot integrate with Entra ID directly. Being deprecated in favor of cloud auth."]}
+  ]}
+  storageKey="az305-challenge-05"
+/>
 
 2. Design the synchronization topology considering:
    - Single forest, three domains

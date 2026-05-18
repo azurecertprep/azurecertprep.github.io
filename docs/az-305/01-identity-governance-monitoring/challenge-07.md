@@ -4,6 +4,7 @@ title: "Challenge 07: Design Authorization for On-Premises Resources"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 07: Design Authorization for On-Premises Resources
 
@@ -42,12 +43,17 @@ Your task is to design solutions that bridge cloud identities with on-premises r
 
 1. For each application, evaluate and recommend the appropriate access solution:
 
-| Application | Requirements | Options to Evaluate | Recommended Solution |
-|-------------|-------------|--------------------|--------------------|
-| HR Portal (Kerberos/IIS) | SSO, no VPN, secure | App Proxy, Azure AD DS, VPN, P2S | |
-| Engineering File Shares | Remote access, domain-joined | Azure Files, App Proxy, VPN, Azure AD DS | |
-| Manufacturing ERP (NTLM) | Domain-joined thick client | Azure AD DS, VPN, AVD | |
-| Supplier Portal (external users) | B2B access, no VPN | App Proxy + B2B, SWA, modernize | |
+<DecisionMatrix
+  title="Legacy Application Access Strategy"
+  headers={["Requirements", "Options to Evaluate", "Recommended Solution"]}
+  rows={[
+    {criteria: "HR Portal (Kerberos/IIS)", values: ["SSO, no VPN, secure access for remote employees", "App Proxy, Azure AD DS, VPN, P2S VPN", "Microsoft Entra Application Proxy with Kerberos Constrained Delegation (KCD). Provides SSO without VPN, supports Kerberos via connector-to-DC delegation. Secure: no inbound ports, pre-authentication in the cloud."]},
+    {criteria: "Engineering File Shares", values: ["Remote access to SMB shares, domain-joined clients preferred", "Azure Files with AD DS auth, App Proxy, VPN, Azure AD DS", "Azure Files with on-prem AD DS authentication. Provides identity-based SMB access, supports NTFS permissions, accessible via SMB 3.0 over internet (port 445) or VPN. Replaces traditional file server."]},
+    {criteria: "Manufacturing ERP (NTLM)", values: ["Domain-joined thick client required, NTLM authentication, graphical UI", "Azure AD DS, VPN, Azure Virtual Desktop (AVD)", "Azure Virtual Desktop (AVD) with Azure AD DS. Provides domain-joined session hosts for thick-client access, NTLM support via AD DS, no need to extend on-prem AD to cloud. Users connect via web/client."]},
+    {criteria: "Supplier Portal (external users)", values: ["B2B external access, no VPN, limited scope", "App Proxy + B2B, Secure Web App (SWA), modernize to SaaS", "Microsoft Entra Application Proxy + B2B collaboration. Suppliers invited as guests, pre-authenticated at cloud layer, App Proxy delivers on-prem app without exposing network. Conditional Access restricts scope."]}
+  ]}
+  storageKey="az305-challenge-07"
+/>
 
 2. Document the decision criteria for each choice:
    - Authentication protocol support (Kerberos, NTLM, header-based)
