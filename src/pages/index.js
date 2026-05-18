@@ -7,8 +7,8 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 const stats = [
-  { number: '28', label: 'Challenges' },
-  { number: '100%', label: 'AZ-104 Coverage' },
+  { number: '28', label: 'Challenges (AZ-104)' },
+  { number: '100%', label: 'Exam Coverage' },
   { number: '~$5', label: 'Total Cost' },
   { number: 'v2026.04', label: 'Exam Objectives' },
 ];
@@ -76,7 +76,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           Azure Cert Prep
         </Heading>
-        <p className="hero__subtitle">"Don't just study — build it."</p>
+        <p className="hero__subtitle">Hands-on challenges for Microsoft Azure certification exams.</p>
         <div className="stats-bar">
           {stats.map((stat, idx) => (
             <div key={idx} className="stat-item">
@@ -108,8 +108,8 @@ function ChallengeGrid() {
     <section style={{padding: '2rem 0'}}>
       <div className="container">
         <div className="section-heading">
-          <Heading as="h2">28 Challenges</Heading>
-          <p>Progressive difficulty — from your first Entra ID user to a cross-domain capstone.</p>
+          <Heading as="h2">AZ-104: Azure Administrator</Heading>
+          <p>28 challenges — progressive difficulty from your first Entra ID user to a cross-domain capstone.</p>
         </div>
         <div className="row">
           {challenges.map((ch) => (
@@ -219,6 +219,50 @@ function CertificationCoverage() {
   );
 }
 
+function ExamRoadmap() {
+  return (
+    <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
+      <div className="container" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <Heading as="h2" style={{textAlign: 'center', fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem'}}>Exam Roadmap</Heading>
+        <p style={{textAlign: 'center', color: 'var(--ifm-color-emphasis-600)', fontSize: '1.1rem', maxWidth: '600px', marginBottom: '2rem'}}>
+          More exams coming soon. Each will follow the same hands-on, challenge-based format.
+        </p>
+        <table style={{width: 'auto', borderCollapse: 'collapse'}}>
+          <thead>
+            <tr>
+              <th style={{textAlign: 'center'}}>Exam</th>
+              <th style={{textAlign: 'center'}}>Title</th>
+              <th style={{textAlign: 'center'}}>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{textAlign: 'center'}}><strong>AZ-104</strong></td>
+              <td style={{textAlign: 'center'}}>Azure Administrator</td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available</span></td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}>AZ-305</td>
+              <td style={{textAlign: 'center'}}>Solutions Architect Expert</td>
+              <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planned</span></td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}>AZ-400</td>
+              <td style={{textAlign: 'center'}}>DevOps Engineer Expert</td>
+              <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planned</span></td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}>AZ-500</td>
+              <td style={{textAlign: 'center'}}>Azure Security Engineer</td>
+              <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planned</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   return (
     <Layout
@@ -229,6 +273,7 @@ export default function Home() {
         <HomepageFeatures />
         <ChallengeGrid />
         <CertificationCoverage />
+        <ExamRoadmap />
         <ReferenceTable />
       </main>
     </Layout>
