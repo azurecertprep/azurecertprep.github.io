@@ -1,4 +1,4 @@
-# ☁️ Azure Cert Prep
+# Azure Cert Prep
 
 [![Deploy to GitHub Pages](https://github.com/azurecertprep/azurecertprep.github.io/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/azurecertprep/azurecertprep.github.io/actions/workflows/deploy.yml)
 [![Validate Content](https://github.com/azurecertprep/azurecertprep.github.io/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/azurecertprep/azurecertprep.github.io/actions/workflows/validate.yml)
@@ -10,9 +10,9 @@
 
 Hands-on, challenge-based preparation for Microsoft Azure certification exams. Every skill from the official study guide covered with real Azure resources you create, configure, and troubleshoot.
 
-**🌐 Website**: [azurecertprep.github.io](https://azurecertprep.github.io)
+**Website**: [azurecertprep.github.io](https://azurecertprep.github.io)
 
-## 🖥️ One-Click Lab Environment
+## One-Click Lab Environment
 
 **No setup needed!** Click the button below to get a full Azure lab environment running in your browser:
 
@@ -24,43 +24,52 @@ Your Codespace comes pre-configured with:
 - **AzCopy** — Bulk data transfer tool
 - **jq** / **yq** — JSON/YAML processing
 
-> 💡 GitHub Free accounts get **60 hours/month** of Codespaces — more than enough to complete all challenges.
+> GitHub Free accounts get **60 hours/month** of Codespaces — more than enough to complete all challenges.
 
 ## Supported Exams
 
 | Exam | Title | Challenges | Status |
 |------|-------|-----------|--------|
-| **AZ-104** | Azure Administrator | 16 | ✅ Available |
-| AZ-305 | Solutions Architect Expert | — | 🔵 Planned |
-| AZ-400 | DevOps Engineer Expert | — | 🔵 Planned |
-| AZ-500 | Azure Security Engineer | — | 🔵 Planned |
+| **AZ-104** | Azure Administrator | 28 | Available |
+| AZ-305 | Solutions Architect Expert | — | Planned |
+| AZ-400 | DevOps Engineer Expert | — | Planned |
+| AZ-500 | Azure Security Engineer | — | Planned |
 
 ## AZ-104: Azure Administrator
 
-16 challenges covering **100% of the exam domains** (as of April 2026):
+28 challenges covering **100% of the exam domains** (as of April 2026):
 
 | Domain | Weight | Challenges | Topics |
 |--------|--------|-----------|--------|
-| 🔐 Identity & Governance | 20-25% | 01-03 | Entra ID, RBAC, Azure Policy, budgets |
-| 💾 Storage | 15-20% | 04-06 | Storage accounts, Blob, Files, AzCopy, lifecycle |
-| ⚙️ Compute | 20-25% | 07-10 | ARM/Bicep, VMs, VMSS, Containers, App Service |
-| 🌐 Networking | 15-20% | 11-13 | VNets, NSGs, Bastion, DNS, Load Balancer |
-| 📊 Monitor & Maintain | 10-15% | 14-15 | Azure Monitor, KQL, Backup, Site Recovery |
-| 🏆 Capstone | All | 16 | Cross-domain troubleshooting scenario |
+| Identity & Governance | 20-25% | 01-03, 17-18 | Entra ID, RBAC, Azure Policy, budgets, Cost Management |
+| Storage | 15-20% | 04-06, 19-20 | Storage accounts, Blob, Files, AzCopy, lifecycle, legal hold |
+| Compute | 20-25% | 07-10, 21-23 | ARM/Bicep, VMs, VMSS, Containers, App Service, Automation |
+| Networking | 15-20% | 11-13, 24-26 | VNets, NSGs, Bastion, DNS, Load Balancer, Network Watcher |
+| Monitor & Maintain | 10-15% | 14-15, 27-28 | Azure Monitor, KQL, Backup, Site Recovery, Alerts |
+| Capstone | All | 16 | Cross-domain troubleshooting scenario |
 
-**Estimated total cost: ~$3** (with cleanup after each challenge)
+**Estimated total cost: ~$5** (with cleanup after each challenge)
 
 ### Challenge Format
 
 Each challenge includes:
-- 🎯 **Exam skills** mapped to official study guide
-- 📖 **Real-world scenario** (Contoso Ltd.)
-- 🔧 **Hands-on tasks** with Azure CLI, PowerShell, and Portal instructions
-- ✅ **Success criteria** — clear "done" definition
-- 💡 **Expandable hints** — try first, peek if stuck
-- 🔥 **Break & Fix** — troubleshooting scenarios
-- 🧠 **Knowledge check** — exam-style questions
-- 🧹 **Cleanup script** — delete resources, avoid costs
+- **Exam skills** mapped to official study guide
+- **Real-world scenario** (Contoso Ltd.)
+- **Hands-on tasks** with Azure CLI, PowerShell, and Portal instructions
+- **Interactive success criteria** — click to check off as you complete
+- **Expandable hints** — try first, peek if stuck
+- **Break & Fix** — troubleshooting scenarios with deliberate misconfigurations
+- **Knowledge check** — exam-style questions
+- **Cleanup script** — delete resources, avoid costs
+
+### Features
+
+- Multi-tool tabs (Azure CLI / PowerShell / Portal)
+- Interactive self-assessment checklist
+- Progress tracking with localStorage
+- Bilingual content (English + Brazilian Portuguese)
+- GitHub Codespaces lab environment
+- Coach/instructor guide with full solutions
 
 ## Prerequisites
 
@@ -95,14 +104,19 @@ Contributions are welcome! Please:
 
 ## Related Projects
 
-- ☸️ [Kubernetes Hackathon](https://k8shackathon.com/) — 20 hands-on Kubernetes challenges
-- 🐧 [Linux FUNdamentals Hackathon](https://linuxhackathon.com/) — Master Linux basics
-- ☁️ [AKS Learning](https://aks-learning.github.io/) — From zero to production on AKS
-- 📖 [From Server to Cluster](https://fromservertocluster.com/) — The book for Linux professionals
+| Project | Description |
+|---------|-------------|
+| [Kubernetes Hackathon](https://k8shackathon.com/) | 20 hands-on Kubernetes challenges |
+| [Linux FUNdamentals Hackathon](https://linuxhackathon.com/) | Master Linux basics through challenges |
+| [AKS Learning](https://aks-learning.github.io/) | From zero to production on AKS |
+| [From Server to Cluster](https://fromservertocluster.com/) | The book for Linux professionals moving to containers |
+| [AI for Infrastructure](https://ai4infra.com/) | AI-powered infrastructure automation |
+| [Azure Governance](https://azgovernance.com/) | Azure governance best practices |
+| [AZ-900 Study Guide](https://github.com/ricmmartins/study-guide-az900) | Free study guide for Azure Fundamentals |
 
-## 🇧🇷 Portuguese Content
+## Portuguese Content
 
-This project is also available in **Brazilian Portuguese**! Check out the [`pt-br`](https://github.com/azurecertprep/azurecertprep.github.io/tree/pt-br) branch.
+This project is also available in **Brazilian Portuguese**! Use the language switcher on the website or check the [`i18n/pt-br`](https://github.com/azurecertprep/azurecertprep.github.io/tree/main/i18n/pt-br) directory.
 
 ## License
 
