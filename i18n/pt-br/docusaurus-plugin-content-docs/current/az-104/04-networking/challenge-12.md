@@ -7,7 +7,7 @@ title: "Challenge 12 | Network Security"
 
 :::info Tempo Estimado & Custo
 
-**60 minutos** | **~$0,30** (Azure Bastion gera cobranças por hora | exclua rapidamente) | 📊 **Peso no exame: 15–20%**
+**60 minutos** | **~$0,30** (Azure Bastion gera cobranças por hora | exclua rapidamente) | **Peso no exame: 15–20%**
 
 :::
 ## Cenário

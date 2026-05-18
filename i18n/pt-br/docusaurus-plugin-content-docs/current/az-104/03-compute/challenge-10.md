@@ -7,7 +7,7 @@ title: "Challenge 10 | Azure App Service"
 
 :::info Informação
 
-**Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.20** (tier S1, exclua rapidamente) | 📊 **Peso no exame: 20–25%**
+**Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.20** (tier S1, exclua rapidamente) | **Peso no exame: 20–25%**
 
 :::
 ## Cenário

@@ -80,7 +80,7 @@ const config = {
           },
           {
             href: 'https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1',
-            label: '🖥️ Open Lab',
+            label: 'Open Lab',
             position: 'right',
           },
         ],

@@ -7,7 +7,7 @@ title: "Challenge 11 | Virtual Networks & Subnets"
 
 :::info Tempo Estimado & Custo
 
-**45–60 minutos** | **~$0,10** (VMs para teste, desaloque rapidamente) | 📊 **Peso no exame: 15–20%**
+**45–60 minutos** | **~$0,10** (VMs para teste, desaloque rapidamente) | **Peso no exame: 15–20%**
 
 :::
 ## Cenário

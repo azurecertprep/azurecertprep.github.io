@@ -3,7 +3,7 @@ sidebar_label: "AZ-104 Solutions"
 sidebar_position: 1
 ---
 
-# 🎓 Guia do Instrutor AZ-104: Soluções Completas
+# Guia do Instrutor AZ-104: Soluções Completas
 
 :::danger Apenas para Instrutores & Facilitadores
 

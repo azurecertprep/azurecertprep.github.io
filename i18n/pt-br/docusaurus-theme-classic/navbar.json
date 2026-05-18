@@ -15,8 +15,8 @@
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
   },
-  "item.label.🖥️ Open Lab": {
-    "message": "🖥️ Abrir Lab",
-    "description": "Navbar item with label 🖥️ Open Lab"
+  "item.label.Open Lab": {
+    "message": "Abrir Lab",
+    "description": "Navbar item with label Open Lab"
   }
 }

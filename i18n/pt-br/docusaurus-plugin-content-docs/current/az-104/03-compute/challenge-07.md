@@ -7,7 +7,7 @@ title: "Challenge 07 | ARM Templates & Bicep"
 
 :::info Informação
 
-**Tempo estimado: 60 minutos** | **Custo estimado: Gratuito** (templates + storage account apenas) | 📊 **Peso no exame: 20–25%**
+**Tempo estimado: 60 minutos** | **Custo estimado: Gratuito** (templates + storage account apenas) | **Peso no exame: 20–25%**
 
 :::
 ## Cenário

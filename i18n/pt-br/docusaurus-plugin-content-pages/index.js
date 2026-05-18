@@ -149,7 +149,7 @@ function HomepageHeader() {
             className="button button--outline button--lg"
             style={{color: 'white', borderColor: 'white', marginLeft: '1rem'}}
             href="https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1">
-            🖥️ Abrir Lab
+            Abrir Lab
           </Link>
         </div>
       </div>

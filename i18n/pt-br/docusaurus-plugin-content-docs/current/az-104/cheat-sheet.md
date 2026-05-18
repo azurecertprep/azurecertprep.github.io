@@ -30,7 +30,7 @@ az group list --output table
 az group delete --name myRG --yes --no-wait
 ```
 
-## 🔐 Identidade e Governança
+## Identidade e Governança
 
 ```bash
 # Entra ID Users
@@ -65,7 +65,7 @@ az resource tag --tags Environment=Dev --ids RESOURCE_ID
 az account management-group create --name "MyMG" --display-name "My Management Group"
 ```
 
-## 💾 Armazenamento
+## Armazenamento
 
 ```bash
 # Storage accounts
@@ -93,7 +93,7 @@ azcopy sync "./local/" "https://mystorageacct.blob.core.windows.net/mycontainer?
 az storage account management-policy create --account-name mystorageacct --resource-group myRG --policy @policy.json
 ```
 
-## ⚙️ Computação
+## Computação
 
 ```bash
 # Virtual Machines
@@ -137,7 +137,7 @@ az webapp deployment slot create --name myApp --resource-group myRG --slot stagi
 az webapp deployment slot swap --name myApp --resource-group myRG --slot staging
 ```
 
-## 🌐 Redes
+## Redes
 
 ```bash
 # Virtual Networks
@@ -167,7 +167,7 @@ az network watcher show-topology --resource-group myRG
 az network watcher test-ip-flow --resource-group myRG --vm myVM --direction Inbound --protocol TCP --local 10.0.0.4:80 --remote 1.2.3.4:*
 ```
 
-## 📊 Monitorar e Manter
+## Monitorar e Manter
 
 ```bash
 # Azure Monitor

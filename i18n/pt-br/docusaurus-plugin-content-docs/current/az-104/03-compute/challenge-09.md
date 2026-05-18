@@ -7,7 +7,7 @@ title: "Challenge 09 | Containers in Azure"
 
 :::info Informação
 
-**Tempo estimado: 45–60 minutos** | **Custo estimado: ~$0.30** | 📊 **Peso no exame: 20–25%**
+**Tempo estimado: 45–60 minutos** | **Custo estimado: ~$0.30** | **Peso no exame: 20–25%**
 
 :::
 ## Cenário

@@ -439,7 +439,7 @@ done
 
 ---
 
-:::tip Dica 🎓 Você Completou a Série de Desafios AZ-104!
+:::tip Dica Você Completou a Série de Desafios AZ-104!
 
 Se você trabalhou em todos os 28 desafios, cobriu todas as principais habilidades medidas no exame AZ-104. Revise as áreas onde teve dificuldade e depois agende seu exame com confiança. Boa sorte!
 

@@ -7,7 +7,7 @@ title: "Challenge 08 | Virtual Machines & Scale Sets"
 
 :::info Informação
 
-**Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.50** (desaloque rapidamente!) | 📊 **Peso no exame: 20–25%**
+**Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.50** (desaloque rapidamente!) | **Peso no exame: 20–25%**
 
 :::
 :::danger Aviso de Custo
