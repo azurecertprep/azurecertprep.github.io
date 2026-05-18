@@ -133,10 +133,8 @@ az network watcher configure \
   --enabled true
 
 # Verify
-az network watcher show \
-  --resource-group NetworkWatcherRG \
-  --location $LOCATION \
-  --query "{Name:name, Location:location, State:provisioningState}" -o table
+az network watcher list \
+  --query "[?location=='$LOCATION'] | [0].{Name:name, Location:location, State:provisioningState}" -o table
 ```
 
 ### Tarefa 2: IP Flow Verify
@@ -547,9 +545,9 @@ A versão 1 registra apenas: timestamp, IP origem/destino, porta origem/destino,
 ```bash
 # Delete connection monitors first
 az network watcher connection-monitor delete \
-  --location $LOCATION --name cm-web-to-internet --yes 2>/dev/null
+  --location $LOCATION --name cm-web-to-internet 2>/dev/null
 az network watcher connection-monitor delete \
-  --location $LOCATION --name cm-web-to-db --yes 2>/dev/null
+  --location $LOCATION --name cm-web-to-db 2>/dev/null
 
 # Delete flow logs
 az network watcher flow-log delete \
