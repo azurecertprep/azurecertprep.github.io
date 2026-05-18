@@ -7,9 +7,9 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 const stats = [
-  { number: '28', label: 'Challenges (AZ-104)' },
-  { number: '100%', label: 'Exam Coverage' },
-  { number: '~$5', label: 'Total Cost' },
+  { number: '78', label: 'Challenges' },
+  { number: '2', label: 'Exams' },
+  { number: '100%', label: 'Coverage' },
   { number: 'v2026.04', label: 'Exam Objectives' },
 ];
 
@@ -89,7 +89,13 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/az-104/overview">
-            Start with AZ-104 →
+            AZ-104 (28 challenges)
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            style={{marginLeft: '1rem'}}
+            to="/docs/az-305/overview">
+            AZ-305 (50 challenges)
           </Link>
           <Link
             className="button button--outline button--lg"
@@ -239,12 +245,12 @@ function ExamRoadmap() {
             <tr>
               <td style={{textAlign: 'center'}}><strong>AZ-104</strong></td>
               <td style={{textAlign: 'center'}}>Azure Administrator</td>
-              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available</span></td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available (28 challenges)</span></td>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}>AZ-305</td>
+              <td style={{textAlign: 'center'}}><strong>AZ-305</strong></td>
               <td style={{textAlign: 'center'}}>Solutions Architect Expert</td>
-              <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planned</span></td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available (50 challenges)</span></td>
             </tr>
             <tr>
               <td style={{textAlign: 'center'}}>AZ-400</td>
