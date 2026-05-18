@@ -4,6 +4,7 @@ title: "Challenge 04: Design Authentication for Cloud-Native Apps"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 04: Design Authentication for Cloud-Native Apps
 
@@ -37,15 +38,20 @@ Your task is to design the complete authentication architecture for both applica
 
 1. For each application, determine the appropriate identity platform:
 
-| Requirement | Internal Portal | Customer Platform |
-|-------------|----------------|-------------------|
-| Identity provider | | |
-| User population | | |
-| Sign-up/sign-in experience | | |
-| Social identity support | | |
-| MFA requirements | | |
-| Branding customization | | |
-| Licensing model | | |
+<DecisionMatrix
+  title="Authentication Strategy Selection"
+  headers={["Internal Portal", "Customer Platform"]}
+  rows={[
+    {criteria: "Identity provider", values: ["Microsoft Entra ID (corporate tenant) - employees authenticate with existing work accounts", "Azure AD B2C (separate tenant) - consumer identities isolated from corporate directory"]},
+    {criteria: "User population", values: ["500 internal employees with existing Azure AD accounts", "100,000+ external consumers, self-service registration required"]},
+    {criteria: "Sign-up/sign-in experience", values: ["SSO via existing corporate credentials, no separate registration needed", "Custom sign-up flow with email verification, progressive profiling for loyalty data"]},
+    {criteria: "Social identity support", values: ["Not needed - corporate accounts only (block social sign-in)", "Required - Google, Facebook, Apple sign-in to reduce registration friction"]},
+    {criteria: "MFA requirements", values: ["Conditional Access policy: MFA required outside corporate network or for privileged operations", "Risk-based MFA: triggered only for suspicious sign-ins or high-value transactions (checkout)"]},
+    {criteria: "Branding customization", values: ["Minimal - standard Microsoft sign-in page with company logo", "Fully customized - branded pages matching the e-commerce site design, custom CSS/HTML"]},
+    {criteria: "Licensing model", values: ["Included with Microsoft 365 E3/E5 licenses already assigned to employees", "Azure AD B2C pricing: first 50K authentications/month free, then per-authentication billing"]}
+  ]}
+  storageKey="az305-challenge-04"
+/>
 
 2. Justify why you chose Microsoft Entra ID vs. Azure AD B2C vs. Azure AD B2B for each application. Document scenarios where the alternative would be more appropriate.
 
