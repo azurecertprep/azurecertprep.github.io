@@ -15,12 +15,18 @@ Como candidato a esta certificação, você deve ter experiência na implementa�
 
 | Domínio | Peso | Desafios |
 |---------|------|----------|
-| 🔐 Gerenciar identidades e governança do Azure | 20–25% | 01, 02, 03 |
-| 💾 Implementar e gerenciar armazenamento | 15–20% | 04, 05, 06 |
-| ⚙️ Implantar e gerenciar recursos de computação do Azure | 20–25% | 07, 08, 09, 10 |
-| 🌐 Implementar e gerenciar redes virtuais | 15–20% | 11, 12, 13 |
-| 📊 Monitorar e manter recursos do Azure | 10–15% | 14, 15 |
-| 🏆 Capstone entre domínios | | | 16 |
+| Gerenciar identidades e governança do Azure | 20–25% | 01, 02, 03, 17, 18 |
+| Implementar e gerenciar armazenamento | 15–20% | 04, 05, 06, 19, 20 |
+| Implantar e gerenciar recursos de computação do Azure | 20–25% | 07, 08, 09, 10, 21, 22, 23 |
+| Implementar e gerenciar redes virtuais | 15–20% | 11, 12, 13, 24, 25, 26 |
+| Monitorar e manter recursos do Azure | 10–15% | 14, 15, 27, 28 |
+| Capstone entre domínios | Todos | 16 |
+
+:::tip Estrutura dos Desafios
+
+Os desafios 01-16 cobrem os tópicos principais do exame. Os desafios 17-28 são aprofundamentos avançados adicionados a cada domínio. A navegação segue a **ordem dos domínios do exame** (Identidade → Armazenamento → Computação → Rede → Monitoramento → Capstone), não a ordem numérica dos desafios. Dentro de cada domínio, os desafios básicos vêm primeiro, seguidos dos avançados.
+
+:::
 
 ## Como Este Site Funciona
 

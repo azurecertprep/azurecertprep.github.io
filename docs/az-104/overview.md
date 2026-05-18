@@ -15,12 +15,18 @@ As a candidate for this certification, you should have subject matter expertise 
 
 | Domain | Weight | Challenges |
 |--------|--------|------------|
-| Manage Azure identities and governance | 20–25% | 01, 02, 03 |
-| Implement and manage storage | 15–20% | 04, 05, 06 |
-| Deploy and manage Azure compute resources | 20–25% | 07, 08, 09, 10 |
-| Implement and manage virtual networking | 15–20% | 11, 12, 13 |
-| Monitor and maintain Azure resources | 10–15% | 14, 15 |
+| Manage Azure identities and governance | 20–25% | 01, 02, 03, 17, 18 |
+| Implement and manage storage | 15–20% | 04, 05, 06, 19, 20 |
+| Deploy and manage Azure compute resources | 20–25% | 07, 08, 09, 10, 21, 22, 23 |
+| Implement and manage virtual networking | 15–20% | 11, 12, 13, 24, 25, 26 |
+| Monitor and maintain Azure resources | 10–15% | 14, 15, 27, 28 |
 | Cross-domain capstone | All | 16 |
+
+:::tip Challenge Structure
+
+Challenges 01-16 cover core exam topics. Challenges 17-28 are advanced deep dives added to each domain. Navigation follows the **exam domain order** (Identity → Storage → Compute → Networking → Monitor → Capstone), not the challenge number. Within each domain, basic challenges come first, then advanced ones.
+
+:::
 
 ## How This Site Works
 
