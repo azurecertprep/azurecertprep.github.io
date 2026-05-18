@@ -4,6 +4,7 @@ title: "Challenge 29: Design a Disaster Recovery Plan"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 29: Design a Disaster Recovery Plan
 
@@ -61,11 +62,16 @@ az group create --name rg-shopstream-dr --location westus2
 
 4. Design the database replication strategy for each data store:
 
-| Data Store | Primary Region | DR Approach | RPO | RTO |
-|------------|---------------|-------------|-----|-----|
-| Azure SQL (transactions) | East US 2 | ? | 5 sec | ? |
-| Redis Cache (sessions) | East US 2 | ? | N/A | ? |
-| Azure Storage (images) | East US 2 | ? | ? | ? |
+<DecisionMatrix
+  title="DR Strategy by Data Store"
+  headers={["DR Approach", "RPO", "RTO", "Failover Mode"]}
+  rows={[
+    {criteria: "Azure SQL (transactions)", values: ["Failover group with automatic failover to West US 2", "~5 seconds (asynchronous geo-replication)", "~30 seconds (automatic promotion via failover group)", "Automatic after grace period; stable DNS endpoint redirects connections transparently"]},
+    {criteria: "Redis Cache (sessions)", values: ["Accept session loss; deploy warm standby Redis in DR region", "N/A (sessions are ephemeral and can be regenerated)", "Minutes (pre-provisioned Redis in DR region starts serving immediately)", "Manual; users re-authenticate after failover since session state is not replicated"]},
+    {criteria: "Azure Storage (images)", values: ["RA-GRS with read-access secondary endpoint as CDN origin failover", "Up to 15 minutes (asynchronous geo-replication to paired region)", "Seconds (secondary read endpoint is always available for reads)", "Automatic for reads via secondary endpoint; full account failover is customer-initiated"]}
+  ]}
+  storageKey="az305-challenge-29"
+/>
 
 5. Configure an Azure SQL failover group for the transaction database:
    - Automatic failover with appropriate grace period

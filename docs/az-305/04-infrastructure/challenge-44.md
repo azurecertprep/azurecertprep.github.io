@@ -163,6 +163,57 @@ SOX and FDA 21 CFR Part 11 compliance require: audit trails (Azure Activity Log,
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge44 --location eastus
+```
+
+2. Create a VNet with two subnets (web and api):
+
+```bash
+az network vnet create --resource-group rg-az305-challenge44 \
+  --name vnet-lab44 --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-web --subnet-prefix 10.0.1.0/24
+
+az network vnet subnet create --resource-group rg-az305-challenge44 \
+  --vnet-name vnet-lab44 --name subnet-api --address-prefix 10.0.2.0/24
+```
+
+3. Create an Application Security Group and a Network Security Group:
+
+```bash
+az network asg create --resource-group rg-az305-challenge44 \
+  --name asg-webservers
+
+az network nsg create --resource-group rg-az305-challenge44 \
+  --name nsg-web
+```
+
+4. Add an NSG rule allowing HTTP traffic to the ASG:
+
+```bash
+az network nsg rule create --resource-group rg-az305-challenge44 \
+  --nsg-name nsg-web --name AllowHTTP --priority 100 \
+  --direction Inbound --access Allow --protocol Tcp \
+  --destination-asgs asg-webservers --destination-port-ranges 80
+```
+
+5. Verify the rule was created:
+
+```bash
+az network nsg rule list --resource-group rg-az305-challenge44 \
+  --nsg-name nsg-web -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

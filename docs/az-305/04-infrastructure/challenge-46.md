@@ -177,6 +177,60 @@ For a 2TB database over a 1Gbps ExpressRoute connection: theoretical transfer ti
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge46 --location eastus
+```
+
+2. Create a VNet and subnet for the backend pool:
+
+```bash
+az network vnet create --resource-group rg-az305-challenge46 \
+  --name vnet-lab46 --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-backend --subnet-prefix 10.0.1.0/24
+```
+
+3. Create a public IP and a Standard Load Balancer:
+
+```bash
+az network public-ip create --resource-group rg-az305-challenge46 \
+  --name pip-lb46 --sku Standard --allocation-method Static
+
+az network lb create --resource-group rg-az305-challenge46 \
+  --name lb-lab46 --sku Standard \
+  --frontend-ip-name frontend-lb46 --public-ip-address pip-lb46 \
+  --backend-pool-name backend-pool46
+```
+
+4. Create two NICs and add them to the backend pool:
+
+```bash
+az network nic create --resource-group rg-az305-challenge46 \
+  --name nic-vm1 --vnet-name vnet-lab46 --subnet subnet-backend \
+  --lb-name lb-lab46 --lb-address-pools backend-pool46
+
+az network nic create --resource-group rg-az305-challenge46 \
+  --name nic-vm2 --vnet-name vnet-lab46 --subnet subnet-backend \
+  --lb-name lb-lab46 --lb-address-pools backend-pool46
+```
+
+5. Verify the backend pool members:
+
+```bash
+az network lb address-pool show --resource-group rg-az305-challenge46 \
+  --lb-name lb-lab46 --name backend-pool46 \
+  --query "backendIPConfigurations[].id" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

@@ -316,6 +316,76 @@ Key cost drivers in this architecture: Cosmos DB multi-region (use autoscale to 
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge50 --location eastus
+```
+
+2. Create a VNet with subnets for App Service integration and private endpoints:
+
+```bash
+az network vnet create --resource-group rg-az305-challenge50 \
+  --name vnet-lab50 --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-appservice --subnet-prefix 10.0.1.0/24
+
+az network vnet subnet create --resource-group rg-az305-challenge50 \
+  --vnet-name vnet-lab50 --name subnet-pe --address-prefix 10.0.2.0/24 \
+  --disable-private-endpoint-network-policies true
+```
+
+3. Create an App Service with VNet integration:
+
+```bash
+az appservice plan create --resource-group rg-az305-challenge50 \
+  --name plan-lab50 --sku S1 --is-linux
+
+az webapp create --resource-group rg-az305-challenge50 \
+  --plan plan-lab50 --name webapp-lab50-$(openssl rand -hex 4) \
+  --runtime "NODE:20-lts"
+
+WEBAPP_NAME=$(az webapp list --resource-group rg-az305-challenge50 \
+  --query "[0].name" -o tsv)
+
+az webapp vnet-integration add --resource-group rg-az305-challenge50 \
+  --name $WEBAPP_NAME --vnet vnet-lab50 --subnet subnet-appservice
+```
+
+4. Create a Key Vault with a private endpoint:
+
+```bash
+az keyvault create --resource-group rg-az305-challenge50 \
+  --name kv-lab50-$(openssl rand -hex 4) --location eastus \
+  --public-network-access Disabled
+
+KV_ID=$(az keyvault list --resource-group rg-az305-challenge50 \
+  --query "[0].id" -o tsv)
+
+az network private-endpoint create --resource-group rg-az305-challenge50 \
+  --name pe-keyvault50 --vnet-name vnet-lab50 --subnet subnet-pe \
+  --private-connection-resource-id $KV_ID \
+  --group-id vault --connection-name conn-vault
+```
+
+5. Verify the App Service VNet integration and private endpoint:
+
+```bash
+az webapp vnet-integration list --resource-group rg-az305-challenge50 \
+  --name $WEBAPP_NAME -o table
+
+az network private-endpoint show --resource-group rg-az305-challenge50 \
+  --name pe-keyvault50 \
+  --query "privateLinkServiceConnections[0].privateLinkServiceConnectionState.status" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

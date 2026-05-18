@@ -136,6 +136,49 @@ Elastic pools are cost-effective when you have multiple databases with varying a
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge14 --location eastus
+```
+
+2. Deploy an Azure SQL Database (General Purpose, serverless):
+
+```bash
+az sql server create --name sql-shopwave-lab --resource-group rg-az305-challenge14 \
+  --location eastus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
+
+az sql db create --name db-shopwave-orders --resource-group rg-az305-challenge14 \
+  --server sql-shopwave-lab --edition GeneralPurpose --compute-model Serverless \
+  --family Gen5 --capacity 2
+```
+
+3. Configure geo-replication to a secondary region:
+
+```bash
+az sql db replica create --name db-shopwave-orders --resource-group rg-az305-challenge14 \
+  --server sql-shopwave-lab --partner-server sql-shopwave-lab-west \
+  --partner-resource-group rg-az305-challenge14
+
+az sql server create --name sql-shopwave-lab-west --resource-group rg-az305-challenge14 \
+  --location westus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
+```
+
+4. Verify geo-replication status:
+
+```bash
+az sql db replica list-links --name db-shopwave-orders \
+  --resource-group rg-az305-challenge14 --server sql-shopwave-lab
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

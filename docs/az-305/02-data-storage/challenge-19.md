@@ -148,6 +148,67 @@ Azure Blob Storage immutable storage supports two policy types: (1) Time-based r
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge19 --location eastus
+```
+
+2. Deploy a storage account with blob service:
+
+```bash
+az storage account create --name stmediavaultlab19 --resource-group rg-az305-challenge19 \
+  --location eastus --sku Standard_LRS --kind StorageV2 --access-tier Hot
+```
+
+3. Create containers with different access tiers:
+
+```bash
+az storage container create --name active-production \
+  --account-name stmediavaultlab19
+
+az storage container create --name completed-projects \
+  --account-name stmediavaultlab19
+
+az storage container create --name archive-masters \
+  --account-name stmediavaultlab19
+```
+
+4. Upload a test blob and set its tier:
+
+```bash
+echo "test content" > testfile.txt
+
+az storage blob upload --account-name stmediavaultlab19 \
+  --container-name active-production --name sample.txt --file testfile.txt
+
+az storage blob upload --account-name stmediavaultlab19 \
+  --container-name completed-projects --name sample.txt --file testfile.txt \
+  --tier Cool
+
+rm testfile.txt
+```
+
+5. Verify tier assignments:
+
+```bash
+az storage blob list --account-name stmediavaultlab19 \
+  --container-name active-production \
+  --query "[].{name:name,tier:properties.blobTier}" --output table
+
+az storage blob list --account-name stmediavaultlab19 \
+  --container-name completed-projects \
+  --query "[].{name:name,tier:properties.blobTier}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

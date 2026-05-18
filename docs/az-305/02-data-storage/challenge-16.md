@@ -141,6 +141,48 @@ Active geo-replication in Azure SQL Database uses asynchronous replication. Typi
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge16 --location eastus
+```
+
+2. Deploy an Azure SQL Database:
+
+```bash
+az sql server create --name sql-gnn-lab --resource-group rg-az305-challenge16 \
+  --location eastus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
+
+az sql db create --name db-gnn-articles --resource-group rg-az305-challenge16 \
+  --server sql-gnn-lab --edition GeneralPurpose --compute-model Serverless \
+  --family Gen5 --capacity 2
+```
+
+3. Deploy an Azure Cache for Redis instance:
+
+```bash
+az redis create --name redis-gnn-lab --resource-group rg-az305-challenge16 \
+  --location eastus --sku Basic --vm-size c0
+```
+
+4. Verify connectivity between the resources:
+
+```bash
+az sql db show --name db-gnn-articles --resource-group rg-az305-challenge16 \
+  --server sql-gnn-lab --query "{status:status,location:location}" --output table
+
+az redis show --name redis-gnn-lab --resource-group rg-az305-challenge16 \
+  --query "{hostName:hostName,port:port,provisioningState:provisioningState}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

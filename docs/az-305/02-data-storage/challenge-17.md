@@ -139,6 +139,51 @@ For 7-year tamper-proof audit retention, store audit logs in an Azure Storage Ac
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge17 --location eastus
+```
+
+2. Deploy an Azure SQL Database with TDE enabled (default):
+
+```bash
+az sql server create --name sql-securebank-lab --resource-group rg-az305-challenge17 \
+  --location eastus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
+
+az sql db create --name db-securebank-core --resource-group rg-az305-challenge17 \
+  --server sql-securebank-lab --edition GeneralPurpose --compute-model Serverless \
+  --family Gen5 --capacity 2
+```
+
+3. Create a Key Vault for customer-managed keys:
+
+```bash
+az keyvault create --name kv-sb-tde-lab --resource-group rg-az305-challenge17 \
+  --location eastus --enable-soft-delete true --enable-purge-protection true
+
+az keyvault key create --vault-name kv-sb-tde-lab --name tde-protector \
+  --kty RSA --size 2048
+```
+
+4. Verify TDE status and Key Vault configuration:
+
+```bash
+az sql db tde show --resource-group rg-az305-challenge17 \
+  --server sql-securebank-lab --database db-securebank-core
+
+az keyvault key show --vault-name kv-sb-tde-lab --name tde-protector \
+  --query "{name:name,keyType:key.kty,enabled:attributes.enabled}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

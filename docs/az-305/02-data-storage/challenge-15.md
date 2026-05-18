@@ -138,6 +138,50 @@ Azure SQL Database reserved capacity provides 30-65% discount compared to pay-as
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge15 --location eastus
+```
+
+2. Deploy an Azure SQL Server and an elastic pool:
+
+```bash
+az sql server create --name sql-cloudtenant-lab --resource-group rg-az305-challenge15 \
+  --location eastus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
+
+az sql elastic-pool create --name pool-standard --resource-group rg-az305-challenge15 \
+  --server sql-cloudtenant-lab --edition GeneralPurpose --capacity 2 --family Gen5
+```
+
+3. Create two databases inside the elastic pool:
+
+```bash
+az sql db create --name db-tenant-001 --resource-group rg-az305-challenge15 \
+  --server sql-cloudtenant-lab --elastic-pool pool-standard
+
+az sql db create --name db-tenant-002 --resource-group rg-az305-challenge15 \
+  --server sql-cloudtenant-lab --elastic-pool pool-standard
+```
+
+4. Verify pool utilization and database placement:
+
+```bash
+az sql elastic-pool show --name pool-standard --resource-group rg-az305-challenge15 \
+  --server sql-cloudtenant-lab --query "{sku:sku,perDbSettings:perDatabaseSettings}"
+
+az sql db list --resource-group rg-az305-challenge15 --server sql-cloudtenant-lab \
+  --query "[].{name:name,elasticPool:elasticPoolName}" --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

@@ -166,6 +166,55 @@ Azure File Sync allows on-premises Windows file servers to remain operational wh
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge45 --location eastus
+```
+
+2. Create two VNets simulating separate environments:
+
+```bash
+az network vnet create --resource-group rg-az305-challenge45 \
+  --name vnet-hub --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-default --subnet-prefix 10.0.1.0/24
+
+az network vnet create --resource-group rg-az305-challenge45 \
+  --name vnet-spoke --address-prefix 10.1.0.0/16 \
+  --subnet-name subnet-default --subnet-prefix 10.1.1.0/24
+```
+
+3. Create VNet peering from hub to spoke:
+
+```bash
+az network vnet peering create --resource-group rg-az305-challenge45 \
+  --name hub-to-spoke --vnet-name vnet-hub \
+  --remote-vnet vnet-spoke --allow-vnet-access
+```
+
+4. Create VNet peering from spoke to hub:
+
+```bash
+az network vnet peering create --resource-group rg-az305-challenge45 \
+  --name spoke-to-hub --vnet-name vnet-spoke \
+  --remote-vnet vnet-hub --allow-vnet-access
+```
+
+5. Verify peering status is Connected:
+
+```bash
+az network vnet peering list --resource-group rg-az305-challenge45 \
+  --vnet-name vnet-hub -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

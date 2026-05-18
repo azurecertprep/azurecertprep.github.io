@@ -174,6 +174,58 @@ Azure DNS Private Resolver replaces the need for custom DNS forwarder VMs in hub
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge48 --location eastus
+```
+
+2. Create an Azure Front Door profile (Standard tier):
+
+```bash
+az afd profile create --resource-group rg-az305-challenge48 \
+  --profile-name afd-lab48 --sku Standard_AzureFrontDoor
+```
+
+3. Create an endpoint for the Front Door:
+
+```bash
+az afd endpoint create --resource-group rg-az305-challenge48 \
+  --profile-name afd-lab48 --endpoint-name endpoint-lab48 \
+  --enabled-state Enabled
+```
+
+4. Create an origin group and add a simple origin:
+
+```bash
+az afd origin-group create --resource-group rg-az305-challenge48 \
+  --profile-name afd-lab48 --origin-group-name og-lab48 \
+  --probe-request-type HEAD --probe-protocol Https \
+  --probe-interval-in-seconds 30
+
+az afd origin create --resource-group rg-az305-challenge48 \
+  --profile-name afd-lab48 --origin-group-name og-lab48 \
+  --origin-name origin-web --host-name www.example.com \
+  --origin-host-header www.example.com \
+  --http-port 80 --https-port 443 --priority 1
+```
+
+5. Verify the Front Door endpoint hostname:
+
+```bash
+az afd endpoint show --resource-group rg-az305-challenge48 \
+  --profile-name afd-lab48 --endpoint-name endpoint-lab48 \
+  --query "hostName" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

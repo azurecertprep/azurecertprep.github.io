@@ -167,6 +167,62 @@ Files in Azure Blob Storage Archive tier are offline and cannot be read directly
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge47 --location eastus
+```
+
+2. Create a storage account with public access disabled:
+
+```bash
+az storage account create --resource-group rg-az305-challenge47 \
+  --name stlab47$(openssl rand -hex 4) --sku Standard_LRS \
+  --kind StorageV2 --public-network-access Disabled
+```
+
+3. Create a VNet and subnet for the private endpoint:
+
+```bash
+az network vnet create --resource-group rg-az305-challenge47 \
+  --name vnet-lab47 --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-pe --subnet-prefix 10.0.1.0/24
+
+az network vnet subnet update --resource-group rg-az305-challenge47 \
+  --vnet-name vnet-lab47 --name subnet-pe \
+  --disable-private-endpoint-network-policies true
+```
+
+4. Create a private endpoint and Private DNS Zone for blob storage:
+
+```bash
+STORAGE_ID=$(az storage account list --resource-group rg-az305-challenge47 \
+  --query "[0].id" -o tsv)
+
+az network private-endpoint create --resource-group rg-az305-challenge47 \
+  --name pe-storage47 --vnet-name vnet-lab47 --subnet subnet-pe \
+  --private-connection-resource-id $STORAGE_ID \
+  --group-id blob --connection-name conn-blob
+
+az network private-dns zone create --resource-group rg-az305-challenge47 \
+  --name privatelink.blob.core.windows.net
+```
+
+5. Verify the private endpoint connection state:
+
+```bash
+az network private-endpoint show --resource-group rg-az305-challenge47 \
+  --name pe-storage47 --query "privateLinkServiceConnections[0].privateLinkServiceConnectionState.status" -o tsv
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

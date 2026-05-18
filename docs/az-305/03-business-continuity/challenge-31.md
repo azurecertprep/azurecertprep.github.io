@@ -256,10 +256,87 @@ For GlobalPay: APAC region uses geo-replica for reporting reads, with manual fai
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create resource groups for primary and secondary regions:
+
+```bash
+az group create --name rg-az305-challenge31 --location eastus
+az group create --name rg-az305-challenge31-dr --location westus
+```
+
+2. Deploy SQL Servers in both regions:
+
+```bash
+SUFFIX=$RANDOM
+
+az sql server create \
+  --resource-group rg-az305-challenge31 \
+  --name sql-challenge31-pri-$SUFFIX \
+  --location eastus \
+  --admin-user sqladmin \
+  --admin-password "P@ss${SUFFIX}w0rd!"
+
+az sql server create \
+  --resource-group rg-az305-challenge31-dr \
+  --name sql-challenge31-sec-$SUFFIX \
+  --location westus \
+  --admin-user sqladmin \
+  --admin-password "P@ss${SUFFIX}w0rd!"
+```
+
+3. Create a database on the primary server:
+
+```bash
+PRIMARY_SERVER="sql-challenge31-pri-$SUFFIX"
+SECONDARY_SERVER="sql-challenge31-sec-$SUFFIX"
+
+az sql db create \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --name payrolldb \
+  --edition GeneralPurpose \
+  --compute-model Serverless \
+  --family Gen5 \
+  --capacity 1
+```
+
+4. Create a failover group linking both servers:
+
+```bash
+az sql failover-group create \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --partner-server $SECONDARY_SERVER \
+  --partner-resource-group rg-az305-challenge31-dr \
+  --name fg-challenge31-$SUFFIX \
+  --failover-policy Automatic \
+  --grace-period 1 \
+  --add-db payrolldb
+```
+
+5. Verify the failover group status and replication:
+
+```bash
+az sql failover-group show \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --name fg-challenge31-$SUFFIX \
+  --query "{Name:name, Role:replicationRole, Partner:partnerServers[0].replicationRole}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
 # Delete resources in reverse dependency order
+az group delete --name rg-az305-challenge31 --yes --no-wait
+az group delete --name rg-az305-challenge31-dr --yes --no-wait
 az sql failover-group delete \
   --resource-group rg-globalpay \
   --server sql-globalpay-eastus \

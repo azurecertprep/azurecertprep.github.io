@@ -281,10 +281,91 @@ Restore options:
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge28 --location eastus
+```
+
+2. Deploy a storage account:
+
+```bash
+SUFFIX=$RANDOM
+
+az storage account create \
+  --resource-group rg-az305-challenge28 \
+  --name stchallenge28$SUFFIX \
+  --location eastus \
+  --sku Standard_LRS \
+  --kind StorageV2
+
+STORAGE_NAME=$(az storage account list --resource-group rg-az305-challenge28 --query "[0].name" -o tsv)
+```
+
+3. Enable blob soft delete with 7-day retention:
+
+```bash
+az storage account blob-service-properties update \
+  --account-name $STORAGE_NAME \
+  --resource-group rg-az305-challenge28 \
+  --enable-delete-retention true \
+  --delete-retention-days 7
+```
+
+4. Create a container and upload a test blob:
+
+```bash
+az storage container create \
+  --account-name $STORAGE_NAME \
+  --name testcontainer \
+  --auth-mode login
+
+echo "test data for recovery lab" > testfile.txt
+
+az storage blob upload \
+  --account-name $STORAGE_NAME \
+  --container-name testcontainer \
+  --name testfile.txt \
+  --file testfile.txt \
+  --auth-mode login
+```
+
+5. Delete the blob and then recover it using soft delete:
+
+```bash
+az storage blob delete \
+  --account-name $STORAGE_NAME \
+  --container-name testcontainer \
+  --name testfile.txt \
+  --auth-mode login
+
+az storage blob undelete \
+  --account-name $STORAGE_NAME \
+  --container-name testcontainer \
+  --name testfile.txt \
+  --auth-mode login
+
+az storage blob show \
+  --account-name $STORAGE_NAME \
+  --container-name testcontainer \
+  --name testfile.txt \
+  --auth-mode login \
+  --query "{Name:name, ContentLength:properties.contentLength}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
 # Delete resource groups
+az group delete --name rg-az305-challenge28 --yes --no-wait
 az group delete --name rg-creative-assets --yes --no-wait
 
 # Note: If soft delete is enabled, storage data persists until retention expires

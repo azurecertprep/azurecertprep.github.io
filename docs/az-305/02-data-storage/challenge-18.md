@@ -140,6 +140,50 @@ Autoscale throughput automatically scales between 10% and 100% of a configured m
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge18 --location eastus
+```
+
+2. Deploy an Azure Cosmos DB account (NoSQL API, serverless):
+
+```bash
+az cosmosdb create --name cosmos-sensorgrid-lab --resource-group rg-az305-challenge18 \
+  --locations regionName=eastus failoverPriority=0 \
+  --capabilities EnableServerless
+```
+
+3. Create a database and container with a partition key:
+
+```bash
+az cosmosdb sql database create --account-name cosmos-sensorgrid-lab \
+  --resource-group rg-az305-challenge18 --name SensorData
+
+az cosmosdb sql container create --account-name cosmos-sensorgrid-lab \
+  --resource-group rg-az305-challenge18 --database-name SensorData \
+  --name Telemetry --partition-key-path "/deviceId" \
+  --default-ttl 7776000
+```
+
+4. Verify the deployment and container configuration:
+
+```bash
+az cosmosdb sql container show --account-name cosmos-sensorgrid-lab \
+  --resource-group rg-az305-challenge18 --database-name SensorData \
+  --name Telemetry \
+  --query "{partitionKey:resource.partitionKey,defaultTtl:resource.defaultTtl}" \
+  --output table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

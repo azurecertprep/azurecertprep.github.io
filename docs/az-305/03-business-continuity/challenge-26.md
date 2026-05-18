@@ -4,6 +4,7 @@ title: "Challenge 26: Design Backup & Recovery for Compute"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 26: Design Backup & Recovery for Compute
 
@@ -31,12 +32,16 @@ The IT director wants a unified backup strategy managed through Azure Backup Cen
 
 1. Design differentiated backup policies for each workload type:
 
-| Workload | VMs | Backup Frequency | Retention | Consistency Type |
-|----------|-----|-------------------|-----------|-----------------|
-| Domain Controllers | 5 | ? | ? | ? |
-| SQL Server VMs | 8 | ? | ? | ? |
-| Web Servers (IIS) | 25 | ? | ? | ? |
-| Linux Microservices | 12 | ? | ? | ? |
+<DecisionMatrix
+  title="Backup Policy Comparison"
+  headers={["RPO", "RTO", "Consistency Type", "Cross-Region Support", "Best For"]}
+  rows={[
+    {criteria: "Azure VM Backup", values: ["24 hours (daily schedule)", "Minutes to hours depending on disk size", "Application-consistent (VSS) or crash-consistent", "Yes with GRS vault and Cross-Region Restore enabled", "Standard VM protection with centralized management via Backup Center"]},
+    {criteria: "Managed Disk Snapshots", values: ["Manual (on-demand only)", "Minutes (create new VM from snapshot)", "Crash-consistent only (no application quiesce)", "Yes by copying snapshot to another region manually", "Quick ad-hoc backup before changes or for dev/test VM cloning"]},
+    {criteria: "Azure Site Recovery (ASR)", values: ["30 seconds to 2 minutes (continuous replication)", "Minutes (automated orchestrated failover)", "Crash-consistent continuous plus app-consistent every 1-12 hours", "Yes built-in continuous cross-region replication", "Disaster recovery with near-zero RPO and automated failover orchestration"]}
+  ]}
+  storageKey="az305-challenge-26"
+/>
 
 2. For each workload, determine the appropriate recovery point schedule:
    - Daily recovery points: how many days retained?
@@ -242,10 +247,65 @@ For Azure VMs running as DCs, Azure Backup with application-consistent snapshots
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge26 --location eastus
+```
+
+2. Deploy a virtual machine to protect with backup:
+
+```bash
+az vm create \
+  --resource-group rg-az305-challenge26 \
+  --name vm-backup-lab \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys
+```
+
+3. Create a Recovery Services vault:
+
+```bash
+az backup vault create \
+  --resource-group rg-az305-challenge26 \
+  --name vault-az305-challenge26 \
+  --location eastus
+```
+
+4. Enable backup on the VM using the default policy:
+
+```bash
+az backup protection enable-for-vm \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --vm vm-backup-lab \
+  --policy-name DefaultPolicy
+```
+
+5. Verify the VM is registered and protection is active:
+
+```bash
+az backup item list \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --query "[].{Name:name, Status:properties.protectionStatus}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
 # Delete resource groups containing backup infrastructure
+az group delete --name rg-az305-challenge26 --yes --no-wait
 az group delete --name rg-backup-eastus --yes --no-wait
 az group delete --name rg-backup-westeurope --yes --no-wait
 az group delete --name rg-backup-southeastasia --yes --no-wait

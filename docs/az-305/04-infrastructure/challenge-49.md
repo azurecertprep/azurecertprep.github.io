@@ -175,6 +175,52 @@ Private Endpoints bring the PaaS service into your VNet with a private IP (acces
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge49 --location eastus
+```
+
+2. Create an Azure Migrate project:
+
+```bash
+az extension add --name resource-mover --only-show-errors 2>/dev/null
+az resource create --resource-group rg-az305-challenge49 \
+  --resource-type Microsoft.Migrate/migrateProjects \
+  --name migrate-lab49 --location eastus \
+  --properties "{}"
+```
+
+3. Verify the Azure Migrate project was created:
+
+```bash
+az resource show --resource-group rg-az305-challenge49 \
+  --resource-type Microsoft.Migrate/migrateProjects \
+  --name migrate-lab49 --query "name" -o tsv
+```
+
+4. List the resource to confirm it appears in the resource group:
+
+```bash
+az resource list --resource-group rg-az305-challenge49 -o table
+```
+
+5. Check the project properties:
+
+```bash
+az resource show --resource-group rg-az305-challenge49 \
+  --resource-type Microsoft.Migrate/migrateProjects \
+  --name migrate-lab49 --query "properties" -o json
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash

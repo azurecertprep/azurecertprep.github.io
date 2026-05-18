@@ -4,6 +4,7 @@ title: "Challenge 27: Design Backup & Recovery for Databases"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 27: Design Backup & Recovery for Databases
 
@@ -60,11 +61,18 @@ az sql db ltr-policy set \
 
 4. Evaluate the three recovery options for Azure SQL Database and map to each workload:
 
-| Recovery Option | RPO | RTO | Trading DB | Analytics DB |
-|-----------------|-----|-----|------------|--------------|
-| Point-in-time restore | ~5-10 min | Minutes-hours | ? | ? |
-| Geo-restore | ~1 hour | Up to 12 hours | ? | ? |
-| Failover groups | ~5 seconds | ~30 seconds | ? | ? |
+<DecisionMatrix
+  title="Azure SQL Database Recovery Options"
+  headers={["RPO", "RTO", "Cost Impact", "Automation", "Best For"]}
+  rows={[
+    {criteria: "Point-in-Time Restore (PITR)", values: ["5-10 minutes (transaction log backup interval)", "Minutes to hours depending on database size", "Included in service tier pricing (no extra cost)", "On-demand restore to a new database", "Operational recovery from accidental deletion or corruption within 1-35 days"]},
+    {criteria: "Long-Term Retention (LTR)", values: ["Weekly, monthly, or yearly per policy schedule", "Hours (full database restore from backup copy)", "Storage cost for retained backups in RA-GRS blob storage", "Scheduled automatically via configured retention policy", "Regulatory compliance requiring multi-year data retention (up to 10 years)"]},
+    {criteria: "Geo-Restore", values: ["Up to 1 hour (GRS replication lag)", "Up to 12 hours (restore from geo-replicated backup)", "Included with geo-redundant backup storage setting", "On-demand restore to any Azure region from geo-backup", "Budget-friendly DR for non-critical databases with relaxed RTO requirements"]},
+    {criteria: "Active Geo-Replication", values: ["~5 seconds (asynchronous continuous replication)", "Seconds to minutes (manual failover promotion)", "Full secondary database cost (same tier and size)", "Manual failover; supports up to 4 readable secondaries in any region", "Multi-region read scale-out with flexible topology and manual DR control"]},
+    {criteria: "Failover Groups", values: ["~5 seconds (asynchronous continuous replication)", "~30 seconds (automatic failover with stable DNS)", "Full secondary database cost (same tier and size)", "Automatic failover after grace period with stable read-write endpoint", "Mission-critical databases needing transparent automatic failover without app changes"]}
+  ]}
+  storageKey="az305-challenge-27"
+/>
 
 5. For the trading database, justify why failover groups are the only option that meets the near-zero RPO requirement. Configure an auto-failover group:
 
@@ -225,10 +233,82 @@ Important: Continuous backup mode cannot be changed back to periodic once enable
 
 </details>
 
+## Validation Lab
+
+Deploy a minimal proof-of-concept to validate your design:
+
+1. Create a resource group for this lab:
+
+```bash
+az group create --name rg-az305-challenge27 --location eastus
+```
+
+2. Deploy an Azure SQL Server and database:
+
+```bash
+SUFFIX=$RANDOM
+
+az sql server create \
+  --resource-group rg-az305-challenge27 \
+  --name sql-challenge27-$SUFFIX \
+  --location eastus \
+  --admin-user sqladmin \
+  --admin-password "P@ss$(date +%s | tail -c 6)w0rd!"
+
+SQL_SERVER=$(az sql server list --resource-group rg-az305-challenge27 --query "[0].name" -o tsv)
+
+az sql db create \
+  --resource-group rg-az305-challenge27 \
+  --server $SQL_SERVER \
+  --name tradingdb \
+  --edition GeneralPurpose \
+  --compute-model Serverless \
+  --family Gen5 \
+  --capacity 1
+```
+
+3. Configure long-term retention policy on the database:
+
+```bash
+az sql db ltr-policy set \
+  --resource-group rg-az305-challenge27 \
+  --server $SQL_SERVER \
+  --database tradingdb \
+  --weekly-retention P4W \
+  --monthly-retention P12M \
+  --yearly-retention P1Y \
+  --week-of-year 1
+```
+
+4. Verify the LTR policy is applied:
+
+```bash
+az sql db ltr-policy show \
+  --resource-group rg-az305-challenge27 \
+  --server $SQL_SERVER \
+  --database tradingdb \
+  --query "{Weekly:weeklyRetention, Monthly:monthlyRetention, Yearly:yearlyRetention}" -o table
+```
+
+5. Confirm the database is operational and check backup settings:
+
+```bash
+az sql db show \
+  --resource-group rg-az305-challenge27 \
+  --server $SQL_SERVER \
+  --name tradingdb \
+  --query "{Name:name, Status:status, Edition:edition}" -o table
+```
+
+:::tip
+This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+:::
+
 ## Cleanup
 
 ```bash
 # Delete trading database resources
+az group delete --name rg-az305-challenge27 --yes --no-wait
 az group delete --name rg-trading --yes --no-wait
 az group delete --name rg-trading-dr --yes --no-wait
 

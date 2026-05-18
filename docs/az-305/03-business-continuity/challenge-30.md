@@ -4,6 +4,7 @@ title: "Challenge 30: Design High Availability for Compute"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 30: Design High Availability for Compute
 
@@ -92,14 +93,19 @@ done
 
 7. Evaluate whether VMSS would be more appropriate than individual VMs for the web tier:
 
-| Factor | Individual VMs | VMSS Uniform | VMSS Flexible |
-|--------|---------------|--------------|---------------|
-| Auto-scaling | Manual | Yes | Yes |
-| Zone spreading | Manual | Automatic | Automatic |
-| Rolling updates | Manual | Automatic | Automatic |
-| Individual VM access | Full | Limited | Full |
-| Load balancer integration | Manual | Automatic | Automatic |
-| Use case fit for FedBenefits | ? | ? | ? |
+<DecisionMatrix
+  title="VMSS Deployment Comparison"
+  headers={["Individual VMs", "VMSS Uniform", "VMSS Flexible"]}
+  rows={[
+    {criteria: "Auto-scaling", values: ["Manual (add or remove VMs by hand)", "Yes (built-in autoscale rules with metrics)", "Yes (built-in autoscale rules with metrics)"]},
+    {criteria: "Zone spreading", values: ["Manual (must specify zone per VM at creation)", "Automatic (even distribution across configured zones)", "Automatic (even distribution across configured zones)"]},
+    {criteria: "Rolling updates", values: ["Manual (update each VM individually)", "Automatic (orchestrated rolling upgrades with health monitoring)", "Automatic (orchestrated rolling upgrades with health monitoring)"]},
+    {criteria: "Individual VM access", values: ["Full (SSH/RDP to any VM directly)", "Limited (no direct VM management or unique configuration)", "Full (SSH/RDP access, can attach existing VMs)"]},
+    {criteria: "Load balancer integration", values: ["Manual (add each VM to backend pool)", "Automatic (instances auto-registered on creation)", "Automatic (instances auto-registered on creation)"]},
+    {criteria: "Use case fit for FedBenefits", values: ["Suitable for legacy apps needing full control but lacks autoscaling benefit", "Best for identical stateless workloads; limited troubleshooting access for legacy apps", "Recommended - combines autoscale and zone spreading with individual VM access for legacy .NET Framework apps"]}
+  ]}
+  storageKey="az305-challenge-30"
+/>
 
 8. Design a VMSS Flexible configuration for the legacy .NET Framework web tier:
    - Spreading across 3 availability zones
