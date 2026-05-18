@@ -228,9 +228,9 @@ function CertificationCoverage() {
           <Heading as="h2">100% de Cobertura da Certificação</Heading>
           <p>Cada domínio do exame AZ-104 mapeado para desafios práticos.</p>
         </div>
-        <div className="row" style={{justifyContent: 'center'}}>
-          <div className="col col--8">
-            <table style={{width: '100%', margin: '0 auto'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div style={{width: '100%', maxWidth: '650px'}}>
+            <table style={{width: '100%'}}>
               <thead>
                 <tr>
                   <th style={{textAlign: 'center'}}>Domínio</th>
