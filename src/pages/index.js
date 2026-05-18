@@ -169,12 +169,12 @@ function ReferenceTable() {
 function CertificationCoverage() {
   return (
     <section style={{padding: '2rem 0'}}>
-      <div className="container">
-        <div className="section-heading">
-          <Heading as="h2">100% Certification Coverage</Heading>
-          <p>Every exam domain from the AZ-104 study guide mapped to hands-on challenges.</p>
-        </div>
-        <table style={{width: '100%', maxWidth: '650px', margin: '0 auto'}}>
+      <div className="container" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <Heading as="h2" style={{textAlign: 'center', fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem'}}>100% Certification Coverage</Heading>
+        <p style={{textAlign: 'center', color: 'var(--ifm-color-emphasis-600)', fontSize: '1.1rem', maxWidth: '600px', marginBottom: '2rem'}}>
+          Every exam domain from the AZ-104 study guide mapped to hands-on challenges.
+        </p>
+        <table style={{width: 'auto', borderCollapse: 'collapse'}}>
           <thead>
             <tr>
               <th style={{textAlign: 'center'}}>Domain</th>
