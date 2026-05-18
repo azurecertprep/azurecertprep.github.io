@@ -1,0 +1,327 @@
+---
+sidebar_position: 5
+title: "Challenge 05: Design Identity Management"
+---
+
+import SuccessChecklist from '@site/src/components/SuccessChecklist';
+
+# Challenge 05: Design Identity Management
+
+:::info Estimated Time and Cost
+
+**75-90 min** | **Estimated cost**: $0-5 | **Exam Weight: 25-30%**
+
+:::
+
+## Introduction
+
+Woodgrove Bank is a financial institution with 8,000 employees across 12 offices. They have a mature on-premises Active Directory environment (Windows Server 2019 domain controllers, single forest, three domains) that manages all employee identities, group policies, and application access. They are migrating to a hybrid cloud model with Microsoft 365 and Azure workloads but cannot abandon on-premises AD due to legacy line-of-business applications that require Kerberos authentication.
+
+The CISO has identified several critical security gaps in the current identity posture:
+- 15 Global Administrator accounts with no access reviews or time-limited activation
+- Service accounts with permanently assigned high-privilege roles
+- No detection mechanism for compromised credentials or impossible travel sign-ins
+- Passwords synced from AD with no cloud-native password protection
+- Former contractors still have active accounts discovered during a recent audit
+
+Your task is to design a hybrid identity management solution that synchronizes identities to the cloud while implementing modern security controls for privileged access and identity protection.
+
+## Exam Skills Covered
+
+- Recommend an identity management solution
+- Recommend an authentication solution
+- Recommend a solution for authorizing access to Azure resources
+
+## Design Tasks
+
+### Part 1: Hybrid Identity Synchronization
+
+1. Evaluate and recommend the appropriate synchronization method for Woodgrove Bank:
+
+| Method | Description | When to Use |
+|--------|-------------|-------------|
+| Microsoft Entra Connect Sync | Traditional sync engine | |
+| Microsoft Entra Cloud Sync | Cloud-based lightweight agent | |
+| Federation (AD FS) | On-prem federation service | |
+
+2. Design the synchronization topology considering:
+   - Single forest, three domains
+   - Which objects to synchronize (users, groups, contacts, devices)
+   - Filtering strategy (OU-based, attribute-based, or domain-based)
+   - Password hash synchronization vs. pass-through authentication vs. federation
+
+3. Design the authentication method hierarchy:
+   - Primary authentication method for cloud resources
+   - Failover authentication method if primary is unavailable
+   - Staged rollout approach for migration
+
+### Part 2: Password Protection and Authentication Security
+
+4. Design password protection for Woodgrove Bank:
+   - Microsoft Entra Password Protection (custom banned password list)
+   - On-premises password protection agent deployment
+   - Smart lockout configuration
+   - Self-service password reset with on-premises writeback
+
+5. Evaluate passwordless authentication options and design a rollout plan:
+   - Windows Hello for Business
+   - FIDO2 security keys
+   - Microsoft Authenticator phone sign-in
+   - Certificate-based authentication
+
+### Part 3: Privileged Identity Management (PIM)
+
+6. Design a PIM strategy for the 15 Global Administrator accounts:
+   - Eligible vs. active role assignments
+   - Maximum activation duration
+   - Approval workflow requirements
+   - MFA requirement for activation
+   - Justification and ticket requirements
+
+7. Design PIM for Azure resource roles:
+   - Owner role on production subscriptions: who can activate, approval required
+   - Contributor role on development subscriptions: who can activate, auto-approve
+   - Just-in-time access windows and notification configuration
+
+8. Create an access review schedule:
+   - Quarterly review of Global Administrator assignments
+   - Monthly review of guest user access
+   - Semi-annual review of Azure subscription Owner assignments
+
+### Part 4: Identity Protection
+
+9. Design Identity Protection policies for Woodgrove Bank:
+   - Sign-in risk policy: what actions for low, medium, and high risk
+   - User risk policy: when to require password change vs. block access
+   - Risk-based Conditional Access integration
+
+10. Design detection and response for these scenarios:
+    - Employee sign-in from two countries within 1 hour (impossible travel)
+    - Sign-in from a known botnet IP address
+    - Credentials found in a dark web breach database
+    - Anomalous token usage pattern
+
+### Part 5: Implement Proof of Concept
+
+11. Configure Entra ID Password Protection with a custom banned password list.
+
+12. Create a PIM eligible role assignment (using a non-production role) and demonstrate the activation workflow.
+
+## Success Criteria
+
+<SuccessChecklist
+  storageKey="az305-challenge-05"
+  items={[
+    "Synchronization method selected with documented justification considering multi-domain topology",
+    "Authentication method hierarchy designed with primary and failover methods",
+    "PIM configured for privileged roles with appropriate activation duration and approval workflows",
+    "Identity Protection policies designed for sign-in risk and user risk scenarios",
+    "Password protection strategy covers both cloud and on-premises with banned password list",
+    "Access review schedule defined for all privileged role types"
+  ]}
+/>
+
+## Hints
+
+<details>
+<summary>Hint 1: Entra Connect Sync vs. Cloud Sync</summary>
+
+**Microsoft Entra Connect Sync** (formerly Azure AD Connect):
+- Mature, feature-rich sync engine installed on-premises
+- Supports complex topologies (multi-forest, filtering, device writeback)
+- Required for: device writeback, Exchange hybrid, group writeback
+- Single server per directory (staging server for HA)
+
+**Microsoft Entra Cloud Sync** (lightweight agent):
+- Cloud-managed, multiple agents for HA
+- Simpler setup, auto-updates
+- Supports multi-forest disconnected scenarios
+- Limited features: no device writeback, no pass-through authentication
+
+For Woodgrove Bank's scenario (single forest, three domains, needs PHS + PTA failover), **Entra Connect Sync** is the better choice because it supports the full feature set needed for a complex enterprise environment including password writeback and staged rollout.
+
+</details>
+
+<details>
+<summary>Hint 2: Password Hash Sync vs. Pass-Through Authentication</summary>
+
+**Password Hash Synchronization (PHS)**:
+- Hashes of password hashes synced to cloud (double-hashed, not actual passwords)
+- Works even if on-prem AD is unavailable (resilience)
+- Required for Identity Protection leaked credentials detection
+- Simplest deployment and maintenance
+
+**Pass-Through Authentication (PTA)**:
+- Authentication validated in real-time against on-prem AD
+- Passwords never stored in cloud (compliance requirement for some orgs)
+- Requires on-prem connectivity (no sign-in if all agents are offline)
+- Install multiple agents (3+) for high availability
+
+**Recommended for Woodgrove**: PHS as primary (enables Identity Protection, works if on-prem fails) with PTA as additional if compliance requires on-prem password validation. Both can be enabled simultaneously as "staged rollout."
+
+</details>
+
+<details>
+<summary>Hint 3: Configuring PIM for Global Admin</summary>
+
+```bash
+# Note: PIM configuration is primarily done through the portal or Microsoft Graph API
+# The following shows the Graph API approach
+
+# List eligible role assignments for Global Administrator
+az rest --method get \
+  --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleInstances?\$filter=roleDefinitionId eq '62e90394-69f5-4237-9190-012177145e10'"
+
+# Create an eligible assignment (makes user eligible but not active)
+az rest --method post \
+  --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleRequests" \
+  --body '{
+    "action": "adminAssign",
+    "justification": "Assign eligible Global Admin for emergency use",
+    "roleDefinitionId": "62e90394-69f5-4237-9190-012177145e10",
+    "directoryScopeId": "/",
+    "principalId": "<user-object-id>",
+    "scheduleInfo": {
+      "startDateTime": "2024-01-01T00:00:00Z",
+      "expiration": {
+        "type": "afterDuration",
+        "duration": "P365D"
+      }
+    }
+  }'
+```
+
+PIM best practices for Global Admin:
+- Maximum activation duration: 2 hours (not 8 or 24)
+- Require approval from another Global Admin
+- Require MFA at activation time
+- Require justification and incident ticket number
+- Send notification to all other Global Admins on activation
+
+</details>
+
+<details>
+<summary>Hint 4: Identity Protection Risk Policies</summary>
+
+Design risk response by severity:
+
+| Risk Level | Sign-in Risk Response | User Risk Response |
+|------------|----------------------|-------------------|
+| Low | Allow with MFA | Allow (monitor) |
+| Medium | Require MFA | Require password change |
+| High | Block access | Block until admin review |
+
+Key configuration:
+- Sign-in risk detects: impossible travel, unfamiliar sign-in properties, malware-linked IPs, anonymous IPs
+- User risk detects: leaked credentials (requires PHS), anomalous user activity
+- Risk-based Conditional Access policies supersede the legacy Identity Protection policies
+
+```bash
+# Conditional Access policy for high sign-in risk (via Graph API)
+az rest --method post \
+  --url "https://graph.microsoft.com/v1.0/identity/conditionalAccess/policies" \
+  --body '{
+    "displayName": "Block high risk sign-ins",
+    "state": "enabled",
+    "conditions": {
+      "signInRiskLevels": ["high"],
+      "applications": {"includeApplications": ["All"]},
+      "users": {"includeUsers": ["All"], "excludeUsers": ["<break-glass-id>"]}
+    },
+    "grantControls": {
+      "operator": "OR",
+      "builtInControls": ["block"]
+    }
+  }'
+```
+
+</details>
+
+<details>
+<summary>Hint 5: Custom Banned Password List</summary>
+
+Microsoft Entra Password Protection evaluates passwords against:
+1. The global banned password list (maintained by Microsoft, based on telemetry)
+2. Your custom banned password list (up to 1,000 entries)
+3. Normalization rules (character substitution: @ for a, 3 for e, etc.)
+
+For Woodgrove Bank, add company-specific terms:
+- Company name and variations (woodgrove, w00dgr0ve)
+- Product names
+- Office locations
+- Common internal abbreviations
+
+On-premises deployment requires:
+- Azure AD Password Protection Proxy service (at least one per forest)
+- Azure AD Password Protection DC Agent (on every DC)
+- No internet connectivity required from DCs (proxy handles communication)
+
+```bash
+# Configure custom banned passwords (Portal or PowerShell)
+# PowerShell example:
+# Connect-MgGraph -Scopes "Policy.ReadWrite.AuthenticationMethod"
+# Update-MgPolicyAuthenticationMethodPolicy -AuthenticationMethodConfigurations @{
+#   customBannedPasswords = @("woodgrove", "banking123", "finance2024")
+# }
+```
+
+</details>
+
+## Learning Resources
+
+- [Microsoft Entra Connect Sync documentation](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-azure-ad-connect)
+- [Microsoft Entra Cloud Sync](https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/what-is-cloud-sync)
+- [Privileged Identity Management](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-configure)
+- [Identity Protection overview](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection)
+- [Password protection in Entra ID](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-password-ban-bad)
+- [Passwordless authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-passwordless)
+- [Access reviews](https://learn.microsoft.com/en-us/entra/id-governance/access-reviews-overview)
+
+## Knowledge Check
+
+<details>
+<summary>1. Woodgrove Bank has a compliance requirement that passwords must never leave their on-premises environment, but they also want Identity Protection leaked credentials detection. Which authentication methods satisfy both requirements?</summary>
+
+**These requirements are mutually exclusive.** Leaked credentials detection in Identity Protection requires password hash synchronization (PHS) because it compares cloud-stored hashes against known breached credential databases. If compliance strictly prohibits password hashes in the cloud, you must choose: use Pass-Through Authentication (PTA) for compliance and lose leaked credential detection, OR use PHS to gain Identity Protection at the cost of having hashes in the cloud. Microsoft's guidance is that PHS hashes are double-hashed and extremely secure. Most organizations accept PHS for the security benefits gained.
+
+</details>
+
+<details>
+<summary>2. Woodgrove has 15 permanently active Global Administrator accounts. After implementing PIM, what should the target state look like?</summary>
+
+**Target state:** (1) Reduce to 2-3 permanently active Global Admins (emergency/break-glass accounts only), (2) Convert remaining 12-13 accounts to "eligible" assignments requiring activation, (3) Set maximum activation duration to 1-2 hours, (4) Require multi-person approval for activation, (5) Require MFA and justification at activation time, (6) Configure quarterly access reviews to verify continued need, (7) Set up alerts for any activation event. The goal is zero standing access -- all privileged access is just-in-time and time-bounded.
+
+</details>
+
+<details>
+<summary>3. The company has three AD domains in one forest. They need to sync users from two domains but exclude the third (legacy domain being decommissioned). Which filtering approach should they use?</summary>
+
+**Domain-based filtering in Microsoft Entra Connect Sync.** During the Entra Connect Sync installation wizard, you can select which domains to include in synchronization. Deselect the legacy domain entirely. Alternatively, use OU-based filtering if you need finer control within domains (sync specific OUs while excluding others). Domain-based filtering is the simplest and most maintainable approach when the exclusion boundary aligns with domain boundaries. Remember to also configure the sync scope to exclude disabled accounts from the remaining domains.
+
+</details>
+
+<details>
+<summary>4. An employee's credentials are detected in a dark web breach database. Identity Protection flags the user risk as "high." What automated response should occur?</summary>
+
+**The user risk policy should force a secure password change.** When user risk is "high" due to leaked credentials: (1) The risk-based Conditional Access policy triggers at next sign-in, (2) The user is required to perform MFA (proving they are the legitimate user), (3) After MFA, they must change their password, (4) The new password is validated against the banned password list, (5) If SSPR with on-premises writeback is configured, the new password is written back to on-prem AD, (6) After successful password change, the user risk is automatically remediated (reset to none). If the user cannot complete MFA, access is blocked pending admin intervention.
+
+</details>
+
+## Cleanup
+
+```bash
+# Remove PIM eligible assignments (via Graph API)
+# az rest --method post --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleRequests" --body '{"action":"adminRemove",...}'
+
+# Remove custom banned password list (Portal: Entra ID > Security > Authentication Methods > Password Protection)
+
+# If any test users were created:
+az ad user delete --id testuser@yourtenant.onmicrosoft.com
+
+# Delete resource groups if any Azure resources were deployed
+az group delete --name rg-identity-poc --yes --no-wait
+```
+
+---
+
+**Next**: [Challenge 06: Design Authorization for Azure Resources](/docs/az-305/identity-governance-monitoring/challenge-06)

@@ -74,6 +74,12 @@ const config = {
             label: 'AZ-104',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'az305Sidebar',
+            position: 'left',
+            label: 'AZ-305',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },
@@ -99,6 +105,10 @@ const config = {
                 label: 'AZ-104: Azure Administrator',
                 to: '/docs/az-104/overview',
               },
+              {
+                label: 'AZ-305: Solutions Architect',
+                to: '/docs/az-305/overview',
+              },
             ],
           },
           {
@@ -109,8 +119,12 @@ const config = {
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/',
               },
               {
+                label: 'Microsoft Learn — AZ-305',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-solutions-architect/',
+              },
+              {
                 label: 'Free Practice Assessment',
-                href: 'https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104/practice/assessment?assessment-type=practice&assessmentId=21',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/practice/assessment?assessment-type=practice&assessmentId=15',
               },
               {
                 label: 'Exam Sandbox',
