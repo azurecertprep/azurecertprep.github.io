@@ -5,9 +5,9 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
 const stats = [
-  { number: '16', label: 'Desafios' },
+  { number: '28', label: 'Desafios' },
   { number: '100%', label: 'Cobertura AZ-104' },
-  { number: '~$3', label: 'Custo Total' },
+  { number: '~$5', label: 'Custo Total' },
   { number: 'v2026.04', label: 'Objetivos do Exame' },
 ];
 
@@ -28,6 +28,18 @@ const challenges = [
   { num: '14', title: 'Azure Monitor & Alertas', domain: 'monitor', href: '/docs/az-104/monitor/challenge-14' },
   { num: '15', title: 'Backup & Recuperação', domain: 'monitor', href: '/docs/az-104/monitor/challenge-15' },
   { num: '16', title: 'Capstone: Um Dia na Vida', domain: 'monitor', href: '/docs/az-104/capstone/challenge-16' },
+  { num: '17', title: 'Grupos de Gerenciamento & Assinaturas', domain: 'identity', href: '/docs/az-104/identity/challenge-17' },
+  { num: '18', title: 'Gerenciamento de Custos & Azure Advisor', domain: 'identity', href: '/docs/az-104/identity/challenge-18' },
+  { num: '19', title: 'AzCopy & Migração de Armazenamento', domain: 'storage', href: '/docs/az-104/storage/challenge-19' },
+  { num: '20', title: 'Criptografia de Armazenamento & Proteção de Dados', domain: 'storage', href: '/docs/az-104/storage/challenge-20' },
+  { num: '21', title: 'Extensões de VM & Automação', domain: 'compute', href: '/docs/az-104/compute/challenge-21' },
+  { num: '22', title: 'Discos de VM & Criptografia', domain: 'compute', href: '/docs/az-104/compute/challenge-22' },
+  { num: '23', title: 'App Service: Configuração Avançada', domain: 'compute', href: '/docs/az-104/compute/challenge-23' },
+  { num: '24', title: 'Rotas Definidas pelo Usuário & Controle de Tráfego', domain: 'networking', href: '/docs/az-104/networking/challenge-24' },
+  { num: '25', title: 'Private Endpoints & Service Endpoints', domain: 'networking', href: '/docs/az-104/networking/challenge-25' },
+  { num: '26', title: 'Network Watcher & Diagnósticos', domain: 'networking', href: '/docs/az-104/networking/challenge-26' },
+  { num: '27', title: 'Log Analytics & KQL em Profundidade', domain: 'monitor', href: '/docs/az-104/monitor/challenge-27' },
+  { num: '28', title: 'Azure Advisor & Service Health', domain: 'monitor', href: '/docs/az-104/monitor/challenge-28' },
 ];
 
 const domainLabels = {
@@ -57,42 +69,35 @@ const referenceTable = [
 
 const FeatureList = [
   {
-    emoji: '🎯',
     title: '100% de Cobertura do Exame',
     description: 'Cada habilidade do guia de estudo oficial do AZ-104 mapeada para um desafio prático. Verificado com os objetivos do exame de Abril de 2026.',
   },
   {
-    emoji: '🔧',
     title: 'Labs Práticos',
     description: 'Sem slides, sem dumps de teoria. Cada conceito ensinado com recursos reais do Azure que você cria, configura e diagnostica.',
   },
   {
-    emoji: '💰',
     title: 'Econômico',
-    description: 'Todos os 16 desafios custam ~$3 no total com scripts de limpeza. Projetado para Conta Gratuita do Azure ($200 crédito) ou Azure para Estudantes.',
+    description: 'Todos os 28 desafios custam ~$5 no total com scripts de limpeza. Projetado para Conta Gratuita do Azure ($200 crédito) ou Azure para Estudantes.',
   },
   {
-    emoji: '🖥️',
     title: 'Lab com Um Clique',
     description: 'Abra no GitHub Codespaces e tenha Azure CLI, Bicep e PowerShell prontos em minutos. Sem configuração local.',
   },
   {
-    emoji: '✅',
     title: 'Comandos Validados',
     description: 'Cada comando Azure CLI, trecho PowerShell e template Bicep testado de ponta a ponta. CI valida a cada commit.',
   },
   {
-    emoji: '📖',
     title: 'Quebre & Conserte',
     description: 'Cada desafio inclui cenários de troubleshooting com configurações incorretas deliberadas para diagnosticar e corrigir. Desenvolva habilidades do mundo real.',
   },
 ];
 
-function Feature({emoji, title, description}) {
+function Feature({title, description}) {
   return (
     <div className="col col--4" style={{marginBottom: '1.5rem'}}>
       <div className="feature-card">
-        <span className="feature-emoji">{emoji}</span>
         <Heading as="h3" style={{fontSize: '1.1rem'}}>{title}</Heading>
         <p style={{fontSize: '0.95rem', margin: 0}}>{description}</p>
       </div>
@@ -123,7 +128,7 @@ function HomepageHeader() {
     <header className="hero--azure">
       <div className="container">
         <Heading as="h1" className="hero__title">
-          ☁️ Azure Cert Prep
+          Azure Cert Prep
         </Heading>
         <p className="hero__subtitle">"Não estude apenas — construa."</p>
         <div className="stats-bar">
@@ -157,7 +162,7 @@ function ChallengeGrid() {
     <section style={{padding: '2rem 0'}}>
       <div className="container">
         <div className="section-heading">
-          <Heading as="h2">16 Desafios</Heading>
+          <Heading as="h2">28 Desafios</Heading>
           <p>Dificuldade progressiva — do seu primeiro usuário Entra ID até um capstone multidisciplinar.</p>
         </div>
         <div className="row">
@@ -188,25 +193,27 @@ function ReferenceTable() {
           <Heading as="h2">Sysadmin ↔ Azure</Heading>
           <p>Você já conhece os conceitos. Veja como eles se traduzem para o Azure.</p>
         </div>
-        <div className="reference-table">
-          <table>
-            <thead>
-              <tr>
-                <th>On-Prem / Sysadmin</th>
-                <th>Equivalente no Azure</th>
-                <th>Descrição</th>
-              </tr>
-            </thead>
-            <tbody>
-              {referenceTable.map((row, idx) => (
-                <tr key={idx}>
-                  <td><code>{row.onprem}</code></td>
-                  <td><strong>{row.azure}</strong></td>
-                  <td>{row.desc}</td>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div className="reference-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>On-Prem / Sysadmin</th>
+                  <th>Equivalente no Azure</th>
+                  <th>Descrição</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {referenceTable.map((row, idx) => (
+                  <tr key={idx}>
+                    <td><code>{row.onprem}</code></td>
+                    <td><strong>{row.azure}</strong></td>
+                    <td>{row.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -223,45 +230,45 @@ function CertificationCoverage() {
         </div>
         <div className="row" style={{justifyContent: 'center'}}>
           <div className="col col--8">
-            <table style={{width: '100%'}}>
+            <table style={{width: '100%', margin: '0 auto'}}>
               <thead>
                 <tr>
-                  <th>Domínio</th>
-                  <th>Peso no Exame</th>
-                  <th>Desafios</th>
+                  <th style={{textAlign: 'center'}}>Domínio</th>
+                  <th style={{textAlign: 'center'}}>Peso no Exame</th>
+                  <th style={{textAlign: 'center'}}>Desafios</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><span className="domain-badge domain-badge--identity">Identidade & Governança</span></td>
                   <td>20–25%</td>
-                  <td>01, 02, 03</td>
+                  <td>01, 02, 03, 17, 18</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--storage">Armazenamento</span></td>
                   <td>15–20%</td>
-                  <td>04, 05, 06</td>
+                  <td>04, 05, 06, 19, 20</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--compute">Computação</span></td>
                   <td>20–25%</td>
-                  <td>07, 08, 09, 10</td>
+                  <td>07, 08, 09, 10, 21, 22, 23</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--networking">Rede</span></td>
                   <td>15–20%</td>
-                  <td>11, 12, 13</td>
+                  <td>11, 12, 13, 24, 25, 26</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--monitor">Monitorar & Manter</span></td>
                   <td>10–15%</td>
-                  <td>14, 15</td>
+                  <td>14, 15, 27, 28</td>
                 </tr>
               </tbody>
             </table>
             <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
               Alinhado com o <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104">guia de estudo oficial do AZ-104</a> de Abril de 2026.
-              O Desafio 16 é um capstone multidisciplinar.
+              O Desafio 16 é um capstone multidisciplinar. Desafios 17-28 oferecem aprofundamento em tópicos avançados.
             </p>
           </div>
         </div>

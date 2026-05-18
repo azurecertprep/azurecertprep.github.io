@@ -9,7 +9,7 @@ title: "Challenge 13: DNS & Load Balancing"
 |---|---|
 | ⏱️ **Estimated Time** | 60 minutes |
 | 💰 **Cost Estimate** | ~$0.20 |
-| 📊 **Exam Weight** | 15–20% |
+| **Exam Weight** | 15–20% |
 
 ## Scenario
 
@@ -21,7 +21,7 @@ Contoso's web application needs DNS resolution and load balancing for high avail
 - Configure internal and public load balancer
 - Troubleshoot load balancing
 
-## Sysadmin ➜ Azure Translation
+## Sysadmin ↔ Azure Reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -54,6 +54,7 @@ az network dns zone create \
 ```
 
 :::tip
+
 You don't need to own the domain to create a DNS zone in Azure — you just won't be able to resolve it publicly unless you delegate NS records from the parent domain.
 :::
 

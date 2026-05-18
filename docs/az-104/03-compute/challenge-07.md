@@ -1,12 +1,13 @@
 ---
 sidebar_position: 1
-title: "Challenge 07 — ARM Templates & Bicep"
+title: "Challenge 07: ARM Templates & Bicep"
 ---
 
-# Challenge 07 — ARM Templates & Bicep
+# Challenge 07: ARM Templates & Bicep
 
 :::info Estimated Time & Cost
-⏱️ **60 minutes** | 💰 **Free** (templates + storage account only) | 📊 **Exam Weight: 20–25%**
+
+⏱️ **60 minutes** | 💰 **Free** (templates + storage account only) | **Exam Weight: 20–25%**
 :::
 
 ## Scenario

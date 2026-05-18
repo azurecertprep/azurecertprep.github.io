@@ -1,12 +1,13 @@
 ---
 sidebar_position: 1
-title: "Challenge 11 — Virtual Networks & Subnets"
+title: "Challenge 11: Virtual Networks & Subnets"
 ---
 
-# Challenge 11 — Virtual Networks & Subnets
+# Challenge 11: Virtual Networks & Subnets
 
 :::info Estimated Time & Cost
-⏱️ **45–60 minutes** | 💰 **~$0.10** (VMs for testing, deallocate promptly) | 📊 **Exam Weight: 15–20%**
+
+⏱️ **45–60 minutes** | 💰 **~$0.10** (VMs for testing, deallocate promptly) | **Exam Weight: 15–20%**
 :::
 
 ## Scenario

@@ -5,11 +5,19 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'Azure Cert Prep',
   tagline: "Don't just study — build it.",
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.svg',
 
   future: {
     v4: true,
   },
+
+  markdown: {
+    mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
+  themes: ['@docusaurus/theme-mermaid'],
 
   url: 'https://azurecertprep.github.io',
   baseUrl: '/',
@@ -19,12 +27,6 @@ const config = {
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
-
-  markdown: {
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
-  },
 
   i18n: {
     defaultLocale: 'en',
@@ -135,16 +137,32 @@ const config = {
             title: 'Related Projects',
             items: [
               {
-                label: '☸️ Kubernetes Hackathon',
+                label: 'Kubernetes Hackathon',
                 href: 'https://k8shackathon.com',
               },
               {
-                label: '🐧 Linux Hackathon',
+                label: 'Linux Hackathon',
                 href: 'https://linuxhackathon.com',
               },
               {
-                label: '☁️ AKS Learning',
+                label: 'AKS Learning',
                 href: 'https://aks-learning.github.io',
+              },
+              {
+                label: 'From Server to Cluster',
+                href: 'https://fromservertocluster.com',
+              },
+              {
+                label: 'AI for Infrastructure',
+                href: 'https://ai4infra.com',
+              },
+              {
+                label: 'Azure Governance',
+                href: 'https://azgovernance.com',
+              },
+              {
+                label: 'AZ-900 Study Guide',
+                href: 'https://github.com/ricmmartins/study-guide-az900',
               },
             ],
           },

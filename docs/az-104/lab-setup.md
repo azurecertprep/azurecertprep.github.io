@@ -68,6 +68,7 @@ You need an Azure subscription for all challenges except Challenge 07 (ARM/Bicep
 | [Visual Studio Subscription](https://azure.microsoft.com/pricing/member-offers/credit-for-visual-studio-subscribers/) | $50-150/mo | Monthly | Depends on tier |
 
 :::warning Cost Management
+
 All challenges include cleanup scripts. **Always run cleanup after each challenge** to avoid unexpected charges. Total cost for all 16 challenges is estimated at ~$3 with proper cleanup.
 :::
 
@@ -98,6 +99,7 @@ az group list --output table
 ```
 
 :::tip PowerShell equivalent
+
 ```powershell
 $Location = "eastus"
 New-AzResourceGroup -Name "rg-az104-shared" -Location $Location

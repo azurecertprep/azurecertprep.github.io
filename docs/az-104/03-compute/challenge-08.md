@@ -1,15 +1,17 @@
 ---
 sidebar_position: 2
-title: "Challenge 08 — Virtual Machines & Scale Sets"
+title: "Challenge 08: Virtual Machines & Scale Sets"
 ---
 
-# Challenge 08 — Virtual Machines & Scale Sets
+# Challenge 08: Virtual Machines & Scale Sets
 
 :::info Estimated Time & Cost
-⏱️ **60–75 minutes** | 💰 **~$0.50** (deallocate promptly!) | 📊 **Exam Weight: 20–25%**
+
+⏱️ **60–75 minutes** | 💰 **~$0.50** (deallocate promptly!) | **Exam Weight: 20–25%**
 :::
 
 :::danger Cost Warning
+
 Virtual machines incur charges while running. **Deallocate all VMs** as soon as you finish each task. The cleanup script at the bottom deletes everything — run it when done.
 :::
 

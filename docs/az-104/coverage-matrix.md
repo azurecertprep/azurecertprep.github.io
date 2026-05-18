@@ -36,8 +36,8 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Apply and manage tags on resources | [Challenge 03](/docs/az-104/identity/challenge-03) |
 | Manage resource groups | [Challenge 03](/docs/az-104/identity/challenge-03) |
 | Manage subscriptions | [Challenge 03](/docs/az-104/identity/challenge-03) |
-| Manage costs by using alerts, budgets, and Azure Advisor | [Challenge 03](/docs/az-104/identity/challenge-03) |
-| Configure management groups | [Challenge 03](/docs/az-104/identity/challenge-03) |
+| Manage costs by using alerts, budgets, and Azure Advisor | [Challenge 03](/docs/az-104/identity/challenge-03), [Challenge 18](/docs/az-104/identity/challenge-18) |
+| Configure management groups | [Challenge 03](/docs/az-104/identity/challenge-03), [Challenge 17](/docs/az-104/identity/challenge-17) |
 
 ## Implement and manage storage (15–20%)
 
@@ -58,8 +58,8 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Create and configure storage accounts | [Challenge 04](/docs/az-104/storage/challenge-04) |
 | Configure Azure Storage redundancy | [Challenge 04](/docs/az-104/storage/challenge-04) |
 | Configure object replication | [Challenge 06](/docs/az-104/storage/challenge-06) |
-| Configure storage account encryption | [Challenge 04](/docs/az-104/storage/challenge-04) |
-| Manage data by using Azure Storage Explorer and AzCopy | [Challenge 04](/docs/az-104/storage/challenge-04) |
+| Configure storage account encryption | [Challenge 04](/docs/az-104/storage/challenge-04), [Challenge 20](/docs/az-104/storage/challenge-20) |
+| Manage data by using Azure Storage Explorer and AzCopy | [Challenge 04](/docs/az-104/storage/challenge-04), [Challenge 19](/docs/az-104/storage/challenge-19) |
 
 ### Configure Azure Files and Azure Blob Storage
 
@@ -90,10 +90,10 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Skill | Challenge |
 |-------|-----------|
 | Create a virtual machine | [Challenge 08](/docs/az-104/compute/challenge-08) |
-| Configure encryption at host for Azure virtual machines | [Challenge 08](/docs/az-104/compute/challenge-08) |
+| Configure encryption at host for Azure virtual machines | [Challenge 08](/docs/az-104/compute/challenge-08), [Challenge 22](/docs/az-104/compute/challenge-22) |
 | Move a virtual machine to another resource group, subscription, or region | [Challenge 08](/docs/az-104/compute/challenge-08) |
 | Manage virtual machine sizes | [Challenge 08](/docs/az-104/compute/challenge-08) |
-| Manage virtual machine disks | [Challenge 08](/docs/az-104/compute/challenge-08) |
+| Manage virtual machine disks | [Challenge 08](/docs/az-104/compute/challenge-08), [Challenge 22](/docs/az-104/compute/challenge-22) |
 | Deploy virtual machines to availability zones and availability sets | [Challenge 08](/docs/az-104/compute/challenge-08) |
 | Deploy and configure an Azure Virtual Machine Scale Sets | [Challenge 08](/docs/az-104/compute/challenge-08) |
 
@@ -113,10 +113,10 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Provision an App Service plan | [Challenge 10](/docs/az-104/compute/challenge-10) |
 | Configure scaling for an App Service plan | [Challenge 10](/docs/az-104/compute/challenge-10) |
 | Create an App Service | [Challenge 10](/docs/az-104/compute/challenge-10) |
-| Configure certificates and TLS for an App Service | [Challenge 10](/docs/az-104/compute/challenge-10) |
+| Configure certificates and TLS for an App Service | [Challenge 10](/docs/az-104/compute/challenge-10), [Challenge 23](/docs/az-104/compute/challenge-23) |
 | Map an existing custom DNS name to an App Service | [Challenge 10](/docs/az-104/compute/challenge-10) |
 | Configure backup for an App Service | [Challenge 10](/docs/az-104/compute/challenge-10) |
-| Configure networking settings for an App Service | [Challenge 10](/docs/az-104/compute/challenge-10) |
+| Configure networking settings for an App Service | [Challenge 10](/docs/az-104/compute/challenge-10), [Challenge 23](/docs/az-104/compute/challenge-23) |
 | Configure deployment slots for an App Service | [Challenge 10](/docs/az-104/compute/challenge-10) |
 
 ## Implement and manage virtual networking (15–20%)
@@ -128,8 +128,8 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Create and configure virtual networks and subnets | [Challenge 11](/docs/az-104/networking/challenge-11) |
 | Create and configure virtual network peering | [Challenge 11](/docs/az-104/networking/challenge-11) |
 | Configure public IP addresses | [Challenge 11](/docs/az-104/networking/challenge-11) |
-| Configure user-defined routes | [Challenge 11](/docs/az-104/networking/challenge-11) |
-| Troubleshoot network connectivity | [Challenge 11](/docs/az-104/networking/challenge-11) |
+| Configure user-defined routes | [Challenge 11](/docs/az-104/networking/challenge-11), [Challenge 24](/docs/az-104/networking/challenge-24) |
+| Troubleshoot network connectivity | [Challenge 11](/docs/az-104/networking/challenge-11), [Challenge 26](/docs/az-104/networking/challenge-26) |
 
 ### Configure secure access to virtual networks
 
@@ -138,8 +138,8 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Create and configure NSGs and application security groups | [Challenge 12](/docs/az-104/networking/challenge-12) |
 | Evaluate effective security rules in NSGs | [Challenge 12](/docs/az-104/networking/challenge-12) |
 | Implement Azure Bastion | [Challenge 12](/docs/az-104/networking/challenge-12) |
-| Configure service endpoints for Azure PaaS | [Challenge 12](/docs/az-104/networking/challenge-12) |
-| Configure private endpoints for Azure PaaS | [Challenge 12](/docs/az-104/networking/challenge-12) |
+| Configure service endpoints for Azure PaaS | [Challenge 12](/docs/az-104/networking/challenge-12), [Challenge 25](/docs/az-104/networking/challenge-25) |
+| Configure private endpoints for Azure PaaS | [Challenge 12](/docs/az-104/networking/challenge-12), [Challenge 25](/docs/az-104/networking/challenge-25) |
 
 ### Configure name resolution and load balancing
 
@@ -156,11 +156,11 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 | Skill | Challenge |
 |-------|-----------|
 | Interpret metrics in Azure Monitor | [Challenge 14](/docs/az-104/monitor/challenge-14) |
-| Configure log settings in Azure Monitor | [Challenge 14](/docs/az-104/monitor/challenge-14) |
-| Query and analyze logs in Azure Monitor | [Challenge 14](/docs/az-104/monitor/challenge-14) |
+| Configure log settings in Azure Monitor | [Challenge 14](/docs/az-104/monitor/challenge-14), [Challenge 27](/docs/az-104/monitor/challenge-27) |
+| Query and analyze logs in Azure Monitor | [Challenge 14](/docs/az-104/monitor/challenge-14), [Challenge 27](/docs/az-104/monitor/challenge-27) |
 | Set up alert rules, action groups, and alert processing rules | [Challenge 14](/docs/az-104/monitor/challenge-14) |
 | Configure and interpret monitoring of VMs, storage, and networks using Azure Monitor Insights | [Challenge 14](/docs/az-104/monitor/challenge-14) |
-| Use Azure Network Watcher and Connection monitor | [Challenge 14](/docs/az-104/monitor/challenge-14) |
+| Use Azure Network Watcher and Connection monitor | [Challenge 14](/docs/az-104/monitor/challenge-14), [Challenge 26](/docs/az-104/networking/challenge-26) |
 
 ### Implement backup and recovery
 
@@ -176,6 +176,6 @@ Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/e
 
 ---
 
-✅ **Total skills covered: 57/57 (100%)**
+**Total skills covered: 57/57 (100%)** | 28 challenges provide comprehensive coverage with deep dives into advanced topics.
 
 > This matrix is aligned with the [AZ-104 study guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104) as of April 17, 2026.

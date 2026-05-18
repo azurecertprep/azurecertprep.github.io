@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-title: "Challenge 03 — Azure Policy & Governance"
+title: "Challenge 03: Azure Policy & Governance"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 03 — Azure Policy & Governance
+# Challenge 03: Azure Policy & Governance
 
-> ⏱️ **Estimated time**: 60-75 min | 💰 **Estimated cost**: Free (policy evaluation) | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | 💰 **Estimated cost**: Free (policy evaluation) | 🎯 **Exam weight**: 15-20%
 
 ## Introduction
 
@@ -147,6 +147,7 @@ az consumption budget create \
 ```
 
 :::note
+
 Budget alerts via CLI require additional configuration for notification thresholds. It's easier to set these up in the Portal under **Cost Management + Billing** → **Budgets**.
 :::
 
@@ -209,6 +210,7 @@ az policy assignment create \
 ```
 
 :::tip
+
 Policy assignments can take **5-15 minutes** to take effect. Be patient when testing!
 :::
 

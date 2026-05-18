@@ -9,7 +9,7 @@ title: "Challenge 15: Backup & Recovery"
 |---|---|
 | ⏱️ **Estimated Time** | 60–75 minutes |
 | 💰 **Cost Estimate** | ~$0.30 |
-| 📊 **Exam Weight** | 10–15% |
+| **Exam Weight** | 10–15% |
 
 ## Scenario
 
@@ -25,7 +25,7 @@ Disaster struck at Contoso — a developer accidentally deleted production data.
 - Perform failover to a secondary region
 - Configure and interpret reports and alerts for backups
 
-## Sysadmin ➜ Azure Translation
+## Sysadmin ↔ Azure Reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -58,6 +58,7 @@ az backup vault create \
 ```
 
 :::tip
+
 Recovery Services vaults are used for VM backup and Azure Site Recovery. The vault must be in the **same region** as the VMs you want to back up.
 :::
 
@@ -121,6 +122,7 @@ az backup protection backup-now \
 ```
 
 :::note
+
 The first backup can take **30–60 minutes** depending on the VM size. You can check progress in the vault's **Backup Jobs** blade.
 :::
 
@@ -191,6 +193,7 @@ Enable replication for a VM to a secondary region:
 6. Review replication settings and enable
 
 :::tip
+
 Site Recovery replicates VM disks asynchronously to the target region. Initial replication can take 30–60 minutes depending on disk size.
 :::
 
@@ -205,6 +208,7 @@ After initial replication completes:
 5. **Clean up test failover** when done
 
 :::warning
+
 Always clean up test failover resources — they continue to incur charges until removed.
 :::
 
@@ -263,6 +267,7 @@ az group delete --name $RG --yes --no-wait
 ```
 
 :::warning
+
 If vault deletion fails, follow this order:
 1. Stop backup protection with "Delete backup data" for all items
 2. Remove Site Recovery replicated items

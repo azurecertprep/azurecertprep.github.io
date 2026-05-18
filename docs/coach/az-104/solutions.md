@@ -3,10 +3,11 @@ sidebar_label: "AZ-104 Solutions"
 sidebar_position: 1
 ---
 
-# 🎓 AZ-104 Coach's Guide — Complete Solutions
+# AZ-104 Coach's Guide: Complete Solutions
 
 :::danger For Coaches & Facilitators Only
-This document contains **complete solutions** for all 16 challenges. Students should attempt each challenge independently before consulting this guide. The learning happens in the struggle — if students jump straight to solutions, they won't retain the knowledge for the exam.
+
+This document contains **complete solutions** for all 28 challenges. Students should attempt each challenge independently before consulting this guide. The learning happens in the struggle — if students jump straight to solutions, they won't retain the knowledge for the exam.
 
 **How to use this guide:**
 - Walk through the challenge with students first — let them hit walls
@@ -17,9 +18,9 @@ This document contains **complete solutions** for all 16 challenges. Students sh
 
 ---
 
-## Challenge 01 — Entra ID: Users & Groups
+## Challenge 01: Entra ID: Users & Groups
 
-> ⏱️ **Coach time estimate**: 30–45 min (students: 45–60 min) | 🎯 Domain: Identity & Governance
+> **Coach time estimate**: 30–45 min (students: 45–60 min) | Domain: Identity & Governance
 
 ### Complete Solution
 
@@ -139,9 +140,9 @@ az ad group member add --group "All-Employees" --member-id $GUEST_ID
 
 ---
 
-## Challenge 02 — RBAC & Access Management
+## Challenge 02: RBAC & Access Management
 
-> ⏱️ **Coach time estimate**: 30–40 min (students: 45–60 min) | 🎯 Domain: Identity & Governance
+> **Coach time estimate**: 30–40 min (students: 45–60 min) | Domain: Identity & Governance
 
 ### Complete Solution
 
@@ -251,9 +252,9 @@ az role assignment list --all --role "Owner" \
 
 ---
 
-## Challenge 03 — Azure Policy & Governance
+## Challenge 03: Azure Policy & Governance
 
-> ⏱️ **Coach time estimate**: 45–55 min (students: 60–75 min) | 🎯 Domain: Identity & Governance
+> **Coach time estimate**: 45–55 min (students: 60–75 min) | Domain: Identity & Governance
 
 ### Complete Solution
 
@@ -365,9 +366,9 @@ az advisor recommendation list \
 
 ---
 
-## Challenge 04 — Storage Accounts & Access
+## Challenge 04: Storage Accounts & Access
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60–75 min) | 🎯 Domain: Storage
+> **Coach time estimate**: 40–50 min (students: 60–75 min) | Domain: Storage
 
 ### Complete Solution
 
@@ -465,9 +466,9 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 
 ---
 
-## Challenge 05 — Blob Storage & Azure Files
+## Challenge 05: Blob Storage & Azure Files
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60–75 min) | 🎯 Domain: Storage
+> **Coach time estimate**: 40–50 min (students: 60–75 min) | Domain: Storage
 
 ### Complete Solution
 
@@ -568,9 +569,9 @@ az storage share snapshot --name finance-share --connection-string "$CONN_STRING
 
 ---
 
-## Challenge 06 — Storage Security & Lifecycle
+## Challenge 06: Storage Security & Lifecycle
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60–75 min) | 🎯 Domain: Storage
+> **Coach time estimate**: 40–50 min (students: 60–75 min) | Domain: Storage
 
 ### Complete Solution
 
@@ -658,9 +659,9 @@ az storage container create --name replicated-data --connection-string "$CONN_SE
 
 ---
 
-## Challenge 07 — ARM Templates & Bicep
+## Challenge 07: ARM Templates & Bicep
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60 min) | 🎯 Domain: Compute (IaC)
+> **Coach time estimate**: 40–50 min (students: 60 min) | Domain: Compute (IaC)
 
 ### Complete Solution
 
@@ -711,9 +712,9 @@ az deployment group what-if \
 
 ---
 
-## Challenge 08 — Virtual Machines & Scale Sets
+## Challenge 08: Virtual Machines & Scale Sets
 
-> ⏱️ **Coach time estimate**: 45–55 min (students: 60–75 min) | 🎯 Domain: Compute
+> **Coach time estimate**: 45–55 min (students: 60–75 min) | Domain: Compute
 
 ### Complete Solution
 
@@ -784,9 +785,9 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 
 ---
 
-## Challenge 09 — Containers in Azure
+## Challenge 09: Containers in Azure
 
-> ⏱️ **Coach time estimate**: 30–40 min (students: 45–60 min) | 🎯 Domain: Compute
+> **Coach time estimate**: 30–40 min (students: 45–60 min) | Domain: Compute
 
 ### Complete Solution
 
@@ -854,9 +855,9 @@ az containerapp update --resource-group rg-containers-lab --name ca-dashboard \
 
 ---
 
-## Challenge 10 — Azure App Service
+## Challenge 10: Azure App Service
 
-> ⏱️ **Coach time estimate**: 45–55 min (students: 60–75 min) | 🎯 Domain: Compute
+> **Coach time estimate**: 45–55 min (students: 60–75 min) | Domain: Compute
 
 ### Complete Solution
 
@@ -931,9 +932,9 @@ az monitor autoscale rule create --resource-group rg-appservice-lab \
 
 ---
 
-## Challenge 11 — Virtual Networks & Subnets
+## Challenge 11: Virtual Networks & Subnets
 
-> ⏱️ **Coach time estimate**: 35–45 min (students: 45–60 min) | 🎯 Domain: Networking
+> **Coach time estimate**: 35–45 min (students: 45–60 min) | Domain: Networking
 
 ### Complete Solution
 
@@ -1000,9 +1001,9 @@ az network watcher show-next-hop -g rg-network-lab --vm vm-spoke \
 
 ---
 
-## Challenge 12 — Network Security
+## Challenge 12: Network Security
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60 min) | 🎯 Domain: Networking
+> **Coach time estimate**: 40–50 min (students: 60 min) | Domain: Networking
 
 ### Complete Solution
 
@@ -1085,9 +1086,9 @@ az network private-endpoint create -g rg-netsec-lab --name pe-storage \
 
 ---
 
-## Challenge 13 — DNS & Load Balancing
+## Challenge 13: DNS & Load Balancing
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60 min) | 🎯 Domain: Networking
+> **Coach time estimate**: 40–50 min (students: 60 min) | Domain: Networking
 
 ### Complete Solution
 
@@ -1147,9 +1148,9 @@ az network lb create -g $RG --name lb-internal --sku Standard \
 
 ---
 
-## Challenge 14 — Azure Monitor & Alerts
+## Challenge 14: Azure Monitor & Alerts
 
-> ⏱️ **Coach time estimate**: 40–50 min (students: 60 min) | 🎯 Domain: Monitor & Maintain
+> **Coach time estimate**: 40–50 min (students: 60 min) | Domain: Monitor & Maintain
 
 ### Complete Solution
 
@@ -1221,9 +1222,9 @@ Syslog
 
 ---
 
-## Challenge 15 — Backup & Recovery
+## Challenge 15: Backup & Recovery
 
-> ⏱️ **Coach time estimate**: 45–55 min (students: 60–75 min) | 🎯 Domain: Monitor & Maintain
+> **Coach time estimate**: 45–55 min (students: 60–75 min) | Domain: Monitor & Maintain
 
 ### Complete Solution
 
@@ -1268,9 +1269,9 @@ az dataprotection backup-vault create -g $RG --vault-name bv-contoso \
 
 ---
 
-## Challenge 16 — Capstone: Day in the Life of an Azure Admin
+## Challenge 16: Capstone: Day in the Life of an Azure Admin
 
-> ⏱️ **Coach time estimate**: 60–80 min (students: 90–120 min) | 🎯 Domain: All 5 domains
+> **Coach time estimate**: 60–80 min (students: 90–120 min) | Domain: All 5 domains
 
 ### Complete Solution
 
@@ -1373,18 +1374,1551 @@ az monitor metrics alert update -g rg-az104-capstone-monitor \
 
 ---
 
+## Challenge 17: Management Groups & Subscriptions
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Identity & Governance
+
+### Complete Solution
+
+```bash
+# Create the full management group hierarchy
+az account management-group create \
+  --name "mg-contoso" \
+  --display-name "Contoso Ltd."
+
+az account management-group create \
+  --name "mg-production" \
+  --display-name "Production" \
+  --parent "mg-contoso"
+
+az account management-group create \
+  --name "mg-prod-it" \
+  --display-name "IT Production" \
+  --parent "mg-production"
+
+az account management-group create \
+  --name "mg-prod-finance" \
+  --display-name "Finance Production" \
+  --parent "mg-production"
+
+az account management-group create \
+  --name "mg-nonproduction" \
+  --display-name "Non-Production" \
+  --parent "mg-contoso"
+
+az account management-group create \
+  --name "mg-dev" \
+  --display-name "Development" \
+  --parent "mg-nonproduction"
+
+az account management-group create \
+  --name "mg-sandbox" \
+  --display-name "Sandbox" \
+  --parent "mg-nonproduction"
+```
+
+**Why**: Management groups mirror organizational structure. Creating them top-down is required because child groups reference their parent. The `--name` is an immutable ID (no spaces, no special chars) while `--display-name` is the friendly label.
+
+```bash
+# Move subscription into mg-dev
+SUB_ID=$(az account show --query id -o tsv)
+az account management-group subscription add \
+  --name "mg-dev" \
+  --subscription $SUB_ID
+
+# Assign policy at mg-production scope
+POLICY_DEF=$(az policy definition list \
+  --query "[?displayName=='Require a tag and its value on resources'].id" -o tsv)
+
+az policy assignment create \
+  --name "require-env-tag-prod" \
+  --display-name "Require Environment Tag (Production)" \
+  --policy "$POLICY_DEF" \
+  --scope "/providers/Microsoft.Management/managementGroups/mg-production" \
+  --params '{"tagName": {"value": "Environment"}, "tagValue": {"value": "Production"}}'
+```
+
+**Why**: Policy at the MG scope cascades to all child subscriptions. This means every resource in IT Production and Finance Production subscriptions must have the Environment=Production tag. No per-subscription policy duplication needed.
+
+```bash
+# Assign Reader role at mg-contoso scope
+USER_ID=$(az ad user show --id "alice@yourtenant.onmicrosoft.com" --query id -o tsv)
+az role assignment create \
+  --assignee "$USER_ID" \
+  --role "Reader" \
+  --scope "/providers/Microsoft.Management/managementGroups/mg-contoso"
+
+# Move subscription from mg-dev to mg-sandbox
+az account management-group subscription remove \
+  --name "mg-dev" \
+  --subscription $SUB_ID
+
+az account management-group subscription add \
+  --name "mg-sandbox" \
+  --subscription $SUB_ID
+
+# Verify hierarchy
+az account management-group show \
+  --name "mg-contoso" \
+  --expand \
+  --recurse
+```
+
+**Why**: RBAC at MG scope cascades to all child MGs and subscriptions. Moving a subscription between MGs immediately changes which policies and RBAC apply. The old policies stop applying and new ones take effect.
+
+### Common Mistakes
+
+1. **Creating MGs bottom-up** — child MGs require their parent to exist first; students who try to create mg-dev before mg-nonproduction get errors
+2. **Using spaces in MG names** — the `--name` parameter is an immutable ID that cannot contain spaces or special characters
+3. **Forgetting the scope format** — MG scope is `/providers/Microsoft.Management/managementGroups/<name>`, not a resource group path
+4. **Not understanding policy inheritance** — students think they can "exempt" a child MG from a parent policy; exemptions only work at the resource level
+5. **Deleting MGs top-down** — you must delete leaf MGs first (bottom-up); a MG with children cannot be deleted
+
+### Key Teaching Points
+
+- Maximum 6 levels of depth below Tenant Root Group
+- Moving a subscription changes governance immediately (policy + RBAC)
+- The Tenant Root Group cannot be moved, deleted, or renamed (ID only)
+- By default, any user can create MGs (can be restricted via tenant settings)
+- Each directory has a single MG hierarchy (no forests/multiple trees)
+
+---
+
+## Challenge 18: Cost Management & Azure Advisor
+
+> **Coach time estimate**: 35-45 min (students: 45-60 min) | Domain: Identity & Governance
+
+### Complete Solution
+
+```bash
+# Create resource group with cost-tracking tags
+az group create \
+  --name rg-cost-lab \
+  --location eastus \
+  --tags Department=Engineering Environment=Development CostCenter=CC-4200 Owner=admin@contoso.com
+
+# Create sample resources with consistent tags
+STORAGE_NAME="stcostlab$RANDOM"
+az storage account create \
+  --name $STORAGE_NAME \
+  --resource-group rg-cost-lab \
+  --location eastus \
+  --sku Standard_LRS \
+  --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=WebApp
+
+az vm create \
+  --name vm-cost-test \
+  --resource-group rg-cost-lab \
+  --image Ubuntu2404 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=API
+```
+
+**Why**: Tags are the primary mechanism for cost allocation. Without tags, Cost Management cannot split spending by department/project. Tags do NOT inherit from resource groups to resources — you must tag each resource individually (or use Azure Policy to enforce inheritance).
+
+```bash
+# Create a monthly budget with alert thresholds
+az consumption budget create \
+  --budget-name "budget-engineering-dev" \
+  --amount 100 \
+  --category Cost \
+  --time-grain Monthly \
+  --start-date "2024-01-01" \
+  --end-date "2025-12-31" \
+  --resource-group rg-cost-lab
+
+# Create action group for cost alerts
+az monitor action-group create \
+  --name "ag-cost-alerts" \
+  --resource-group rg-cost-lab \
+  --short-name "CostAlert" \
+  --action email finance-team finance@contoso.com
+```
+
+**Why**: Budgets are informational only — they send alerts but do NOT stop spending. For automatic cost control, you must combine budget alerts with Automation runbooks or Logic Apps. The exam tests whether students know this distinction.
+
+```bash
+# Review Azure Advisor cost recommendations
+az advisor recommendation list \
+  --category Cost \
+  --query "[].{Resource:resourceMetadata.resourceId, Problem:shortDescription.problem, Impact:impact}" \
+  -o table
+
+# Configure cost export to storage
+az storage container create \
+  --name cost-exports \
+  --account-name $STORAGE_NAME \
+  --auth-mode login
+
+az costmanagement export create \
+  --name "daily-cost-export" \
+  --scope "subscriptions/$(az account show --query id -o tsv)" \
+  --type ActualCost \
+  --timeframe MonthToDate \
+  --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
+  --storage-container cost-exports \
+  --storage-directory "exports" \
+  --schedule-recurrence Daily \
+  --schedule-status Active
+
+# Enforce tagging with Azure Policy
+POLICY_DEF=$(az policy definition list \
+  --query "[?displayName=='Require a tag on resources'].id" -o tsv)
+
+az policy assignment create \
+  --name "require-costcenter-tag" \
+  --display-name "Require CostCenter Tag" \
+  --policy "$POLICY_DEF" \
+  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-cost-lab" \
+  --params '{"tagName": {"value": "CostCenter"}}'
+```
+
+**Why**: Cost exports create CSV files in storage for external analysis (Power BI, Excel). Advisor recommendations refresh every 24 hours. The tagging policy prevents future untagged resources but does NOT remediate existing ones — use "Modify" effect policies for that.
+
+### Common Mistakes
+
+1. **Expecting budgets to stop spending** — budgets are alerts only; they never automatically shut down resources
+2. **Forgetting tag inheritance does not exist** — tagging a resource group does NOT tag child resources; use policy with "Inherit a tag" effect
+3. **Setting budget start date in the past** — budget start dates must be the first of a current or future month
+4. **Confusing actual vs forecasted alerts** — actual fires when you hit the threshold; forecasted fires when projected spend will exceed it
+5. **Not scoping cost analysis correctly** — students look at subscription-level costs when the challenge asks for resource-group-level analysis
+
+### Key Teaching Points
+
+- Five Advisor categories: Cost, Security, Reliability, Performance, Operational Excellence
+- Advisor Score (0-100%) tracks how many recommendations are addressed
+- Cost Management Reader role allows viewing costs; Contributor allows creating budgets
+- Tags are the foundation of cost allocation — enforce them early with policy
+- Budget alerts support action groups with email, SMS, webhooks, and runbooks
+
+---
+
+## Challenge 19: AzCopy & Storage Migration
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Storage
+
+### Complete Solution
+
+```bash
+# Create source and destination storage accounts in different regions
+az group create --name rg-azcopy-lab --location eastus
+
+az storage account create \
+  --name stsource$RANDOM \
+  --resource-group rg-azcopy-lab \
+  --location eastus \
+  --sku Standard_LRS \
+  --kind StorageV2
+
+az storage account create \
+  --name stdest$RANDOM \
+  --resource-group rg-azcopy-lab \
+  --location westus2 \
+  --sku Standard_LRS \
+  --kind StorageV2
+
+SOURCE_ACCOUNT=$(az storage account list -g rg-azcopy-lab \
+  --query "[?contains(name,'source')].name" -o tsv | head -1)
+DEST_ACCOUNT=$(az storage account list -g rg-azcopy-lab \
+  --query "[?contains(name,'dest')].name" -o tsv | head -1)
+
+# Create containers and upload sample data
+az storage container create --name documents --account-name $SOURCE_ACCOUNT --auth-mode login
+az storage container create --name documents --account-name $DEST_ACCOUNT --auth-mode login
+
+for i in $(seq 1 10); do
+  echo "Document $i content - $(date)" > doc$i.txt
+  az storage blob upload \
+    --container-name documents \
+    --file doc$i.txt \
+    --name "folder1/doc$i.txt" \
+    --account-name $SOURCE_ACCOUNT \
+    --auth-mode login
+done
+rm -f doc*.txt
+```
+
+**Why**: Two accounts in different regions simulates a real DR/migration scenario. AzCopy performs server-side copy between Azure accounts — data never passes through your local machine, making cross-region copies fast.
+
+```bash
+# Authenticate AzCopy with Entra ID
+azcopy login --tenant-id $(az account show --query tenantId -o tsv)
+
+# Copy between containers (same account)
+azcopy copy \
+  "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents/*" \
+  "https://$SOURCE_ACCOUNT.blob.core.windows.net/backups/" \
+  --recursive
+
+# Generate SAS tokens for cross-account copy
+SOURCE_SAS=$(az storage account generate-sas \
+  --account-name $SOURCE_ACCOUNT \
+  --permissions rl \
+  --resource-types co \
+  --services b \
+  --expiry $(date -u -d "+1 hour" +%Y-%m-%dT%H:%MZ) \
+  -o tsv)
+
+DEST_SAS=$(az storage account generate-sas \
+  --account-name $DEST_ACCOUNT \
+  --permissions wca \
+  --resource-types co \
+  --services b \
+  --expiry $(date -u -d "+1 hour" +%Y-%m-%dT%H:%MZ) \
+  -o tsv)
+
+# Cross-account copy using SAS tokens (server-side)
+azcopy copy \
+  "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents?$SOURCE_SAS" \
+  "https://$DEST_ACCOUNT.blob.core.windows.net/documents?$DEST_SAS" \
+  --recursive
+```
+
+**Why**: SAS tokens are required for cross-account copy when not using Entra ID. Source needs Read+List (rl), destination needs Write+Create+Add (wca). The copy is server-to-server — data flows directly between Azure datacenters.
+
+```bash
+# Sync (only new/modified files, like robocopy /MIR)
+azcopy sync \
+  "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents" \
+  "https://$DEST_ACCOUNT.blob.core.windows.net/documents" \
+  --recursive \
+  --delete-destination=true
+
+# Pattern-based filtering
+azcopy copy \
+  "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents/*" \
+  "https://$DEST_ACCOUNT.blob.core.windows.net/archives/" \
+  --recursive \
+  --include-pattern "*.txt"
+
+# Benchmark performance
+azcopy benchmark \
+  "https://$DEST_ACCOUNT.blob.core.windows.net/archives" \
+  --file-count 100 \
+  --size-per-file 1M
+```
+
+**Why**: `azcopy sync` only transfers changed files (compares last-modified timestamps). With `--delete-destination=true`, it mirrors the source exactly (deletes files at destination that do not exist at source). This is the Azure equivalent of `robocopy /MIR`.
+
+### Common Mistakes
+
+1. **Wrong SAS permissions** — source needs Read+List, destination needs Write+Create+Add; students often forget List on source or Create on destination
+2. **Expired SAS tokens** — students generate short-lived tokens and get 403 errors mid-transfer; use 1-hour minimum for lab work
+3. **Confusing copy vs sync** — copy always transfers everything; sync only transfers new/modified files
+4. **Not authenticating AzCopy** — students try to use AzCopy without `azcopy login` or SAS tokens and get auth errors
+5. **Using download-then-upload** — students manually download to local disk then re-upload; AzCopy does server-side copy (much faster)
+
+### Key Teaching Points
+
+- Three auth methods: Entra ID login, SAS tokens, storage account keys (not recommended)
+- Server-to-server copy never touches your local machine (data stays in Azure)
+- `azcopy jobs resume` can restart interrupted transfers using the job journal
+- Set `AZCOPY_CONCURRENCY_VALUE` environment variable to increase parallelism
+- Storage Blob Data Contributor role needed for Entra ID auth (not classic Contributor)
+
+---
+
+## Challenge 20: Storage Encryption & Data Protection
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Storage
+
+### Complete Solution
+
+```bash
+# Create Key Vault with purge protection (mandatory for CMK)
+az group create --name rg-encryption-lab --location eastus
+
+az keyvault create \
+  --name kv-contoso-cmk-$RANDOM \
+  --resource-group rg-encryption-lab \
+  --location eastus \
+  --enable-purge-protection true \
+  --enable-soft-delete true \
+  --retention-days 7
+
+KV_NAME=$(az keyvault list -g rg-encryption-lab --query "[0].name" -o tsv)
+
+# Create storage account with infrastructure encryption (double encryption)
+az storage account create \
+  --name stencrypt$RANDOM \
+  --resource-group rg-encryption-lab \
+  --location eastus \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --require-infrastructure-encryption true
+
+STORAGE_NAME=$(az storage account list -g rg-encryption-lab \
+  --query "[?contains(name,'encrypt')].name" -o tsv | head -1)
+```
+
+**Why**: Infrastructure encryption adds a second layer of encryption at the hardware level using a different algorithm. It MUST be set at creation time — cannot be enabled later. Purge protection on Key Vault prevents permanent deletion of keys (mandatory for CMK scenarios).
+
+```bash
+# Create RSA key in Key Vault for CMK
+az keyvault key create \
+  --vault-name $KV_NAME \
+  --name storage-cmk-key \
+  --kty RSA \
+  --size 2048
+
+# Assign managed identity to storage account
+az storage account update \
+  --name $STORAGE_NAME \
+  --resource-group rg-encryption-lab \
+  --assign-identity
+
+IDENTITY_ID=$(az storage account show \
+  --name $STORAGE_NAME \
+  --resource-group rg-encryption-lab \
+  --query "identity.principalId" -o tsv)
+
+# Grant Key Vault Crypto Service Encryption User role
+az role assignment create \
+  --assignee $IDENTITY_ID \
+  --role "Key Vault Crypto Service Encryption User" \
+  --scope $(az keyvault show --name $KV_NAME --query id -o tsv)
+
+# Configure CMK on storage account
+az storage account update \
+  --name $STORAGE_NAME \
+  --resource-group rg-encryption-lab \
+  --encryption-key-source Microsoft.Keyvault \
+  --encryption-key-vault $(az keyvault show --name $KV_NAME --query "properties.vaultUri" -o tsv) \
+  --encryption-key-name storage-cmk-key
+```
+
+**Why**: The storage account's managed identity needs the Key Vault Crypto Service Encryption User role (RBAC approach) to wrap/unwrap the encryption key. The key source changes from Microsoft.Storage (default) to Microsoft.Keyvault. Azure re-wraps existing data transparently — no data migration needed.
+
+```bash
+# Configure immutability policy (30-day WORM retention)
+az storage container create \
+  --name regulatory-data \
+  --account-name $STORAGE_NAME \
+  --auth-mode login
+
+az storage container immutability-policy create \
+  --account-name $STORAGE_NAME \
+  --container-name regulatory-data \
+  --period 30 \
+  --allow-protected-append-writes true
+
+# Configure legal hold
+az storage container create \
+  --name litigation-docs \
+  --account-name $STORAGE_NAME \
+  --auth-mode login
+
+az storage container legal-hold set \
+  --account-name $STORAGE_NAME \
+  --container-name litigation-docs \
+  --tags "case-2024-001" "litigation-hold"
+
+# Rotate the CMK (create new key version)
+az keyvault key create \
+  --vault-name $KV_NAME \
+  --name storage-cmk-key \
+  --kty RSA \
+  --size 2048
+
+# Verify encryption configuration
+az storage account show \
+  --name $STORAGE_NAME \
+  --resource-group rg-encryption-lab \
+  --query "{KeySource:encryption.keySource, InfraEncryption:encryption.requireInfrastructureEncryption, KeyName:encryption.keyVaultProperties.keyName}" -o table
+```
+
+**Why**: Immutability policies prevent blob deletion/modification until retention expires. Legal holds are indefinite (no time limit) until all tags are removed. Both can coexist on the same container. Creating a new key version auto-rotates CMK when the key name (not version) is specified.
+
+### Common Mistakes
+
+1. **Trying to enable infrastructure encryption after creation** — this is a create-time-only setting; students must recreate the account if they miss it
+2. **Forgetting purge protection on Key Vault** — Azure requires it for CMK; without it, the configuration fails
+3. **Wrong Key Vault permissions** — students assign legacy access policies instead of RBAC roles; "Key Vault Crypto Service Encryption User" is the correct role
+4. **Locking immutability policy prematurely** — once locked, retention can only be increased never decreased; policy cannot be deleted
+5. **Disabling/deleting the CMK key** — all storage operations fail until the key is re-enabled; if permanently purged, data is lost forever
+
+### Key Teaching Points
+
+- Microsoft-managed keys (default) vs customer-managed keys (CMK): CMK gives you control over key lifecycle
+- Infrastructure encryption = double encryption (two different algorithms at two layers)
+- Immutability: time-based retention (expires after N days) vs legal hold (indefinite until cleared)
+- You CAN switch between Microsoft-managed and CMK at any time without data migration
+- Key rotation: store only the key name (not version) for automatic rotation to latest version
+
+---
+
+## Challenge 21: VM Extensions & Automation
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Compute
+
+### Complete Solution
+
+```bash
+# Create lab VMs
+az group create --name rg-automation-lab --location eastus
+
+az vm create \
+  --name vm-linux-auto \
+  --resource-group rg-automation-lab \
+  --image Ubuntu2404 \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --tags Environment=Development Department=IT
+
+az vm create \
+  --name vm-win-auto \
+  --resource-group rg-automation-lab \
+  --image Win2022Datacenter \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --admin-password "P@ssw0rd2024!" \
+  --tags Environment=Development Department=IT
+```
+
+```bash
+# Deploy Custom Script Extension (Linux) — install Nginx
+az vm extension set \
+  --resource-group rg-automation-lab \
+  --vm-name vm-linux-auto \
+  --name customScript \
+  --publisher Microsoft.Azure.Extensions \
+  --version 2.1 \
+  --settings '{
+    "commandToExecute": "apt-get update && apt-get install -y nginx && systemctl enable nginx && systemctl start nginx && echo \"<h1>Configured by Custom Script Extension</h1>\" > /var/www/html/index.html"
+  }'
+
+# Deploy Custom Script Extension (Windows) — install IIS
+az vm extension set \
+  --resource-group rg-automation-lab \
+  --vm-name vm-win-auto \
+  --name CustomScriptExtension \
+  --publisher Microsoft.Compute \
+  --version 1.10 \
+  --settings '{
+    "commandToExecute": "powershell.exe -Command \"Install-WindowsFeature -name Web-Server -IncludeManagementTools\""
+  }'
+```
+
+**Why**: Custom Script Extension is the primary method for post-deployment VM configuration. Linux uses publisher `Microsoft.Azure.Extensions` with name `customScript`. Windows uses publisher `Microsoft.Compute` with name `CustomScriptExtension`. Only ONE instance of CSE can exist on a VM at a time.
+
+```bash
+# Use Run Command for ad-hoc operations (no extension lifecycle)
+az vm run-command invoke \
+  --resource-group rg-automation-lab \
+  --name vm-linux-auto \
+  --command-id RunShellScript \
+  --scripts "df -h && echo '---' && free -m && echo '---' && systemctl status nginx --no-pager"
+
+az vm run-command invoke \
+  --resource-group rg-automation-lab \
+  --name vm-win-auto \
+  --command-id RunPowerShellScript \
+  --scripts "Get-Service W3SVC | Format-Table Name, Status, StartType"
+
+# Create Automation Account with runbook
+az automation account create \
+  --name auto-contoso-ops \
+  --resource-group rg-automation-lab \
+  --location eastus
+
+az automation runbook create \
+  --resource-group rg-automation-lab \
+  --automation-account-name auto-contoso-ops \
+  --name "Stop-DevVMs" \
+  --type PowerShell \
+  --description "Stop all development VMs tagged Environment=Development"
+
+# Create and link a schedule
+az automation schedule create \
+  --resource-group rg-automation-lab \
+  --automation-account-name auto-contoso-ops \
+  --name "weekday-evening-shutdown" \
+  --frequency Day \
+  --interval 1 \
+  --start-time "2024-01-01T19:00:00-05:00" \
+  --description "Runs every weekday at 7 PM ET"
+```
+
+**Why**: Run Command is API-based (no extension to manage), good for ad-hoc troubleshooting. Automation runbooks are for scheduled/recurring tasks. The Automation Account needs a managed identity with appropriate RBAC (VM Contributor) to start/stop VMs.
+
+### Common Mistakes
+
+1. **Trying to install two Custom Script Extensions** — only one CSE instance per VM; must delete the existing one before installing a new one
+2. **Using wrong publisher/extension names** — Linux: `Microsoft.Azure.Extensions`/`customScript`; Windows: `Microsoft.Compute`/`CustomScriptExtension`
+3. **Not giving the Automation Account managed identity RBAC** — runbooks fail silently if the identity has no permissions on target resources
+4. **Confusing Run Command with Custom Script Extension** — Run Command is ephemeral (one-shot), CSE persists as part of VM config
+5. **Extension timeout** — CSE has 90-min default timeout; long scripts need explicit timeout settings or should be split
+
+### Key Teaching Points
+
+- CSE runs once at deployment (or when settings change); Run Command runs on-demand
+- Extension logs: Linux at `/var/log/azure/custom-script/handler.log`; Windows at `C:\WindowsAzure\Logs\Plugins\`
+- Modern runbooks use Managed Identity (Run As accounts are deprecated)
+- VM agent must be healthy for extensions to work; check with `az vm get-instance-view`
+- External scripts can be referenced via SAS-protected URLs in `fileUris`
+
+---
+
+## Challenge 22: VM Disks & Encryption
+
+> **Coach time estimate**: 50-60 min (students: 60-75 min) | Domain: Compute
+
+### Complete Solution
+
+```bash
+# Create VM with Premium OS disk and Key Vault for ADE
+az group create --name rg-disks-lab --location eastus
+
+az vm create \
+  --name vm-disk-lab \
+  --resource-group rg-disks-lab \
+  --image Ubuntu2404 \
+  --size Standard_D2s_v3 \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --os-disk-size-gb 64 \
+  --os-disk-caching ReadWrite \
+  --storage-sku Premium_LRS
+
+az keyvault create \
+  --name kv-disk-enc-$RANDOM \
+  --resource-group rg-disks-lab \
+  --location eastus \
+  --enabled-for-disk-encryption true \
+  --enable-purge-protection true
+
+KV_NAME=$(az keyvault list -g rg-disks-lab --query "[0].name" -o tsv)
+```
+
+```bash
+# Create and attach data disks of different tiers
+az disk create \
+  --name disk-data-standard \
+  --resource-group rg-disks-lab \
+  --location eastus \
+  --size-gb 128 \
+  --sku Standard_LRS
+
+az disk create \
+  --name disk-data-premium \
+  --resource-group rg-disks-lab \
+  --location eastus \
+  --size-gb 256 \
+  --sku Premium_LRS
+
+az vm disk attach \
+  --resource-group rg-disks-lab \
+  --vm-name vm-disk-lab \
+  --name disk-data-standard \
+  --lun 0 \
+  --caching None
+
+az vm disk attach \
+  --resource-group rg-disks-lab \
+  --vm-name vm-disk-lab \
+  --name disk-data-premium \
+  --lun 1 \
+  --caching ReadOnly
+```
+
+**Why**: Disk caching matters: None for write-heavy (logs), ReadOnly for read-heavy (databases), ReadWrite only for OS disks. Premium SSD provides up to 20,000 IOPS. LUN numbers must be unique per VM.
+
+```bash
+# Enable Azure Disk Encryption on all volumes
+az vm encryption enable \
+  --resource-group rg-disks-lab \
+  --name vm-disk-lab \
+  --disk-encryption-keyvault $KV_NAME \
+  --volume-type All
+
+# Check encryption status (takes 15-30 min)
+az vm encryption show \
+  --resource-group rg-disks-lab \
+  --name vm-disk-lab
+
+# Create snapshots for backup
+OS_DISK_ID=$(az vm show -g rg-disks-lab -n vm-disk-lab \
+  --query "storageProfile.osDisk.managedDisk.id" -o tsv)
+
+az snapshot create \
+  --name snap-os-$(date +%Y%m%d) \
+  --resource-group rg-disks-lab \
+  --source $OS_DISK_ID
+
+PREMIUM_DISK_ID=$(az disk show -n disk-data-premium -g rg-disks-lab --query id -o tsv)
+az snapshot create \
+  --name snap-premium-$(date +%Y%m%d) \
+  --resource-group rg-disks-lab \
+  --source $PREMIUM_DISK_ID
+
+# Create disk from snapshot
+SNAP_ID=$(az snapshot show -n snap-premium-$(date +%Y%m%d) -g rg-disks-lab --query id -o tsv)
+az disk create \
+  --name disk-restored \
+  --resource-group rg-disks-lab \
+  --source $SNAP_ID \
+  --sku Premium_LRS
+```
+
+**Why**: ADE uses dm-crypt (Linux) or BitLocker (Windows) with keys stored in Key Vault. Snapshots are point-in-time copies of a single disk (crash-consistent for running VMs). Creating a disk from a snapshot is how you restore.
+
+```bash
+# Create custom image from generalized VM
+az vm run-command invoke -g rg-disks-lab -n vm-disk-lab \
+  --command-id RunShellScript \
+  --scripts "waagent -deprovision+user -force"
+
+az vm deallocate -g rg-disks-lab -n vm-disk-lab
+az vm generalize -g rg-disks-lab -n vm-disk-lab
+
+az image create \
+  --name img-contoso-base-linux \
+  --resource-group rg-disks-lab \
+  --source vm-disk-lab
+
+# Deploy VM from custom image
+az vm create \
+  --name vm-from-image \
+  --resource-group rg-disks-lab \
+  --image img-contoso-base-linux \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --generate-ssh-keys
+
+# Resize a disk (must deallocate for OS disk)
+az vm deallocate -g rg-disks-lab -n vm-from-image
+az disk update -g rg-disks-lab \
+  --name $(az vm show -g rg-disks-lab -n vm-from-image --query "storageProfile.osDisk.name" -o tsv) \
+  --size-gb 128
+az vm start -g rg-disks-lab -n vm-from-image
+```
+
+**Why**: Generalizing removes machine-specific info (hostname, SSH keys, user accounts). After generalization, the original VM is UNUSABLE — only the image remains. Disk resize is one-directional (increase only). After resize, expand the filesystem inside the VM.
+
+### Common Mistakes
+
+1. **Not setting `--enabled-for-disk-encryption`** on Key Vault — ADE fails without this flag
+2. **Trying to use the VM after generalization** — `az vm generalize` marks the VM as unusable; students expect it to still work
+3. **Forgetting to deallocate before OS disk resize** — data disks can sometimes resize online, but OS disk requires deallocation
+4. **Not expanding filesystem after disk resize** — Azure extends the disk layer but the OS filesystem still shows old size until `growpart`/`resize2fs`
+5. **Snapshot vs Image confusion** — snapshot = single disk copy; image = full VM template (OS + data disks + config)
+
+### Key Teaching Points
+
+- ADE vs Encryption at Host: ADE = guest OS encryption; Encryption at Host = host-level encryption (no Key Vault needed)
+- Disk resize is one-way (increase only); to shrink, create new smaller disk and copy data
+- Generalized image = new VMs need new hostname/creds; Specialized = exact clone
+- Key Vault and VM must be in same region and subscription for ADE
+- Disk performance scales with size: larger disks get more IOPS and throughput
+
+---
+
+## Challenge 23: App Service Advanced Configuration
+
+> **Coach time estimate**: 50-60 min (students: 75-90 min) | Domain: Compute
+
+### Complete Solution
+
+```bash
+RG="rg-az104-challenge23"
+SUFFIX=$RANDOM
+az group create --name $RG --location eastus
+
+# Create App Service plan (Standard S1 required for custom domains/TLS/backups/VNet)
+az appservice plan create \
+  --resource-group $RG \
+  --name plan-contoso-prod \
+  --sku S1 \
+  --is-linux
+
+# Create web app
+APP_NAME="contoso-prod-$SUFFIX"
+az webapp create \
+  --resource-group $RG \
+  --plan plan-contoso-prod \
+  --name $APP_NAME \
+  --runtime "NODE:18-lts"
+```
+
+**Why**: Standard tier (S1) is the minimum for custom domains, TLS bindings, scheduled backups, and VNet integration. Free and Basic tiers lack these features. The exam frequently tests which tier supports which feature.
+
+```bash
+# Configure custom domain DNS records
+az network dns zone create --resource-group $RG --name contoso-lab.com
+
+az network dns record-set cname set-record \
+  --resource-group $RG \
+  --zone-name contoso-lab.com \
+  --record-set-name www \
+  --cname "$APP_NAME.azurewebsites.net"
+
+# Enforce HTTPS and set minimum TLS version
+az webapp update \
+  --resource-group $RG \
+  --name $APP_NAME \
+  --https-only true
+
+az webapp config set \
+  --resource-group $RG \
+  --name $APP_NAME \
+  --min-tls-version 1.2
+```
+
+**Why**: Custom domains require DNS verification (TXT or CNAME). HTTPS-only mode redirects all HTTP traffic to HTTPS. TLS 1.2 minimum is required by most compliance frameworks. Managed certificates are free and auto-renewing but do not support wildcards or naked domains.
+
+```bash
+# Configure backup to storage account
+STORAGE_NAME="contosobkup$SUFFIX"
+az storage account create -g $RG --name $STORAGE_NAME --sku Standard_LRS
+az storage container create --name app-backups --account-name $STORAGE_NAME
+
+EXPIRY=$(date -u -d "+365 days" '+%Y-%m-%dT%H:%MZ' 2>/dev/null || date -u -v+365d '+%Y-%m-%dT%H:%MZ')
+SAS_TOKEN=$(az storage container generate-sas \
+  --account-name $STORAGE_NAME \
+  --name app-backups \
+  --permissions rwdl \
+  --expiry $EXPIRY \
+  -o tsv)
+CONTAINER_URL="https://$STORAGE_NAME.blob.core.windows.net/app-backups?$SAS_TOKEN"
+
+az webapp config backup create \
+  --resource-group $RG \
+  --webapp-name $APP_NAME \
+  --container-url "$CONTAINER_URL" \
+  --backup-name "contoso-daily" \
+  --frequency 1d \
+  --retain-one true \
+  --retention-period-in-days 30
+
+# VNet integration
+az network vnet create -g $RG --name vnet-contoso \
+  --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-webapp-integration \
+  --subnet-prefix 10.0.1.0/24
+
+az webapp vnet-integration add \
+  --resource-group $RG \
+  --name $APP_NAME \
+  --vnet vnet-contoso \
+  --subnet subnet-webapp-integration
+
+# Access restrictions
+MY_IP=$(curl -s ifconfig.me)
+az webapp config access-restriction add \
+  --resource-group $RG \
+  --name $APP_NAME \
+  --rule-name "AllowAdmin" \
+  --priority 100 \
+  --ip-address "$MY_IP/32" \
+  --action Allow
+
+az webapp config access-restriction add \
+  --resource-group $RG \
+  --name $APP_NAME \
+  --rule-name "DenyAll" \
+  --priority 300 \
+  --ip-address "0.0.0.0/0" \
+  --action Deny
+
+# Restrict SCM site separately
+az webapp config access-restriction add \
+  --resource-group $RG \
+  --name $APP_NAME \
+  --rule-name "AllowAdminSCM" \
+  --priority 100 \
+  --ip-address "$MY_IP/32" \
+  --action Allow \
+  --scm-site true
+```
+
+**Why**: VNet integration gives the app service outbound connectivity to VNet resources. The integration subnet must be dedicated (delegated to Microsoft.Web/serverFarms). Access restrictions implement IP-based firewall rules. SCM site (Kudu/deployment) can be restricted independently from the main site.
+
+### Common Mistakes
+
+1. **Using Free/Basic tier** — custom domains, backups, and VNet integration all require Standard (S1) or higher
+2. **Backup SAS token expiration** — if the storage key rotates, the SAS token becomes invalid and backups fail silently
+3. **VNet integration subnet sharing** — the integration subnet must be dedicated to App Service; other resources cannot be deployed there
+4. **Locking themselves out with access restrictions** — students add DenyAll without first adding their own IP as Allow
+5. **Forgetting to restrict SCM site** — by default SCM inherits main site rules, but if you configure them separately, both need explicit rules
+
+### Key Teaching Points
+
+- App Service Managed Certificates: free, auto-renew, but no wildcards or naked domains
+- VNet integration = outbound only (app to VNet); for inbound private access, use Private Endpoints
+- Access restrictions: lower priority number = evaluated first; first match wins
+- Backups include app config, file content, and optionally linked databases
+- `WEBSITE_VNET_ROUTE_ALL=1` routes ALL outbound through VNet (not just RFC1918)
+
+---
+
+## Challenge 24: User-Defined Routes & Traffic Control
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Networking
+
+### Complete Solution
+
+```bash
+RG="rg-az104-challenge24"
+az group create --name $RG --location eastus
+
+# Create hub-spoke topology
+az network vnet create -g $RG --name vnet-hub \
+  --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-nva --subnet-prefix 10.0.1.0/24
+
+az network vnet create -g $RG --name vnet-spoke \
+  --address-prefix 10.1.0.0/16 \
+  --subnet-name subnet-workload --subnet-prefix 10.1.1.0/24
+
+# Create VNet peering (both directions)
+az network vnet peering create -g $RG \
+  --name hub-to-spoke --vnet-name vnet-hub \
+  --remote-vnet vnet-spoke --allow-forwarded-traffic
+
+az network vnet peering create -g $RG \
+  --name spoke-to-hub --vnet-name vnet-spoke \
+  --remote-vnet vnet-hub --allow-forwarded-traffic
+```
+
+**Why**: Hub-spoke is the standard Azure network topology. `--allow-forwarded-traffic` is critical — without it, the peering drops packets that were forwarded by the NVA. This is the number one cause of "traffic not flowing through NVA" issues.
+
+```bash
+# Deploy NVA with IP forwarding enabled at BOTH levels
+az vm create -g $RG --name vm-nva \
+  --image Ubuntu2204 --size Standard_B1s \
+  --vnet-name vnet-hub --subnet subnet-nva \
+  --private-ip-address 10.0.1.4 \
+  --admin-username azureuser --generate-ssh-keys
+
+# Enable IP forwarding on NIC (Azure level)
+NVA_NIC_NAME=$(az vm show -g $RG -n vm-nva \
+  --query "networkProfile.networkInterfaces[0].id" -o tsv | xargs basename)
+az network nic update -g $RG --name $NVA_NIC_NAME --ip-forwarding true
+
+# Enable IP forwarding in the OS
+az vm run-command invoke -g $RG --name vm-nva \
+  --command-id RunShellScript \
+  --scripts "sysctl -w net.ipv4.ip_forward=1 && echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf && iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
+```
+
+**Why**: IP forwarding must be enabled at TWO levels: the Azure NIC property AND the OS kernel. Without the NIC setting, Azure drops forwarded packets before they reach the VM. Without the OS setting, the kernel drops them. This is a very common exam question.
+
+```bash
+# Create route table with UDRs
+az network route-table create -g $RG \
+  --name rt-spoke-workload \
+  --disable-bgp-route-propagation true
+
+# Route internet traffic through NVA (forced tunneling)
+az network route-table route create -g $RG \
+  --route-table-name rt-spoke-workload \
+  --name route-to-internet \
+  --address-prefix 0.0.0.0/0 \
+  --next-hop-type VirtualAppliance \
+  --next-hop-ip-address 10.0.1.4
+
+# Route hub VNet traffic through NVA
+az network route-table route create -g $RG \
+  --route-table-name rt-spoke-workload \
+  --name route-to-hub \
+  --address-prefix 10.0.0.0/16 \
+  --next-hop-type VirtualAppliance \
+  --next-hop-ip-address 10.0.1.4
+
+# Black hole route (drop traffic to specific range)
+az network route-table route create -g $RG \
+  --route-table-name rt-spoke-workload \
+  --name route-block-range \
+  --address-prefix 192.168.0.0/16 \
+  --next-hop-type None
+
+# Associate route table with spoke subnet
+az network vnet subnet update -g $RG \
+  --vnet-name vnet-spoke --name subnet-workload \
+  --route-table rt-spoke-workload
+
+# Verify effective routes
+az vm create -g $RG --name vm-workload \
+  --image Ubuntu2204 --size Standard_B1s \
+  --vnet-name vnet-spoke --subnet subnet-workload \
+  --admin-username azureuser --generate-ssh-keys
+
+WORKLOAD_NIC=$(az vm show -g $RG -n vm-workload \
+  --query "networkProfile.networkInterfaces[0].id" -o tsv | xargs basename)
+az network nic show-effective-route-table -g $RG --name $WORKLOAD_NIC -o table
+```
+
+**Why**: UDRs override Azure default system routes. Longest prefix match determines which route wins. UDRs have higher priority than BGP routes, which have higher priority than system routes. Disabling BGP propagation prevents VPN/ExpressRoute learned routes from interfering with your custom routing.
+
+### Common Mistakes
+
+1. **Forgetting IP forwarding at BOTH levels** — must be enabled on the Azure NIC AND inside the OS; students enable one but not the other
+2. **Wrong next-hop IP** — the IP must be the NVA's private IP in the SAME VNet or a peered VNet; using a public IP fails
+3. **Not associating route table with subnet** — creating routes without associating the table has no effect
+4. **Forgetting `--allow-forwarded-traffic` on peering** — without this, peered VNets drop NVA-forwarded packets
+5. **NVA goes down = black hole** — Azure does NOT failover to system routes; all traffic is dropped. Use LB + multiple NVAs in production
+
+### Key Teaching Points
+
+- Route precedence: UDR > BGP > System routes (longest prefix match within each)
+- Next-hop types: VirtualAppliance, VirtualNetworkGateway, Internet, VNetLocal, None
+- `--disable-bgp-route-propagation` gives full control over routing (no gateway interference)
+- 0.0.0.0/0 to VirtualAppliance = forced tunneling (all internet via NVA)
+- Effective routes view combines all route sources into what actually applies
+
+---
+
+## Challenge 25: Private Endpoints & Service Endpoints
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Networking
+
+### Complete Solution
+
+```bash
+RG="rg-az104-challenge25"
+SUFFIX=$RANDOM
+az group create --name $RG --location eastus
+
+# Create VNet with subnets
+az network vnet create -g $RG --name vnet-contoso \
+  --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-workload --subnet-prefix 10.0.1.0/24
+
+az network vnet subnet create -g $RG --vnet-name vnet-contoso \
+  --name subnet-privateendpoints --address-prefix 10.0.2.0/24
+
+az network vnet subnet create -g $RG --vnet-name vnet-contoso \
+  --name subnet-serviceendpoints --address-prefix 10.0.3.0/24
+
+# Create target PaaS resources
+STORAGE_NAME="contososa$SUFFIX"
+az storage account create -g $RG --name $STORAGE_NAME \
+  --sku Standard_LRS --location eastus
+
+KV_NAME="contoso-kv-$SUFFIX"
+az keyvault create -g $RG --name $KV_NAME --location eastus
+```
+
+```bash
+# Configure SERVICE ENDPOINT for storage
+az network vnet subnet update -g $RG \
+  --vnet-name vnet-contoso --name subnet-serviceendpoints \
+  --service-endpoints Microsoft.Storage
+
+az storage account network-rule add -g $RG \
+  --account-name $STORAGE_NAME \
+  --vnet-name vnet-contoso \
+  --subnet subnet-serviceendpoints
+
+az storage account update -g $RG --name $STORAGE_NAME --default-action Deny
+```
+
+**Why**: Service endpoints optimize the route to PaaS services via the Azure backbone. Traffic still uses the PaaS public IP, but the source is identified by VNet/subnet identity. Free, but same-region only and not accessible from on-premises.
+
+```bash
+# Configure PRIVATE ENDPOINT for storage
+az network vnet subnet update -g $RG \
+  --vnet-name vnet-contoso --name subnet-privateendpoints \
+  --disable-private-endpoint-network-policies true
+
+STORAGE_ID=$(az storage account show -g $RG -n $STORAGE_NAME --query id -o tsv)
+
+az network private-endpoint create -g $RG \
+  --name pe-storage-blob \
+  --vnet-name vnet-contoso \
+  --subnet subnet-privateendpoints \
+  --private-connection-resource-id $STORAGE_ID \
+  --group-id blob \
+  --connection-name storage-blob-connection
+
+# Create private DNS zone and link to VNet
+az network private-dns zone create -g $RG \
+  --name "privatelink.blob.core.windows.net"
+
+az network private-dns link vnet create -g $RG \
+  --zone-name "privatelink.blob.core.windows.net" \
+  --name link-to-vnet \
+  --virtual-network vnet-contoso \
+  --registration-enabled false
+
+az network private-endpoint dns-zone-group create -g $RG \
+  --endpoint-name pe-storage-blob \
+  --name storage-dns-group \
+  --private-dns-zone "privatelink.blob.core.windows.net" \
+  --zone-name blob
+```
+
+**Why**: Private endpoints assign a private IP from your VNet to the PaaS service. The Private DNS Zone is essential — it makes the FQDN (e.g., `contososa123.blob.core.windows.net`) resolve to the private IP instead of the public IP. Without it, DNS resolves to the public IP and traffic bypasses the private endpoint.
+
+```bash
+# Configure Private Endpoint for Key Vault
+KV_ID=$(az keyvault show -g $RG -n $KV_NAME --query id -o tsv)
+
+az network private-endpoint create -g $RG \
+  --name pe-keyvault \
+  --vnet-name vnet-contoso \
+  --subnet subnet-privateendpoints \
+  --private-connection-resource-id $KV_ID \
+  --group-id vault \
+  --connection-name keyvault-connection
+
+az network private-dns zone create -g $RG \
+  --name "privatelink.vaultcore.azure.net"
+
+az network private-dns link vnet create -g $RG \
+  --zone-name "privatelink.vaultcore.azure.net" \
+  --name link-kv-to-vnet \
+  --virtual-network vnet-contoso \
+  --registration-enabled false
+
+az network private-endpoint dns-zone-group create -g $RG \
+  --endpoint-name pe-keyvault \
+  --name keyvault-dns-group \
+  --private-dns-zone "privatelink.vaultcore.azure.net" \
+  --zone-name vault
+
+# Disable public access
+az keyvault update -g $RG --name $KV_NAME --public-network-access Disabled
+
+# Verify DNS resolution from a VNet VM
+az vm create -g $RG --name vm-test --image Ubuntu2204 --size Standard_B1s \
+  --vnet-name vnet-contoso --subnet subnet-workload \
+  --admin-username azureuser --generate-ssh-keys
+
+az vm run-command invoke -g $RG --name vm-test \
+  --command-id RunShellScript \
+  --scripts "nslookup $STORAGE_NAME.blob.core.windows.net"
+# Should resolve to 10.0.2.x (private IP), NOT public IP
+```
+
+**Why**: Each PaaS service has a specific Private DNS zone name (e.g., `privatelink.blob.core.windows.net` for blob, `privatelink.vaultcore.azure.net` for Key Vault). The DNS zone group auto-creates A records pointing the FQDN to the private endpoint IP.
+
+### Common Mistakes
+
+1. **Forgetting the Private DNS zone** — without it, FQDN resolves to public IP and traffic goes over the internet despite the private endpoint existing
+2. **Wrong DNS zone name** — each service has a specific zone name; students confuse `privatelink.blob.core.windows.net` with `privatelink.storage.azure.net`
+3. **Not linking DNS zone to VNet** — the zone must be linked to the VNet for resolution to work from VMs inside
+4. **Service endpoint vs private endpoint confusion** — service endpoints use public IP (Azure backbone); private endpoints use private IP in your VNet
+5. **Not disabling public access** — creating a private endpoint does NOT automatically disable public access; you must set `--default-action Deny` or disable public access separately
+
+### Key Teaching Points
+
+- Service endpoints: free, same-region, public IP, VNet-identity based access control
+- Private endpoints: per-hour cost, cross-region, private IP, accessible from on-premises via VPN/ER
+- Private DNS zones must match the service (blob, file, vault, sqlServer, etc.)
+- `--disable-private-endpoint-network-policies` was historically required; newer NSG support can be enabled
+- On-premises access to private endpoints requires conditional DNS forwarders pointing to Azure DNS
+
+---
+
+## Challenge 26: Network Watcher & Diagnostics
+
+> **Coach time estimate**: 45-55 min (students: 60-75 min) | Domain: Networking
+
+### Complete Solution
+
+```bash
+RG="rg-az104-challenge26"
+az group create --name $RG --location eastus
+
+# Create VNet, NSG, and test VMs
+az network vnet create -g $RG --name vnet-diag \
+  --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-web --subnet-prefix 10.0.1.0/24
+
+az network nsg create -g $RG --name nsg-web
+az network nsg rule create -g $RG --nsg-name nsg-web \
+  --name AllowHTTP --priority 100 \
+  --destination-port-ranges 80 443 --protocol Tcp --access Allow
+az network nsg rule create -g $RG --nsg-name nsg-web \
+  --name DenySSHFromInternet --priority 200 \
+  --source-address-prefixes Internet --destination-port-ranges 22 \
+  --protocol Tcp --access Deny
+
+az network vnet subnet update -g $RG --vnet-name vnet-diag \
+  --name subnet-web --network-security-group nsg-web
+
+az vm create -g $RG --name vm-web --image Ubuntu2204 --size Standard_B1s \
+  --vnet-name vnet-diag --subnet subnet-web --nsg "" \
+  --admin-username azureuser --generate-ssh-keys
+
+az vm create -g $RG --name vm-db --image Ubuntu2204 --size Standard_B1s \
+  --vnet-name vnet-diag --subnet subnet-web --public-ip-address "" --nsg "" \
+  --admin-username azureuser --generate-ssh-keys
+```
+
+```bash
+# Enable Network Watcher (usually auto-enabled)
+az network watcher configure \
+  --resource-group NetworkWatcherRG \
+  --locations eastus \
+  --enabled true
+
+# IP Flow Verify: Test if traffic is allowed/denied by NSG
+VM_WEB_ID=$(az vm show -g $RG -n vm-web --query id -o tsv)
+VM_WEB_NIC=$(az vm show -g $RG -n vm-web \
+  --query "networkProfile.networkInterfaces[0].id" -o tsv)
+VM_WEB_IP=$(az vm show -g $RG -n vm-web -d --query privateIps -o tsv)
+
+# Port 80 should be ALLOWED
+az network watcher test-ip-flow \
+  --direction Inbound --protocol Tcp \
+  --local "$VM_WEB_IP:80" --remote "1.2.3.4:12345" \
+  --vm $VM_WEB_ID --nic $VM_WEB_NIC
+
+# Port 22 should be DENIED
+az network watcher test-ip-flow \
+  --direction Inbound --protocol Tcp \
+  --local "$VM_WEB_IP:22" --remote "1.2.3.4:12345" \
+  --vm $VM_WEB_ID --nic $VM_WEB_NIC
+```
+
+**Why**: IP Flow Verify is the fastest diagnostic tool for NSG issues. It returns exactly which rule (name + priority) is allowing or denying traffic, and which NSG (subnet-level or NIC-level) contains that rule. This is the first tool to use for "why can't I connect?" questions.
+
+```bash
+# Next Hop: Determine routing path
+az network watcher show-next-hop -g $RG --vm vm-web \
+  --source-ip $VM_WEB_IP --dest-ip 8.8.8.8
+
+az network watcher show-next-hop -g $RG --vm vm-web \
+  --source-ip $VM_WEB_IP --dest-ip 10.0.1.5
+
+# Connection Troubleshoot: One-time connectivity check
+az network watcher test-connectivity -g $RG \
+  --source-resource vm-web \
+  --dest-address 8.8.8.8 --dest-port 443 --protocol Tcp
+
+# Packet Capture
+CAPTURE_STORAGE="diagcapture$RANDOM"
+az storage account create -g $RG --name $CAPTURE_STORAGE --sku Standard_LRS
+
+az network watcher packet-capture create -g $RG \
+  --vm vm-web --name capture-web-traffic \
+  --storage-account $CAPTURE_STORAGE \
+  --time-limit 60 \
+  --filters '[{"protocol":"TCP","localPort":"80"}]'
+
+# Connection Monitor (continuous monitoring)
+az network watcher connection-monitor create \
+  --name cm-web-to-internet --location eastus \
+  --test-group-name tg-web-external \
+  --endpoint-source-name "vm-web" \
+  --endpoint-source-resource-id $VM_WEB_ID \
+  --endpoint-dest-name "google-dns" \
+  --endpoint-dest-address "8.8.8.8" \
+  --test-config-name "tcp-443" \
+  --protocol Tcp --tcp-port 443 \
+  --test-config-frequency 30
+
+# NSG Flow Logs with Traffic Analytics
+WORKSPACE_ID=$(az monitor log-analytics workspace create -g $RG \
+  --workspace-name law-network-diag --query id -o tsv)
+FLOW_STORAGE="flowlogs$RANDOM"
+az storage account create -g $RG --name $FLOW_STORAGE --sku Standard_LRS
+NSG_ID=$(az network nsg show -g $RG -n nsg-web --query id -o tsv)
+
+az network watcher flow-log create --location eastus \
+  --name flowlog-nsg-web --nsg $NSG_ID \
+  --storage-account $FLOW_STORAGE --workspace $WORKSPACE_ID \
+  --enabled true --format JSON --log-version 2 \
+  --retention 7 --traffic-analytics true --interval 10
+
+# Effective security rules
+WEB_NIC_NAME=$(basename $VM_WEB_NIC)
+az network nic list-effective-nsg -g $RG --name $WEB_NIC_NAME -o table
+```
+
+**Why**: Network Watcher tools form a diagnostic toolkit: IP Flow Verify (NSG issues), Next Hop (routing issues), Connection Troubleshoot (one-time check), Connection Monitor (ongoing), Packet Capture (deep inspection), Flow Logs (traffic analytics). The exam tests when to use each tool.
+
+### Common Mistakes
+
+1. **Not enabling Network Watcher** — it is auto-enabled in most subscriptions, but students in restricted environments may need to enable it manually
+2. **Confusing Connection Monitor vs Connection Troubleshoot** — Monitor is continuous/scheduled; Troubleshoot is one-time
+3. **Packet capture without the VM agent** — the Network Watcher agent extension must be installed (auto-installed on first capture)
+4. **Flow log version 1 vs 2** — version 2 adds bytes/bandwidth data and is required for Traffic Analytics
+5. **Not checking BOTH NSG levels** — effective security rules combine subnet-level AND NIC-level NSGs; students check only one
+
+### Key Teaching Points
+
+- IP Flow Verify: answers "is this traffic allowed?" and names the exact rule
+- Next Hop: answers "where will this packet go?" (routing diagnosis)
+- Connection Monitor: ongoing monitoring with alerting integration
+- NSG Flow Logs v2: enable Traffic Analytics for geo-maps and flow visualization
+- Effective routes + effective security rules = complete network path diagnosis
+
+---
+
+## Challenge 27: Log Analytics & KQL Deep Dive
+
+> **Coach time estimate**: 55-70 min (students: 75-90 min) | Domain: Monitor & Maintain
+
+### Complete Solution
+
+```bash
+RG="rg-az104-challenge27"
+az group create --name $RG --location eastus
+
+# Create Log Analytics workspace
+az monitor log-analytics workspace create \
+  --resource-group $RG \
+  --workspace-name law-contoso-ops \
+  --location eastus \
+  --retention-time 30 \
+  --sku PerGB2018
+
+WORKSPACE_RESOURCE_ID=$(az monitor log-analytics workspace show \
+  -g $RG --workspace-name law-contoso-ops --query id -o tsv)
+WORKSPACE_ID=$(az monitor log-analytics workspace show \
+  -g $RG --workspace-name law-contoso-ops --query customerId -o tsv)
+
+# Deploy VMs to monitor
+az network vnet create -g $RG --name vnet-monitored \
+  --address-prefix 10.0.0.0/16 --subnet-name subnet-vms --subnet-prefix 10.0.1.0/24
+
+az vm create -g $RG --name vm-linux-web --image Ubuntu2204 --size Standard_B1s \
+  --vnet-name vnet-monitored --subnet subnet-vms \
+  --admin-username azureuser --generate-ssh-keys
+
+az vm create -g $RG --name vm-win-app --image Win2022Datacenter --size Standard_B2s \
+  --vnet-name vnet-monitored --subnet subnet-vms \
+  --admin-username azureuser --admin-password 'C0nt0so!Pass2024'
+```
+
+```bash
+# Install Azure Monitor Agent on both VMs
+az vm extension set -g $RG --vm-name vm-linux-web \
+  --name AzureMonitorLinuxAgent \
+  --publisher Microsoft.Azure.Monitor \
+  --version 1.0 --enable-auto-upgrade true
+
+az vm extension set -g $RG --vm-name vm-win-app \
+  --name AzureMonitorWindowsAgent \
+  --publisher Microsoft.Azure.Monitor \
+  --version 1.0 --enable-auto-upgrade true
+
+# Create Data Collection Rule for Linux (perf + syslog)
+az monitor data-collection rule create -g $RG \
+  --name dcr-linux-perf-syslog --location eastus \
+  --data-flows '[{"streams":["Microsoft-Perf","Microsoft-Syslog"],"destinations":["law-destination"]}]' \
+  --log-analytics "[{\"name\":\"law-destination\",\"workspace-resource-id\":\"$WORKSPACE_RESOURCE_ID\"}]" \
+  --performance-counters '[{"name":"perfCounters","streams":["Microsoft-Perf"],"sampling-frequency":60,"counter-specifiers":["\\Processor(*)\\% Processor Time","\\Memory\\Available Bytes","\\LogicalDisk(*)\\% Free Space"]}]' \
+  --syslog '[{"name":"syslogCollection","streams":["Microsoft-Syslog"],"facility-names":["auth","daemon","kern","syslog"],"log-levels":["Warning","Error","Critical","Alert","Emergency"]}]'
+
+# Associate DCR with Linux VM
+LINUX_VM_ID=$(az vm show -g $RG -n vm-linux-web --query id -o tsv)
+DCR_LINUX_ID=$(az monitor data-collection rule show -g $RG \
+  --name dcr-linux-perf-syslog --query id -o tsv)
+
+az monitor data-collection rule association create \
+  --name "linux-dcr-association" \
+  --resource $LINUX_VM_ID \
+  --rule-id $DCR_LINUX_ID
+```
+
+**Why**: AMA (Azure Monitor Agent) replaced the legacy MMA/OMS agent. DCRs (Data Collection Rules) define WHAT to collect and WHERE to send it. DCRs are reusable — one DCR can be associated with many VMs. The agent uses managed identity for authentication (no workspace keys).
+
+```bash
+# Configure diagnostic settings for Azure resources
+VNET_ID=$(az network vnet show -g $RG -n vnet-monitored --query id -o tsv)
+az monitor diagnostic-settings create \
+  --name "vnet-diagnostics" \
+  --resource $VNET_ID \
+  --workspace $WORKSPACE_RESOURCE_ID \
+  --metrics '[{"category":"AllMetrics","enabled":true}]'
+
+# Set daily ingestion cap and adjust retention
+az monitor log-analytics workspace update -g $RG \
+  --workspace-name law-contoso-ops --quota 1
+
+az monitor log-analytics workspace update -g $RG \
+  --workspace-name law-contoso-ops --retention-time 60
+
+# Create saved query
+az monitor log-analytics workspace saved-search create \
+  -g $RG --workspace-name law-contoso-ops \
+  --name "HighCPUAlerts" \
+  --display-name "High CPU VMs" \
+  --category "Performance" \
+  --saved-query "Perf | where ObjectName == 'Processor' and CounterName == '% Processor Time' and InstanceName == '_Total' | where CounterValue > 80 | summarize AvgCPU=avg(CounterValue) by Computer, bin(TimeGenerated, 5m) | where AvgCPU > 80"
+```
+
+**Why**: Diagnostic settings (for PaaS/platform resources) are distinct from DCRs (for VMs). Diagnostic settings send platform metrics and resource logs. Daily cap prevents runaway costs but stops data ingestion when reached. Saved queries are reusable KQL snippets.
+
+**Essential KQL for the exam (run in Portal Log Analytics > Logs):**
+
+```kusto
+// Basic filter
+Heartbeat
+| where TimeGenerated > ago(1h)
+| project Computer, TimeGenerated, OSType
+
+// Summarize with time bins
+Perf
+| where ObjectName == "Processor" and CounterName == "% Processor Time"
+| where InstanceName == "_Total"
+| summarize AvgCPU=avg(CounterValue) by bin(TimeGenerated, 5m), Computer
+
+// Join tables
+Perf
+| where TimeGenerated > ago(1h)
+| where ObjectName == "Processor" and CounterName == "% Processor Time"
+| summarize AvgCPU=avg(CounterValue) by bin(TimeGenerated, 5m), Computer
+| join kind=leftouter (
+    Syslog | where TimeGenerated > ago(1h)
+    | summarize ErrorCount=count() by bin(TimeGenerated, 5m), Computer
+) on TimeGenerated, Computer
+
+// Render visualization
+Perf
+| where ObjectName == "Processor" and CounterName == "% Processor Time"
+| summarize AvgCPU=avg(CounterValue) by bin(TimeGenerated, 5m), Computer
+| render timechart
+```
+
+### Common Mistakes
+
+1. **Using legacy MMA agent instead of AMA** — MMA is deprecated; exam expects AMA + DCR approach
+2. **Not waiting for data** — logs take 5-15 minutes to appear after DCR association; students think config is wrong
+3. **DCR not associated with VM** — creating a DCR without associating it to a VM means no data flows
+4. **Wrong KQL table names** — it is `Perf` not `PerformanceCounters`, `Syslog` not `SyslogEvents`
+5. **Daily cap stops ingestion** — students set a low cap and wonder why data stops flowing; use `-1` to remove cap
+
+### Key Teaching Points
+
+- AMA uses DCRs (centralized, reusable); MMA used workspace config (deprecated)
+- DCRs = VM data; Diagnostic Settings = PaaS/platform data
+- Key KQL operators: where, project, summarize, bin(), join, render, extend, top
+- Workspace retention: 30 days included, up to 730 days (extra cost), table-level override possible
+- Workbooks combine KQL queries with visualizations (timechart, piechart, grid)
+
+---
+
+## Challenge 28: Azure Advisor & Service Health
+
+> **Coach time estimate**: 30-40 min (students: 45-60 min) | Domain: Monitor & Maintain
+
+### Complete Solution
+
+```bash
+RG="rg-az104-challenge28"
+az group create --name $RG --location eastus
+
+# Review Advisor recommendations across all categories
+az advisor recommendation list --category Cost -o table
+az advisor recommendation list --category Security -o table
+az advisor recommendation list --category Performance -o table
+az advisor recommendation list --category HighAvailability -o table
+az advisor recommendation list --category OperationalExcellence -o table
+
+# Get detailed recommendation info
+az advisor recommendation list --category Cost \
+  --query "[].{Resource:resourceMetadata.resourceId, Problem:shortDescription.problem, Impact:impact}" \
+  -o table
+```
+
+**Why**: Advisor provides actionable recommendations across 5 categories. Recommendations refresh every 24 hours. Advisor Score (0-100%) measures how many recommendations are addressed. The exam tests whether students can interpret recommendations and understand the categories.
+
+```bash
+# Create action group for notifications
+az monitor action-group create -g $RG \
+  --name ag-advisor-notifications \
+  --short-name AdvisorAG \
+  --action email ops-team opsTeam@contoso.com
+
+# Suppress/postpone a recommendation
+RECOMMENDATION_ID=$(az advisor recommendation list --category Cost --query "[0].id" -o tsv)
+if [ -n "$RECOMMENDATION_ID" ]; then
+  az advisor recommendation disable --ids "$RECOMMENDATION_ID" --days 30
+fi
+
+# Create Advisor alert for new recommendations
+az monitor activity-log alert create -g $RG \
+  --name "alert-advisor-cost" \
+  --description "Alert on new Cost Advisor recommendations" \
+  --action-group ag-advisor-notifications \
+  --condition category=Recommendation \
+  --condition operationName="Microsoft.Advisor/recommendations/available/action"
+```
+
+**Why**: Suppressing recommendations is appropriate when the risk is accepted or the recommendation does not apply (e.g., oversized VMs in dev are intentional). Activity log alerts fire when new recommendations appear. Action groups define notification channels (email, SMS, webhook, etc.).
+
+```bash
+# Configure Service Health alerts
+# Alert for service outages
+az monitor activity-log alert create -g $RG \
+  --name "alert-service-issues" \
+  --description "Alert for Azure service outages affecting our resources" \
+  --action-group ag-advisor-notifications \
+  --condition category=ServiceHealth \
+  --condition "properties.incidentType=Incident"
+
+# Alert for planned maintenance
+az monitor activity-log alert create -g $RG \
+  --name "alert-planned-maintenance" \
+  --description "Alert for planned maintenance events" \
+  --action-group ag-advisor-notifications \
+  --condition category=ServiceHealth \
+  --condition "properties.incidentType=Maintenance"
+
+# Alert for health advisories
+az monitor activity-log alert create -g $RG \
+  --name "alert-health-advisories" \
+  --description "Alert for health advisories and security bulletins" \
+  --action-group ag-advisor-notifications \
+  --condition category=ServiceHealth \
+  --condition "properties.incidentType=ActionRequired"
+
+# Verify all alerts
+az monitor activity-log alert list -g $RG -o table
+
+# Create comprehensive action group with multiple channels
+az monitor action-group create -g $RG \
+  --name ag-critical-alerts \
+  --short-name CritAlert \
+  --action email cto-email cto@contoso.com \
+  --action email ops-email ops@contoso.com \
+  --action sms ops-sms 1 5551234567
+```
+
+**Why**: Service Health is personalized — it only shows events affecting YOUR resources in YOUR regions. Three event types: Incidents (outages), Maintenance (planned), Advisories (action needed). Without these alerts, teams learn about outages from users instead of Azure.
+
+### Common Mistakes
+
+1. **Confusing Azure Status with Service Health** — Azure Status (status.azure.com) is global/public; Service Health is personalized to your subscription
+2. **Not scoping Service Health alerts to specific services/regions** — without scoping, you get alerts for every Azure event globally
+3. **Expecting Advisor to be real-time** — recommendations refresh every 24 hours; newly created resources may not have recommendations yet
+4. **Action group rate limits** — email: 100/hour, SMS: 1 per 5 minutes, voice: 1 per 5 minutes; students wonder why repeated tests do not arrive
+5. **Confusing Resource Health with Service Health** — Resource Health is for a single specific resource; Service Health is subscription-wide
+
+### Key Teaching Points
+
+- Five Advisor categories: Cost, Security, Reliability, Performance, Operational Excellence
+- Service Health event types: Incident, Maintenance, ActionRequired, Security
+- Resource Health: Available, Unavailable, Degraded, Unknown (per-resource)
+- Advisor Score tracks improvement over time (percentage of recommendations addressed)
+- Action groups support: email, SMS, voice, push, webhook, Logic App, Function, ITSM, runbook, Event Hub
+
+---
+
 ## Workshop Facilitation Timeline
 
 | Block | Duration | Challenges | Focus |
 |-------|----------|------------|-------|
-| **Day 1 Morning** | 3 hours | 01–03 | Identity & Governance |
-| **Day 1 Afternoon** | 3 hours | 04–06 | Storage |
-| **Day 2 Morning** | 3 hours | 07–10 | Compute |
-| **Day 2 Afternoon** | 2.5 hours | 11–13 | Networking |
-| **Day 3 Morning** | 2 hours | 14–15 | Monitor & Maintain |
+| **Day 1 Morning** | 3 hours | 01-03 | Identity & Governance |
+| **Day 1 Afternoon** | 3 hours | 04-06 | Storage |
+| **Day 2 Morning** | 3 hours | 07-10 | Compute |
+| **Day 2 Afternoon** | 2.5 hours | 11-13 | Networking |
+| **Day 3 Morning** | 2 hours | 14-15 | Monitor & Maintain |
 | **Day 3 Afternoon** | 2 hours | 16 | Capstone |
+| **Day 4 Morning** | 3 hours | 17-20 | Identity & Storage (Advanced) |
+| **Day 4 Afternoon** | 3 hours | 21-23 | Compute (Advanced) |
+| **Day 5 Morning** | 3 hours | 24-26 | Networking (Advanced) |
+| **Day 5 Afternoon** | 2 hours | 27-28 | Monitor & Maintain (Advanced) |
 
-**Total workshop time**: ~15.5 hours (3 days)
+**Total workshop time**: ~26.5 hours (5 days)
 
 ### Tips for Coaches
 

@@ -1,17 +1,18 @@
 ---
 sidebar_position: 1
-title: "Challenge 16: Capstone — Day in the Life of an Azure Admin"
+title: "Challenge 16: Capstone: Day in the Life of an Azure Admin"
 ---
 
-# Challenge 16: Capstone — Day in the Life of an Azure Admin
+# Challenge 16: Capstone: Day in the Life of an Azure Admin
 
 | | |
 |---|---|
 | ⏱️ **Estimated Time** | 90–120 minutes |
 | 💰 **Cost Estimate** | ~$0.50 |
-| 📊 **Exam Weight** | All 5 domains |
+| **Exam Weight** | All 5 domains |
 
 :::info Capstone Challenge
+
 This challenge spans **all five AZ-104 exam domains**. It simulates a real workday where you troubleshoot issues using skills from every domain. Treat this as your final exam rehearsal.
 :::
 
@@ -438,6 +439,7 @@ done
 
 ---
 
-:::tip 🎓 You've Completed the AZ-104 Challenge Series!
+:::tip You've Completed the AZ-104 Challenge Series!
+
 If you've worked through all 16 challenges, you've covered every major skill measured on the AZ-104 exam. Review any areas where you struggled, then schedule your exam with confidence. Good luck!
 :::

@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
-title: "Challenge 01 — Entra ID: Users & Groups"
+title: "Challenge 01: Entra ID: Users & Groups"
 ---
 
-# Challenge 01 — Entra ID: Users & Groups
+# Challenge 01: Entra ID: Users & Groups
 
-> ⏱️ **Estimated time**: 45-60 min | 💰 **Estimated cost**: Free | 🎯 **Exam weight**: 20-25%
+> **Estimated time**: 45-60 min | 💰 **Estimated cost**: Free | 🎯 **Exam weight**: 20-25%
 
 ## Introduction
 
@@ -145,6 +145,7 @@ az rest --method post \
 <summary>Hint 5: Enabling SSPR</summary>
 
 :::note
+
 SSPR configuration is best done through the Azure Portal:
 1. Go to **Microsoft Entra ID** → **Password reset**
 2. Set **Self-service password reset enabled** to **Selected**

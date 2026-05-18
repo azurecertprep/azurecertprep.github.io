@@ -1,14 +1,14 @@
 ---
 sidebar_position: 1
-title: "Challenge 04 — Storage Accounts & Access"
+title: "Challenge 04: Storage Accounts & Access"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 04 — Storage Accounts & Access
+# Challenge 04: Storage Accounts & Access
 
-> ⏱️ **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$0.50 | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$0.50 | 🎯 **Exam weight**: 15-20%
 
 ## Introduction
 
@@ -94,6 +94,7 @@ az storage account keys list --account-name $STORAGE_NAME --resource-group $RG -
 ```
 
 :::warning
+
 Access keys grant **full control** over the storage account. Treat them like passwords — never commit them to source control or share them in plain text.
 :::
 
@@ -164,6 +165,7 @@ az storage container generate-sas \
 ```
 
 :::tip
+
 **Why use stored access policies?** If you need to revoke a SAS token, you can't invalidate a standalone SAS without rotating the access key. But if the SAS references a stored access policy, you can modify or delete the policy to revoke access instantly.
 :::
 
@@ -207,6 +209,7 @@ az storage account keys renew --account-name $STORAGE_NAME --resource-group $RG 
 ```
 
 :::warning
+
 After rotating a key, any application or SAS token using that key will **immediately stop working**. Always update your applications before rotating keys in production.
 :::
 
@@ -302,6 +305,7 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --default-ac
 ```
 
 :::info
+
 Azure Cloud Shell and trusted Azure services can always access storage accounts regardless of firewall rules, as long as the **"Allow trusted Microsoft services"** checkbox is enabled.
 :::
 

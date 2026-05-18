@@ -9,7 +9,7 @@ title: "Challenge 14: Azure Monitor & Alerts"
 |---|---|
 | ⏱️ **Estimated Time** | 60 minutes |
 | 💰 **Cost Estimate** | ~$0.10 |
-| 📊 **Exam Weight** | 10–15% |
+| **Exam Weight** | 10–15% |
 
 ## Scenario
 
@@ -24,7 +24,7 @@ Contoso needs observability across their Azure environment. The CTO's mandate is
 - Configure monitoring for VMs, storage, and networks using Azure Monitor Insights
 - Use Azure Network Watcher and Connection Monitor
 
-## Sysadmin ➜ Azure Translation
+## Sysadmin ↔ Azure Reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -73,6 +73,7 @@ az vm create \
 Enable VM Insights via the Azure Portal: **VM → Insights → Enable**.
 
 :::tip
+
 VM Insights automatically installs the Azure Monitor Agent and configures a data collection rule (DCR).
 :::
 
@@ -111,6 +112,7 @@ az monitor diagnostic-settings create \
 ```
 
 :::note
+
 It can take **15–30 minutes** for log data to appear in Log Analytics after enabling diagnostic settings. This is normal.
 :::
 

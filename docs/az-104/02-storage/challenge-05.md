@@ -1,14 +1,14 @@
 ---
 sidebar_position: 2
-title: "Challenge 05 — Blob Storage & Azure Files"
+title: "Challenge 05: Blob Storage & Azure Files"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 05 — Blob Storage & Azure Files
+# Challenge 05: Blob Storage & Azure Files
 
-> ⏱️ **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$0.50 | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$0.50 | 🎯 **Exam weight**: 15-20%
 
 ## Introduction
 
@@ -306,6 +306,7 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 | **Archive** | Lowest | Highest | Hours (1-15h) | 180 days | Long-term backup, compliance |
 
 :::info
+
 **Early deletion penalty**: If you delete or move a blob from Cool/Archive before the minimum retention period, you're charged as if you kept it for the full period. For example, deleting a blob from Cool after 10 days = charged for 30 days.
 :::
 

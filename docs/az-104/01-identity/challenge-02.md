@@ -1,14 +1,14 @@
 ---
 sidebar_position: 2
-title: "Challenge 02 — RBAC & Access Management"
+title: "Challenge 02: RBAC & Access Management"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 02 — RBAC & Access Management
+# Challenge 02: RBAC & Access Management
 
-> ⏱️ **Estimated time**: 45-60 min | 💰 **Estimated cost**: Free | 🎯 **Exam weight**: 20-25%
+> **Estimated time**: 45-60 min | 💰 **Estimated cost**: Free | 🎯 **Exam weight**: 20-25%
 
 ## Introduction
 
@@ -55,6 +55,7 @@ RBAC is the gatekeeper of Azure. Every action — creating a VM, reading a stora
 ### Part 2: Assign Roles at Different Scopes
 
 :::warning
+
 For these tasks, you'll need a resource group. Create one called `rg-rbac-challenge` in your subscription first.
 :::
 

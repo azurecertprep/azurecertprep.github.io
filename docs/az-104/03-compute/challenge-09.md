@@ -1,12 +1,13 @@
 ---
 sidebar_position: 3
-title: "Challenge 09 — Containers in Azure"
+title: "Challenge 09: Containers in Azure"
 ---
 
-# Challenge 09 — Containers in Azure
+# Challenge 09: Containers in Azure
 
 :::info Estimated Time & Cost
-⏱️ **45–60 minutes** | 💰 **~$0.30** | 📊 **Exam Weight: 20–25%**
+
+⏱️ **45–60 minutes** | 💰 **~$0.30** | **Exam Weight: 20–25%**
 :::
 
 ## Scenario

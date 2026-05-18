@@ -33,6 +33,7 @@ Click on the correct area of a screenshot or diagram. Common for Portal-based qu
 A multi-page scenario with 4-7 questions. You can navigate between questions within the case study but cannot return after moving to the next section.
 
 :::warning Case Study Strategy
+
 Read the **requirements** tab first, then the scenario. Many case study questions only need specific details — don't try to memorize everything.
 :::
 
@@ -40,6 +41,7 @@ Read the **requirements** tab first, then the scenario. Many case study question
 A real Azure Portal environment where you complete tasks. You have limited time and a restricted set of actions.
 
 :::tip Lab Strategy
+
 Labs are scored on the **end state**, not the steps you take. If the CLI fails, use the Portal. If you make a mistake, just redo it. The evaluator checks the final configuration.
 :::
 
@@ -73,6 +75,7 @@ Monitoring is 10-15% but the concepts (Azure Monitor, KQL, alerts) connect every
 ## Common Exam Gotchas
 
 :::warning Things that catch people off guard
+
 1. **Moving VMs between regions** requires Azure Site Recovery — it's NOT a simple move operation
 2. **SAS tokens** — know the difference between account SAS, service SAS, and user delegation SAS
 3. **Azure Policy** vs **RBAC** — Policy controls WHAT resources can do, RBAC controls WHO can do things

@@ -7,9 +7,9 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 const stats = [
-  { number: '16', label: 'Challenges' },
+  { number: '28', label: 'Challenges' },
   { number: '100%', label: 'AZ-104 Coverage' },
-  { number: '~$3', label: 'Total Cost' },
+  { number: '~$5', label: 'Total Cost' },
   { number: 'v2026.04', label: 'Exam Objectives' },
 ];
 
@@ -30,6 +30,18 @@ const challenges = [
   { num: '14', title: 'Azure Monitor & Alerts', domain: 'monitor', href: '/docs/az-104/monitor/challenge-14' },
   { num: '15', title: 'Backup & Recovery', domain: 'monitor', href: '/docs/az-104/monitor/challenge-15' },
   { num: '16', title: 'Capstone: Day in the Life', domain: 'monitor', href: '/docs/az-104/capstone/challenge-16' },
+  { num: '17', title: 'Management Groups & Subscriptions', domain: 'identity', href: '/docs/az-104/identity/challenge-17' },
+  { num: '18', title: 'Cost Management & Azure Advisor', domain: 'identity', href: '/docs/az-104/identity/challenge-18' },
+  { num: '19', title: 'AzCopy & Storage Migration', domain: 'storage', href: '/docs/az-104/storage/challenge-19' },
+  { num: '20', title: 'Storage Encryption & Data Protection', domain: 'storage', href: '/docs/az-104/storage/challenge-20' },
+  { num: '21', title: 'VM Extensions & Automation', domain: 'compute', href: '/docs/az-104/compute/challenge-21' },
+  { num: '22', title: 'VM Disks & Encryption', domain: 'compute', href: '/docs/az-104/compute/challenge-22' },
+  { num: '23', title: 'App Service Advanced Config', domain: 'compute', href: '/docs/az-104/compute/challenge-23' },
+  { num: '24', title: 'User-Defined Routes & Traffic Control', domain: 'networking', href: '/docs/az-104/networking/challenge-24' },
+  { num: '25', title: 'Private Endpoints & Service Endpoints', domain: 'networking', href: '/docs/az-104/networking/challenge-25' },
+  { num: '26', title: 'Network Watcher & Diagnostics', domain: 'networking', href: '/docs/az-104/networking/challenge-26' },
+  { num: '27', title: 'Log Analytics & KQL Deep Dive', domain: 'monitor', href: '/docs/az-104/monitor/challenge-27' },
+  { num: '28', title: 'Azure Advisor & Service Health', domain: 'monitor', href: '/docs/az-104/monitor/challenge-28' },
 ];
 
 const domainLabels = {
@@ -62,7 +74,7 @@ function HomepageHeader() {
     <header className="hero--azure">
       <div className="container">
         <Heading as="h1" className="hero__title">
-          ☁️ Azure Cert Prep
+          Azure Cert Prep
         </Heading>
         <p className="hero__subtitle">"Don't just study — build it."</p>
         <div className="stats-bar">
@@ -96,7 +108,7 @@ function ChallengeGrid() {
     <section style={{padding: '2rem 0'}}>
       <div className="container">
         <div className="section-heading">
-          <Heading as="h2">16 Challenges</Heading>
+          <Heading as="h2">28 Challenges</Heading>
           <p>Progressive difficulty — from your first Entra ID user to a cross-domain capstone.</p>
         </div>
         <div className="row">
@@ -127,25 +139,27 @@ function ReferenceTable() {
           <Heading as="h2">Sysadmin ↔ Azure</Heading>
           <p>You already know the concepts. Here's how they translate to Azure.</p>
         </div>
-        <div className="reference-table">
-          <table>
-            <thead>
-              <tr>
-                <th>On-Prem / Sysadmin</th>
-                <th>Azure Equivalent</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {referenceTable.map((row, idx) => (
-                <tr key={idx}>
-                  <td><code>{row.onprem}</code></td>
-                  <td><strong>{row.azure}</strong></td>
-                  <td>{row.desc}</td>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div className="reference-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>On-Prem / Sysadmin</th>
+                  <th>Azure Equivalent</th>
+                  <th>Description</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {referenceTable.map((row, idx) => (
+                  <tr key={idx}>
+                    <td><code>{row.onprem}</code></td>
+                    <td><strong>{row.azure}</strong></td>
+                    <td>{row.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -162,45 +176,45 @@ function CertificationCoverage() {
         </div>
         <div className="row" style={{justifyContent: 'center'}}>
           <div className="col col--8">
-            <table style={{width: '100%'}}>
+            <table style={{width: '100%', margin: '0 auto'}}>
               <thead>
                 <tr>
-                  <th>Domain</th>
-                  <th>Exam Weight</th>
-                  <th>Challenges</th>
+                  <th style={{textAlign: 'center'}}>Domain</th>
+                  <th style={{textAlign: 'center'}}>Exam Weight</th>
+                  <th style={{textAlign: 'center'}}>Challenges</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><span className="domain-badge domain-badge--identity">Identity & Governance</span></td>
                   <td>20–25%</td>
-                  <td>01, 02, 03</td>
+                  <td>01, 02, 03, 17, 18</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--storage">Storage</span></td>
                   <td>15–20%</td>
-                  <td>04, 05, 06</td>
+                  <td>04, 05, 06, 19, 20</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--compute">Compute</span></td>
                   <td>20–25%</td>
-                  <td>07, 08, 09, 10</td>
+                  <td>07, 08, 09, 10, 21, 22, 23</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--networking">Networking</span></td>
                   <td>15–20%</td>
-                  <td>11, 12, 13</td>
+                  <td>11, 12, 13, 24, 25, 26</td>
                 </tr>
                 <tr>
                   <td><span className="domain-badge domain-badge--monitor">Monitor & Maintain</span></td>
                   <td>10–15%</td>
-                  <td>14, 15</td>
+                  <td>14, 15, 27, 28</td>
                 </tr>
               </tbody>
             </table>
             <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
               Aligned with the <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104">official AZ-104 study guide</a> as of April 2026.
-              Challenge 16 is a cross-domain capstone.
+              Challenge 16 is a cross-domain capstone. Challenges 17-28 provide deep dives into advanced topics.
             </p>
           </div>
         </div>

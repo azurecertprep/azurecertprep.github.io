@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-title: "Challenge 06 — Storage Security & Lifecycle"
+title: "Challenge 06: Storage Security & Lifecycle"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 06 — Storage Security & Lifecycle
+# Challenge 06: Storage Security & Lifecycle
 
-> ⏱️ **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$1.00 (two storage accounts) | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$1.00 (two storage accounts) | 🎯 **Exam weight**: 15-20%
 
 ## Introduction
 
@@ -110,6 +110,7 @@ az storage blob upload --container-name replicated-data --file repl-test.txt --n
 4. Create a lifecycle management policy with the following rules:
 
 :::info
+
 **Lifecycle management** automatically transitions blobs between tiers and deletes them based on age. This is the primary tool for controlling storage costs at scale.
 :::
 
@@ -237,6 +238,7 @@ az storage account management-policy show \
 ### Part 3: Identity-Based Access for Azure Files
 
 :::tip
+
 Identity-based access lets users authenticate to Azure File shares using their Entra ID credentials instead of storage account keys. This is more secure and allows per-user/group NTFS-like permissions.
 :::
 
@@ -264,6 +266,7 @@ az storage account update \
 ```
 
 :::note
+
 Full Entra ID Kerberos authentication for Azure Files requires additional setup including configuring the Kerberos ticket-granting-ticket and setting up share-level and directory/file-level permissions. For this challenge, enabling the feature flag is sufficient.
 :::
 
@@ -294,6 +297,7 @@ STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $R
 ```
 
 :::info
+
 Azure Files identity-based access uses a **two-layer permission model**:
 1. **Share-level permissions**: Assigned via RBAC (Storage File Data SMB Share Reader/Contributor/Elevated Contributor)
 2. **Directory/file-level permissions**: Configured using Windows NTFS ACLs after mounting the share
@@ -369,6 +373,7 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
 ```
 
 :::warning
+
 Object replication is **asynchronous**. It may take several minutes for blobs to appear in the destination account. There is no SLA on replication time for standard accounts.
 :::
 
@@ -451,6 +456,7 @@ Lifecycle rules support these conditions:
 | `daysAfterLastTierChangeGreaterThan` | Days since tier was last changed | Prevent rapid tier changes |
 
 :::tip
+
 To use `daysAfterLastAccessTimeGreaterThan`, you must enable **last access time tracking** on the storage account:
 ```bash
 az storage account blob-service-properties update \
