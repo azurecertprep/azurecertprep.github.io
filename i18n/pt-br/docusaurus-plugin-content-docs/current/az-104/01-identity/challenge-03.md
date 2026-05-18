@@ -1,20 +1,20 @@
 ---
 sidebar_position: 3
-title: "Challenge 03 — Azure Policy & Governance"
+title: "Challenge 03 | Azure Policy & Governance"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 03 — Azure Policy & Governança
+# Desafio 03: Azure Policy & Governança
 
-> ⏱️ **Tempo estimado**: 60-75 min | 💰 **Custo estimado**: Gratuito (avaliação de política) | 🎯 **Peso no exame**: 15-20%
+> **Tempo estimado**: 60-75 min | **Custo estimado**: Gratuito (avaliação de política) | **Peso no exame**: 15-20%
 
 ## Introdução
 
 O CTO da Contoso Ltd. acabou de voltar de uma conferência de segurança em nuvem e está preocupado. "Ouvi dizer que uma empresa implantou cargas de trabalho de produção na região errada e foi penalizada por violações de soberania de dados. Isso pode acontecer conosco?" Seu trabalho: configurar barreiras de proteção para que ninguém possa implantar recursos sem tags adequadas, fora das regiões aprovadas ou sem seguir os padrões da empresa.
 
-Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para a nuvem — mas em vez de controlar configurações de desktop, você está controlando quais recursos podem ser criados e como eles devem ser configurados.
+Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para a nuvem | mas em vez de controlar configurações de desktop, você está controlando quais recursos podem ser criados e como eles devem ser configurados.
 
 ## Habilidades do Exame Cobertas
 
@@ -57,13 +57,13 @@ az group create --name rg-policy-dev --location eastus --tags Environment=Develo
    - `CostCenter` = IT-001 ou IT-002
    - `Owner` = seu nome
 
-3. Praticar operações em massa com tags — listar todos os recursos com uma tag específica:
+3. Praticar operações em massa com tags | listar todos os recursos com uma tag específica:
 
 ```bash
 az resource list --tag Environment=Production -o table
 ```
 
-### Parte 2: Azure Policy — Exigir Tags
+### Parte 2: Azure Policy | Exigir Tags
 
 4. Atribuir a política interna **"Require a tag and its value on resources"** ao `rg-policy-prod`:
    - Nome da tag: `CostCenter`
@@ -92,7 +92,7 @@ az storage account create \
   --tags CostCenter=IT-001
 ```
 
-### Parte 3: Azure Policy — Localizações Permitidas
+### Parte 3: Azure Policy | Localizações Permitidas
 
 7. Atribuir a política interna **"Allowed locations"** ao `rg-policy-prod`:
    - Localizações permitidas: East US, West US 2
@@ -147,6 +147,7 @@ az consumption budget create \
 ```
 
 :::note
+
 Alertas de orçamento via CLI requerem configuração adicional para limites de notificação. É mais fácil configurá-los no Portal em **Cost Management + Billing** → **Budgets**.
 :::
 
@@ -209,6 +210,7 @@ az policy assignment create \
 ```
 
 :::tip Dica
+
 Atribuições de política podem levar **5-15 minutos** para entrar em vigor. Tenha paciência ao testar!
 :::
 
@@ -294,7 +296,7 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 - [Management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
 - [Azure Advisor](https://learn.microsoft.com/en-us/azure/advisor/advisor-overview)
 
-## Quebre & Conserte 🔧
+## Quebre & Conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -304,7 +306,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 3. **Política não está funcionando**: Você atribuiu uma política Deny há 2 minutos e ela não está bloqueando nada ainda. Por quê? (A avaliação de política pode levar até 15 minutos para novas atribuições. Acione uma verificação sob demanda com `az policy state trigger-scan`.)
 
-4. **Confusão com tag herdada**: Você marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele não têm a tag. Isso é esperado? (Sim — tags NÃO são herdadas de grupos de recursos para recursos por padrão. Use a política `Inherit a tag from the resource group` para habilitar isso.)
+4. **Confusão com tag herdada**: Você marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele não têm a tag. Isso é esperado? (Sim | tags NÃO são herdadas de grupos de recursos para recursos por padrão. Use a política `Inherit a tag from the resource group` para habilitar isso.)
 
 ## Teste seus Conhecimentos
 
@@ -312,7 +314,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 <summary>1. Qual é a diferença entre os efeitos de política Deny, Audit e Append?</summary>
 
 - **Deny**: Bloqueia a criação ou modificação do recurso se não estiver em conformidade. Aplicação rígida.
-- **Audit**: Permite o recurso mas cria uma entrada de conformidade. Aplicação flexível — você vê violações mas não as bloqueia.
+- **Audit**: Permite o recurso mas cria uma entrada de conformidade. Aplicação flexível | você vê violações mas não as bloqueia.
 - **Append**: Adiciona automaticamente campos ao recurso durante a criação. Por exemplo, adicionar uma tag que está faltando.
 
 Outros efeitos incluem: **AuditIfNotExists**, **DeployIfNotExists** (remediação automática), **Disabled** e **Modify**.
@@ -361,7 +363,7 @@ Root Management Group (Tenant Root)
 - Nível de **grupo de recursos** (afeta todos os recursos no grupo)
 - Nível de **recurso individual** (afeta apenas aquele recurso)
 
-Bloqueios são herdados — um bloqueio no nível do grupo de recursos se aplica a todos os recursos dentro dele. Para excluir um recurso bloqueado, você deve primeiro remover o bloqueio.
+Bloqueios são herdados | um bloqueio no nível do grupo de recursos se aplica a todos os recursos dentro dele. Para excluir um recurso bloqueado, você deve primeiro remover o bloqueio.
 
 </details>
 
@@ -398,4 +400,4 @@ rm -f initiative.json
 
 ---
 
-**Próximo**: [Desafio 04 — Storage Accounts & Acesso](/docs/az-104/storage/challenge-04)
+**Próximo**: [Desafio 04 | Storage Accounts & Acesso](/docs/az-104/storage/challenge-04)

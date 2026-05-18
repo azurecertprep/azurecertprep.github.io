@@ -1,23 +1,24 @@
 ---
 sidebar_position: 1
-title: "Challenge 16: Capstone — Day in the Life of an Azure Admin"
+title: "Challenge 16: Capstone | Day in the Life of an Azure Admin"
 ---
 
-# Desafio 16: Capstone — Um Dia na Vida de um Administrador Azure
+# Desafio 16: Capstone | Um Dia na Vida de um Administrador Azure
 
 | | |
 |---|---|
-| ⏱️ **Tempo estimado** | 90–120 minutos |
-| 💰 **Custo estimado** | ~$0,50 |
+| **Tempo estimado** | 90–120 minutos |
+| **Custo estimado** | ~$0,50 |
 | 📊 **Peso no exame** | Todos os 5 domínios |
 
 :::info Informação Desafio Capstone
+
 Este desafio abrange **todos os cinco domínios do exame AZ-104**. Ele simula um dia de trabalho real onde você soluciona problemas usando habilidades de cada domínio. Trate isto como seu ensaio final para o exame.
 :::
 
 ## Cenário
 
-Você chega ao trabalho na segunda-feira de manhã na Contoso e encontra **cinco tickets urgentes** na sua fila. Cada ticket testa conhecimentos de um domínio diferente do exame. Ninguém mais está disponível — tudo depende de você.
+Você chega ao trabalho na segunda-feira de manhã na Contoso e encontra **cinco tickets urgentes** na sua fila. Cada ticket testa conhecimentos de um domínio diferente do exame. Ninguém mais está disponível | tudo depende de você.
 
 ## Configuração
 
@@ -30,7 +31,7 @@ done
 
 ---
 
-## 🎫 Ticket 1 — Crise de Identidade
+## 🎫 Ticket 1: Crise de Identidade
 
 **Domínio: Gerenciar Identidades e Governança do Microsoft Entra ID**
 
@@ -40,7 +41,7 @@ done
 
 1. Verifique se a conta de Jordan está **habilitada** no Entra ID
 2. Verifique se o **SSPR (Self-Service Password Reset)** está configurado
-3. Verifique a associação ao grupo — Jordan está no grupo "Developers"?
+3. Verifique a associação ao grupo | Jordan está no grupo "Developers"?
 
 <details>
 <summary>💡 Passos de Diagnóstico</summary>
@@ -82,11 +83,11 @@ az ad group member add \
 </details>
 
 ### Causa Raiz
-O usuário foi provisionado por um script automatizado que falhou no meio do processo — a conta foi criada mas ficou em estado desabilitado, nenhuma senha inicial foi definida, e a etapa de atribuição de grupo foi pulada.
+O usuário foi provisionado por um script automatizado que falhou no meio do processo | a conta foi criada mas ficou em estado desabilitado, nenhuma senha inicial foi definida, e a etapa de atribuição de grupo foi pulada.
 
 ---
 
-## 🎫 Ticket 2 — SOS de Storage
+## 🎫 Ticket 2: SOS de Storage
 
 **Domínio: Implementar e Gerenciar Armazenamento**
 
@@ -94,8 +95,8 @@ O usuário foi provisionado por um script automatizado que falhou no meio do pro
 
 ### Diagnosticar
 
-1. Verifique o **token SAS** — ele expirou?
-2. Verifique o **firewall da conta de armazenamento** — uma regra de rede foi adicionada que bloqueia o IP deles?
+1. Verifique o **token SAS** | ele expirou?
+2. Verifique o **firewall da conta de armazenamento** | uma regra de rede foi adicionada que bloqueia o IP deles?
 3. Verifique se as **chaves de acesso foram rotacionadas**
 
 <details>
@@ -152,7 +153,7 @@ O token SAS gerado na semana passada tinha validade de 7 dias e expirou durante 
 
 ---
 
-## 🎫 Ticket 3 — VM Fora do Ar
+## 🎫 Ticket 3: VM Fora do Ar
 
 **Domínio: Implantar e Gerenciar Recursos de Computação do Azure**
 
@@ -160,7 +161,7 @@ O token SAS gerado na semana passada tinha validade de 7 dias e expirou durante 
 
 ### Diagnosticar
 
-1. Verifique o **log de atividades** — quem ou o que parou a VM?
+1. Verifique o **log de atividades** | quem ou o que parou a VM?
 2. Verifique se há um **agendamento de desligamento automático** configurado
 3. Verifique o **estado de energia** atual da VM
 
@@ -217,7 +218,7 @@ Um desenvolvedor habilitou o desligamento automático às 19:00 para sua VM de d
 
 ---
 
-## 🎫 Ticket 4 — Bloqueio de Rede
+## 🎫 Ticket 4: Bloqueio de Rede
 
 **Domínio: Configurar e Gerenciar Redes Virtuais**
 
@@ -225,8 +226,8 @@ Um desenvolvedor habilitou o desligamento automático às 19:00 para sua VM de d
 
 ### Diagnosticar
 
-1. Verifique as **regras NSG** — uma regra deny-all foi adicionada?
-2. Verifique o **health probe do Load Balancer** — o backend está saudável?
+1. Verifique as **regras NSG** | uma regra deny-all foi adicionada?
+2. Verifique o **health probe do Load Balancer** | o backend está saudável?
 3. Verifique se a **NIC da VM ainda tem o NSG correto** associado
 
 <details>
@@ -296,7 +297,7 @@ A equipe de segurança adicionou uma regra `DenyAllInbound` com prioridade 200, 
 
 ---
 
-## 🎫 Ticket 5 — Cadê Meus Alertas?
+## 🎫 Ticket 5: Cadê Meus Alertas?
 
 **Domínio: Monitorar e Manter Recursos do Azure**
 
@@ -304,7 +305,7 @@ A equipe de segurança adicionou uma regra `DenyAllInbound` com prioridade 200, 
 
 ### Diagnosticar
 
-1. Verifique o **grupo de ação** — o endereço de email está correto?
+1. Verifique o **grupo de ação** | o endereço de email está correto?
 2. Verifique se as **regras de alerta estão habilitadas**
 3. Verifique as **configurações de alerta de backup** no Recovery Services vault
 
@@ -333,7 +334,7 @@ az monitor metrics alert show \
 
 ### Corrigir
 
-1. **Verificar o grupo de ação** — confirmar que o endereço de email está correto
+1. **Verificar o grupo de ação** | confirmar que o endereço de email está correto
 2. **Habilitar a regra de alerta** (ela estava desabilitada)
 3. **Configurar alertas de falha de backup**
 
@@ -359,11 +360,11 @@ Para alertas de backup: Configure via **Recovery Services vault → Alertas → 
 </details>
 
 ### Causa Raiz
-O grupo de ação tinha o email errado (um erro de digitação — `ops@contso.com` em vez de `ops@contoso.com`). O alerta de disponibilidade de VM foi criado mas ficou em estado desabilitado durante os testes e nunca foi reabilitado. Os alertas de backup nunca foram configurados.
+O grupo de ação tinha o email errado (um erro de digitação | `ops@contso.com` em vez de `ops@contoso.com`). O alerta de disponibilidade de VM foi criado mas ficou em estado desabilitado durante os testes e nunca foi reabilitado. Os alertas de backup nunca foram configurados.
 
 ---
 
-## 📝 Teste seus Conhecimentos — Questões Estilo Exame
+## 📝 Teste seus Conhecimentos: Questões Estilo Exame
 
 **Questão 1** *(Identidade)*
 Um usuário relata que não consegue fazer login no Portal do Azure. A conta dele existe no Microsoft Entra ID. O que você deve verificar PRIMEIRO?
@@ -373,7 +374,7 @@ Um usuário relata que não consegue fazer login no Portal do Azure. A conta del
 - C. Redefinir o registro MFA do usuário
 - D. Adicionar o usuário ao papel de Administrador Global
 
-<details><summary>Resposta</summary>**B.** Uma conta desabilitada impede o login. Sempre verifique o básico primeiro — a conta está habilitada e tem uma senha válida?</details>
+<details><summary>Resposta</summary>**B.** Uma conta desabilitada impede o login. Sempre verifique o básico primeiro | a conta está habilitada e tem uma senha válida?</details>
 
 **Questão 2** *(Armazenamento)*
 Uploads do AzCopy para uma conta de armazenamento falham com "AuthorizationFailure." O token SAS foi gerado 8 dias atrás com validade de 7 dias. Qual é a causa mais provável?
@@ -403,7 +404,7 @@ Após adicionar uma regra NSG DenyAllInbound na prioridade 200, o tráfego web n
 - C. Adicionar uma regra Allow para a porta 443 com prioridade maior que 200 (ex: 300)
 - D. Desassociar o NSG da subnet
 
-<details><summary>Resposta</summary>**B.** As regras NSG são avaliadas por prioridade — o número mais baixo vence. Uma regra Allow na prioridade 100 é avaliada antes de uma regra Deny na prioridade 200.</details>
+<details><summary>Resposta</summary>**B.** As regras NSG são avaliadas por prioridade | o número mais baixo vence. Uma regra Allow na prioridade 100 é avaliada antes de uma regra Deny na prioridade 200.</details>
 
 **Questão 5** *(Monitoramento)*
 Uma regra de alerta está configurada com a condição correta, mas a equipe nunca recebe notificações por email. O que você deve verificar?
@@ -413,7 +414,7 @@ Uma regra de alerta está configurada com a condição correta, mas a equipe nun
 - C. O tier de preço do Azure Monitor
 - D. A política de retenção do Log Analytics workspace
 
-<details><summary>Resposta</summary>**B.** Se o alerta dispara mas nenhuma notificação é recebida, o grupo de ação é o provável culpado — verifique se ele tem os endereços de email corretos e se está anexado à regra de alerta.</details>
+<details><summary>Resposta</summary>**B.** Se o alerta dispara mas nenhuma notificação é recebida, o grupo de ação é o provável culpado | verifique se ele tem os endereços de email corretos e se está anexado à regra de alerta.</details>
 
 ---
 
@@ -428,16 +429,17 @@ done
 
 ## ✅ Critérios de Sucesso
 
-- [ ] **Ticket 1** — Crise de Identidade resolvida (conta habilitada, senha redefinida, associação ao grupo corrigida)
-- [ ] **Ticket 2** — SOS de Storage resolvido (novo token SAS ou regras de firewall atualizadas)
-- [ ] **Ticket 3** — VM Fora do Ar resolvida (VM iniciada, desligamento automático removido, causa raiz identificada)
-- [ ] **Ticket 4** — Bloqueio de Rede resolvido (regra NSG adicionada, tráfego fluindo)
-- [ ] **Ticket 5** — Alertas corrigidos (grupo de ação corrigido, alerta habilitado, alertas de backup configurados)
+- [ ] **Ticket 1** | Crise de Identidade resolvida (conta habilitada, senha redefinida, associação ao grupo corrigida)
+- [ ] **Ticket 2** | SOS de Storage resolvido (novo token SAS ou regras de firewall atualizadas)
+- [ ] **Ticket 3** | VM Fora do Ar resolvida (VM iniciada, desligamento automático removido, causa raiz identificada)
+- [ ] **Ticket 4** | Bloqueio de Rede resolvido (regra NSG adicionada, tráfego fluindo)
+- [ ] **Ticket 5** | Alertas corrigidos (grupo de ação corrigido, alerta habilitado, alertas de backup configurados)
 - [ ] Cada ticket: passos de diagnóstico documentados, causa raiz identificada, correção aplicada
 - [ ] Todos os grupos de recursos limpos
 
 ---
 
 :::tip Dica 🎓 Você Completou a Série de Desafios AZ-104!
-Se você trabalhou em todos os 16 desafios, cobriu todas as principais habilidades medidas no exame AZ-104. Revise as áreas onde teve dificuldade e depois agende seu exame com confiança. Boa sorte!
+
+Se você trabalhou em todos os 28 desafios, cobriu todas as principais habilidades medidas no exame AZ-104. Revise as áreas onde teve dificuldade e depois agende seu exame com confiança. Boa sorte!
 :::

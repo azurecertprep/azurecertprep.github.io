@@ -1,17 +1,17 @@
 ---
 sidebar_position: 1
-title: "Challenge 01 — Entra ID: Users & Groups"
+title: "Challenge 01 | Entra ID: Users & Groups"
 ---
 
-# Desafio 01 — Entra ID: Usuários & Grupos
+# Desafio 01: Entra ID: Usuários & Grupos
 
-> ⏱️ **Tempo estimado**: 45-60 min | 💰 **Custo estimado**: Gratuito | 🎯 **Peso no exame**: 20-25%
+> **Tempo estimado**: 45-60 min | **Custo estimado**: Gratuito | **Peso no exame**: 20-25%
 
 ## Introdução
 
 Você acabou de ingressar na Contoso Ltd. como o novo Administrador Azure. Sua primeira tarefa: configurar o gerenciamento de identidades. A empresa está migrando do Active Directory local e você precisa criar a estrutura inicial de usuários e grupos no Microsoft Entra ID.
 
-Este desafio cobre a base de tudo no Azure — identidade. Sem usuários, grupos e gerenciamento adequado de acesso, nada mais funciona.
+Este desafio cobre a base de tudo no Azure | identidade. Sem usuários, grupos e gerenciamento adequado de acesso, nada mais funciona.
 
 ## Habilidades do Exame Cobertas
 
@@ -40,18 +40,18 @@ Sua missão é:
 ### Parte 1: Criar Usuários
 
 1. Criar 3 usuários internos no seu tenant do Entra ID:
-   - `alice@SEU_TENANT.onmicrosoft.com` — Nome de exibição: Alice Johnson, Departamento: IT, Cargo: Cloud Engineer
-   - `bob@SEU_TENANT.onmicrosoft.com` — Nome de exibição: Bob Smith, Departamento: Finance, Cargo: Financial Analyst
-   - `carol@SEU_TENANT.onmicrosoft.com` — Nome de exibição: Carol Williams, Departamento: IT, Cargo: Security Admin
+   - `alice@SEU_TENANT.onmicrosoft.com` | Nome de exibição: Alice Johnson, Departamento: IT, Cargo: Cloud Engineer
+   - `bob@SEU_TENANT.onmicrosoft.com` | Nome de exibição: Bob Smith, Departamento: Finance, Cargo: Financial Analyst
+   - `carol@SEU_TENANT.onmicrosoft.com` | Nome de exibição: Carol Williams, Departamento: IT, Cargo: Security Admin
 
 2. Configurar Alice com uma senha temporária que deve ser alterada no primeiro login.
 
 ### Parte 2: Criar Grupos
 
 3. Criar os seguintes grupos de segurança:
-   - `IT-Team` — Membros: Alice, Carol
-   - `Finance-Team` — Membros: Bob
-   - `All-Employees` — Membros: Alice, Bob, Carol (use uma regra de associação dinâmica baseada no departamento)
+   - `IT-Team` | Membros: Alice, Carol
+   - `Finance-Team` | Membros: Bob
+   - `All-Employees` | Membros: Alice, Bob, Carol (use uma regra de associação dinâmica baseada no departamento)
 
 ### Parte 3: Gerenciar Propriedades
 
@@ -61,7 +61,7 @@ Sua missão é:
 
 ### Parte 4: Usuários Externos
 
-7. Convidar um usuário externo (convidado) — use qualquer email ao qual você tenha acesso
+7. Convidar um usuário externo (convidado) | use qualquer email ao qual você tenha acesso
 8. Adicionar o usuário convidado ao grupo `All-Employees`
 
 ### Parte 5: Redefinição de Senha por Autoatendimento
@@ -145,6 +145,7 @@ az rest --method post \
 <summary>Dica 5: Habilitando SSPR</summary>
 
 :::note
+
 A configuração do SSPR é feita preferencialmente pelo Portal do Azure:
 1. Vá para **Microsoft Entra ID** → **Password reset**
 2. Defina **Self-service password reset enabled** como **Selected**
@@ -163,7 +164,7 @@ A configuração do SSPR é feita preferencialmente pelo Portal do Azure:
 - [Configurar SSPR](https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr)
 - [Regras de associação dinâmica](https://learn.microsoft.com/en-us/entra/identity/users/groups-dynamic-membership)
 
-## Quebre & Conserte 🔧
+## Quebre & Conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -239,4 +240,4 @@ done
 
 ---
 
-**Próximo**: [Desafio 02 — RBAC & Gerenciamento de Acesso](/docs/az-104/identity/challenge-02)
+**Próximo**: [Desafio 02 | RBAC & Gerenciamento de Acesso](/docs/az-104/identity/challenge-02)

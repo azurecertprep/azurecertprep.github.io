@@ -7,8 +7,8 @@ title: "Challenge 13: DNS & Load Balancing"
 
 | | |
 |---|---|
-| ⏱️ **Estimated Time** | 60 minutes |
-| 💰 **Cost Estimate** | ~$0.20 |
+| **Estimated Time** | 60 minutes |
+| **Cost Estimate** | ~$0.20 |
 | **Exam Weight** | 15–20% |
 
 ## Scenario
@@ -43,7 +43,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1 — Create an Azure DNS Zone
+### Task 1: Create an Azure DNS Zone
 
 Create a DNS zone for a subdomain. Since you likely don't own `contoso.com`, use a subdomain like `lab.contoso.com` for practice.
 
@@ -55,16 +55,16 @@ az network dns zone create \
 
 :::tip
 
-You don't need to own the domain to create a DNS zone in Azure — you just won't be able to resolve it publicly unless you delegate NS records from the parent domain.
+You don't need to own the domain to create a DNS zone in Azure | you just won't be able to resolve it publicly unless you delegate NS records from the parent domain.
 :::
 
-### Task 2 — Add DNS Records
+### Task 2: Add DNS Records
 
 Add the following record types to your DNS zone:
 
-1. **A Record** — Map `www.lab.contoso.com` to an IP address
-2. **CNAME Record** — Map `portal.lab.contoso.com` to `www.lab.contoso.com`
-3. **TXT Record** — Add a verification TXT record
+1. **A Record** | Map `www.lab.contoso.com` to an IP address
+2. **CNAME Record** | Map `portal.lab.contoso.com` to `www.lab.contoso.com`
+3. **TXT Record** | Add a verification TXT record
 
 <details>
 <summary>💡 Hint</summary>
@@ -94,7 +94,7 @@ az network dns record-set txt add-record \
 
 </details>
 
-### Task 3 — Create a Public Standard Load Balancer
+### Task 3: Create a Public Standard Load Balancer
 
 Create a Standard SKU public load balancer with a frontend IP configuration.
 
@@ -108,12 +108,12 @@ az network lb create \
   --public-ip-address lb-pip
 ```
 
-### Task 4 — Create a Backend Pool with 2 VMs
+### Task 4: Create a Backend Pool with 2 VMs
 
 Deploy two VMs and add them to the load balancer's backend pool.
 
 <details>
-<summary>💡 Hint — Create VMs with a web server</summary>
+<summary>💡 Hint | Create VMs with a web server</summary>
 
 ```bash
 # Create a VNet and subnet
@@ -143,7 +143,7 @@ done
 
 </details>
 
-### Task 5 — Create a Health Probe
+### Task 5: Create a Health Probe
 
 Create an HTTP health probe on port 80.
 
@@ -157,7 +157,7 @@ az network lb probe create \
   --path /
 ```
 
-### Task 6 — Create a Load Balancing Rule
+### Task 6: Create a Load Balancing Rule
 
 Create a rule that maps frontend port 80 to backend port 80.
 
@@ -174,7 +174,7 @@ az network lb rule create \
   --backend-port 80
 ```
 
-### Task 7 — Test Load Balancing
+### Task 7: Test Load Balancing
 
 Access the load balancer's public IP in a browser or with `curl`. Refresh multiple times and observe that responses come from different VMs.
 
@@ -188,7 +188,7 @@ echo "Load Balancer IP: $LB_IP"
 # curl http://$LB_IP (repeat several times)
 ```
 
-### Task 8 — Create an Internal Load Balancer
+### Task 8: Create an Internal Load Balancer
 
 Create a second load balancer for internal (private) backend services.
 
@@ -206,11 +206,11 @@ az network lb create \
   --subnet subnet-backend
 ```
 
-Note: No `--public-ip-address` flag — this makes it internal.
+Note: No `--public-ip-address` flag | this makes it internal.
 
 </details>
 
-### Task 9 — Troubleshoot Load Balancing
+### Task 9: Troubleshoot Load Balancing
 
 Check the health probe status and verify backend pool health.
 
@@ -232,8 +232,8 @@ az vm get-instance-view \
 ## 🔨 Break & Fix
 
 ### Break It
-1. **Misconfigure the health probe** — Change the probe to check port 8080 instead of 80 (or use path `/healthz` when the web server doesn't have that endpoint). Observe that all backend instances show as unhealthy.
-2. **Add a broken VM** — Add a third VM to the backend pool that doesn't have a web server running on port 80. Check how the LB handles it.
+1. **Misconfigure the health probe** | Change the probe to check port 8080 instead of 80 (or use path `/healthz` when the web server doesn't have that endpoint). Observe that all backend instances show as unhealthy.
+2. **Add a broken VM** | Add a third VM to the backend pool that doesn't have a web server running on port 80. Check how the LB handles it.
 
 ### Fix It
 - Correct the health probe port/path back to the working configuration
@@ -252,8 +252,8 @@ az vm get-instance-view \
    - HTTP/HTTPS probes check for a 200 response; TCP checks for a successful connection
 
 3. **When would you use Load Balancer vs Application Gateway?**
-   - Load Balancer = Layer 4 (TCP/UDP) — fast, simple, any protocol
-   - Application Gateway = Layer 7 (HTTP/HTTPS) — URL routing, SSL termination, WAF
+   - Load Balancer = Layer 4 (TCP/UDP) | fast, simple, any protocol
+   - Application Gateway = Layer 7 (HTTP/HTTPS) | URL routing, SSL termination, WAF
 
 4. **Which DNS record types should you know for the exam?**
    - A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), TXT (verification), NS (name server), SOA (start of authority), SRV (service location)

@@ -7,7 +7,7 @@ title: "Challenge 09: Containers in Azure"
 
 :::info Estimated Time & Cost
 
-⏱️ **45–60 minutes** | 💰 **~$0.30** | **Exam Weight: 20–25%**
+**45–60 minutes** | **~$0.30** | **Exam Weight: 20–25%**
 :::
 
 ## Scenario
@@ -36,7 +36,7 @@ Contoso's development team has containerized their internal dashboard applicatio
 
 ## Tasks
 
-### Task 1 — Create an Azure Container Registry
+### Task 1: Create an Azure Container Registry
 
 ```bash
 # Create a resource group
@@ -58,9 +58,9 @@ echo "ACR Name: $ACR_NAME"
 az acr show --name $ACR_NAME --query "{Name:name, SKU:sku.name, LoginServer:loginServer}" -o table
 ```
 
-### Task 2 — Build and Push an Image to ACR
+### Task 2: Build and Push an Image to ACR
 
-Use `az acr build` to build directly in the cloud — no local Docker needed:
+Use `az acr build` to build directly in the cloud | no local Docker needed:
 
 ```bash
 # Create a simple app directory
@@ -93,7 +93,7 @@ az acr repository list --name $ACR_NAME -o table
 az acr repository show-tags --name $ACR_NAME --repository contoso-dashboard -o table
 ```
 
-### Task 3 — Deploy to Azure Container Instances
+### Task 3: Deploy to Azure Container Instances
 
 ```bash
 # Get ACR credentials
@@ -124,7 +124,7 @@ echo "Test: http://$ACI_FQDN"
 az container logs -g rg-containers-lab -n aci-dashboard
 ```
 
-### Task 4 — Create a Container Apps Environment
+### Task 4: Create a Container Apps Environment
 
 ```bash
 # Install/update the Container Apps extension
@@ -141,7 +141,7 @@ az containerapp env create \
   --location eastus
 ```
 
-### Task 5 — Deploy to Container Apps
+### Task 5: Deploy to Container Apps
 
 ```bash
 # Enable managed identity access to ACR (preferred over admin credentials)
@@ -163,7 +163,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
   --query "properties.configuration.ingress.fqdn" -o tsv
 ```
 
-### Task 6 — Configure Container Apps Scaling
+### Task 6: Configure Container Apps Scaling
 
 ```bash
 # Add an HTTP scaling rule (scale when concurrent requests > 10 per replica)
@@ -184,7 +184,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 az containerapp replica list -g rg-containers-lab -n ca-dashboard -o table
 ```
 
-### Task 7 — Compare ACI vs Container Apps
+### Task 7: Compare ACI vs Container Apps
 
 Run both deployments and compare:
 
@@ -201,7 +201,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 ```
 
 <details>
-<summary>💡 Hint — When to use ACI vs Container Apps vs AKS</summary>
+<summary>💡 Hint | When to use ACI vs Container Apps vs AKS</summary>
 
 | Feature | ACI | Container Apps | AKS |
 |---------|-----|---------------|-----|
@@ -222,9 +222,9 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 - [ ] Scaling rules configured on Container Apps
 - [ ] Can articulate when to use ACI vs Container Apps vs AKS
 
-## 🔧 Break & Fix Scenarios
+## Break & Fix Scenarios
 
-### Scenario A — Wrong Image Name
+### Scenario A: Wrong Image Name
 ```bash
 # Deploy ACI with a misspelled image name
 az container create \
@@ -238,7 +238,7 @@ az container create \
 # What error do you get? Check: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
 ```
 
-### Scenario B — ACR Permission Issue
+### Scenario B: ACR Permission Issue
 ```bash
 # Try deploying Container Apps without providing registry credentials
 az containerapp create \
@@ -251,7 +251,7 @@ az containerapp create \
 # How do you fix ACR authentication? (Hint: managed identity or admin credentials)
 ```
 
-### Scenario C — Port Mismatch
+### Scenario C: Port Mismatch
 ```bash
 # Deploy with wrong target port
 az containerapp create \
@@ -291,7 +291,7 @@ az containerapp create \
 
 - **ACI**: Simple batch jobs, build agents, sidecar containers, quick tests. No orchestration needed. Per-second billing.
 - **Container Apps**: Microservices, APIs, event-driven apps, web apps. Built-in scaling with KEDA, Dapr integration, easy HTTPS ingress. Serverless pricing.
-- **AKS**: Full Kubernetes needed — complex networking, custom operators, stateful workloads, multi-container pods with shared storage. You manage the cluster.
+- **AKS**: Full Kubernetes needed | complex networking, custom operators, stateful workloads, multi-container pods with shared storage. You manage the cluster.
 </details>
 
 **3. What is the difference between ACR admin account and managed identity for authentication?**
@@ -299,7 +299,7 @@ az containerapp create \
 <details>
 <summary>Show Answer</summary>
 
-- **Admin account**: A shared username/password. Simple but insecure — anyone with the password has full push/pull access. Disabled by default. Use only for dev/test.
+- **Admin account**: A shared username/password. Simple but insecure | anyone with the password has full push/pull access. Disabled by default. Use only for dev/test.
 - **Managed identity**: Azure AD–based authentication. No passwords to manage. Supports role-based access (AcrPull, AcrPush). Recommended for production. Works with ACI, Container Apps, AKS, and App Service.
 </details>
 

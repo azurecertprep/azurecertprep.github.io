@@ -13,7 +13,7 @@ title: "Challenge 19: AzCopy & Storage Migration"
 
 ## Scenario
 
-Contoso Ltd. is consolidating storage after acquiring a smaller company. You need to migrate terabytes of blob data between storage accounts, copy data across regions for disaster recovery, and set up ongoing synchronization for a file share. The operations team has been using the Azure Portal to download and re-upload files manually — which takes days. You will introduce them to AzCopy and Storage Explorer for efficient, high-performance data movement.
+Contoso Ltd. is consolidating storage after acquiring a smaller company. You need to migrate terabytes of blob data between storage accounts, copy data across regions for disaster recovery, and set up ongoing synchronization for a file share. The operations team has been using the Azure Portal to download and re-upload files manually | which takes days. You will introduce them to AzCopy and Storage Explorer for efficient, high-performance data movement.
 
 ## Exam Skills Covered
 
@@ -39,7 +39,7 @@ Contoso Ltd. is consolidating storage after acquiring a smaller company. You nee
 
 ## Tasks
 
-### Task 1 — Set Up the Lab Environment
+### Task 1: Set Up the Lab Environment
 
 Create two storage accounts to simulate a migration scenario:
 
@@ -97,7 +97,7 @@ az storage blob upload \
 rm -f doc*.txt largefile.bin
 ```
 
-### Task 2 — Install and Authenticate AzCopy
+### Task 2: Install and Authenticate AzCopy
 
 ```bash
 # Check if AzCopy is installed
@@ -119,7 +119,7 @@ If AzCopy is not installed:
 
 :::
 
-### Task 3 — Copy Blobs Between Containers (Same Account)
+### Task 3: Copy Blobs Between Containers (Same Account)
 
 ```bash
 # Copy all blobs from documents to backups container (same account)
@@ -136,7 +136,7 @@ az storage blob list \
   --query "[].name" -o tsv
 ```
 
-### Task 4 — Copy Blobs Between Storage Accounts Using SAS Tokens
+### Task 4: Copy Blobs Between Storage Accounts Using SAS Tokens
 
 Generate SAS tokens and perform cross-account copy:
 
@@ -173,7 +173,7 @@ az storage blob list \
   --query "[].{Name:name, Size:properties.contentLength}" -o table
 ```
 
-### Task 5 — Sync Operations (Mirror Source to Destination)
+### Task 5: Sync Operations (Mirror Source to Destination)
 
 ```bash
 # Add new files to source
@@ -201,7 +201,7 @@ azcopy sync \
 rm -f newfile.txt
 ```
 
-### Task 6 — Benchmark Transfer Performance
+### Task 6: Benchmark Transfer Performance
 
 ```bash
 # Benchmark upload performance to the destination account
@@ -217,7 +217,7 @@ azcopy benchmark \
   --size-per-file 100M
 ```
 
-### Task 7 — Use AzCopy with Include/Exclude Patterns
+### Task 7: Use AzCopy with Include/Exclude Patterns
 
 ```bash
 # Copy only .txt files
@@ -235,7 +235,7 @@ azcopy copy \
   --exclude-pattern "*.bin"
 ```
 
-### Task 8 — View Job History and Logs
+### Task 8: View Job History and Logs
 
 ```bash
 # List recent AzCopy jobs
@@ -265,9 +265,9 @@ azcopy env
 <summary>Hint 1: AzCopy authentication methods</summary>
 
 AzCopy supports three authentication methods:
-1. **Entra ID (azcopy login)** — Best for interactive use and RBAC-based access
-2. **SAS tokens** — Appended to the URL, time-limited, best for automation
-3. **Storage account key** — Set via `ACCOUNT_KEY` environment variable (not recommended)
+1. **Entra ID (azcopy login)** | Best for interactive use and RBAC-based access
+2. **SAS tokens** | Appended to the URL, time-limited, best for automation
+3. **Storage account key** | Set via `ACCOUNT_KEY` environment variable (not recommended)
 
 For the exam, know that service-to-service copy (between accounts) requires SAS tokens on both sides OR Entra ID login with appropriate RBAC roles on both accounts.
 
@@ -276,8 +276,8 @@ For the exam, know that service-to-service copy (between accounts) requires SAS 
 <details>
 <summary>Hint 2: Copy vs Sync</summary>
 
-- **azcopy copy** — Always copies all specified files regardless of whether they exist at the destination
-- **azcopy sync** — Only copies files that are new or modified (compares last-modified timestamps). Optionally deletes destination files not present in source (--delete-destination)
+- **azcopy copy** | Always copies all specified files regardless of whether they exist at the destination
+- **azcopy sync** | Only copies files that are new or modified (compares last-modified timestamps). Optionally deletes destination files not present in source (--delete-destination)
 
 </details>
 
@@ -301,15 +301,15 @@ Set the `AZCOPY_CONCURRENCY_VALUE` environment variable to increase parallel con
 
 ## Break and Fix
 
-### Scenario A — SAS Token Expired
+### Scenario A: SAS Token Expired
 
 Generate a SAS token with a 1-minute expiry. Wait 2 minutes, then attempt a copy. Observe the error message. How do you diagnose SAS expiration vs permission issues?
 
-### Scenario B — Missing Container at Destination
+### Scenario B: Missing Container at Destination
 
 Attempt to copy to a container that does not exist at the destination. Does AzCopy create it automatically? (Answer: Yes, if the SAS token or RBAC permissions allow container creation.)
 
-### Scenario C — Partial Transfer Failure
+### Scenario C: Partial Transfer Failure
 
 During a large copy operation, simulate a failure by revoking the SAS token mid-transfer. Use `azcopy jobs resume` to restart the failed job with a new valid token.
 
@@ -323,7 +323,7 @@ azcopy jobs resume <job-id> --source-sas="<new-sas>" --destination-sas="<new-sas
 <details>
 <summary>1. What is the difference between azcopy copy and azcopy sync?</summary>
 
-**azcopy copy** unconditionally copies all files matching the criteria — it does not check if files already exist at the destination. It is best for one-time transfers.
+**azcopy copy** unconditionally copies all files matching the criteria | it does not check if files already exist at the destination. It is best for one-time transfers.
 
 **azcopy sync** compares source and destination by last-modified time and only transfers changed or new files. It is best for ongoing synchronization. With `--delete-destination=true`, it mirrors the source exactly (deleting extras at destination).
 
@@ -351,7 +351,7 @@ For blob operations:
 - **Write**: Storage Blob Data Contributor
 - **Full control**: Storage Blob Data Owner
 
-Note: The classic "Reader" or "Contributor" roles on the storage account are NOT sufficient for data plane operations — you need the data-specific roles.
+Note: The classic "Reader" or "Contributor" roles on the storage account are NOT sufficient for data plane operations | you need the data-specific roles.
 
 </details>
 

@@ -7,12 +7,12 @@ title: "Challenge 10: Azure App Service"
 
 :::info Estimated Time & Cost
 
-⏱️ **60–75 minutes** | 💰 **~$0.20** (S1 tier, delete promptly) | **Exam Weight: 20–25%**
+**60–75 minutes** | **~$0.20** (S1 tier, delete promptly) | **Exam Weight: 20–25%**
 :::
 
 ## Scenario
 
-Contoso's marketing team needs a web application deployed for an upcoming campaign. The site must support zero-downtime deployments, auto-scaling during traffic spikes, and regular backups. You'll deploy it to Azure App Service with production best practices — deployment slots, autoscale, and networking controls.
+Contoso's marketing team needs a web application deployed for an upcoming campaign. The site must support zero-downtime deployments, auto-scaling during traffic spikes, and regular backups. You'll deploy it to Azure App Service with production best practices | deployment slots, autoscale, and networking controls.
 
 ## Exam Skills Covered
 
@@ -41,13 +41,13 @@ Contoso's marketing team needs a web application deployed for an upcoming campai
 
 ## Tasks
 
-### Task 1 — Create an App Service Plan
+### Task 1: Create an App Service Plan
 
 ```bash
 # Create a resource group
 az group create --name rg-appservice-lab --location eastus
 
-# Create an App Service plan (Standard S1 — required for deployment slots)
+# Create an App Service plan (Standard S1: required for deployment slots)
 az appservice plan create \
   --resource-group rg-appservice-lab \
   --name plan-contoso-web \
@@ -59,7 +59,7 @@ az appservice plan show -g rg-appservice-lab -n plan-contoso-web \
   --query "{Name:name, SKU:sku.name, Tier:sku.tier, Workers:sku.capacity}" -o table
 ```
 
-### Task 2 — Create a Web App
+### Task 2: Create a Web App
 
 ```bash
 # Create a web app with Node.js runtime
@@ -78,7 +78,7 @@ az webapp show -g rg-appservice-lab -n $APP_NAME \
   --query "{Name:name, State:state, URL:defaultHostName}" -o table
 ```
 
-### Task 3 — Deploy Sample Code
+### Task 3: Deploy Sample Code
 
 ```bash
 # Create a simple Node.js app
@@ -124,7 +124,7 @@ az webapp config appsettings set \
 echo "Visit: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Task 4 — Create a Staging Deployment Slot
+### Task 4: Create a Staging Deployment Slot
 
 ```bash
 # Create a staging slot
@@ -140,7 +140,7 @@ az webapp deployment slot list -g rg-appservice-lab -n $APP_NAME -o table
 echo "Staging URL: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Task 5 — Deploy a New Version to Staging
+### Task 5: Deploy a New Version to Staging
 
 ```bash
 # Update the version in staging
@@ -167,7 +167,7 @@ echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 echo "Production: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Task 6 — Swap Staging and Production
+### Task 6: Swap Staging and Production
 
 ```bash
 # Preview what will change
@@ -180,12 +180,12 @@ az webapp deployment slot swap \
   --slot staging \
   --target-slot production
 
-# Verify — production now runs v2, staging has v1
+# Verify: production now runs v2, staging has v1
 echo "Production: https://$APP_NAME.azurewebsites.net"
 echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Task 7 — Configure Autoscale
+### Task 7: Configure Autoscale
 
 ```bash
 # Get the App Service plan resource ID
@@ -220,7 +220,7 @@ az monitor autoscale show -g rg-appservice-lab -n autoscale-web \
   --query "profiles[0].rules[].{Metric:metricTrigger.metricName, Op:metricTrigger.operator, Threshold:metricTrigger.threshold, Direction:scaleAction.direction}" -o table
 ```
 
-### Task 8 — Configure Backup
+### Task 8: Configure Backup
 
 ```bash
 # Create a storage account for backups
@@ -256,7 +256,7 @@ az webapp config backup create \
   --retain-one true
 ```
 
-### Task 9 — Configure Access Restrictions
+### Task 9: Configure Access Restrictions
 
 ```bash
 # Add an IP-based access restriction (allow only your IP)
@@ -289,14 +289,14 @@ az webapp config access-restriction show \
 - [ ] App Service plan (Standard S1) created
 - [ ] Web app deployed and accessible via HTTPS
 - [ ] Staging deployment slot created and receives v2
-- [ ] Slot swap executed — production runs v2
+- [ ] Slot swap executed | production runs v2
 - [ ] Autoscale configured with CPU-based rules
 - [ ] Backup schedule configured with storage account
 - [ ] Access restrictions configured on the web app
 
-## 🔧 Break & Fix Scenarios
+## Break & Fix Scenarios
 
-### Scenario A — Deploying to the Wrong Slot
+### Scenario A: Deploying to the Wrong Slot
 ```bash
 # You deployed v2 to production instead of staging. How do you roll back?
 # Hint: The previous version is now in the staging slot after a swap.
@@ -307,7 +307,7 @@ az webapp deployment slot swap \
   --target-slot production
 ```
 
-### Scenario B — Autoscale Min > Max
+### Scenario B: Autoscale Min > Max
 ```bash
 # Try setting min-count higher than max-count
 az monitor autoscale update \
@@ -317,7 +317,7 @@ az monitor autoscale update \
 # What error do you get?
 ```
 
-### Scenario C — Slots on Free Tier
+### Scenario C: Slots on Free Tier
 ```bash
 # Create a Free tier plan and try to add a slot
 az appservice plan create -g rg-appservice-lab -n plan-free --sku F1 --is-linux
@@ -351,10 +351,10 @@ Deployment slots require **Standard** tier or higher.
 
 1. Azure applies the **target slot's settings** (connection strings, app settings marked "slot setting") to the source slot.
 2. Azure **warms up** the source slot by sending an HTTP request to its root path.
-3. If warm-up succeeds, Azure **swaps the routing rules** — traffic now goes to the warmed-up source slot.
+3. If warm-up succeeds, Azure **swaps the routing rules** | traffic now goes to the warmed-up source slot.
 4. The previous production code is now in the staging slot (instant rollback if needed).
 
-The swap is atomic from the user's perspective — no downtime.
+The swap is atomic from the user's perspective | no downtime.
 </details>
 
 **3. Which deployment slot settings swap, and which don't?**
@@ -374,7 +374,7 @@ The swap is atomic from the user's perspective — no downtime.
 <details>
 <summary>Show Answer</summary>
 
-- **Scale-up** (vertical): Change the App Service plan tier/size — bigger VM, more CPU/RAM. Requires a brief restart.
+- **Scale-up** (vertical): Change the App Service plan tier/size | bigger VM, more CPU/RAM. Requires a brief restart.
 - **Scale-out** (horizontal): Add more instances of the same size. App Service load balances across instances. Can be manual or automatic (autoscale rules). No downtime.
 </details>
 

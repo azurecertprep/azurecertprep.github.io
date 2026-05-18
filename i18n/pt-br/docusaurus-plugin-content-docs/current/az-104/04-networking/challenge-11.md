@@ -1,17 +1,18 @@
 ---
 sidebar_position: 1
-title: "Challenge 11 — Virtual Networks & Subnets"
+title: "Challenge 11 | Virtual Networks & Subnets"
 ---
 
-# Desafio 11 — Virtual Networks & Subnets
+# Desafio 11: Virtual Networks & Subnets
 
 :::info Tempo Estimado & Custo
-⏱️ **45–60 minutos** | 💰 **~$0,10** (VMs para teste, desaloque rapidamente) | 📊 **Peso no exame: 15–20%**
+
+**45–60 minutos** | **~$0,10** (VMs para teste, desaloque rapidamente) | 📊 **Peso no exame: 15–20%**
 :::
 
 ## Cenário
 
-A Contoso está construindo uma arquitetura multi-camada com uma topologia de rede hub-spoke. A VNet hub contém serviços compartilhados (firewalls, DNS), enquanto as VNets spoke hospedam cargas de trabalho de aplicações. Você precisa projetar a rede com segmentação adequada, peering e roteamento — e depois provar que tudo funciona com testes de conectividade.
+A Contoso está construindo uma arquitetura multi-camada com uma topologia de rede hub-spoke. A VNet hub contém serviços compartilhados (firewalls, DNS), enquanto as VNets spoke hospedam cargas de trabalho de aplicações. Você precisa projetar a rede com segmentação adequada, peering e roteamento | e depois provar que tudo funciona com testes de conectividade.
 
 ## Habilidades do Exame Cobertas
 
@@ -36,7 +37,7 @@ A Contoso está construindo uma arquitetura multi-camada com uma topologia de re
 
 ## Tarefas
 
-### Tarefa 1 — Criar a VNet Hub
+### Tarefa 1: Criar a VNet Hub
 
 ```bash
 # Create a resource group
@@ -62,7 +63,7 @@ az network vnet show -g rg-network-lab -n vnet-hub \
   --query "{Name:name, AddressSpace:addressSpace.addressPrefixes, Subnets:subnets[].{Name:name, Prefix:addressPrefix}}" -o json
 ```
 
-### Tarefa 2 — Criar a VNet Spoke
+### Tarefa 2: Criar a VNet Spoke
 
 ```bash
 # Create the Spoke VNet
@@ -77,7 +78,7 @@ az network vnet create \
 az network vnet list -g rg-network-lab -o table
 ```
 
-### Tarefa 3 — Criar VNet Peering Bidirecional
+### Tarefa 3: Criar VNet Peering Bidirecional
 
 ```bash
 # Get VNet resource IDs
@@ -107,7 +108,7 @@ az network vnet peering list -g rg-network-lab --vnet-name vnet-hub -o table
 az network vnet peering list -g rg-network-lab --vnet-name vnet-spoke -o table
 ```
 
-### Tarefa 4 — Implantar VMs e Testar Conectividade
+### Tarefa 4: Implantar VMs e Testar Conectividade
 
 ```bash
 # Deploy a VM in the Hub VNet
@@ -149,7 +150,7 @@ echo "Then ping spoke: ping $SPOKE_PRIVATE_IP"
 ```
 
 <details>
-<summary>💡 Dica — Se o ping não funcionar</summary>
+<summary>💡 Dica | Se o ping não funcionar</summary>
 
 ICMP (ping) pode estar bloqueado pelo NSG padrão. Permita ICMP:
 ```bash
@@ -167,7 +168,7 @@ az network nsg rule create \
 ```
 </details>
 
-### Tarefa 5 — Criar um IP Público
+### Tarefa 5: Criar um IP Público
 
 ```bash
 # Create a static Standard public IP
@@ -183,7 +184,7 @@ az network public-ip show -g rg-network-lab -n pip-static-web \
   --query "{Name:name, IP:ipAddress, SKU:sku.name, Method:publicIpAllocationMethod}" -o table
 ```
 
-### Tarefa 6 — Criar uma Rota Definida pelo Usuário (UDR)
+### Tarefa 6: Criar uma Rota Definida pelo Usuário (UDR)
 
 ```bash
 # Create a route table
@@ -216,7 +217,7 @@ az network vnet subnet show -g rg-network-lab \
   --query "routeTable.id" -o tsv
 ```
 
-### Tarefa 7 — Usar o Network Watcher para Solucionar Problemas
+### Tarefa 7: Usar o Network Watcher para Solucionar Problemas
 
 ```bash
 # Enable Network Watcher (usually auto-enabled)
@@ -225,7 +226,7 @@ az network watcher configure \
   --locations eastus \
   --enabled true 2>/dev/null || true
 
-# IP Flow Verify — check if traffic from spoke VM to hub VM is allowed
+# IP Flow Verify: check if traffic from spoke VM to hub VM is allowed
 az network watcher test-ip-flow \
   --resource-group rg-network-lab \
   --vm vm-spoke \
@@ -234,7 +235,7 @@ az network watcher test-ip-flow \
   --local "$SPOKE_PRIVATE_IP:*" \
   --remote "$HUB_PRIVATE_IP:80"
 
-# Next Hop — check where traffic from spoke goes
+# Next Hop: check where traffic from spoke goes
 az network watcher show-next-hop \
   --resource-group rg-network-lab \
   --vm vm-spoke \
@@ -259,9 +260,9 @@ az network nic show-effective-route-table \
 - [ ] UDR força o tráfego spoke-para-hub a passar por um IP de appliance virtual
 - [ ] Network Watcher IP flow verify e next hop retornam resultados esperados
 
-## 🔧 Cenários de Quebre & Conserte
+## Cenários de Quebre & Conserte
 
-### Cenário A — Espaços de Endereço Sobrepostos
+### Cenário A: Espaços de Endereço Sobrepostos
 ```bash
 # Try to create a VNet with overlapping address space and peer it
 az network vnet create -g rg-network-lab \
@@ -274,7 +275,7 @@ az network vnet peering create -g rg-network-lab \
 # What error do you get? Why can't overlapping VNets be peered?
 ```
 
-### Cenário B — Next Hop Inválido
+### Cenário B: Next Hop Inválido
 ```bash
 # Create a UDR with a next hop IP that doesn't exist
 az network route-table route create \
@@ -287,7 +288,7 @@ az network route-table route create \
 # The route is created but traffic to 192.168.0.0/24 will blackhole. How do you diagnose?
 ```
 
-### Cenário C — Peering Unidirecional
+### Cenário C: Peering Unidirecional
 ```bash
 # Delete only one side of the peering
 az network vnet peering delete -g rg-network-lab \
@@ -356,7 +357,7 @@ O IP flow verify verifica se um pacote é permitido ou negado simulando as regra
 2. Ele avalia as regras NSG tanto no **NSG no nível da NIC** quanto no **NSG no nível da subnet**
 3. Retorna: Permitir ou Negar, além do nome específico da regra NSG que correspondeu
 
-Ele **não** verifica UDRs, firewalls ou NVAs — apenas regras NSG. Para problemas de roteamento, use "Next Hop".
+Ele **não** verifica UDRs, firewalls ou NVAs | apenas regras NSG. Para problemas de roteamento, use "Next Hop".
 </details>
 
 ## 🧹 Limpeza

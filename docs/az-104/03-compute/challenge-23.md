@@ -50,7 +50,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1 — Create App Service with Custom Domain Prerequisites
+### Task 1: Create App Service with Custom Domain Prerequisites
 
 ```bash
 # Create App Service plan (Standard required for custom domains + TLS)
@@ -71,7 +71,7 @@ az webapp create \
 echo "App URL: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Task 2 — Configure Custom Domain with DNS Verification
+### Task 2: Configure Custom Domain with DNS Verification
 
 :::tip Custom Domain Verification
 
@@ -119,7 +119,7 @@ az network dns record-set cname set-record \
 5. Add the required DNS records at your registrar
 6. Click **Validate** then **Add**
 
-### Task 3 — Bind a TLS Certificate (Managed Certificate)
+### Task 3: Bind a TLS Certificate (Managed Certificate)
 
 ```bash
 # Create an App Service Managed Certificate (free, auto-renewed)
@@ -160,7 +160,7 @@ az webapp show -g $RG -n $APP_NAME \
 4. Select **SNI SSL** as the binding type
 5. Under **Protocol Settings**, set Minimum TLS Version to **1.2**
 
-### Task 4 — Configure App Service Backup
+### Task 4: Configure App Service Backup
 
 ```bash
 # Create storage account for backups
@@ -212,7 +212,7 @@ az webapp config backup show \
 6. Optionally include linked database
 7. Click **Save**
 
-### Task 5 — Configure VNet Integration
+### Task 5: Configure VNet Integration
 
 ```bash
 # Create a VNet for integration
@@ -247,7 +247,7 @@ az webapp config appsettings set \
 The integration subnet must be delegated to Microsoft.Web/serverFarms and should not contain any other resources. Use a /24 or /26 subnet dedicated to App Service integration.
 :::
 
-### Task 6 — Configure Access Restrictions (IP Allow/Deny Rules)
+### Task 6: Configure Access Restrictions (IP Allow/Deny Rules)
 
 ```bash
 # Get your current IP
@@ -296,7 +296,7 @@ az webapp config access-restriction show \
   --name $APP_NAME -o table
 ```
 
-### Task 7 — Configure Hybrid Connections
+### Task 7: Configure Hybrid Connections
 
 :::tip Hybrid Connections
 
@@ -331,7 +331,7 @@ az relay namespace list --resource-group $RG -o table
 
 ## Break & Fix Scenarios
 
-### Scenario A — Backup Fails with Storage Error
+### Scenario A: Backup Fails with Storage Error
 
 ```bash
 # Simulate: Revoke the SAS token by regenerating storage keys
@@ -340,7 +340,7 @@ az storage account keys renew \
   --account-name $STORAGE_NAME \
   --key primary
 
-# Trigger a manual backup — it will fail
+# Trigger a manual backup: it will fail
 az webapp config backup create \
   --resource-group $RG \
   --webapp-name $APP_NAME \
@@ -350,7 +350,7 @@ az webapp config backup create \
 # Fix: Generate a new SAS token and update the backup configuration
 ```
 
-### Scenario B — VNet Integration Blocks Outbound
+### Scenario B: VNet Integration Blocks Outbound
 
 ```bash
 # After enabling WEBSITE_VNET_ROUTE_ALL, external APIs stop working
@@ -366,7 +366,7 @@ az network vnet subnet show \
 # Or set WEBSITE_VNET_ROUTE_ALL=0 for split tunneling
 ```
 
-### Scenario C — Access Restrictions Lock You Out
+### Scenario C: Access Restrictions Lock You Out
 
 ```bash
 # You accidentally denied all traffic including your own IP

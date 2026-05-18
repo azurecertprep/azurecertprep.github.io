@@ -13,7 +13,7 @@ title: "Desafio 19: AzCopy & Migração de Armazenamento"
 
 ## Cenário
 
-A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor. Você precisa migrar terabytes de dados blob entre contas de armazenamento, copiar dados entre regiões para recuperação de desastres e configurar sincronização contínua para um file share. A equipe de operações tem usado o Portal do Azure para baixar e re-enviar arquivos manualmente — o que leva dias. Você vai apresentar a eles o AzCopy e o Storage Explorer para movimentação de dados eficiente e de alto desempenho.
+A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor. Você precisa migrar terabytes de dados blob entre contas de armazenamento, copiar dados entre regiões para recuperação de desastres e configurar sincronização contínua para um file share. A equipe de operações tem usado o Portal do Azure para baixar e re-enviar arquivos manualmente | o que leva dias. Você vai apresentar a eles o AzCopy e o Storage Explorer para movimentação de dados eficiente e de alto desempenho.
 
 ## Habilidades do Exame Cobertas
 
@@ -39,7 +39,7 @@ A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor
 
 ## Tarefas
 
-### Tarefa 1 — Configurar o Ambiente do Laboratório
+### Tarefa 1: Configurar o Ambiente do Laboratório
 
 Crie duas contas de armazenamento para simular um cenário de migração:
 
@@ -97,7 +97,7 @@ az storage blob upload \
 rm -f doc*.txt largefile.bin
 ```
 
-### Tarefa 2 — Instalar e Autenticar o AzCopy
+### Tarefa 2: Instalar e Autenticar o AzCopy
 
 ```bash
 # Verificar se o AzCopy está instalado
@@ -119,7 +119,7 @@ Se o AzCopy não estiver instalado:
 
 :::
 
-### Tarefa 3 — Copiar Blobs Entre Contêineres (Mesma Conta)
+### Tarefa 3: Copiar Blobs Entre Contêineres (Mesma Conta)
 
 ```bash
 # Copiar todos os blobs do contêiner documents para backups (mesma conta)
@@ -136,7 +136,7 @@ az storage blob list \
   --query "[].name" -o tsv
 ```
 
-### Tarefa 4 — Copiar Blobs Entre Contas de Armazenamento Usando Tokens SAS
+### Tarefa 4: Copiar Blobs Entre Contas de Armazenamento Usando Tokens SAS
 
 Gere tokens SAS e realize a cópia entre contas:
 
@@ -173,7 +173,7 @@ az storage blob list \
   --query "[].{Name:name, Size:properties.contentLength}" -o table
 ```
 
-### Tarefa 5 — Operações de Sincronização (Espelhar Origem para Destino)
+### Tarefa 5: Operações de Sincronização (Espelhar Origem para Destino)
 
 ```bash
 # Adicionar novos arquivos à origem
@@ -201,7 +201,7 @@ azcopy sync \
 rm -f newfile.txt
 ```
 
-### Tarefa 6 — Benchmark de Desempenho de Transferência
+### Tarefa 6: Benchmark de Desempenho de Transferência
 
 ```bash
 # Benchmark de desempenho de upload para a conta de destino
@@ -217,7 +217,7 @@ azcopy benchmark \
   --size-per-file 100M
 ```
 
-### Tarefa 7 — Usar AzCopy com Padrões de Inclusão/Exclusão
+### Tarefa 7: Usar AzCopy com Padrões de Inclusão/Exclusão
 
 ```bash
 # Copiar apenas arquivos .txt
@@ -235,7 +235,7 @@ azcopy copy \
   --exclude-pattern "*.bin"
 ```
 
-### Tarefa 8 — Visualizar Histórico de Jobs e Logs
+### Tarefa 8: Visualizar Histórico de Jobs e Logs
 
 ```bash
 # Listar jobs recentes do AzCopy
@@ -265,9 +265,9 @@ azcopy env
 <summary>Dica 1: Métodos de autenticação do AzCopy</summary>
 
 O AzCopy suporta três métodos de autenticação:
-1. **Entra ID (azcopy login)** — Melhor para uso interativo e acesso baseado em RBAC
-2. **Tokens SAS** — Anexados à URL, com limite de tempo, melhor para automação
-3. **Chave da conta de armazenamento** — Definida via variável de ambiente `ACCOUNT_KEY` (não recomendado)
+1. **Entra ID (azcopy login)** | Melhor para uso interativo e acesso baseado em RBAC
+2. **Tokens SAS** | Anexados à URL, com limite de tempo, melhor para automação
+3. **Chave da conta de armazenamento** | Definida via variável de ambiente `ACCOUNT_KEY` (não recomendado)
 
 Para o exame, saiba que a cópia service-to-service (entre contas) requer tokens SAS em ambos os lados OU login com Entra ID com funções RBAC apropriadas em ambas as contas.
 
@@ -276,8 +276,8 @@ Para o exame, saiba que a cópia service-to-service (entre contas) requer tokens
 <details>
 <summary>Dica 2: Copy vs Sync</summary>
 
-- **azcopy copy** — Sempre copia todos os arquivos especificados independentemente de existirem no destino
-- **azcopy sync** — Só copia arquivos novos ou modificados (compara timestamps de última modificação). Opcionalmente exclui arquivos no destino que não estão na origem (--delete-destination)
+- **azcopy copy** | Sempre copia todos os arquivos especificados independentemente de existirem no destino
+- **azcopy sync** | Só copia arquivos novos ou modificados (compara timestamps de última modificação). Opcionalmente exclui arquivos no destino que não estão na origem (--delete-destination)
 
 </details>
 
@@ -301,15 +301,15 @@ Defina a variável de ambiente `AZCOPY_CONCURRENCY_VALUE` para aumentar conexõe
 
 ## Quebrar & Consertar
 
-### Cenário A — Token SAS Expirado
+### Cenário A: Token SAS Expirado
 
 Gere um token SAS com expiração de 1 minuto. Espere 2 minutos, depois tente uma cópia. Observe a mensagem de erro. Como você diagnostica expiração de SAS vs problemas de permissão?
 
-### Cenário B — Contêiner Ausente no Destino
+### Cenário B: Contêiner Ausente no Destino
 
 Tente copiar para um contêiner que não existe no destino. O AzCopy o cria automaticamente? (Resposta: Sim, se o token SAS ou as permissões RBAC permitirem a criação de contêineres.)
 
-### Cenário C — Falha Parcial na Transferência
+### Cenário C: Falha Parcial na Transferência
 
 Durante uma operação de cópia grande, simule uma falha revogando o token SAS no meio da transferência. Use `azcopy jobs resume` para reiniciar o job com falha com um novo token válido.
 
@@ -323,7 +323,7 @@ azcopy jobs resume <job-id> --source-sas="<new-sas>" --destination-sas="<new-sas
 <details>
 <summary>1. Qual é a diferença entre azcopy copy e azcopy sync?</summary>
 
-**azcopy copy** copia incondicionalmente todos os arquivos que correspondem aos critérios — não verifica se os arquivos já existem no destino. É melhor para transferências únicas.
+**azcopy copy** copia incondicionalmente todos os arquivos que correspondem aos critérios | não verifica se os arquivos já existem no destino. É melhor para transferências únicas.
 
 **azcopy sync** compara origem e destino pelo tempo de última modificação e só transfere arquivos alterados ou novos. É melhor para sincronização contínua. Com `--delete-destination=true`, espelha a origem exatamente (excluindo extras no destino).
 
@@ -351,7 +351,7 @@ Para operações de blob:
 - **Escrita**: Storage Blob Data Contributor
 - **Controle total**: Storage Blob Data Owner
 
-Nota: As funções clássicas "Reader" ou "Contributor" na conta de armazenamento NÃO são suficientes para operações no plano de dados — você precisa das funções específicas de dados.
+Nota: As funções clássicas "Reader" ou "Contributor" na conta de armazenamento NÃO são suficientes para operações no plano de dados | você precisa das funções específicas de dados.
 
 </details>
 

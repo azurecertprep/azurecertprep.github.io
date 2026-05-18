@@ -7,8 +7,8 @@ title: "Challenge 14: Azure Monitor & Alerts"
 
 | | |
 |---|---|
-| ⏱️ **Tempo estimado** | 60 minutos |
-| 💰 **Custo estimado** | ~$0,10 |
+| **Tempo estimado** | 60 minutos |
+| **Custo estimado** | ~$0,10 |
 | 📊 **Peso no exame** | 10–15% |
 
 ## Cenário
@@ -47,7 +47,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1 — Criar um Log Analytics Workspace
+### Tarefa 1: Criar um Log Analytics Workspace
 
 ```bash
 az monitor log-analytics workspace create \
@@ -56,7 +56,7 @@ az monitor log-analytics workspace create \
   --location $LOCATION
 ```
 
-### Tarefa 2 — Implantar uma VM e Habilitar VM Insights
+### Tarefa 2: Implantar uma VM e Habilitar VM Insights
 
 Implante uma VM e habilite o Azure Monitor VM Insights para coletar dados de desempenho e dependência.
 
@@ -73,20 +73,21 @@ az vm create \
 Habilite o VM Insights pelo Portal do Azure: **VM → Insights → Habilitar**.
 
 :::tip Dica
+
 O VM Insights instala automaticamente o Azure Monitor Agent e configura uma regra de coleta de dados (DCR).
 :::
 
-### Tarefa 3 — Explorar Métricas do Azure Monitor
+### Tarefa 3: Explorar Métricas do Azure Monitor
 
 Navegue até **Azure Monitor → Métricas** (ou a aba Métricas da VM) e explore:
 
-- **Percentage CPU** — Utilização atual da CPU
-- **Available Memory Bytes** — Pressão de memória
-- **Disk Read/Write Operations/Sec** — I/O de disco
+- **Percentage CPU** | Utilização atual da CPU
+- **Available Memory Bytes** | Pressão de memória
+- **Disk Read/Write Operations/Sec** | I/O de disco
 
 Tente fixar um gráfico em um dashboard.
 
-### Tarefa 4 — Configurar Diagnostic Settings
+### Tarefa 4: Configurar Diagnostic Settings
 
 Envie logs e métricas da plataforma para o Log Analytics:
 
@@ -111,10 +112,11 @@ az monitor diagnostic-settings create \
 ```
 
 :::note
+
 Pode levar **15–30 minutos** para os dados de log aparecerem no Log Analytics após habilitar as configurações de diagnóstico. Isso é normal.
 :::
 
-### Tarefa 5 — Escrever Consultas KQL
+### Tarefa 5: Escrever Consultas KQL
 
 Abra **Log Analytics → Logs** e execute estas consultas:
 
@@ -138,7 +140,7 @@ Syslog
 ```
 
 ```kusto
-// Heartbeat — which VMs are reporting?
+// Heartbeat | which VMs are reporting?
 Heartbeat
 | summarize LastHeartbeat = max(TimeGenerated) by Computer
 | extend Status = iff(LastHeartbeat < ago(5m), "Offline", "Online")
@@ -164,7 +166,7 @@ Perf
 
 </details>
 
-### Tarefa 6 — Criar um Action Group
+### Tarefa 6: Criar um Action Group
 
 Crie um grupo de ação que envia notificações por email:
 
@@ -176,7 +178,7 @@ az monitor action-group create \
   --action email ops-email yourname@contoso.com
 ```
 
-### Tarefa 7 — Criar um Alerta de Métrica
+### Tarefa 7: Criar um Alerta de Métrica
 
 Crie um alerta que dispara quando a CPU excede 80% por 5 minutos:
 
@@ -195,9 +197,9 @@ az monitor metrics alert create \
   --description "CPU usage exceeded 80% for 5 minutes"
 ```
 
-### Tarefa 8 — Criar um Alerta de Log
+### Tarefa 8: Criar um Alerta de Log
 
-Crie um alerta baseado em uma consulta KQL — por exemplo, detectar um padrão específico de erro nos logs:
+Crie um alerta baseado em uma consulta KQL | por exemplo, detectar um padrão específico de erro nos logs:
 
 <details>
 <summary>💡 Dica</summary>
@@ -212,19 +214,19 @@ Use o Portal do Azure: **Monitor → Alertas → Criar → Regra de alerta de lo
 
 </details>
 
-### Tarefa 9 — Habilitar Storage Insights
+### Tarefa 9: Habilitar Storage Insights
 
 1. Crie uma conta de armazenamento (se você não tiver uma)
 2. Navegue até **Azure Monitor → Contas de armazenamento** (ou **Conta de armazenamento → Insights**)
 3. Explore: métricas de transação, latência, disponibilidade, tendências de capacidade
 
-### Tarefa 10 — Usar o Network Watcher
+### Tarefa 10: Usar o Network Watcher
 
 Explore estas ferramentas do Network Watcher:
 
-1. **Topologia** — Visualize sua VNet e recursos conectados
-2. **IP Flow Verify** — Teste se o tráfego é permitido ou negado entre dois endpoints
-3. **Connection Troubleshoot** — Verifique a conectividade de uma VM para um destino
+1. **Topologia** | Visualize sua VNet e recursos conectados
+2. **IP Flow Verify** | Teste se o tráfego é permitido ou negado entre dois endpoints
+3. **Connection Troubleshoot** | Verifique a conectividade de uma VM para um destino
 
 ```bash
 # IP Flow Verify example
@@ -240,12 +242,12 @@ az network watcher test-ip-flow \
 ## 🔨 Quebre & Conserte
 
 ### Quebre
-1. **Alerta sem ação** — Crie uma regra de alerta mas não anexe um grupo de ação. Acione a condição. Observe: o alerta dispara no portal mas nenhuma notificação é enviada. Por quê?
-2. **Resultados de log vazios** — Consulte logs imediatamente após habilitar as configurações de diagnóstico. Os resultados estão vazios. Isso está quebrado?
+1. **Alerta sem ação** | Crie uma regra de alerta mas não anexe um grupo de ação. Acione a condição. Observe: o alerta dispara no portal mas nenhuma notificação é enviada. Por quê?
+2. **Resultados de log vazios** | Consulte logs imediatamente após habilitar as configurações de diagnóstico. Os resultados estão vazios. Isso está quebrado?
 
 ### Conserte
 - Anexe o grupo de ação à regra de alerta
-- Entenda que a ingestão de logs tem um atraso (15–30 min) — isso é comportamento esperado, não um bug
+- Entenda que a ingestão de logs tem um atraso (15–30 min) | isso é comportamento esperado, não um bug
 - Use a tabela **Heartbeat** para verificar que o agente está conectado
 
 ## 📝 Teste seus Conhecimentos
@@ -255,11 +257,11 @@ az network watcher test-ip-flow \
    - Logs = texto estruturado/não estruturado, armazenado no Log Analytics, consultado com KQL
 
 2. **Quais são os operadores KQL essenciais para o exame?**
-   - `where` — filtrar linhas
-   - `summarize` — agregar (count, avg, sum, max)
-   - `ago()` — tempo relativo ao agora (ex: `ago(1h)`, `ago(7d)`)
-   - `project` — selecionar colunas
-   - `render` — visualizar resultados
+   - `where` | filtrar linhas
+   - `summarize` | agregar (count, avg, sum, max)
+   - `ago()` | tempo relativo ao agora (ex: `ago(1h)`, `ago(7d)`)
+   - `project` | selecionar colunas
+   - `render` | visualizar resultados
 
 3. **Quais são os níveis de severidade de alerta?**
    - 0 = Crítico, 1 = Erro, 2 = Aviso, 3 = Informativo, 4 = Detalhado

@@ -13,7 +13,7 @@ title: "Challenge 20: Storage Encryption & Data Protection"
 
 ## Scenario
 
-Contoso Ltd.'s compliance team has flagged a regulatory requirement: all storage containing financial or healthcare data must use customer-managed encryption keys (CMK) for audit trail purposes. Additionally, regulatory data (such as financial records and audit logs) must be stored in immutable (WORM — Write Once, Read Many) containers where data cannot be modified or deleted for a specified retention period. You are tasked with implementing these encryption and data protection controls.
+Contoso Ltd.'s compliance team has flagged a regulatory requirement: all storage containing financial or healthcare data must use customer-managed encryption keys (CMK) for audit trail purposes. Additionally, regulatory data (such as financial records and audit logs) must be stored in immutable (WORM | Write Once, Read Many) containers where data cannot be modified or deleted for a specified retention period. You are tasked with implementing these encryption and data protection controls.
 
 ## Exam Skills Covered
 
@@ -41,7 +41,7 @@ Contoso Ltd.'s compliance team has flagged a regulatory requirement: all storage
 
 ## Tasks
 
-### Task 1 — Create the Lab Environment
+### Task 1: Create the Lab Environment
 
 ```bash
 # Create resource group
@@ -60,7 +60,7 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-encryption-lab --query "[0].name" -o tsv)
 ```
 
-### Task 2 — Create a Storage Account with Infrastructure Encryption
+### Task 2: Create a Storage Account with Infrastructure Encryption
 
 Infrastructure encryption (double encryption) adds a second layer of encryption at the infrastructure level using a different algorithm:
 
@@ -93,7 +93,7 @@ When creating a storage account in the portal:
 
 :::
 
-### Task 3 — Create a Key in Azure Key Vault
+### Task 3: Create a Key in Azure Key Vault
 
 ```bash
 # Create an RSA key for storage encryption
@@ -112,7 +112,7 @@ KEY_URI=$(az keyvault key show \
 echo "Key URI: $KEY_URI"
 ```
 
-### Task 4 — Configure Customer-Managed Keys (CMK) on the Storage Account
+### Task 4: Configure Customer-Managed Keys (CMK) on the Storage Account
 
 ```bash
 # Assign a system-managed identity to the storage account
@@ -148,7 +148,7 @@ az storage account show \
   --query "{KeySource:encryption.keySource, KeyVaultUri:encryption.keyVaultProperties.keyVaultUri, KeyName:encryption.keyVaultProperties.keyName}" -o table
 ```
 
-### Task 5 — Configure Immutability Policy (Time-Based Retention)
+### Task 5: Configure Immutability Policy (Time-Based Retention)
 
 ```bash
 # Create a container for regulatory data
@@ -194,7 +194,7 @@ Only lock a policy when you are certain about the retention requirements.
 
 :::
 
-### Task 6 — Configure Legal Hold
+### Task 6: Configure Legal Hold
 
 ```bash
 # Create a container for litigation data
@@ -235,7 +235,7 @@ az storage blob delete \
 rm -f evidence.txt
 ```
 
-### Task 7 — Verify Encryption Settings
+### Task 7: Verify Encryption Settings
 
 ```bash
 # Check encryption scope at the account level
@@ -258,7 +258,7 @@ az keyvault key show \
   --query "{Name:key.kid, Enabled:attributes.enabled, Created:attributes.created}" -o table
 ```
 
-### Task 8 — Rotate the Customer-Managed Key
+### Task 8: Rotate the Customer-Managed Key
 
 ```bash
 # Create a new version of the key
@@ -306,7 +306,7 @@ The storage account's managed identity needs the **Key Vault Crypto Service Encr
 <summary>Hint 3: Immutability vs Legal Hold</summary>
 
 - **Time-based retention**: Blobs cannot be deleted until the retention period expires. The period can be extended but never shortened (once locked).
-- **Legal hold**: Blobs cannot be deleted indefinitely until ALL legal hold tags are removed. No time limit — it persists until explicitly cleared.
+- **Legal hold**: Blobs cannot be deleted indefinitely until ALL legal hold tags are removed. No time limit | it persists until explicitly cleared.
 - Both can be active simultaneously on the same container.
 
 </details>
@@ -320,7 +320,7 @@ Purge protection must be enabled on the Key Vault used for CMK. Without it, dele
 
 ## Break and Fix
 
-### Scenario A — CMK Key Disabled
+### Scenario A: CMK Key Disabled
 
 Disable the encryption key in Key Vault. What happens to read/write operations on the storage account? (Answer: All data plane operations fail with a 403 error after the cached key expires, typically within a few hours.)
 
@@ -341,11 +341,11 @@ az keyvault key set-attributes \
   --enabled true
 ```
 
-### Scenario B — Locked Immutability Policy
+### Scenario B: Locked Immutability Policy
 
-Lock the immutability policy on a test container, then try to delete a blob before the retention period ends. Observe the error. Note: This cannot be undone — only do this on a test container.
+Lock the immutability policy on a test container, then try to delete a blob before the retention period ends. Observe the error. Note: This cannot be undone | only do this on a test container.
 
-### Scenario C — Lost Key Vault Access
+### Scenario C: Lost Key Vault Access
 
 Remove the managed identity's role assignment on the Key Vault. How long before storage operations begin failing? How do you diagnose the issue using Azure Monitor?
 
@@ -354,7 +354,7 @@ Remove the managed identity's role assignment on the Key Vault. How long before 
 <details>
 <summary>1. What is the difference between Microsoft-managed keys and customer-managed keys?</summary>
 
-**Microsoft-managed keys (default)**: Microsoft handles all key management — generation, storage, rotation, and retirement. Zero admin effort required. Keys are rotated automatically.
+**Microsoft-managed keys (default)**: Microsoft handles all key management | generation, storage, rotation, and retirement. Zero admin effort required. Keys are rotated automatically.
 
 **Customer-managed keys (CMK)**: You create and manage the key in Azure Key Vault. You control rotation schedule, access policies, and can revoke access by disabling the key. Required for compliance scenarios where key custody must be demonstrable.
 
@@ -363,7 +363,7 @@ Remove the managed identity's role assignment on the Key Vault. How long before 
 <details>
 <summary>2. Can you switch from Microsoft-managed keys to CMK on an existing storage account?</summary>
 
-**Yes.** You can switch an existing storage account from Microsoft-managed keys to customer-managed keys at any time. The reverse is also possible (CMK back to Microsoft-managed). No data migration is needed — Azure re-wraps the encryption keys transparently.
+**Yes.** You can switch an existing storage account from Microsoft-managed keys to customer-managed keys at any time. The reverse is also possible (CMK back to Microsoft-managed). No data migration is needed | Azure re-wraps the encryption keys transparently.
 
 </details>
 

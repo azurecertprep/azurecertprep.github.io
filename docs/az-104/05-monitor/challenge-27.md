@@ -51,7 +51,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1 — Create a Log Analytics Workspace
+### Task 1: Create a Log Analytics Workspace
 
 ```bash
 # Create Log Analytics workspace
@@ -86,7 +86,7 @@ The PerGB2018 SKU charges per GB ingested. For the exam, know these options:
 - **Daily cap**: Can set a daily ingestion cap to control costs
 :::
 
-### Task 2 — Deploy Target VMs for Monitoring
+### Task 2: Deploy Target VMs for Monitoring
 
 ```bash
 # Create a VNet
@@ -129,7 +129,7 @@ az vm run-command invoke \
   --scripts "sudo apt-get update && sudo apt-get install -y nginx && sudo systemctl start nginx"
 ```
 
-### Task 3 — Create Data Collection Rules (DCR)
+### Task 3: Create Data Collection Rules (DCR)
 
 ```bash
 # Get workspace resource ID
@@ -162,7 +162,7 @@ az monitor data-collection rule create \
 az monitor data-collection rule list --resource-group $RG -o table
 ```
 
-### Task 4 — Install Azure Monitor Agent and Associate DCRs
+### Task 4: Install Azure Monitor Agent and Associate DCRs
 
 ```bash
 # Install Azure Monitor Agent on Linux VM
@@ -220,7 +220,7 @@ AMA replaces the legacy Log Analytics agent (MMA/OMS) and Diagnostics extension:
 - For the AZ-104 exam, focus on AMA + DCR (the modern approach)
 :::
 
-### Task 5 — Configure Diagnostic Settings for Azure Resources
+### Task 5: Configure Diagnostic Settings for Azure Resources
 
 ```bash
 # Enable diagnostic settings for the VNet (sending to Log Analytics)
@@ -252,7 +252,7 @@ az monitor diagnostic-settings categories list \
 4. Choose destinations: Log Analytics workspace, Storage account, Event Hub
 5. Click **Save**
 
-### Task 6 — Write KQL Queries
+### Task 6: Write KQL Queries
 
 :::tip KQL Basics
 
@@ -318,7 +318,7 @@ Perf
 | evaluate pivot(CounterName, any(AvgValue))
 ```
 
-### Task 7 — Create Saved Queries and Functions
+### Task 7: Create Saved Queries and Functions
 
 ```bash
 # Save a query via the Portal:
@@ -341,7 +341,7 @@ az monitor log-analytics workspace saved-search list \
   --workspace-name law-contoso-ops -o table
 ```
 
-### Task 8 — Create a Workbook with Visualizations
+### Task 8: Create a Workbook with Visualizations
 
 **Portal Steps (Workbooks require Portal):**
 
@@ -349,7 +349,7 @@ az monitor log-analytics workspace saved-search list \
 2. Click **New**
 3. Add the following elements:
 
-**Section 1 — VM Health Overview (Grid):**
+**Section 1 | VM Health Overview (Grid):**
 ```kusto
 Heartbeat
 | where TimeGenerated > ago(5m)
@@ -358,7 +358,7 @@ Heartbeat
 | project Computer, OSType, LastHeartbeat, Status
 ```
 
-**Section 2 — CPU Usage Over Time (Line Chart):**
+**Section 2 | CPU Usage Over Time (Line Chart):**
 ```kusto
 Perf
 | where TimeGenerated > ago(4h)
@@ -368,7 +368,7 @@ Perf
 | render timechart
 ```
 
-**Section 3 — Error Summary (Pie Chart):**
+**Section 3 | Error Summary (Pie Chart):**
 ```kusto
 Syslog
 | where TimeGenerated > ago(24h)
@@ -377,7 +377,7 @@ Syslog
 | render piechart
 ```
 
-**Section 4 — Top Talkers (Bar Chart):**
+**Section 4 | Top Talkers (Bar Chart):**
 ```kusto
 Perf
 | where TimeGenerated > ago(1h)
@@ -389,7 +389,7 @@ Perf
 
 4. Click **Save** and name the workbook "Contoso Operations Dashboard"
 
-### Task 9 — Configure Workspace Settings
+### Task 9: Configure Workspace Settings
 
 ```bash
 # Set daily ingestion cap (cost control)
@@ -433,7 +433,7 @@ az monitor log-analytics workspace show \
 
 ## Break & Fix Scenarios
 
-### Scenario A — No Data Appearing in Log Analytics
+### Scenario A: No Data Appearing in Log Analytics
 
 ```bash
 # Check if AMA extension is installed and healthy
@@ -455,7 +455,7 @@ az monitor data-collection rule show \
 # 4. Wait time (data takes 5-15 minutes to appear)
 ```
 
-### Scenario B — KQL Query Returns No Results
+### Scenario B: KQL Query Returns No Results
 
 ```kusto
 // Common mistake: Wrong table name
@@ -471,7 +471,7 @@ search *
 | order by Count desc
 ```
 
-### Scenario C — Daily Cap Reached
+### Scenario C: Daily Cap Reached
 
 ```bash
 # Symptom: Data stops flowing into workspace

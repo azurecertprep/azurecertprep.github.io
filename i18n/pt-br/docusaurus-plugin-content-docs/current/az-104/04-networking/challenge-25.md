@@ -70,7 +70,7 @@ az network vnet subnet create \
 
 ## Tarefas
 
-### Tarefa 1 — Criar Recursos PaaS de Destino
+### Tarefa 1: Criar Recursos PaaS de Destino
 
 ```bash
 # Create a Storage Account
@@ -101,7 +101,7 @@ az keyvault secret set \
   --value "Server=sql.contoso.local;Database=app;Trusted_Connection=True;"
 ```
 
-### Tarefa 2 — Configurar Service Endpoint para Storage
+### Tarefa 2: Configurar Service Endpoint para Storage
 
 ```bash
 # Enable the Microsoft.Storage service endpoint on the subnet
@@ -142,7 +142,7 @@ az storage account network-rule list \
 Service endpoints mantêm o tráfego na rede backbone do Azure e restringem o acesso ao PaaS a sub-redes específicas da VNet. O IP público do serviço PaaS ainda é usado para comunicação, mas a origem é identificada pela VNet/sub-rede em vez de um IP público.
 :::
 
-### Tarefa 3 — Configurar Private Endpoint para Storage
+### Tarefa 3: Configurar Private Endpoint para Storage
 
 ```bash
 # Disable private endpoint network policies on the subnet
@@ -175,7 +175,7 @@ az network private-endpoint show \
   --query "{Name:name, PrivateIP:customDnsConfigs[0].ipAddresses[0], Status:privateLinkServiceConnections[0].privateLinkServiceConnectionState.status}" -o table
 ```
 
-### Tarefa 4 — Configurar Private DNS Zone para Storage
+### Tarefa 4: Configurar Private DNS Zone para Storage
 
 ```bash
 # Create private DNS zone for blob storage
@@ -210,7 +210,7 @@ az network private-dns record-set a list \
 Quando você cria um private endpoint, precisa de uma Private DNS Zone para que o FQDN (ex.: `contososa12345.blob.core.windows.net`) resolva para o IP privado (ex.: `10.0.2.4`) em vez do IP público. O nome da zona deve corresponder à zona privatelink do serviço (ex.: `privatelink.blob.core.windows.net`).
 :::
 
-### Tarefa 5 — Configurar Private Endpoint para Key Vault
+### Tarefa 5: Configurar Private Endpoint para Key Vault
 
 ```bash
 # Get Key Vault resource ID
@@ -262,7 +262,7 @@ az network private-dns record-set a list \
   --zone-name "privatelink.vaultcore.azure.net" -o table
 ```
 
-### Tarefa 6 — Verificar Resolução de Nomes Através do DNS Privado
+### Tarefa 6: Verificar Resolução de Nomes Através do DNS Privado
 
 ```bash
 # Deploy a test VM in the workload subnet
@@ -296,7 +296,7 @@ az vm run-command invoke \
 # Expected: resolves to private IP (10.0.2.x)
 ```
 
-### Tarefa 7 — Configurar Políticas de Rede para Private Endpoints
+### Tarefa 7: Configurar Políticas de Rede para Private Endpoints
 
 ```bash
 # Enable NSG support for private endpoints (newer feature)
@@ -343,7 +343,7 @@ az network vnet subnet update \
   --network-security-group nsg-privateendpoints
 ```
 
-### Tarefa 8 — Comparar Service Endpoints vs Private Endpoints
+### Tarefa 8: Comparar Service Endpoints vs Private Endpoints
 
 Implante ambas as abordagens lado a lado e observe as diferenças:
 
@@ -389,7 +389,7 @@ echo "
 
 ## Cenários de Quebrar & Consertar
 
-### Cenário A — DNS Não Resolve para IP Privado
+### Cenário A: DNS Não Resolve para IP Privado
 
 ```bash
 # Symptom: nslookup returns public IP instead of private IP
@@ -409,7 +409,7 @@ az network private-dns link vnet create \
   --registration-enabled false
 ```
 
-### Cenário B — Conexão do Private Endpoint Não Aprovada
+### Cenário B: Conexão do Private Endpoint Não Aprovada
 
 ```bash
 # If using manual approval, the connection stays in "Pending" state
@@ -426,14 +426,14 @@ az network private-endpoint show \
 #   --name <connection-name>
 ```
 
-### Cenário C — Storage Acessível pela Internet Apesar do Firewall
+### Cenário C: Storage Acessível pela Internet Apesar do Firewall
 
 ```bash
 # Check if default action is set correctly
 az storage account show -g $RG -n $STORAGE_NAME \
   --query "networkRuleSet.defaultAction"
 
-# Should be "Deny" — if "Allow", public access is still open
+# Should be "Deny": if "Allow", public access is still open
 az storage account update -g $RG -n $STORAGE_NAME --default-action Deny
 
 # Also check if "Allow Azure services" bypass is enabled

@@ -240,29 +240,29 @@ function CertificationCoverage() {
               </thead>
               <tbody>
                 <tr>
-                  <td><span className="domain-badge domain-badge--identity">Identidade & Governança</span></td>
-                  <td>20–25%</td>
-                  <td>01, 02, 03, 17, 18</td>
+                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identidade & Governança</span></td>
+                  <td style={{textAlign: 'center'}}>20–25%</td>
+                  <td style={{textAlign: 'center'}}>01, 02, 03, 17, 18</td>
                 </tr>
                 <tr>
-                  <td><span className="domain-badge domain-badge--storage">Armazenamento</span></td>
-                  <td>15–20%</td>
-                  <td>04, 05, 06, 19, 20</td>
+                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--storage">Armazenamento</span></td>
+                  <td style={{textAlign: 'center'}}>15–20%</td>
+                  <td style={{textAlign: 'center'}}>04, 05, 06, 19, 20</td>
                 </tr>
                 <tr>
-                  <td><span className="domain-badge domain-badge--compute">Computação</span></td>
-                  <td>20–25%</td>
-                  <td>07, 08, 09, 10, 21, 22, 23</td>
+                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Computação</span></td>
+                  <td style={{textAlign: 'center'}}>20–25%</td>
+                  <td style={{textAlign: 'center'}}>07, 08, 09, 10, 21, 22, 23</td>
                 </tr>
                 <tr>
-                  <td><span className="domain-badge domain-badge--networking">Rede</span></td>
-                  <td>15–20%</td>
-                  <td>11, 12, 13, 24, 25, 26</td>
+                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Rede</span></td>
+                  <td style={{textAlign: 'center'}}>15–20%</td>
+                  <td style={{textAlign: 'center'}}>11, 12, 13, 24, 25, 26</td>
                 </tr>
                 <tr>
-                  <td><span className="domain-badge domain-badge--monitor">Monitorar & Manter</span></td>
-                  <td>10–15%</td>
-                  <td>14, 15, 27, 28</td>
+                  <td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitor">Monitorar & Manter</span></td>
+                  <td style={{textAlign: 'center'}}>10–15%</td>
+                  <td style={{textAlign: 'center'}}>14, 15, 27, 28</td>
                 </tr>
               </tbody>
             </table>

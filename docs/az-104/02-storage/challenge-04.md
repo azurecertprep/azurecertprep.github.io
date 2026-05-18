@@ -8,11 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 04: Storage Accounts & Access
 
-> **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$0.50 | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | **Estimated cost**: ~$0.50 | **Exam weight**: 15-20%
 
 ## Introduction
 
-Contoso's application team needs a centralized storage solution. The legacy file server is running out of space, and the dev team keeps emailing ZIP files back and forth. You've been asked to set up Azure Storage with proper security controls — access keys, SAS tokens, firewalls, and encryption. This is the Azure equivalent of setting up a file server, but with cloud-scale security.
+Contoso's application team needs a centralized storage solution. The legacy file server is running out of space, and the dev team keeps emailing ZIP files back and forth. You've been asked to set up Azure Storage with proper security controls | access keys, SAS tokens, firewalls, and encryption. This is the Azure equivalent of setting up a file server, but with cloud-scale security.
 
 Storage accounts are one of the most tested topics on the AZ-104 exam. You'll need to know every access method, every redundancy option, and every security control inside and out.
 
@@ -36,7 +36,7 @@ Storage accounts are one of the most tested topics on the AZ-104 exam. You'll ne
 | RAID 1 (mirroring) | LRS (Local Redundant Storage) | 3 copies in one datacenter |
 | RAID across sites | GRS (Geo-Redundant Storage) | 6 copies across 2 regions |
 | Share permissions (Everyone: Read) | SAS tokens | Time-limited, scope-limited access |
-| Admin password for file share | Storage account access keys | Full access — protect like a password |
+| Admin password for file share | Storage account access keys | Full access | protect like a password |
 | Robocopy / xcopy | AzCopy | High-performance data transfer |
 | Windows Explorer for shares | Azure Storage Explorer | GUI tool for storage management |
 | BitLocker / disk encryption | Storage Service Encryption (SSE) | Automatic, always-on encryption |
@@ -95,7 +95,7 @@ az storage account keys list --account-name $STORAGE_NAME --resource-group $RG -
 
 :::warning
 
-Access keys grant **full control** over the storage account. Treat them like passwords — never commit them to source control or share them in plain text.
+Access keys grant **full control** over the storage account. Treat them like passwords | never commit them to source control or share them in plain text.
 :::
 
 7. Create a blob container and upload a test file:
@@ -284,7 +284,7 @@ STORAGE_NAME="stchallenge$(date +%s | tail -c 8)"
 | **Service SAS** | Specific service (e.g., one container) | Access keys | Via stored access policy |
 | **User Delegation SAS** | Specific blob/container | Entra ID credentials | By revoking the delegation key |
 
-**User Delegation SAS** is the most secure — it uses Entra ID instead of access keys.
+**User Delegation SAS** is the most secure | it uses Entra ID instead of access keys.
 
 </details>
 
@@ -333,7 +333,7 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 - [Get started with AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Manage storage account keys](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage)
 
-## Break & Fix 🔧
+## Break & Fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -380,13 +380,13 @@ When you regenerate a storage account access key:
 <summary>3. What is the default encryption for Azure Storage?</summary>
 
 All Azure Storage data is encrypted at rest using **256-bit AES encryption** (Storage Service Encryption / SSE). This is:
-- **Always on** — cannot be disabled
-- **Transparent** — no performance impact
-- **Free** — no additional cost
+- **Always on** | cannot be disabled
+- **Transparent** | no performance impact
+- **Free** | no additional cost
 
 You can choose between:
-- **Microsoft-managed keys** (default) — Azure manages the encryption keys
-- **Customer-managed keys (CMK)** — You manage the keys in Azure Key Vault
+- **Microsoft-managed keys** (default) | Azure manages the encryption keys
+- **Customer-managed keys (CMK)** | You manage the keys in Azure Key Vault
 
 </details>
 
@@ -397,7 +397,7 @@ You can choose between:
 - **LRS ↔ GRS/RA-GRS**: Supported (may take time for initial replication)
 - **LRS ↔ ZRS**: Supported via live migration (request from Microsoft) or manual migration
 - **ZRS ↔ GZRS/RA-GZRS**: Supported
-- **LRS → RA-GZRS directly**: Not supported — you must go through intermediate steps (LRS → GRS → GZRS → RA-GZRS, or LRS → ZRS → GZRS → RA-GZRS)
+- **LRS → RA-GZRS directly**: Not supported | you must go through intermediate steps (LRS → GRS → GZRS → RA-GZRS, or LRS → ZRS → GZRS → RA-GZRS)
 
 The exam may test which transitions are supported and which require intermediate steps.
 
@@ -416,4 +416,4 @@ rm -rf upload-test
 
 ---
 
-**Next**: [Challenge 05 — Blob Storage & Azure Files](/docs/az-104/storage/challenge-05)
+**Next**: [Challenge 05 | Blob Storage & Azure Files](/docs/az-104/storage/challenge-05)

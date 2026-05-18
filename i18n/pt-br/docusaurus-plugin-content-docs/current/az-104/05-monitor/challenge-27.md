@@ -51,7 +51,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1 — Criar um Workspace do Log Analytics
+### Tarefa 1: Criar um Workspace do Log Analytics
 
 ```bash
 # Create Log Analytics workspace
@@ -86,7 +86,7 @@ O SKU PerGB2018 cobra por GB ingerido. Para o exame, conheça estas opções:
 - **Daily cap**: Pode definir um limite diário de ingestão para controlar custos
 :::
 
-### Tarefa 2 — Implantar VMs Alvo para Monitoramento
+### Tarefa 2: Implantar VMs Alvo para Monitoramento
 
 ```bash
 # Create a VNet
@@ -129,7 +129,7 @@ az vm run-command invoke \
   --scripts "sudo apt-get update && sudo apt-get install -y nginx && sudo systemctl start nginx"
 ```
 
-### Tarefa 3 — Criar Data Collection Rules (DCR)
+### Tarefa 3: Criar Data Collection Rules (DCR)
 
 ```bash
 # Get workspace resource ID
@@ -162,7 +162,7 @@ az monitor data-collection rule create \
 az monitor data-collection rule list --resource-group $RG -o table
 ```
 
-### Tarefa 4 — Instalar Azure Monitor Agent e Associar DCRs
+### Tarefa 4: Instalar Azure Monitor Agent e Associar DCRs
 
 ```bash
 # Install Azure Monitor Agent on Linux VM
@@ -220,7 +220,7 @@ O AMA substitui o agente legado do Log Analytics (MMA/OMS) e a extensão de Diag
 - Para o exame AZ-104, foque no AMA + DCR (abordagem moderna)
 :::
 
-### Tarefa 5 — Configurar Diagnostic Settings para Recursos do Azure
+### Tarefa 5: Configurar Diagnostic Settings para Recursos do Azure
 
 ```bash
 # Enable diagnostic settings for the VNet (sending to Log Analytics)
@@ -252,7 +252,7 @@ az monitor diagnostic-settings categories list \
 4. Escolha destinos: workspace do Log Analytics, conta de armazenamento, Event Hub
 5. Clique em **Save**
 
-### Tarefa 6 — Escrever Consultas KQL
+### Tarefa 6: Escrever Consultas KQL
 
 :::tip Dica
 
@@ -318,7 +318,7 @@ Perf
 | evaluate pivot(CounterName, any(AvgValue))
 ```
 
-### Tarefa 7 — Criar Consultas Salvas e Funções
+### Tarefa 7: Criar Consultas Salvas e Funções
 
 ```bash
 # Save a query via the Portal:
@@ -341,7 +341,7 @@ az monitor log-analytics workspace saved-search list \
   --workspace-name law-contoso-ops -o table
 ```
 
-### Tarefa 8 — Criar um Workbook com Visualizações
+### Tarefa 8: Criar um Workbook com Visualizações
 
 **Passos no Portal (Workbooks requerem Portal):**
 
@@ -349,7 +349,7 @@ az monitor log-analytics workspace saved-search list \
 2. Clique em **New**
 3. Adicione os seguintes elementos:
 
-**Seção 1 — Visão Geral de Saúde das VMs (Grid):**
+**Seção 1 | Visão Geral de Saúde das VMs (Grid):**
 ```kusto
 Heartbeat
 | where TimeGenerated > ago(5m)
@@ -358,7 +358,7 @@ Heartbeat
 | project Computer, OSType, LastHeartbeat, Status
 ```
 
-**Seção 2 — Uso de CPU ao Longo do Tempo (Gráfico de Linha):**
+**Seção 2 | Uso de CPU ao Longo do Tempo (Gráfico de Linha):**
 ```kusto
 Perf
 | where TimeGenerated > ago(4h)
@@ -368,7 +368,7 @@ Perf
 | render timechart
 ```
 
-**Seção 3 — Resumo de Erros (Gráfico de Pizza):**
+**Seção 3 | Resumo de Erros (Gráfico de Pizza):**
 ```kusto
 Syslog
 | where TimeGenerated > ago(24h)
@@ -377,7 +377,7 @@ Syslog
 | render piechart
 ```
 
-**Seção 4 — Top Consumidores de Rede (Gráfico de Barras):**
+**Seção 4 | Top Consumidores de Rede (Gráfico de Barras):**
 ```kusto
 Perf
 | where TimeGenerated > ago(1h)
@@ -389,7 +389,7 @@ Perf
 
 4. Clique em **Save** e nomeie o workbook "Contoso Operations Dashboard"
 
-### Tarefa 9 — Configurar Definições do Workspace
+### Tarefa 9: Configurar Definições do Workspace
 
 ```bash
 # Set daily ingestion cap (cost control)
@@ -433,7 +433,7 @@ az monitor log-analytics workspace show \
 
 ## Cenários de Quebrar & Consertar
 
-### Cenário A — Nenhum Dado Aparecendo no Log Analytics
+### Cenário A: Nenhum Dado Aparecendo no Log Analytics
 
 ```bash
 # Check if AMA extension is installed and healthy
@@ -455,7 +455,7 @@ az monitor data-collection rule show \
 # 4. Wait time (data takes 5-15 minutes to appear)
 ```
 
-### Cenário B — Consulta KQL Não Retorna Resultados
+### Cenário B: Consulta KQL Não Retorna Resultados
 
 ```kusto
 // Common mistake: Wrong table name
@@ -471,7 +471,7 @@ search *
 | order by Count desc
 ```
 
-### Cenário C — Daily Cap Atingido
+### Cenário C: Daily Cap Atingido
 
 ```bash
 # Symptom: Data stops flowing into workspace

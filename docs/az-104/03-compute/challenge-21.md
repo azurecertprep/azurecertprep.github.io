@@ -40,7 +40,7 @@ Contoso Ltd. has a fleet of 50 VMs across development, staging, and production e
 
 ## Tasks
 
-### Task 1 — Create the Lab Environment
+### Task 1: Create the Lab Environment
 
 ```bash
 # Create resource group
@@ -67,7 +67,7 @@ az vm create \
   --tags Environment=Development Department=IT
 ```
 
-### Task 2 — Deploy Custom Script Extension (Linux)
+### Task 2: Deploy Custom Script Extension (Linux)
 
 Install Nginx on the Linux VM using the Custom Script Extension:
 
@@ -91,7 +91,7 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState, Publisher:publisher}" -o table
 ```
 
-### Task 3 — Deploy Custom Script Extension (Windows)
+### Task 3: Deploy Custom Script Extension (Windows)
 
 Install IIS on the Windows VM using Custom Script Extension:
 
@@ -115,7 +115,7 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState}" -o table
 ```
 
-### Task 4 — Use Custom Script Extension with External Script
+### Task 4: Use Custom Script Extension with External Script
 
 Host a configuration script in a storage account and reference it:
 
@@ -186,7 +186,7 @@ az vm extension set \
 rm -f configure-vm.sh
 ```
 
-### Task 5 — Use Run Command for Ad-Hoc Operations
+### Task 5: Use Run Command for Ad-Hoc Operations
 
 Run commands on VMs without SSH/RDP access:
 
@@ -220,7 +220,7 @@ az vm run-command invoke \
   --scripts "Get-Service W3SVC | Format-Table Name, Status, StartType"
 ```
 
-### Task 6 — List and Manage VM Extensions
+### Task 6: List and Manage VM Extensions
 
 ```bash
 # List all extensions on a VM
@@ -236,7 +236,7 @@ az vm extension image list \
   --query "[].{Name:name, Publisher:publisher}" -o table --latest
 ```
 
-### Task 7 — Create an Azure Automation Account
+### Task 7: Create an Azure Automation Account
 
 ```bash
 # Create Automation Account
@@ -252,7 +252,7 @@ az automation account show \
   --query "{Name:name, State:state, Location:location}" -o table
 ```
 
-### Task 8 — Create a Runbook for VM Start/Stop
+### Task 8: Create a Runbook for VM Start/Stop
 
 ```bash
 # Create a PowerShell runbook
@@ -320,7 +320,7 @@ az automation runbook publish \
 rm -f stop-dev-vms.ps1
 ```
 
-### Task 9 — Schedule the Runbook
+### Task 9: Schedule the Runbook
 
 ```bash
 # Create a schedule (weekdays at 7 PM)
@@ -387,7 +387,7 @@ For the runbook to manage Azure resources, the Automation Account needs a manage
 
 ## Break and Fix
 
-### Scenario A — Extension Fails to Install
+### Scenario A: Extension Fails to Install
 
 Deploy a Custom Script Extension with an intentional error (e.g., referencing a non-existent file URL). Check the extension status and diagnose the failure:
 
@@ -407,11 +407,11 @@ az vm run-command invoke \
   --scripts "cat /var/log/azure/custom-script/handler.log | tail -20"
 ```
 
-### Scenario B — Run Command Timeout
+### Scenario B: Run Command Timeout
 
 Execute a Run Command script that sleeps for 5 minutes. What happens when the default timeout is exceeded? How do you handle long-running operations?
 
-### Scenario C — Runbook Authentication Failure
+### Scenario C: Runbook Authentication Failure
 
 Create a runbook that tries to access resources but the Automation Account managed identity has no RBAC assignment. Observe the error in the job output and diagnose the missing permissions.
 

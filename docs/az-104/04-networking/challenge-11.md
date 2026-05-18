@@ -7,12 +7,12 @@ title: "Challenge 11: Virtual Networks & Subnets"
 
 :::info Estimated Time & Cost
 
-⏱️ **45–60 minutes** | 💰 **~$0.10** (VMs for testing, deallocate promptly) | **Exam Weight: 15–20%**
+**45–60 minutes** | **~$0.10** (VMs for testing, deallocate promptly) | **Exam Weight: 15–20%**
 :::
 
 ## Scenario
 
-Contoso is building a multi-tier architecture with a hub-spoke network topology. The hub VNet contains shared services (firewalls, DNS), while spoke VNets host application workloads. You need to design the network with proper segmentation, peering, and routing — then prove it all works with connectivity tests.
+Contoso is building a multi-tier architecture with a hub-spoke network topology. The hub VNet contains shared services (firewalls, DNS), while spoke VNets host application workloads. You need to design the network with proper segmentation, peering, and routing | then prove it all works with connectivity tests.
 
 ## Exam Skills Covered
 
@@ -37,7 +37,7 @@ Contoso is building a multi-tier architecture with a hub-spoke network topology.
 
 ## Tasks
 
-### Task 1 — Create the Hub VNet
+### Task 1: Create the Hub VNet
 
 ```bash
 # Create a resource group
@@ -63,7 +63,7 @@ az network vnet show -g rg-network-lab -n vnet-hub \
   --query "{Name:name, AddressSpace:addressSpace.addressPrefixes, Subnets:subnets[].{Name:name, Prefix:addressPrefix}}" -o json
 ```
 
-### Task 2 — Create the Spoke VNet
+### Task 2: Create the Spoke VNet
 
 ```bash
 # Create the Spoke VNet
@@ -78,7 +78,7 @@ az network vnet create \
 az network vnet list -g rg-network-lab -o table
 ```
 
-### Task 3 — Create Bidirectional VNet Peering
+### Task 3: Create Bidirectional VNet Peering
 
 ```bash
 # Get VNet resource IDs
@@ -108,7 +108,7 @@ az network vnet peering list -g rg-network-lab --vnet-name vnet-hub -o table
 az network vnet peering list -g rg-network-lab --vnet-name vnet-spoke -o table
 ```
 
-### Task 4 — Deploy VMs and Test Connectivity
+### Task 4: Deploy VMs and Test Connectivity
 
 ```bash
 # Deploy a VM in the Hub VNet
@@ -150,7 +150,7 @@ echo "Then ping spoke: ping $SPOKE_PRIVATE_IP"
 ```
 
 <details>
-<summary>💡 Hint — If ping doesn't work</summary>
+<summary>💡 Hint | If ping doesn't work</summary>
 
 ICMP (ping) may be blocked by the default NSG. Allow ICMP:
 ```bash
@@ -168,7 +168,7 @@ az network nsg rule create \
 ```
 </details>
 
-### Task 5 — Create a Public IP
+### Task 5: Create a Public IP
 
 ```bash
 # Create a static Standard public IP
@@ -184,7 +184,7 @@ az network public-ip show -g rg-network-lab -n pip-static-web \
   --query "{Name:name, IP:ipAddress, SKU:sku.name, Method:publicIpAllocationMethod}" -o table
 ```
 
-### Task 6 — Create a User-Defined Route (UDR)
+### Task 6: Create a User-Defined Route (UDR)
 
 ```bash
 # Create a route table
@@ -217,7 +217,7 @@ az network vnet subnet show -g rg-network-lab \
   --query "routeTable.id" -o tsv
 ```
 
-### Task 7 — Use Network Watcher to Troubleshoot
+### Task 7: Use Network Watcher to Troubleshoot
 
 ```bash
 # Enable Network Watcher (usually auto-enabled)
@@ -226,7 +226,7 @@ az network watcher configure \
   --locations eastus \
   --enabled true 2>/dev/null || true
 
-# IP Flow Verify — check if traffic from spoke VM to hub VM is allowed
+# IP Flow Verify: check if traffic from spoke VM to hub VM is allowed
 az network watcher test-ip-flow \
   --resource-group rg-network-lab \
   --vm vm-spoke \
@@ -235,7 +235,7 @@ az network watcher test-ip-flow \
   --local "$SPOKE_PRIVATE_IP:*" \
   --remote "$HUB_PRIVATE_IP:80"
 
-# Next Hop — check where traffic from spoke goes
+# Next Hop: check where traffic from spoke goes
 az network watcher show-next-hop \
   --resource-group rg-network-lab \
   --vm vm-spoke \
@@ -260,9 +260,9 @@ az network nic show-effective-route-table \
 - [ ] UDR forces spoke-to-hub traffic through a virtual appliance IP
 - [ ] Network Watcher IP flow verify and next hop return expected results
 
-## 🔧 Break & Fix Scenarios
+## Break & Fix Scenarios
 
-### Scenario A — Overlapping Address Spaces
+### Scenario A: Overlapping Address Spaces
 ```bash
 # Try to create a VNet with overlapping address space and peer it
 az network vnet create -g rg-network-lab \
@@ -275,7 +275,7 @@ az network vnet peering create -g rg-network-lab \
 # What error do you get? Why can't overlapping VNets be peered?
 ```
 
-### Scenario B — Invalid Next Hop
+### Scenario B: Invalid Next Hop
 ```bash
 # Create a UDR with a next hop IP that doesn't exist
 az network route-table route create \
@@ -288,7 +288,7 @@ az network route-table route create \
 # The route is created but traffic to 192.168.0.0/24 will blackhole. How do you diagnose?
 ```
 
-### Scenario C — One-Way Peering
+### Scenario C: One-Way Peering
 ```bash
 # Delete only one side of the peering
 az network vnet peering delete -g rg-network-lab \
@@ -357,7 +357,7 @@ IP flow verify checks whether a packet is allowed or denied by simulating the NS
 2. It evaluates NSG rules on both the **NIC-level NSG** and the **subnet-level NSG**
 3. Returns: Allow or Deny, plus the specific NSG rule name that matched
 
-It does **not** check UDRs, firewalls, or NVAs — only NSG rules. For routing issues, use "Next Hop" instead.
+It does **not** check UDRs, firewalls, or NVAs | only NSG rules. For routing issues, use "Next Hop" instead.
 </details>
 
 ## 🧹 Cleanup

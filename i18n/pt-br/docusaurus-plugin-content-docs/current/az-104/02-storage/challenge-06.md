@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-title: "Challenge 06 — Storage Security & Lifecycle"
+title: "Challenge 06 | Storage Security & Lifecycle"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 06 — Segurança de Storage & Ciclo de Vida
+# Desafio 06: Segurança de Storage & Ciclo de Vida
 
-> ⏱️ **Tempo estimado**: 60-75 min | 💰 **Custo estimado**: ~$1.00 (duas storage accounts) | 🎯 **Peso no exame**: 15-20%
+> **Tempo estimado**: 60-75 min | **Custo estimado**: ~$1.00 (duas storage accounts) | **Peso no exame**: 15-20%
 
 ## Introdução
 
@@ -97,7 +97,7 @@ az storage container create --name replicated-data --connection-string "$CONN_SE
 
 # Upload test data
 for i in $(seq 1 10); do
-  echo "Log entry $i — $(date -u +%Y-%m-%dT%H:%M:%SZ)" > log-$i.txt
+  echo "Log entry $i | $(date -u +%Y-%m-%dT%H:%M:%SZ)" > log-$i.txt
   az storage blob upload --container-name app-logs --file log-$i.txt --name "2025/01/log-$i.txt" --connection-string "$CONN_PRIMARY" --overwrite 2>/dev/null
 done
 
@@ -110,6 +110,7 @@ az storage blob upload --container-name replicated-data --file repl-test.txt --n
 4. Criar uma política de gerenciamento de ciclo de vida com as seguintes regras:
 
 :::info Informação
+
 **Gerenciamento de ciclo de vida** transiciona automaticamente blobs entre camadas e os exclui com base na idade. Esta é a principal ferramenta para controlar custos de armazenamento em escala.
 :::
 
@@ -237,6 +238,7 @@ az storage account management-policy show \
 ### Parte 3: Acesso Baseado em Identidade para Azure Files
 
 :::tip Dica
+
 O acesso baseado em identidade permite que usuários se autentiquem em compartilhamentos Azure Files usando suas credenciais do Entra ID em vez de chaves de storage account. Isso é mais seguro e permite permissões por usuário/grupo no estilo NTFS.
 :::
 
@@ -264,6 +266,7 @@ az storage account update \
 ```
 
 :::note
+
 A autenticação completa via Entra ID Kerberos para Azure Files requer configuração adicional incluindo a configuração do ticket de concessão de ticket Kerberos e a configuração de permissões no nível de compartilhamento e no nível de diretório/arquivo. Para este desafio, habilitar o sinalizador de recurso é suficiente.
 :::
 
@@ -294,11 +297,12 @@ STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $R
 ```
 
 :::info Informação
+
 O acesso baseado em identidade do Azure Files usa um **modelo de permissão de duas camadas**:
 1. **Permissões no nível do compartilhamento**: Atribuídas via RBAC (Storage File Data SMB Share Reader/Contributor/Elevated Contributor)
 2. **Permissões no nível de diretório/arquivo**: Configuradas usando ACLs NTFS do Windows após montar o compartilhamento
 
-A permissão efetiva é a **interseção** de ambas as camadas — um usuário precisa de acesso tanto no nível do compartilhamento quanto no nível do diretório.
+A permissão efetiva é a **interseção** de ambas as camadas | um usuário precisa de acesso tanto no nível do compartilhamento quanto no nível do diretório.
 :::
 
 ### Parte 4: Replicação de Objetos
@@ -359,7 +363,7 @@ az storage account or-policy list --account-name $STORAGE_SECONDARY --resource-g
 11. Fazer upload de um novo blob na origem e verificar que ele replica:
 
 ```bash
-echo "New data to replicate — $(date -u)" > new-repl-data.txt
+echo "New data to replicate | $(date -u)" > new-repl-data.txt
 az storage blob upload --container-name replicated-data --file new-repl-data.txt --name new-repl-data.txt --connection-string "$CONN_PRIMARY" --overwrite
 
 # Wait a few minutes, then check the destination
@@ -369,6 +373,7 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
 ```
 
 :::warning Atenção
+
 A replicação de objetos é **assíncrona**. Pode levar vários minutos para os blobs aparecerem na conta de destino. Não há SLA sobre o tempo de replicação para contas padrão.
 :::
 
@@ -451,6 +456,7 @@ Regras de ciclo de vida suportam estas condições:
 | `daysAfterLastTierChangeGreaterThan` | Dias desde a última mudança de camada | Prevenir mudanças rápidas de camada |
 
 :::tip Dica
+
 Para usar `daysAfterLastAccessTimeGreaterThan`, você deve habilitar o **rastreamento de tempo de último acesso** na storage account:
 ```bash
 az storage account blob-service-properties update \
@@ -537,7 +543,7 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 - [Políticas de acesso armazenadas](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy)
 - [Configurar Microsoft Entra Kerberos para Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-identity-auth-azure-active-directory-enable)
 
-## Quebre & Conserte 🔧
+## Quebre & Conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -551,7 +557,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 3. **Token SAS ainda funciona após exclusão da política**: Você excluiu uma política de acesso armazenada, mas o token SAS daquela política deveria parar de funcionar. Teste isso. Se ainda funcionar, verifique se o SAS foi gerado com uma expiração explícita (SAS autônomo) ou se era realmente vinculado à política.
 
-4. **Acesso baseado em identidade negado**: Um usuário tem `Storage File Data SMB Share Contributor` no nível do compartilhamento mas recebe "Access Denied" ao abrir uma pasta. O que está errado? (ACLs NTFS no nível do diretório podem estar restringindo o acesso — lembre-se do modelo de duas camadas.)
+4. **Acesso baseado em identidade negado**: Um usuário tem `Storage File Data SMB Share Contributor` no nível do compartilhamento mas recebe "Access Denied" ao abrir uma pasta. O que está errado? (ACLs NTFS no nível do diretório podem estar restringindo o acesso | lembre-se do modelo de duas camadas.)
 
 ## Teste seus Conhecimentos
 
@@ -559,18 +565,18 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 <summary>1. Quais são as condições que você pode usar em regras de gerenciamento de ciclo de vida?</summary>
 
 **Condições de base blob**:
-- `daysAfterModificationGreaterThan` — dias desde a última modificação
-- `daysAfterCreationGreaterThan` — dias desde a criação
-- `daysAfterLastAccessTimeGreaterThan` — dias desde a última leitura (requer rastreamento de acesso)
-- `daysAfterLastTierChangeGreaterThan` — dias desde a última mudança de camada
+- `daysAfterModificationGreaterThan` | dias desde a última modificação
+- `daysAfterCreationGreaterThan` | dias desde a criação
+- `daysAfterLastAccessTimeGreaterThan` | dias desde a última leitura (requer rastreamento de acesso)
+- `daysAfterLastTierChangeGreaterThan` | dias desde a última mudança de camada
 
 **Condições de snapshot/versão**:
-- `daysAfterCreationGreaterThan` — dias desde a criação do snapshot/versão
+- `daysAfterCreationGreaterThan` | dias desde a criação do snapshot/versão
 
 **Opções de filtro**:
-- `blobTypes` — filtrar por block blob, append blob
-- `prefixMatch` — filtrar por prefixo do nome do blob (ex: `logs/`)
-- `blobIndexMatch` — filtrar por tags de índice de blob
+- `blobTypes` | filtrar por block blob, append blob
+- `prefixMatch` | filtrar por prefixo do nome do blob (ex: `logs/`)
+- `blobIndexMatch` | filtrar por tags de índice de blob
 
 **Dica para o exame**: Saiba a diferença entre `daysAfterModification` e `daysAfterCreation`. Modification é redefinido sempre que o blob é escrito; creation é definido uma vez.
 
@@ -612,7 +618,7 @@ Um usuário deve ter acesso tanto no nível do compartilhamento QUANTO no nível
 <details>
 <summary>4. Com que frequência o gerenciamento de ciclo de vida é executado?</summary>
 
-O gerenciamento de ciclo de vida é executado **uma vez por dia**. O horário exato não é garantido — o Azure processa regras de ciclo de vida pelo menos uma vez a cada 24 horas, mas não há SLA sobre o horário exato de execução.
+O gerenciamento de ciclo de vida é executado **uma vez por dia**. O horário exato não é garantido | o Azure processa regras de ciclo de vida pelo menos uma vez a cada 24 horas, mas não há SLA sobre o horário exato de execução.
 
 Para uma política recém-criada ou modificada, a primeira execução pode levar até **24 horas** para iniciar. Depois disso, é executada diariamente.
 
@@ -646,4 +652,4 @@ rm -f log-*.txt repl-test.txt new-repl-data.txt
 
 ---
 
-**Próximo**: [Desafio 07 — ARM Templates & Bicep](/docs/az-104/compute/challenge-07)
+**Próximo**: [Desafio 07 | ARM Templates & Bicep](/docs/az-104/compute/challenge-07)

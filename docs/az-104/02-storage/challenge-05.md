@@ -8,13 +8,13 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 05: Blob Storage & Azure Files
 
-> **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$0.50 | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | **Estimated cost**: ~$0.50 | **Exam weight**: 15-20%
 
 ## Introduction
 
-Contoso's application team stores user profile images, log files, and reports in Azure. Meanwhile, the finance team needs a shared file system they can mount from their Windows desktops — just like the on-prem file server they're used to. You need to set up both Blob Storage (for app data) and Azure Files (for the finance team's shared drive).
+Contoso's application team stores user profile images, log files, and reports in Azure. Meanwhile, the finance team needs a shared file system they can mount from their Windows desktops | just like the on-prem file server they're used to. You need to set up both Blob Storage (for app data) and Azure Files (for the finance team's shared drive).
 
-Understanding the difference between Blob Storage and Azure Files — and when to use each — is critical for the AZ-104 exam. This challenge gives you hands-on experience with both.
+Understanding the difference between Blob Storage and Azure Files | and when to use each | is critical for the AZ-104 exam. This challenge gives you hands-on experience with both.
 
 ## Exam Skills Covered
 
@@ -68,13 +68,13 @@ CONN_STRING=$(az storage account show-connection-string --name $STORAGE_NAME --r
 2. Create three blob containers with different access levels:
 
 ```bash
-# Private (default) — no anonymous access
+# Private (default): no anonymous access
 az storage container create --name app-data --connection-string "$CONN_STRING"
 
-# Private — for sensitive logs
+# Private: for sensitive logs
 az storage container create --name logs --connection-string "$CONN_STRING"
 
-# Private — for archived reports
+# Private: for archived reports
 az storage container create --name archive --connection-string "$CONN_STRING"
 ```
 
@@ -142,7 +142,7 @@ az storage account blob-service-properties update \
   --container-delete-retention-days 14
 ```
 
-9. Test soft delete — delete a blob and then recover it:
+9. Test soft delete | delete a blob and then recover it:
 
 ```bash
 # Delete the blob
@@ -170,7 +170,7 @@ az storage account blob-service-properties update \
 11. Test versioning by uploading a modified version of the same blob:
 
 ```bash
-echo "Updated profile data for Alice — version 2" > profile-alice-v2.txt
+echo "Updated profile data for Alice | version 2" > profile-alice-v2.txt
 az storage blob upload --container-name app-data --file profile-alice-v2.txt --name profiles/alice.txt --connection-string "$CONN_STRING" --overwrite
 
 # List versions
@@ -193,7 +193,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
   --query "[?snapshot!=null].{Name:name, Snapshot:snapshot}" -o table
 ```
 
-### Part 6: Azure Files — Create & Configure
+### Part 6: Azure Files | Create & Configure
 
 14. Create an Azure File share for the finance team:
 
@@ -334,14 +334,14 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 Archived blobs cannot be read directly. You must first **rehydrate** them:
 
 ```bash
-# Change tier from Archive to Hot (standard priority — up to 15 hours)
+# Change tier from Archive to Hot (standard priority: up to 15 hours)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
   --tier Hot \
   --connection-string "$CONN_STRING"
 
-# High priority rehydration (faster, more expensive — under 1 hour for < 10 GB)
+# High priority rehydration (faster, more expensive: under 1 hour for < 10 GB)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
@@ -353,7 +353,7 @@ az storage blob set-tier \
 </details>
 
 <details>
-<summary>Hint 4: Azure Files — SMB port requirements</summary>
+<summary>Hint 4: Azure Files | SMB port requirements</summary>
 
 Azure Files uses **SMB 3.0** over **TCP port 445**. Many ISPs and corporate firewalls block this port.
 
@@ -392,11 +392,11 @@ If port 445 is blocked, alternatives include:
 - [Azure Files overview](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction)
 - [Azure Files planning guide](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-planning)
 
-## Break & Fix 🔧
+## Break & Fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
-1. **Archived blob surprise**: Try to download the blob you set to Archive tier. What error do you get? (`BlobArchived` — you must rehydrate first.) How long does standard rehydration take?
+1. **Archived blob surprise**: Try to download the blob you set to Archive tier. What error do you get? (`BlobArchived` | you must rehydrate first.) How long does standard rehydration take?
 
 2. **Soft delete confusion**: Delete a blob, then delete the same blob again after recreating it. How many soft-deleted versions exist? Can you recover a specific one?
 
@@ -476,4 +476,4 @@ rm -f profile-alice.txt profile-bob.txt profile-alice-v2.txt app-log-2025-01-15.
 
 ---
 
-**Next**: [Challenge 06 — Storage Security & Lifecycle](/docs/az-104/storage/challenge-06)
+**Next**: [Challenge 06 | Storage Security & Lifecycle](/docs/az-104/storage/challenge-06)

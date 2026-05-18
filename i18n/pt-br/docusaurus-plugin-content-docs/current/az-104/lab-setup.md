@@ -9,7 +9,7 @@ Todo desafio requer uma assinatura do Azure e ferramentas de linha de comando. E
 
 ## Opção 1: GitHub Codespaces (Recomendado)
 
-A maneira mais rápida de começar — tudo já vem pré-instalado.
+A maneira mais rápida de começar | tudo já vem pré-instalado.
 
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Open_in_GitHub_Codespaces-181717?style=for-the-badge&logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
@@ -19,7 +19,7 @@ Seu Codespace vem pré-configurado com:
 - **jq** e **yq** para manipulação de JSON/YAML
 - **Git** e **GitHub CLI**
 
-> 💡 Contas GitHub Free oferecem **60 horas/mês** de Codespaces — mais que suficiente para completar todos os desafios.
+> 💡 Contas GitHub Free oferecem **60 horas/mês** de Codespaces | mais que suficiente para completar todos os desafios.
 
 ### Após abrir o Codespaces, faça login no Azure:
 
@@ -68,7 +68,8 @@ Você precisa de uma assinatura do Azure para todos os desafios, exceto o Desafi
 | [Assinatura Visual Studio](https://azure.microsoft.com/pricing/member-offers/credit-for-visual-studio-subscribers/) | $50-150/mês | Mensal | Depende do plano |
 
 :::warning Atenção
-Gerenciamento de custos — Todos os desafios incluem scripts de limpeza. **Sempre execute a limpeza após cada desafio** para evitar cobranças inesperadas. O custo total para todos os 16 desafios é estimado em ~$3 com a limpeza adequada.
+
+Gerenciamento de custos | Todos os desafios incluem scripts de limpeza. **Sempre execute a limpeza após cada desafio** para evitar cobranças inesperadas. O custo total para todos os 28 desafios é estimado em ~$5 com a limpeza adequada.
 :::
 
 ## Convenção de Nomenclatura de Recursos
@@ -98,6 +99,7 @@ az group list --output table
 ```
 
 :::tip Dica
+
 Equivalente em PowerShell:
 ```powershell
 $Location = "eastus"

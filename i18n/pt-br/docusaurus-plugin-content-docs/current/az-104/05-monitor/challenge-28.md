@@ -51,12 +51,12 @@ az group create --name $RG --location $LOCATION
 
 :::tip Dica
 
-Este desafio utiliza principalmente o Azure Advisor e Service Health, que analisam os recursos existentes na sua assinatura. Você não precisa implantar VMs ou serviços para este laboratório — o Advisor analisa o que já existe na sua assinatura.
+Este desafio utiliza principalmente o Azure Advisor e Service Health, que analisam os recursos existentes na sua assinatura. Você não precisa implantar VMs ou serviços para este laboratório | o Advisor analisa o que já existe na sua assinatura.
 :::
 
 ## Tarefas
 
-### Tarefa 1 — Revisar Recomendações do Azure Advisor
+### Tarefa 1: Revisar Recomendações do Azure Advisor
 
 ```bash
 # List all Advisor recommendations for the subscription
@@ -92,7 +92,7 @@ az advisor recommendation list \
 3. Clique em cada categoria para ver recomendações detalhadas
 4. Cada recomendação mostra: Impacto (Alto/Médio/Baixo), recursos afetados e passos de remediação
 
-### Tarefa 2 — Entender o Advisor Score
+### Tarefa 2: Entender o Advisor Score
 
 **Passos no Portal:**
 1. Navegue até **Advisor** > **Advisor Score**
@@ -122,7 +122,7 @@ O Advisor Score representa a porcentagem de recomendações do Advisor que foram
 - Definir metas organizacionais (ex.: manter acima de 80%)
 :::
 
-### Tarefa 3 — Suprimir ou Adiar Recomendações
+### Tarefa 3: Suprimir ou Adiar Recomendações
 
 ```bash
 # List current recommendations
@@ -157,7 +157,7 @@ Suprima recomendações quando:
 - A recomendação é um falso positivo para sua carga de trabalho
 :::
 
-### Tarefa 4 — Configurar Alertas do Advisor
+### Tarefa 4: Configurar Alertas do Advisor
 
 ```bash
 # First, create an action group for notifications
@@ -189,7 +189,7 @@ az monitor activity-log alert create \
    - Action group: Selecione ou crie
 4. Clique em **Create alert rule**
 
-### Tarefa 5 — Configurar Alertas de Service Health
+### Tarefa 5: Configurar Alertas de Service Health
 
 ```bash
 # Create alert for service issues (outages) in your region
@@ -235,7 +235,7 @@ az monitor activity-log alert list \
 4. Selecione action group
 5. Nomeie a regra de alerta e clique em **Create**
 
-### Tarefa 6 — Verificar Resource Health
+### Tarefa 6: Verificar Resource Health
 
 ```bash
 # Check availability/health status of specific resources
@@ -265,7 +265,7 @@ az monitor activity-log list \
 4. Navegue até um recurso específico > blade **Resource Health**
 5. Visualize eventos históricos de saúde e análise de causa raiz
 
-### Tarefa 7 — Criar Action Groups para Notificações
+### Tarefa 7: Criar Action Groups para Notificações
 
 ```bash
 # Create a comprehensive action group with multiple notification channels
@@ -300,7 +300,7 @@ AG_ID=$(az monitor action-group show \
 #   --notifications '[{"notificationType":"Email","emailAddress":"ops@contoso.com"}]'
 ```
 
-### Tarefa 8 — Revisar o Painel de Service Health
+### Tarefa 8: Revisar o Painel de Service Health
 
 **Passos no Portal:**
 1. Navegue até **Service Health** no portal
@@ -316,7 +316,7 @@ AG_ID=$(az monitor action-group show \
    - Ações recomendadas
 4. Verifique o **Health history** para eventos passados
 
-### Tarefa 9 — Implementar Recomendações do Advisor
+### Tarefa 9: Implementar Recomendações do Advisor
 
 ```bash
 # Example: Implement a common Advisor recommendation
@@ -358,7 +358,7 @@ az advisor recommendation list --category Cost -o table
 
 ## Cenários de Quebrar & Consertar
 
-### Cenário A — Alerta Não Disparando
+### Cenário A: Alerta Não Disparando
 
 ```bash
 # Check if action group is correctly configured
@@ -384,7 +384,7 @@ az monitor activity-log alert update \
   --enabled true
 ```
 
-### Cenário B — Muitas Notificações (Fadiga de Alertas)
+### Cenário B: Muitas Notificações (Fadiga de Alertas)
 
 ```bash
 # Problem: Getting too many low-impact Advisor notifications
@@ -408,7 +408,7 @@ az monitor alert-processing-rule create \
   --schedule-recurrence "Saturday" "Sunday"
 ```
 
-### Cenário C — Resource Health Mostra Indisponível
+### Cenário C: Resource Health Mostra Indisponível
 
 ```bash
 # A VM shows "Unavailable" in Resource Health

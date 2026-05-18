@@ -5,13 +5,13 @@ title: "Challenge 01: Entra ID: Users & Groups"
 
 # Challenge 01: Entra ID: Users & Groups
 
-> **Estimated time**: 45-60 min | 💰 **Estimated cost**: Free | 🎯 **Exam weight**: 20-25%
+> **Estimated time**: 45-60 min | **Estimated cost**: Free | **Exam weight**: 20-25%
 
 ## Introduction
 
 You just joined Contoso Ltd. as the new Azure Administrator. Your first task: set up identity management. The company is migrating from on-premises Active Directory, and you need to create the initial user and group structure in Microsoft Entra ID.
 
-This challenge covers the foundation of everything in Azure — identity. Without users, groups, and proper access management, nothing else works.
+This challenge covers the foundation of everything in Azure | identity. Without users, groups, and proper access management, nothing else works.
 
 ## Exam Skills Covered
 
@@ -40,18 +40,18 @@ Your mission is to:
 ### Part 1: Create Users
 
 1. Create 3 internal users in your Entra ID tenant:
-   - `alice@YOUR_TENANT.onmicrosoft.com` — Display name: Alice Johnson, Department: IT, Job title: Cloud Engineer
-   - `bob@YOUR_TENANT.onmicrosoft.com` — Display name: Bob Smith, Department: Finance, Job title: Financial Analyst
-   - `carol@YOUR_TENANT.onmicrosoft.com` — Display name: Carol Williams, Department: IT, Job title: Security Admin
+   - `alice@YOUR_TENANT.onmicrosoft.com` | Display name: Alice Johnson, Department: IT, Job title: Cloud Engineer
+   - `bob@YOUR_TENANT.onmicrosoft.com` | Display name: Bob Smith, Department: Finance, Job title: Financial Analyst
+   - `carol@YOUR_TENANT.onmicrosoft.com` | Display name: Carol Williams, Department: IT, Job title: Security Admin
 
 2. Set up Alice with a temporary password that must be changed on first login.
 
 ### Part 2: Create Groups
 
 3. Create the following security groups:
-   - `IT-Team` — Members: Alice, Carol
-   - `Finance-Team` — Members: Bob
-   - `All-Employees` — Members: Alice, Bob, Carol (use a dynamic membership rule based on department)
+   - `IT-Team` | Members: Alice, Carol
+   - `Finance-Team` | Members: Bob
+   - `All-Employees` | Members: Alice, Bob, Carol (use a dynamic membership rule based on department)
 
 ### Part 3: Manage Properties
 
@@ -61,7 +61,7 @@ Your mission is to:
 
 ### Part 4: External Users
 
-7. Invite an external user (guest) — use any email you have access to
+7. Invite an external user (guest) | use any email you have access to
 8. Add the guest user to the `All-Employees` group
 
 ### Part 5: Self-Service Password Reset
@@ -164,7 +164,7 @@ SSPR configuration is best done through the Azure Portal:
 - [Configure SSPR](https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr)
 - [Dynamic membership rules](https://learn.microsoft.com/en-us/entra/identity/users/groups-dynamic-membership)
 
-## Break & Fix 🔧
+## Break & Fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -240,4 +240,4 @@ done
 
 ---
 
-**Next**: [Challenge 02 — RBAC & Access Management](/docs/az-104/identity/challenge-02)
+**Next**: [Challenge 02 | RBAC & Access Management](/docs/az-104/identity/challenge-02)

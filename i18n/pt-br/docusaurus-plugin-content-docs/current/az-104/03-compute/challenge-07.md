@@ -1,19 +1,20 @@
 ---
 sidebar_position: 1
-title: "Challenge 07 — ARM Templates & Bicep"
+title: "Challenge 07 | ARM Templates & Bicep"
 ---
 
-# Desafio 07 — ARM Templates & Bicep
+# Desafio 07: ARM Templates & Bicep
 
 :::info Informação
-⏱️ **Tempo estimado: 60 minutos** | 💰 **Custo estimado: Gratuito** (templates + storage account apenas) | 📊 **Peso no exame: 20–25%**
+
+**Tempo estimado: 60 minutos** | **Custo estimado: Gratuito** (templates + storage account apenas) | 📊 **Peso no exame: 20–25%**
 :::
 
 ## Cenário
 
-O CTO da Contoso se cansou de deploys do tipo "funciona no meu portal". Depois que um administrador júnior acidentalmente excluiu uma conta de armazenamento de produção clicando pelo Portal do Azure, a diretriz é clara: **tudo deve ser infraestrutura como código**. Nada mais de cliques no portal para provisionamento — cada recurso deve ser repetível, versionado e auditável.
+O CTO da Contoso se cansou de deploys do tipo "funciona no meu portal". Depois que um administrador júnior acidentalmente excluiu uma conta de armazenamento de produção clicando pelo Portal do Azure, a diretriz é clara: **tudo deve ser infraestrutura como código**. Nada mais de cliques no portal para provisionamento | cada recurso deve ser repetível, versionado e auditável.
 
-Sua tarefa é pegar o primeiro recurso crítico da Contoso — uma conta de armazenamento — e defini-lo como um ARM template, depois modernizá-lo para Bicep.
+Sua tarefa é pegar o primeiro recurso crítico da Contoso | uma conta de armazenamento | e defini-lo como um ARM template, depois modernizá-lo para Bicep.
 
 ## Habilidades do Exame Cobertas
 
@@ -40,7 +41,7 @@ Sua tarefa é pegar o primeiro recurso crítico da Contoso — uma conta de arma
 
 ## Tarefas
 
-### Tarefa 1 — Examinar um ARM Template
+### Tarefa 1: Examinar um ARM Template
 
 Estude este ARM template que cria uma conta de armazenamento. Identifique as cinco seções principais: `$schema`, `parameters`, `variables`, `resources` e `outputs`.
 
@@ -91,7 +92,7 @@ Salve como `storage.json`:
 }
 ```
 
-### Tarefa 2 — Modificar o ARM Template
+### Tarefa 2: Modificar o ARM Template
 
 Adicione um parâmetro de tag `environment` ao template para que cada recurso implantado receba uma tag:
 
@@ -104,7 +105,7 @@ az deployment group validate \
 ```
 
 <details>
-<summary>💡 Dica — Onde adicionar o parâmetro de tag</summary>
+<summary>💡 Dica | Onde adicionar o parâmetro de tag</summary>
 
 Adicione um novo parâmetro:
 ```json
@@ -123,7 +124,7 @@ Em seguida, adicione uma propriedade `tags` ao recurso:
 ```
 </details>
 
-### Tarefa 3 — Implantar o ARM Template
+### Tarefa 3: Implantar o ARM Template
 
 ```bash
 # Criar um grupo de recursos para este lab
@@ -143,7 +144,7 @@ az deployment group show \
   --query "properties.outputs"
 ```
 
-### Tarefa 4 — Exportar a Implantação
+### Tarefa 4: Exportar a Implantação
 
 ```bash
 # Exportar todo o grupo de recursos como um ARM template
@@ -153,7 +154,7 @@ az group export --name rg-iac-lab --output json > exported-template.json
 cat exported-template.json | python -m json.tool | head -50
 ```
 
-### Tarefa 5 — Converter ARM para Bicep
+### Tarefa 5: Converter ARM para Bicep
 
 ```bash
 # Instalar/atualizar o Bicep CLI
@@ -163,11 +164,11 @@ az bicep version
 # Decompilar o ARM template para Bicep
 az bicep decompile --file storage.json
 
-# Isso cria storage.bicep — revise-o
+# Isso cria storage.bicep: revise-o
 cat storage.bicep
 ```
 
-### Tarefa 6 — Modificar o Arquivo Bicep
+### Tarefa 6: Modificar o Arquivo Bicep
 
 Adicione um contêiner de blob ao arquivo Bicep:
 
@@ -177,7 +178,7 @@ az bicep build --file storage.bicep
 ```
 
 <details>
-<summary>💡 Dica — Recurso de contêiner de blob no Bicep</summary>
+<summary>💡 Dica | Recurso de contêiner de blob no Bicep</summary>
 
 ```bicep
 param storagePrefix string
@@ -219,7 +220,7 @@ output storageName string = storageAccount.name
 ```
 </details>
 
-### Tarefa 7 — Implantar o Arquivo Bicep
+### Tarefa 7: Implantar o Arquivo Bicep
 
 ```bash
 # Implantar o arquivo Bicep
@@ -238,7 +239,7 @@ STORAGE_NAME=$(az deployment group show \
 az storage container list --account-name $STORAGE_NAME --auth-mode login -o table
 ```
 
-### Tarefa 8 — Visualizar Alterações com What-If
+### Tarefa 8: Visualizar Alterações com What-If
 
 ```bash
 # Executar um deploy what-if para visualizar alterações sem implantar
@@ -256,9 +257,9 @@ az deployment group what-if \
 - [ ] Arquivo Bicep implanta uma conta de armazenamento **e** contêiner de blob
 - [ ] What-if mostra as alterações esperadas sem implantar
 
-## 🔧 Cenários Quebre & Conserte
+## Cenários Quebre & Conserte
 
-### Cenário A — Erro de Sintaxe
+### Cenário A: Erro de Sintaxe
 Implante este template quebrado e corrija o erro:
 ```bash
 # Introduza um erro de digitação no template (ex: "Standar_LRS" em vez de "Standard_LRS")
@@ -269,7 +270,7 @@ az deployment group create \
   --parameters storagePrefix=contoso
 ```
 
-### Cenário B — Parâmetro Obrigatório Ausente
+### Cenário B: Parâmetro Obrigatório Ausente
 ```bash
 # Implante sem o parâmetro obrigatório storagePrefix
 az deployment group create \
@@ -279,7 +280,7 @@ az deployment group create \
 # Qual erro você recebe? Como o Azure valida os parâmetros?
 ```
 
-### Cenário C — Implantação em Modo Completo
+### Cenário C: Implantação em Modo Completo
 ```bash
 # ATENÇÃO: O modo Completo exclui recursos que não estão no template!
 az deployment group what-if \
@@ -297,7 +298,7 @@ az deployment group what-if \
 <details>
 <summary>Mostrar Resposta</summary>
 
-Bicep é uma linguagem de domínio específico (DSL) que compila para ARM JSON. Oferece sintaxe mais limpa, gerenciamento automático de dependências e melhor ferramental (extensão do VS Code). Por baixo dos panos, o Azure Resource Manager só entende ARM JSON — o Bicep é transpilado antes da implantação.
+Bicep é uma linguagem de domínio específico (DSL) que compila para ARM JSON. Oferece sintaxe mais limpa, gerenciamento automático de dependências e melhor ferramental (extensão do VS Code). Por baixo dos panos, o Azure Resource Manager só entende ARM JSON | o Bicep é transpilado antes da implantação.
 </details>
 
 **2. Qual é a diferença entre os modos de implantação Incremental e Completo?**
@@ -314,7 +315,7 @@ Bicep é uma linguagem de domínio específico (DSL) que compila para ARM JSON. 
 <details>
 <summary>Mostrar Resposta</summary>
 
-Ele converte um ARM template JSON em um arquivo Bicep (.bicep). A conversão é de melhor esforço — algumas construções podem precisar de limpeza manual (avisos são exibidos). A operação inversa é `az bicep build`, que compila Bicep para ARM JSON.
+Ele converte um ARM template JSON em um arquivo Bicep (.bicep). A conversão é de melhor esforço | algumas construções podem precisar de limpeza manual (avisos são exibidos). A operação inversa é `az bicep build`, que compila Bicep para ARM JSON.
 </details>
 
 **4. Por que usar `uniqueString()` em nomes de contas de armazenamento?**

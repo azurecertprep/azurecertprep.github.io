@@ -1,20 +1,20 @@
 ---
 sidebar_position: 2
-title: "Challenge 05 — Blob Storage & Azure Files"
+title: "Challenge 05 | Blob Storage & Azure Files"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 05 — Blob Storage & Azure Files
+# Desafio 05: Blob Storage & Azure Files
 
-> ⏱️ **Tempo estimado**: 60-75 min | 💰 **Custo estimado**: ~$0.50 | 🎯 **Peso no exame**: 15-20%
+> **Tempo estimado**: 60-75 min | **Custo estimado**: ~$0.50 | **Peso no exame**: 15-20%
 
 ## Introdução
 
-A equipe de aplicações da Contoso armazena imagens de perfil de usuários, arquivos de log e relatórios no Azure. Enquanto isso, a equipe de finanças precisa de um sistema de arquivos compartilhado que possam montar a partir de seus desktops Windows — assim como o servidor de arquivos local ao qual estão acostumados. Você precisa configurar tanto o Blob Storage (para dados de aplicações) quanto o Azure Files (para o drive compartilhado da equipe de finanças).
+A equipe de aplicações da Contoso armazena imagens de perfil de usuários, arquivos de log e relatórios no Azure. Enquanto isso, a equipe de finanças precisa de um sistema de arquivos compartilhado que possam montar a partir de seus desktops Windows | assim como o servidor de arquivos local ao qual estão acostumados. Você precisa configurar tanto o Blob Storage (para dados de aplicações) quanto o Azure Files (para o drive compartilhado da equipe de finanças).
 
-Entender a diferença entre Blob Storage e Azure Files — e quando usar cada um — é fundamental para o exame AZ-104. Este desafio oferece experiência prática com ambos.
+Entender a diferença entre Blob Storage e Azure Files | e quando usar cada um | é fundamental para o exame AZ-104. Este desafio oferece experiência prática com ambos.
 
 ## Habilidades do Exame Cobertas
 
@@ -68,13 +68,13 @@ CONN_STRING=$(az storage account show-connection-string --name $STORAGE_NAME --r
 2. Criar três containers de blob com diferentes níveis de acesso:
 
 ```bash
-# Private (default) — no anonymous access
+# Private (default): no anonymous access
 az storage container create --name app-data --connection-string "$CONN_STRING"
 
-# Private — for sensitive logs
+# Private: for sensitive logs
 az storage container create --name logs --connection-string "$CONN_STRING"
 
-# Private — for archived reports
+# Private: for archived reports
 az storage container create --name archive --connection-string "$CONN_STRING"
 ```
 
@@ -142,7 +142,7 @@ az storage account blob-service-properties update \
   --container-delete-retention-days 14
 ```
 
-9. Testar exclusão reversível — excluir um blob e depois recuperá-lo:
+9. Testar exclusão reversível | excluir um blob e depois recuperá-lo:
 
 ```bash
 # Delete the blob
@@ -170,7 +170,7 @@ az storage account blob-service-properties update \
 11. Testar o versionamento fazendo upload de uma versão modificada do mesmo blob:
 
 ```bash
-echo "Updated profile data for Alice — version 2" > profile-alice-v2.txt
+echo "Updated profile data for Alice | version 2" > profile-alice-v2.txt
 az storage blob upload --container-name app-data --file profile-alice-v2.txt --name profiles/alice.txt --connection-string "$CONN_STRING" --overwrite
 
 # List versions
@@ -193,7 +193,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
   --query "[?snapshot!=null].{Name:name, Snapshot:snapshot}" -o table
 ```
 
-### Parte 6: Azure Files — Criar & Configurar
+### Parte 6: Azure Files | Criar & Configurar
 
 14. Criar um compartilhamento Azure Files para a equipe de finanças:
 
@@ -306,6 +306,7 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 | **Archive** | Mais baixo | Mais alto | Horas (1-15h) | 180 dias | Backup de longo prazo, conformidade |
 
 :::info Informação
+
 **Penalidade por exclusão antecipada**: Se você excluir ou mover um blob de Cool/Archive antes do período mínimo de retenção, será cobrado como se o mantivesse pelo período completo. Por exemplo, excluir um blob de Cool após 10 dias = cobrado por 30 dias.
 :::
 
@@ -333,14 +334,14 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 Blobs arquivados não podem ser lidos diretamente. Você deve primeiro **reidratá-los**:
 
 ```bash
-# Change tier from Archive to Hot (standard priority — up to 15 hours)
+# Change tier from Archive to Hot (standard priority: up to 15 hours)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
   --tier Hot \
   --connection-string "$CONN_STRING"
 
-# High priority rehydration (faster, more expensive — under 1 hour for < 10 GB)
+# High priority rehydration (faster, more expensive: under 1 hour for < 10 GB)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
@@ -352,7 +353,7 @@ az storage blob set-tier \
 </details>
 
 <details>
-<summary>Dica 4: Azure Files — Requisitos de porta SMB</summary>
+<summary>Dica 4: Azure Files | Requisitos de porta SMB</summary>
 
 Azure Files usa **SMB 3.0** pela **porta TCP 445**. Muitos provedores de internet e firewalls corporativos bloqueiam esta porta.
 
@@ -391,11 +392,11 @@ Se a porta 445 estiver bloqueada, as alternativas incluem:
 - [Visão geral do Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction)
 - [Guia de planejamento do Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-planning)
 
-## Quebre & Conserte 🔧
+## Quebre & Conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
-1. **Surpresa com blob arquivado**: Tente baixar o blob que você definiu para a camada Archive. Qual erro você recebe? (`BlobArchived` — você deve reidratar primeiro.) Quanto tempo leva a reidratação padrão?
+1. **Surpresa com blob arquivado**: Tente baixar o blob que você definiu para a camada Archive. Qual erro você recebe? (`BlobArchived` | você deve reidratar primeiro.) Quanto tempo leva a reidratação padrão?
 
 2. **Confusão com exclusão reversível**: Exclua um blob, depois exclua o mesmo blob novamente após recriá-lo. Quantas versões excluídas de forma reversível existem? Você pode recuperar uma específica?
 
@@ -475,4 +476,4 @@ rm -f profile-alice.txt profile-bob.txt profile-alice-v2.txt app-log-2025-01-15.
 
 ---
 
-**Próximo**: [Desafio 06 — Segurança de Storage & Ciclo de Vida](/docs/az-104/storage/challenge-06)
+**Próximo**: [Desafio 06 | Segurança de Storage & Ciclo de Vida](/docs/az-104/storage/challenge-06)

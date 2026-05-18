@@ -40,7 +40,7 @@ A Contoso Ltd. tem uma frota de 50 VMs distribuídas em ambientes de desenvolvim
 
 ## Tarefas
 
-### Tarefa 1 — Criar o Ambiente do Laboratório
+### Tarefa 1: Criar o Ambiente do Laboratório
 
 ```bash
 # Criar grupo de recursos
@@ -67,7 +67,7 @@ az vm create \
   --tags Environment=Development Department=IT
 ```
 
-### Tarefa 2 — Implantar Custom Script Extension (Linux)
+### Tarefa 2: Implantar Custom Script Extension (Linux)
 
 Instale o Nginx na VM Linux usando a Custom Script Extension:
 
@@ -91,7 +91,7 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState, Publisher:publisher}" -o table
 ```
 
-### Tarefa 3 — Implantar Custom Script Extension (Windows)
+### Tarefa 3: Implantar Custom Script Extension (Windows)
 
 Instale o IIS na VM Windows usando Custom Script Extension:
 
@@ -115,7 +115,7 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState}" -o table
 ```
 
-### Tarefa 4 — Usar Custom Script Extension com Script Externo
+### Tarefa 4: Usar Custom Script Extension com Script Externo
 
 Hospede um script de configuração em uma conta de armazenamento e referencie-o:
 
@@ -186,7 +186,7 @@ az vm extension set \
 rm -f configure-vm.sh
 ```
 
-### Tarefa 5 — Usar Run Command para Operações Ad-Hoc
+### Tarefa 5: Usar Run Command para Operações Ad-Hoc
 
 Execute comandos em VMs sem acesso SSH/RDP:
 
@@ -220,7 +220,7 @@ az vm run-command invoke \
   --scripts "Get-Service W3SVC | Format-Table Name, Status, StartType"
 ```
 
-### Tarefa 6 — Listar e Gerenciar Extensões de VM
+### Tarefa 6: Listar e Gerenciar Extensões de VM
 
 ```bash
 # Listar todas as extensões em uma VM
@@ -236,7 +236,7 @@ az vm extension image list \
   --query "[].{Name:name, Publisher:publisher}" -o table --latest
 ```
 
-### Tarefa 7 — Criar uma Conta do Azure Automation
+### Tarefa 7: Criar uma Conta do Azure Automation
 
 ```bash
 # Criar Conta do Automation
@@ -252,7 +252,7 @@ az automation account show \
   --query "{Name:name, State:state, Location:location}" -o table
 ```
 
-### Tarefa 8 — Criar um Runbook para Iniciar/Parar VMs
+### Tarefa 8: Criar um Runbook para Iniciar/Parar VMs
 
 ```bash
 # Criar um runbook PowerShell
@@ -320,7 +320,7 @@ az automation runbook publish \
 rm -f stop-dev-vms.ps1
 ```
 
-### Tarefa 9 — Agendar o Runbook
+### Tarefa 9: Agendar o Runbook
 
 ```bash
 # Criar um agendamento (dias úteis às 19h)
@@ -387,7 +387,7 @@ Para o runbook gerenciar recursos do Azure, a Conta do Automation precisa de uma
 
 ## Quebrar & Consertar
 
-### Cenário A — Extensão Falha ao Instalar
+### Cenário A: Extensão Falha ao Instalar
 
 Implante uma Custom Script Extension com um erro intencional (ex: referenciando uma URL de arquivo inexistente). Verifique o status da extensão e diagnostique a falha:
 
@@ -407,11 +407,11 @@ az vm run-command invoke \
   --scripts "cat /var/log/azure/custom-script/handler.log | tail -20"
 ```
 
-### Cenário B — Timeout do Run Command
+### Cenário B: Timeout do Run Command
 
 Execute um script Run Command que dorme por 5 minutos. O que acontece quando o timeout padrão é excedido? Como você lida com operações de longa duração?
 
-### Cenário C — Falha de Autenticação do Runbook
+### Cenário C: Falha de Autenticação do Runbook
 
 Crie um runbook que tenta acessar recursos, mas a identidade gerenciada da Conta do Automation não tem atribuição RBAC. Observe o erro na saída do job e diagnostique as permissões ausentes.
 

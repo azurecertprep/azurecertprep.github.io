@@ -1,18 +1,18 @@
 ---
 sidebar_position: 1
-title: "Challenge 04 — Storage Accounts & Access"
+title: "Challenge 04 | Storage Accounts & Access"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 04 — Storage Accounts & Acesso
+# Desafio 04: Storage Accounts & Acesso
 
-> ⏱️ **Tempo estimado**: 60-75 min | 💰 **Custo estimado**: ~$0.50 | 🎯 **Peso no exame**: 15-20%
+> **Tempo estimado**: 60-75 min | **Custo estimado**: ~$0.50 | **Peso no exame**: 15-20%
 
 ## Introdução
 
-A equipe de aplicações da Contoso precisa de uma solução de armazenamento centralizada. O servidor de arquivos legado está ficando sem espaço, e a equipe de desenvolvimento fica enviando arquivos ZIP por email. Você foi solicitado a configurar o Azure Storage com controles de segurança adequados — chaves de acesso, tokens SAS, firewalls e criptografia. Este é o equivalente no Azure de configurar um servidor de arquivos, mas com segurança em escala de nuvem.
+A equipe de aplicações da Contoso precisa de uma solução de armazenamento centralizada. O servidor de arquivos legado está ficando sem espaço, e a equipe de desenvolvimento fica enviando arquivos ZIP por email. Você foi solicitado a configurar o Azure Storage com controles de segurança adequados | chaves de acesso, tokens SAS, firewalls e criptografia. Este é o equivalente no Azure de configurar um servidor de arquivos, mas com segurança em escala de nuvem.
 
 Storage accounts são um dos tópicos mais testados no exame AZ-104. Você precisará conhecer cada método de acesso, cada opção de redundância e cada controle de segurança por completo.
 
@@ -36,7 +36,7 @@ Storage accounts são um dos tópicos mais testados no exame AZ-104. Você preci
 | RAID 1 (espelhamento) | LRS (Local Redundant Storage) | 3 cópias em um datacenter |
 | RAID entre sites | GRS (Geo-Redundant Storage) | 6 cópias em 2 regiões |
 | Permissões de compartilhamento (Everyone: Read) | Tokens SAS | Acesso limitado por tempo e escopo |
-| Senha de admin para compartilhamento de arquivos | Chaves de acesso da storage account | Acesso total — proteja como uma senha |
+| Senha de admin para compartilhamento de arquivos | Chaves de acesso da storage account | Acesso total | proteja como uma senha |
 | Robocopy / xcopy | AzCopy | Transferência de dados de alto desempenho |
 | Windows Explorer para compartilhamentos | Azure Storage Explorer | Ferramenta GUI para gerenciamento de armazenamento |
 | BitLocker / criptografia de disco | Storage Service Encryption (SSE) | Criptografia automática, sempre ativa |
@@ -94,7 +94,8 @@ az storage account keys list --account-name $STORAGE_NAME --resource-group $RG -
 ```
 
 :::warning Atenção
-Chaves de acesso concedem **controle total** sobre a storage account. Trate-as como senhas — nunca as envie para controle de versão nem as compartilhe em texto simples.
+
+Chaves de acesso concedem **controle total** sobre a storage account. Trate-as como senhas | nunca as envie para controle de versão nem as compartilhe em texto simples.
 :::
 
 7. Criar um container de blob e fazer upload de um arquivo de teste:
@@ -164,6 +165,7 @@ az storage container generate-sas \
 ```
 
 :::tip Dica
+
 **Por que usar políticas de acesso armazenadas?** Se você precisar revogar um token SAS, não é possível invalidar um SAS autônomo sem rotacionar a chave de acesso. Mas se o SAS faz referência a uma política de acesso armazenada, você pode modificar ou excluir a política para revogar o acesso instantaneamente.
 :::
 
@@ -207,6 +209,7 @@ az storage account keys renew --account-name $STORAGE_NAME --resource-group $RG 
 ```
 
 :::warning Atenção
+
 Após rotacionar uma chave, qualquer aplicação ou token SAS usando essa chave **parará de funcionar imediatamente**. Sempre atualize suas aplicações antes de rotacionar chaves em produção.
 :::
 
@@ -281,7 +284,7 @@ STORAGE_NAME="stchallenge$(date +%s | tail -c 8)"
 | **Service SAS** | Serviço específico (ex: um container) | Chaves de acesso | Via política de acesso armazenada |
 | **User Delegation SAS** | Blob/container específico | Credenciais do Entra ID | Revogando a chave de delegação |
 
-**User Delegation SAS** é o mais seguro — usa Entra ID em vez de chaves de acesso.
+**User Delegation SAS** é o mais seguro | usa Entra ID em vez de chaves de acesso.
 
 </details>
 
@@ -302,6 +305,7 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --default-ac
 ```
 
 :::info Informação
+
 Azure Cloud Shell e serviços confiáveis do Azure sempre podem acessar storage accounts independentemente das regras de firewall, desde que a opção **"Allow trusted Microsoft services"** esteja habilitada.
 :::
 
@@ -329,7 +333,7 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 - [Começar com AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Gerenciar chaves de storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage)
 
-## Quebre & Conserte 🔧
+## Quebre & Conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -376,13 +380,13 @@ Quando você regenera uma chave de acesso de storage account:
 <summary>3. Qual é a criptografia padrão para Azure Storage?</summary>
 
 Todos os dados do Azure Storage são criptografados em repouso usando **criptografia AES de 256 bits** (Storage Service Encryption / SSE). Isso é:
-- **Sempre ativo** — não pode ser desabilitado
-- **Transparente** — sem impacto no desempenho
-- **Gratuito** — sem custo adicional
+- **Sempre ativo** | não pode ser desabilitado
+- **Transparente** | sem impacto no desempenho
+- **Gratuito** | sem custo adicional
 
 Você pode escolher entre:
-- **Chaves gerenciadas pela Microsoft** (padrão) — o Azure gerencia as chaves de criptografia
-- **Chaves gerenciadas pelo cliente (CMK)** — Você gerencia as chaves no Azure Key Vault
+- **Chaves gerenciadas pela Microsoft** (padrão) | o Azure gerencia as chaves de criptografia
+- **Chaves gerenciadas pelo cliente (CMK)** | Você gerencia as chaves no Azure Key Vault
 
 </details>
 
@@ -393,7 +397,7 @@ Você pode escolher entre:
 - **LRS ↔ GRS/RA-GRS**: Suportado (pode levar tempo para replicação inicial)
 - **LRS ↔ ZRS**: Suportado via migração ao vivo (solicitar à Microsoft) ou migração manual
 - **ZRS ↔ GZRS/RA-GZRS**: Suportado
-- **LRS → RA-GZRS diretamente**: Não suportado — você deve passar por etapas intermediárias (LRS → GRS → GZRS → RA-GZRS, ou LRS → ZRS → GZRS → RA-GZRS)
+- **LRS → RA-GZRS diretamente**: Não suportado | você deve passar por etapas intermediárias (LRS → GRS → GZRS → RA-GZRS, ou LRS → ZRS → GZRS → RA-GZRS)
 
 O exame pode testar quais transições são suportadas e quais requerem etapas intermediárias.
 
@@ -412,4 +416,4 @@ rm -rf upload-test
 
 ---
 
-**Próximo**: [Desafio 05 — Blob Storage & Azure Files](/docs/az-104/storage/challenge-05)
+**Próximo**: [Desafio 05 | Blob Storage & Azure Files](/docs/az-104/storage/challenge-05)

@@ -50,7 +50,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1 — Criar App Service com Pré-requisitos de Domínio Personalizado
+### Tarefa 1: Criar App Service com Pré-requisitos de Domínio Personalizado
 
 ```bash
 # Create App Service plan (Standard required for custom domains + TLS)
@@ -71,7 +71,7 @@ az webapp create \
 echo "App URL: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Tarefa 2 — Configurar Domínio Personalizado com Verificação DNS
+### Tarefa 2: Configurar Domínio Personalizado com Verificação DNS
 
 :::tip Dica
 
@@ -119,7 +119,7 @@ az network dns record-set cname set-record \
 5. Adicione os registros DNS necessários no seu registrador
 6. Clique em **Validate** e depois em **Add**
 
-### Tarefa 3 — Vincular um Certificado TLS (Managed Certificate)
+### Tarefa 3: Vincular um Certificado TLS (Managed Certificate)
 
 ```bash
 # Create an App Service Managed Certificate (free, auto-renewed)
@@ -160,7 +160,7 @@ az webapp show -g $RG -n $APP_NAME \
 4. Selecione **SNI SSL** como tipo de binding
 5. Em **Protocol Settings**, defina a versão mínima de TLS para **1.2**
 
-### Tarefa 4 — Configurar Backup do App Service
+### Tarefa 4: Configurar Backup do App Service
 
 ```bash
 # Create storage account for backups
@@ -212,7 +212,7 @@ az webapp config backup show \
 6. Opcionalmente inclua banco de dados vinculado
 7. Clique em **Save**
 
-### Tarefa 5 — Configurar Integração com VNet
+### Tarefa 5: Configurar Integração com VNet
 
 ```bash
 # Create a VNet for integration
@@ -247,7 +247,7 @@ az webapp config appsettings set \
 A sub-rede de integração deve ser delegada a Microsoft.Web/serverFarms e não deve conter outros recursos. Use uma sub-rede /24 ou /26 dedicada à integração com App Service.
 :::
 
-### Tarefa 6 — Configurar Restrições de Acesso (Regras de Permitir/Negar IP)
+### Tarefa 6: Configurar Restrições de Acesso (Regras de Permitir/Negar IP)
 
 ```bash
 # Get your current IP
@@ -296,7 +296,7 @@ az webapp config access-restriction show \
   --name $APP_NAME -o table
 ```
 
-### Tarefa 7 — Configurar Hybrid Connections
+### Tarefa 7: Configurar Hybrid Connections
 
 :::tip Dica
 
@@ -331,7 +331,7 @@ az relay namespace list --resource-group $RG -o table
 
 ## Cenários de Quebrar & Consertar
 
-### Cenário A — Backup Falha com Erro de Armazenamento
+### Cenário A: Backup Falha com Erro de Armazenamento
 
 ```bash
 # Simulate: Revoke the SAS token by regenerating storage keys
@@ -340,7 +340,7 @@ az storage account keys renew \
   --account-name $STORAGE_NAME \
   --key primary
 
-# Trigger a manual backup — it will fail
+# Trigger a manual backup: it will fail
 az webapp config backup create \
   --resource-group $RG \
   --webapp-name $APP_NAME \
@@ -350,7 +350,7 @@ az webapp config backup create \
 # Fix: Generate a new SAS token and update the backup configuration
 ```
 
-### Cenário B — Integração com VNet Bloqueia Saída
+### Cenário B: Integração com VNet Bloqueia Saída
 
 ```bash
 # After enabling WEBSITE_VNET_ROUTE_ALL, external APIs stop working
@@ -366,7 +366,7 @@ az network vnet subnet show \
 # Or set WEBSITE_VNET_ROUTE_ALL=0 for split tunneling
 ```
 
-### Cenário C — Restrições de Acesso Bloqueiam Seu Próprio Acesso
+### Cenário C: Restrições de Acesso Bloqueiam Seu Próprio Acesso
 
 ```bash
 # You accidentally denied all traffic including your own IP

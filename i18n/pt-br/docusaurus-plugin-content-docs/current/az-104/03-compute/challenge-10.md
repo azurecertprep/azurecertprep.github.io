@@ -1,17 +1,18 @@
 ---
 sidebar_position: 4
-title: "Challenge 10 — Azure App Service"
+title: "Challenge 10 | Azure App Service"
 ---
 
-# Desafio 10 — Azure App Service
+# Desafio 10: Azure App Service
 
 :::info Informação
-⏱️ **Tempo estimado: 60–75 minutos** | 💰 **Custo estimado: ~$0.20** (tier S1, exclua rapidamente) | 📊 **Peso no exame: 20–25%**
+
+**Tempo estimado: 60–75 minutos** | **Custo estimado: ~$0.20** (tier S1, exclua rapidamente) | 📊 **Peso no exame: 20–25%**
 :::
 
 ## Cenário
 
-A equipe de marketing da Contoso precisa de uma aplicação web implantada para uma campanha futura. O site deve suportar implantações sem tempo de inatividade, auto-scaling durante picos de tráfego e backups regulares. Você vai implantá-lo no Azure App Service com boas práticas de produção — deployment slots, autoscale e controles de rede.
+A equipe de marketing da Contoso precisa de uma aplicação web implantada para uma campanha futura. O site deve suportar implantações sem tempo de inatividade, auto-scaling durante picos de tráfego e backups regulares. Você vai implantá-lo no Azure App Service com boas práticas de produção | deployment slots, autoscale e controles de rede.
 
 ## Habilidades do Exame Cobertas
 
@@ -40,13 +41,13 @@ A equipe de marketing da Contoso precisa de uma aplicação web implantada para 
 
 ## Tarefas
 
-### Tarefa 1 — Criar um Plano do App Service
+### Tarefa 1: Criar um Plano do App Service
 
 ```bash
 # Criar um grupo de recursos
 az group create --name rg-appservice-lab --location eastus
 
-# Criar um plano do App Service (Standard S1 — necessário para deployment slots)
+# Criar um plano do App Service (Standard S1: necessário para deployment slots)
 az appservice plan create \
   --resource-group rg-appservice-lab \
   --name plan-contoso-web \
@@ -58,7 +59,7 @@ az appservice plan show -g rg-appservice-lab -n plan-contoso-web \
   --query "{Name:name, SKU:sku.name, Tier:sku.tier, Workers:sku.capacity}" -o table
 ```
 
-### Tarefa 2 — Criar um Web App
+### Tarefa 2: Criar um Web App
 
 ```bash
 # Criar um web app com runtime Node.js
@@ -77,7 +78,7 @@ az webapp show -g rg-appservice-lab -n $APP_NAME \
   --query "{Name:name, State:state, URL:defaultHostName}" -o table
 ```
 
-### Tarefa 3 — Implantar Código de Exemplo
+### Tarefa 3: Implantar Código de Exemplo
 
 ```bash
 # Criar uma aplicação Node.js simples
@@ -123,7 +124,7 @@ az webapp config appsettings set \
 echo "Visite: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Tarefa 4 — Criar um Deployment Slot de Staging
+### Tarefa 4: Criar um Deployment Slot de Staging
 
 ```bash
 # Criar um slot de staging
@@ -139,7 +140,7 @@ az webapp deployment slot list -g rg-appservice-lab -n $APP_NAME -o table
 echo "URL de Staging: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Tarefa 5 — Implantar uma Nova Versão no Staging
+### Tarefa 5: Implantar uma Nova Versão no Staging
 
 ```bash
 # Atualizar a versão no staging
@@ -166,7 +167,7 @@ echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 echo "Produção: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Tarefa 6 — Trocar Staging e Produção
+### Tarefa 6: Trocar Staging e Produção
 
 ```bash
 # Visualizar o que vai mudar
@@ -179,12 +180,12 @@ az webapp deployment slot swap \
   --slot staging \
   --target-slot production
 
-# Verificar — produção agora executa v2, staging tem v1
+# Verificar: produção agora executa v2, staging tem v1
 echo "Produção: https://$APP_NAME.azurewebsites.net"
 echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Tarefa 7 — Configurar Autoscale
+### Tarefa 7: Configurar Autoscale
 
 ```bash
 # Obter o ID do recurso do plano do App Service
@@ -219,7 +220,7 @@ az monitor autoscale show -g rg-appservice-lab -n autoscale-web \
   --query "profiles[0].rules[].{Metric:metricTrigger.metricName, Op:metricTrigger.operator, Threshold:metricTrigger.threshold, Direction:scaleAction.direction}" -o table
 ```
 
-### Tarefa 8 — Configurar Backup
+### Tarefa 8: Configurar Backup
 
 ```bash
 # Criar uma conta de armazenamento para backups
@@ -255,7 +256,7 @@ az webapp config backup create \
   --retain-one true
 ```
 
-### Tarefa 9 — Configurar Restrições de Acesso
+### Tarefa 9: Configurar Restrições de Acesso
 
 ```bash
 # Adicionar uma restrição de acesso baseada em IP (permitir apenas seu IP)
@@ -288,14 +289,14 @@ az webapp config access-restriction show \
 - [ ] Plano do App Service (Standard S1) criado
 - [ ] Web app implantado e acessível via HTTPS
 - [ ] Deployment slot de staging criado e recebe a v2
-- [ ] Swap de slot executado — produção executa a v2
+- [ ] Swap de slot executado | produção executa a v2
 - [ ] Autoscale configurado com regras baseadas em CPU
 - [ ] Agenda de backup configurada com conta de armazenamento
 - [ ] Restrições de acesso configuradas no web app
 
-## 🔧 Cenários Quebre & Conserte
+## Cenários Quebre & Conserte
 
-### Cenário A — Implantando no Slot Errado
+### Cenário A: Implantando no Slot Errado
 ```bash
 # Você implantou a v2 em produção em vez de staging. Como reverter?
 # Dica: A versão anterior agora está no slot de staging após um swap.
@@ -306,7 +307,7 @@ az webapp deployment slot swap \
   --target-slot production
 ```
 
-### Cenário B — Autoscale Min > Max
+### Cenário B: Autoscale Min > Max
 ```bash
 # Tente definir min-count maior que max-count
 az monitor autoscale update \
@@ -316,7 +317,7 @@ az monitor autoscale update \
 # Qual erro você recebe?
 ```
 
-### Cenário C — Slots no Tier Gratuito
+### Cenário C: Slots no Tier Gratuito
 ```bash
 # Crie um plano de tier Gratuito e tente adicionar um slot
 az appservice plan create -g rg-appservice-lab -n plan-free --sku F1 --is-linux
@@ -350,10 +351,10 @@ Deployment slots requerem tier **Standard** ou superior.
 
 1. O Azure aplica as **configurações do slot de destino** (connection strings, app settings marcadas como "slot setting") ao slot de origem.
 2. O Azure **aquece** o slot de origem enviando uma requisição HTTP para seu caminho raiz.
-3. Se o aquecimento for bem-sucedido, o Azure **troca as regras de roteamento** — o tráfego agora vai para o slot de origem aquecido.
+3. Se o aquecimento for bem-sucedido, o Azure **troca as regras de roteamento** | o tráfego agora vai para o slot de origem aquecido.
 4. O código anterior de produção agora está no slot de staging (rollback instantâneo se necessário).
 
-O swap é atômico da perspectiva do usuário — sem tempo de inatividade.
+O swap é atômico da perspectiva do usuário | sem tempo de inatividade.
 </details>
 
 **3. Quais configurações de deployment slot são trocadas e quais não são?**
@@ -373,7 +374,7 @@ O swap é atômico da perspectiva do usuário — sem tempo de inatividade.
 <details>
 <summary>Mostrar Resposta</summary>
 
-- **Scale-up** (vertical): Altera o tier/tamanho do plano do App Service — VM maior, mais CPU/RAM. Requer uma breve reinicialização.
+- **Scale-up** (vertical): Altera o tier/tamanho do plano do App Service | VM maior, mais CPU/RAM. Requer uma breve reinicialização.
 - **Scale-out** (horizontal): Adiciona mais instâncias do mesmo tamanho. O App Service faz balanceamento de carga entre as instâncias. Pode ser manual ou automático (regras de autoscale). Sem tempo de inatividade.
 </details>
 

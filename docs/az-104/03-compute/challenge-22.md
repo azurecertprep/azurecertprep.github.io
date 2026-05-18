@@ -42,7 +42,7 @@ Contoso Ltd. is standardizing disk management across their VM fleet. The securit
 
 ## Tasks
 
-### Task 1 — Create the Lab Environment
+### Task 1: Create the Lab Environment
 
 ```bash
 # Create resource group
@@ -72,7 +72,7 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-disks-lab --query "[0].name" -o tsv)
 ```
 
-### Task 2 — Create and Attach Managed Disks
+### Task 2: Create and Attach Managed Disks
 
 Create disks of different performance tiers and attach them:
 
@@ -118,7 +118,7 @@ az vm show \
   --query "storageProfile.dataDisks[].{Name:name, SizeGB:diskSizeGb, Lun:lun, Caching:caching}" -o table
 ```
 
-### Task 3 — Initialize and Mount Disks Inside the VM
+### Task 3: Initialize and Mount Disks Inside the VM
 
 ```bash
 # Use Run Command to partition and mount the disks
@@ -150,7 +150,7 @@ az vm run-command invoke \
   '
 ```
 
-### Task 4 — Configure Azure Disk Encryption (ADE)
+### Task 4: Configure Azure Disk Encryption (ADE)
 
 Enable Azure Disk Encryption using Key Vault:
 
@@ -181,7 +181,7 @@ Azure Disk Encryption can take 15-30 minutes to complete, depending on disk size
 
 :::
 
-### Task 5 — Create Disk Snapshots
+### Task 5: Create Disk Snapshots
 
 Create point-in-time snapshots for backup purposes:
 
@@ -217,7 +217,7 @@ az snapshot list \
   --query "[].{Name:name, SizeGB:diskSizeGb, Source:creationData.sourceResourceId}" -o table
 ```
 
-### Task 6 — Create a Disk from a Snapshot
+### Task 6: Create a Disk from a Snapshot
 
 ```bash
 # Create a new managed disk from the snapshot
@@ -240,7 +240,7 @@ az disk show \
   --query "{Name:name, SizeGB:diskSizeGb, Sku:sku.name, ProvisioningState:provisioningState}" -o table
 ```
 
-### Task 7 — Create a Custom VM Image (Generalized)
+### Task 7: Create a Custom VM Image (Generalized)
 
 Create a reusable image from the VM for rapid deployment:
 
@@ -277,7 +277,7 @@ az image show \
   --query "{Name:name, State:provisioningState, Source:sourceVirtualMachine.id}" -o table
 ```
 
-### Task 8 — Deploy a New VM from the Custom Image
+### Task 8: Deploy a New VM from the Custom Image
 
 ```bash
 # Create a new VM from the custom image
@@ -298,7 +298,7 @@ az vm run-command invoke \
   --scripts "cat /opt/contoso/logs/setup.log 2>/dev/null || echo 'No pre-config found (expected if image was from fresh VM)'"
 ```
 
-### Task 9 — Resize a Managed Disk
+### Task 9: Resize a Managed Disk
 
 ```bash
 # Deallocate the new VM to resize its OS disk
@@ -325,7 +325,7 @@ az vm run-command invoke \
   --scripts "growpart /dev/sda 1 && resize2fs /dev/sda1 && df -h /"
 ```
 
-### Task 10 — Compare Disk Performance Tiers
+### Task 10: Compare Disk Performance Tiers
 
 ```bash
 # View disk performance characteristics
@@ -399,7 +399,7 @@ You can only increase the size of a managed disk, never decrease it. If you need
 
 ## Break and Fix
 
-### Scenario A — Disk Encryption Failure
+### Scenario A: Disk Encryption Failure
 
 Try enabling ADE on a VM when the Key Vault does not have "Enabled for disk encryption" set. Observe the error message and remediate:
 
@@ -409,11 +409,11 @@ az keyvault show --name $KV_NAME \
   --query "{EnabledForDiskEncryption:properties.enabledForDiskEncryption}" -o table
 ```
 
-### Scenario B — Snapshot from Running VM
+### Scenario B: Snapshot from Running VM
 
 Create a snapshot while the VM is running and data is being written. Is the snapshot crash-consistent or application-consistent? What are the implications for databases?
 
-### Scenario C — Detach Disk While Mounted
+### Scenario C: Detach Disk While Mounted
 
 Attempt to detach a data disk that is currently mounted inside the VM without unmounting first. What happens? (Answer: The detach operation at the Azure level may succeed, but the VM will experience I/O errors on that mount point.)
 

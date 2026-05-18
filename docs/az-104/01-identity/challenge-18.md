@@ -39,7 +39,7 @@ Contoso Ltd.'s monthly Azure bill has grown from $5,000 to $45,000 in six months
 
 ## Tasks
 
-### Task 1 — Set Up Resource Tags for Cost Allocation
+### Task 1: Set Up Resource Tags for Cost Allocation
 
 Create a consistent tagging strategy and apply tags to existing resources:
 
@@ -68,7 +68,7 @@ az vm create \
   --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=API
 ```
 
-### Task 2 — Create a Budget with Alerts
+### Task 2: Create a Budget with Alerts
 
 Create a monthly budget with multiple alert thresholds:
 
@@ -91,15 +91,15 @@ az consumption budget create \
 3. Set the scope to your resource group or subscription
 4. Configure the budget amount ($100 monthly)
 5. Add alert conditions:
-   - **50% actual** — notify the team early
-   - **75% actual** — escalate to manager
-   - **100% actual** — alert all stakeholders
-   - **110% forecasted** — proactive forecast warning
+   - **50% actual** | notify the team early
+   - **75% actual** | escalate to manager
+   - **100% actual** | alert all stakeholders
+   - **110% forecasted** | proactive forecast warning
 6. Configure action group or email recipients for each threshold
 
 :::
 
-### Task 3 — Configure Cost Analysis Views
+### Task 3: Configure Cost Analysis Views
 
 Explore cost analysis in the Azure Portal:
 
@@ -130,7 +130,7 @@ az costmanagement query \
   --dataset-grouping name=Department type=TagKey
 ```
 
-### Task 4 — Configure Cost Exports
+### Task 4: Configure Cost Exports
 
 Set up automated cost data export to a storage account:
 
@@ -157,7 +157,7 @@ az costmanagement export create \
   --schedule-status Active
 ```
 
-### Task 5 — Review Azure Advisor Recommendations
+### Task 5: Review Azure Advisor Recommendations
 
 ```bash
 # List all Advisor recommendations
@@ -186,7 +186,7 @@ Navigate to **Azure Advisor** > **Cost** tab to see:
 
 :::
 
-### Task 6 — Implement Spending Notifications with Action Groups
+### Task 6: Implement Spending Notifications with Action Groups
 
 ```bash
 # Create an action group for cost alerts
@@ -203,7 +203,7 @@ az monitor action-group show \
   --query "{Name:name, Receivers:emailReceivers[].{Name:name, Email:emailAddress}}" -o json
 ```
 
-### Task 7 — Enforce Tagging with Azure Policy
+### Task 7: Enforce Tagging with Azure Policy
 
 Apply a policy that denies resource creation without the required CostCenter tag:
 
@@ -243,7 +243,7 @@ az storage account create \
 <details>
 <summary>Hint 1: Budget scope</summary>
 
-Budgets can be scoped to a subscription, resource group, or management group. For the exam, know that budget alerts are informational by default — they do not stop spending. To automatically shut down resources, you need to combine budget alerts with Azure Automation runbooks or Logic Apps.
+Budgets can be scoped to a subscription, resource group, or management group. For the exam, know that budget alerts are informational by default | they do not stop spending. To automatically shut down resources, you need to combine budget alerts with Azure Automation runbooks or Logic Apps.
 
 </details>
 
@@ -270,11 +270,11 @@ To view costs, you need at minimum the **Cost Management Reader** role or **Read
 
 ## Break and Fix
 
-### Scenario A — Budget Not Alerting
+### Scenario A: Budget Not Alerting
 
 You created a budget with a $100 threshold, but spending reached $120 and no alert was sent. Investigate: Was an action group configured? Is the email address valid? Check budget alert conditions and ensure "actual" vs "forecasted" is set correctly.
 
-### Scenario B — Untagged Resources
+### Scenario B: Untagged Resources
 
 Run a query to find all resources in a resource group that are missing the CostCenter tag. How do you remediate existing untagged resources? (Answer: Use policy remediation tasks with "Modify" or "DeployIfNotExists" effects.)
 
@@ -284,7 +284,7 @@ az resource list --resource-group rg-cost-lab \
   --query "[?tags.CostCenter==null].{Name:name, Type:type}" -o table
 ```
 
-### Scenario C — Cost Export Failures
+### Scenario C: Cost Export Failures
 
 Your daily cost export stopped working. Check the export status and common causes: storage account key rotation, deleted container, or network access restrictions on the storage account.
 
@@ -293,25 +293,25 @@ Your daily cost export stopped working. Check the export status and common cause
 <details>
 <summary>1. What is the difference between actual and forecasted budget alerts?</summary>
 
-**Actual alerts** fire when cumulative spending reaches the threshold percentage of the budget. **Forecasted alerts** fire when the projected end-of-period spend is expected to exceed the threshold. Forecasted alerts are proactive — they warn you before you overspend based on spending trends.
+**Actual alerts** fire when cumulative spending reaches the threshold percentage of the budget. **Forecasted alerts** fire when the projected end-of-period spend is expected to exceed the threshold. Forecasted alerts are proactive | they warn you before you overspend based on spending trends.
 
 </details>
 
 <details>
 <summary>2. Can Azure budgets automatically stop resource consumption?</summary>
 
-**No.** Budget alerts are informational only — they send notifications but do not stop or delete resources. To automate cost control actions (like shutting down VMs), you must combine budget alerts with **Action Groups** that trigger **Azure Automation runbooks** or **Logic Apps**.
+**No.** Budget alerts are informational only | they send notifications but do not stop or delete resources. To automate cost control actions (like shutting down VMs), you must combine budget alerts with **Action Groups** that trigger **Azure Automation runbooks** or **Logic Apps**.
 
 </details>
 
 <details>
 <summary>3. What are the four categories of Azure Advisor recommendations?</summary>
 
-1. **Cost** — Right-size or shut down underutilized resources
-2. **Security** — Vulnerability and threat detection
-3. **Reliability** — High availability and business continuity
-4. **Performance** — Speed and responsiveness improvements
-5. **Operational Excellence** — Process and workflow best practices
+1. **Cost** | Right-size or shut down underutilized resources
+2. **Security** | Vulnerability and threat detection
+3. **Reliability** | High availability and business continuity
+4. **Performance** | Speed and responsiveness improvements
+5. **Operational Excellence** | Process and workflow best practices
 
 (Note: There are actually five categories as of recent updates.)
 

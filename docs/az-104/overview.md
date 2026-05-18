@@ -38,9 +38,9 @@ Each challenge follows a consistent format:
 
 ## Prerequisites
 
-- **Azure subscription** — [Azure Free Account](https://azure.microsoft.com/free/) ($200 credit for 30 days) or [Azure for Students](https://azure.microsoft.com/free/students/) ($100 credit, no credit card)
-- **Familiarity with** — Operating systems, networking basics, servers, virtualization
-- **Experience with** — Azure Portal, command-line tools (CLI or PowerShell)
+- **Azure subscription** | [Azure Free Account](https://azure.microsoft.com/free/) ($200 credit for 30 days) or [Azure for Students](https://azure.microsoft.com/free/students/) ($100 credit, no credit card)
+- **Familiarity with** | Operating systems, networking basics, servers, virtualization
+- **Experience with** | Azure Portal, command-line tools (CLI or PowerShell)
 
 :::tip One-Click Lab
 

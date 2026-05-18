@@ -38,7 +38,7 @@ Contoso Ltd. is growing fast. What started as a single Azure subscription has ba
 
 ## Tasks
 
-### Task 1 — Create a Management Group Hierarchy
+### Task 1: Create a Management Group Hierarchy
 
 Design and create the following management group structure:
 
@@ -98,7 +98,7 @@ Navigate to **Azure Portal** > **Management groups**. Click **+ Create** and spe
 
 :::
 
-### Task 2 — Move a Subscription into a Management Group
+### Task 2: Move a Subscription into a Management Group
 
 Move your current subscription into the `mg-dev` management group:
 
@@ -118,7 +118,7 @@ az account management-group show \
   --recurse
 ```
 
-### Task 3 — Assign Azure Policy at Management Group Scope
+### Task 3: Assign Azure Policy at Management Group Scope
 
 Apply the built-in policy "Require a tag and its value on resources" at the `mg-production` scope:
 
@@ -136,7 +136,7 @@ az policy assignment create \
   --params '{"tagName": {"value": "Environment"}, "tagValue": {"value": "Production"}}'
 ```
 
-### Task 4 — Apply RBAC at Management Group Level
+### Task 4: Apply RBAC at Management Group Level
 
 Grant a user the "Reader" role at the `mg-contoso` management group scope (cascading to all subscriptions):
 
@@ -156,7 +156,7 @@ az role assignment list \
   --query "[?principalId=='$USER_ID']" -o table
 ```
 
-### Task 5 — Move a Subscription Between Management Groups
+### Task 5: Move a Subscription Between Management Groups
 
 Simulate a department reorganization by moving the subscription from `mg-dev` to `mg-sandbox`:
 
@@ -178,7 +178,7 @@ az account management-group show \
   --recurse
 ```
 
-### Task 6 — Query the Management Group Hierarchy
+### Task 6: Query the Management Group Hierarchy
 
 ```bash
 # View the full hierarchy
@@ -213,7 +213,7 @@ You need specific permissions to create management groups. By default, any user 
 <details>
 <summary>Hint 2: Policy inheritance</summary>
 
-Policies assigned at a management group scope are inherited by all child management groups and subscriptions. You cannot override or exclude a child from an inherited policy — you can only add exemptions for specific resources.
+Policies assigned at a management group scope are inherited by all child management groups and subscriptions. You cannot override or exclude a child from an inherited policy | you can only add exemptions for specific resources.
 
 </details>
 
@@ -233,15 +233,15 @@ Moving a subscription between management groups changes which policies and RBAC 
 
 ## Break and Fix
 
-### Scenario A — Policy Conflict
+### Scenario A: Policy Conflict
 
 Assign two conflicting policies at different levels: one requiring tag "Environment=Production" at mg-production and another requiring "Environment=Development" at mg-dev. Try to deploy a resource in a subscription under mg-dev. What happens when contradictory policies exist at different levels?
 
-### Scenario B — Orphaned Subscription
+### Scenario B: Orphaned Subscription
 
 Remove your subscription from all custom management groups. Where does it appear? (Answer: It returns to the Tenant Root Group.) How do you find subscriptions that are not in any custom management group?
 
-### Scenario C — Locked Out
+### Scenario C: Locked Out
 
 Assign a Deny RBAC assignment at a management group scope. What happens to users who previously had access through subscription-level assignments? How do deny assignments interact with allow assignments?
 

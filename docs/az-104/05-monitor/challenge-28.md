@@ -51,12 +51,12 @@ az group create --name $RG --location $LOCATION
 
 :::tip No Infrastructure Needed
 
-This challenge primarily uses Azure Advisor and Service Health, which analyze your existing subscription resources. You do not need to deploy VMs or services for this lab — Advisor analyzes whatever already exists in your subscription.
+This challenge primarily uses Azure Advisor and Service Health, which analyze your existing subscription resources. You do not need to deploy VMs or services for this lab | Advisor analyzes whatever already exists in your subscription.
 :::
 
 ## Tasks
 
-### Task 1 — Review Azure Advisor Recommendations
+### Task 1: Review Azure Advisor Recommendations
 
 ```bash
 # List all Advisor recommendations for the subscription
@@ -92,7 +92,7 @@ az advisor recommendation list \
 3. Click into each category to see detailed recommendations
 4. Each recommendation shows: Impact (High/Medium/Low), affected resources, and remediation steps
 
-### Task 2 — Understand Advisor Score
+### Task 2: Understand Advisor Score
 
 **Portal Steps:**
 1. Navigate to **Advisor** > **Advisor Score**
@@ -122,7 +122,7 @@ Advisor Score represents the percentage of Advisor recommendations that have bee
 - Set organizational targets (e.g., maintain above 80%)
 :::
 
-### Task 3 — Suppress or Postpone Recommendations
+### Task 3: Suppress or Postpone Recommendations
 
 ```bash
 # List current recommendations
@@ -157,7 +157,7 @@ Suppress recommendations when:
 - The recommendation is a false positive for your workload
 :::
 
-### Task 4 — Configure Advisor Alerts
+### Task 4: Configure Advisor Alerts
 
 ```bash
 # First, create an action group for notifications
@@ -189,7 +189,7 @@ az monitor activity-log alert create \
    - Action group: Select or create
 4. Click **Create alert rule**
 
-### Task 5 — Configure Service Health Alerts
+### Task 5: Configure Service Health Alerts
 
 ```bash
 # Create alert for service issues (outages) in your region
@@ -235,7 +235,7 @@ az monitor activity-log alert list \
 4. Select action group
 5. Name the alert rule and click **Create**
 
-### Task 6 — Check Resource Health
+### Task 6: Check Resource Health
 
 ```bash
 # Check availability/health status of specific resources
@@ -265,7 +265,7 @@ az monitor activity-log list \
 4. Navigate to a specific resource > **Resource Health** blade
 5. View historical health events and root cause analysis
 
-### Task 7 — Create Action Groups for Notifications
+### Task 7: Create Action Groups for Notifications
 
 ```bash
 # Create a comprehensive action group with multiple notification channels
@@ -300,7 +300,7 @@ AG_ID=$(az monitor action-group show \
 #   --notifications '[{"notificationType":"Email","emailAddress":"ops@contoso.com"}]'
 ```
 
-### Task 8 — Review Service Health Dashboard
+### Task 8: Review Service Health Dashboard
 
 **Portal Steps:**
 1. Navigate to **Service Health** in the portal
@@ -316,7 +316,7 @@ AG_ID=$(az monitor action-group show \
    - Recommended actions
 4. Check **Health history** for past events
 
-### Task 9 — Implement Advisor Recommendations
+### Task 9: Implement Advisor Recommendations
 
 ```bash
 # Example: Implement a common Advisor recommendation
@@ -358,7 +358,7 @@ az advisor recommendation list --category Cost -o table
 
 ## Break & Fix Scenarios
 
-### Scenario A — Alert Not Firing
+### Scenario A: Alert Not Firing
 
 ```bash
 # Check if action group is correctly configured
@@ -384,7 +384,7 @@ az monitor activity-log alert update \
   --enabled true
 ```
 
-### Scenario B — Too Many Notifications (Alert Fatigue)
+### Scenario B: Too Many Notifications (Alert Fatigue)
 
 ```bash
 # Problem: Getting too many low-impact Advisor notifications
@@ -408,7 +408,7 @@ az monitor alert-processing-rule create \
   --schedule-recurrence "Saturday" "Sunday"
 ```
 
-### Scenario C — Resource Health Shows Unavailable
+### Scenario C: Resource Health Shows Unavailable
 
 ```bash
 # A VM shows "Unavailable" in Resource Health

@@ -119,7 +119,7 @@ az vm create \
 
 ## Tasks
 
-### Task 1 — Enable Network Watcher
+### Task 1: Enable Network Watcher
 
 ```bash
 # Network Watcher is auto-enabled for most subscriptions
@@ -139,7 +139,7 @@ az network watcher show \
   --query "{Name:name, Location:location, State:provisioningState}" -o table
 ```
 
-### Task 2 — IP Flow Verify
+### Task 2: IP Flow Verify
 
 Test whether traffic is allowed or denied by NSG rules:
 
@@ -184,7 +184,7 @@ az network watcher test-ip-flow \
 IP Flow Verify tells you which NSG rule (name and priority) is allowing or denying traffic. It checks both the NIC-level NSG and subnet-level NSG. This is the fastest way to diagnose "why can't I connect?" issues.
 :::
 
-### Task 3 — Next Hop Analysis
+### Task 3: Next Hop Analysis
 
 Determine the next hop for traffic from a VM:
 
@@ -212,7 +212,7 @@ az network watcher show-next-hop \
   --dest-ip 192.168.1.1
 ```
 
-### Task 4 — Packet Capture
+### Task 4: Packet Capture
 
 ```bash
 # Create a storage account for packet captures
@@ -262,7 +262,7 @@ az network watcher packet-capture delete \
 Packet captures are stored as .cap files in the storage account. You can download and analyze them with Wireshark. The Network Watcher agent must be installed on the VM (automatically installed when you create a capture).
 :::
 
-### Task 5 — Connection Monitor
+### Task 5: Connection Monitor
 
 ```bash
 # Create a Connection Monitor to continuously test connectivity
@@ -303,7 +303,7 @@ az network watcher connection-monitor show \
   --name cm-web-to-internet
 ```
 
-### Task 6 — NSG Flow Logs
+### Task 6: NSG Flow Logs
 
 ```bash
 # Create a Log Analytics workspace for flow logs
@@ -355,7 +355,7 @@ az network watcher flow-log show \
 5. Enable Traffic Analytics with Log Analytics workspace
 6. Set processing interval (10 minutes recommended)
 
-### Task 7 — Connection Troubleshoot
+### Task 7: Connection Troubleshoot
 
 ```bash
 # One-time connectivity check from VM to destination
@@ -383,7 +383,7 @@ az network watcher test-connectivity \
   --protocol Tcp
 ```
 
-### Task 8 — Topology View and Effective Security Rules
+### Task 8: Topology View and Effective Security Rules
 
 ```bash
 # Generate network topology
@@ -423,7 +423,7 @@ az network nic list-effective-nsg \
 
 ## Break & Fix Scenarios
 
-### Scenario A — VM Cannot Reach Internet
+### Scenario A: VM Cannot Reach Internet
 
 ```bash
 # Add a deny-all outbound rule to the NSG
@@ -457,7 +457,7 @@ az network nsg rule delete \
   --name BlockOutbound
 ```
 
-### Scenario B — Asymmetric Routing Causes Drops
+### Scenario B: Asymmetric Routing Causes Drops
 
 ```bash
 # Add a UDR that routes response traffic differently than request traffic
@@ -472,7 +472,7 @@ az network watcher show-next-hop \
 # If next hop shows "VirtualAppliance" but no NVA exists, traffic is black-holed
 ```
 
-### Scenario C — Connection Monitor Shows Failures
+### Scenario C: Connection Monitor Shows Failures
 
 ```bash
 # Check Connection Monitor for failures

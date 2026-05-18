@@ -42,7 +42,7 @@ A Contoso Ltd. está padronizando o gerenciamento de discos em sua frota de VMs.
 
 ## Tarefas
 
-### Tarefa 1 — Criar o Ambiente do Laboratório
+### Tarefa 1: Criar o Ambiente do Laboratório
 
 ```bash
 # Criar grupo de recursos
@@ -72,7 +72,7 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-disks-lab --query "[0].name" -o tsv)
 ```
 
-### Tarefa 2 — Criar e Anexar Managed Disks
+### Tarefa 2: Criar e Anexar Managed Disks
 
 Crie discos de diferentes tiers de desempenho e anexe-os:
 
@@ -118,7 +118,7 @@ az vm show \
   --query "storageProfile.dataDisks[].{Name:name, SizeGB:diskSizeGb, Lun:lun, Caching:caching}" -o table
 ```
 
-### Tarefa 3 — Inicializar e Montar Discos Dentro da VM
+### Tarefa 3: Inicializar e Montar Discos Dentro da VM
 
 ```bash
 # Usar Run Command para particionar e montar os discos
@@ -150,7 +150,7 @@ az vm run-command invoke \
   '
 ```
 
-### Tarefa 4 — Configurar Azure Disk Encryption (ADE)
+### Tarefa 4: Configurar Azure Disk Encryption (ADE)
 
 Habilite o Azure Disk Encryption usando Key Vault:
 
@@ -181,7 +181,7 @@ O Azure Disk Encryption pode levar de 15 a 30 minutos para ser concluído, depen
 
 :::
 
-### Tarefa 5 — Criar Snapshots de Disco
+### Tarefa 5: Criar Snapshots de Disco
 
 Crie snapshots point-in-time para fins de backup:
 
@@ -217,7 +217,7 @@ az snapshot list \
   --query "[].{Name:name, SizeGB:diskSizeGb, Source:creationData.sourceResourceId}" -o table
 ```
 
-### Tarefa 6 — Criar um Disco a partir de um Snapshot
+### Tarefa 6: Criar um Disco a partir de um Snapshot
 
 ```bash
 # Criar um novo managed disk a partir do snapshot
@@ -240,7 +240,7 @@ az disk show \
   --query "{Name:name, SizeGB:diskSizeGb, Sku:sku.name, ProvisioningState:provisioningState}" -o table
 ```
 
-### Tarefa 7 — Criar uma Imagem Personalizada de VM (Generalizada)
+### Tarefa 7: Criar uma Imagem Personalizada de VM (Generalizada)
 
 Crie uma imagem reutilizável a partir da VM para implantação rápida:
 
@@ -277,7 +277,7 @@ az image show \
   --query "{Name:name, State:provisioningState, Source:sourceVirtualMachine.id}" -o table
 ```
 
-### Tarefa 8 — Implantar uma Nova VM a partir da Imagem Personalizada
+### Tarefa 8: Implantar uma Nova VM a partir da Imagem Personalizada
 
 ```bash
 # Criar uma nova VM a partir da imagem personalizada
@@ -298,7 +298,7 @@ az vm run-command invoke \
   --scripts "cat /opt/contoso/logs/setup.log 2>/dev/null || echo 'No pre-config found (expected if image was from fresh VM)'"
 ```
 
-### Tarefa 9 — Redimensionar um Managed Disk
+### Tarefa 9: Redimensionar um Managed Disk
 
 ```bash
 # Desalocar a nova VM para redimensionar seu disco de SO
@@ -325,7 +325,7 @@ az vm run-command invoke \
   --scripts "growpart /dev/sda 1 && resize2fs /dev/sda1 && df -h /"
 ```
 
-### Tarefa 10 — Comparar Tiers de Desempenho de Disco
+### Tarefa 10: Comparar Tiers de Desempenho de Disco
 
 ```bash
 # Visualizar características de desempenho dos discos
@@ -399,7 +399,7 @@ Você só pode aumentar o tamanho de um managed disk, nunca diminuir. Se precisa
 
 ## Quebrar & Consertar
 
-### Cenário A — Falha na Criptografia de Disco
+### Cenário A: Falha na Criptografia de Disco
 
 Tente habilitar o ADE em uma VM quando o Key Vault não tem "Habilitado para criptografia de disco" definido. Observe a mensagem de erro e remedie:
 
@@ -409,11 +409,11 @@ az keyvault show --name $KV_NAME \
   --query "{EnabledForDiskEncryption:properties.enabledForDiskEncryption}" -o table
 ```
 
-### Cenário B — Snapshot de VM em Execução
+### Cenário B: Snapshot de VM em Execução
 
 Crie um snapshot enquanto a VM está em execução e dados estão sendo escritos. O snapshot é crash-consistent ou application-consistent? Quais são as implicações para bancos de dados?
 
-### Cenário C — Desanexar Disco Enquanto Montado
+### Cenário C: Desanexar Disco Enquanto Montado
 
 Tente desanexar um disco de dados que está atualmente montado dentro da VM sem desmontar primeiro. O que acontece? (Resposta: A operação de desanexar no nível do Azure pode ter sucesso, mas a VM experimentará erros de I/O naquele ponto de montagem.)
 

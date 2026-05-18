@@ -1,12 +1,13 @@
 ---
 sidebar_position: 2
-title: "Challenge 12 — Network Security"
+title: "Challenge 12 | Network Security"
 ---
 
-# Desafio 12 — Network Security
+# Desafio 12: Network Security
 
 :::info Tempo Estimado & Custo
-⏱️ **60 minutos** | 💰 **~$0,30** (Azure Bastion gera cobranças por hora — exclua rapidamente) | 📊 **Peso no exame: 15–20%**
+
+**60 minutos** | **~$0,30** (Azure Bastion gera cobranças por hora | exclua rapidamente) | 📊 **Peso no exame: 15–20%**
 :::
 
 ## Cenário
@@ -36,7 +37,7 @@ A equipe de segurança da Contoso concluiu uma revisão e emitiu diretrizes: tod
 
 ## Tarefas
 
-### Tarefa 1 — Criar um NSG com Regras
+### Tarefa 1: Criar um NSG com Regras
 
 ```bash
 # Create a resource group
@@ -107,7 +108,7 @@ az network nsg rule create \
 az network nsg rule list -g rg-netsec-lab --nsg-name nsg-frontend -o table
 ```
 
-### Tarefa 2 — Associar o NSG a uma Subnet
+### Tarefa 2: Associar o NSG a uma Subnet
 
 ```bash
 # Associate NSG with the frontend subnet
@@ -123,7 +124,7 @@ az network vnet subnet show -g rg-netsec-lab \
   --query "networkSecurityGroup.id" -o tsv
 ```
 
-### Tarefa 3 — Criar Application Security Groups
+### Tarefa 3: Criar Application Security Groups
 
 ```bash
 # Create ASGs for logical grouping
@@ -139,7 +140,7 @@ az network asg create \
 az network asg list -g rg-netsec-lab -o table
 ```
 
-### Tarefa 4 — Criar Regras NSG Usando ASGs
+### Tarefa 4: Criar Regras NSG Usando ASGs
 
 ```bash
 # Create an NSG for the backend
@@ -211,7 +212,7 @@ az vm create \
   --no-wait
 ```
 
-### Tarefa 5 — Avaliar Regras de Segurança Efetivas
+### Tarefa 5: Avaliar Regras de Segurança Efetivas
 
 ```bash
 # Wait for VMs to finish provisioning
@@ -241,7 +242,7 @@ az network watcher test-ip-flow \
   --remote "$DB_PRIVATE_IP:5432"
 ```
 
-### Tarefa 6 — Implantar o Azure Bastion
+### Tarefa 6: Implantar o Azure Bastion
 
 ```bash
 # Create the required AzureBastionSubnet (must be /26 or larger, must be named exactly this)
@@ -276,7 +277,7 @@ az network bastion show -g rg-netsec-lab -n bastion-secure \
 ```
 
 <details>
-<summary>💡 Dica — Conectar usando Bastion via CLI</summary>
+<summary>💡 Dica | Conectar usando Bastion via CLI</summary>
 
 Para SSH via Bastion pela CLI (requer o túnel Bastion):
 ```bash
@@ -290,7 +291,7 @@ az network bastion ssh \
 ```
 </details>
 
-### Tarefa 7 — Configurar um Service Endpoint
+### Tarefa 7: Configurar um Service Endpoint
 
 ```bash
 # Create a storage account
@@ -328,7 +329,7 @@ az storage account show -g rg-netsec-lab -n $STORAGE_NAME \
   --query "networkRuleSet" -o json
 ```
 
-### Tarefa 8 — Criar um Private Endpoint
+### Tarefa 8: Criar um Private Endpoint
 
 ```bash
 # Disable private endpoint network policies on a subnet
@@ -356,7 +357,7 @@ az network private-endpoint show -g rg-netsec-lab -n pe-storage \
   --query "{Name:name, Subnet:subnet.id, IP:customDnsConfigs[0].ipAddresses[0], Status:privateLinkServiceConnections[0].privateLinkServiceConnectionState.status}" -o table
 ```
 
-### Tarefa 9 — Verificar Conectividade do Private Endpoint
+### Tarefa 9: Verificar Conectividade do Private Endpoint
 
 ```bash
 # Create a private DNS zone for blob storage
@@ -401,14 +402,14 @@ echo "From vm-db, run: nslookup $STORAGE_NAME.blob.core.windows.net"
 - [ ] ASGs criados para servidores web e servidores de banco de dados
 - [ ] Regras NSG usam ASGs como origem/destino
 - [ ] Regras de segurança efetivas mostram regras combinadas de NIC + subnet
-- [ ] Azure Bastion implantado — VMs acessíveis sem IPs públicos
+- [ ] Azure Bastion implantado | VMs acessíveis sem IPs públicos
 - [ ] Service endpoint habilitado para Storage na subnet backend
 - [ ] Private endpoint criado para a conta de armazenamento
 - [ ] Zona DNS resolve o FQDN do armazenamento para IP privado dentro da VNet
 
-## 🔧 Cenários de Quebre & Conserte
+## Cenários de Quebre & Conserte
 
-### Cenário A — Regras NSG Conflitantes
+### Cenário A: Regras NSG Conflitantes
 ```bash
 # Add a rule at priority 200 that allows SSH, then another at priority 150 that denies it
 az network nsg rule create -g rg-netsec-lab --nsg-name nsg-frontend \
@@ -421,14 +422,14 @@ az network nsg rule create -g rg-netsec-lab --nsg-name nsg-frontend \
 # Which rule wins? (Lower number = higher priority = evaluated first)
 ```
 
-### Cenário B — Bloqueado Fora de uma VM
+### Cenário B: Bloqueado Fora de uma VM
 ```bash
 # What if you accidentally remove the SSH allow rule and can't connect?
 # Azure Bastion bypasses NSG rules on the AzureBastionSubnet
 # Connect via Azure Portal → VM → Connect → Bastion
 ```
 
-### Cenário C — Nome Errado da Subnet do Bastion
+### Cenário C: Nome Errado da Subnet do Bastion
 ```bash
 # Try creating Bastion with a differently named subnet
 az network vnet subnet create -g rg-netsec-lab \
@@ -445,7 +446,7 @@ az network vnet subnet create -g rg-netsec-lab \
 
 - As regras são avaliadas do **número mais baixo (maior prioridade) ao número mais alto**.
 - Faixa de prioridade: **100 a 4096**.
-- A **primeira regra correspondente vence** — o Azure para de avaliar após uma correspondência.
+- A **primeira regra correspondente vence** | o Azure para de avaliar após uma correspondência.
 - Regras padrão (65000-65500) não podem ser excluídas, mas podem ser substituídas por regras personalizadas de menor prioridade.
 - Se nenhuma regra personalizada corresponder, as regras padrão se aplicam (permitir VNet-para-VNet, permitir load balancer, negar todo outro tráfego de entrada).
 </details>
@@ -513,7 +514,7 @@ Isso significa que a combinação mais restritiva se aplica. Se o NSG da subnet 
 ## 🧹 Limpeza
 
 ```bash
-# Delete all resources — Bastion incurs hourly charges so clean up promptly!
+# Delete all resources: Bastion incurs hourly charges so clean up promptly!
 az group delete --name rg-netsec-lab --yes --no-wait
 
 echo "Resources are being deleted in the background."

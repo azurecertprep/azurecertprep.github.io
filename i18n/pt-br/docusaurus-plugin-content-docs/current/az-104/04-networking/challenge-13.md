@@ -7,8 +7,8 @@ title: "Challenge 13: DNS & Load Balancing"
 
 | | |
 |---|---|
-| ⏱️ **Tempo estimado** | 60 minutos |
-| 💰 **Custo estimado** | ~$0,20 |
+| **Tempo estimado** | 60 minutos |
+| **Custo estimado** | ~$0,20 |
 | 📊 **Peso no exame** | 15–20% |
 
 ## Cenário
@@ -43,7 +43,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1 — Criar uma Zona Azure DNS
+### Tarefa 1: Criar uma Zona Azure DNS
 
 Crie uma zona DNS para um subdomínio. Como você provavelmente não é dono de `contoso.com`, use um subdomínio como `lab.contoso.com` para praticar.
 
@@ -54,16 +54,17 @@ az network dns zone create \
 ```
 
 :::tip Dica
-Você não precisa ser dono do domínio para criar uma zona DNS no Azure — você só não conseguirá resolvê-lo publicamente a menos que delegue os registros NS do domínio pai.
+
+Você não precisa ser dono do domínio para criar uma zona DNS no Azure | você só não conseguirá resolvê-lo publicamente a menos que delegue os registros NS do domínio pai.
 :::
 
-### Tarefa 2 — Adicionar Registros DNS
+### Tarefa 2: Adicionar Registros DNS
 
 Adicione os seguintes tipos de registro à sua zona DNS:
 
-1. **Registro A** — Mapear `www.lab.contoso.com` para um endereço IP
-2. **Registro CNAME** — Mapear `portal.lab.contoso.com` para `www.lab.contoso.com`
-3. **Registro TXT** — Adicionar um registro TXT de verificação
+1. **Registro A** | Mapear `www.lab.contoso.com` para um endereço IP
+2. **Registro CNAME** | Mapear `portal.lab.contoso.com` para `www.lab.contoso.com`
+3. **Registro TXT** | Adicionar um registro TXT de verificação
 
 <details>
 <summary>💡 Dica</summary>
@@ -93,7 +94,7 @@ az network dns record-set txt add-record \
 
 </details>
 
-### Tarefa 3 — Criar um Load Balancer Público Standard
+### Tarefa 3: Criar um Load Balancer Público Standard
 
 Crie um Load Balancer público com SKU Standard e uma configuração de IP frontend.
 
@@ -107,12 +108,12 @@ az network lb create \
   --public-ip-address lb-pip
 ```
 
-### Tarefa 4 — Criar um Backend Pool com 2 VMs
+### Tarefa 4: Criar um Backend Pool com 2 VMs
 
 Implante duas VMs e adicione-as ao backend pool do load balancer.
 
 <details>
-<summary>💡 Dica — Criar VMs com um servidor web</summary>
+<summary>💡 Dica | Criar VMs com um servidor web</summary>
 
 ```bash
 # Create a VNet and subnet
@@ -142,7 +143,7 @@ done
 
 </details>
 
-### Tarefa 5 — Criar um Health Probe
+### Tarefa 5: Criar um Health Probe
 
 Crie um health probe HTTP na porta 80.
 
@@ -156,7 +157,7 @@ az network lb probe create \
   --path /
 ```
 
-### Tarefa 6 — Criar uma Regra de Balanceamento de Carga
+### Tarefa 6: Criar uma Regra de Balanceamento de Carga
 
 Crie uma regra que mapeie a porta 80 do frontend para a porta 80 do backend.
 
@@ -173,7 +174,7 @@ az network lb rule create \
   --backend-port 80
 ```
 
-### Tarefa 7 — Testar o Balanceamento de Carga
+### Tarefa 7: Testar o Balanceamento de Carga
 
 Acesse o IP público do load balancer em um navegador ou com `curl`. Atualize várias vezes e observe que as respostas vêm de diferentes VMs.
 
@@ -187,7 +188,7 @@ echo "Load Balancer IP: $LB_IP"
 # curl http://$LB_IP (repeat several times)
 ```
 
-### Tarefa 8 — Criar um Load Balancer Interno
+### Tarefa 8: Criar um Load Balancer Interno
 
 Crie um segundo load balancer para serviços backend internos (privados).
 
@@ -205,11 +206,11 @@ az network lb create \
   --subnet subnet-backend
 ```
 
-Nota: Sem a flag `--public-ip-address` — isso o torna interno.
+Nota: Sem a flag `--public-ip-address` | isso o torna interno.
 
 </details>
 
-### Tarefa 9 — Solucionar Problemas de Balanceamento de Carga
+### Tarefa 9: Solucionar Problemas de Balanceamento de Carga
 
 Verifique o status do health probe e valide a integridade do backend pool.
 
@@ -231,8 +232,8 @@ az vm get-instance-view \
 ## 🔨 Quebre & Conserte
 
 ### Quebre
-1. **Configuração errada do health probe** — Altere o probe para verificar a porta 8080 em vez da 80 (ou use o caminho `/healthz` quando o servidor web não tem esse endpoint). Observe que todas as instâncias do backend aparecem como não saudáveis.
-2. **Adicione uma VM quebrada** — Adicione uma terceira VM ao backend pool que não tem um servidor web rodando na porta 80. Verifique como o LB lida com isso.
+1. **Configuração errada do health probe** | Altere o probe para verificar a porta 8080 em vez da 80 (ou use o caminho `/healthz` quando o servidor web não tem esse endpoint). Observe que todas as instâncias do backend aparecem como não saudáveis.
+2. **Adicione uma VM quebrada** | Adicione uma terceira VM ao backend pool que não tem um servidor web rodando na porta 80. Verifique como o LB lida com isso.
 
 ### Conserte
 - Corrija a porta/caminho do health probe de volta para a configuração funcional
@@ -251,8 +252,8 @@ az vm get-instance-view \
    - Probes HTTP/HTTPS verificam uma resposta 200; TCP verifica uma conexão bem-sucedida
 
 3. **Quando você usaria Load Balancer vs Application Gateway?**
-   - Load Balancer = Camada 4 (TCP/UDP) — rápido, simples, qualquer protocolo
-   - Application Gateway = Camada 7 (HTTP/HTTPS) — roteamento por URL, terminação SSL, WAF
+   - Load Balancer = Camada 4 (TCP/UDP) | rápido, simples, qualquer protocolo
+   - Application Gateway = Camada 7 (HTTP/HTTPS) | roteamento por URL, terminação SSL, WAF
 
 4. **Quais tipos de registro DNS você deve conhecer para o exame?**
    - A (IPv4), AAAA (IPv6), CNAME (alias), MX (correio), TXT (verificação), NS (servidor de nomes), SOA (início de autoridade), SRV (localização de serviço)

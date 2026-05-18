@@ -9,7 +9,7 @@ Every challenge requires an Azure subscription and command-line tools. This page
 
 ## Option 1: GitHub Codespaces (Recommended)
 
-The fastest way to get started — everything is pre-installed.
+The fastest way to get started | everything is pre-installed.
 
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Open_in_GitHub_Codespaces-181717?style=for-the-badge&logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
@@ -19,7 +19,7 @@ Your Codespace comes pre-configured with:
 - **jq** and **yq** for JSON/YAML manipulation
 - **Git** and **GitHub CLI**
 
-> 💡 GitHub Free accounts get **60 hours/month** of Codespaces — more than enough to complete all challenges.
+> 💡 GitHub Free accounts get **60 hours/month** of Codespaces | more than enough to complete all challenges.
 
 ### After opening Codespaces, log in to Azure:
 
@@ -69,7 +69,7 @@ You need an Azure subscription for all challenges except Challenge 07 (ARM/Bicep
 
 :::warning Cost Management
 
-All challenges include cleanup scripts. **Always run cleanup after each challenge** to avoid unexpected charges. Total cost for all 16 challenges is estimated at ~$3 with proper cleanup.
+All challenges include cleanup scripts. **Always run cleanup after each challenge** to avoid unexpected charges. Total cost for all 28 challenges is estimated at ~$5 with proper cleanup.
 :::
 
 ## Resource Naming Convention

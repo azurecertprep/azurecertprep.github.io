@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 06: Storage Security & Lifecycle
 
-> **Estimated time**: 60-75 min | 💰 **Estimated cost**: ~$1.00 (two storage accounts) | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam weight**: 15-20%
 
 ## Introduction
 
@@ -97,7 +97,7 @@ az storage container create --name replicated-data --connection-string "$CONN_SE
 
 # Upload test data
 for i in $(seq 1 10); do
-  echo "Log entry $i — $(date -u +%Y-%m-%dT%H:%M:%SZ)" > log-$i.txt
+  echo "Log entry $i | $(date -u +%Y-%m-%dT%H:%M:%SZ)" > log-$i.txt
   az storage blob upload --container-name app-logs --file log-$i.txt --name "2025/01/log-$i.txt" --connection-string "$CONN_PRIMARY" --overwrite 2>/dev/null
 done
 
@@ -302,7 +302,7 @@ Azure Files identity-based access uses a **two-layer permission model**:
 1. **Share-level permissions**: Assigned via RBAC (Storage File Data SMB Share Reader/Contributor/Elevated Contributor)
 2. **Directory/file-level permissions**: Configured using Windows NTFS ACLs after mounting the share
 
-The effective permission is the **intersection** of both layers — a user needs both share-level and directory-level access.
+The effective permission is the **intersection** of both layers | a user needs both share-level and directory-level access.
 :::
 
 ### Part 4: Object Replication
@@ -363,7 +363,7 @@ az storage account or-policy list --account-name $STORAGE_SECONDARY --resource-g
 11. Upload a new blob to the source and verify it replicates:
 
 ```bash
-echo "New data to replicate — $(date -u)" > new-repl-data.txt
+echo "New data to replicate | $(date -u)" > new-repl-data.txt
 az storage blob upload --container-name replicated-data --file new-repl-data.txt --name new-repl-data.txt --connection-string "$CONN_PRIMARY" --overwrite
 
 # Wait a few minutes, then check the destination
@@ -543,7 +543,7 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 - [Stored access policies](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy)
 - [Configure Microsoft Entra Kerberos for Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-identity-auth-azure-active-directory-enable)
 
-## Break & Fix 🔧
+## Break & Fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -557,7 +557,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 3. **SAS token still works after policy deletion**: You deleted a stored access policy, but the SAS token from that policy should stop working. Test this. If it still works, check whether the SAS was generated with an explicit expiry (standalone SAS) or was truly policy-linked.
 
-4. **Identity-based access denied**: A user has `Storage File Data SMB Share Contributor` at the share level but gets "Access Denied" when opening a folder. What's wrong? (Directory-level NTFS ACLs may be restricting access — remember the two-layer model.)
+4. **Identity-based access denied**: A user has `Storage File Data SMB Share Contributor` at the share level but gets "Access Denied" when opening a folder. What's wrong? (Directory-level NTFS ACLs may be restricting access | remember the two-layer model.)
 
 ## Knowledge Check
 
@@ -565,18 +565,18 @@ After completing the challenge, try these troubleshooting scenarios:
 <summary>1. What are the conditions you can use in lifecycle management rules?</summary>
 
 **Base blob conditions**:
-- `daysAfterModificationGreaterThan` — days since last modification
-- `daysAfterCreationGreaterThan` — days since creation
-- `daysAfterLastAccessTimeGreaterThan` — days since last read (requires access tracking)
-- `daysAfterLastTierChangeGreaterThan` — days since tier was last changed
+- `daysAfterModificationGreaterThan` | days since last modification
+- `daysAfterCreationGreaterThan` | days since creation
+- `daysAfterLastAccessTimeGreaterThan` | days since last read (requires access tracking)
+- `daysAfterLastTierChangeGreaterThan` | days since tier was last changed
 
 **Snapshot/version conditions**:
-- `daysAfterCreationGreaterThan` — days since the snapshot/version was created
+- `daysAfterCreationGreaterThan` | days since the snapshot/version was created
 
 **Filter options**:
-- `blobTypes` — filter by block blob, append blob
-- `prefixMatch` — filter by blob name prefix (e.g., `logs/`)
-- `blobIndexMatch` — filter by blob index tags
+- `blobTypes` | filter by block blob, append blob
+- `prefixMatch` | filter by blob name prefix (e.g., `logs/`)
+- `blobIndexMatch` | filter by blob index tags
 
 **Exam tip**: Know the difference between `daysAfterModification` and `daysAfterCreation`. Modification resets whenever the blob is written to; creation is set once.
 
@@ -618,7 +618,7 @@ A user must have both share-level AND directory-level access. If RBAC grants Con
 <details>
 <summary>4. How often does lifecycle management run?</summary>
 
-Lifecycle management runs **once per day**. The exact timing is not guaranteed — Azure processes lifecycle rules at least once every 24 hours, but there is no SLA on the exact execution time.
+Lifecycle management runs **once per day**. The exact timing is not guaranteed | Azure processes lifecycle rules at least once every 24 hours, but there is no SLA on the exact execution time.
 
 For a newly created or modified policy, the first run may take up to **24 hours** to start. After that, it runs daily.
 
@@ -652,4 +652,4 @@ rm -f log-*.txt repl-test.txt new-repl-data.txt
 
 ---
 
-**Next**: [Challenge 07 — ARM Templates & Bicep](/docs/az-104/compute/challenge-07)
+**Next**: [Challenge 07 | ARM Templates & Bicep](/docs/az-104/compute/challenge-07)

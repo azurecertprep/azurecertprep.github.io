@@ -8,13 +8,13 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 03: Azure Policy & Governance
 
-> **Estimated time**: 60-75 min | 💰 **Estimated cost**: Free (policy evaluation) | 🎯 **Exam weight**: 15-20%
+> **Estimated time**: 60-75 min | **Estimated cost**: Free (policy evaluation) | **Exam weight**: 15-20%
 
 ## Introduction
 
 The CTO of Contoso Ltd. just came back from a cloud security conference and is worried. "I heard a company accidentally deployed production workloads in the wrong region and got hit with data sovereignty violations. Can that happen to us?" Your job: set up guardrails so nobody can deploy resources without proper tags, outside approved regions, or without following company standards.
 
-Azure Policy is your enforcement engine. Think of it as Group Policy for the cloud — but instead of controlling desktop settings, you're controlling what resources can be created and how they must be configured.
+Azure Policy is your enforcement engine. Think of it as Group Policy for the cloud | but instead of controlling desktop settings, you're controlling what resources can be created and how they must be configured.
 
 ## Exam Skills Covered
 
@@ -57,13 +57,13 @@ az group create --name rg-policy-dev --location eastus --tags Environment=Develo
    - `CostCenter` = IT-001 or IT-002
    - `Owner` = your name
 
-3. Practice bulk tag operations — list all resources with a specific tag:
+3. Practice bulk tag operations | list all resources with a specific tag:
 
 ```bash
 az resource list --tag Environment=Production -o table
 ```
 
-### Part 2: Azure Policy — Require Tags
+### Part 2: Azure Policy | Require Tags
 
 4. Assign the built-in policy **"Require a tag and its value on resources"** to `rg-policy-prod`:
    - Tag name: `CostCenter`
@@ -92,7 +92,7 @@ az storage account create \
   --tags CostCenter=IT-001
 ```
 
-### Part 3: Azure Policy — Allowed Locations
+### Part 3: Azure Policy | Allowed Locations
 
 7. Assign the built-in policy **"Allowed locations"** to `rg-policy-prod`:
    - Allowed locations: East US, West US 2
@@ -296,7 +296,7 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 - [Management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
 - [Azure Advisor](https://learn.microsoft.com/en-us/azure/advisor/advisor-overview)
 
-## Break & Fix 🔧
+## Break & Fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -306,7 +306,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 3. **Policy not working**: You assigned a Deny policy 2 minutes ago and it's not blocking anything yet. Why? (Policy evaluation can take up to 15 minutes for new assignments. Trigger an on-demand scan with `az policy state trigger-scan`.)
 
-4. **Inherited tag confusion**: You tagged a resource group with `Environment=Production`, but resources inside it don't have the tag. Is this expected? (Yes — tags are NOT inherited from resource groups to resources by default. Use the `Inherit a tag from the resource group` policy to enable this.)
+4. **Inherited tag confusion**: You tagged a resource group with `Environment=Production`, but resources inside it don't have the tag. Is this expected? (Yes | tags are NOT inherited from resource groups to resources by default. Use the `Inherit a tag from the resource group` policy to enable this.)
 
 ## Knowledge Check
 
@@ -314,7 +314,7 @@ After completing the challenge, try these troubleshooting scenarios:
 <summary>1. What is the difference between Deny, Audit, and Append policy effects?</summary>
 
 - **Deny**: Blocks the resource creation or modification if it doesn't comply. Hard enforcement.
-- **Audit**: Allows the resource but creates a compliance entry. Soft enforcement — you see violations but don't block them.
+- **Audit**: Allows the resource but creates a compliance entry. Soft enforcement | you see violations but don't block them.
 - **Append**: Automatically adds fields to the resource during creation. For example, adding a tag that's missing.
 
 Other effects include: **AuditIfNotExists**, **DeployIfNotExists** (auto-remediate), **Disabled**, and **Modify**.
@@ -363,7 +363,7 @@ Root Management Group (Tenant Root)
 - **Resource group** level (affects all resources in the group)
 - **Individual resource** level (affects only that resource)
 
-Locks are inherited — a lock at the resource group level applies to all resources within it. To delete a locked resource, you must first remove the lock.
+Locks are inherited | a lock at the resource group level applies to all resources within it. To delete a locked resource, you must first remove the lock.
 
 </details>
 
@@ -400,4 +400,4 @@ rm -f initiative.json
 
 ---
 
-**Next**: [Challenge 04 — Storage Accounts & Access](/docs/az-104/storage/challenge-04)
+**Next**: [Challenge 04 | Storage Accounts & Access](/docs/az-104/storage/challenge-04)

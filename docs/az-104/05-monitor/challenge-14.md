@@ -7,8 +7,8 @@ title: "Challenge 14: Azure Monitor & Alerts"
 
 | | |
 |---|---|
-| ⏱️ **Estimated Time** | 60 minutes |
-| 💰 **Cost Estimate** | ~$0.10 |
+| **Estimated Time** | 60 minutes |
+| **Cost Estimate** | ~$0.10 |
 | **Exam Weight** | 10–15% |
 
 ## Scenario
@@ -47,7 +47,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1 — Create a Log Analytics Workspace
+### Task 1: Create a Log Analytics Workspace
 
 ```bash
 az monitor log-analytics workspace create \
@@ -56,7 +56,7 @@ az monitor log-analytics workspace create \
   --location $LOCATION
 ```
 
-### Task 2 — Deploy a VM and Enable VM Insights
+### Task 2: Deploy a VM and Enable VM Insights
 
 Deploy a VM, then enable Azure Monitor VM Insights to collect performance and dependency data.
 
@@ -77,17 +77,17 @@ Enable VM Insights via the Azure Portal: **VM → Insights → Enable**.
 VM Insights automatically installs the Azure Monitor Agent and configures a data collection rule (DCR).
 :::
 
-### Task 3 — Explore Azure Monitor Metrics
+### Task 3: Explore Azure Monitor Metrics
 
 Navigate to **Azure Monitor → Metrics** (or the VM's Metrics blade) and explore:
 
-- **Percentage CPU** — Current CPU utilization
-- **Available Memory Bytes** — Memory pressure
-- **Disk Read/Write Operations/Sec** — Disk I/O
+- **Percentage CPU** | Current CPU utilization
+- **Available Memory Bytes** | Memory pressure
+- **Disk Read/Write Operations/Sec** | Disk I/O
 
 Try pinning a chart to a dashboard.
 
-### Task 4 — Configure Diagnostic Settings
+### Task 4: Configure Diagnostic Settings
 
 Send platform logs and metrics to Log Analytics:
 
@@ -116,7 +116,7 @@ az monitor diagnostic-settings create \
 It can take **15–30 minutes** for log data to appear in Log Analytics after enabling diagnostic settings. This is normal.
 :::
 
-### Task 5 — Write KQL Queries
+### Task 5: Write KQL Queries
 
 Open **Log Analytics → Logs** and run these queries:
 
@@ -140,7 +140,7 @@ Syslog
 ```
 
 ```kusto
-// Heartbeat — which VMs are reporting?
+// Heartbeat | which VMs are reporting?
 Heartbeat
 | summarize LastHeartbeat = max(TimeGenerated) by Computer
 | extend Status = iff(LastHeartbeat < ago(5m), "Offline", "Online")
@@ -166,7 +166,7 @@ Perf
 
 </details>
 
-### Task 6 — Create an Action Group
+### Task 6: Create an Action Group
 
 Create an action group that sends email notifications:
 
@@ -178,7 +178,7 @@ az monitor action-group create \
   --action email ops-email yourname@contoso.com
 ```
 
-### Task 7 — Create a Metric Alert
+### Task 7: Create a Metric Alert
 
 Create an alert that fires when CPU exceeds 80% for 5 minutes:
 
@@ -197,9 +197,9 @@ az monitor metrics alert create \
   --description "CPU usage exceeded 80% for 5 minutes"
 ```
 
-### Task 8 — Create a Log Alert
+### Task 8: Create a Log Alert
 
-Create an alert based on a KQL query — e.g., detect a specific error pattern in logs:
+Create an alert based on a KQL query | e.g., detect a specific error pattern in logs:
 
 <details>
 <summary>💡 Hint</summary>
@@ -214,19 +214,19 @@ Use the Azure Portal: **Monitor → Alerts → Create → Log alert rule**
 
 </details>
 
-### Task 9 — Enable Storage Insights
+### Task 9: Enable Storage Insights
 
 1. Create a storage account (if you don't have one)
 2. Navigate to **Azure Monitor → Storage accounts** (or **Storage account → Insights**)
 3. Explore: transaction metrics, latency, availability, capacity trends
 
-### Task 10 — Use Network Watcher
+### Task 10: Use Network Watcher
 
 Explore these Network Watcher tools:
 
-1. **Topology** — Visualize your VNet and connected resources
-2. **IP Flow Verify** — Test if traffic is allowed or denied between two endpoints
-3. **Connection Troubleshoot** — Check connectivity from a VM to a destination
+1. **Topology** | Visualize your VNet and connected resources
+2. **IP Flow Verify** | Test if traffic is allowed or denied between two endpoints
+3. **Connection Troubleshoot** | Check connectivity from a VM to a destination
 
 ```bash
 # IP Flow Verify example
@@ -242,12 +242,12 @@ az network watcher test-ip-flow \
 ## 🔨 Break & Fix
 
 ### Break It
-1. **Alert without action** — Create an alert rule but don't attach an action group. Trigger the condition. Notice: the alert fires in the portal but no notification is sent. Why?
-2. **Empty log results** — Query logs immediately after enabling diagnostic settings. Results are empty. Is this broken?
+1. **Alert without action** | Create an alert rule but don't attach an action group. Trigger the condition. Notice: the alert fires in the portal but no notification is sent. Why?
+2. **Empty log results** | Query logs immediately after enabling diagnostic settings. Results are empty. Is this broken?
 
 ### Fix It
 - Attach the action group to the alert rule
-- Understand that log ingestion has a delay (15–30 min) — this is expected behavior, not a bug
+- Understand that log ingestion has a delay (15–30 min) | this is expected behavior, not a bug
 - Use **Heartbeat** table to verify the agent is connected
 
 ## 📝 Knowledge Check
@@ -257,11 +257,11 @@ az network watcher test-ip-flow \
    - Logs = structured/unstructured text, stored in Log Analytics, queried with KQL
 
 2. **What are the essential KQL operators for the exam?**
-   - `where` — filter rows
-   - `summarize` — aggregate (count, avg, sum, max)
-   - `ago()` — time relative to now (e.g., `ago(1h)`, `ago(7d)`)
-   - `project` — select columns
-   - `render` — visualize results
+   - `where` | filter rows
+   - `summarize` | aggregate (count, avg, sum, max)
+   - `ago()` | time relative to now (e.g., `ago(1h)`, `ago(7d)`)
+   - `project` | select columns
+   - `render` | visualize results
 
 3. **What are the alert severity levels?**
    - 0 = Critical, 1 = Error, 2 = Warning, 3 = Informational, 4 = Verbose

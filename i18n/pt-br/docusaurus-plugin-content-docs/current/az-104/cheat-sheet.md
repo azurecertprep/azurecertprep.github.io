@@ -8,7 +8,8 @@ title: "Azure CLI Cheat Sheet"
 Referência rápida para os comandos mais comuns do Azure CLI, organizados por domínio do exame. Salve esta página nos favoritos.
 
 :::tip Dica
-Equivalentes em PowerShell — A maioria dos comandos mostra a versão Azure CLI. Quando o PowerShell difere significativamente, o equivalente é mostrado. Para o exame, conheça AMBAS as sintaxes: `az` CLI e `Az` PowerShell.
+
+Equivalentes em PowerShell | A maioria dos comandos mostra a versão Azure CLI. Quando o PowerShell difere significativamente, o equivalente é mostrado. Para o exame, conheça AMBAS as sintaxes: `az` CLI e `Az` PowerShell.
 :::
 
 ## Geral
@@ -191,5 +192,6 @@ az site-recovery vault create --resource-group myRG --name mySRVault --location 
 ---
 
 :::note Nota
+
 Este guia rápido cobre os comandos mais comuns. Cada desafio inclui explicações detalhadas dos comandos com todos os parâmetros necessários.
 :::

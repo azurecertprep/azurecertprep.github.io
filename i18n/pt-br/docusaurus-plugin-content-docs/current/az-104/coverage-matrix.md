@@ -176,6 +176,6 @@ Todas as habilidades do [guia de estudo oficial do AZ-104](https://learn.microso
 
 ---
 
-✅ **Total de habilidades cobertas: 57/57 (100%)**
+**Total de habilidades cobertas: 57/57 (100%)**
 
 > Esta matriz está alinhada com o [guia de estudo do AZ-104](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104) a partir de 17 de abril de 2026.

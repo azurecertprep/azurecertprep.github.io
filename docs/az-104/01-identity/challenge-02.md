@@ -8,13 +8,13 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 02: RBAC & Access Management
 
-> **Estimated time**: 45-60 min | 💰 **Estimated cost**: Free | 🎯 **Exam weight**: 20-25%
+> **Estimated time**: 45-60 min | **Estimated cost**: Free | **Exam weight**: 20-25%
 
 ## Introduction
 
 Now that Contoso Ltd. has users and groups in Entra ID, you need to control **who can do what** in Azure. The VP of Engineering just asked: "Why can the intern see our production subscription?" Time to lock things down with Role-Based Access Control.
 
-RBAC is the gatekeeper of Azure. Every action — creating a VM, reading a storage account, deleting a resource group — is controlled by roles assigned to identities at specific scopes. Get this wrong, and you'll either block your team or expose your environment.
+RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage account, deleting a resource group | is controlled by roles assigned to identities at specific scopes. Get this wrong, and you'll either block your team or expose your environment.
 
 ## Exam Skills Covered
 
@@ -42,10 +42,10 @@ RBAC is the gatekeeper of Azure. Every action — creating a VM, reading a stora
 ### Part 1: Explore Built-in Roles
 
 1. List the 4 fundamental built-in roles and understand what each one allows:
-   - **Owner** — Full access to all resources + can assign roles to others
-   - **Contributor** — Full access to all resources but cannot assign roles
-   - **Reader** — View all resources but cannot make changes
-   - **User Access Administrator** — Manage user access to Azure resources
+   - **Owner** | Full access to all resources + can assign roles to others
+   - **Contributor** | Full access to all resources but cannot assign roles
+   - **Reader** | View all resources but cannot make changes
+   - **User Access Administrator** | Manage user access to Azure resources
 
 2. Explore additional built-in roles relevant to the exam:
    - Virtual Machine Contributor
@@ -71,7 +71,7 @@ az group create --name rg-rbac-challenge --location eastus
 
 ### Part 3: Verify & Interpret Access
 
-7. List all role assignments for Alice — she should have Reader at subscription level and (inherited via IT-Team) Contributor at resource group level
+7. List all role assignments for Alice | she should have Reader at subscription level and (inherited via IT-Team) Contributor at resource group level
 8. Check the effective access for Bob on the resource group
 9. List all role assignments at the resource group scope
 
@@ -232,13 +232,13 @@ az role assignment list --all --role "Owner" \
 - [Understand role definitions](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
 - [Understand scope for Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview)
 
-## Break & Fix 🔧
+## Break & Fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
 1. **Permission escalation blocked**: Log in as Bob (who has VM Contributor) and try to assign the Reader role to another user on the resource group. What happens? What role does Bob need to assign roles?
 
-2. **Conflicting permissions**: Assign Alice both **Reader** at the subscription scope and **Contributor** at the resource group scope. What is her effective access on the resource group? (RBAC is additive — she gets Contributor on that RG.)
+2. **Conflicting permissions**: Assign Alice both **Reader** at the subscription scope and **Contributor** at the resource group scope. What is her effective access on the resource group? (RBAC is additive | she gets Contributor on that RG.)
 
 3. **Mystery access denial**: Carol has the custom `VM-Reader` role but claims she can't see VMs in the Portal. Check:
    - Is the role assigned at the correct scope?
@@ -261,9 +261,9 @@ The **Owner** role can do everything the **Contributor** can, plus it can **mana
 <details>
 <summary>2. What is a deny assignment, and how is it different from NotActions?</summary>
 
-**Deny assignments** are explicit blocks that prevent users from performing specific actions, even if a role grants them access. They take precedence over role assignments. Deny assignments can only be created by **Azure Blueprints** or **managed apps** — you cannot create them directly.
+**Deny assignments** are explicit blocks that prevent users from performing specific actions, even if a role grants them access. They take precedence over role assignments. Deny assignments can only be created by **Azure Blueprints** or **managed apps** | you cannot create them directly.
 
-**NotActions** simply subtract permissions from the `Actions` list within a role definition. They don't explicitly deny anything — if another role grants the permission, the user still has it.
+**NotActions** simply subtract permissions from the `Actions` list within a role definition. They don't explicitly deny anything | if another role grants the permission, the user still has it.
 
 **Precedence order**: Explicit Deny → NotActions → Allow
 
@@ -282,7 +282,7 @@ A role assigned at a **higher scope** is inherited by all **lower scopes**. For 
 - Reader at the subscription level = Reader on every resource group and resource in that subscription
 - Contributor at a resource group = Contributor on every resource in that group
 
-**Permissions are additive** — if you have Reader at subscription and Contributor at a resource group, your effective access on that RG is Contributor (the most permissive combination).
+**Permissions are additive** | if you have Reader at subscription and Contributor at a resource group, your effective access on that RG is Contributor (the most permissive combination).
 
 </details>
 
@@ -335,4 +335,4 @@ rm -f vm-reader-role.json
 
 ---
 
-**Next**: [Challenge 03 — Azure Policy & Governance](/docs/az-104/identity/challenge-03)
+**Next**: [Challenge 03 | Azure Policy & Governance](/docs/az-104/identity/challenge-03)

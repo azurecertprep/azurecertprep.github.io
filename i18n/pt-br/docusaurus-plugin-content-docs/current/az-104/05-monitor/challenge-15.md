@@ -7,13 +7,13 @@ title: "Challenge 15: Backup & Recovery"
 
 | | |
 |---|---|
-| ⏱️ **Tempo estimado** | 60–75 minutos |
-| 💰 **Custo estimado** | ~$0,30 |
+| **Tempo estimado** | 60–75 minutos |
+| **Custo estimado** | ~$0,30 |
 | 📊 **Peso no exame** | 10–15% |
 
 ## Cenário
 
-O desastre aconteceu na Contoso — um desenvolvedor acidentalmente excluiu dados de produção. A gerência está exigindo respostas: *"Por que não havia um backup?"* Seu trabalho é implementar o Azure Backup e o Azure Site Recovery para que isso nunca mais aconteça.
+O desastre aconteceu na Contoso | um desenvolvedor acidentalmente excluiu dados de produção. A gerência está exigindo respostas: *"Por que não havia um backup?"* Seu trabalho é implementar o Azure Backup e o Azure Site Recovery para que isso nunca mais aconteça.
 
 ## Habilidades do Exame Cobertas
 
@@ -48,7 +48,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1 — Criar um Recovery Services Vault
+### Tarefa 1: Criar um Recovery Services Vault
 
 ```bash
 az backup vault create \
@@ -58,10 +58,11 @@ az backup vault create \
 ```
 
 :::tip Dica
+
 Recovery Services vaults são usados para backup de VM e Azure Site Recovery. O vault deve estar na **mesma região** das VMs que você deseja fazer backup.
 :::
 
-### Tarefa 2 — Criar uma Política de Backup
+### Tarefa 2: Criar uma Política de Backup
 
 Crie uma política de backup personalizada: backups diários às 2:00 da manhã, retenção de 30 dias.
 
@@ -87,7 +88,7 @@ az backup policy set \
 
 </details>
 
-### Tarefa 3 — Habilitar Backup para uma VM
+### Tarefa 3: Habilitar Backup para uma VM
 
 Implante uma VM e habilite o backup:
 
@@ -109,7 +110,7 @@ az backup protection enable-for-vm \
   --policy-name DefaultPolicy
 ```
 
-### Tarefa 4 — Acionar um Backup Sob Demanda
+### Tarefa 4: Acionar um Backup Sob Demanda
 
 ```bash
 az backup protection backup-now \
@@ -121,10 +122,11 @@ az backup protection backup-now \
 ```
 
 :::note
+
 O primeiro backup pode levar **30–60 minutos** dependendo do tamanho da VM. Você pode acompanhar o progresso na aba **Backup Jobs** do vault.
 :::
 
-### Tarefa 5 — Restaurar uma VM a partir do Backup
+### Tarefa 5: Restaurar uma VM a partir do Backup
 
 Quando o backup for concluído, restaure-o para uma nova VM:
 
@@ -149,7 +151,7 @@ az backup recoverypoint list \
 
 </details>
 
-### Tarefa 6 — Criar um Azure Backup Vault
+### Tarefa 6: Criar um Azure Backup Vault
 
 Azure Backup vaults são usados para cargas de trabalho mais novas como backup de blob e Azure Database for PostgreSQL.
 
@@ -161,7 +163,7 @@ az dataprotection backup-vault create \
   --storage-setting "[{type:LocallyRedundant,datastore-type:VaultStore}]"
 ```
 
-### Tarefa 7 — Configurar Backup de Blob (Camada Operacional)
+### Tarefa 7: Configurar Backup de Blob (Camada Operacional)
 
 1. Crie uma conta de armazenamento
 2. Configure backup operacional para blobs (restauração point-in-time)
@@ -175,11 +177,11 @@ Pelo Portal do Azure:
 3. Selecione a conta de armazenamento
 4. Configure a política de backup (padrão: 30 dias de retenção operacional)
 
-Isso habilita a restauração point-in-time para blobs — nenhuma cópia de backup é criada; ele usa rastreamento de alterações na conta de armazenamento.
+Isso habilita a restauração point-in-time para blobs | nenhuma cópia de backup é criada; ele usa rastreamento de alterações na conta de armazenamento.
 
 </details>
 
-### Tarefa 8 — Configurar Azure Site Recovery
+### Tarefa 8: Configurar Azure Site Recovery
 
 Habilite a replicação para uma VM em uma região secundária:
 
@@ -191,10 +193,11 @@ Habilite a replicação para uma VM em uma região secundária:
 6. Revise as configurações de replicação e habilite
 
 :::tip Dica
+
 O Site Recovery replica os discos da VM de forma assíncrona para a região de destino. A replicação inicial pode levar 30–60 minutos dependendo do tamanho do disco.
 :::
 
-### Tarefa 9 — Executar um Test Failover
+### Tarefa 9: Executar um Test Failover
 
 Após a replicação inicial ser concluída:
 
@@ -205,16 +208,17 @@ Após a replicação inicial ser concluída:
 5. **Limpe o test failover** quando terminar
 
 :::warning Atenção
-Sempre limpe os recursos do test failover — eles continuam gerando cobranças até serem removidos.
+
+Sempre limpe os recursos do test failover | eles continuam gerando cobranças até serem removidos.
 :::
 
-### Tarefa 10 — Configurar Relatórios de Backup
+### Tarefa 10: Configurar Relatórios de Backup
 
 1. Vá para **Backup center → Relatórios de backup**
 2. Configure o Log Analytics workspace como fonte de dados
 3. Explore: integridade dos itens de backup, tendências de jobs de backup, consumo de armazenamento
 
-### Tarefa 11 — Configurar Alertas de Backup
+### Tarefa 11: Configurar Alertas de Backup
 
 Configure alertas para jobs de backup com falha:
 
@@ -225,8 +229,8 @@ Configure alertas para jobs de backup com falha:
 ## 🔨 Quebre & Conserte
 
 ### Quebre
-1. **Excluir um vault com itens protegidos** — Tente excluir o Recovery Services vault enquanto ele ainda tem itens de backup. Observe o erro: *"O vault não pode ser excluído pois existem recursos dentro do vault."*
-2. **Incompatibilidade de região** — Tente fazer backup de uma VM em `westus2` usando o vault em `eastus`. O que acontece?
+1. **Excluir um vault com itens protegidos** | Tente excluir o Recovery Services vault enquanto ele ainda tem itens de backup. Observe o erro: *"O vault não pode ser excluído pois existem recursos dentro do vault."*
+2. **Incompatibilidade de região** | Tente fazer backup de uma VM em `westus2` usando o vault em `eastus`. O que acontece?
 
 ### Conserte
 - Para excluir um vault: primeiro pare a proteção de backup, exclua os dados de backup, depois exclua o vault
@@ -243,13 +247,13 @@ Configure alertas para jobs de backup com falha:
    - RTO (Recovery Time Objective) = Tempo de inatividade máximo aceitável (tempo para restaurar o serviço)
 
 3. **Quais são os tipos de backup?**
-   - Completo — cópia completa de todos os dados
-   - Incremental — apenas alterações desde o último backup (padrão do Azure para VMs)
-   - Diferencial — alterações desde o último backup completo
+   - Completo | cópia completa de todos os dados
+   - Incremental | apenas alterações desde o último backup (padrão do Azure para VMs)
+   - Diferencial | alterações desde o último backup completo
 
 4. **Site Recovery: failover vs test failover?**
-   - Test failover — valida a replicação sem afetar a produção; cria recursos de teste
-   - Failover — recuperação de desastre real; transfere a produção para a região secundária
+   - Test failover | valida a replicação sem afetar a produção; cria recursos de teste
+   - Failover | recuperação de desastre real; transfere a produção para a região secundária
 
 ## 🧹 Limpeza
 
@@ -263,6 +267,7 @@ az group delete --name $RG --yes --no-wait
 ```
 
 :::warning Atenção
+
 Se a exclusão do vault falhar, siga esta ordem:
 1. Pare a proteção de backup com "Excluir dados de backup" para todos os itens
 2. Remova os itens replicados do Site Recovery

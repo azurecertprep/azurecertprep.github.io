@@ -1,20 +1,20 @@
 ---
 sidebar_position: 2
-title: "Challenge 02 — RBAC & Access Management"
+title: "Challenge 02 | RBAC & Access Management"
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 02 — RBAC & Gerenciamento de Acesso
+# Desafio 02: RBAC & Gerenciamento de Acesso
 
-> ⏱️ **Tempo estimado**: 45-60 min | 💰 **Custo estimado**: Gratuito | 🎯 **Peso no exame**: 20-25%
+> **Tempo estimado**: 45-60 min | **Custo estimado**: Gratuito | **Peso no exame**: 20-25%
 
 ## Introdução
 
 Agora que a Contoso Ltd. tem usuários e grupos no Entra ID, você precisa controlar **quem pode fazer o quê** no Azure. O VP de Engenharia acabou de perguntar: "Por que o estagiário consegue ver nossa assinatura de produção?" Hora de trancar tudo com Role-Based Access Control.
 
-RBAC é o guardião do Azure. Cada ação — criar uma VM, ler uma conta de armazenamento, excluir um grupo de recursos — é controlada por funções atribuídas a identidades em escopos específicos. Se errar nisso, você vai bloquear sua equipe ou expor seu ambiente.
+RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armazenamento, excluir um grupo de recursos | é controlada por funções atribuídas a identidades em escopos específicos. Se errar nisso, você vai bloquear sua equipe ou expor seu ambiente.
 
 ## Habilidades do Exame Cobertas
 
@@ -42,10 +42,10 @@ RBAC é o guardião do Azure. Cada ação — criar uma VM, ler uma conta de arm
 ### Parte 1: Explorar Funções Internas
 
 1. Listar as 4 funções internas fundamentais e entender o que cada uma permite:
-   - **Owner** — Acesso total a todos os recursos + pode atribuir funções a outros
-   - **Contributor** — Acesso total a todos os recursos mas não pode atribuir funções
-   - **Reader** — Visualizar todos os recursos mas não pode fazer alterações
-   - **User Access Administrator** — Gerenciar acesso de usuários aos recursos do Azure
+   - **Owner** | Acesso total a todos os recursos + pode atribuir funções a outros
+   - **Contributor** | Acesso total a todos os recursos mas não pode atribuir funções
+   - **Reader** | Visualizar todos os recursos mas não pode fazer alterações
+   - **User Access Administrator** | Gerenciar acesso de usuários aos recursos do Azure
 
 2. Explorar funções internas adicionais relevantes para o exame:
    - Virtual Machine Contributor
@@ -55,6 +55,7 @@ RBAC é o guardião do Azure. Cada ação — criar uma VM, ler uma conta de arm
 ### Parte 2: Atribuir Funções em Diferentes Escopos
 
 :::warning Atenção
+
 Para estas tarefas, você precisará de um grupo de recursos. Crie um chamado `rg-rbac-challenge` na sua assinatura primeiro.
 :::
 
@@ -70,7 +71,7 @@ az group create --name rg-rbac-challenge --location eastus
 
 ### Parte 3: Verificar & Interpretar Acesso
 
-7. Listar todas as atribuições de função para Alice — ela deve ter Reader no nível da assinatura e (herdado via IT-Team) Contributor no nível do grupo de recursos
+7. Listar todas as atribuições de função para Alice | ela deve ter Reader no nível da assinatura e (herdado via IT-Team) Contributor no nível do grupo de recursos
 8. Verificar o acesso efetivo do Bob no grupo de recursos
 9. Listar todas as atribuições de função no escopo do grupo de recursos
 
@@ -231,13 +232,13 @@ az role assignment list --all --role "Owner" \
 - [Entender definições de funções](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
 - [Entender escopo para Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview)
 
-## Quebre & Conserte 🔧
+## Quebre & Conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
 1. **Escalação de permissão bloqueada**: Faça login como Bob (que tem VM Contributor) e tente atribuir a função Reader a outro usuário no grupo de recursos. O que acontece? Qual função o Bob precisa para atribuir funções?
 
-2. **Permissões conflitantes**: Atribua a Alice tanto **Reader** no escopo da assinatura quanto **Contributor** no escopo do grupo de recursos. Qual é o acesso efetivo dela no grupo de recursos? (RBAC é aditivo — ela recebe Contributor naquele RG.)
+2. **Permissões conflitantes**: Atribua a Alice tanto **Reader** no escopo da assinatura quanto **Contributor** no escopo do grupo de recursos. Qual é o acesso efetivo dela no grupo de recursos? (RBAC é aditivo | ela recebe Contributor naquele RG.)
 
 3. **Negação misteriosa de acesso**: Carol tem a função personalizada `VM-Reader` mas alega que não consegue ver VMs no Portal. Verifique:
    - A função está atribuída no escopo correto?
@@ -260,9 +261,9 @@ A função **Owner** pode fazer tudo que o **Contributor** pode, além de poder 
 <details>
 <summary>2. O que é uma deny assignment e como é diferente de NotActions?</summary>
 
-**Deny assignments** são bloqueios explícitos que impedem usuários de realizar ações específicas, mesmo que uma função conceda acesso. Elas têm precedência sobre atribuições de função. Deny assignments só podem ser criadas pelo **Azure Blueprints** ou **managed apps** — você não pode criá-las diretamente.
+**Deny assignments** são bloqueios explícitos que impedem usuários de realizar ações específicas, mesmo que uma função conceda acesso. Elas têm precedência sobre atribuições de função. Deny assignments só podem ser criadas pelo **Azure Blueprints** ou **managed apps** | você não pode criá-las diretamente.
 
-**NotActions** simplesmente subtraem permissões da lista de `Actions` dentro de uma definição de função. Elas não negam explicitamente nada — se outra função conceder a permissão, o usuário ainda a terá.
+**NotActions** simplesmente subtraem permissões da lista de `Actions` dentro de uma definição de função. Elas não negam explicitamente nada | se outra função conceder a permissão, o usuário ainda a terá.
 
 **Ordem de precedência**: Deny Explícito → NotActions → Allow
 
@@ -281,7 +282,7 @@ Uma função atribuída em um **escopo superior** é herdada por todos os **esco
 - Reader no nível da assinatura = Reader em cada grupo de recursos e recurso nessa assinatura
 - Contributor em um grupo de recursos = Contributor em cada recurso nesse grupo
 
-**Permissões são aditivas** — se você tem Reader na assinatura e Contributor em um grupo de recursos, seu acesso efetivo naquele RG é Contributor (a combinação mais permissiva).
+**Permissões são aditivas** | se você tem Reader na assinatura e Contributor em um grupo de recursos, seu acesso efetivo naquele RG é Contributor (a combinação mais permissiva).
 
 </details>
 
@@ -334,4 +335,4 @@ rm -f vm-reader-role.json
 
 ---
 
-**Próximo**: [Desafio 03 — Azure Policy & Governança](/docs/az-104/identity/challenge-03)
+**Próximo**: [Desafio 03 | Azure Policy & Governança](/docs/az-104/identity/challenge-03)

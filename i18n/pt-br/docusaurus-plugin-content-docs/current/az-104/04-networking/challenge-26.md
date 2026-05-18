@@ -119,7 +119,7 @@ az vm create \
 
 ## Tarefas
 
-### Tarefa 1 — Habilitar o Network Watcher
+### Tarefa 1: Habilitar o Network Watcher
 
 ```bash
 # Network Watcher is auto-enabled for most subscriptions
@@ -139,7 +139,7 @@ az network watcher show \
   --query "{Name:name, Location:location, State:provisioningState}" -o table
 ```
 
-### Tarefa 2 — IP Flow Verify
+### Tarefa 2: IP Flow Verify
 
 Teste se o tráfego é permitido ou negado pelas regras NSG:
 
@@ -184,7 +184,7 @@ az network watcher test-ip-flow \
 IP Flow Verify informa qual regra NSG (nome e prioridade) está permitindo ou negando o tráfego. Verifica tanto o NSG no nível da NIC quanto no nível da sub-rede. Esta é a maneira mais rápida de diagnosticar problemas de "por que não consigo conectar?".
 :::
 
-### Tarefa 3 — Análise de Next Hop
+### Tarefa 3: Análise de Next Hop
 
 Determine o próximo salto para o tráfego a partir de uma VM:
 
@@ -212,7 +212,7 @@ az network watcher show-next-hop \
   --dest-ip 192.168.1.1
 ```
 
-### Tarefa 4 — Packet Capture
+### Tarefa 4: Packet Capture
 
 ```bash
 # Create a storage account for packet captures
@@ -262,7 +262,7 @@ az network watcher packet-capture delete \
 Capturas de pacotes são armazenadas como arquivos .cap na conta de armazenamento. Você pode baixar e analisá-los com o Wireshark. O agente do Network Watcher deve estar instalado na VM (instalado automaticamente quando você cria uma captura).
 :::
 
-### Tarefa 5 — Connection Monitor
+### Tarefa 5: Connection Monitor
 
 ```bash
 # Create a Connection Monitor to continuously test connectivity
@@ -303,7 +303,7 @@ az network watcher connection-monitor show \
   --name cm-web-to-internet
 ```
 
-### Tarefa 6 — NSG Flow Logs
+### Tarefa 6: NSG Flow Logs
 
 ```bash
 # Create a Log Analytics workspace for flow logs
@@ -355,7 +355,7 @@ az network watcher flow-log show \
 5. Habilite Traffic Analytics com workspace do Log Analytics
 6. Defina o intervalo de processamento (10 minutos recomendado)
 
-### Tarefa 7 — Connection Troubleshoot
+### Tarefa 7: Connection Troubleshoot
 
 ```bash
 # One-time connectivity check from VM to destination
@@ -383,7 +383,7 @@ az network watcher test-connectivity \
   --protocol Tcp
 ```
 
-### Tarefa 8 — Visualização de Topologia e Regras de Segurança Efetivas
+### Tarefa 8: Visualização de Topologia e Regras de Segurança Efetivas
 
 ```bash
 # Generate network topology
@@ -423,7 +423,7 @@ az network nic list-effective-nsg \
 
 ## Cenários de Quebrar & Consertar
 
-### Cenário A — VM Não Consegue Alcançar a Internet
+### Cenário A: VM Não Consegue Alcançar a Internet
 
 ```bash
 # Add a deny-all outbound rule to the NSG
@@ -457,7 +457,7 @@ az network nsg rule delete \
   --name BlockOutbound
 ```
 
-### Cenário B — Roteamento Assimétrico Causa Descartes
+### Cenário B: Roteamento Assimétrico Causa Descartes
 
 ```bash
 # Add a UDR that routes response traffic differently than request traffic
@@ -472,7 +472,7 @@ az network watcher show-next-hop \
 # If next hop shows "VirtualAppliance" but no NVA exists, traffic is black-holed
 ```
 
-### Cenário C — Connection Monitor Mostra Falhas
+### Cenário C: Connection Monitor Mostra Falhas
 
 ```bash
 # Check Connection Monitor for failures

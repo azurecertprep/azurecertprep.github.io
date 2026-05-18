@@ -7,12 +7,12 @@ title: "Challenge 08: Virtual Machines & Scale Sets"
 
 :::info Estimated Time & Cost
 
-⏱️ **60–75 minutes** | 💰 **~$0.50** (deallocate promptly!) | **Exam Weight: 20–25%**
+**60–75 minutes** | **~$0.50** (deallocate promptly!) | **Exam Weight: 20–25%**
 :::
 
 :::danger Cost Warning
 
-Virtual machines incur charges while running. **Deallocate all VMs** as soon as you finish each task. The cleanup script at the bottom deletes everything — run it when done.
+Virtual machines incur charges while running. **Deallocate all VMs** as soon as you finish each task. The cleanup script at the bottom deletes everything | run it when done.
 :::
 
 ## Scenario
@@ -44,7 +44,7 @@ Contoso needs to deploy a web server fleet for their customer-facing application
 
 ## Tasks
 
-### Task 1 — Create a Linux VM with SSH Keys
+### Task 1: Create a Linux VM with SSH Keys
 
 ```bash
 # Create a resource group
@@ -70,7 +70,7 @@ VM_IP=$(az vm show -g rg-vm-lab -n vm-web-01 -d --query publicIps -o tsv)
 echo "SSH with: ssh azureuser@$VM_IP"
 ```
 
-### Task 2 — Attach and Mount a Data Disk
+### Task 2: Attach and Mount a Data Disk
 
 ```bash
 # Attach a 128 GB data disk
@@ -88,7 +88,7 @@ az vm show -g rg-vm-lab -n vm-web-01 \
 ```
 
 <details>
-<summary>💡 Hint — Format and mount the disk inside the VM</summary>
+<summary>💡 Hint | Format and mount the disk inside the VM</summary>
 
 SSH into the VM, then:
 ```bash
@@ -111,7 +111,7 @@ df -h /data
 ```
 </details>
 
-### Task 3 — Resize the VM
+### Task 3: Resize the VM
 
 ```bash
 # List available sizes in the VM's location
@@ -128,7 +128,7 @@ az vm show -g rg-vm-lab -n vm-web-01 \
   --query "hardwareProfile.vmSize" -o tsv
 ```
 
-### Task 4 — Move a VM to Another Resource Group
+### Task 4: Move a VM to Another Resource Group
 
 ```bash
 # Create a destination resource group
@@ -148,7 +148,7 @@ az resource list -g rg-vm-lab --query "[].id" -o tsv
 ```
 
 <details>
-<summary>💡 Hint — Moving all dependent resources</summary>
+<summary>💡 Hint | Moving all dependent resources</summary>
 
 You must move the VM and all its dependent resources together:
 ```bash
@@ -157,7 +157,7 @@ az resource move --destination-group rg-vm-prod --ids $RESOURCE_IDS
 ```
 </details>
 
-### Task 5 — Create an Availability Set and Deploy a VM
+### Task 5: Create an Availability Set and Deploy a VM
 
 ```bash
 # Create an availability set
@@ -179,7 +179,7 @@ az vm create \
   --no-wait
 ```
 
-### Task 6 — Create a VMSS with Autoscale
+### Task 6: Create a VMSS with Autoscale
 
 ```bash
 # Create a VM Scale Set with 2 instances
@@ -222,7 +222,7 @@ az monitor autoscale rule create \
   --scale in 1
 ```
 
-### Task 7 — Test Autoscale with Load
+### Task 7: Test Autoscale with Load
 
 ```bash
 # Get the public IP of the load balancer
@@ -243,7 +243,7 @@ az monitor autoscale show -g rg-vm-lab -n autoscale-vmss-web \
 az vmss list-instances -g rg-vm-lab -n vmss-web -o table
 ```
 
-### Task 8 — Deallocate to Stop Charges
+### Task 8: Deallocate to Stop Charges
 
 ```bash
 # Deallocate the standalone VM (stops billing for compute)
@@ -267,9 +267,9 @@ az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 - [ ] Autoscale rules configured (CPU-based scale-out and scale-in)
 - [ ] All VMs deallocated when finished
 
-## 🔧 Break & Fix Scenarios
+## Break & Fix Scenarios
 
-### Scenario A — Unavailable VM Size
+### Scenario A: Unavailable VM Size
 ```bash
 # Try resizing to a size not available in the current zone
 az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
@@ -277,13 +277,13 @@ az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
 # az vm list-vm-resize-options -g rg-vm-lab -n vm-web-avset -o table
 ```
 
-### Scenario B — Move VM with Public IP
+### Scenario B: Move VM with Public IP
 ```bash
 # Try moving a VM while it has dependent resources in the source group
 # What error do you get? What resources must move together?
 ```
 
-### Scenario C — VMSS Instance Count Conflict
+### Scenario C: VMSS Instance Count Conflict
 ```bash
 # Try to set autoscale min-count higher than max-count
 az monitor autoscale update \
@@ -333,7 +333,7 @@ az monitor autoscale update \
 ## 🧹 Cleanup
 
 ```bash
-# Delete all resources — run this when completely finished
+# Delete all resources: run this when completely finished
 az group delete --name rg-vm-lab --yes --no-wait
 az group delete --name rg-vm-prod --yes --no-wait
 

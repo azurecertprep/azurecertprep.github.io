@@ -1,12 +1,13 @@
 ---
 sidebar_position: 3
-title: "Challenge 09 — Containers in Azure"
+title: "Challenge 09 | Containers in Azure"
 ---
 
-# Desafio 09 — Contêineres no Azure
+# Desafio 09: Contêineres no Azure
 
 :::info Informação
-⏱️ **Tempo estimado: 45–60 minutos** | 💰 **Custo estimado: ~$0.30** | 📊 **Peso no exame: 20–25%**
+
+**Tempo estimado: 45–60 minutos** | **Custo estimado: ~$0.30** | 📊 **Peso no exame: 20–25%**
 :::
 
 ## Cenário
@@ -35,7 +36,7 @@ A equipe de desenvolvimento da Contoso containerizou sua aplicação de dashboar
 
 ## Tarefas
 
-### Tarefa 1 — Criar um Azure Container Registry
+### Tarefa 1: Criar um Azure Container Registry
 
 ```bash
 # Criar um grupo de recursos
@@ -57,9 +58,9 @@ echo "ACR Name: $ACR_NAME"
 az acr show --name $ACR_NAME --query "{Name:name, SKU:sku.name, LoginServer:loginServer}" -o table
 ```
 
-### Tarefa 2 — Compilar e Enviar uma Imagem para o ACR
+### Tarefa 2: Compilar e Enviar uma Imagem para o ACR
 
-Use `az acr build` para compilar diretamente na nuvem — sem necessidade de Docker local:
+Use `az acr build` para compilar diretamente na nuvem | sem necessidade de Docker local:
 
 ```bash
 # Criar um diretório simples para a aplicação
@@ -92,7 +93,7 @@ az acr repository list --name $ACR_NAME -o table
 az acr repository show-tags --name $ACR_NAME --repository contoso-dashboard -o table
 ```
 
-### Tarefa 3 — Implantar no Azure Container Instances
+### Tarefa 3: Implantar no Azure Container Instances
 
 ```bash
 # Obter as credenciais do ACR
@@ -123,7 +124,7 @@ echo "Teste: http://$ACI_FQDN"
 az container logs -g rg-containers-lab -n aci-dashboard
 ```
 
-### Tarefa 4 — Criar um Ambiente de Container Apps
+### Tarefa 4: Criar um Ambiente de Container Apps
 
 ```bash
 # Instalar/atualizar a extensão de Container Apps
@@ -140,7 +141,7 @@ az containerapp env create \
   --location eastus
 ```
 
-### Tarefa 5 — Implantar no Container Apps
+### Tarefa 5: Implantar no Container Apps
 
 ```bash
 # Habilitar acesso de identidade gerenciada ao ACR (preferível a credenciais de admin)
@@ -162,7 +163,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
   --query "properties.configuration.ingress.fqdn" -o tsv
 ```
 
-### Tarefa 6 — Configurar Escalabilidade do Container Apps
+### Tarefa 6: Configurar Escalabilidade do Container Apps
 
 ```bash
 # Adicionar uma regra de escalabilidade HTTP (escalar quando requisições simultâneas > 10 por réplica)
@@ -183,7 +184,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 az containerapp replica list -g rg-containers-lab -n ca-dashboard -o table
 ```
 
-### Tarefa 7 — Comparar ACI vs Container Apps
+### Tarefa 7: Comparar ACI vs Container Apps
 
 Execute ambas as implantações e compare:
 
@@ -200,7 +201,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 ```
 
 <details>
-<summary>💡 Dica — Quando usar ACI vs Container Apps vs AKS</summary>
+<summary>💡 Dica | Quando usar ACI vs Container Apps vs AKS</summary>
 
 | Recurso | ACI | Container Apps | AKS |
 |---------|-----|---------------|-----|
@@ -221,9 +222,9 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 - [ ] Regras de escalabilidade configuradas no Container Apps
 - [ ] Consegue articular quando usar ACI vs Container Apps vs AKS
 
-## 🔧 Cenários Quebre & Conserte
+## Cenários Quebre & Conserte
 
-### Cenário A — Nome de Imagem Incorreto
+### Cenário A: Nome de Imagem Incorreto
 ```bash
 # Implante o ACI com um nome de imagem digitado errado
 az container create \
@@ -237,7 +238,7 @@ az container create \
 # Qual erro você recebe? Verifique: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
 ```
 
-### Cenário B — Problema de Permissão do ACR
+### Cenário B: Problema de Permissão do ACR
 ```bash
 # Tente implantar Container Apps sem fornecer credenciais do registro
 az containerapp create \
@@ -250,7 +251,7 @@ az containerapp create \
 # Como você corrige a autenticação do ACR? (Dica: identidade gerenciada ou credenciais de admin)
 ```
 
-### Cenário C — Porta Incorreta
+### Cenário C: Porta Incorreta
 ```bash
 # Implante com a porta de destino errada
 az containerapp create \
@@ -290,7 +291,7 @@ az containerapp create \
 
 - **ACI**: Trabalhos batch simples, agentes de build, contêineres sidecar, testes rápidos. Sem necessidade de orquestração. Cobrança por segundo.
 - **Container Apps**: Microsserviços, APIs, aplicações orientadas a eventos, aplicações web. Escalabilidade integrada com KEDA, integração com Dapr, ingress HTTPS fácil. Preço serverless.
-- **AKS**: Kubernetes completo necessário — rede complexa, operators personalizados, cargas de trabalho stateful, pods multi-contêiner com armazenamento compartilhado. Você gerencia o cluster.
+- **AKS**: Kubernetes completo necessário | rede complexa, operators personalizados, cargas de trabalho stateful, pods multi-contêiner com armazenamento compartilhado. Você gerencia o cluster.
 </details>
 
 **3. Qual é a diferença entre conta de admin do ACR e identidade gerenciada para autenticação?**
@@ -298,7 +299,7 @@ az containerapp create \
 <details>
 <summary>Mostrar Resposta</summary>
 
-- **Conta de admin**: Um usuário/senha compartilhado. Simples mas inseguro — qualquer pessoa com a senha tem acesso total de push/pull. Desabilitado por padrão. Use apenas para dev/test.
+- **Conta de admin**: Um usuário/senha compartilhado. Simples mas inseguro | qualquer pessoa com a senha tem acesso total de push/pull. Desabilitado por padrão. Use apenas para dev/test.
 - **Identidade gerenciada**: Autenticação baseada no Azure AD. Sem senhas para gerenciar. Suporta acesso baseado em funções (AcrPull, AcrPush). Recomendado para produção. Funciona com ACI, Container Apps, AKS e App Service.
 </details>
 

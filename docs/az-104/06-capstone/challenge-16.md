@@ -7,8 +7,8 @@ title: "Challenge 16: Capstone: Day in the Life of an Azure Admin"
 
 | | |
 |---|---|
-| ⏱️ **Estimated Time** | 90–120 minutes |
-| 💰 **Cost Estimate** | ~$0.50 |
+| **Estimated Time** | 90–120 minutes |
+| **Cost Estimate** | ~$0.50 |
 | **Exam Weight** | All 5 domains |
 
 :::info Capstone Challenge
@@ -18,7 +18,7 @@ This challenge spans **all five AZ-104 exam domains**. It simulates a real workd
 
 ## Scenario
 
-You arrive at work Monday morning at Contoso to find **five urgent tickets** in your queue. Each ticket tests knowledge from a different exam domain. No one else is available — it's all on you.
+You arrive at work Monday morning at Contoso to find **five urgent tickets** in your queue. Each ticket tests knowledge from a different exam domain. No one else is available | it's all on you.
 
 ## Setup
 
@@ -31,7 +31,7 @@ done
 
 ---
 
-## 🎫 Ticket 1 — Identity Crisis
+## 🎫 Ticket 1: Identity Crisis
 
 **Domain: Manage Microsoft Entra ID Identities and Governance**
 
@@ -41,7 +41,7 @@ done
 
 1. Check if Jordan's account is **enabled** in Entra ID
 2. Check if **SSPR (Self-Service Password Reset)** is configured
-3. Verify group membership — is Jordan in the "Developers" group?
+3. Verify group membership | is Jordan in the "Developers" group?
 
 <details>
 <summary>💡 Diagnosis Steps</summary>
@@ -83,11 +83,11 @@ az ad group member add \
 </details>
 
 ### Root Cause
-The user was provisioned by an automated script that failed partway through — the account was created but left in a disabled state, no initial password was set, and the group assignment step was skipped.
+The user was provisioned by an automated script that failed partway through | the account was created but left in a disabled state, no initial password was set, and the group assignment step was skipped.
 
 ---
 
-## 🎫 Ticket 2 — Storage SOS
+## 🎫 Ticket 2: Storage SOS
 
 **Domain: Implement and Manage Storage**
 
@@ -95,8 +95,8 @@ The user was provisioned by an automated script that failed partway through — 
 
 ### Diagnose
 
-1. Check the **SAS token** — has it expired?
-2. Check the **storage account firewall** — was a network rule added that blocks their IP?
+1. Check the **SAS token** | has it expired?
+2. Check the **storage account firewall** | was a network rule added that blocks their IP?
 3. Check if **access keys were rotated**
 
 <details>
@@ -153,7 +153,7 @@ The SAS token generated last week had a 7-day expiry and expired overnight. Addi
 
 ---
 
-## 🎫 Ticket 3 — VM Down
+## 🎫 Ticket 3: VM Down
 
 **Domain: Deploy and Manage Azure Compute Resources**
 
@@ -161,7 +161,7 @@ The SAS token generated last week had a 7-day expiry and expired overnight. Addi
 
 ### Diagnose
 
-1. Check the **activity log** — who or what stopped the VM?
+1. Check the **activity log** | who or what stopped the VM?
 2. Check if there's an **auto-shutdown schedule** configured
 3. Check the VM's current **power state**
 
@@ -218,7 +218,7 @@ A developer enabled auto-shutdown at 7:00 PM for their dev VM but accidentally a
 
 ---
 
-## 🎫 Ticket 4 — Network Lockout
+## 🎫 Ticket 4: Network Lockout
 
 **Domain: Configure and Manage Virtual Networking**
 
@@ -226,8 +226,8 @@ A developer enabled auto-shutdown at 7:00 PM for their dev VM but accidentally a
 
 ### Diagnose
 
-1. Check **NSG rules** — was a deny-all rule added?
-2. Check the **Load Balancer health probe** — is the backend healthy?
+1. Check **NSG rules** | was a deny-all rule added?
+2. Check the **Load Balancer health probe** | is the backend healthy?
 3. Check if the **VM NIC still has the correct NSG** associated
 
 <details>
@@ -297,7 +297,7 @@ The security team added a `DenyAllInbound` rule at priority 200, which overrides
 
 ---
 
-## 🎫 Ticket 5 — Where Are My Alerts?
+## 🎫 Ticket 5: Where Are My Alerts?
 
 **Domain: Monitor and Maintain Azure Resources**
 
@@ -305,7 +305,7 @@ The security team added a `DenyAllInbound` rule at priority 200, which overrides
 
 ### Diagnose
 
-1. Check the **action group** — is the email address correct?
+1. Check the **action group** | is the email address correct?
 2. Check if the **alert rules are enabled**
 3. Check **backup alert settings** in the Recovery Services vault
 
@@ -360,11 +360,11 @@ For backup alerts: Configure via **Recovery Services vault → Alerts → Config
 </details>
 
 ### Root Cause
-The action group had the wrong email (a typo — `ops@contso.com` instead of `ops@contoso.com`). The VM availability alert was created but left in a disabled state during testing and never re-enabled. Backup alerts were never configured.
+The action group had the wrong email (a typo | `ops@contso.com` instead of `ops@contoso.com`). The VM availability alert was created but left in a disabled state during testing and never re-enabled. Backup alerts were never configured.
 
 ---
 
-## 📝 Knowledge Check — Exam-Style Questions
+## 📝 Knowledge Check: Exam-Style Questions
 
 **Question 1** *(Identity)*
 A user reports they cannot sign in to the Azure Portal. Their account exists in Microsoft Entra ID. Which should you check FIRST?
@@ -374,7 +374,7 @@ A user reports they cannot sign in to the Azure Portal. Their account exists in 
 - C. Reset the user's MFA registration
 - D. Add the user to the Global Administrator role
 
-<details><summary>Answer</summary>**B.** A disabled account prevents sign-in. Always check the basics first — is the account enabled and does it have a valid password?</details>
+<details><summary>Answer</summary>**B.** A disabled account prevents sign-in. Always check the basics first | is the account enabled and does it have a valid password?</details>
 
 **Question 2** *(Storage)*
 AzCopy uploads to a storage account fail with "AuthorizationFailure." The SAS token was generated 8 days ago with a 7-day expiry. What is the most likely cause?
@@ -404,7 +404,7 @@ After adding a DenyAllInbound NSG rule at priority 200, web traffic on port 443 
 - C. Add an Allow rule for port 443 with a priority higher than 200 (e.g., 300)
 - D. Disassociate the NSG from the subnet
 
-<details><summary>Answer</summary>**B.** NSG rules are evaluated by priority — lowest number wins. An Allow rule at priority 100 is evaluated before a Deny rule at priority 200.</details>
+<details><summary>Answer</summary>**B.** NSG rules are evaluated by priority | lowest number wins. An Allow rule at priority 100 is evaluated before a Deny rule at priority 200.</details>
 
 **Question 5** *(Monitoring)*
 An alert rule is configured with the correct condition but the team never receives email notifications. What should you check?
@@ -414,7 +414,7 @@ An alert rule is configured with the correct condition but the team never receiv
 - C. The Azure Monitor pricing tier
 - D. The Log Analytics workspace retention policy
 
-<details><summary>Answer</summary>**B.** If the alert fires but no notification is received, the action group is the likely culprit — check that it has the correct email addresses and that it is attached to the alert rule.</details>
+<details><summary>Answer</summary>**B.** If the alert fires but no notification is received, the action group is the likely culprit | check that it has the correct email addresses and that it is attached to the alert rule.</details>
 
 ---
 
@@ -429,11 +429,11 @@ done
 
 ## ✅ Success Criteria
 
-- [ ] **Ticket 1** — Identity Crisis resolved (account enabled, password reset, group membership fixed)
-- [ ] **Ticket 2** — Storage SOS resolved (new SAS token or firewall rules updated)
-- [ ] **Ticket 3** — VM Down resolved (VM started, auto-shutdown removed, root cause identified)
-- [ ] **Ticket 4** — Network Lockout resolved (NSG rule added, traffic flowing)
-- [ ] **Ticket 5** — Alerts fixed (action group corrected, alert enabled, backup alerts configured)
+- [ ] **Ticket 1** | Identity Crisis resolved (account enabled, password reset, group membership fixed)
+- [ ] **Ticket 2** | Storage SOS resolved (new SAS token or firewall rules updated)
+- [ ] **Ticket 3** | VM Down resolved (VM started, auto-shutdown removed, root cause identified)
+- [ ] **Ticket 4** | Network Lockout resolved (NSG rule added, traffic flowing)
+- [ ] **Ticket 5** | Alerts fixed (action group corrected, alert enabled, backup alerts configured)
 - [ ] Each ticket: diagnosis steps documented, root cause identified, fix applied
 - [ ] All resource groups cleaned up
 
@@ -441,5 +441,5 @@ done
 
 :::tip You've Completed the AZ-104 Challenge Series!
 
-If you've worked through all 16 challenges, you've covered every major skill measured on the AZ-104 exam. Review any areas where you struggled, then schedule your exam with confidence. Good luck!
+If you've worked through all 28 challenges, you've covered every major skill measured on the AZ-104 exam. Review any areas where you struggled, then schedule your exam with confidence. Good luck!
 :::

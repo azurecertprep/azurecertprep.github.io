@@ -13,7 +13,7 @@ title: "Desafio 20: Criptografia de Armazenamento & Proteção de Dados"
 
 ## Cenário
 
-A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo armazenamento contendo dados financeiros ou de saúde deve usar chaves de criptografia gerenciadas pelo cliente (CMK) para fins de trilha de auditoria. Além disso, dados regulatórios (como registros financeiros e logs de auditoria) devem ser armazenados em contêineres imutáveis (WORM — Write Once, Read Many) onde os dados não podem ser modificados ou excluídos por um período de retenção especificado. Você foi encarregado de implementar esses controles de criptografia e proteção de dados.
+A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo armazenamento contendo dados financeiros ou de saúde deve usar chaves de criptografia gerenciadas pelo cliente (CMK) para fins de trilha de auditoria. Além disso, dados regulatórios (como registros financeiros e logs de auditoria) devem ser armazenados em contêineres imutáveis (WORM | Write Once, Read Many) onde os dados não podem ser modificados ou excluídos por um período de retenção especificado. Você foi encarregado de implementar esses controles de criptografia e proteção de dados.
 
 ## Habilidades do Exame Cobertas
 
@@ -41,7 +41,7 @@ A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo
 
 ## Tarefas
 
-### Tarefa 1 — Criar o Ambiente do Laboratório
+### Tarefa 1: Criar o Ambiente do Laboratório
 
 ```bash
 # Criar grupo de recursos
@@ -60,7 +60,7 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-encryption-lab --query "[0].name" -o tsv)
 ```
 
-### Tarefa 2 — Criar uma Conta de Armazenamento com Criptografia de Infraestrutura
+### Tarefa 2: Criar uma Conta de Armazenamento com Criptografia de Infraestrutura
 
 A criptografia de infraestrutura (criptografia dupla) adiciona uma segunda camada de criptografia no nível de infraestrutura usando um algoritmo diferente:
 
@@ -93,7 +93,7 @@ Ao criar uma conta de armazenamento no portal:
 
 :::
 
-### Tarefa 3 — Criar uma Chave no Azure Key Vault
+### Tarefa 3: Criar uma Chave no Azure Key Vault
 
 ```bash
 # Criar uma chave RSA para criptografia de armazenamento
@@ -112,7 +112,7 @@ KEY_URI=$(az keyvault key show \
 echo "Key URI: $KEY_URI"
 ```
 
-### Tarefa 4 — Configurar Chaves Gerenciadas pelo Cliente (CMK) na Conta de Armazenamento
+### Tarefa 4: Configurar Chaves Gerenciadas pelo Cliente (CMK) na Conta de Armazenamento
 
 ```bash
 # Atribuir uma identidade gerenciada pelo sistema à conta de armazenamento
@@ -148,7 +148,7 @@ az storage account show \
   --query "{KeySource:encryption.keySource, KeyVaultUri:encryption.keyVaultProperties.keyVaultUri, KeyName:encryption.keyVaultProperties.keyName}" -o table
 ```
 
-### Tarefa 5 — Configurar Política de Imutabilidade (Retenção Baseada em Tempo)
+### Tarefa 5: Configurar Política de Imutabilidade (Retenção Baseada em Tempo)
 
 ```bash
 # Criar um contêiner para dados regulatórios
@@ -194,7 +194,7 @@ Só bloqueie uma política quando tiver certeza sobre os requisitos de retençã
 
 :::
 
-### Tarefa 6 — Configurar Retenção Legal
+### Tarefa 6: Configurar Retenção Legal
 
 ```bash
 # Criar um contêiner para dados de litígio
@@ -235,7 +235,7 @@ az storage blob delete \
 rm -f evidence.txt
 ```
 
-### Tarefa 7 — Verificar Configurações de Criptografia
+### Tarefa 7: Verificar Configurações de Criptografia
 
 ```bash
 # Verificar escopo de criptografia no nível da conta
@@ -258,7 +258,7 @@ az keyvault key show \
   --query "{Name:key.kid, Enabled:attributes.enabled, Created:attributes.created}" -o table
 ```
 
-### Tarefa 8 — Rotacionar a Chave Gerenciada pelo Cliente
+### Tarefa 8: Rotacionar a Chave Gerenciada pelo Cliente
 
 ```bash
 # Criar uma nova versão da chave
@@ -306,7 +306,7 @@ A identidade gerenciada da conta de armazenamento precisa da função **Key Vaul
 <summary>Dica 3: Imutabilidade vs Retenção Legal</summary>
 
 - **Retenção baseada em tempo**: Blobs não podem ser excluídos até que o período de retenção expire. O período pode ser estendido, mas nunca reduzido (uma vez bloqueado).
-- **Retenção legal**: Blobs não podem ser excluídos indefinidamente até que TODAS as tags de retenção legal sejam removidas. Sem limite de tempo — persiste até ser explicitamente removida.
+- **Retenção legal**: Blobs não podem ser excluídos indefinidamente até que TODAS as tags de retenção legal sejam removidas. Sem limite de tempo | persiste até ser explicitamente removida.
 - Ambas podem estar ativas simultaneamente no mesmo contêiner.
 
 </details>
@@ -320,7 +320,7 @@ A proteção contra purge deve estar habilitada no Key Vault usado para CMK. Sem
 
 ## Quebrar & Consertar
 
-### Cenário A — Chave CMK Desabilitada
+### Cenário A: Chave CMK Desabilitada
 
 Desabilite a chave de criptografia no Key Vault. O que acontece com as operações de leitura/escrita na conta de armazenamento? (Resposta: Todas as operações do plano de dados falham com erro 403 após a chave em cache expirar, geralmente em algumas horas.)
 
@@ -341,11 +341,11 @@ az keyvault key set-attributes \
   --enabled true
 ```
 
-### Cenário B — Política de Imutabilidade Bloqueada
+### Cenário B: Política de Imutabilidade Bloqueada
 
-Bloqueie a política de imutabilidade em um contêiner de teste, depois tente excluir um blob antes do período de retenção terminar. Observe o erro. Nota: Isso não pode ser desfeito — só faça isso em um contêiner de teste.
+Bloqueie a política de imutabilidade em um contêiner de teste, depois tente excluir um blob antes do período de retenção terminar. Observe o erro. Nota: Isso não pode ser desfeito | só faça isso em um contêiner de teste.
 
-### Cenário C — Acesso ao Key Vault Perdido
+### Cenário C: Acesso ao Key Vault Perdido
 
 Remova a atribuição de função da identidade gerenciada no Key Vault. Quanto tempo até as operações de armazenamento começarem a falhar? Como você diagnostica o problema usando o Azure Monitor?
 
@@ -354,7 +354,7 @@ Remova a atribuição de função da identidade gerenciada no Key Vault. Quanto 
 <details>
 <summary>1. Qual é a diferença entre chaves gerenciadas pela Microsoft e chaves gerenciadas pelo cliente?</summary>
 
-**Chaves gerenciadas pela Microsoft (padrão)**: A Microsoft cuida de todo o gerenciamento de chaves — geração, armazenamento, rotação e aposentadoria. Zero esforço administrativo necessário. Chaves são rotacionadas automaticamente.
+**Chaves gerenciadas pela Microsoft (padrão)**: A Microsoft cuida de todo o gerenciamento de chaves | geração, armazenamento, rotação e aposentadoria. Zero esforço administrativo necessário. Chaves são rotacionadas automaticamente.
 
 **Chaves gerenciadas pelo cliente (CMK)**: Você cria e gerencia a chave no Azure Key Vault. Você controla o cronograma de rotação, políticas de acesso e pode revogar o acesso desabilitando a chave. Necessário para cenários de compliance onde a custódia da chave deve ser demonstrável.
 
@@ -363,7 +363,7 @@ Remova a atribuição de função da identidade gerenciada no Key Vault. Quanto 
 <details>
 <summary>2. Você pode trocar de chaves gerenciadas pela Microsoft para CMK em uma conta de armazenamento existente?</summary>
 
-**Sim.** Você pode trocar uma conta de armazenamento existente de chaves gerenciadas pela Microsoft para chaves gerenciadas pelo cliente a qualquer momento. O inverso também é possível (CMK de volta para gerenciada pela Microsoft). Nenhuma migração de dados é necessária — o Azure re-encapsula as chaves de criptografia de forma transparente.
+**Sim.** Você pode trocar uma conta de armazenamento existente de chaves gerenciadas pela Microsoft para chaves gerenciadas pelo cliente a qualquer momento. O inverso também é possível (CMK de volta para gerenciada pela Microsoft). Nenhuma migração de dados é necessária | o Azure re-encapsula as chaves de criptografia de forma transparente.
 
 </details>
 

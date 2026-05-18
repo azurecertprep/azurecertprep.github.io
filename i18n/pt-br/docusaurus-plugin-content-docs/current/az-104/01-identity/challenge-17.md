@@ -38,7 +38,7 @@ A Contoso Ltd. está crescendo rápido. O que começou como uma única assinatur
 
 ## Tarefas
 
-### Tarefa 1 — Criar uma Hierarquia de Grupos de Gerenciamento
+### Tarefa 1: Criar uma Hierarquia de Grupos de Gerenciamento
 
 Projete e crie a seguinte estrutura de grupos de gerenciamento:
 
@@ -98,7 +98,7 @@ Navegue até **Portal do Azure** > **Grupos de gerenciamento**. Clique em **+ Cr
 
 :::
 
-### Tarefa 2 — Mover uma Assinatura para um Grupo de Gerenciamento
+### Tarefa 2: Mover uma Assinatura para um Grupo de Gerenciamento
 
 Mova sua assinatura atual para o grupo de gerenciamento `mg-dev`:
 
@@ -118,7 +118,7 @@ az account management-group show \
   --recurse
 ```
 
-### Tarefa 3 — Atribuir Azure Policy no Escopo do Grupo de Gerenciamento
+### Tarefa 3: Atribuir Azure Policy no Escopo do Grupo de Gerenciamento
 
 Aplique a política integrada "Require a tag and its value on resources" no escopo `mg-production`:
 
@@ -136,7 +136,7 @@ az policy assignment create \
   --params '{"tagName": {"value": "Environment"}, "tagValue": {"value": "Production"}}'
 ```
 
-### Tarefa 4 — Aplicar RBAC no Nível do Grupo de Gerenciamento
+### Tarefa 4: Aplicar RBAC no Nível do Grupo de Gerenciamento
 
 Conceda a um usuário a função "Reader" no escopo do grupo de gerenciamento `mg-contoso` (cascateando para todas as assinaturas):
 
@@ -156,7 +156,7 @@ az role assignment list \
   --query "[?principalId=='$USER_ID']" -o table
 ```
 
-### Tarefa 5 — Mover uma Assinatura Entre Grupos de Gerenciamento
+### Tarefa 5: Mover uma Assinatura Entre Grupos de Gerenciamento
 
 Simule uma reorganização departamental movendo a assinatura de `mg-dev` para `mg-sandbox`:
 
@@ -178,7 +178,7 @@ az account management-group show \
   --recurse
 ```
 
-### Tarefa 6 — Consultar a Hierarquia de Grupos de Gerenciamento
+### Tarefa 6: Consultar a Hierarquia de Grupos de Gerenciamento
 
 ```bash
 # Visualizar a hierarquia completa
@@ -213,7 +213,7 @@ Você precisa de permissões específicas para criar grupos de gerenciamento. Po
 <details>
 <summary>Dica 2: Herança de políticas</summary>
 
-Políticas atribuídas no escopo de um grupo de gerenciamento são herdadas por todos os grupos de gerenciamento filhos e assinaturas. Você não pode substituir ou excluir um filho de uma política herdada — você só pode adicionar isenções para recursos específicos.
+Políticas atribuídas no escopo de um grupo de gerenciamento são herdadas por todos os grupos de gerenciamento filhos e assinaturas. Você não pode substituir ou excluir um filho de uma política herdada | você só pode adicionar isenções para recursos específicos.
 
 </details>
 
@@ -233,15 +233,15 @@ Mover uma assinatura entre grupos de gerenciamento altera quais políticas e atr
 
 ## Quebrar & Consertar
 
-### Cenário A — Conflito de Políticas
+### Cenário A: Conflito de Políticas
 
 Atribua duas políticas conflitantes em diferentes níveis: uma exigindo a tag "Environment=Production" em mg-production e outra exigindo "Environment=Development" em mg-dev. Tente implantar um recurso em uma assinatura sob mg-dev. O que acontece quando políticas contraditórias existem em diferentes níveis?
 
-### Cenário B — Assinatura Órfã
+### Cenário B: Assinatura Órfã
 
 Remova sua assinatura de todos os grupos de gerenciamento personalizados. Onde ela aparece? (Resposta: Ela retorna ao Tenant Root Group.) Como você encontra assinaturas que não estão em nenhum grupo de gerenciamento personalizado?
 
-### Cenário C — Bloqueado
+### Cenário C: Bloqueado
 
 Atribua uma atribuição RBAC de Negação no escopo de um grupo de gerenciamento. O que acontece com os usuários que anteriormente tinham acesso através de atribuições no nível da assinatura? Como as atribuições de negação interagem com as atribuições de permissão?
 

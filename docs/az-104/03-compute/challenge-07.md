@@ -7,14 +7,14 @@ title: "Challenge 07: ARM Templates & Bicep"
 
 :::info Estimated Time & Cost
 
-⏱️ **60 minutes** | 💰 **Free** (templates + storage account only) | **Exam Weight: 20–25%**
+**60 minutes** | **Free** (templates + storage account only) | **Exam Weight: 20–25%**
 :::
 
 ## Scenario
 
-Contoso's CTO has had enough of "it works on my portal" deployments. After a junior admin accidentally deleted a production storage account while clicking through the Azure Portal, the mandate is clear: **everything must be infrastructure as code**. No more portal clicks for provisioning — every resource must be repeatable, version-controlled, and auditable.
+Contoso's CTO has had enough of "it works on my portal" deployments. After a junior admin accidentally deleted a production storage account while clicking through the Azure Portal, the mandate is clear: **everything must be infrastructure as code**. No more portal clicks for provisioning | every resource must be repeatable, version-controlled, and auditable.
 
-Your job is to take Contoso's first critical resource — a storage account — and define it as an ARM template, then modernize it to Bicep.
+Your job is to take Contoso's first critical resource | a storage account | and define it as an ARM template, then modernize it to Bicep.
 
 ## Exam Skills Covered
 
@@ -41,7 +41,7 @@ Your job is to take Contoso's first critical resource — a storage account — 
 
 ## Tasks
 
-### Task 1 — Examine an ARM Template
+### Task 1: Examine an ARM Template
 
 Study this ARM template that creates a storage account. Identify the five key sections: `$schema`, `parameters`, `variables`, `resources`, and `outputs`.
 
@@ -92,7 +92,7 @@ Save this as `storage.json`:
 }
 ```
 
-### Task 2 — Modify the ARM Template
+### Task 2: Modify the ARM Template
 
 Add a `environment` tag parameter to the template so every deployed resource gets tagged:
 
@@ -105,7 +105,7 @@ az deployment group validate \
 ```
 
 <details>
-<summary>💡 Hint — Where to add the tag parameter</summary>
+<summary>💡 Hint | Where to add the tag parameter</summary>
 
 Add a new parameter:
 ```json
@@ -124,7 +124,7 @@ Then add a `tags` property to the resource:
 ```
 </details>
 
-### Task 3 — Deploy the ARM Template
+### Task 3: Deploy the ARM Template
 
 ```bash
 # Create a resource group for this lab
@@ -144,7 +144,7 @@ az deployment group show \
   --query "properties.outputs"
 ```
 
-### Task 4 — Export the Deployment
+### Task 4: Export the Deployment
 
 ```bash
 # Export the entire resource group as an ARM template
@@ -154,7 +154,7 @@ az group export --name rg-iac-lab --output json > exported-template.json
 cat exported-template.json | python -m json.tool | head -50
 ```
 
-### Task 5 — Convert ARM to Bicep
+### Task 5: Convert ARM to Bicep
 
 ```bash
 # Install/upgrade Bicep CLI
@@ -164,11 +164,11 @@ az bicep version
 # Decompile the ARM template to Bicep
 az bicep decompile --file storage.json
 
-# This creates storage.bicep — review it
+# This creates storage.bicep: review it
 cat storage.bicep
 ```
 
-### Task 6 — Modify the Bicep File
+### Task 6: Modify the Bicep File
 
 Add a blob container to the Bicep file:
 
@@ -178,7 +178,7 @@ az bicep build --file storage.bicep
 ```
 
 <details>
-<summary>💡 Hint — Bicep blob container resource</summary>
+<summary>💡 Hint | Bicep blob container resource</summary>
 
 ```bicep
 param storagePrefix string
@@ -220,7 +220,7 @@ output storageName string = storageAccount.name
 ```
 </details>
 
-### Task 7 — Deploy the Bicep File
+### Task 7: Deploy the Bicep File
 
 ```bash
 # Deploy the Bicep file
@@ -239,7 +239,7 @@ STORAGE_NAME=$(az deployment group show \
 az storage container list --account-name $STORAGE_NAME --auth-mode login -o table
 ```
 
-### Task 8 — Preview Changes with What-If
+### Task 8: Preview Changes with What-If
 
 ```bash
 # Run a what-if deployment to preview changes without deploying
@@ -257,9 +257,9 @@ az deployment group what-if \
 - [ ] Bicep file deploys a storage account **and** blob container
 - [ ] What-if shows expected changes without deploying
 
-## 🔧 Break & Fix Scenarios
+## Break & Fix Scenarios
 
-### Scenario A — Syntax Error
+### Scenario A: Syntax Error
 Deploy this broken template and fix the error:
 ```bash
 # Introduce a typo in the template (e.g., "Standar_LRS" instead of "Standard_LRS")
@@ -270,7 +270,7 @@ az deployment group create \
   --parameters storagePrefix=contoso
 ```
 
-### Scenario B — Missing Required Parameter
+### Scenario B: Missing Required Parameter
 ```bash
 # Deploy without the required storagePrefix parameter
 az deployment group create \
@@ -280,7 +280,7 @@ az deployment group create \
 # What error do you get? How does Azure validate parameters?
 ```
 
-### Scenario C — Complete Mode Deployment
+### Scenario C: Complete Mode Deployment
 ```bash
 # WARNING: Complete mode deletes resources not in the template!
 az deployment group what-if \
@@ -298,7 +298,7 @@ az deployment group what-if \
 <details>
 <summary>Show Answer</summary>
 
-Bicep is a domain-specific language (DSL) that compiles down to ARM JSON. It offers cleaner syntax, automatic dependency management, and better tooling (VS Code extension). Under the hood, Azure Resource Manager only understands ARM JSON — Bicep is transpiled before deployment.
+Bicep is a domain-specific language (DSL) that compiles down to ARM JSON. It offers cleaner syntax, automatic dependency management, and better tooling (VS Code extension). Under the hood, Azure Resource Manager only understands ARM JSON | Bicep is transpiled before deployment.
 </details>
 
 **2. What is the difference between Incremental and Complete deployment modes?**
@@ -315,7 +315,7 @@ Bicep is a domain-specific language (DSL) that compiles down to ARM JSON. It off
 <details>
 <summary>Show Answer</summary>
 
-It converts an ARM JSON template into a Bicep (.bicep) file. The conversion is best-effort — some constructs may need manual cleanup (warnings are printed). The reverse operation is `az bicep build`, which compiles Bicep to ARM JSON.
+It converts an ARM JSON template into a Bicep (.bicep) file. The conversion is best-effort | some constructs may need manual cleanup (warnings are printed). The reverse operation is `az bicep build`, which compiles Bicep to ARM JSON.
 </details>
 
 **4. Why use `uniqueString()` in storage account names?**

@@ -70,7 +70,7 @@ az network vnet subnet create \
 
 ## Tasks
 
-### Task 1 — Create Target PaaS Resources
+### Task 1: Create Target PaaS Resources
 
 ```bash
 # Create a Storage Account
@@ -101,7 +101,7 @@ az keyvault secret set \
   --value "Server=sql.contoso.local;Database=app;Trusted_Connection=True;"
 ```
 
-### Task 2 — Configure Service Endpoint for Storage
+### Task 2: Configure Service Endpoint for Storage
 
 ```bash
 # Enable the Microsoft.Storage service endpoint on the subnet
@@ -142,7 +142,7 @@ az storage account network-rule list \
 Service endpoints keep traffic on the Azure backbone network and restrict PaaS access to specific VNet subnets. The PaaS service's public IP is still used for communication, but the source is identified by the VNet/subnet rather than a public IP.
 :::
 
-### Task 3 — Configure Private Endpoint for Storage
+### Task 3: Configure Private Endpoint for Storage
 
 ```bash
 # Disable private endpoint network policies on the subnet
@@ -175,7 +175,7 @@ az network private-endpoint show \
   --query "{Name:name, PrivateIP:customDnsConfigs[0].ipAddresses[0], Status:privateLinkServiceConnections[0].privateLinkServiceConnectionState.status}" -o table
 ```
 
-### Task 4 — Configure Private DNS Zone for Storage
+### Task 4: Configure Private DNS Zone for Storage
 
 ```bash
 # Create private DNS zone for blob storage
@@ -210,7 +210,7 @@ az network private-dns record-set a list \
 When you create a private endpoint, you need a Private DNS Zone so that the FQDN (e.g., `contososa12345.blob.core.windows.net`) resolves to the private IP (e.g., `10.0.2.4`) instead of the public IP. The zone name must match the service's privatelink zone (e.g., `privatelink.blob.core.windows.net`).
 :::
 
-### Task 5 — Configure Private Endpoint for Key Vault
+### Task 5: Configure Private Endpoint for Key Vault
 
 ```bash
 # Get Key Vault resource ID
@@ -262,7 +262,7 @@ az network private-dns record-set a list \
   --zone-name "privatelink.vaultcore.azure.net" -o table
 ```
 
-### Task 6 — Verify Name Resolution Through Private DNS
+### Task 6: Verify Name Resolution Through Private DNS
 
 ```bash
 # Deploy a test VM in the workload subnet
@@ -296,7 +296,7 @@ az vm run-command invoke \
 # Expected: resolves to private IP (10.0.2.x)
 ```
 
-### Task 7 — Configure Network Policies for Private Endpoints
+### Task 7: Configure Network Policies for Private Endpoints
 
 ```bash
 # Enable NSG support for private endpoints (newer feature)
@@ -343,7 +343,7 @@ az network vnet subnet update \
   --network-security-group nsg-privateendpoints
 ```
 
-### Task 8 — Compare Service Endpoints vs Private Endpoints
+### Task 8: Compare Service Endpoints vs Private Endpoints
 
 Deploy both approaches side by side and observe the differences:
 
@@ -389,7 +389,7 @@ echo "
 
 ## Break & Fix Scenarios
 
-### Scenario A — DNS Not Resolving to Private IP
+### Scenario A: DNS Not Resolving to Private IP
 
 ```bash
 # Symptom: nslookup returns public IP instead of private IP
@@ -409,7 +409,7 @@ az network private-dns link vnet create \
   --registration-enabled false
 ```
 
-### Scenario B — Private Endpoint Connection Not Approved
+### Scenario B: Private Endpoint Connection Not Approved
 
 ```bash
 # If using manual approval, the connection stays in "Pending" state
@@ -426,14 +426,14 @@ az network private-endpoint show \
 #   --name <connection-name>
 ```
 
-### Scenario C — Storage Accessible from Internet Despite Firewall
+### Scenario C: Storage Accessible from Internet Despite Firewall
 
 ```bash
 # Check if default action is set correctly
 az storage account show -g $RG -n $STORAGE_NAME \
   --query "networkRuleSet.defaultAction"
 
-# Should be "Deny" — if "Allow", public access is still open
+# Should be "Deny": if "Allow", public access is still open
 az storage account update -g $RG -n $STORAGE_NAME --default-action Deny
 
 # Also check if "Allow Azure services" bypass is enabled

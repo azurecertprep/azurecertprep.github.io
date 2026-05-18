@@ -39,7 +39,7 @@ A conta mensal do Azure da Contoso Ltd. cresceu de $5.000 para $45.000 em seis m
 
 ## Tarefas
 
-### Tarefa 1 — Configurar Tags de Recursos para Alocação de Custos
+### Tarefa 1: Configurar Tags de Recursos para Alocação de Custos
 
 Crie uma estratégia consistente de tagging e aplique tags aos recursos existentes:
 
@@ -68,7 +68,7 @@ az vm create \
   --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=API
 ```
 
-### Tarefa 2 — Criar um Orçamento com Alertas
+### Tarefa 2: Criar um Orçamento com Alertas
 
 Crie um orçamento mensal com múltiplos limites de alerta:
 
@@ -91,15 +91,15 @@ az consumption budget create \
 3. Defina o escopo para seu grupo de recursos ou assinatura
 4. Configure o valor do orçamento ($100 mensal)
 5. Adicione condições de alerta:
-   - **50% real** — notificar a equipe antecipadamente
-   - **75% real** — escalar para o gerente
-   - **100% real** — alertar todos os stakeholders
-   - **110% previsto** — aviso proativo de previsão
+   - **50% real** | notificar a equipe antecipadamente
+   - **75% real** | escalar para o gerente
+   - **100% real** | alertar todos os stakeholders
+   - **110% previsto** | aviso proativo de previsão
 6. Configure o grupo de ação ou destinatários de email para cada limite
 
 :::
 
-### Tarefa 3 — Configurar Visualizações de Análise de Custos
+### Tarefa 3: Configurar Visualizações de Análise de Custos
 
 Explore a análise de custos no Portal do Azure:
 
@@ -130,7 +130,7 @@ az costmanagement query \
   --dataset-grouping name=Department type=TagKey
 ```
 
-### Tarefa 4 — Configurar Exportações de Custos
+### Tarefa 4: Configurar Exportações de Custos
 
 Configure a exportação automatizada de dados de custo para uma conta de armazenamento:
 
@@ -157,7 +157,7 @@ az costmanagement export create \
   --schedule-status Active
 ```
 
-### Tarefa 5 — Revisar Recomendações do Azure Advisor
+### Tarefa 5: Revisar Recomendações do Azure Advisor
 
 ```bash
 # Listar todas as recomendações do Advisor
@@ -186,7 +186,7 @@ Navegue até **Azure Advisor** > aba **Custo** para ver:
 
 :::
 
-### Tarefa 6 — Implementar Notificações de Gastos com Action Groups
+### Tarefa 6: Implementar Notificações de Gastos com Action Groups
 
 ```bash
 # Criar um grupo de ação para alertas de custo
@@ -203,7 +203,7 @@ az monitor action-group show \
   --query "{Name:name, Receivers:emailReceivers[].{Name:name, Email:emailAddress}}" -o json
 ```
 
-### Tarefa 7 — Impor Tagging com Azure Policy
+### Tarefa 7: Impor Tagging com Azure Policy
 
 Aplique uma política que nega a criação de recursos sem a tag CostCenter obrigatória:
 
@@ -243,7 +243,7 @@ az storage account create \
 <details>
 <summary>Dica 1: Escopo do orçamento</summary>
 
-Orçamentos podem ter escopo de assinatura, grupo de recursos ou grupo de gerenciamento. Para o exame, saiba que alertas de orçamento são informativos por padrão — eles não interrompem os gastos. Para desligar recursos automaticamente, você precisa combinar alertas de orçamento com runbooks do Azure Automation ou Logic Apps.
+Orçamentos podem ter escopo de assinatura, grupo de recursos ou grupo de gerenciamento. Para o exame, saiba que alertas de orçamento são informativos por padrão | eles não interrompem os gastos. Para desligar recursos automaticamente, você precisa combinar alertas de orçamento com runbooks do Azure Automation ou Logic Apps.
 
 </details>
 
@@ -270,11 +270,11 @@ Para visualizar custos, você precisa no mínimo da função **Cost Management R
 
 ## Quebrar & Consertar
 
-### Cenário A — Orçamento Não Está Alertando
+### Cenário A: Orçamento Não Está Alertando
 
 Você criou um orçamento com um limite de $100, mas os gastos chegaram a $120 e nenhum alerta foi enviado. Investigue: Um grupo de ação foi configurado? O endereço de email é válido? Verifique as condições de alerta do orçamento e certifique-se de que "real" vs "previsto" está configurado corretamente.
 
-### Cenário B — Recursos Sem Tags
+### Cenário B: Recursos Sem Tags
 
 Execute uma consulta para encontrar todos os recursos em um grupo de recursos que estão sem a tag CostCenter. Como você remedia recursos existentes sem tags? (Resposta: Use tarefas de remediação de política com efeitos "Modify" ou "DeployIfNotExists".)
 
@@ -284,7 +284,7 @@ az resource list --resource-group rg-cost-lab \
   --query "[?tags.CostCenter==null].{Name:name, Type:type}" -o table
 ```
 
-### Cenário C — Falhas na Exportação de Custos
+### Cenário C: Falhas na Exportação de Custos
 
 Sua exportação diária de custos parou de funcionar. Verifique o status da exportação e causas comuns: rotação de chave da conta de armazenamento, contêiner excluído ou restrições de acesso de rede na conta de armazenamento.
 
@@ -293,25 +293,25 @@ Sua exportação diária de custos parou de funcionar. Verifique o status da exp
 <details>
 <summary>1. Qual é a diferença entre alertas de orçamento reais e previstos?</summary>
 
-**Alertas reais** disparam quando os gastos cumulativos atingem o percentual limite do orçamento. **Alertas previstos** disparam quando a projeção de gastos ao final do período deve exceder o limite. Alertas previstos são proativos — eles avisam antes de você gastar demais com base nas tendências de gastos.
+**Alertas reais** disparam quando os gastos cumulativos atingem o percentual limite do orçamento. **Alertas previstos** disparam quando a projeção de gastos ao final do período deve exceder o limite. Alertas previstos são proativos | eles avisam antes de você gastar demais com base nas tendências de gastos.
 
 </details>
 
 <details>
 <summary>2. Os orçamentos do Azure podem interromper automaticamente o consumo de recursos?</summary>
 
-**Não.** Alertas de orçamento são apenas informativos — eles enviam notificações, mas não param ou excluem recursos. Para automatizar ações de controle de custos (como desligar VMs), você deve combinar alertas de orçamento com **Action Groups** que acionam **runbooks do Azure Automation** ou **Logic Apps**.
+**Não.** Alertas de orçamento são apenas informativos | eles enviam notificações, mas não param ou excluem recursos. Para automatizar ações de controle de custos (como desligar VMs), você deve combinar alertas de orçamento com **Action Groups** que acionam **runbooks do Azure Automation** ou **Logic Apps**.
 
 </details>
 
 <details>
 <summary>3. Quais são as categorias de recomendações do Azure Advisor?</summary>
 
-1. **Custo** — Redimensionar ou desligar recursos subutilizados
-2. **Segurança** — Detecção de vulnerabilidades e ameaças
-3. **Confiabilidade** — Alta disponibilidade e continuidade de negócios
-4. **Desempenho** — Melhorias de velocidade e responsividade
-5. **Excelência Operacional** — Melhores práticas de processos e workflows
+1. **Custo** | Redimensionar ou desligar recursos subutilizados
+2. **Segurança** | Detecção de vulnerabilidades e ameaças
+3. **Confiabilidade** | Alta disponibilidade e continuidade de negócios
+4. **Desempenho** | Melhorias de velocidade e responsividade
+5. **Excelência Operacional** | Melhores práticas de processos e workflows
 
 (Nota: Na verdade existem cinco categorias nas atualizações mais recentes.)
 
