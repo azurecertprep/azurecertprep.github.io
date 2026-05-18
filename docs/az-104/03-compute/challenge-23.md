@@ -5,11 +5,11 @@ title: "Challenge 23: App Service Advanced Configuration"
 
 # Challenge 23: App Service Advanced Configuration
 
-| | |
-|---|---|
-| **Estimated Time** | 75-90 minutes |
-| **Cost Estimate** | ~$0.30 |
-| **Exam Weight** | 20-25% |
+:::info Estimated Time and Cost
+
+**75-90 minutes** | **Estimated cost**: ~$0.30 | **Exam Weight: 20-25%**
+
+:::
 
 ## Scenario
 

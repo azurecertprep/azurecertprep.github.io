@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Desafio 02: RBAC & Gerenciamento de Acesso
 
-> **Tempo estimado**: 45-60 min | **Custo estimado**: Gratuito | **Peso no exame**: 20-25%
+:::info Tempo e Custo Estimados
+
+**45-60 min** | **Custo estimado**: Gratuito | **Peso no Exame: 20-25%**
+
+:::
 
 ## Introdução
 

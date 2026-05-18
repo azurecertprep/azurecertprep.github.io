@@ -5,11 +5,11 @@ title: "Challenge 14: Azure Monitor & Alerts"
 
 # Challenge 14: Azure Monitor & Alerts
 
-| | |
-|---|---|
-| **Estimated Time** | 60 minutes |
-| **Cost Estimate** | ~$0.10 |
-| **Exam Weight** | 10–15% |
+:::info Estimated Time and Cost
+
+**60 minutes** | **Estimated cost**: ~$0.10 | **Exam Weight: 10–15%**
+
+:::
 
 ## Scenario
 

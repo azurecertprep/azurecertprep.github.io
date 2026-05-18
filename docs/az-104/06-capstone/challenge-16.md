@@ -5,11 +5,11 @@ title: "Challenge 16: Capstone: Day in the Life of an Azure Admin"
 
 # Challenge 16: Capstone: Day in the Life of an Azure Admin
 
-| | |
-|---|---|
-| **Estimated Time** | 90–120 minutes |
-| **Cost Estimate** | ~$0.50 |
-| **Exam Weight** | All 5 domains |
+:::info Estimated Time and Cost
+
+**90–120 minutes** | **Estimated cost**: ~$0.50 | **Exam Weight: All 5 domains**
+
+:::
 
 :::info Capstone Challenge
 

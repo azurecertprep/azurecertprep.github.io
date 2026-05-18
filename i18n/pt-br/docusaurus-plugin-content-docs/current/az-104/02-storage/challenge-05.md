@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Desafio 05: Blob Storage & Azure Files
 
-> **Tempo estimado**: 60-75 min | **Custo estimado**: ~$0.50 | **Peso no exame**: 15-20%
+:::info Tempo e Custo Estimados
+
+**60-75 min** | **Custo estimado**: ~$0.50 | **Peso no Exame: 15-20%**
+
+:::
 
 ## Introdução
 

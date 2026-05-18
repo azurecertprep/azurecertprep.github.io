@@ -5,11 +5,11 @@ title: "Challenge 25: Private Endpoints & Service Endpoints"
 
 # Challenge 25: Private Endpoints & Service Endpoints
 
-| | |
-|---|---|
-| **Estimated Time** | 60-75 minutes |
-| **Cost Estimate** | ~$0.15 |
-| **Exam Weight** | 15-20% |
+:::info Estimated Time and Cost
+
+**60-75 minutes** | **Estimated cost**: ~$0.15 | **Exam Weight: 15-20%**
+
+:::
 
 ## Scenario
 

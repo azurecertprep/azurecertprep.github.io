@@ -5,11 +5,11 @@ title: "Desafio 23: Configuração Avançada do App Service"
 
 # Desafio 23: Configuração Avançada do App Service
 
-| | |
-|---|---|
-| **Tempo Estimado** | 75-90 minutos |
-| **Custo Estimado** | ~$0,30 |
-| **Peso no Exame** | 20-25% |
+:::info Tempo e Custo Estimados
+
+**75-90 minutos** | **Custo estimado**: ~$0,30 | **Peso no Exame: 20-25%**
+
+:::
 
 ## Cenário
 

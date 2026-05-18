@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 02: RBAC & Access Management
 
-> **Estimated time**: 45-60 min | **Estimated cost**: Free | **Exam weight**: 20-25%
+:::info Estimated Time and Cost
+
+**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%**
+
+:::
 
 ## Introduction
 

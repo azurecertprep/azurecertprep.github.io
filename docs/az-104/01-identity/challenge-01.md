@@ -5,7 +5,11 @@ title: "Challenge 01: Entra ID: Users & Groups"
 
 # Challenge 01: Entra ID: Users & Groups
 
-> **Estimated time**: 45-60 min | **Estimated cost**: Free | **Exam weight**: 20-25%
+:::info Estimated Time and Cost
+
+**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%**
+
+:::
 
 ## Introduction
 

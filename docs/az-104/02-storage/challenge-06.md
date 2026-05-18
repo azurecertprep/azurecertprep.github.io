@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 06: Storage Security & Lifecycle
 
-> **Estimated time**: 60-75 min | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam weight**: 15-20%
+:::info Estimated Time and Cost
+
+**60-75 min** | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam Weight: 15-20%**
+
+:::
 
 ## Introduction
 

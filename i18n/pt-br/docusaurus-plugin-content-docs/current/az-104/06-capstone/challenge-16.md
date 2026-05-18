@@ -5,11 +5,11 @@ title: "Challenge 16: Capstone | Day in the Life of an Azure Admin"
 
 # Desafio 16: Capstone | Um Dia na Vida de um Administrador Azure
 
-| | |
-|---|---|
-| **Tempo estimado** | 90–120 minutos |
-| **Custo estimado** | ~$0,50 |
-| 📊 **Peso no exame** | Todos os 5 domínios |
+:::info Tempo e Custo Estimados
+
+**90–120 minutos** | **Custo estimado**: ~$0,50 | **Peso no Exame: Todos os 5 domínios**
+
+:::
 
 :::info Informação Desafio Capstone
 

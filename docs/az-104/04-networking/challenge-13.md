@@ -5,11 +5,11 @@ title: "Challenge 13: DNS & Load Balancing"
 
 # Challenge 13: DNS & Load Balancing
 
-| | |
-|---|---|
-| **Estimated Time** | 60 minutes |
-| **Cost Estimate** | ~$0.20 |
-| **Exam Weight** | 15–20% |
+:::info Estimated Time and Cost
+
+**60 minutes** | **Estimated cost**: ~$0.20 | **Exam Weight: 15–20%**
+
+:::
 
 ## Scenario
 

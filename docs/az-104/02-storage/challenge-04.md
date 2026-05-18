@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Challenge 04: Storage Accounts & Access
 
-> **Estimated time**: 60-75 min | **Estimated cost**: ~$0.50 | **Exam weight**: 15-20%
+:::info Estimated Time and Cost
+
+**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%**
+
+:::
 
 ## Introduction
 

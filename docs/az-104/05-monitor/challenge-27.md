@@ -5,11 +5,11 @@ title: "Challenge 27: Log Analytics & KQL Deep Dive"
 
 # Challenge 27: Log Analytics & KQL Deep Dive
 
-| | |
-|---|---|
-| **Estimated Time** | 75-90 minutes |
-| **Cost Estimate** | ~$0.15 |
-| **Exam Weight** | 10-15% |
+:::info Estimated Time and Cost
+
+**75-90 minutes** | **Estimated cost**: ~$0.15 | **Exam Weight: 10-15%**
+
+:::
 
 ## Scenario
 

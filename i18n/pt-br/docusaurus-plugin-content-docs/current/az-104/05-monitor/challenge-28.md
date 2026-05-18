@@ -5,11 +5,11 @@ title: "Desafio 28: Azure Advisor & Service Health"
 
 # Desafio 28: Azure Advisor & Service Health
 
-| | |
-|---|---|
-| **Tempo Estimado** | 45-60 minutos |
-| **Custo Estimado** | ~$0,00 (Advisor e Service Health são gratuitos) |
-| **Peso no Exame** | 5-10% |
+:::info Tempo e Custo Estimados
+
+**45-60 minutos** | **Custo estimado**: ~$0,00 (Advisor e Service Health são gratuitos) | **Peso no Exame: 5-10%**
+
+:::
 
 ## Cenário
 

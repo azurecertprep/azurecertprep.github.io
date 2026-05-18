@@ -5,11 +5,11 @@ title: "Challenge 15: Backup & Recovery"
 
 # Desafio 15: Backup & Recovery
 
-| | |
-|---|---|
-| **Tempo estimado** | 60–75 minutos |
-| **Custo estimado** | ~$0,30 |
-| 📊 **Peso no exame** | 10–15% |
+:::info Tempo e Custo Estimados
+
+**60–75 minutos** | **Custo estimado**: ~$0,30 | **Peso no Exame: 10–15%**
+
+:::
 
 ## Cenário
 

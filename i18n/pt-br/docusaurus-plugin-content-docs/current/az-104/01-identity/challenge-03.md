@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Desafio 03: Azure Policy & Governança
 
-> **Tempo estimado**: 60-75 min | **Custo estimado**: Gratuito (avaliação de política) | **Peso no exame**: 15-20%
+:::info Tempo e Custo Estimados
+
+**60-75 min** | **Custo estimado**: Gratuito (avaliação de política) | **Peso no Exame: 15-20%**
+
+:::
 
 ## Introdução
 

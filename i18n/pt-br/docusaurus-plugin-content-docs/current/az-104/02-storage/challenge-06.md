@@ -8,7 +8,11 @@ import TabItem from '@theme/TabItem';
 
 # Desafio 06: Segurança de Storage & Ciclo de Vida
 
-> **Tempo estimado**: 60-75 min | **Custo estimado**: ~$1.00 (duas storage accounts) | **Peso no exame**: 15-20%
+:::info Tempo e Custo Estimados
+
+**60-75 min** | **Custo estimado**: ~$1.00 (duas storage accounts) | **Peso no Exame: 15-20%**
+
+:::
 
 ## Introdução
 

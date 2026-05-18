@@ -5,11 +5,11 @@ title: "Desafio 26: Network Watcher & Diagnósticos"
 
 # Desafio 26: Network Watcher & Diagnósticos
 
-| | |
-|---|---|
-| **Tempo Estimado** | 60-75 minutos |
-| **Custo Estimado** | ~$0,20 |
-| **Peso no Exame** | 10-15% |
+:::info Tempo e Custo Estimados
+
+**60-75 minutos** | **Custo estimado**: ~$0,20 | **Peso no Exame: 10-15%**
+
+:::
 
 ## Cenário
 

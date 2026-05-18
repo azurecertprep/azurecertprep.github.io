@@ -5,11 +5,11 @@ title: "Challenge 24: User-Defined Routes & Traffic Control"
 
 # Challenge 24: User-Defined Routes & Traffic Control
 
-| | |
-|---|---|
-| **Estimated Time** | 60-75 minutes |
-| **Cost Estimate** | ~$0.25 |
-| **Exam Weight** | 15-20% |
+:::info Estimated Time and Cost
+
+**60-75 minutes** | **Estimated cost**: ~$0.25 | **Exam Weight: 15-20%**
+
+:::
 
 ## Scenario
 

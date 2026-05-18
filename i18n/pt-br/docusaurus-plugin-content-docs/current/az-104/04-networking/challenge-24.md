@@ -5,11 +5,11 @@ title: "Desafio 24: Rotas Definidas pelo Usuário & Controle de Tráfego"
 
 # Desafio 24: Rotas Definidas pelo Usuário & Controle de Tráfego
 
-| | |
-|---|---|
-| **Tempo Estimado** | 60-75 minutos |
-| **Custo Estimado** | ~$0,25 |
-| **Peso no Exame** | 15-20% |
+:::info Tempo e Custo Estimados
+
+**60-75 minutos** | **Custo estimado**: ~$0,25 | **Peso no Exame: 15-20%**
+
+:::
 
 ## Cenário
 

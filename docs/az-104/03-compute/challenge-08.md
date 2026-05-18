@@ -5,7 +5,7 @@ title: "Challenge 08: Virtual Machines & Scale Sets"
 
 # Challenge 08: Virtual Machines & Scale Sets
 
-:::info Estimated Time & Cost
+:::info Estimated Time and Cost
 
 **60–75 minutes** | **~$0.50** (deallocate promptly!) | **Exam Weight: 20–25%**
 

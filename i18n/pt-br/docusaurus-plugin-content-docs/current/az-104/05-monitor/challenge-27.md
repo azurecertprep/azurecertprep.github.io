@@ -5,11 +5,11 @@ title: "Desafio 27: Log Analytics & KQL em Profundidade"
 
 # Desafio 27: Log Analytics & KQL em Profundidade
 
-| | |
-|---|---|
-| **Tempo Estimado** | 75-90 minutos |
-| **Custo Estimado** | ~$0,15 |
-| **Peso no Exame** | 10-15% |
+:::info Tempo e Custo Estimados
+
+**75-90 minutos** | **Custo estimado**: ~$0,15 | **Peso no Exame: 10-15%**
+
+:::
 
 ## Cenário
 

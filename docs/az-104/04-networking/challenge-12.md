@@ -5,7 +5,7 @@ title: "Challenge 12: Network Security"
 
 # Challenge 12: Network Security
 
-:::info Estimated Time & Cost
+:::info Estimated Time and Cost
 
 **60 minutes** | **~$0.30** (Bastion incurs hourly charges | delete promptly) | **Exam Weight: 15–20%**
 
