@@ -4,6 +4,7 @@ title: "Challenge 03: Design a Monitoring and Alerting Strategy"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 03: Design a Monitoring and Alerting Strategy
 
@@ -43,13 +44,18 @@ Your task is to design a comprehensive monitoring and alerting strategy that pro
 
 2. Create a monitoring coverage matrix:
 
-| Component | Metrics to Monitor | Alert Threshold | Data Source |
-|-----------|-------------------|-----------------|-------------|
-| Front Door | | | |
-| App Service | | | |
-| SQL Database | | | |
-| Redis Cache | | | |
-| Azure Functions | | | |
+<DecisionMatrix
+  title="Monitoring Coverage Matrix"
+  headers={["Metrics to Monitor", "Alert Threshold", "Data Source"]}
+  rows={[
+    {criteria: "Front Door", values: ["Request count, latency (p95), backend health, WAF blocked requests, origin response time", "Latency p95 > 500ms, backend health < 80%, error rate > 1%", "Azure Monitor Metrics (platform metrics) + diagnostic settings to Log Analytics"]},
+    {criteria: "App Service", values: ["CPU %, memory %, HTTP 5xx count, response time (p95), thread count, request queue length", "CPU > 70% for 5min, HTTP 5xx > 10/min, response time p95 > 2s", "App Service Metrics + Application Insights (custom telemetry, dependency tracking)"]},
+    {criteria: "SQL Database", values: ["DTU/vCore utilization, connection count, deadlocks, long-running queries, storage %", "DTU > 80% for 10min, deadlocks > 5/hour, storage > 85%", "Azure SQL Analytics + Query Performance Insight + diagnostic settings"]},
+    {criteria: "Redis Cache", values: ["Memory usage %, server load %, cache hits/misses, connected clients, evicted keys", "Memory > 80%, server load > 70%, cache hit ratio < 90%", "Azure Monitor Metrics + Redis diagnostics to Log Analytics"]},
+    {criteria: "Azure Functions", values: ["Execution count, duration, failure rate, queue length (for queue triggers), throttle count", "Failure rate > 5%, duration p95 > 10s, queue length > 1000", "Application Insights (integrated) + Function-level diagnostic settings"]}
+  ]}
+  storageKey="az305-challenge-03"
+/>
 
 ### Part 2: Alert Design
 

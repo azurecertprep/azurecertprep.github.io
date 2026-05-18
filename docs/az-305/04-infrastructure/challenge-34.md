@@ -4,6 +4,7 @@ title: "Challenge 34: Design Compute for Workload Requirements"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 34: Design Compute for Workload Requirements
 
@@ -66,12 +67,17 @@ Your task is to select the optimal VM family/series for each workload, determine
 
 8. Create a budget allocation table:
 
-| Workload | VM SKU | Pricing Model | Monthly Cost | % of Budget |
-|----------|--------|---------------|--------------|-------------|
-| Web frontend | | | | |
-| ML training | | | | |
-| Data processing | | | | |
-| **Total** | | | **$X** | **100%** |
+<DecisionMatrix
+  title="Compute Budget Allocation"
+  headers={["VM SKU", "Pricing Model", "Monthly Cost", "% of Budget"]}
+  rows={[
+    {criteria: "Web frontend", values: ["B2ms (2 vCPU, 8 GB) x 2 instances + VMSS autoscale to 4", "1-year Reserved Instance for base 2 VMs + pay-as-you-go for autoscale burst", "$180 (RI) + ~$50 (burst) = ~$230", "~3%"]},
+    {criteria: "ML training", values: ["NC6s_v3 (6 vCPU, 112 GB, 1x V100 GPU)", "Spot VMs with checkpointing (up to 90% discount)", "~$400-800 (128 GPU-hours/month at Spot pricing)", "~5-10%"]},
+    {criteria: "Data processing", values: ["E32-8ds_v5 (32 vCPU, 256 GB RAM) or E64ds_v5 (64 vCPU, 512 GB)", "3-year Reserved Instance (up to 72% discount for 24/7 workload)", "~$2,500-3,500 (depending on SKU and region)", "~35-45%"]},
+    {criteria: "Total", values: ["—", "Mixed (RI + Spot + PAYG)", "$3,100-4,500 within $8,000 budget", "~40-56% (leaves room for storage, networking, other services)"]}
+  ]}
+  storageKey="az305-challenge-34"
+/>
 
 9. Verify the total stays within $8,000/month. If it exceeds the budget, identify optimization strategies (smaller SKUs, fewer hours, different pricing).
 

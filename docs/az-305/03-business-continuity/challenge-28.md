@@ -4,6 +4,7 @@ title: "Challenge 28: Design Backup & Recovery for Unstructured Data"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 28: Design Backup & Recovery for Unstructured Data
 
@@ -31,12 +32,17 @@ The challenge is balancing multiple protection layers: instant recovery for the 
 
 1. Evaluate and configure the following native protection features for the blob storage accounts. For each, document what it protects against, its cost impact, and its limitations:
 
-| Feature | Protects Against | Cost Impact | Retention |
-|---------|-----------------|-------------|-----------|
-| Blob soft delete | | | |
-| Container soft delete | | | |
-| Blob versioning | | | |
-| Point-in-time restore | | | |
+<DecisionMatrix
+  title="Blob Storage Protection Features"
+  headers={["Protects Against", "Cost Impact", "Retention"]}
+  rows={[
+    {criteria: "Blob soft delete", values: ["Accidental blob deletion and overwrites - deleted blobs retained as soft-deleted for recovery", "Low - only charged for storage of soft-deleted data at standard rates for the blob access tier", "Configurable 1-365 days; after retention expires, data is permanently deleted"]},
+    {criteria: "Container soft delete", values: ["Accidental container deletion - entire container and its contents recoverable", "Low - same as blob soft delete, charged for stored data during retention period", "Configurable 1-365 days; independent of blob soft delete setting"]},
+    {criteria: "Blob versioning", values: ["Overwrites - every write creates a new version, previous versions preserved automatically", "High for frequently modified files - each version stored at full size, can multiply storage costs significantly", "Indefinite until explicitly deleted or managed by lifecycle policy; no automatic expiration"]},
+    {criteria: "Point-in-time restore", values: ["Bulk corruption or accidental mass deletion - restores entire container to a previous state", "Moderate - requires versioning + change feed + soft delete all enabled; additional storage for change feed", "Maximum 14 days; requires continuous change tracking enabled; cannot be used with hierarchical namespace (ADLS Gen2)"]}
+  ]}
+  storageKey="az305-challenge-28"
+/>
 
 2. Design a layered protection strategy:
    - **Layer 1 (Instant recovery)**: Which features provide self-service restore within minutes?

@@ -4,6 +4,7 @@ title: "Challenge 01: Design a Centralized Logging Solution"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 01: Design a Centralized Logging Solution
 
@@ -39,13 +40,18 @@ Your task is to design a Log Analytics workspace architecture that balances cost
 
 2. Document the trade-offs of your chosen architecture using this decision matrix:
 
-| Criteria | Single Workspace | Per-Subscription | Per-Team | Hybrid |
-|----------|-----------------|------------------|----------|--------|
-| Access control granularity | | | | |
-| Cross-resource correlation | | | | |
-| Cost optimization | | | | |
-| Compliance/data residency | | | | |
-| Management overhead | | | | |
+<DecisionMatrix
+  title="Log Analytics Workspace Architecture"
+  headers={["Single Workspace", "Per-Subscription", "Per-Team", "Hybrid"]}
+  rows={[
+    {criteria: "Access control granularity", values: ["Limited - table-level RBAC only", "Good - natural subscription boundary", "Excellent - full isolation per team", "Best - security isolated + team access via resource-context"]},
+    {criteria: "Cross-resource correlation", values: ["Excellent - all data in one place", "Difficult - requires cross-workspace queries", "Difficult - queries span multiple workspaces", "Good - security correlated centrally, operational per team"]},
+    {criteria: "Cost optimization", values: ["Best - single commitment tier at highest volume discount", "Moderate - lower volume per workspace reduces tier discounts", "Poor - each workspace has low volume, no tier discounts", "Good - security workspace at high tier, operational at lower tiers"]},
+    {criteria: "Compliance/data residency", values: ["Cannot satisfy - single region only", "Partially - if subscriptions map to regions", "Can satisfy - team workspaces in required regions", "Best - regional workspaces where required, central for non-regulated"]},
+    {criteria: "Management overhead", values: ["Lowest - one workspace to manage", "Moderate - 3 workspaces", "High - one per team, grows with org", "Moderate - 2-3 workspaces with clear purpose"]}
+  ]}
+  storageKey="az305-challenge-01"
+/>
 
 3. Determine the appropriate region(s) for your workspace(s) considering the EU data residency requirement.
 

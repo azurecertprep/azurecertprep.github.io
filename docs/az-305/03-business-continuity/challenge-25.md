@@ -4,6 +4,7 @@ title: "Challenge 25: Design Recovery Objectives & Strategy"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
+import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 # Challenge 25: Design Recovery Objectives & Strategy
 
@@ -52,13 +53,18 @@ The challenge is significant: Mercy has a DR budget of only $5,000/month to prot
 
 5. Complete this decision matrix for each tier:
 
-| Factor | Tier 1 (Critical) | Tier 2 (Important) | Tier 3 (Standard) |
-|--------|-------------------|--------------------|--------------------|
-| Recovery pattern | | | |
-| Monthly DR cost | | | |
-| Data replication method | | | |
-| Failover automation | | | |
-| Testing frequency | | | |
+<DecisionMatrix
+  title="DR Strategy by Workload Tier"
+  headers={["Tier 1 (Critical)", "Tier 2 (Important)", "Tier 3 (Standard)"]}
+  rows={[
+    {criteria: "Recovery pattern", values: ["Hot standby (active-active or active-passive with synchronous replication)", "Warm standby (scaled-down replica with asynchronous replication)", "Cold standby (IaC templates + backup restore)"]},
+    {criteria: "Monthly DR cost", values: ["$3,000-4,000 (80-100% of production cost for secondary region)", "$800-1,500 (30-50% of production for scaled-down replicas)", "$200-500 (5-10% for storage of backups + IaC definitions)"]},
+    {criteria: "Data replication method", values: ["Synchronous geo-replication (SQL Always On, ZRS/GZRS), real-time data sync", "Asynchronous geo-replication (SQL geo-replication, GRS), 5-15 min lag acceptable", "Daily/hourly backups to GRS storage, restore from backup during disaster"]},
+    {criteria: "Failover automation", values: ["Fully automated - Traffic Manager/Front Door health probes trigger instant failover", "Semi-automated - runbook triggered by alert, requires validation before cutover", "Manual - ops team deploys from IaC templates and restores data from backups"]},
+    {criteria: "Testing frequency", values: ["Monthly failover drills (automated), quarterly full DR tests", "Quarterly failover tests with documented runbook validation", "Semi-annual restore tests to verify backup integrity"]}
+  ]}
+  storageKey="az305-challenge-25"
+/>
 
 6. Justify why hot standby is required for Tier 1 but would be wasteful for Tier 3.
 
