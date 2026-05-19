@@ -5,7 +5,7 @@ title: "Desafio 38: Projetar uma Arquitetura de Mensageria"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 38: Projetar uma Arquitetura de Mensageria
+# Desafio 38: projetar uma arquitetura de mensageria
 
 :::info Tempo Estimado e Custo
 
@@ -19,13 +19,13 @@ MegaMart é um marketplace online processando 500,000 pedidos por dia em 10,000 
 
 A equipe de arquitetura precisa projetar uma solução de mensageria que garanta processamento exactly-once, suporte roteamento de mensagens baseado em prioridade, lide com transações multi-etapa de forma confiável e mantenha garantias de entrega mesmo quando serviços downstream experimentam indisponibilidades prolongadas (até 4 horas).
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma arquitetura de mensageria
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao de Serviço de Mensageria
+### Parte 1: selecao de serviço de mensageria
 
 1. Compare serviços de mensageria Azure para o pipeline de processamento de pedidos:
 
@@ -46,7 +46,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
    - Requisitos de recursos: detecção de duplicatas, sessions, transações
    - Isolamento de rede: O sistema precisa de private endpoints?
 
-### Parte 2: Design de Processamento Exactly-Once
+### Parte 2: design de processamento Exactly-Once
 
 4. Projete a estratégia de detecção de duplicatas:
    - Service Bus fornece detecção de duplicatas dentro de uma janela de tempo configuravel (até 7 dias)
@@ -68,7 +68,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
    - Consumidor completa (acknowledges) a mensagem
    - Se o processamento falhar, mensagem retorna a fila apos o lock expirar
 
-### Parte 3: Design de Fila de Prioridade
+### Parte 3: design de fila de prioridade
 
 7. Projete a arquitetura de roteamento por prioridade para pedidos premium vs standard:
    - **Opcao A**: Filas separadas (premium-orders, standard-orders) com alocacao diferente de consumidores
@@ -85,7 +85,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
    - Implemente o padrão competing consumers para scaling horizontal
    - Como você previne starvation de pedidos standard durante spikes de trafego premium?
 
-### Parte 4: Orquestração de Transações Multi-Etapa
+### Parte 4: orquestração de transações Multi-Etapa
 
 10. Projete a saga de fulfillment de pedidos usando Service Bus:
     - Etapa 1: Verificar pagamento (chamar Payment Service via fila)
@@ -104,7 +104,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
     - Projete o processo de revisao manual para pedidos dead-lettered
     - Qual é a política de retencao para mensagens dead-letter?
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-38"
@@ -201,7 +201,7 @@ Projete sua estratégia de DLQ:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Service Bus overview](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview)
 - [Service Bus message sessions (FIFO)](https://learn.microsoft.com/en-us/azure/service-bus-messaging/message-sessions)
@@ -209,7 +209,7 @@ Projete sua estratégia de DLQ:
 - [Service Bus dead-letter queues](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues)
 - [Competing Consumers pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um consumidor processa uma mensagem de pedido e escreve no banco de dados, mas crasheia antes de chamar Complete() na mensagem do Service Bus. O que acontece?</summary>
@@ -239,7 +239,7 @@ Projete sua estratégia de DLQ:
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

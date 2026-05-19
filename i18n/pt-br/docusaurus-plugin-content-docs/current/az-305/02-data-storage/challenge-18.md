@@ -5,7 +5,7 @@ title: "Desafio 18: Projetar uma Solução de Dados Semi-Estruturados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 18: Projetar uma Solução de Dados Semi-Estruturados
+# Desafio 18: projetar uma solução de dados Semi-Estruturados
 
 :::info Tempo Estimado e Custo
 
@@ -21,34 +21,34 @@ A plataforma tem dois padrões de acesso primários. Primeiro, operadores precis
 
 O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minimizar a sobrecarga operacional (sem gerenciar clusters ou shards manualmente) e requer disponibilidade multi-região com failover automático. A equipe de engenharia tem experiência com sintaxe de consulta MongoDB de um projeto anterior, mas esta aberta a outras APIs se os trade-offs justificarem. A política de retencao de dados requer dados quentes por 90 dias, apos os quais devem ser arquivados ou movidos para armazenamento frio para controlar custos.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para armazenamento de dados semi-estruturados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao de Serviço e API
+### Parte 1: selecao de serviço e API
 
 1. Avalie Azure Cosmos DB como o armazenamento de dados primário para os requisitos da SensorGrid. Compare-o com alternativas (Azure Table Storage, MongoDB Atlas no Azure) e justifique sua recomendacao.
 2. Selecione a API Cosmos DB mais apropriada para esta carga de trabalho. Compare as APIs NoSQL (nativa), MongoDB, PostgreSQL, Cassandra e Gremlin. Considere a experiência da equipe com MongoDB, os padrões de consulta necessários e flexibilidade de longo prazo.
 3. Se você recomendar a API NoSQL, explique como consultas tipo SQL e o change feed fornecem vantagens sobre a API MongoDB para este cenário de IoT. Se recomendar a API MongoDB, explique como a compatibilidade de protocolo wire reduz o esforco de migração.
 4. Avalie se Azure Table Storage poderia lidar com qualquer porcao desta carga de trabalho a um custo menor (para lookups key-value mais simples do estado do dispositivo).
 
-### Parte 2: Modelagem de Dados e Particionamento
+### Parte 2: modelagem de dados e particionamento
 
 5. Projete a estratégia de partition key para o container de eventos de telemetria. Avalie candidatos: device ID, facility ID, tipo de dispositivo, timestamp ou uma chave sintetica combinando múltiplos campos. Considere os padrões de acesso (leituras pontuais por dispositivo, consultas de intervalo por tempo, consultas por instalacao).
 6. Calcule o consumo esperado de RU (Request Unit) para os dois padrões de acesso primários: (a) leitura pontual do estado mais recente do dispositivo, (b) consulta retornando 1 hora de histórico para um único dispositivo. Estime o throughput provisionado necessário.
 7. Projete a estrutura do documento para eventos de telemetria. Decida se deve armazenar cada leitura como um documento individual ou agrupar múltiplas leituras em um único documento (padrão de bucketing). Análise os trade-offs em custo de RU, flexibilidade de consulta e throughput de escrita.
 8. Projete uma estratégia de TTL (time-to-live) para expirar automaticamente os dados apos 90 dias, reduzindo custos de armazenamento sem jobs de limpeza manuais.
 
-### Parte 3: Consistência e Distribuição Global
+### Parte 3: consistência e distribuição global
 
 9. Selecione o nível de consistência apropriado para cada padrão de acesso: (a) leituras de dashboard em tempo real (estado mais recente do dispositivo), (b) consultas analiticas historicas. Avalie strong, bounded staleness, session, consistent prefix e eventual consistency. Documente as implicacoes de custo de RU de cada nível.
 10. Projete a topologia de implantacao multi-região. Determine quais regiões devem ter capacidade de escrita (single-write vs multi-write) e quantas regiões de leitura implantar dada a distribuição dos dispositivos.
 11. Avalie multi-region writes para cenários onde dispositivos em cada região escrevem na instância Cosmos DB mais próxima. Aborde a estratégia de resolução de conflitos (Last Writer Wins vs procedimentos de merge customizados).
 12. Projete uma estratégia de otimização de custos incluindo autoscale throughput, camada serverless para ambientes de desenvolvimento e hierarchical partition keys para melhor distribuição de dados.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-18"
@@ -99,7 +99,7 @@ Autoscale throughput escala automaticamente entre 10% e 100% de um máximo confi
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Cosmos DB overview](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction)
 - [Choose an API in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/choose-api)
@@ -110,7 +110,7 @@ Autoscale throughput escala automaticamente entre 10% e 100% de um máximo confi
 - [Distribute data globally with Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally)
 - [Time to Live (TTL) in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/time-to-live)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma plataforma IoT ingere 1 milhao de eventos por segundo de dispositivos globalmente distribuidos. Cada evento é um documento JSON de 1KB. Por que document bucketing (agrupamento) e crítico para gerenciamento de custos no Cosmos DB?</summary>

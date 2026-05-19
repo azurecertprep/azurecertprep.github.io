@@ -5,7 +5,7 @@ title: "Challenge 15: Design Database Tiers and Compute"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 15: Design Database Tiers and Compute
+# Challenge 15: design database tiers and compute
 
 :::info Estimated Time and Cost
 
@@ -21,33 +21,33 @@ CloudTenant has three distinct workload tiers. The "Standard" tier (250 customer
 
 The finance team reports that the current database spend is $18,000/month and wants it reduced by at least 30% without degrading the customer experience. The VP of Engineering wants to understand the trade-offs between the DTU and vCore purchasing models and whether serverless compute could help with the off-hours cost problem.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a database service tier and compute tier
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Purchasing Model Selection
+### Part 1: purchasing model selection
 
 1. Compare the DTU and vCore purchasing models for CloudTenant's workloads. Document the advantages and disadvantages of each model for their specific usage patterns.
 2. Recommend which purchasing model to use for each customer tier (Standard, Premium, Enterprise) and justify your choice.
 3. Determine whether the Standard tier databases would benefit from the DTU model's simplicity or the vCore model's flexibility in independently scaling compute and storage.
 
-### Part 2: Service Tier Assignment
+### Part 2: Service tier assignment
 
 4. For the Standard tier (250 databases), recommend the appropriate service tier (General Purpose, Business Critical, or Hyperscale). Consider the 99.99% SLA requirement and cost constraints.
 5. For the Premium tier (45 databases), evaluate whether Business Critical tier is required for sub-5ms latency and In-Memory OLTP support. Identify any alternative approaches.
 6. For the Enterprise tier (5 databases exceeding 4TB), explain why Hyperscale is the appropriate tier and describe its architecture (multi-tiered caching, snapshot-based backups, named replicas).
 7. Document the maximum database size, read replicas, and availability SLA for each service tier.
 
-### Part 3: Compute Tier Optimization
+### Part 3: compute tier optimization
 
 8. Evaluate serverless compute for the Standard tier databases. Calculate the potential savings given the usage pattern (active 9 hours weekdays, minimal usage otherwise). Consider auto-pause delay and cold-start latency implications.
 9. Determine whether provisioned compute with reserved capacity (1-year or 3-year terms) would be more cost-effective than serverless for any of the workload tiers.
 10. Design an auto-scaling strategy for the Enterprise tier using Hyperscale named replicas to handle unpredictable read workloads without over-provisioning the primary.
 11. Calculate the projected monthly cost after optimization and verify it achieves the 30% reduction target.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-15"
@@ -97,7 +97,7 @@ Azure SQL Database reserved capacity provides 30-65% discount compared to pay-as
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure SQL Database purchasing models](https://learn.microsoft.com/en-us/azure/azure-sql/database/purchasing-models)
 - [Azure SQL Database service tiers](https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tiers-general-purpose-business-critical)
@@ -108,7 +108,7 @@ Azure SQL Database reserved capacity provides 30-65% discount compared to pay-as
 - [DTU-based resource limits](https://learn.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases)
 - [vCore-based resource limits](https://learn.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A database is heavily used during business hours but has near-zero activity at night and on weekends. The application can tolerate a 1-2 minute cold start delay for the first connection after inactivity. Which compute tier minimizes cost?</summary>
@@ -138,7 +138,7 @@ Azure SQL Database reserved capacity provides 30-65% discount compared to pay-as
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
@@ -191,7 +191,7 @@ az group delete --name rg-cloudtenant-premium --yes --no-wait
 az group delete --name rg-cloudtenant-enterprise --yes --no-wait
 
 # Cancel any reserved capacity purchases (if testing in a lab, use a short-term reservation)
-# Note: Reserved capacity cancellations may incur early termination fees
+# Note: reserved capacity cancellations may incur early termination fees
 ```
 
 ---

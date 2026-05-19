@@ -5,7 +5,7 @@ title: "Challenge 33: Design a Highly Available Multi-Region Application"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 33: Design a Highly Available Multi-Region Application
+# Challenge 33: design a highly available Multi-Region Application
 
 :::info Estimated Time and Cost
 
@@ -21,16 +21,16 @@ The executive team has mandated a 99.99% composite SLA with less than 50ms video
 
 This is the Domain 3 capstone challenge. You will combine all high availability, backup, and disaster recovery concepts from Challenges 25-32 into a complete, production-grade multi-region architecture. You must calculate the composite SLA mathematically, prove it meets the 99.99% target, and demonstrate that every component has appropriate redundancy.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a high availability solution for compute
 - Recommend a high availability solution for relational data
 - Recommend a high availability solution for semi-structured and unstructured data
 - Recommend a recovery solution for Azure and hybrid workloads that meets recovery objectives
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Global Traffic Routing and Edge Layer
+### Part 1: global Traffic routing and edge layer
 
 1. Design the global entry point using Azure Front Door:
    - Configure 3 origin groups (East US 2, North Europe, Japan East)
@@ -50,7 +50,7 @@ This is the Domain 3 capstone challenge. You will combine all high availability,
    - User impact: requests in-flight to failed region fail, next request goes to healthy region
    - Total user-visible disruption: approximately 30-60 seconds
 
-### Part 2: Compute Layer (Per-Region)
+### Part 2: compute layer (Per-Region)
 
 4. Design the compute architecture within each region:
    - Web/API tier: Azure Kubernetes Service (AKS) or App Service (zone-redundant)
@@ -68,7 +68,7 @@ This is the Domain 3 capstone challenge. You will combine all high availability,
    - Autoscaler headroom: each region must be able to scale to 150% of normal capacity within 2 minutes
    - Design the autoscale triggers and pre-warming strategy
 
-### Part 3: Data Layer (Multi-Region)
+### Part 3: Data layer (Multi-Region)
 
 7. Design the data architecture for each data type:
 
@@ -98,7 +98,7 @@ This is the Domain 3 capstone challenge. You will combine all high availability,
     - Azure CDN with multiple origin groups for failover
     - Cache warming: pre-populate CDN cache for new releases before launch
 
-### Part 4: Composite SLA Calculation
+### Part 4: composite SLA calculation
 
 11. Calculate the composite SLA for the complete architecture:
 
@@ -126,7 +126,7 @@ Per-region composite = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
     - The multi-region active-active pattern compensates for lower per-region SLAs
     - Document assumptions: Front Door must correctly detect and route around regional failures
 
-### Part 5: Failure Testing and Operations
+### Part 5: failure testing and operations
 
 14. Design a chaos engineering approach to validate the architecture:
     - **Zone failure test**: Simulate AZ failure, verify traffic redistributes within zone
@@ -146,7 +146,7 @@ Per-region composite = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
     - Alerting: alert when any region drops below healthy threshold
     - SLA tracking: monthly uptime calculation with automated reports
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-33"
@@ -274,7 +274,7 @@ For the < 50ms requirement to be met globally, the CDN is not optional - it's ar
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Front Door routing architecture](https://learn.microsoft.com/en-us/azure/frontdoor/front-door-routing-architecture)
 - [Multi-region web application - Azure Architecture Center](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/app-service-web-app/multi-region)
@@ -283,7 +283,7 @@ For the < 50ms requirement to be met globally, the CDN is not optional - it's ar
 - [Composite SLA calculation](https://learn.microsoft.com/en-us/azure/architecture/framework/resiliency/business-metrics#composite-slas)
 - [AKS availability zones](https://learn.microsoft.com/en-us/azure/aks/availability-zones)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. StreamFlix's per-region composite SLA is 99.914%. How does deploying active-active across 3 regions achieve 99.99%+ overall, and what component becomes the effective SLA ceiling?</summary>
@@ -313,7 +313,7 @@ For the < 50ms requirement to be met globally, the CDN is not optional - it's ar
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

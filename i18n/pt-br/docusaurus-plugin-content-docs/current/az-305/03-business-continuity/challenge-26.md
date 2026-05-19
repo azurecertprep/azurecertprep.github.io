@@ -5,7 +5,7 @@ title: "Desafio 26: Projetar Backup e Recuperação para Computação"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 26: Projetar Backup e Recuperação para Computação
+# Desafio 26: projetar Backup e recuperação para computação
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Os domain controllers requerem backups crash-consistent que capturam o estado de
 
 O diretor de TI deseja uma estratégia de backup unificada gerenciada através do Azure Backup Center que forneça: diferentes frequencias de backup por tipo de carga de trabalho, capacidade de restauracao entre regiões para disaster recovery, backups imutáveis para proteção contra ransomware, e backup seletivo de disco para reduzir custos em VMs com discos grandes de temp/cache.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de backup e recuperação para computacao
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design de Política de Backup
+### Parte 1: design de política de Backup
 
 1. Projete políticas de backup diferenciadas para cada tipo de carga de trabalho:
 
@@ -46,7 +46,7 @@ O diretor de TI deseja uma estratégia de backup unificada gerenciada através d
 
 3. Justifique por que VMs SQL Server precisam de snapshots application-consistent ao inves de crash-consistent, e o que acontece se você usar crash-consistent para um banco de dados SQL em execução.
 
-### Parte 2: Cross-Region Restore e Arquitetura de Vault
+### Parte 2: Cross-Region restore e arquitetura de Vault
 
 4. Projete a topologia de Recovery Services vault:
    - Quantos vaults você precisa? (Considere requisitos regionais e limites de gerenciamento)
@@ -77,7 +77,7 @@ az backup vault backup-properties set \
   --cross-region-restore-flag true
 ```
 
-### Parte 3: Vault Imutável e Proteção contra Ransomware
+### Parte 3: Vault imutável e proteção contra ransomware
 
 7. Projete uma estratégia de backup resiliente a ransomware usando:
    - Vaults imutáveis (não podem ser desabilitados uma vez habilitados com lock)
@@ -99,7 +99,7 @@ az backup vault backup-properties set \
   --soft-delete-duration 30
 ```
 
-### Parte 4: Backup Seletivo de Disco e Otimização de Custo
+### Parte 4: Backup seletivo de disco e otimização de custo
 
 10. Várias VMs SQL Server tem 4 discos cada: disco do SO (128 GB), disco de dados (2 TB), disco de log (512 GB) e disco temp (256 GB). Projete uma estratégia de backup seletivo de disco que:
     - Sempre faca backup dos discos do SO e dados
@@ -110,7 +110,7 @@ az backup vault backup-properties set \
 
 12. Configure o Backup Center para fornecer uma visão unificada em todas as três regiões e configure relatórios de backup para auditoria de conformidade.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-26"
@@ -207,7 +207,7 @@ Para VMs Azure executando como DCs, o Azure Backup com snapshots application-con
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Overview of Azure VM backup](https://learn.microsoft.com/en-us/azure/backup/backup-azure-vms-introduction)
 - [Back up SQL Server databases in Azure VMs](https://learn.microsoft.com/en-us/azure/backup/backup-azure-sql-database)
@@ -216,7 +216,7 @@ Para VMs Azure executando como DCs, o Azure Backup com snapshots application-con
 - [Selective disk backup for Azure VMs](https://learn.microsoft.com/en-us/azure/backup/selective-disk-backup-restore)
 - [Backup Center overview](https://learn.microsoft.com/en-us/azure/backup/backup-center-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma empresa descobre que ransomware criptografou suas VMs de produção E deletou seus pontos de recuperação de backup. Qual recurso do Azure Backup teria prevenido a delecao do backup?</summary>
@@ -254,7 +254,7 @@ az group delete --name rg-backup-eastus --yes --no-wait
 az group delete --name rg-backup-westeurope --yes --no-wait
 az group delete --name rg-backup-southeastasia --yes --no-wait
 
-# Note: Soft delete may prevent immediate deletion of backup items
+# Note: soft delete may prevent immediate deletion of backup items
 # You may need to disable soft delete first or wait for retention to expire
 ```
 

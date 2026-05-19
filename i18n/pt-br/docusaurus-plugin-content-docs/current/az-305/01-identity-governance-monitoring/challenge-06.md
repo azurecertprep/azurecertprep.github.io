@@ -5,7 +5,7 @@ title: "Desafio 06: Projetar Autorização para Recursos Azure"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 06: Projetar Autorização para Recursos Azure
+# Desafio 06: projetar autorização para recursos Azure
 
 :::info Tempo Estimado e Custo
 
@@ -24,15 +24,15 @@ O modelo de acesso atual esta quebrado: a maioria dos engenheiros tem Contributo
 
 O CTO determinou um modelo de autorização zero-trust: privilegio mínimo por padrão, elevação just-in-time quando necessário, e nenhum acesso permanente a produção para qualquer engenheiro. Sua tarefa é projetar é implementar parcialmente este modelo.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para autorizar acesso a recursos Azure
 - Recomendar uma solução de gerenciamento de identidade
 - Recomendar uma solução para gerenciamento de conformidade
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design da Hierarquia de Escopo RBAC
+### Parte 1: design da hierarquia de escopo RBAC
 
 1. Projete a hierarquia de escopo RBAC para a Fabrikam:
 
@@ -55,7 +55,7 @@ Management Group (Fabrikam Root)
    - Auditores de segurança (acesso somente leitura em todas as assinaturas)
    - Analistas de custos (acesso somente leitura a dados de faturamento e custos apenas)
 
-### Parte 2: Design de Função Personalizada
+### Parte 2: design de função personalizada
 
 3. Projete uma função RBAC personalizada para engenheiros de equipe de produto que permita:
    - Implantar é gerenciar App Services, Functions e Container Apps
@@ -72,7 +72,7 @@ Management Group (Fabrikam Root)
    - Não pode modificar dados ou excluir recursos
    - Não pode alterar configurações de rede ou segurança
 
-### Parte 3: Attribute-Based Access Control (ABAC)
+### Parte 3: Attribute-Based access control (abac)
 
 5. Projete condições ABAC para acesso a storage accounts:
    - Engenheiros só podem acessar blobs em containers marcados com o nome de sua equipe
@@ -81,7 +81,7 @@ Management Group (Fabrikam Root)
 
 6. Implemente uma condição ABAC usando Azure CLI que restrinja o acesso a blobs com base no nome do container ou blob index tags.
 
-### Parte 4: Design de Acesso Just-in-Time
+### Parte 4: design de acesso Just-in-Time
 
 7. Projete o fluxo de trabalho de acesso just-in-time (JIT) para incidentes de produção:
    - Quem pode solicitar acesso elevado?
@@ -96,7 +96,7 @@ Management Group (Fabrikam Root)
    - Duracao máxima ativa (4 horas para incidentes)
    - Configuração de alertas quando qualquer função de produção e ativada
 
-### Parte 5: Deny Assignments e Resource Locks
+### Parte 5: deny assignments e Resource locks
 
 9. Projete deny assignments e resource locks para recursos críticos:
    - Impedir qualquer usuário (incluindo Owners) de excluir o SQL Server de produção
@@ -105,13 +105,13 @@ Management Group (Fabrikam Root)
 
 10. Implemente resource locks é um deny assignment (ou documente por que deny assignments sao limitados a aplicações gerenciadas).
 
-### Parte 6: Implementar Prova de Conceito
+### Parte 6: implementar prova de conceito
 
 11. Crie uma definicao de função RBAC personalizada para a função "Product Team Engineer".
 
 12. Crie uma atribuicao de função no escopo de resource group para um usuário de teste.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-06"
@@ -201,8 +201,8 @@ az role assignment create \
 O Azure ABAC (Attribute-Based Access Control) adiciona condições a atribuicoes de função. As condições usam atributos `@Resource` e `@Principal`:
 
 ```bash
-# Assign Storage Blob Data Reader with ABAC condition
-# Condition: User can only read blobs in containers matching their team tag
+# Assign Storage Blob Data reader with ABAC condition
+# Condition: user can only read blobs in containers matching their team tag
 az role assignment create \
   --assignee-object-id "<user-or-group-id>" \
   --role "Storage Blob Data Reader" \
@@ -226,7 +226,7 @@ As condições suportam: `StringEquals`, `StringNotEquals`, `StringLike`, `Strin
 Resource locks impedem exclusão ou modificacao acidental:
 
 ```bash
-# Create a CanNotDelete lock on production SQL Server
+# Create a CanNotDelete lock on production SQL server
 az lock create \
   --name "protect-prod-sql" \
   --resource-group rg-team-alpha-data-prod \
@@ -278,7 +278,7 @@ Configure no Portal: Entra ID > Privileged Identity Management > Azure Resources
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure RBAC overview](https://learn.microsoft.com/en-us/azure/role-based-access-control/overview)
 - [Custom roles for Azure resources](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles)
@@ -288,7 +288,7 @@ Configure no Portal: Entra ID > Privileged Identity Management > Azure Resources
 - [Deny assignments in Azure](https://learn.microsoft.com/en-us/azure/role-based-access-control/deny-assignments)
 - [Best practices for Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/best-practices)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um desenvolvedor junior precisa implantar App Services no resource group de desenvolvimento de sua equipe, mas não deve poder excluir o resource group ou modificar recursos de rede. A função Contributor integrada e muito ampla. O que você deve recomendar?</summary>

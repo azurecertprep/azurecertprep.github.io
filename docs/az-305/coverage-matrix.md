@@ -3,7 +3,7 @@ sidebar_position: 99
 title: "Coverage Matrix"
 ---
 
-# Coverage Matrix
+# Coverage matrix
 
 Every skill from the [official AZ-305 study guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-305) (as of April 17, 2026) mapped to the challenge that covers it.
 
@@ -137,7 +137,7 @@ Every skill from the [official AZ-305 study guide](https://learn.microsoft.com/e
 
 ---
 
-## Coverage Summary
+## Coverage summary
 
 | Domain | Skills | Challenges | Coverage |
 |--------|--------|-----------|----------|

@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 04: Storage Accounts & Acesso
+# Desafio 04: Storage accounts & acesso
 
 :::info Tempo e Custo Estimados
 
-**60-75 min** | **Custo estimado**: ~$0.50 | **Peso no Exame: 15-20%**
+**60-75 min** | **Custo estimado**: ~$0.50 | **Peso no Exame: 15-20%
+**
 
 :::
 
@@ -22,7 +23,7 @@ A equipe de aplicações da Contoso precisa de uma solução de armazenamento ce
 
 Storage accounts são um dos tópicos mais testados no exame AZ-104. Você precisará conhecer cada método de acesso, cada opção de redundância e cada controle de segurança por completo.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar e configurar storage accounts
 - Configurar redundância do Azure Storage
@@ -34,7 +35,7 @@ Storage accounts são um dos tópicos mais testados no exame AZ-104. Você preci
 - Fazer upload e gerenciar dados com AzCopy
 - Configurar o Azure Storage Explorer
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -50,7 +51,7 @@ Storage accounts são um dos tópicos mais testados no exame AZ-104. Você preci
 
 ## Descrição
 
-### Parte 1: Criar uma Storage Account
+### Parte 1: criar uma Storage account
 
 1. Criar um grupo de recursos e uma storage account:
 
@@ -80,7 +81,7 @@ az storage account show --name $STORAGE_NAME --resource-group $RG \
   --query "{Name:name, SKU:sku.name, Kind:kind, AccessTier:accessTier, TLS:minimumTlsVersion}" -o table
 ```
 
-### Parte 2: Configurar Redundância
+### Parte 2: configurar redundância
 
 3. Visualizar a configuração atual de redundância (deve ser LRS)
 4. Alterar a redundância de LRS para GRS:
@@ -91,7 +92,7 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --sku Standa
 
 5. Verificar a alteração e entender o que cada opção de redundância oferece
 
-### Parte 3: Chaves de Acesso & Tokens SAS
+### Parte 3: chaves de acesso & tokens SAS
 
 6. Recuperar as chaves de acesso da storage account:
 
@@ -146,7 +147,7 @@ az storage container generate-sas \
   -o tsv
 ```
 
-### Parte 4: Políticas de Acesso Armazenadas
+### Parte 4: políticas de acesso armazenadas
 
 10. Criar uma política de acesso armazenada no container:
 
@@ -186,7 +187,7 @@ az storage container generate-sas \
 # Get your public IP
 MY_IP=$(curl -s https://api.ipify.org)
 
-# Set default action to Deny
+# Set default action to deny
 az storage account update --name $STORAGE_NAME --resource-group $RG --default-action Deny
 
 # Add your IP to the allow list
@@ -206,7 +207,7 @@ az storage account network-rule add --account-name $STORAGE_NAME --resource-grou
 
 13. Verificar que você ainda pode acessar a storage account do seu IP
 
-### Parte 6: Rotacionar Chaves de Acesso
+### Parte 6: rotacionar chaves de acesso
 
 14. Regenerar uma das chaves de acesso da storage account:
 
@@ -239,7 +240,7 @@ SAS_TOKEN=$(az storage account generate-sas \
 azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcontainer?$SAS_TOKEN" --recursive
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-04"
@@ -304,14 +305,14 @@ STORAGE_NAME="stchallenge$(date +%s | tail -c 8)"
 Se você configurar o firewall e se bloquear:
 
 ```bash
-# Option 1: Allow your current IP
+# Option 1: allow your current IP
 MY_IP=$(curl -s https://api.ipify.org)
 az storage account network-rule add --account-name $STORAGE_NAME --resource-group $RG --ip-address $MY_IP
 
-# Option 2: Reset to allow all networks (temporary!)
+# Option 2: reset to allow all networks (temporary!)
 az storage account update --name $STORAGE_NAME --resource-group $RG --default-action Allow
 
-# Option 3: Use Azure Cloud Shell (always allowed via "trusted services")
+# Option 3: use Azure Cloud Shell (always allowed via "trusted services")
 ```
 
 :::info Informação
@@ -328,13 +329,13 @@ Azure Cloud Shell e serviços confiáveis do Azure sempre podem acessar storage 
 # Login to AzCopy with Entra ID (no SAS needed)
 azcopy login
 
-# Upload using Entra ID auth (requires Storage Blob Data Contributor role)
+# Upload using Entra ID auth (requires Storage Blob Data contributor role)
 azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcontainer" --recursive
 ```
 
 </details>
 
-## Recursos de Aprendizado
+## Recursos de aprendizado
 
 - [Visão geral de storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview)
 - [Redundância do Azure Storage](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
@@ -343,7 +344,7 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 - [Começar com AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Gerenciar chaves de storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage)
 
-## Quebre & Conserte
+## Quebre & conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -355,7 +356,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 4. **Redundância errada**: Crie uma storage account com LRS, depois tente alterá-la diretamente para RA-GZRS. Funciona? (Algumas mudanças de redundância requerem etapas intermediárias ou migração de dados.)
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 <details>
 <summary>1. Quais são os três tipos de tokens SAS e quando você usaria cada um?</summary>

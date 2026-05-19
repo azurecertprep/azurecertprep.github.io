@@ -5,7 +5,7 @@ title: "Desafio 39: Projetar uma Arquitetura Orientada a Eventos"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 39: Projetar uma Arquitetura Orientada a Eventos
+# Desafio 39: projetar uma arquitetura orientada a eventos
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Cenário 1 (Alertas em tempo real): Quando um sensor de temperatura excede 35C o
 
 O desafio é projetar uma arquitetura orientada a eventos que roteie eventos para o pipeline de processamento apropriado com base nos requisitos de latência e durabilidade de cada cenário.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma arquitetura orientada a eventos
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao do Serviço de Ingestao de Eventos
+### Parte 1: selecao do serviço de ingestao de eventos
 
 1. Compare os serviços de ingestao de eventos do Azure para 2.000-5.000 eventos/segundo:
 
@@ -51,7 +51,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
    - Quantas throughput units (Standard) ou processing units (Premium)?
    - Qual é a estratégia de partition key? (Building ID? Tipo de sensor? Andar?)
 
-### Parte 2: Processamento de Alertas em Tempo Real (Cenário 1)
+### Parte 2: processamento de alertas em tempo real (Cenário 1)
 
 4. Projete o pipeline de alertas em tempo real (requisito de latência de 2 segundos):
    - Fonte de eventos: Event Hubs (ou rota do IoT Hub)
@@ -65,7 +65,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 
 6. Para o SLA de 2 segundos, qual opcao de processamento fornece a menor latência? Projete a lógica de regra de alerta (ex.: temperatura > 35C por 3 leituras consecutivas em 30 segundos, para evitar falsos positivos por ruido do sensor).
 
-### Parte 3: Distribuição de Eventos com Event Grid (Cenário 4)
+### Parte 3: distribuição de eventos com event Grid (Cenário 4)
 
 7. Projete o sistema de resposta automatizada usando Event Grid:
    - Defina eventos customizados para condições do edifício (OccupancyZero, EnergyAnomaly, TemperatureExceedance)
@@ -85,7 +85,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
    - Como o Event Grid garante a entrega para todos os subscribers?
    - O que acontece se um subscriber estiver temporariamente indisponivel?
 
-### Parte 4: Arquivo de Eventos e Armazenamento de Longo Prazo (Cenário 3)
+### Parte 4: arquivo de eventos e armazenamento de longo prazo (Cenário 3)
 
 10. Projete a estratégia de arquivamento de eventos para retencao de 7 anos:
     - **Event Hubs Capture**: Escreve automaticamente eventos no Azure Storage ou Data Lake em formato Avro
@@ -103,7 +103,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
     - Datasets curados em Parquet (agregados, otimizados para analitica)
     - Como a equipe de ML consulta 7 anos de dados de sensores de forma eficiente?
 
-### Parte 5: Estratégia de Consumer Groups
+### Parte 5: estratégia de consumer Groups
 
 13. Projete a alocacao de consumer groups para Event Hubs:
     - Consumer Group 1: Processador de alertas em tempo real (Stream Analytics)
@@ -113,7 +113,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 
 14. Explique por que cada consumidor precisa de seu próprio consumer group e o que acontece se duas aplicações diferentes compartilharem um consumer group.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-39"
@@ -198,7 +198,7 @@ A política de gerenciamento de ciclo de vida automatiza as transicoes entre cam
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Event Hubs overview](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about)
 - [Azure Event Grid overview](https://learn.microsoft.com/en-us/azure/event-grid/overview)
@@ -206,7 +206,7 @@ A política de gerenciamento de ciclo de vida automatiza as transicoes entre cam
 - [IoT Hub message routing](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c)
 - [Choose between Azure messaging services](https://learn.microsoft.com/en-us/azure/service-bus-messaging/compare-messaging-services)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Duas aplicações leem do mesmo Event Hub usando o mesmo consumer group. Qual problema ocorre?</summary>
@@ -236,7 +236,7 @@ A política de gerenciamento de ciclo de vida automatiza as transicoes entre cam
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

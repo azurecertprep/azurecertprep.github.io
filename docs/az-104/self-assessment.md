@@ -5,15 +5,15 @@ title: "Am I Ready?"
 
 import SelfAssessment from '@site/src/components/SelfAssessment';
 
-# Am I Ready for the AZ-104?
+# Am i ready for the AZ-104?
 
 Before diving into the challenges, take a few minutes to assess your readiness. The AZ-104 assumes you already have foundational knowledge of IT concepts and some Azure experience.
 
-## Self-Assessment Checklist
+## Self-Assessment checklist
 
 Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New to Me
 
-### General IT Knowledge
+### General IT knowledge
 
 <SelfAssessment
   storageKey="general-it"
@@ -27,7 +27,7 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-### Azure-Specific Knowledge
+### Azure-Specific knowledge
 
 <SelfAssessment
   storageKey="azure-specific"
@@ -41,15 +41,15 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-## How to Interpret Your Results
+## How to interpret your results
 
-### Mostly ✅: You're ready!
+### Mostly ✅: you're ready!
 Jump straight to [Lab Setup](/docs/az-104/lab-setup) and start Challenge 01.
 
-### Mix of ✅ and ⚠️: You're almost ready
+### Mix of ✅ and ⚠️: you're almost ready
 Start the challenges but give yourself extra time on unfamiliar topics. Use the **Learning Resources** section in each challenge to fill gaps.
 
-### Several ❌: Start with fundamentals first
+### Several ❌: start with fundamentals first
 Consider these resources before starting:
 - [AZ-900: Azure Fundamentals](https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/) | Free learning path covering all the basics
 - [Azure Portal Tour](https://learn.microsoft.com/en-us/azure/azure-portal/azure-portal-overview) | Get comfortable navigating the Portal
@@ -60,7 +60,7 @@ Consider these resources before starting:
 That's okay! The AZ-900 (Azure Fundamentals) certification is an excellent starting point. It's a lighter exam that builds the foundation you need for AZ-104. Many people take AZ-900 first, then AZ-104.
 
 :::
-## Experience Expectations
+## Experience expectations
 
 According to Microsoft, AZ-104 candidates should have:
 

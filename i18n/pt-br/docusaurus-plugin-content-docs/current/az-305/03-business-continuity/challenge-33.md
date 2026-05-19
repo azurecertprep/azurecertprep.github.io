@@ -5,7 +5,7 @@ title: "Desafio 33: Projetar uma Aplicacao Multi-Região Altamente Disponível"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 33: Projetar uma Aplicacao Multi-Região Altamente Disponível
+# Desafio 33: projetar uma aplicacao Multi-Região altamente disponível
 
 :::info Tempo Estimado e Custo
 
@@ -21,16 +21,16 @@ A equipe executiva determinou um SLA composto de 99,99% com menos de 50ms de tem
 
 Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de alta disponibilidade, backup e disaster recovery dos Challenges 25-32 em uma arquitetura multi-região completa e pronta para produção. Você deve calcular o SLA composto matematicamente, provar que atende a meta de 99,99% é demonstrar que cada componente tem redundância apropriada.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de alta disponibilidade para computacao
 - Recomendar uma solução de alta disponibilidade para dados relacionais
 - Recomendar uma solução de alta disponibilidade para dados semi-estruturados e não estruturados
 - Recomendar uma solução de recuperação para cargas de trabalho Azure e hibridas que atenda aos objetivos de recuperação
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Roteamento Global de Trafego e Camada de Edge
+### Parte 1: roteamento global de trafego e camada de edge
 
 1. Projete o ponto de entrada global usando Azure Front Door:
    - Configure 3 origin groups (East US 2, North Europe, Japan East)
@@ -50,7 +50,7 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
    - Impacto ao usuário: requisicoes em andamento para região falhada falham, próxima requisicao vai para região saudavel
    - Interrupcao total visivel ao usuário: aproximadamente 30-60 segundos
 
-### Parte 2: Camada de Computação (Por Região)
+### Parte 2: camada de computação (Por região)
 
 4. Projete a arquitetura de computacao dentro de cada região:
    - Camada Web/API: Azure Kubernetes Service (AKS) ou App Service (zone-redundant)
@@ -68,7 +68,7 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
    - Folga do autoscaler: cada região deve poder escalar para 150% da capacidade normal em 2 minutos
    - Projete os gatilhos de autoscale e estratégia de pré-aquecimento
 
-### Parte 3: Camada de Dados (Multi-Region)
+### Parte 3: camada de dados (Multi-Region)
 
 7. Projete a arquitetura de dados para cada tipo de dado:
 
@@ -98,7 +98,7 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
     - Azure CDN com múltiplos origin groups para failover
     - Cache warming: pré-popular cache CDN para novos lancamentos antes do lancamento
 
-### Parte 4: Calculo do SLA Composto
+### Parte 4: calculo do SLA composto
 
 11. Calcule o SLA composto para a arquitetura completa:
 
@@ -126,7 +126,7 @@ SLA composto por região = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
     - O padrão multi-região active-active compensa SLAs por-região mais baixos
     - Documente premissas: Front Door deve corretamente detectar e rotear ao redor de falhas regionais
 
-### Parte 5: Testes de Falha e Operações
+### Parte 5: testes de falha e operações
 
 14. Projete uma abordagem de chaos engineering para validar a arquitetura:
     - **Teste de falha de zona**: Simule falha de AZ, verifique que trafego redistribui dentro da zona
@@ -146,7 +146,7 @@ SLA composto por região = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
     - Alertas: alertar quando qualquer região cair abaixo do limite saudavel
     - Rastreamento de SLA: calculo mensal de uptime com relatórios automatizados
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-33"
@@ -274,7 +274,7 @@ Para o requisito de < 50ms ser atendido globalmente, o CDN não é opcional - e 
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Front Door routing architecture](https://learn.microsoft.com/en-us/azure/frontdoor/front-door-routing-architecture)
 - [Multi-region web application - Azure Architecture Center](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/app-service-web-app/multi-region)
@@ -283,7 +283,7 @@ Para o requisito de < 50ms ser atendido globalmente, o CDN não é opcional - e 
 - [Composite SLA calculation](https://learn.microsoft.com/en-us/azure/architecture/framework/resiliency/business-metrics#composite-slas)
 - [AKS availability zones](https://learn.microsoft.com/en-us/azure/aks/availability-zones)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. O SLA composto por região da StreamFlix e 99,914%. Como implantar active-active em 3 regiões alcanca 99,99%+ geral, e qual componente se torna o teto efetivo do SLA?</summary>
@@ -313,7 +313,7 @@ Para o requisito de < 50ms ser atendido globalmente, o CDN não é opcional - e 
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

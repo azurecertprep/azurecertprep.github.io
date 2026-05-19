@@ -5,7 +5,7 @@ title: "Challenge 07 | ARM Templates & Bicep"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 07: ARM Templates & Bicep
+# Desafio 07: ARM templates & Bicep
 
 :::info Informação
 
@@ -18,7 +18,7 @@ O CTO da Contoso se cansou de deploys do tipo "funciona no meu portal". Depois q
 
 Sua tarefa é pegar o primeiro recurso crítico da Contoso | uma conta de armazenamento | e defini-lo como um ARM template, depois modernizá-lo para Bicep.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -30,7 +30,7 @@ Sua tarefa é pegar o primeiro recurso crítico da Contoso | uma conta de armaze
 | Exportar uma implantação como ARM template | Médio |
 | Converter um ARM template para Bicep | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | Tradicional | Equivalente no Azure |
 |-------------|---------------------|
@@ -43,7 +43,7 @@ Sua tarefa é pegar o primeiro recurso crítico da Contoso | uma conta de armaze
 
 ## Tarefas
 
-### Tarefa 1: Examinar um ARM Template
+### Tarefa 1: examinar um ARM template
 
 Estude este ARM template que cria uma conta de armazenamento. Identifique as cinco seções principais: `$schema`, `parameters`, `variables`, `resources` e `outputs`.
 
@@ -94,7 +94,7 @@ Salve como `storage.json`:
 }
 ```
 
-### Tarefa 2: Modificar o ARM Template
+### Tarefa 2: modificar o ARM template
 
 Adicione um parâmetro de tag `environment` ao template para que cada recurso implantado receba uma tag:
 
@@ -126,7 +126,7 @@ Em seguida, adicione uma propriedade `tags` ao recurso:
 ```
 </details>
 
-### Tarefa 3: Implantar o ARM Template
+### Tarefa 3: implantar o ARM template
 
 ```bash
 # Criar um grupo de recursos para este lab
@@ -146,7 +146,7 @@ az deployment group show \
   --query "properties.outputs"
 ```
 
-### Tarefa 4: Exportar a Implantação
+### Tarefa 4: exportar a implantação
 
 ```bash
 # Exportar todo o grupo de recursos como um ARM template
@@ -156,7 +156,7 @@ az group export --name rg-iac-lab --output json > exported-template.json
 cat exported-template.json | python -m json.tool | head -50
 ```
 
-### Tarefa 5: Converter ARM para Bicep
+### Tarefa 5: converter ARM para Bicep
 
 ```bash
 # Instalar/atualizar o Bicep CLI
@@ -170,7 +170,7 @@ az bicep decompile --file storage.json
 cat storage.bicep
 ```
 
-### Tarefa 6: Modificar o Arquivo Bicep
+### Tarefa 6: modificar o arquivo Bicep
 
 Adicione um contêiner de blob ao arquivo Bicep:
 
@@ -222,7 +222,7 @@ output storageName string = storageAccount.name
 ```
 </details>
 
-### Tarefa 7: Implantar o Arquivo Bicep
+### Tarefa 7: implantar o arquivo Bicep
 
 ```bash
 # Implantar o arquivo Bicep
@@ -241,7 +241,7 @@ STORAGE_NAME=$(az deployment group show \
 az storage container list --account-name $STORAGE_NAME --auth-mode login -o table
 ```
 
-### Tarefa 8: Visualizar Alterações com What-If
+### Tarefa 8: visualizar alterações com What-If
 
 ```bash
 # Executar um deploy what-if para visualizar alterações sem implantar
@@ -251,7 +251,7 @@ az deployment group what-if \
   --parameters storagePrefix=contoso environment=staging
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-07"
@@ -263,9 +263,9 @@ az deployment group what-if \
     "What-if mostra as alterações esperadas sem implantar"
   ]}
 />
-## Cenários Quebre & Conserte
+## Cenários quebre & conserte
 
-### Cenário A: Erro de Sintaxe
+### Cenário a: erro de sintaxe
 Implante este template quebrado e corrija o erro:
 ```bash
 # Introduza um erro de digitação no template (ex: "Standar_LRS" em vez de "Standard_LRS")
@@ -276,28 +276,28 @@ az deployment group create \
   --parameters storagePrefix=contoso
 ```
 
-### Cenário B: Parâmetro Obrigatório Ausente
+### Cenário b: parâmetro obrigatório ausente
 ```bash
 # Implante sem o parâmetro obrigatório storagePrefix
 az deployment group create \
   --resource-group rg-iac-lab \
   --template-file storage.json \
   --name deploy-broken
-# Qual erro você recebe? Como o Azure valida os parâmetros?
+# Qual erro você recebe? como o Azure valida os parâmetros?
 ```
 
-### Cenário C: Implantação em Modo Completo
+### Cenário c: implantação em modo completo
 ```bash
-# ATENÇÃO: O modo Completo exclui recursos que não estão no template!
+# ATENÇÃO: o modo completo exclui recursos que não estão no template!
 az deployment group what-if \
   --resource-group rg-iac-lab \
   --template-file storage.bicep \
   --parameters storagePrefix=contoso environment=dev \
   --mode Complete
-# Compare a saída do what-if entre os modos Incremental e Completo
+# Compare a saída do what-if entre os modos incremental e completo
 ```
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 **1. Qual é a diferença principal entre ARM templates e Bicep?**
 

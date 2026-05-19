@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 02: RBAC & Access Management
+# Challenge 02: RBAC & access Management
 
 :::info Estimated Time and Cost
 
-**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%**
+**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%
+**
 
 :::
 
@@ -22,7 +23,7 @@ Now that Contoso Ltd. has users and groups in Entra ID, you need to control **wh
 
 RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage account, deleting a resource group | is controlled by roles assigned to identities at specific scopes. Get this wrong, and you'll either block your team or expose your environment.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Manage built-in Azure roles
 - Assign roles at different scopes (management group, subscription, resource group, resource)
@@ -30,7 +31,7 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
 - Create and assign custom roles
 - Manage Microsoft Entra role assignments
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -45,7 +46,7 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
 
 ## Description
 
-### Part 1: Explore Built-in Roles
+### Part 1: explore built-in roles
 
 1. List the 4 fundamental built-in roles and understand what each one allows:
    - **Owner** | Full access to all resources + can assign roles to others
@@ -58,7 +59,7 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
    - Storage Blob Data Reader
    - Network Contributor
 
-### Part 2: Assign Roles at Different Scopes
+### Part 2: assign roles at different scopes
 
 :::warning
 
@@ -75,13 +76,13 @@ az group create --name rg-rbac-challenge --location eastus
 5. Assign the **Contributor** role to the `IT-Team` group at the **resource group** scope (`rg-rbac-challenge`)
 6. Assign the **Virtual Machine Contributor** role to Bob at the **resource group** scope
 
-### Part 3: Verify & Interpret Access
+### Part 3: verify & interpret access
 
 7. List all role assignments for Alice | she should have Reader at subscription level and (inherited via IT-Team) Contributor at resource group level
 8. Check the effective access for Bob on the resource group
 9. List all role assignments at the resource group scope
 
-### Part 4: Create a Custom Role
+### Part 4: create a custom role
 
 10. Create a custom role called `VM-Reader` with the following permissions:
     - **Allowed actions**: `Microsoft.Compute/virtualMachines/read`, `Microsoft.Compute/virtualMachines/instanceView/read`, `Microsoft.Network/networkInterfaces/read`
@@ -90,12 +91,12 @@ az group create --name rg-rbac-challenge --location eastus
 
 11. Assign the `VM-Reader` custom role to Carol at the resource group scope
 
-### Part 5: Audit Access
+### Part 5: audit access
 
 12. Generate a report of all role assignments in your subscription
 13. Find all users with **Owner** role at any scope
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-02"
@@ -136,7 +137,7 @@ Get-AzRoleDefinition | Where-Object {
   $_.Name -in @('Owner','Contributor','Reader','User Access Administrator')
 } | Select-Object Name, Description | Format-Table
 
-# See details for Contributor
+# See details for contributor
 Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 ```
 
@@ -160,13 +161,13 @@ Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 ALICE_ID=$(az ad user show --id "alice@YOUR_TENANT.onmicrosoft.com" --query id -o tsv)
 
-# Assign Reader to Alice at subscription scope
+# Assign reader to alice at subscription scope
 az role assignment create \
   --assignee $ALICE_ID \
   --role "Reader" \
   --scope "/subscriptions/$SUBSCRIPTION_ID"
 
-# Assign Contributor to IT-Team at resource group scope
+# Assign contributor to IT-Team at resource group scope
 IT_GROUP_ID=$(az ad group show --group "IT-Team" --query id -o tsv)
 az role assignment create \
   --assignee $IT_GROUP_ID \
@@ -224,7 +225,7 @@ az role definition create --role-definition vm-reader-role.json
 <summary>Hint 5: Finding all Owners in the subscription</summary>
 
 ```bash
-# Find all Owner assignments
+# Find all owner assignments
 az role assignment list --all --role "Owner" -o table
 
 # More detailed output
@@ -234,7 +235,7 @@ az role assignment list --all --role "Owner" \
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure built-in roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
 - [Assign Azure roles using Azure CLI](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli)
@@ -242,7 +243,7 @@ az role assignment list --all --role "Owner" \
 - [Understand role definitions](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
 - [Understand scope for Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview)
 
-## Break & Fix
+## Break & fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -257,7 +258,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 4. **Orphaned assignments**: Delete Alice's user account, then list role assignments. You'll see an assignment with an "Unknown" or "Identity not found" principal. How do you clean these up?
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the key difference between Owner and Contributor?</summary>

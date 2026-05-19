@@ -5,7 +5,7 @@ title: "Desafio 45: Projetar Migração de Servidores e Aplicações"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 45: Projetar Migração de Servidores e Aplicações
+# Desafio 45: projetar migração de servidores e aplicações
 
 :::info Tempo Estimado e Custo
 
@@ -25,14 +25,14 @@ Seguindo a estratégia do Cloud Adoption Framework desenvolvida para a Precision
 
 A equipe de migração precisa categorizar cada grupo de workload, selecionar o alvo Azure apropriado (IaaS vs PaaS), recomendar ferramentas de migração específicas é projetar uma estratégia de validação.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Avaliar servidores, dados e aplicações on-premises para migração
 - Recomendar uma solução para migrar workloads para infrastructure as a service (IaaS) e platform as a service (PaaS)
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Análise de Avaliação e Descoberta
+### Parte 1: análise de avaliação e descoberta
 
 1. Revise a saida da avaliação do Azure Migrate e crie uma matriz de categorizacao de workloads com colunas para: nome do workload, plataforma atual, dependências descobertas, status de prontidao Azure (pronto, condicionalmente pronto, não pronto), alvo recomendado e ferramenta de migração.
 2. Para cada grupo de workload, documente os criterios de avaliação que determinam o alvo IaaS vs. PaaS:
@@ -41,7 +41,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
    - Existem dependências bloqueadoras? (versao específica de SO, módulos de kernel, serviços locais)
 3. Identifique os "bloqueadores" para cada workload condicionalmente pronto e documente os passos de remediacao necessários antes da migração (ex: atualizar versao do .NET Framework, remover IPs hard-coded, externalizar estado de sessão).
 
-### Parte 2: Estratégia de Migração IaaS
+### Parte 2: estratégia de migração IaaS
 
 4. Projete a abordagem de migração IaaS para workloads que não podem mover para PaaS:
    - Controladores de dominio AD: migrar usando Azure Migrate Server Migration com Entra Connect pré-configurado
@@ -53,7 +53,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
    - Documente os requisitos de largura de banda de replicação para migrar 200 servidores dentro da timeline
 6. Projete a estratégia de dimensionamento de VM: compare dimensionamento "as-on-premises" (corresponder specs atuais) vs. dimensionamento "baseado em performance" (right-size baseado em dados reais de utilizacao da avaliação de 30 dias).
 
-### Parte 3: Estratégia de Migração PaaS
+### Parte 3: estratégia de migração PaaS
 
 7. Projete o caminho de migração PaaS para aplicações web elegiveis:
    - Apps .NET Framework IIS: avaliar compatibilidade com Azure App Service (Windows) usando App Service Migration Assistant
@@ -66,7 +66,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
    - Push de imagens de container para Azure Container Registry
    - Implantar em Container Apps com configuração de ambiente mapeada do Docker Compose on-premises
 
-### Parte 4: Teste e Validação
+### Parte 4: teste e validação
 
 10. Projete um checklist de teste pré-migração para cada tipo de workload:
     - Validação de conectividade de rede (resolução DNS, acessibilidade de portas, latência para dependências)
@@ -76,7 +76,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
 11. Projete uma estratégia de execução paralela para workloads críticos onde tanto on-premises quanto Azure funcionam simultaneamente, com trafego gradualmente desviado para Azure usando Azure Traffic Manager ou cutover baseado em DNS.
 12. Defina criterios e procedimentos de rollback: em que ponto uma migração e considerada falha, e como você reverte (reabilitar VM on-premises, atualizar DNS, restaurar da replicação)?
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-45"
@@ -127,7 +127,7 @@ Azure File Sync permite que servidores de arquivo Windows on-premises permanecam
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Migrate overview](https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview)
 - [Azure Migrate server assessment](https://learn.microsoft.com/en-us/azure/migrate/concepts-assessment-calculation)
@@ -136,7 +136,7 @@ Azure File Sync permite que servidores de arquivo Windows on-premises permanecam
 - [Extended Security Updates for Windows Server](https://learn.microsoft.com/en-us/windows-server/get-started/extended-security-updates-overview)
 - [Migrate servers to Azure using Azure Migrate](https://learn.microsoft.com/en-us/azure/migrate/tutorial-migrate-vmware)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma aplicação IIS usa Windows Authentication e acessa um compartilhamento de arquivo local em D:\AppData. O App Service Migration Assistant reporta como "condicionalmente pronto." Quais sao os fatores bloqueadores e opcoes de remediacao?</summary>

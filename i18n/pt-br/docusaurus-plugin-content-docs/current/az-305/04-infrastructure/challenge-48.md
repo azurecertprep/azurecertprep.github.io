@@ -5,7 +5,7 @@ title: "Desafio 48: Projetar Conectividade de Rede"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 48: Projetar Conectividade de Rede
+# Desafio 48: projetar conectividade de rede
 
 :::info Tempo Estimado e Custo
 
@@ -21,15 +21,15 @@ Os requisitos de conectividade incluem: conexões site-to-site seguras de ambos 
 
 A equipe de rede deve projetar uma solução que equilibre custo, performance e complexidade operacional enquanto atende requisitos regulatorios rigorosos para residencia de dados e criptografia de rede.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de conectividade que conecte recursos Azure a internet
 - Recomendar uma solução de conectividade que conecte recursos Azure a redes locais
 - Recomendar uma solução para otimizar a performance de rede
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design de Conectividade Hibrida
+### Parte 1: design de conectividade hibrida
 
 1. Compare as opcoes de conectividade para os 2 data centers com 3 regiões Azure:
    - VPN Gateway (S2S VPN): custo por gateway, limites de largura de banda por SKU, overhead de criptografia
@@ -45,7 +45,7 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
    - Método de autenticação: Entra ID, baseado em certificado, ou RADIUS
    - Consideracoes de split tunneling vs. forced tunneling para trabalhadores remotos
 
-### Parte 2: Topologia de Rede Azure
+### Parte 2: topologia de rede Azure
 
 4. Projete a arquitetura de VNet Azure em 3 regiões:
    - Topologia hub-spoke em cada região com VNets hub em peering
@@ -60,7 +60,7 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
    - Quais subnets precisam de NAT Gateway (subnets de aplicação, não subnets de gateway)
    - Requisitos de IP de saida estatico para allowlisting de APIs de terceiros
 
-### Parte 3: Conectividade Privada para Serviços PaaS
+### Parte 3: conectividade privada para serviços PaaS
 
 7. Projete a estratégia de Private Endpoint para serviços Azure PaaS:
    - Azure SQL Database, Storage Accounts, Key Vault: private endpoint na VNet hub de cada região
@@ -73,7 +73,7 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
    - Fluxo de resolução DNS do ambiente local para private endpoint Azure
 9. Compare Private Endpoint vs. Service Endpoint vs. acesso público com regras de firewall. Documente quando cada abordagem e apropriada e as implicacoes de segurança de cada uma.
 
-### Parte 4: DNS e Otimização de Roteamento
+### Parte 4: DNS e otimização de roteamento
 
 10. Projete a arquitetura DNS de ponta a ponta:
     - Servidores DNS locais (Active Directory Integrated DNS)
@@ -91,7 +91,7 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
     - VPN hub com múltiplas conexões S2S
     - Compare custo e overhead de gerenciamento
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-48"
@@ -142,7 +142,7 @@ O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de enca
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure ExpressRoute overview](https://learn.microsoft.com/en-us/azure/expressroute/expressroute-introduction)
 - [Azure Virtual WAN overview](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
@@ -151,7 +151,7 @@ O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de enca
 - [VPN Gateway design](https://learn.microsoft.com/en-us/azure/vpn-gateway/design)
 - [Hub-spoke network topology](https://learn.microsoft.com/en-us/azure/architecture/networking/architecture/hub-spoke)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma empresa tem circuitos ExpressRoute em Nova York (conectado ao East US) e Londres (conectado ao UK South). Sua workload Azure no Southeast Asia precisa de conectividade privada para ambos os data centers. O que eles precisam?</summary>
@@ -178,7 +178,7 @@ O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de enca
 
 ```bash
 # Delete all resources created in this challenge
-# WARNING: ExpressRoute circuits and VPN Gateways can be expensive - verify deletion
+# WARNING: ExpressRoute circuits and VPN gateways can be expensive - verify deletion
 az group delete --name rg-az305-challenge48 --yes --no-wait
 ```
 

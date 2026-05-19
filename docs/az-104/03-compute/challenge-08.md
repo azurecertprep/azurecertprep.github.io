@@ -5,7 +5,7 @@ title: "Challenge 08: Virtual Machines & Scale Sets"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 08: Virtual Machines & Scale Sets
+# Challenge 08: Virtual machines & scale sets
 
 :::info Estimated Time and Cost
 
@@ -21,7 +21,7 @@ Virtual machines incur charges while running. **Deallocate all VMs** as soon as 
 
 Contoso needs to deploy a web server fleet for their customer-facing application. Start with a single Linux VM to validate the configuration, then scale out to a VM Scale Set (VMSS) for the production workload. The infrastructure must handle availability zone failures and scale automatically during traffic spikes.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -33,7 +33,7 @@ Contoso needs to deploy a web server fleet for their customer-facing application
 | Deploy and configure VM Scale Sets | High |
 | Configure VMSS autoscale | High |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | Traditional | Azure Equivalent |
 |-------------|-----------------|
@@ -46,13 +46,13 @@ Contoso needs to deploy a web server fleet for their customer-facing application
 
 ## Tasks
 
-### Task 1: Create a Linux VM with SSH Keys
+### Task 1: create a Linux VM with SSH keys
 
 ```bash
 # Create a resource group
 az group create --name rg-vm-lab --location eastus
 
-# Create an Ubuntu VM with SSH key authentication
+# Create an ubuntu VM with SSH key authentication
 az vm create \
   --resource-group rg-vm-lab \
   --name vm-web-01 \
@@ -72,7 +72,7 @@ VM_IP=$(az vm show -g rg-vm-lab -n vm-web-01 -d --query publicIps -o tsv)
 echo "SSH with: ssh azureuser@$VM_IP"
 ```
 
-### Task 2: Attach and Mount a Data Disk
+### Task 2: attach and mount a Data disk
 
 ```bash
 # Attach a 128 GB data disk
@@ -113,7 +113,7 @@ df -h /data
 ```
 </details>
 
-### Task 3: Resize the VM
+### Task 3: resize the VM
 
 ```bash
 # List available sizes in the VM's location
@@ -130,7 +130,7 @@ az vm show -g rg-vm-lab -n vm-web-01 \
   --query "hardwareProfile.vmSize" -o tsv
 ```
 
-### Task 4: Move a VM to Another Resource Group
+### Task 4: move a VM to another Resource Group
 
 ```bash
 # Create a destination resource group
@@ -139,12 +139,12 @@ az group create --name rg-vm-prod --location eastus
 # Get the VM's resource ID
 VM_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query id -o tsv)
 
-# Move the VM and all dependent resources (NIC, disk, public IP, NSG)
+# Move the VM and all dependent resources (nic, disk, public IP, nsg)
 az resource move \
   --destination-group rg-vm-prod \
   --ids $VM_ID
 
-# NOTE: Moving VMs also requires moving dependent resources.
+# NOTE: moving VMs also requires moving dependent resources.
 # List all resources to get their IDs:
 az resource list -g rg-vm-lab --query "[].id" -o tsv
 ```
@@ -159,7 +159,7 @@ az resource move --destination-group rg-vm-prod --ids $RESOURCE_IDS
 ```
 </details>
 
-### Task 5: Create an Availability Set and Deploy a VM
+### Task 5: create an availability set and deploy a VM
 
 ```bash
 # Create an availability set
@@ -181,10 +181,10 @@ az vm create \
   --no-wait
 ```
 
-### Task 6: Create a VMSS with Autoscale
+### Task 6: create a VMSS with autoscale
 
 ```bash
-# Create a VM Scale Set with 2 instances
+# Create a VM scale set with 2 instances
 az vmss create \
   --resource-group rg-vm-lab \
   --name vmss-web \
@@ -224,7 +224,7 @@ az monitor autoscale rule create \
   --scale in 1
 ```
 
-### Task 7: Test Autoscale with Load
+### Task 7: test autoscale with Load
 
 ```bash
 # Get the public IP of the load balancer
@@ -245,7 +245,7 @@ az monitor autoscale show -g rg-vm-lab -n autoscale-vmss-web \
 az vmss list-instances -g rg-vm-lab -n vmss-web -o table
 ```
 
-### Task 8: Deallocate to Stop Charges
+### Task 8: deallocate to stop charges
 
 ```bash
 # Deallocate the standalone VM (stops billing for compute)
@@ -258,7 +258,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-08"
@@ -273,9 +273,9 @@ az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
     "All VMs deallocated when finished"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: Unavailable VM Size
+### Scenario a: unavailable VM size
 ```bash
 # Try resizing to a size not available in the current zone
 az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
@@ -283,13 +283,13 @@ az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
 # az vm list-vm-resize-options -g rg-vm-lab -n vm-web-avset -o table
 ```
 
-### Scenario B: Move VM with Public IP
+### Scenario b: move VM with public IP
 ```bash
 # Try moving a VM while it has dependent resources in the source group
-# What error do you get? What resources must move together?
+# What error do you get? what resources must move together?
 ```
 
-### Scenario C: VMSS Instance Count Conflict
+### Scenario c: VMSS instance count conflict
 ```bash
 # Try to set autoscale min-count higher than max-count
 az monitor autoscale update \
@@ -298,7 +298,7 @@ az monitor autoscale update \
   --min-count 10 --max-count 5
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What is the difference between stopping and deallocating a VM?**
 

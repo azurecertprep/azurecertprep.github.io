@@ -6,7 +6,7 @@ title: "Challenge 32: Design High Availability for Non-Relational Data"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 32: Design High Availability for Non-Relational Data
+# Challenge 32: design high availability for Non-Relational Data
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ The gaming industry demands extreme availability: if players cannot access their
 
 The primary technical challenge is balancing consistency vs. availability in Cosmos DB. Multi-region writes provide the lowest latency but introduce conflict resolution complexity. The storage layer must provide continuous access to 5 TB of game assets even during regional failures, without requiring players to experience loading delays. BattleForge has a budget of $8,000/month for their data tier (excluding compute).
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a high availability solution for semi-structured and unstructured data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Cosmos DB Multi-Region Write Configuration
+### Part 1: Cosmos DB Multi-Region write configuration
 
 1. Design the Cosmos DB deployment for player profiles:
    - Account deployed to 3 regions: East US, West Europe, Japan East
@@ -73,7 +73,7 @@ az cosmosdb create \
   --default-consistency-level Session
 ```
 
-### Part 2: Cosmos DB Availability and Failover
+### Part 2: Cosmos DB availability and failover
 
 5. Analyze the availability characteristics of the multi-region write configuration:
    - What SLA does multi-region write Cosmos DB provide? (99.999% read and write)
@@ -96,7 +96,7 @@ az cosmosdb create \
    - Option C: Use a different service for match state (e.g., Azure SignalR for real-time sync)
    - Recommend and justify your choice
 
-### Part 3: Storage Account Redundancy for Game Assets
+### Part 3: Storage account redundancy for game assets
 
 8. Design the storage redundancy for 5 TB of game assets across these options:
 
@@ -118,7 +118,7 @@ az cosmosdb create \
 10. Configure the storage account with the selected redundancy and the CDN for global distribution:
 
 ```bash
-# Create storage account with RA-GRS (CDN handles zone-level caching)
+# Create storage account with RA-GRS (cdn handles zone-level caching)
 az storage account create \
   --resource-group rg-battleforge \
   --name stbattleforgeassets \
@@ -128,7 +128,7 @@ az storage account create \
   --access-tier Hot
 ```
 
-### Part 4: CDN and Edge Availability
+### Part 4: CDN and edge availability
 
 11. Design the CDN architecture for game asset delivery:
     - Azure CDN (or Azure Front Door with caching) as the primary delivery mechanism
@@ -147,7 +147,7 @@ az storage account create \
     - CDN: bandwidth costs for global delivery
     - Verify total fits within $8,000/month budget
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-32"
@@ -266,7 +266,7 @@ This is the highest SLA of any Azure database service. Compare:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Distribute data globally with Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally)
 - [Consistency levels in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels)
@@ -275,7 +275,7 @@ This is the highest SLA of any Azure database service. Compare:
 - [Azure CDN overview](https://learn.microsoft.com/en-us/azure/cdn/cdn-overview)
 - [High availability for Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/high-availability)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. BattleForge needs all players in a multiplayer match to see the same game state. Why can't they use Strong consistency with multi-region writes, and what is the recommended alternative?</summary>
@@ -305,7 +305,7 @@ This is the highest SLA of any Azure database service. Compare:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

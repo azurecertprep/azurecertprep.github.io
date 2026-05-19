@@ -5,7 +5,7 @@ title: "Desafio 50: Projetar uma Solução Azure Completa"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 50: Projetar uma Solução Azure Completa
+# Desafio 50: projetar uma solução Azure completa
 
 :::info Tempo Estimado e Custo
 
@@ -32,7 +32,7 @@ Os requisitos de negocio incluem:
 
 Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governança/Monitoramento, Armazenamento de Dados, Continuidade de Negocios e Infraestrutura. Projete a arquitetura completa.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Projetar soluções para logging e monitoramento
 - Projetar soluções de autenticação e autorização
@@ -48,9 +48,9 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
 - Recomendar uma solução para otimizar a segurança de rede
 - Recomendar uma solução de balanceamento de carga e roteamento
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Identidade, Governança e Monitoramento (Dominio 1)
+### Parte 1: identidade, governança e monitoramento (Dominio 1)
 
 1. Projete a arquitetura de identidade:
    - Autenticação de pacientes: Azure AD B2C com autenticação multifator, provedores de identidade social, redefinicao de senha self-service
@@ -68,7 +68,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
    - Dashboards customizados para equipe de operações (tempos de espera de pacientes em tempo real, utilizacao de medicos, saúde da plataforma)
    - Audit logging para conformidade (quem acessou qual prontuario de paciente, quando, de onde)
 
-### Parte 2: Design de Armazenamento de Dados (Dominio 2)
+### Parte 2: design de armazenamento de dados (Dominio 2)
 
 4. Projete a arquitetura de armazenamento de dados para cada tipo de dado:
    - Prontuarios de pacientes (estruturados, relacionais): Azure SQL Database ou Cosmos DB? Considere padrões de consulta, requisitos de consistência e necessidades multi-região
@@ -87,7 +87,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
    - Mascaramento de dados para ambientes de não-produção
    - Políticas de backup e retencao (retencao de 7 anos para prontuarios medicos conforme regulamentacao)
 
-### Parte 3: Design de Continuidade de Negocios (Dominio 3)
+### Parte 3: design de continuidade de negocios (Dominio 3)
 
 7. Projete a arquitetura de alta disponibilidade para SLA de 99,99%:
    - Calcule o SLA composto entre todos os serviços no caminho crítico
@@ -104,7 +104,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
    - Blob Storage: soft delete, versionamento, políticas de imutabilidade para conformidade
    - Documente RPO/RTO para sistemas não críticos (analytics: RPO 1 hora, RTO 4 horas)
 
-### Parte 4: Design de Infraestrutura e Computação (Dominio 4)
+### Parte 4: design de infraestrutura e computação (Dominio 4)
 
 10. Projete a arquitetura de computacao:
     - Serviço de consulta por vídeo: qual plataforma de computacao lida com 5.000 sessões WebRTC simultaneas? (Azure Communication Services ou servidor de midia customizado no AKS?)
@@ -122,7 +122,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
     - Segmentacao de rede: camada web, camada de API, camada de dados com NSGs
     - Sem exposicao pública a internet para nenhum serviço backend
 
-### Parte 5: Diagrama de Arquitetura
+### Parte 5: diagrama de arquitetura
 
 13. Crie um diagrama de arquitetura abrangente (usando o bloco de diagrama Mermaid abaixo como template inicial) que mostre:
     - Todos os serviços Azure selecionados
@@ -183,7 +183,7 @@ graph TB
     FN_US --> SQL_US
 ```
 
-### Parte 6: Avaliação do Well-Architected Framework
+### Parte 6: avaliação do Well-Architected Framework
 
 14. Avalie seu design contra cada pilar do Azure Well-Architected Framework:
 
@@ -212,7 +212,7 @@ graph TB
 - Como o agendamento de consultas lida com 10.000 usuários simultaneos?
 - Qual estratégia de caching reduz a carga no banco de dados?
 
-### Parte 7: Estimativa de Custos
+### Parte 7: estimativa de custos
 
 15. Produza uma estimativa de custo mensal dividida por categoria de serviço:
     - Computação (Container Apps, Functions, AKS se usado)
@@ -224,7 +224,7 @@ graph TB
     - Verifique que o total cabe no orcamento de $50K/mes
     - Identifique oportunidades de otimização de custos (capacidade reservada, autoscale-to-zero, armazenamento em camadas)
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-50"
@@ -275,7 +275,7 @@ Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (u
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/)
 - [Azure Architecture Center - Healthcare](https://learn.microsoft.com/en-us/azure/architecture/industries/healthcare)
@@ -286,7 +286,7 @@ Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (u
 - [HIPAA compliance on Azure](https://learn.microsoft.com/en-us/azure/compliance/offerings/offering-hipaa-us)
 - [Azure Front Door with Private Link origins](https://learn.microsoft.com/en-us/azure/frontdoor/private-link)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Sua arquitetura usa Cosmos DB com multi-region writes para agendamento de consultas (SLA de 99,999%) e Azure Container Apps para a camada de API (SLA de 99,95%). O caminho crítico passa por ambos. Qual é o SLA composto e como você o melhora?</summary>
@@ -320,7 +320,7 @@ Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (u
 
 ```bash
 # Delete all resources created in this capstone challenge
-# IMPORTANT: This challenge may have created resources across multiple regions
+# IMPORTANT: this challenge may have created resources across multiple regions
 az group delete --name rg-az305-challenge50-eastus --yes --no-wait
 az group delete --name rg-az305-challenge50-uksouth --yes --no-wait
 az group delete --name rg-az305-challenge50-centralindia --yes --no-wait

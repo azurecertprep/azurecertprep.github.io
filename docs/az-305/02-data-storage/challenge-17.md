@@ -5,7 +5,7 @@ title: "Challenge 17: Design Database Protection"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 17: Design Database Protection
+# Challenge 17: design database protection
 
 :::info Estimated Time and Cost
 
@@ -21,20 +21,20 @@ The compliance team has defined the following mandatory requirements: (1) All da
 
 The security architect has also noted that a recent audit finding requires that encryption keys be stored in a customer-managed Azure Key Vault with separation of duties, meaning the DBA team should not have access to the encryption keys. The estimated database size is 500GB with 2,000 transactions per second at peak.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for data protection
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Encryption Strategy
+### Part 1: encryption strategy
 
 1. Design a defense-in-depth encryption strategy covering data at rest and data in transit. Specify the role of TDE (Transparent Data Encryption) and whether to use service-managed keys or customer-managed keys (CMK) stored in Azure Key Vault.
 2. For the SSN and account number columns, evaluate Always Encrypted versus dynamic data masking. Determine which approach meets the requirement that support staff cannot see actual values even with direct database query access.
 3. Design the Key Vault architecture for customer-managed TDE keys. Address separation of duties by specifying which roles (DBA vs security team) have access to the Key Vault versus the database.
 4. Document the encryption hierarchy: Key Vault (CMK) protects the TDE protector, which encrypts the Database Encryption Key (DEK), which encrypts data/log/backup files.
 
-### Part 2: Auditing and Compliance
+### Part 2: auditing and compliance
 
 5. Design an auditing solution using Azure SQL Database Auditing. Specify where audit logs should be stored (Storage Account, Log Analytics, or Event Hub) considering the 7-year retention requirement and tamper-proof needs.
 6. Configure the audit scope: determine which actions to audit (data reads on sensitive tables, schema changes, permission changes, failed logins) while avoiding excessive logging that could impact performance.
@@ -48,7 +48,7 @@ The security architect has also noted that a recent audit finding requires that 
 11. Design a recovery testing procedure that validates backup integrity without impacting production. Include how to perform point-in-time restore to a test environment and validate data consistency.
 12. Document the RPO (Recovery Point Objective) and RTO (Recovery Time Objective) achievable with your design and confirm they meet SecureBank's requirements.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-17"
@@ -99,7 +99,7 @@ For 7-year tamper-proof audit retention, store audit logs in an Azure Storage Ac
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Transparent Data Encryption (TDE) with customer-managed keys](https://learn.microsoft.com/en-us/azure/azure-sql/database/transparent-data-encryption-byok-overview)
 - [Always Encrypted overview](https://learn.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine)
@@ -109,7 +109,7 @@ For 7-year tamper-proof audit retention, store audit logs in an Azure Storage Ac
 - [Long-term backup retention](https://learn.microsoft.com/en-us/azure/azure-sql/database/long-term-retention-overview)
 - [Automated backups in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/automated-backups-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A bank requires that database administrators cannot see plaintext values of Social Security numbers stored in a database, even with full sysadmin privileges. Which feature should you recommend?</summary>
@@ -139,7 +139,7 @@ For 7-year tamper-proof audit retention, store audit logs in an Azure Storage Ac
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

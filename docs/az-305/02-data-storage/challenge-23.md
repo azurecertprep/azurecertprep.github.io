@@ -5,7 +5,7 @@ title: "Challenge 23: Design a Data Analytics Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 23: Design a Data Analytics Solution
+# Challenge 23: design a Data Analytics solution
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ First, the operations center needs real-time fleet tracking with sub-minute late
 
 Each workload has different cost tolerance: the real-time system justifies premium pricing for speed, the dashboards need predictable costs, and the ML training should minimize cost even if it takes longer to process. Your challenge is to design an analytics architecture that serves all three needs efficiently without over-provisioning any single workload.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for data analysis
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Design Real-Time Analytics (Fleet Tracking)
+### Part 1: design Real-Time Analytics (Fleet tracking)
 
 1. Design the ingestion layer for 2 million events/second of GPS telemetry:
    - Compare Azure Event Hubs (Standard vs Premium vs Dedicated) for this throughput
@@ -44,7 +44,7 @@ Each workload has different cost tolerance: the real-time system justifies premi
    - Speed anomaly detection (sudden deceleration events)
    - Late delivery prediction (current position + remaining distance vs scheduled time)
 
-### Part 2: Design Batch Analytics (Operational Dashboards)
+### Part 2: design Batch Analytics (Operational dashboards)
 
 4. Design the data warehouse layer for daily dashboards:
    - Compare dedicated SQL pool vs serverless SQL pool in Synapse Analytics:
@@ -63,7 +63,7 @@ Each workload has different cost tolerance: the real-time system justifies premi
    - Calculate KPIs: on-time delivery rate, fuel efficiency (miles per gallon), driver hours compliance
    - Schedule transformations to complete by 6:00 AM for 7:00 AM dashboard availability
 
-### Part 3: Design Advanced Analytics (ML Model Training)
+### Part 3: design advanced Analytics (ml model training)
 
 7. Design the historical data lake for ML training:
    - Storage format comparison: Parquet vs Delta Lake vs CSV for 6 months of route data (~50TB)
@@ -81,7 +81,7 @@ Each workload has different cost tolerance: the real-time system justifies premi
    - Implement cluster auto-termination after idle period
    - Calculate monthly compute cost for a 72-hour training run on a 20-node cluster
 
-### Part 4: Unified Architecture
+### Part 4: unified architecture
 
 10. Design how the three analytics workloads share infrastructure:
     - Shared Data Lake Storage Gen2 as the central storage layer (Bronze/Silver/Gold zones)
@@ -94,7 +94,7 @@ Each workload has different cost tolerance: the real-time system justifies premi
     - ML: Databricks/Synapse Spark (monthly burst) + ADLS Gen2 storage
     - Identify which components can be paused/scaled down when not in use
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-23"
@@ -145,7 +145,7 @@ Bronze zone: raw data as-is from sources (JSON, CSV, raw Parquet). Silver zone: 
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Event Hubs overview](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about)
 - [Azure Stream Analytics overview](https://learn.microsoft.com/en-us/azure/stream-analytics/stream-analytics-introduction)
@@ -155,7 +155,7 @@ Bronze zone: raw data as-is from sources (JSON, CSV, raw Parquet). Silver zone: 
 - [Delta Lake on Azure](https://learn.microsoft.com/en-us/azure/databricks/delta/)
 - [Power BI integration with Synapse](https://learn.microsoft.com/en-us/azure/synapse-analytics/get-started-visualize-power-bi)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. TransGlobal needs to detect when a truck deviates from its planned route within 30 seconds of the deviation occurring. Which Azure service is most appropriate for this, and why?</summary>
@@ -185,7 +185,7 @@ Bronze zone: raw data as-is from sources (JSON, CSV, raw Parquet). Silver zone: 
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

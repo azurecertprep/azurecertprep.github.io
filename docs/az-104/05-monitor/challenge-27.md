@@ -5,7 +5,7 @@ title: "Challenge 27: Log Analytics & KQL Deep Dive"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 27: Log Analytics & KQL Deep Dive
+# Challenge 27: Log Analytics & KQL deep dive
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. needs centralized logging with powerful query capabilities to meet both compliance and operational needs. The operations team must collect logs from VMs, Azure resources, and applications into a single Log Analytics workspace, then write KQL queries to analyze performance, detect anomalies, and create visualizations in workbooks.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create and configure Log Analytics workspace
 - Configure log settings in Azure Monitor
@@ -28,7 +28,7 @@ Contoso Ltd. needs centralized logging with powerful query capabilities to meet 
 - Create Azure Monitor Workbooks with visualizations
 - Configure diagnostic settings for Azure resources
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -53,7 +53,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1: Create a Log Analytics Workspace
+### Task 1: create a Log Analytics workspace
 
 ```bash
 # Create Log Analytics workspace
@@ -88,7 +88,7 @@ The PerGB2018 SKU charges per GB ingested. For the exam, know these options:
 - **Daily cap**: Can set a daily ingestion cap to control costs
 
 :::
-### Task 2: Deploy Target VMs for Monitoring
+### Task 2: deploy target VMs for monitoring
 
 ```bash
 # Create a VNet
@@ -131,7 +131,7 @@ az vm run-command invoke \
   --scripts "sudo apt-get update && sudo apt-get install -y nginx && sudo systemctl start nginx"
 ```
 
-### Task 3: Create Data Collection Rules (DCR)
+### Task 3: create Data collection rules (dcr)
 
 ```bash
 # Get workspace resource ID
@@ -164,10 +164,10 @@ az monitor data-collection rule create \
 az monitor data-collection rule list --resource-group $RG -o table
 ```
 
-### Task 4: Install Azure Monitor Agent and Associate DCRs
+### Task 4: install Azure Monitor agent and associate DCRs
 
 ```bash
-# Install Azure Monitor Agent on Linux VM
+# Install Azure Monitor agent on Linux VM
 az vm extension set \
   --resource-group $RG \
   --vm-name vm-linux-web \
@@ -176,7 +176,7 @@ az vm extension set \
   --version 1.0 \
   --enable-auto-upgrade true
 
-# Install Azure Monitor Agent on Windows VM
+# Install Azure Monitor agent on Windows VM
 az vm extension set \
   --resource-group $RG \
   --vm-name vm-win-app \
@@ -222,10 +222,10 @@ AMA replaces the legacy Log Analytics agent (MMA/OMS) and Diagnostics extension:
 - For the AZ-104 exam, focus on AMA + DCR (the modern approach)
 
 :::
-### Task 5: Configure Diagnostic Settings for Azure Resources
+### Task 5: configure diagnostic settings for Azure resources
 
 ```bash
-# Enable diagnostic settings for the VNet (sending to Log Analytics)
+# Enable diagnostic settings for the VNet (sending to Log analytics)
 VNET_ID=$(az network vnet show -g $RG -n vnet-monitored --query "id" -o tsv)
 
 az monitor diagnostic-settings create \
@@ -254,7 +254,7 @@ az monitor diagnostic-settings categories list \
 4. Choose destinations: Log Analytics workspace, Storage account, Event Hub
 5. Click **Save**
 
-### Task 6: Write KQL Queries
+### Task 6: write KQL queries
 
 :::tip KQL Basics
 
@@ -320,13 +320,13 @@ Perf
 | evaluate pivot(CounterName, any(AvgValue))
 ```
 
-### Task 7: Create Saved Queries and Functions
+### Task 7: create saved queries and Functions
 
 ```bash
-# Save a query via the Portal:
-# 1. Run the query in Log Analytics > Logs
-# 2. Click "Save" > "Save as query"
-# 3. Name: "High CPU VMs", Category: "Performance"
+# Save a query via the portal:
+# 1. run the query in Log Analytics > logs
+# 2. click "Save" > "Save as query"
+# 3. name: "High CPU VMs", category: "Performance"
 
 # Create a function (reusable query) via CLI
 az monitor log-analytics workspace saved-search create \
@@ -343,7 +343,7 @@ az monitor log-analytics workspace saved-search list \
   --workspace-name law-contoso-ops -o table
 ```
 
-### Task 8: Create a Workbook with Visualizations
+### Task 8: create a workbook with visualizations
 
 **Portal Steps (Workbooks require Portal):**
 
@@ -391,7 +391,7 @@ Perf
 
 4. Click **Save** and name the workbook "Contoso Operations Dashboard"
 
-### Task 9: Configure Workspace Settings
+### Task 9: configure workspace settings
 
 ```bash
 # Set daily ingestion cap (cost control)
@@ -421,7 +421,7 @@ az monitor log-analytics workspace show \
   --query "{Name:name, Retention:retentionInDays, DailyCapGB:workspaceCapping.dailyQuotaGb}" -o table
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-27"
@@ -437,9 +437,9 @@ az monitor log-analytics workspace show \
     "Workspace daily cap and retention configured"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: No Data Appearing in Log Analytics
+### Scenario a: no Data appearing in Log Analytics
 
 ```bash
 # Check if AMA extension is installed and healthy
@@ -457,11 +457,11 @@ az monitor data-collection rule show \
 # Common causes:
 # 1. AMA extension not installed or failed
 # 2. DCR not associated with the VM
-# 3. Workspace ID mismatch in DCR
-# 4. Wait time (data takes 5-15 minutes to appear)
+# 3. workspace ID mismatch in DCR
+# 4. wait time (data takes 5-15 minutes to appear)
 ```
 
-### Scenario B: KQL Query Returns No Results
+### Scenario b: KQL query returns no results
 
 ```kusto
 // Common mistake: Wrong table name
@@ -477,7 +477,7 @@ search *
 | order by Count desc
 ```
 
-### Scenario C: Daily Cap Reached
+### Scenario c: daily cap reached
 
 ```bash
 # Symptom: Data stops flowing into workspace
@@ -487,7 +487,7 @@ az monitor log-analytics workspace show \
   --workspace-name law-contoso-ops \
   --query "workspaceCapping"
 
-# Fix: Increase or remove the daily cap
+# Fix: increase or remove the daily cap
 az monitor log-analytics workspace update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
@@ -495,7 +495,7 @@ az monitor log-analytics workspace update \
 # (-1 removes the cap)
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What is the difference between Data Collection Rules and Diagnostic Settings?**
 
@@ -569,7 +569,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Azure Monitor Logs overview](https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs)
 - [Log Analytics workspace](https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview)

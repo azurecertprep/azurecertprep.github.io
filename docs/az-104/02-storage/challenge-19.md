@@ -5,7 +5,7 @@ title: "Challenge 19: AzCopy & Storage Migration"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 19: AzCopy & Storage Migration
+# Challenge 19: AzCopy & Storage migration
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. is consolidating storage after acquiring a smaller company. You need to migrate terabytes of blob data between storage accounts, copy data across regions for disaster recovery, and set up ongoing synchronization for a file share. The operations team has been using the Azure Portal to download and re-upload files manually | which takes days. You will introduce them to AzCopy and Storage Explorer for efficient, high-performance data movement.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -27,7 +27,7 @@ Contoso Ltd. is consolidating storage after acquiring a smaller company. You nee
 | Configure object replication | Medium |
 | Use SAS tokens for authentication with AzCopy | High |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -41,7 +41,7 @@ Contoso Ltd. is consolidating storage after acquiring a smaller company. You nee
 
 ## Tasks
 
-### Task 1: Set Up the Lab Environment
+### Task 1: set up the lab environment
 
 Create two storage accounts to simulate a migration scenario:
 
@@ -99,7 +99,7 @@ az storage blob upload \
 rm -f doc*.txt largefile.bin
 ```
 
-### Task 2: Install and Authenticate AzCopy
+### Task 2: install and authenticate AzCopy
 
 ```bash
 # Check if AzCopy is installed
@@ -108,7 +108,7 @@ azcopy --version
 # Login with Entra ID (interactive)
 azcopy login
 
-# Alternative: Login with tenant ID
+# Alternative: login with tenant ID
 azcopy login --tenant-id $(az account show --query tenantId -o tsv)
 ```
 
@@ -121,7 +121,7 @@ If AzCopy is not installed:
 
 
 :::
-### Task 3: Copy Blobs Between Containers (Same Account)
+### Task 3: copy blobs between Containers (Same account)
 
 ```bash
 # Copy all blobs from documents to backups container (same account)
@@ -138,7 +138,7 @@ az storage blob list \
   --query "[].name" -o tsv
 ```
 
-### Task 4: Copy Blobs Between Storage Accounts Using SAS Tokens
+### Task 4: copy blobs between Storage accounts using SAS tokens
 
 Generate SAS tokens and perform cross-account copy:
 
@@ -175,7 +175,7 @@ az storage blob list \
   --query "[].{Name:name, Size:properties.contentLength}" -o table
 ```
 
-### Task 5: Sync Operations (Mirror Source to Destination)
+### Task 5: sync operations (Mirror source to destination)
 
 ```bash
 # Add new files to source
@@ -187,13 +187,13 @@ az storage blob upload \
   --account-name $SOURCE_ACCOUNT \
   --auth-mode login
 
-# Sync: Only copies new/modified files (does not delete extras at destination)
+# Sync: only copies new/modified files (does not delete extras at destination)
 azcopy sync \
   "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents" \
   "https://$DEST_ACCOUNT.blob.core.windows.net/documents" \
   --recursive
 
-# Sync with delete-destination flag (mirror behavior like robocopy /MIR)
+# Sync with delete-destination flag (mirror behavior like robocopy /mir)
 azcopy sync \
   "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents" \
   "https://$DEST_ACCOUNT.blob.core.windows.net/documents" \
@@ -203,7 +203,7 @@ azcopy sync \
 rm -f newfile.txt
 ```
 
-### Task 6: Benchmark Transfer Performance
+### Task 6: benchmark transfer performance
 
 ```bash
 # Benchmark upload performance to the destination account
@@ -219,7 +219,7 @@ azcopy bench \
   --size-per-file 100M
 ```
 
-### Task 7: Use AzCopy with Include/Exclude Patterns
+### Task 7: use AzCopy with Include/Exclude patterns
 
 ```bash
 # Copy only .txt files
@@ -237,7 +237,7 @@ azcopy copy \
   --exclude-pattern "*.bin"
 ```
 
-### Task 8: View Job History and Logs
+### Task 8: view job history and logs
 
 ```bash
 # List recent AzCopy jobs
@@ -250,7 +250,7 @@ azcopy jobs show <job-id>
 azcopy env
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-19"
@@ -305,17 +305,17 @@ Set the `AZCOPY_CONCURRENCY_VALUE` environment variable to increase parallel con
 
 </details>
 
-## Break and Fix
+## Break and fix
 
-### Scenario A: SAS Token Expired
+### Scenario a: SAS token expired
 
 Generate a SAS token with a 1-minute expiry. Wait 2 minutes, then attempt a copy. Observe the error message. How do you diagnose SAS expiration vs permission issues?
 
-### Scenario B: Missing Container at Destination
+### Scenario b: missing Container at destination
 
 Attempt to copy to a container that does not exist at the destination. Does AzCopy create it automatically? (Answer: Yes, if the SAS token or RBAC permissions allow container creation.)
 
-### Scenario C: Partial Transfer Failure
+### Scenario c: partial transfer failure
 
 During a large copy operation, simulate a failure by revoking the SAS token mid-transfer. Use `azcopy jobs resume` to restart the failed job with a new valid token.
 
@@ -324,7 +324,7 @@ During a large copy operation, simulate a failure by revoking the SAS token mid-
 azcopy jobs resume <job-id> --source-sas="<new-sas>" --destination-sas="<new-sas>"
 ```
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the difference between azcopy copy and azcopy sync?</summary>
@@ -376,7 +376,7 @@ azcopy logout
 echo "Cleanup complete."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Get started with AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Copy blobs between accounts with AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-blobs-copy)

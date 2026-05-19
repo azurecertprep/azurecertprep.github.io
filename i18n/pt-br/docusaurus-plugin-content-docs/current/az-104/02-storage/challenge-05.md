@@ -12,7 +12,8 @@ import TabItem from '@theme/TabItem';
 
 :::info Tempo e Custo Estimados
 
-**60-75 min** | **Custo estimado**: ~$0.50 | **Peso no Exame: 15-20%**
+**60-75 min** | **Custo estimado**: ~$0.50 | **Peso no Exame: 15-20%
+**
 
 :::
 
@@ -22,7 +23,7 @@ A equipe de aplicações da Contoso armazena imagens de perfil de usuários, arq
 
 Entender a diferença entre Blob Storage e Azure Files | e quando usar cada um | é fundamental para o exame AZ-104. Este desafio oferece experiência prática com ambos.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar e configurar containers de blob
 - Criar e configurar compartilhamentos de arquivos
@@ -32,7 +33,7 @@ Entender a diferença entre Blob Storage e Azure Files | e quando usar cada um |
 - Configurar exclusão reversível para Azure Files
 - Configurar snapshots de compartilhamento de arquivos
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -46,7 +47,7 @@ Entender a diferença entre Blob Storage e Azure Files | e quando usar cada um |
 
 ## Descrição
 
-### Parte 1: Configurar o Ambiente
+### Parte 1: configurar o ambiente
 
 1. Criar um grupo de recursos e uma storage account:
 
@@ -69,7 +70,7 @@ az storage account create \
 CONN_STRING=$(az storage account show-connection-string --name $STORAGE_NAME --resource-group $RG -o tsv)
 ```
 
-### Parte 2: Containers de Blob & Camadas de Acesso
+### Parte 2: Containers de Blob & camadas de acesso
 
 2. Criar três containers de blob com diferentes níveis de acesso:
 
@@ -126,7 +127,7 @@ az storage blob list --container-name archive --connection-string "$CONN_STRING"
   --query "[].{Name:name, Tier:properties.blobTier}" -o table
 ```
 
-### Parte 3: Exclusão Reversível para Blobs & Containers
+### Parte 3: exclusão reversível para blobs & Containers
 
 7. Habilitar exclusão reversível para blobs com período de retenção de 14 dias:
 
@@ -162,7 +163,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
 az storage blob undelete --container-name app-data --name profiles/alice.txt --connection-string "$CONN_STRING"
 ```
 
-### Parte 4: Versionamento de Blob
+### Parte 4: versionamento de Blob
 
 10. Habilitar versionamento de blob:
 
@@ -184,7 +185,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
   --query "[?name=='profiles/alice.txt'].{Name:name, VersionId:versionId, IsCurrentVersion:isCurrentVersion}" -o table
 ```
 
-### Parte 5: Snapshots de Blob
+### Parte 5: snapshots de Blob
 
 12. Criar um snapshot de um blob:
 
@@ -199,7 +200,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
   --query "[?snapshot!=null].{Name:name, Snapshot:snapshot}" -o table
 ```
 
-### Parte 6: Azure Files | Criar & Configurar
+### Parte 6: Azure Files | criar & configurar
 
 14. Criar um compartilhamento Azure Files para a equipe de finanças:
 
@@ -259,7 +260,7 @@ sudo mount -t cifs //$STORAGE_NAME.file.core.windows.net/finance-share /mnt/fina
 </TabItem>
 </Tabs>
 
-### Parte 7: Snapshots de Compartilhamento de Arquivos & Exclusão Reversível
+### Parte 7: snapshots de compartilhamento de arquivos & exclusão reversível
 
 17. Habilitar exclusão reversível para Azure Files:
 
@@ -284,7 +285,7 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
   --query "[?name=='finance-share'].{Name:name, Snapshot:snapshot}" -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-05"
@@ -344,14 +345,14 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 Blobs arquivados não podem ser lidos diretamente. Você deve primeiro **reidratá-los**:
 
 ```bash
-# Change tier from Archive to Hot (standard priority: up to 15 hours)
+# Change tier from archive to hot (standard priority: up to 15 hours)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
   --tier Hot \
   --connection-string "$CONN_STRING"
 
-# High priority rehydration (faster, more expensive: under 1 hour for < 10 GB)
+# High priority rehydration (faster, more expensive: under 1 hour for < 10 gb)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
@@ -393,7 +394,7 @@ Se a porta 445 estiver bloqueada, as alternativas incluem:
 
 </details>
 
-## Recursos de Aprendizado
+## Recursos de aprendizado
 
 - [Visão geral do Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
 - [Camadas de acesso para dados de blob](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
@@ -402,7 +403,7 @@ Se a porta 445 estiver bloqueada, as alternativas incluem:
 - [Visão geral do Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction)
 - [Guia de planejamento do Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-planning)
 
-## Quebre & Conserte
+## Quebre & conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -414,7 +415,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 4. **Sobreposição de snapshot e versionamento**: Habilite tanto versionamento quanto snapshots no mesmo container. Faça upload de um arquivo, crie um snapshot, depois sobrescreva o arquivo. Quantas cópias existem agora? (Versão original, snapshot do original e nova versão atual = 3 cópias.)
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 <details>
 <summary>1. Qual é a diferença de custo entre as camadas Hot, Cool e Archive?</summary>

@@ -5,7 +5,7 @@ title: "Challenge 42: Design Application Configuration Management"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 42: Design Application Configuration Management
+# Challenge 42: design Application configuration Management
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The platform team needs a centralized configuration management solution that pro
 
 Additionally, sensitive configuration values (database passwords, API keys, certificates) must remain in Azure Key Vault with proper access controls, while non-sensitive settings (feature flags, timeouts, connection pool sizes) should be easily manageable by product owners without engineering intervention.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend an application configuration management solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Design Centralized Configuration Architecture
+### Part 1: design centralized configuration architecture
 
 1. Deploy an Azure App Configuration store and design a key naming convention that supports 30 services across 4 environments. Consider using labels for environment differentiation vs. separate stores per environment.
 2. Design a configuration hierarchy that supports:
@@ -36,13 +36,13 @@ Additionally, sensitive configuration values (database passwords, API keys, cert
    - Environment-specific overrides (e.g., database connection strings per environment)
 3. Document the trade-offs between using a single App Configuration store with labels vs. multiple stores (one per environment). Consider cost, access control granularity, and blast radius of misconfigurations.
 
-### Part 2: Integrate Key Vault References
+### Part 2: integrate Key Vault references
 
 4. Design a solution that stores sensitive values in Azure Key Vault while referencing them from App Configuration. Document how Key Vault references work and how applications resolve them at runtime.
 5. Define access control boundaries: which teams can manage non-sensitive configuration (product owners) vs. secrets (security team) vs. feature flags (engineering leads).
 6. Design a secret rotation strategy that updates Key Vault secrets without requiring application restarts. Document how configuration refresh intervals interact with Key Vault reference resolution.
 
-### Part 3: Feature Management and Gradual Rollout
+### Part 3: feature Management and gradual rollout
 
 7. Design a feature flag system using App Configuration feature management that supports:
    - Boolean on/off flags (kill switches)
@@ -52,7 +52,7 @@ Additionally, sensitive configuration values (database passwords, API keys, cert
 8. Design a rollout strategy for a new payment processing feature: start with internal users, expand to 5% of external users, monitor error rates, then increase to 25%, 50%, and 100%.
 9. Document how to implement an instant kill switch that disables a feature across all 30 services within 60 seconds without redeployment.
 
-### Part 4: Configuration Refresh and Monitoring
+### Part 4: configuration refresh and monitoring
 
 10. Design a configuration refresh strategy that balances freshness with performance. Compare polling-based refresh (sentinel key pattern) vs. push-based refresh (Event Grid notifications).
 11. Design a monitoring and alerting solution that detects:
@@ -61,7 +61,7 @@ Additionally, sensitive configuration values (database passwords, API keys, cert
     - Feature flag state changes
 12. Document how App Configuration snapshots can be used to create point-in-time configuration sets for deployment consistency and rollback scenarios.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-42"
@@ -112,7 +112,7 @@ App Configuration snapshots create an immutable, point-in-time copy of key-value
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure App Configuration overview](https://learn.microsoft.com/en-us/azure/azure-app-configuration/overview)
 - [Use Key Vault references in App Configuration](https://learn.microsoft.com/en-us/azure/azure-app-configuration/use-key-vault-references-dotnet-core)
@@ -121,7 +121,7 @@ App Configuration snapshots create an immutable, point-in-time copy of key-value
 - [Azure App Configuration snapshots](https://learn.microsoft.com/en-us/azure/azure-app-configuration/concept-snapshots)
 - [Enable dynamic configuration with push refresh](https://learn.microsoft.com/en-us/azure/azure-app-configuration/enable-dynamic-configuration-push-refresh)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company uses a single App Configuration store with labels to separate environments. A developer accidentally applies the "Production" label to a test configuration value. How could the architecture prevent this?</summary>
@@ -151,7 +151,7 @@ App Configuration snapshots create an immutable, point-in-time copy of key-value
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

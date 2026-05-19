@@ -5,7 +5,7 @@ title: "Desafio 17: Projetar Proteção de Banco de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 17: Projetar Proteção de Banco de Dados
+# Desafio 17: projetar proteção de banco de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,34 +21,34 @@ A equipe de compliance definiu os seguintes requisitos obrigatorios: (1) Todos o
 
 O arquiteto de segurança também observou que uma descoberta recente de auditoria requer que as chaves de criptografia sejam armazenadas em um Azure Key Vault gerenciado pelo cliente com separacao de funções, significando que a equipe de DBA não deve ter acesso as chaves de criptografia. O tamanho estimado do banco de dados e 500GB com 2.000 transações por segundo no pico.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para proteção de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Estratégia de Criptografia
+### Parte 1: estratégia de criptografia
 
 1. Projete uma estratégia de criptografia em defesa em profundidade cobrindo dados em repouso e dados em transito. Especifique o papel do TDE (Transparent Data Encryption) e se deve usar chaves gerenciadas pelo serviço ou chaves gerenciadas pelo cliente (CMK) armazenadas no Azure Key Vault.
 2. Para as colunas de SSN e número de conta, avalie Always Encrypted versus dynamic data masking. Determine qual abordagem atende ao requisito de que a equipe de suporte não pode ver os valores reais mesmo com acesso direto de consulta ao banco de dados.
 3. Projete a arquitetura do Key Vault para chaves TDE gerenciadas pelo cliente. Aborde a separacao de funções especificando quais funções (DBA vs equipe de segurança) tem acesso ao Key Vault versus ao banco de dados.
 4. Documente a hierarquia de criptografia: Key Vault (CMK) protege o TDE protector, que criptografa a Database Encryption Key (DEK), que criptografa arquivos de dados/log/backup.
 
-### Parte 2: Auditoria e Compliance
+### Parte 2: auditoria e compliance
 
 5. Projete uma solução de auditoria usando Azure SQL Database Auditing. Especifique onde os logs de auditoria devem ser armazenados (Storage Account, Log Analytics ou Event Hub) considerando o requisito de retencao de 7 anos e necessidades a prova de adulteracao.
 6. Configure o escopo de auditoria: determine quais ações auditar (leituras de dados em tabelas sensíveis, alteracoes de esquema, alteracoes de permissão, logins falhados) enquanto evita logging excessivo que poderia impactar o desempenho.
 7. Projete uma solução para o requisito de ledger table. Identifique quais tabelas devem usar o recurso ledger do Azure SQL Database e explique como a verificação criptografica funciona (database digests armazenados externamente no Azure Confidential Ledger ou Azure Blob Storage).
 8. Crie uma abordagem de monitoramento de compliance que gere alertas para padrões de acesso suspeitos (ex.: exportacoes de dados em massa, acesso fora do horario comercial, consultas tocando colunas sensíveis).
 
-### Parte 3: Backup e Recuperação
+### Parte 3: Backup e recuperação
 
 9. Projete uma estratégia de backup que atenda tanto ao requisito de restauracao point-in-time de 35 dias quanto ao requisito de retencao de longo prazo (LTR) de 7 anos. Especifique a política LTR (frequência de backup semanal, mensal, anual).
 10. Avalie as implicacoes da camada de serviço para backup e recuperação. Compare os custos de armazenamento de backup entre as camadas General Purpose e Business Critical e como o armazenamento de backup geo-redundante (GZRS) suporta restauracao entre regiões.
 11. Projete um procedimento de teste de recuperação que valide a integridade do backup sem impactar a produção. Inclua como realizar restauracao point-in-time para um ambiente de teste é validar a consistência dos dados.
 12. Documente o RPO (Recovery Point Objective) e RTO (Recovery Time Objective) alcancaveis com seu design e confirme que atendem aos requisitos do SecureBank.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-17"
@@ -99,7 +99,7 @@ Para retencao de auditoria a prova de adulteracao por 7 anos, armazene logs de a
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Transparent Data Encryption (TDE) with customer-managed keys](https://learn.microsoft.com/en-us/azure/azure-sql/database/transparent-data-encryption-byok-overview)
 - [Always Encrypted overview](https://learn.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine)
@@ -109,7 +109,7 @@ Para retencao de auditoria a prova de adulteracao por 7 anos, armazene logs de a
 - [Long-term backup retention](https://learn.microsoft.com/en-us/azure/azure-sql/database/long-term-retention-overview)
 - [Automated backups in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/automated-backups-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um banco requer que administradores de banco de dados não possam ver valores em texto claro de números de Social Security armazenados em um banco de dados, mesmo com privilegios sysadmin completos. Qual recurso você deve recomendar?</summary>

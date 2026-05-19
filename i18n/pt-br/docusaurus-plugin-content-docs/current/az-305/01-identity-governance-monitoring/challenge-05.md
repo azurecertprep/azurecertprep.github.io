@@ -5,7 +5,7 @@ title: "Desafio 05: Projetar Gerenciamento de Identidade"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 05: Projetar Gerenciamento de Identidade
+# Desafio 05: projetar gerenciamento de identidade
 
 :::info Tempo Estimado e Custo
 
@@ -26,15 +26,15 @@ O CISO identificou várias lacunas críticas de segurança na postura de identid
 
 Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que sincronize identidades para a nuvem enquanto implementa controles modernos de segurança para acesso privilegiado e proteção de identidade.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de gerenciamento de identidade
 - Recomendar uma solução de autenticação
 - Recomendar uma solução para autorizar acesso a recursos do Azure
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Sincronizacao de Identidade Hibrida
+### Parte 1: sincronizacao de identidade hibrida
 
 1. Avalie e recomende o método de sincronizacao apropriado para o Woodgrove Bank:
 
@@ -55,7 +55,7 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
    - Método de autenticação de failover se o primário estiver indisponivel
    - Abordagem de staged rollout para migração
 
-### Parte 2: Proteção de Senha e Segurança de Autenticação
+### Parte 2: proteção de senha e segurança de autenticação
 
 4. Projete a proteção de senha para o Woodgrove Bank:
    - Microsoft Entra Password Protection (lista customizada de senhas banidas)
@@ -69,7 +69,7 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
    - Sign-in por telefone com Microsoft Authenticator
    - Autenticação baseada em certificado
 
-### Parte 3: Privileged Identity Management (PIM)
+### Parte 3: privileged identity Management (pim)
 
 6. Projete uma estratégia de PIM para as 15 contas de Global Administrator:
    - Atribuicoes de role eligible vs. active
@@ -88,7 +88,7 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
    - Revisao mensal de acesso de usuários guest
    - Revisao semestral de atribuicoes de Owner em subscriptions Azure
 
-### Parte 4: Identity Protection
+### Parte 4: identity protection
 
 9. Projete políticas de Identity Protection para o Woodgrove Bank:
    - Política de risco de sign-in: quais ações para risco baixo, médio e alto
@@ -101,13 +101,13 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
     - Credenciais encontradas em um banco de dados de vazamento na dark web
     - Padrão anomalo de uso de token
 
-### Parte 5: Implementar Prova de Conceito
+### Parte 5: implementar prova de conceito
 
 11. Configure Entra ID Password Protection com uma lista customizada de senhas banidas.
 
 12. Crie uma atribuicao de role eligible no PIM (usando uma role de não-produção) e demonstre o workflow de ativacao.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-05"
@@ -165,10 +165,10 @@ Para o cenário do Woodgrove Bank (forest única, três dominios, precisa de PHS
 <summary>Dica 3: Configurando PIM para Global Admin</summary>
 
 ```bash
-# Note: PIM configuration is primarily done through the portal or Microsoft Graph API
-# The following shows the Graph API approach
+# Note: PIM configuration is primarily done through the portal or Microsoft graph API
+# The following shows the graph API approach
 
-# List eligible role assignments for Global Administrator
+# List eligible role assignments for global administrator
 az rest --method get \
   --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleInstances?\$filter=roleDefinitionId eq '62e90394-69f5-4237-9190-012177145e10'"
 
@@ -217,7 +217,7 @@ Configuração chave:
 - Políticas de Conditional Access baseadas em risco substituem as políticas legadas do Identity Protection
 
 ```bash
-# Conditional Access policy for high sign-in risk (via Graph API)
+# Conditional access policy for high sign-in risk (via graph api)
 az rest --method post \
   --url "https://graph.microsoft.com/v1.0/identity/conditionalAccess/policies" \
   --body '{
@@ -261,13 +261,13 @@ A implantacao on-premises requer:
 # PowerShell example:
 # Connect-MgGraph -Scopes "Policy.ReadWrite.AuthenticationMethod"
 # Update-MgPolicyAuthenticationMethodPolicy -AuthenticationMethodConfigurations @{
-#   customBannedPasswords = @("woodgrove", "banking123", "finance2024")
+# customBannedPasswords = @("woodgrove", "banking123", "finance2024")
 # }
 ```
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Microsoft Entra Connect Sync documentation](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-azure-ad-connect)
 - [Microsoft Entra Cloud Sync](https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/what-is-cloud-sync)
@@ -277,7 +277,7 @@ A implantacao on-premises requer:
 - [Passwordless authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-passwordless)
 - [Access reviews](https://learn.microsoft.com/en-us/entra/id-governance/access-reviews-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. O Woodgrove Bank tem um requisito de conformidade de que senhas nunca devem sair do ambiente on-premises, mas também querem detecção de credenciais vazadas do Identity Protection. Quais métodos de autenticação satisfazem ambos os requisitos?</summary>
@@ -310,10 +310,10 @@ A implantacao on-premises requer:
 ## Limpeza
 
 ```bash
-# Remove PIM eligible assignments (via Graph API)
+# Remove PIM eligible assignments (via graph api)
 # az rest --method post --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleRequests" --body '{"action":"adminRemove",...}'
 
-# Remove custom banned password list (Portal: Entra ID > Security > Authentication Methods > Password Protection)
+# Remove custom banned password list (Portal: Entra ID > security > authentication methods > password protection)
 
 # If any test users were created:
 az ad user delete --id testuser@yourtenant.onmicrosoft.com

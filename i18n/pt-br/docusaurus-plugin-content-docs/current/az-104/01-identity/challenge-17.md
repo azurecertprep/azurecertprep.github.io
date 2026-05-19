@@ -5,7 +5,7 @@ title: "Desafio 17: Grupos de Gerenciamento & Assinaturas"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 17: Grupos de Gerenciamento & Assinaturas
+# Desafio 17: grupos de gerenciamento & assinaturas
 
 :::info Tempo Estimado e Custo
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. está crescendo rápido. O que começou como uma única assinatura do Azure se transformou em seis assinaturas distribuídas em três departamentos (TI, Finanças e Engenharia). O CTO quer uma hierarquia de governança que aplique políticas de forma consistente em todas as assinaturas sem duplicar esforço. Seu trabalho é projetar e implementar uma estrutura de grupos de gerenciamento que reflita o organograma da empresa e aplicar governança nos níveis adequados.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -27,7 +27,7 @@ A Contoso Ltd. está crescendo rápido. O que começou como uma única assinatur
 | Implementar bloqueios de recursos entre assinaturas | Médio |
 | Aplicar RBAC no escopo do grupo de gerenciamento | Alto |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
@@ -40,7 +40,7 @@ A Contoso Ltd. está crescendo rápido. O que começou como uma única assinatur
 
 ## Tarefas
 
-### Tarefa 1: Criar uma Hierarquia de Grupos de Gerenciamento
+### Tarefa 1: criar uma hierarquia de grupos de gerenciamento
 
 Projete e crie a seguinte estrutura de grupos de gerenciamento:
 
@@ -100,7 +100,7 @@ Navegue até **Portal do Azure** > **Grupos de gerenciamento**. Clique em **+ Cr
 
 
 :::
-### Tarefa 2: Mover uma Assinatura para um Grupo de Gerenciamento
+### Tarefa 2: mover uma assinatura para um grupo de gerenciamento
 
 Mova sua assinatura atual para o grupo de gerenciamento `mg-dev`:
 
@@ -120,7 +120,7 @@ az account management-group show \
   --recurse
 ```
 
-### Tarefa 3: Atribuir Azure Policy no Escopo do Grupo de Gerenciamento
+### Tarefa 3: atribuir Azure Policy no escopo do grupo de gerenciamento
 
 Aplique a política integrada "Require a tag and its value on resources" no escopo `mg-production`:
 
@@ -138,7 +138,7 @@ az policy assignment create \
   --params '{"tagName": {"value": "Environment"}, "tagValue": {"value": "Production"}}'
 ```
 
-### Tarefa 4: Aplicar RBAC no Nível do Grupo de Gerenciamento
+### Tarefa 4: aplicar RBAC no nível do grupo de gerenciamento
 
 Conceda a um usuário a função "Reader" no escopo do grupo de gerenciamento `mg-contoso` (cascateando para todas as assinaturas):
 
@@ -146,7 +146,7 @@ Conceda a um usuário a função "Reader" no escopo do grupo de gerenciamento `m
 # Obter o object ID do usuário (substitua pelo seu usuário de teste)
 USER_ID=$(az ad user show --id "alice@yourtenant.onmicrosoft.com" --query id -o tsv)
 
-# Atribuir função Reader no escopo do grupo de gerenciamento
+# Atribuir função reader no escopo do grupo de gerenciamento
 az role assignment create \
   --assignee "$USER_ID" \
   --role "Reader" \
@@ -158,7 +158,7 @@ az role assignment list \
   --query "[?principalId=='$USER_ID']" -o table
 ```
 
-### Tarefa 5: Mover uma Assinatura Entre Grupos de Gerenciamento
+### Tarefa 5: mover uma assinatura entre grupos de gerenciamento
 
 Simule uma reorganização departamental movendo a assinatura de `mg-dev` para `mg-sandbox`:
 
@@ -180,7 +180,7 @@ az account management-group show \
   --recurse
 ```
 
-### Tarefa 6: Consultar a Hierarquia de Grupos de Gerenciamento
+### Tarefa 6: consultar a hierarquia de grupos de gerenciamento
 
 ```bash
 # Visualizar a hierarquia completa
@@ -194,7 +194,7 @@ az account management-group show \
   --query "{Name:name, Children:children[].{Name:name, Children:children[].name}}"
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-17"
@@ -237,21 +237,21 @@ Mover uma assinatura entre grupos de gerenciamento altera quais políticas e atr
 
 </details>
 
-## Quebrar & Consertar
+## Quebrar & consertar
 
-### Cenário A: Conflito de Políticas
+### Cenário a: conflito de políticas
 
 Atribua duas políticas conflitantes em diferentes níveis: uma exigindo a tag "Environment=Production" em mg-production e outra exigindo "Environment=Development" em mg-dev. Tente implantar um recurso em uma assinatura sob mg-dev. O que acontece quando políticas contraditórias existem em diferentes níveis?
 
-### Cenário B: Assinatura Órfã
+### Cenário b: assinatura órfã
 
 Remova sua assinatura de todos os grupos de gerenciamento personalizados. Onde ela aparece? (Resposta: Ela retorna ao Tenant Root Group.) Como você encontra assinaturas que não estão em nenhum grupo de gerenciamento personalizado?
 
-### Cenário C: Bloqueado
+### Cenário c: bloqueado
 
 Atribua uma atribuição RBAC de Negação no escopo de um grupo de gerenciamento. O que acontece com os usuários que anteriormente tinham acesso através de atribuições no nível da assinatura? Como as atribuições de negação interagem com as atribuições de permissão?
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Quantos níveis de profundidade os grupos de gerenciamento podem ter?</summary>
@@ -284,7 +284,7 @@ Por padrão, **qualquer usuário** no tenant do Entra ID pode criar grupos de ge
 ## Limpeza
 
 ```bash
-# Remover assinatura do MG personalizado (retorna ao Tenant Root Group)
+# Remover assinatura do MG personalizado (retorna ao tenant root group)
 SUB_ID=$(az account show --query id -o tsv)
 az account management-group subscription remove \
   --name "mg-sandbox" \
@@ -295,8 +295,8 @@ az policy assignment delete \
   --name "require-env-tag-prod" \
   --scope "/providers/Microsoft.Management/managementGroups/mg-production" 2>/dev/null
 
-# Remover atribuição RBAC (substitua USER_ID)
-# az role assignment delete --assignee "$USER_ID" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso"
+# Remover atribuição RBAC (substitua user_id)
+# az role assignment delete --assignee "$user_id" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso"
 
 # Excluir grupos de gerenciamento (ordem de baixo para cima é obrigatória)
 az account management-group delete --name "mg-sandbox" 2>/dev/null
@@ -310,7 +310,7 @@ az account management-group delete --name "mg-contoso" 2>/dev/null
 echo "Limpeza concluída."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Organizar recursos com grupos de gerenciamento](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
 - [Criar grupos de gerenciamento](https://learn.microsoft.com/en-us/azure/governance/management-groups/create-management-group-portal)

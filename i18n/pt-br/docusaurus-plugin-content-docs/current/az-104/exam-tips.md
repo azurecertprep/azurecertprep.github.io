@@ -3,11 +3,11 @@ sidebar_position: 4
 title: "Exam Tips & Strategy"
 ---
 
-# Dicas e Estratégia para o Exame
+# Dicas e estratégia para o exame
 
 O AZ-104 é um exame supervisionado com formatos de questão específicos. Saber como o exame funciona é quase tão importante quanto saber o conteúdo.
 
-## Formato do Exame
+## Formato do exame
 
 | Detalhe | Valor |
 |---------|-------|
@@ -18,18 +18,18 @@ O AZ-104 é um exame supervisionado com formatos de questão específicos. Saber
 | **Penalidade por respostas erradas** | Nenhuma | sempre responda todas as questões |
 | **Pode voltar?** | Sim, dentro de uma seção. Não, entre seções. |
 
-## Tipos de Questão que Você Encontrará
+## Tipos de questão que você encontrará
 
-### Múltipla Escolha
+### Múltipla escolha
 Questões padrão de "escolha uma" ou "escolha duas" respostas. Leia com atenção | "quais DUAS" significa exatamente duas.
 
-### Arrastar e Soltar
+### Arrastar e soltar
 Combine itens de uma lista com alvos. Comum para ordenar etapas de implantação ou combinar serviços com requisitos.
 
-### Área Quente
+### Área quente
 Clique na área correta de uma captura de tela ou diagrama. Comum para questões baseadas no Portal ("onde você clicaria para configurar X?").
 
-### Estudo de Caso
+### Estudo de caso
 Um cenário de várias páginas com 4-7 questões. Você pode navegar entre as questões dentro do estudo de caso, mas não pode retornar após avançar para a próxima seção.
 
 :::warning Atenção
@@ -37,7 +37,7 @@ Um cenário de várias páginas com 4-7 questões. Você pode navegar entre as q
 Estratégia para Estudo de Caso | Leia a aba de **requisitos** primeiro, depois o cenário. Muitas questões de estudo de caso precisam apenas de detalhes específicos | não tente memorizar tudo.
 
 :::
-### Laboratório Ativo
+### Laboratório ativo
 Um ambiente real do Azure Portal onde você completa tarefas. Você tem tempo limitado e um conjunto restrito de ações.
 
 :::tip Dica
@@ -45,7 +45,7 @@ Um ambiente real do Azure Portal onde você completa tarefas. Você tem tempo li
 Estratégia para o Laboratório | Os laboratórios são avaliados pelo **estado final**, não pelos passos que você executou. Se o CLI falhar, use o Portal. Se você cometer um erro, simplesmente refaça. O avaliador verifica a configuração final.
 
 :::
-## Gestão de Tempo
+## Gestão de tempo
 
 | Seção | Tempo Sugerido |
 |-------|---------------|
@@ -56,23 +56,23 @@ Estratégia para o Laboratório | Os laboratórios são avaliados pelo **estado 
 
 **Dica**: Não gaste mais de 2 minutos em nenhuma questão na primeira passagem. Marque-a e siga em frente.
 
-## Estratégia de Estudo
+## Estratégia de estudo
 
-### Semana 1-2: Identidade e Governança + Armazenamento (Desafios 01-06)
+### Semana 1-2: identidade e governança + armazenamento (Desafios 01-06)
 Esses domínios representam 35-45% do exame. Comece por aqui porque os conceitos de Entra ID e RBAC aparecem em questões de TODOS os domínios.
 
-### Semana 3-4: Computação + Redes (Desafios 07-13)
+### Semana 3-4: computação + redes (Desafios 07-13)
 Esses são os domínios mais práticos. Dedique tempo extra a VMs, App Service, VNets e NSGs | eles são bastante cobrados.
 
-### Semana 5: Monitoramento + Capstone (Desafios 14-16)
+### Semana 5: monitoramento + capstone (Desafios 14-16)
 Monitoramento representa 10-15%, mas os conceitos (Azure Monitor, KQL, alertas) conectam tudo.
 
-### Semana 6: Revisão + Prática
+### Semana 6: revisão + prática
 - Faça a [Avaliação Prática Gratuita](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104/practice/assessment?assessment-type=practice&assessmentId=21)
 - Revise a [Matriz de Cobertura](/docs/az-104/coverage-matrix) | alguma lacuna?
 - Refaça os cenários Quebre & Conserte de cada desafio
 
-## Pegadinhas Comuns do Exame
+## Pegadinhas comuns do exame
 
 :::warning Atenção
 
@@ -87,7 +87,7 @@ Coisas que pegam as pessoas de surpresa:
 8. **Nomes DNS personalizados** para App Service requerem um registro CNAME ou A + verificação TXT
 
 :::
-## Links Úteis
+## Links úteis
 
 | Recurso | Link |
 |---------|------|
@@ -97,7 +97,7 @@ Coisas que pegam as pessoas de surpresa:
 | **Oferta de repetição de exame** | [Ofertas de Exame](https://learn.microsoft.com/en-us/credentials/certifications/deals) |
 | **Renovação da certificação** | [Renove gratuitamente](https://learn.microsoft.com/en-us/credentials/certifications/renew-your-microsoft-certification) |
 
-## Depois de Passar 🎉
+## Depois de passar 🎉
 
 - Sua certificação aparece no seu [perfil Microsoft Learn](https://learn.microsoft.com/en-us/users/) em até 24 horas
 - Você recebe um **badge digital** via Credly que pode compartilhar no LinkedIn

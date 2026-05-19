@@ -5,7 +5,7 @@ title: "Desafio 32: Projetar Alta Disponibilidade para Dados Não Relacionais"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 32: Projetar Alta Disponibilidade para Dados Não Relacionais
+# Desafio 32: projetar alta disponibilidade para dados não relacionais
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ A industria de games demanda disponibilidade extrema: se jogadores não consegue
 
 O principal desafio técnico e equilibrar consistência vs. disponibilidade no Cosmos DB. Multi-region writes fornecem a menor latência mas introduzem complexidade de resolução de conflitos. A camada de armazenamento deve fornecer acesso continuo a 5 TB de ativos do jogo mesmo durante falhas regionais, sem que jogadores experimentem atrasos de carregamento. A BattleForge tem um orcamento de $8.000/mes para sua camada de dados (excluindo computacao).
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de alta disponibilidade para dados semi-estruturados e não estruturados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Configuração de Multi-Region Write do Cosmos DB
+### Parte 1: configuração de Multi-Region write do Cosmos DB
 
 1. Projete a implantacao do Cosmos DB para perfis de jogadores:
    - Conta implantada em 3 regiões: East US, West Europe, Japan East
@@ -67,7 +67,7 @@ az cosmosdb create \
   --default-consistency-level Session
 ```
 
-### Parte 2: Disponibilidade e Failover do Cosmos DB
+### Parte 2: disponibilidade e failover do Cosmos DB
 
 5. Análise as caracteristicas de disponibilidade da configuração multi-region write:
    - Qual SLA o Cosmos DB multi-region write fornece? (99,999% para leitura e escrita)
@@ -90,7 +90,7 @@ az cosmosdb create \
    - Opcao C: Usar um serviço diferente para estado de partida (ex: Azure SignalR para sync em tempo real)
    - Recomende e justifique sua escolha
 
-### Parte 3: Redundância de Storage Account para Ativos do Jogo
+### Parte 3: redundância de Storage account para ativos do jogo
 
 8. Projete a redundância de armazenamento para 5 TB de ativos do jogo entre estas opcoes:
 
@@ -112,7 +112,7 @@ az cosmosdb create \
 10. Configure a storage account com a redundância selecionada e o CDN para distribuição global:
 
 ```bash
-# Create storage account with RA-GRS (CDN handles zone-level caching)
+# Create storage account with RA-GRS (cdn handles zone-level caching)
 az storage account create \
   --resource-group rg-battleforge \
   --name stbattleforgeassets \
@@ -122,7 +122,7 @@ az storage account create \
   --access-tier Hot
 ```
 
-### Parte 4: CDN e Disponibilidade de Edge
+### Parte 4: CDN e disponibilidade de edge
 
 11. Projete a arquitetura CDN para entrega de ativos do jogo:
     - Azure CDN (ou Azure Front Door com regras de caching) como mecanismo principal de entrega
@@ -141,7 +141,7 @@ az storage account create \
     - CDN: custos de largura de banda para entrega global
     - Verifique se o total cabe dentro do orcamento de $8.000/mes
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-32"
@@ -260,7 +260,7 @@ Este e o SLA mais alto de qualquer serviço de banco de dados Azure. Compare:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Distribute data globally with Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally)
 - [Consistency levels in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels)
@@ -269,7 +269,7 @@ Este e o SLA mais alto de qualquer serviço de banco de dados Azure. Compare:
 - [Azure CDN overview](https://learn.microsoft.com/en-us/azure/cdn/cdn-overview)
 - [High availability for Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/high-availability)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A BattleForge precisa que todos os jogadores em uma partida multiplayer vejam o mesmo estado do jogo. Por que eles não podem usar Strong consistency com multi-region writes, e qual é a alternativa recomendada?</summary>
@@ -299,7 +299,7 @@ Este e o SLA mais alto de qualquer serviço de banco de dados Azure. Compare:
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

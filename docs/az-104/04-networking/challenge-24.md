@@ -5,7 +5,7 @@ title: "Challenge 24: User-Defined Routes & Traffic Control"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 24: User-Defined Routes & Traffic Control
+# Challenge 24: User-Defined routes & Traffic control
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. has a hub-spoke network topology in Azure. The security team requires all internet-bound traffic from spoke VNets to pass through a central Network Virtual Appliance (NVA) in the hub VNet for inspection and logging. You must implement user-defined routes (UDRs) to override Azure's default routing and enforce this traffic flow pattern (forced tunneling).
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create and configure route tables
 - Create and configure user-defined routes
@@ -26,7 +26,7 @@ Contoso Ltd. has a hub-spoke network topology in Azure. The security team requir
 - Configure next-hop types (Virtual Appliance, VNet Gateway, Internet, None)
 - Diagnose routing issues using effective routes
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -51,7 +51,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1: Create Hub-Spoke VNet Topology
+### Task 1: create Hub-Spoke VNet topology
 
 ```bash
 # Create Hub VNet
@@ -69,7 +69,7 @@ az network vnet subnet create \
   --name GatewaySubnet \
   --address-prefix 10.0.255.0/27
 
-# Create Spoke VNet
+# Create spoke VNet
 az network vnet create \
   --resource-group $RG \
   --name vnet-spoke \
@@ -77,7 +77,7 @@ az network vnet create \
   --subnet-name subnet-workload \
   --subnet-prefix 10.1.1.0/24
 
-# Peer Hub to Spoke
+# Peer Hub to spoke
 az network vnet peering create \
   --resource-group $RG \
   --name hub-to-spoke \
@@ -86,7 +86,7 @@ az network vnet peering create \
   --allow-forwarded-traffic \
   --allow-gateway-transit
 
-# Peer Spoke to Hub
+# Peer spoke to Hub
 az network vnet peering create \
   --resource-group $RG \
   --name spoke-to-hub \
@@ -96,7 +96,7 @@ az network vnet peering create \
   --use-remote-gateways false
 ```
 
-### Task 2: Deploy a Simulated Network Virtual Appliance (NVA)
+### Task 2: deploy a simulated Network Virtual appliance (nva)
 
 ```bash
 # Create NVA VM in the hub
@@ -139,7 +139,7 @@ For an Azure VM to act as a router/NVA, IP forwarding must be enabled at TWO lev
 Without both, forwarded packets will be dropped.
 
 :::
-### Task 3: Create a Route Table
+### Task 3: create a route Table
 
 ```bash
 # Create a route table for the spoke subnet
@@ -160,7 +160,7 @@ az network route-table show \
 Setting `--disable-bgp-route-propagation true` prevents routes learned via BGP (from VPN/ExpressRoute gateways) from being injected into the route table. This gives you full control over routing for that subnet.
 
 :::
-### Task 4: Create User-Defined Routes
+### Task 4: create User-Defined routes
 
 ```bash
 # Route all internet traffic (0.0.0.0/0) through the NVA
@@ -195,7 +195,7 @@ az network route-table route list \
   --route-table-name rt-spoke-workload -o table
 ```
 
-### Task 5: Associate Route Table with Subnet
+### Task 5: associate route Table with subnet
 
 ```bash
 # Associate the route table with the spoke workload subnet
@@ -213,7 +213,7 @@ az network vnet subnet show \
   --query "{Subnet:name, RouteTable:routeTable.id}" -o table
 ```
 
-### Task 6: Deploy a Workload VM and Verify Routing
+### Task 6: deploy a workload VM and verify routing
 
 ```bash
 # Create a workload VM in the spoke
@@ -238,7 +238,7 @@ az network nic show-effective-route-table \
   --name $WORKLOAD_NIC_NAME -o table
 ```
 
-### Task 7: Verify Effective Routes and Diagnose
+### Task 7: verify effective routes and diagnose
 
 ```bash
 # Show effective routes (combines system routes + UDRs)
@@ -249,7 +249,7 @@ az network nic show-effective-route-table \
 # Expected output should show:
 # - 0.0.0.0/0 -> VirtualAppliance (10.0.1.4) [User route]
 # - 10.0.0.0/16 -> VirtualAppliance (10.0.1.4) [User route]
-# - 192.168.0.0/16 -> None [User route - black hole]
+# - 192.168.0.0/16 -> none [User route - black hole]
 # - 10.1.0.0/16 -> VnetLocal [System route]
 ```
 
@@ -258,7 +258,7 @@ az network nic show-effective-route-table \
 2. Compare User routes vs System routes
 3. Note that User routes override System routes for the same prefix
 
-### Task 8: Understand Next-Hop Types
+### Task 8: understand Next-Hop types
 
 Create routes demonstrating each next-hop type:
 
@@ -285,7 +285,7 @@ az network route-table route create \
   --address-prefix 192.168.100.0/24 \
   --next-hop-type VirtualNetworkGateway
 
-# Next-hop: Internet (override to force direct internet path)
+# Next-hop: internet (override to force direct internet path)
 az network route-table route create \
   --resource-group $RG \
   --route-table-name rt-demo-nexthops \
@@ -293,7 +293,7 @@ az network route-table route create \
   --address-prefix 203.0.113.0/24 \
   --next-hop-type Internet
 
-# Next-hop: None (black hole | drop traffic)
+# Next-hop: none (black hole | drop traffic)
 az network route-table route create \
   --resource-group $RG \
   --route-table-name rt-demo-nexthops \
@@ -307,7 +307,7 @@ az network route-table route list \
   --route-table-name rt-demo-nexthops -o table
 ```
 
-### Task 9: Implement Forced Tunneling
+### Task 9: implement forced tunneling
 
 :::tip Forced Tunneling
 
@@ -319,8 +319,8 @@ Forced tunneling redirects all internet-bound traffic (0.0.0.0/0) from Azure bac
 # route-to-internet: 0.0.0.0/0 -> VirtualAppliance (10.0.1.4)
 
 # For VPN-based forced tunneling, you would:
-# 1. Create a VPN Gateway in the hub
-# 2. Configure the default route (0.0.0.0/0) via BGP from on-premises
+# 1. create a VPN Gateway in the hub
+# 2. configure the default route (0.0.0.0/0) via BGP from on-premises
 # 3. OR create a UDR with next-hop VirtualNetworkGateway
 
 # Verify forced tunneling is active
@@ -330,7 +330,7 @@ az network nic show-effective-route-table \
   --query "[?addressPrefix[0]=='0.0.0.0/0']" -o table
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-24"
@@ -346,9 +346,9 @@ az network nic show-effective-route-table \
     "All next-hop types understood and demonstrated"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: NVA IP Forwarding Missing
+### Scenario a: NVA IP forwarding missing
 
 ```bash
 # Disable IP forwarding on the NVA NIC
@@ -360,18 +360,18 @@ az network nic update \
 # Try to reach the internet from the workload VM: it will fail
 # because packets reach the NVA but are dropped (not forwarded)
 
-# Diagnosis: Check NIC IP forwarding setting
+# Diagnosis: check NIC IP forwarding setting
 az network nic show -g $RG -n $NVA_NIC_NAME \
   --query "enableIPForwarding"
 
-# Fix: Re-enable IP forwarding
+# Fix: re-enable IP forwarding
 az network nic update \
   --resource-group $RG \
   --name $NVA_NIC_NAME \
   --ip-forwarding true
 ```
 
-### Scenario B: Wrong Next-Hop IP Address
+### Scenario b: wrong Next-Hop IP address
 
 ```bash
 # Create a route with wrong NVA IP
@@ -382,8 +382,8 @@ az network route-table route update \
   --next-hop-ip-address 10.0.1.99
 
 # Traffic is now sent to a non-existent IP: packets are black-holed
-# Diagnosis: Check effective routes and verify next-hop IP exists
-# Fix: Update to correct NVA IP (10.0.1.4)
+# Diagnosis: check effective routes and verify next-hop IP exists
+# Fix: update to correct NVA IP (10.0.1.4)
 az network route-table route update \
   --resource-group $RG \
   --route-table-name rt-spoke-workload \
@@ -391,7 +391,7 @@ az network route-table route update \
   --next-hop-ip-address 10.0.1.4
 ```
 
-### Scenario C: Route Table Not Associated
+### Scenario c: route Table not associated
 
 ```bash
 # Disassociate route table from subnet
@@ -402,11 +402,11 @@ az network vnet subnet update \
   --remove routeTable
 
 # Traffic now uses default system routes (direct to internet)
-# Diagnosis: Check subnet configuration
+# Diagnosis: check subnet configuration
 az network vnet subnet show -g $RG --vnet-name vnet-spoke -n subnet-workload \
   --query "routeTable"
 
-# Fix: Re-associate
+# Fix: re-associate
 az network vnet subnet update \
   --resource-group $RG \
   --vnet-name vnet-spoke \
@@ -414,7 +414,7 @@ az network vnet subnet update \
   --route-table rt-spoke-workload
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What is the order of route precedence in Azure?**
 
@@ -476,7 +476,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Virtual network traffic routing](https://learn.microsoft.com/azure/virtual-network/virtual-networks-udr-overview)
 - [Create and manage route tables](https://learn.microsoft.com/azure/virtual-network/manage-route-table)

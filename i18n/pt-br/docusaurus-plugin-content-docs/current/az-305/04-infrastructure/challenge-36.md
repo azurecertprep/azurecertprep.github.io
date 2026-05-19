@@ -5,7 +5,7 @@ title: "Desafio 36: Projetar uma Solução Baseada em Contêineres"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 36: Projetar uma Solução Baseada em Contêineres
+# Desafio 36: projetar uma solução baseada em contêineres
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Os 20 microservicos se dividem em três categorias: (1) Oito serviços que reque
 
 O orcamento de migração requer minimizar overhead operacional onde possível. A equipe de plataforma pode gerenciar um cluster Kubernetes mas não tem largura de banda para gerenciar múltiplos clusters ou lidar com operações day-2 para cargas de trabalho simples.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução baseada em containers
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao de Plataforma de Container
+### Parte 1: selecao de plataforma de Container
 
 1. Avalie as três principais opcoes de hospedagem de containers Azure para cada categoria de microservico:
 
@@ -47,7 +47,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 
 3. Documente por que rodar todos os 20 serviços no AKS seria operacionalmente desperdicador, e por que rodar os serviços da Categoria 1 no Container Apps seria tecnicamente insuficiente.
 
-### Parte 2: Design do Cluster AKS
+### Parte 2: design do cluster AKS
 
 4. Projete o cluster AKS para os 8 microservicos complexos:
    - **Rede**: Compare Azure CNI vs Azure CNI Overlay vs kubenet:
@@ -66,7 +66,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
    - KEDA (Kubernetes Event-Driven Autoscaling): Para quais cargas de trabalho?
    - Horizontal Pod Autoscaler: Limiares de CPU/memoria
 
-### Parte 3: Design do Ambiente Container Apps
+### Parte 3: design do ambiente Container Apps
 
 7. Projete o ambiente Azure Container Apps para as 10 APIs HTTP simples:
    - Tipo de ambiente: Somente Consumption vs Dedicated (workload profiles)?
@@ -78,7 +78,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
    - Como funciona a invocacao service-to-service do Dapr dentro de um ambiente Container Apps?
    - Qual é o modelo de rede entre Container Apps no mesmo ambiente?
 
-### Parte 4: Container Registry e Segurança
+### Parte 4: Container Registry e segurança
 
 9. Projete a estratégia de Azure Container Registry (ACR):
    - Qual tier do ACR (Basic, Standard, Premium) atende aos requisitos?
@@ -93,7 +93,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 
 11. Projete o pipeline de CI/CD para implantar tanto no AKS (Helm charts) quanto no Container Apps (implantacao por revisao) a partir de um único container registry.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-36"
@@ -163,7 +163,7 @@ Para este cenário, **Premium** é recomendado porque:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Comparing Azure container options](https://learn.microsoft.com/en-us/azure/container-apps/compare-options)
 - [AKS networking concepts](https://learn.microsoft.com/en-us/azure/aks/concepts-network)
@@ -171,7 +171,7 @@ Para este cenário, **Premium** é recomendado porque:
 - [Azure Container Registry service tiers](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus)
 - [Dapr integration with Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/dapr-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma equipe precisa rodar um service mesh Istio com recursos EnvoyFilter customizados. Eles podem usar Azure Container Apps?</summary>
@@ -201,7 +201,7 @@ Para este cenário, **Premium** é recomendado porque:
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

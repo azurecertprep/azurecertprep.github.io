@@ -5,7 +5,7 @@ title: "Desafio 47: Projetar Migração de Dados Não Estruturados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 47: Projetar Migração de Dados Não Estruturados
+# Desafio 47: projetar migração de dados não estruturados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O desafio: sua conexão de internet e de 100Mbps dedicada. Um calculo simples re
 
 Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Los Angeles durante todo o período de migração (sem congelamento da produção). Novo conteúdo e gerado a uma taxa de 5TB por semana. Algum conteúdo tem requisitos específicos de retencao (obrigacoes contratuais de reter filmagens brutas por 7 anos). O arquivo (1,2PB) e raramente acessado (menos de uma vez por trimestre) enquanto as producoes ativas (800TB) sao acessadas diariamente.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para migrar dados não estruturados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Análise de Largura de Banda de Rede e Selecao de Ferramentas
+### Parte 1: análise de largura de banda de rede e selecao de ferramentas
 
 1. Calcule o tempo de transferencia para 2PB de dados usando cada método disponível:
    - Transferencia online a 100Mbps (teorico vs. realista com overhead de protocolo)
@@ -44,7 +44,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
    - Azure File Sync: sincronizacao continua com cloud tiering
    - Documente quando usar cada ferramenta e suas limitacoes
 
-### Parte 2: Planejamento do Azure Data Box
+### Parte 2: planejamento do Azure Data box
 
 4. Calcule o número de dispositivos Azure Data Box necessários para transferir 2PB:
    - Standard Data Box: 80TB de capacidade utilizavel por dispositivo
@@ -59,7 +59,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
    - Pos-ingestao: verificar contagem de arquivos, tamanho total e checksums por amostragem
    - Lidar com transferencias falhas ou corrompidas (recopiar pastas específicas)
 
-### Parte 3: Sincronizacao Continua Durante a Migração
+### Parte 3: sincronizacao continua durante a migração
 
 7. Projete a arquitetura de sincronizacao continua para os 5TB/semana de novo conteúdo gerado durante a migração:
    - Agente Azure File Sync no servidor gateway NAS para replicação continua
@@ -75,7 +75,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
    - Redirecione todos os editores locais para Azure Files ou um cache local
    - Descomissione os arrays NAS locais
 
-### Parte 4: Otimização de Camadas de Armazenamento
+### Parte 4: otimização de camadas de armazenamento
 
 10. Projete a estratégia de camadas de armazenamento Azure para o conteúdo migrado:
     - Producoes ativas (800TB, acessadas diariamente): Hot tier ou Premium file shares
@@ -84,7 +84,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
 11. Projete políticas de lifecycle management que automaticamente movem conteúdo entre camadas com base nos padrões de acesso pós-migração.
 12. Calcule o custo total de armazenamento Azure para 2PB entre camadas e compare com o custo total de propriedade do NAS local atual (hardware, energia, refrigeracao, espaço físico, mao de obra de TI, recuperação de desastres).
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-47"
@@ -135,7 +135,7 @@ Arquivos no Azure Blob Storage Archive tier estao offline e não podem ser lidos
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Data Box overview](https://learn.microsoft.com/en-us/azure/databox/data-box-overview)
 - [Azure Data Box Heavy overview](https://learn.microsoft.com/en-us/azure/databox/data-box-heavy-overview)
@@ -144,7 +144,7 @@ Arquivos no Azure Blob Storage Archive tier estao offline e não podem ser lidos
 - [Azure File Sync overview](https://learn.microsoft.com/en-us/azure/storage/file-sync/file-sync-introduction)
 - [Choose an Azure solution for data transfer](https://learn.microsoft.com/en-us/azure/storage/common/storage-choose-data-transfer-solution)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma empresa tem 2PB de dados é uma conexão de internet de 100Mbps. Eles pedem 3 dispositivos Data Box Heavy. Durante o ciclo de 15 dias de envio/ingestao, 5TB de novos dados sao gerados. Como você lida com o delta?</summary>

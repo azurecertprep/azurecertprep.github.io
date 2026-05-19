@@ -5,7 +5,7 @@ title: "Challenge 02: Design Log Routing and Filtering"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 02: Design Log Routing and Filtering
+# Challenge 02: design Log routing and filtering
 
 :::info Estimated Time and Cost
 
@@ -21,15 +21,15 @@ The current state is chaotic: some resources have diagnostic settings pointing t
 
 Your task is to design a comprehensive log routing architecture that satisfies compliance, operational, and cost requirements while eliminating redundant data flows.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for routing logs
 - Recommend a logging solution
 - Recommend a monitoring solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Log Routing Architecture
+### Part 1: Log routing architecture
 
 1. Design the routing architecture for Contoso's logs considering these destinations:
    - **SIEM (Splunk)**: Security audit logs, near real-time delivery
@@ -43,7 +43,7 @@ Your task is to design a comprehensive log routing architecture that satisfies c
 
 3. Create a data flow diagram showing how logs move from source resources to each destination.
 
-### Part 2: Diagnostic Settings Configuration
+### Part 2: diagnostic settings configuration
 
 4. Design diagnostic settings for the following resource types, specifying which log categories go to which destinations:
    - Azure Key Vault (AuditEvent logs)
@@ -53,7 +53,7 @@ Your task is to design a comprehensive log routing architecture that satisfies c
 
 5. Implement diagnostic settings for at least two resource types using Azure CLI.
 
-### Part 3: Data Collection Rules
+### Part 3: Data collection rules
 
 6. Design data collection rules (DCRs) to filter and transform logs before ingestion into Log Analytics:
    - Filter out health check HTTP requests (status 200, path "/health") from App Service logs
@@ -62,7 +62,7 @@ Your task is to design a comprehensive log routing architecture that satisfies c
 
 7. Implement one DCR using Azure CLI or ARM template that demonstrates log filtering with a KQL transformation.
 
-### Part 4: Cost Optimization Through Routing
+### Part 4: cost optimization through routing
 
 8. Calculate the cost impact of sending all logs to all destinations vs. selective routing. Consider:
    - Log Analytics ingestion cost per GB
@@ -75,7 +75,7 @@ Your task is to design a comprehensive log routing architecture that satisfies c
    - Tier 2 (Audit): Log Analytics + Storage Archive
    - Tier 3 (Verbose): Storage Archive only (with optional restore)
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-02"
@@ -112,7 +112,7 @@ A single diagnostic setting can send to multiple destinations simultaneously, bu
 # Get the resource ID of a Key Vault
 KV_ID=$(az keyvault show --name contoso-prod-kv --query id -o tsv)
 
-# Create diagnostic setting sending audit logs to Event Hub and Storage
+# Create diagnostic setting sending audit logs to event Hub and Storage
 az monitor diagnostic-settings create \
   --name "security-routing" \
   --resource "$KV_ID" \
@@ -212,7 +212,7 @@ az storage account management-policy create \
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Diagnostic settings in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/diagnostic-settings)
 - [Data collection rules overview](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/data-collection-rule-overview)
@@ -221,7 +221,7 @@ az storage account management-policy create \
 - [Archive Azure resource logs to storage account](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/resource-logs)
 - [Azure Monitor cost and usage](https://learn.microsoft.com/en-us/azure/azure-monitor/cost-usage)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Contoso needs security audit logs delivered to their Splunk SIEM within 5 minutes and archived for 7 years at lowest cost. Which combination of destinations should you configure in the diagnostic settings?</summary>
@@ -251,7 +251,7 @@ az storage account management-policy create \
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

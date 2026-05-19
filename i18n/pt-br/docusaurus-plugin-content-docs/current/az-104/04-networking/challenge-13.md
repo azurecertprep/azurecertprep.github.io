@@ -5,7 +5,7 @@ title: "Challenge 13: DNS & Load Balancing"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 13: DNS & Load Balancing
+# Desafio 13: DNS & Load balancing
 
 :::info Tempo e Custo Estimados
 
@@ -17,13 +17,13 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A aplicação web da Contoso precisa de resolução DNS e balanceamento de carga para alta disponibilidade. A equipe de operações quer migrar dos servidores DNS on-prem e balanceadores de carga de hardware para serviços nativos do Azure. Seu trabalho é configurar o Azure DNS para resolução de nomes e o Azure Load Balancer para distribuir tráfego entre múltiplas VMs.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Configurar Azure DNS
 - Configurar load balancer interno e público
 - Solucionar problemas de balanceamento de carga
 
-## Referência Sysadmin ➜ Azure
+## Referência sysadmin ➜ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -45,7 +45,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1: Criar uma Zona Azure DNS
+### Tarefa 1: criar uma zona Azure DNS
 
 Crie uma zona DNS para um subdomínio. Como você provavelmente não é dono de `contoso.com`, use um subdomínio como `lab.contoso.com` para praticar.
 
@@ -60,7 +60,7 @@ az network dns zone create \
 Você não precisa ser dono do domínio para criar uma zona DNS no Azure | você só não conseguirá resolvê-lo publicamente a menos que delegue os registros NS do domínio pai.
 
 :::
-### Tarefa 2: Adicionar Registros DNS
+### Tarefa 2: adicionar registros DNS
 
 Adicione os seguintes tipos de registro à sua zona DNS:
 
@@ -96,7 +96,7 @@ az network dns record-set txt add-record \
 
 </details>
 
-### Tarefa 3: Criar um Load Balancer Público Standard
+### Tarefa 3: criar um Load Balancer público Standard
 
 Crie um Load Balancer público com SKU Standard e uma configuração de IP frontend.
 
@@ -110,7 +110,7 @@ az network lb create \
   --public-ip-address lb-pip
 ```
 
-### Tarefa 4: Criar um Backend Pool com 2 VMs
+### Tarefa 4: criar um backend pool com 2 VMs
 
 Implante duas VMs e adicione-as ao backend pool do load balancer.
 
@@ -145,7 +145,7 @@ done
 
 </details>
 
-### Tarefa 5: Criar um Health Probe
+### Tarefa 5: criar um health probe
 
 Crie um health probe HTTP na porta 80.
 
@@ -159,7 +159,7 @@ az network lb probe create \
   --path /
 ```
 
-### Tarefa 6: Criar uma Regra de Balanceamento de Carga
+### Tarefa 6: criar uma regra de balanceamento de carga
 
 Crie uma regra que mapeie a porta 80 do frontend para a porta 80 do backend.
 
@@ -176,7 +176,7 @@ az network lb rule create \
   --backend-port 80
 ```
 
-### Tarefa 7: Testar o Balanceamento de Carga
+### Tarefa 7: testar o balanceamento de carga
 
 Acesse o IP público do load balancer em um navegador ou com `curl`. Atualize várias vezes e observe que as respostas vêm de diferentes VMs.
 
@@ -190,7 +190,7 @@ echo "Load Balancer IP: $LB_IP"
 # curl http://$LB_IP (repeat several times)
 ```
 
-### Tarefa 8: Criar um Load Balancer Interno
+### Tarefa 8: criar um Load Balancer interno
 
 Crie um segundo load balancer para serviços backend internos (privados).
 
@@ -212,7 +212,7 @@ Nota: Sem a flag `--public-ip-address` | isso o torna interno.
 
 </details>
 
-### Tarefa 9: Solucionar Problemas de Balanceamento de Carga
+### Tarefa 9: solucionar problemas de balanceamento de carga
 
 Verifique o status do health probe e valide a integridade do backend pool.
 
@@ -223,7 +223,7 @@ az network lb probe show \
   --lb-name lb-web \
   --name hp-http
 
-# Check backend pool health (via Portal: Load Balancer > Insights)
+# Check backend pool health (via portal: Load Balancer > insights)
 # Or check individual VM health:
 az vm get-instance-view \
   --resource-group $RG \
@@ -231,7 +231,7 @@ az vm get-instance-view \
   --query instanceView.statuses
 ```
 
-## Quebre & Conserte
+## Quebre & conserte
 
 ### Quebre
 1. **Configuração errada do health probe** | Altere o probe para verificar a porta 8080 em vez da 80 (ou use o caminho `/healthz` quando o servidor web não tem esse endpoint). Observe que todas as instâncias do backend aparecem como não saudáveis.
@@ -242,7 +242,7 @@ az vm get-instance-view \
 - Verifique que a integridade do backend volta ao normal
 - Observe que o LB automaticamente para de enviar tráfego para instâncias não saudáveis
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 1. **Quais são as principais diferenças entre os SKUs Basic e Standard do Load Balancer?**
    - Standard suporta zonas de disponibilidade, tem um SLA e é com redundância de zona por padrão
@@ -266,7 +266,7 @@ az vm get-instance-view \
 az group delete --name $RG --yes --no-wait
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-13"

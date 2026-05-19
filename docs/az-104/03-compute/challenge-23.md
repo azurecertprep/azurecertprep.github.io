@@ -5,7 +5,7 @@ title: "Challenge 23: App Service Advanced Configuration"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 23: App Service Advanced Configuration
+# Challenge 23: App Service advanced configuration
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. is hardening their production web application hosted on Azure App Service. The security and operations teams require custom domain mapping with TLS enforcement, automated backups, and network-level access restrictions. You must configure the App Service to meet enterprise production standards including VNet integration and hybrid connectivity.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Configure certificates and TLS for App Service
 - Map custom DNS names to App Service
@@ -26,7 +26,7 @@ Contoso Ltd. is hardening their production web application hosted on Azure App S
 - Configure VNet integration
 - Configure access restrictions
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -52,10 +52,10 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1: Create App Service with Custom Domain Prerequisites
+### Task 1: create App Service with custom domain prerequisites
 
 ```bash
-# Create App Service plan (Standard required for custom domains + TLS)
+# Create App Service plan (Standard required for custom domains + tls)
 az appservice plan create \
   --resource-group $RG \
   --name plan-contoso-prod \
@@ -73,7 +73,7 @@ az webapp create \
 echo "App URL: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Task 2: Configure Custom Domain with DNS Verification
+### Task 2: configure custom domain with DNS verification
 
 :::tip Custom Domain Verification
 
@@ -108,9 +108,9 @@ az network dns record-set cname set-record \
 
 # Map the custom domain (requires real DNS delegation in production)
 # az webapp config hostname add \
-#   --resource-group $RG \
-#   --webapp-name $APP_NAME \
-#   --hostname www.contoso-lab.com
+# --resource-group $rg \
+# --webapp-name $app_name \
+# --hostname www.contoso-lab.com
 ```
 
 **Portal Steps:**
@@ -121,24 +121,24 @@ az network dns record-set cname set-record \
 5. Add the required DNS records at your registrar
 6. Click **Validate** then **Add**
 
-### Task 3: Bind a TLS Certificate (Managed Certificate)
+### Task 3: bind a TLS certificate (Managed certificate)
 
 ```bash
-# Create an App Service Managed Certificate (free, auto-renewed)
-# Note: Requires custom domain to be validated first
+# Create an App Service managed certificate (free, auto-renewed)
+# Note: requires custom domain to be validated first
 # az webapp config ssl create \
-#   --resource-group $RG \
-#   --name $APP_NAME \
-#   --hostname www.contoso-lab.com
+# --resource-group $rg \
+# --name $app_name \
+# --hostname www.contoso-lab.com
 
 # Bind the certificate to the custom domain
 # az webapp config ssl bind \
-#   --resource-group $RG \
-#   --name $APP_NAME \
-#   --certificate-thumbprint <THUMBPRINT> \
-#   --ssl-type SNI
+# --resource-group $rg \
+# --name $app_name \
+# --certificate-thumbprint <thumbprint> \
+# --ssl-type SNI
 
-# Enforce HTTPS (redirect HTTP to HTTPS)
+# Enforce HTTPS (redirect HTTP to https)
 az webapp update \
   --resource-group $RG \
   --name $APP_NAME \
@@ -162,7 +162,7 @@ az webapp show -g $RG -n $APP_NAME \
 4. Select **SNI SSL** as the binding type
 5. Under **Protocol Settings**, set Minimum TLS Version to **1.2**
 
-### Task 4: Configure App Service Backup
+### Task 4: configure App Service Backup
 
 ```bash
 # Create storage account for backups
@@ -214,7 +214,7 @@ az webapp config backup show \
 6. Optionally include linked database
 7. Click **Save**
 
-### Task 5: Configure VNet Integration
+### Task 5: configure VNet integration
 
 ```bash
 # Create a VNet for integration
@@ -237,7 +237,7 @@ az webapp vnet-integration list \
   --resource-group $RG \
   --name $APP_NAME -o table
 
-# Configure "Route All" to send all outbound traffic through the VNet
+# Configure "Route all" to send all outbound traffic through the VNet
 az webapp config appsettings set \
   --resource-group $RG \
   --name $APP_NAME \
@@ -249,7 +249,7 @@ az webapp config appsettings set \
 The integration subnet must be delegated to Microsoft.Web/serverFarms and should not contain any other resources. Use a /24 or /26 subnet dedicated to App Service integration.
 
 :::
-### Task 6: Configure Access Restrictions (IP Allow/Deny Rules)
+### Task 6: configure access restrictions (ip Allow/Deny rules)
 
 ```bash
 # Get your current IP
@@ -298,7 +298,7 @@ az webapp config access-restriction show \
   --name $APP_NAME -o table
 ```
 
-### Task 7: Configure Hybrid Connections
+### Task 7: configure hybrid connections
 
 :::tip Hybrid Connections
 
@@ -320,7 +320,7 @@ Hybrid Connections provide connectivity from App Service to on-premises resource
 az relay namespace list --resource-group $RG -o table
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-23"
@@ -335,12 +335,12 @@ az relay namespace list --resource-group $RG -o table
     "Hybrid connection concept understood"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: Backup Fails with Storage Error
+### Scenario a: Backup fails with Storage error
 
 ```bash
-# Simulate: Revoke the SAS token by regenerating storage keys
+# Simulate: revoke the SAS token by regenerating storage keys
 az storage account keys renew \
   --resource-group $RG \
   --account-name $STORAGE_NAME \
@@ -353,26 +353,26 @@ az webapp config backup create \
   --container-url "$CONTAINER_URL" \
   --backup-name "manual-test"
 
-# Fix: Generate a new SAS token and update the backup configuration
+# Fix: generate a new SAS token and update the backup configuration
 ```
 
-### Scenario B: VNet Integration Blocks Outbound
+### Scenario b: VNet integration blocks outbound
 
 ```bash
-# After enabling WEBSITE_VNET_ROUTE_ALL, external APIs stop working
+# After enabling website_vnet_route_all, external APIs stop working
 # because the VNet has no internet route.
-# Diagnosis: Check if the VNet has a default route to the internet
+# Diagnosis: check if the VNet has a default route to the internet
 az network vnet subnet show \
   --resource-group $RG \
   --vnet-name vnet-contoso \
   --name subnet-webapp-integration \
   --query "routeTable"
 
-# Fix: Ensure a NAT gateway or route to internet exists
-# Or set WEBSITE_VNET_ROUTE_ALL=0 for split tunneling
+# Fix: ensure a NAT gateway or route to internet exists
+# Or set website_vnet_route_all=0 for split tunneling
 ```
 
-### Scenario C: Access Restrictions Lock You Out
+### Scenario c: access restrictions lock you out
 
 ```bash
 # You accidentally denied all traffic including your own IP
@@ -383,7 +383,7 @@ az webapp config access-restriction remove \
   --rule-name "DenyAll"
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What is the difference between App Service Managed Certificates and purchased certificates?**
 
@@ -447,7 +447,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Configure App Service custom domains](https://learn.microsoft.com/azure/app-service/app-service-web-tutorial-custom-domain)
 - [App Service TLS/SSL certificates](https://learn.microsoft.com/azure/app-service/configure-ssl-certificate)

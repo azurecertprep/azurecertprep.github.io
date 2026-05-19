@@ -3,7 +3,7 @@ sidebar_position: 1
 title: "AZ-104: Azure Administrator"
 ---
 
-# AZ-104: Azure Administrator | Visão Geral do Exame
+# AZ-104: Azure administrator | visão geral do exame
 
 :::info Detalhes do Exame
 
@@ -15,7 +15,7 @@ title: "AZ-104: Azure Administrator"
 
 Como candidato a esta certificação, você deve ter experiência na implementação, gerenciamento e monitoramento do ambiente Microsoft Azure de uma organização, incluindo redes virtuais, armazenamento, computação, identidade, segurança e governança.
 
-## Habilidades em Resumo
+## Habilidades em resumo
 
 | Domínio | Peso | Desafios |
 |---------|------|----------|
@@ -32,7 +32,7 @@ Os desafios 01-16 cobrem os tópicos principais do exame. Os desafios 17-28 são
 
 :::
 
-## Como Este Site Funciona
+## Como este site funciona
 
 Cada desafio segue um formato consistente:
 
@@ -57,7 +57,7 @@ Cada desafio segue um formato consistente:
 Laboratório com um clique | Sem necessidade de configuração! [Abra no GitHub Codespaces](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1) e tenha Azure CLI, Bicep e PowerShell prontos em minutos. Gratuito por 60h/mês.
 
 :::
-## Recursos de Estudo
+## Recursos de estudo
 
 | Recurso | Link |
 |---------|------|
@@ -67,7 +67,7 @@ Laboratório com um clique | Sem necessidade de configuração! [Abra no GitHub 
 | Trilha de Aprendizado Microsoft Learn | [Trilha de Aprendizado AZ-104](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104) |
 | Agendar o Exame | [Pearson VUE](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/) |
 
-## Trilha de Aprendizado
+## Trilha de aprendizado
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260" font-family="Segoe UI, Arial, sans-serif" style={{maxWidth: '680px', width: '100%'}}>
   <defs>
@@ -113,6 +113,29 @@ Laboratório com um clique | Sem necessidade de configuração! [Abra no GitHub 
   <text x="577" y="200" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#4a235a">AZ-400</text>
   <text x="577" y="220" textAnchor="middle" fontSize="11" fill="#555">Engenheiro DevOps</text>
 </svg>
+
+---
+
+## Sysadmin ↔ Azure
+
+Você já conhece os conceitos. Veja como eles se traduzem para o Azure.
+
+| On-Prem / Sysadmin | Equivalente no Azure | Descrição |
+|---------------------|----------------------|-----------|
+| `Active Directory` | **Microsoft Entra ID** | Gerenciamento de identidade e acesso |
+| `Group Policy (GPO)` | **Azure Policy** | Conformidade e governança |
+| `File server (SMB)` | **Azure Files** | Compartilhamentos de arquivos gerenciados |
+| `NAS / SAN` | **Azure Blob Storage** | Armazenamento de objetos e blocos |
+| `Hyper-V / VMware` | **Azure Virtual Machines** | Cargas de trabalho de computação |
+| `IIS / Apache` | **Azure App Service** | Hospedagem de aplicações web |
+| `Docker host` | **Azure Container Apps** | Cargas de trabalho em contêineres |
+| `VLAN / Subnet` | **Azure VNet / Subnet** | Isolamento de rede |
+| `Firewall rules` | **NSG / Azure Firewall** | Controle de tráfego |
+| `DNS server` | **Azure DNS** | Resolução de nomes |
+| `F5 / HAProxy` | **Azure Load Balancer** | Distribuição de tráfego |
+| `Nagios / Zabbix` | **Azure Monitor** | Monitoramento e alertas |
+| `Veeam / SCDPM` | **Azure Backup** | Backup e recuperação |
+| `DR site` | **Azure Site Recovery** | Recuperação de desastres |
 
 ---
 

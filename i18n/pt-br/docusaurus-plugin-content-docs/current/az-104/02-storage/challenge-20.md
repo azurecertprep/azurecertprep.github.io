@@ -5,7 +5,7 @@ title: "Desafio 20: Criptografia de Armazenamento & Proteção de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 20: Criptografia de Armazenamento & Proteção de Dados
+# Desafio 20: criptografia de armazenamento & proteção de dados
 
 :::info Tempo Estimado e Custo
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo armazenamento contendo dados financeiros ou de saúde deve usar chaves de criptografia gerenciadas pelo cliente (CMK) para fins de trilha de auditoria. Além disso, dados regulatórios (como registros financeiros e logs de auditoria) devem ser armazenados em contêineres imutáveis (WORM | Write Once, Read Many) onde os dados não podem ser modificados ou excluídos por um período de retenção especificado. Você foi encarregado de implementar esses controles de criptografia e proteção de dados.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -28,7 +28,7 @@ A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo
 | Configurar retenção legal em contêineres blob | Médio |
 | Configurar Azure Key Vault para CMK | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
@@ -43,7 +43,7 @@ A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo
 
 ## Tarefas
 
-### Tarefa 1: Criar o Ambiente do Laboratório
+### Tarefa 1: criar o ambiente do laboratório
 
 ```bash
 # Criar grupo de recursos
@@ -61,7 +61,7 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-encryption-lab --query "[0].name" -o tsv)
 ```
 
-### Tarefa 2: Criar uma Conta de Armazenamento com Criptografia de Infraestrutura
+### Tarefa 2: criar uma conta de armazenamento com criptografia de infraestrutura
 
 A criptografia de infraestrutura (criptografia dupla) adiciona uma segunda camada de criptografia no nível de infraestrutura usando um algoritmo diferente:
 
@@ -94,7 +94,7 @@ Ao criar uma conta de armazenamento no portal:
 
 
 :::
-### Tarefa 3: Criar uma Chave no Azure Key Vault
+### Tarefa 3: criar uma chave no Azure Key Vault
 
 ```bash
 # Criar uma chave RSA para criptografia de armazenamento
@@ -113,7 +113,7 @@ KEY_URI=$(az keyvault key show \
 echo "Key URI: $KEY_URI"
 ```
 
-### Tarefa 4: Configurar Chaves Gerenciadas pelo Cliente (CMK) na Conta de Armazenamento
+### Tarefa 4: configurar chaves gerenciadas pelo cliente (cmk) na conta de armazenamento
 
 ```bash
 # Atribuir uma identidade gerenciada pelo sistema à conta de armazenamento
@@ -128,7 +128,7 @@ IDENTITY_ID=$(az storage account show \
   --resource-group rg-encryption-lab \
   --query "identity.principalId" -o tsv)
 
-# Conceder à conta de armazenamento a função Key Vault Crypto Service Encryption User
+# Conceder à conta de armazenamento a função Key Vault crypto Service encryption user
 az role assignment create \
   --assignee $IDENTITY_ID \
   --role "Key Vault Crypto Service Encryption User" \
@@ -149,7 +149,7 @@ az storage account show \
   --query "{KeySource:encryption.keySource, KeyVaultUri:encryption.keyVaultProperties.keyVaultUri, KeyName:encryption.keyVaultProperties.keyName}" -o table
 ```
 
-### Tarefa 5: Configurar Política de Imutabilidade (Retenção Baseada em Tempo)
+### Tarefa 5: configurar política de imutabilidade (Retenção baseada em tempo)
 
 ```bash
 # Criar um contêiner para dados regulatórios
@@ -195,7 +195,7 @@ Só bloqueie uma política quando tiver certeza sobre os requisitos de retençã
 
 
 :::
-### Tarefa 6: Configurar Retenção Legal
+### Tarefa 6: configurar retenção legal
 
 ```bash
 # Criar um contêiner para dados de litígio
@@ -236,7 +236,7 @@ az storage blob delete \
 rm -f evidence.txt
 ```
 
-### Tarefa 7: Verificar Configurações de Criptografia
+### Tarefa 7: verificar configurações de criptografia
 
 ```bash
 # Verificar escopo de criptografia no nível da conta
@@ -259,7 +259,7 @@ az keyvault key show \
   --query "{Name:key.kid, Enabled:attributes.enabled, Created:attributes.created}" -o table
 ```
 
-### Tarefa 8: Rotacionar a Chave Gerenciada pelo Cliente
+### Tarefa 8: rotacionar a chave gerenciada pelo cliente
 
 ```bash
 # Criar uma nova versão da chave
@@ -277,7 +277,7 @@ az storage account show \
   --query "encryption.keyVaultProperties.{KeyName:keyName, KeyVersion:keyVersion}" -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-20"
@@ -323,14 +323,14 @@ A proteção contra purge deve estar habilitada no Key Vault usado para CMK. Sem
 
 </details>
 
-## Quebrar & Consertar
+## Quebrar & consertar
 
-### Cenário A: Chave CMK Desabilitada
+### Cenário a: chave CMK desabilitada
 
 Desabilite a chave de criptografia no Key Vault. O que acontece com as operações de leitura/escrita na conta de armazenamento? (Resposta: Todas as operações do plano de dados falham com erro 403 após a chave em cache expirar, geralmente em algumas horas.)
 
 ```bash
-# Desabilitar a chave (CUIDADO: afeta o acesso ao armazenamento)
+# Desabilitar a chave (cuidado: afeta o acesso ao armazenamento)
 az keyvault key set-attributes \
   --vault-name $KV_NAME \
   --name storage-cmk-key \
@@ -346,15 +346,15 @@ az keyvault key set-attributes \
   --enabled true
 ```
 
-### Cenário B: Política de Imutabilidade Bloqueada
+### Cenário b: política de imutabilidade bloqueada
 
 Bloqueie a política de imutabilidade em um contêiner de teste, depois tente excluir um blob antes do período de retenção terminar. Observe o erro. Nota: Isso não pode ser desfeito | só faça isso em um contêiner de teste.
 
-### Cenário C: Acesso ao Key Vault Perdido
+### Cenário c: acesso ao Key Vault perdido
 
 Remova a atribuição de função da identidade gerenciada no Key Vault. Quanto tempo até as operações de armazenamento começarem a falhar? Como você diagnostica o problema usando o Azure Monitor?
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Qual é a diferença entre chaves gerenciadas pela Microsoft e chaves gerenciadas pelo cliente?</summary>
@@ -409,7 +409,7 @@ az group delete --name rg-encryption-lab --yes --no-wait
 echo "Limpeza concluída. O Key Vault permanecerá em estado de soft-delete pelo período de retenção."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Visão geral da criptografia de conta de armazenamento](https://learn.microsoft.com/en-us/azure/storage/common/storage-service-encryption)
 - [Configurar chaves gerenciadas pelo cliente](https://learn.microsoft.com/en-us/azure/storage/common/customer-managed-keys-overview)

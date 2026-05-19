@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Disaster struck at Contoso | a developer accidentally deleted production data. Management is demanding answers: *"Why wasn't there a backup?"* Your job is to implement Azure Backup and Azure Site Recovery so this never happens again.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create a Recovery Services vault
 - Create an Azure Backup vault
@@ -27,7 +27,7 @@ Disaster struck at Contoso | a developer accidentally deleted production data. M
 - Perform failover to a secondary region
 - Configure and interpret reports and alerts for backups
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -50,7 +50,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1: Create a Recovery Services Vault
+### Task 1: create a Recovery Services Vault
 
 ```bash
 az backup vault create \
@@ -64,7 +64,7 @@ az backup vault create \
 Recovery Services vaults are used for VM backup and Azure Site Recovery. The vault must be in the **same region** as the VMs you want to back up.
 
 :::
-### Task 2: Create a Backup Policy
+### Task 2: create a Backup Policy
 
 Create a custom backup policy: daily backups at 2:00 AM, 30-day retention.
 
@@ -90,7 +90,7 @@ az backup policy set \
 
 </details>
 
-### Task 3: Enable Backup for a VM
+### Task 3: enable Backup for a VM
 
 Deploy a VM and enable backup:
 
@@ -112,7 +112,7 @@ az backup protection enable-for-vm \
   --policy-name DefaultPolicy
 ```
 
-### Task 4: Trigger an On-Demand Backup
+### Task 4: trigger an On-Demand Backup
 
 ```bash
 az backup protection backup-now \
@@ -128,7 +128,7 @@ az backup protection backup-now \
 The first backup can take **30–60 minutes** depending on the VM size. You can check progress in the vault's **Backup Jobs** blade.
 
 :::
-### Task 5: Restore a VM from Backup
+### Task 5: restore a VM from Backup
 
 Once the backup completes, restore it to a new VM:
 
@@ -153,7 +153,7 @@ az backup recoverypoint list \
 
 </details>
 
-### Task 6: Create an Azure Backup Vault
+### Task 6: create an Azure Backup Vault
 
 Azure Backup vaults are used for newer workloads like blob backup and Azure Database for PostgreSQL.
 
@@ -165,7 +165,7 @@ az dataprotection backup-vault create \
   --storage-setting "[{type:LocallyRedundant,datastore-type:VaultStore}]"
 ```
 
-### Task 7: Configure Blob Backup (Operational Tier)
+### Task 7: configure Blob Backup (Operational tier)
 
 1. Create a storage account
 2. Configure operational backup for blobs (point-in-time restore)
@@ -183,7 +183,7 @@ This enables point-in-time restore for blobs | no backup copies are created; it 
 
 </details>
 
-### Task 8: Configure Azure Site Recovery
+### Task 8: configure Azure Site Recovery
 
 Enable replication for a VM to a secondary region:
 
@@ -199,7 +199,7 @@ Enable replication for a VM to a secondary region:
 Site Recovery replicates VM disks asynchronously to the target region. Initial replication can take 30–60 minutes depending on disk size.
 
 :::
-### Task 9: Run a Test Failover
+### Task 9: run a test failover
 
 After initial replication completes:
 
@@ -214,13 +214,13 @@ After initial replication completes:
 Always clean up test failover resources | they continue to incur charges until removed.
 
 :::
-### Task 10: Configure Backup Reports
+### Task 10: configure Backup reports
 
 1. Go to **Backup center → Backup reports**
 2. Configure the Log Analytics workspace as the data source
 3. Explore: backup item health, backup job trends, storage consumption
 
-### Task 11: Set Up Backup Alerts
+### Task 11: set up Backup alerts
 
 Configure alerts for failed backup jobs:
 
@@ -228,17 +228,17 @@ Configure alerts for failed backup jobs:
 2. Create an alert rule for **Backup failure**
 3. Attach an action group for email notification
 
-## Break & Fix
+## Break & fix
 
-### Break It
+### Break it
 1. **Delete a vault with protected items** | Try to delete the Recovery Services vault while it still has backup items. Observe the error: *"Vault cannot be deleted as there are existing resources within the vault."*
 2. **Region mismatch** | Try to back up a VM in `westus2` using the vault in `eastus`. What happens?
 
-### Fix It
+### Fix it
 - To delete a vault: first stop backup protection, delete backup data, then delete the vault
 - Move or recreate the vault in the same region as the VM
 
-## Knowledge Check
+## Knowledge check
 
 1. **Recovery Services vault vs Azure Backup vault?**
    - Recovery Services vault: VMs, SQL in Azure VM, Azure Files, Azure Site Recovery
@@ -260,10 +260,10 @@ Configure alerts for failed backup jobs:
 ## Cleanup
 
 ```bash
-# IMPORTANT: Must stop protection before deleting vault
-# 1. Stop backup and delete backup data for each protected item
-# 2. Disable Site Recovery replication
-# 3. Then delete the resource group
+# IMPORTANT: must stop protection before deleting vault
+# 1. stop backup and delete backup data for each protected item
+# 2. disable Site Recovery replication
+# 3. then delete the resource group
 
 az group delete --name $RG --yes --no-wait
 ```
@@ -277,7 +277,7 @@ If vault deletion fails, follow this order:
 4. Delete the resource group
 
 :::
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-15"

@@ -6,7 +6,7 @@ title: "Challenge 25: Design Recovery Objectives & Strategy"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 25: Design Recovery Objectives & Strategy
+# Challenge 25: design Recovery objectives & strategy
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ The CIO has categorized all workloads into three tiers based on business impact 
 
 The challenge is significant: Mercy has a DR budget of only $5,000/month to protect all three tiers. You must design a recovery strategy that appropriately allocates budget across tiers, selecting the right recovery pattern (hot/warm/cold standby) for each workload class while proving that the composite SLA meets availability requirements.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a recovery solution for Azure and hybrid workloads that meets recovery objectives
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Business Impact Analysis and Recovery Objectives
+### Part 1: Business impact analysis and Recovery objectives
 
 1. For each workload tier, formally define the following recovery parameters:
    - Recovery Time Objective (RTO)
@@ -43,7 +43,7 @@ The challenge is significant: Mercy has a DR budget of only $5,000/month to prot
 
 3. Document the business impact of exceeding RTO for each tier (financial loss per hour, patient safety risk, regulatory penalties).
 
-### Part 2: Recovery Strategy Selection
+### Part 2: Recovery strategy selection
 
 4. Map each workload tier to the appropriate recovery pattern:
    - **Hot standby**: Active-active or active-passive with real-time replication
@@ -68,7 +68,7 @@ The challenge is significant: Mercy has a DR budget of only $5,000/month to prot
 
 6. Justify why hot standby is required for Tier 1 but would be wasteful for Tier 3.
 
-### Part 3: SLA Composition and Budget Allocation
+### Part 3: SLA composition and budget allocation
 
 7. Calculate the composite SLA for a Tier 1 workload that depends on:
    - Azure Virtual Machines (99.99% with Availability Zones)
@@ -82,7 +82,7 @@ The challenge is significant: Mercy has a DR budget of only $5,000/month to prot
 
 9. Allocate the $5,000/month DR budget across tiers. Consider that hot standby costs roughly 80-100% of production costs, warm standby costs 30-50%, and cold standby costs 5-10%.
 
-### Part 4: Recovery Strategy Documentation
+### Part 4: Recovery strategy documentation
 
 10. Create a recovery strategy document that maps Azure services to each tier:
     - Tier 1: Which Azure services provide sub-minute RTO?
@@ -91,7 +91,7 @@ The challenge is significant: Mercy has a DR budget of only $5,000/month to prot
 
 11. Define the DR testing schedule and validation criteria for each tier.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-25"
@@ -170,7 +170,7 @@ To convert RTO to minimum uptime percentage:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Business continuity and disaster recovery - Cloud Adoption Framework](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/management-business-continuity-disaster-recovery)
 - [Azure Well-Architected Framework - Reliability pillar](https://learn.microsoft.com/en-us/azure/well-architected/reliability/)
@@ -178,7 +178,7 @@ To convert RTO to minimum uptime percentage:
 - [SLA summary for Azure services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services)
 - [Composite SLA calculation](https://learn.microsoft.com/en-us/azure/architecture/framework/resiliency/business-metrics#composite-slas)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A workload has a composite SLA of 99.9% but requires 99.99% availability. What architectural change most effectively closes this gap?</summary>
@@ -208,7 +208,7 @@ To convert RTO to minimum uptime percentage:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

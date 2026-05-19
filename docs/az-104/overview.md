@@ -3,7 +3,7 @@ sidebar_position: 1
 title: "AZ-104: Azure Administrator"
 ---
 
-# AZ-104: Azure Administrator
+# AZ-104: Azure administrator
 
 :::info Exam Details
 
@@ -15,7 +15,7 @@ title: "AZ-104: Azure Administrator"
 
 As a candidate for this certification, you should have subject matter expertise in implementing, managing, and monitoring an organization's Microsoft Azure environment, including virtual networks, storage, compute, identity, security, and governance.
 
-## Skills at a Glance
+## Skills at a glance
 
 | Domain | Weight | Challenges |
 |--------|--------|------------|
@@ -32,7 +32,7 @@ Challenges 01-16 cover core exam topics. Challenges 17-28 are advanced deep dive
 
 :::
 
-## How This Site Works
+## How this site works
 
 Each challenge follows a consistent format:
 
@@ -57,7 +57,7 @@ Each challenge follows a consistent format:
 No setup needed! [Open in GitHub Codespaces](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1) and get Azure CLI, Bicep, and PowerShell ready in minutes. Free for 60h/month.
 
 :::
-## Study Resources
+## Study resources
 
 | Resource | Link |
 |----------|------|
@@ -67,7 +67,7 @@ No setup needed! [Open in GitHub Codespaces](https://codespaces.new/azurecertpre
 | Exam Sandbox | [Try the exam interface](https://aka.ms/examdemo) |
 | Schedule the Exam | [Pearson VUE](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/) |
 
-## Microsoft Learn Paths
+## Microsoft Learn paths
 
 The official Microsoft Learn self-paced content for AZ-104:
 
@@ -80,7 +80,7 @@ The official Microsoft Learn self-paced content for AZ-104:
 | [Deploy and manage Azure compute resources](https://learn.microsoft.com/en-us/training/paths/az-104-manage-compute-resources/) | 5 |
 | [Monitor and back up Azure resources](https://learn.microsoft.com/en-us/training/paths/az-104-monitor-backup-resources/) | 3 |
 
-## Learning Path
+## Learning path
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260" font-family="Segoe UI, Arial, sans-serif" style={{maxWidth: '680px', width: '100%'}}>
   <defs>
@@ -126,6 +126,29 @@ The official Microsoft Learn self-paced content for AZ-104:
   <text x="577" y="200" textAnchor="middle" fontWeight="bold" fontSize="13" fill="#4a235a">AZ-400</text>
   <text x="577" y="220" textAnchor="middle" fontSize="11" fill="#555">DevOps Engineer</text>
 </svg>
+
+---
+
+## Sysadmin ↔ Azure
+
+You already know the concepts. Here's how they translate to Azure.
+
+| On-Prem / Sysadmin | Azure Equivalent | Description |
+|---------------------|------------------|-------------|
+| `Active Directory` | **Microsoft Entra ID** | Identity & access management |
+| `Group Policy (GPO)` | **Azure Policy** | Compliance & governance |
+| `File server (SMB)` | **Azure Files** | Managed file shares |
+| `NAS / SAN` | **Azure Blob Storage** | Object & block storage |
+| `Hyper-V / VMware` | **Azure Virtual Machines** | Compute workloads |
+| `IIS / Apache` | **Azure App Service** | Web app hosting |
+| `Docker host` | **Azure Container Apps** | Container workloads |
+| `VLAN / Subnet` | **Azure VNet / Subnet** | Network isolation |
+| `Firewall rules` | **NSG / Azure Firewall** | Traffic control |
+| `DNS server` | **Azure DNS** | Name resolution |
+| `F5 / HAProxy` | **Azure Load Balancer** | Traffic distribution |
+| `Nagios / Zabbix` | **Azure Monitor** | Monitoring & alerts |
+| `Veeam / SCDPM` | **Azure Backup** | Backup & recovery |
+| `DR site` | **Azure Site Recovery** | Disaster recovery |
 
 ---
 

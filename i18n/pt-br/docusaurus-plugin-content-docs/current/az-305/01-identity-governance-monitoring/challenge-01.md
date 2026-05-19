@@ -6,7 +6,7 @@ title: "Desafio 01: Projetar uma Solução de Registro Centralizado"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Desafio 01: Projetar uma Solução de Registro Centralizado
+# Desafio 01: projetar uma solução de registro centralizado
 
 :::info Tempo Estimado e Custo
 
@@ -22,15 +22,15 @@ O CTO determinou uma estratégia centralizada de logging que forneça um painel 
 
 Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilibre eficiência de custos, controle de acesso, requisitos de conformidade e simplicidade operacional.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de logging
 - Recomendar uma solução para roteamento de logs
 - Recomendar uma solução de monitoramento
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Decisao de Arquitetura de Workspace
+### Parte 1: decisao de arquitetura de workspace
 
 1. Avalie as seguintes estratégias de workspace para a Northwind Traders e recomende uma com justificativa:
    - Workspace único centralizado
@@ -55,7 +55,7 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
 
 3. Determine a(s) região(oes) apropriada(s) para seu(s) workspace(s) considerando o requisito de residencia de dados da UE.
 
-### Parte 2: Implantar e Configurar o Workspace
+### Parte 2: implantar e configurar o workspace
 
 4. Crie o(s) workspace(s) do Log Analytics de acordo com seu design usando Azure CLI.
 
@@ -66,7 +66,7 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
 
 6. Configure retencao por tabela onde diferentes tipos de dados requerem diferentes períodos de retencao.
 
-### Parte 3: Design de Controle de Acesso
+### Parte 3: design de controle de acesso
 
 7. Projete um modelo de acesso que satisfaca estes requisitos:
    - Equipe de segurança: acesso de leitura a todos os logs de segurança em todos os workspaces
@@ -76,13 +76,13 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
 
 8. Implemente controle de acesso resource-context vs. workspace-context onde apropriado.
 
-### Parte 4: Gerenciamento de Custos
+### Parte 4: gerenciamento de custos
 
 9. Avalie o preco do commitment tier vs. pay-as-you-go para o volume total esperado de ingestao de 350 GB/dia.
 
 10. Projete uma estratégia para reduzir custos de ingestao para logs verbosos mas de baixa prioridade (ex.: logs de aplicação em nível de debug).
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-01"
@@ -148,7 +148,7 @@ az monitor log-analytics workspace table update \
   --name SecurityEvent \
   --retention-time 365
 
-# Set Perf table to 30 days
+# Set perf table to 30 days
 az monitor log-analytics workspace table update \
   --resource-group rg-logging-centralus \
   --workspace-name law-northwind-central \
@@ -190,7 +190,7 @@ Compare: commitment tier de 300 GB + 50 GB de excedente vs. commitment tier de 4
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Design a Log Analytics workspace architecture](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/workspace-design)
 - [Azure Monitor Logs overview](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs)
@@ -199,7 +199,7 @@ Compare: commitment tier de 300 GB + 50 GB de excedente vs. commitment tier de 4
 - [Configure data retention and archive](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure)
 - [Basic Logs in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/basic-logs-configure)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A Northwind Traders tem 350 GB/dia de ingestao de logs divididos entre três equipes. A equipe de segurança precisa consultar todos os logs, mas a equipe de análise deve ver apenas seus próprios dados. Qual é a arquitetura de workspace mais economica?</summary>

@@ -5,7 +5,7 @@ title: "Challenge 38: Design a Messaging Architecture"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 38: Design a Messaging Architecture
+# Challenge 38: design a messaging architecture
 
 :::info Estimated Time and Cost
 
@@ -19,13 +19,13 @@ MegaMart is an online marketplace processing 500,000 orders per day across 10,00
 
 The architecture team needs to design a messaging solution that guarantees exactly-once processing, supports priority-based message routing, handles multi-step transactions reliably, and maintains delivery guarantees even when downstream services experience extended outages (up to 4 hours).
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a messaging architecture
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Messaging Service Selection
+### Part 1: messaging Service selection
 
 1. Compare Azure messaging services for the order processing pipeline:
 
@@ -46,7 +46,7 @@ The architecture team needs to design a messaging solution that guarantees exact
    - Feature requirements: duplicate detection, sessions, transactions
    - Network isolation: Does the system need private endpoints?
 
-### Part 2: Exactly-Once Processing Design
+### Part 2: Exactly-Once processing design
 
 4. Design the duplicate detection strategy:
    - Service Bus provides duplicate detection within a configurable time window (up to 7 days)
@@ -68,7 +68,7 @@ The architecture team needs to design a messaging solution that guarantees exact
    - Consumer completes (acknowledges) the message
    - If processing fails, message returns to queue after lock expires
 
-### Part 3: Priority Queue Design
+### Part 3: priority Queue design
 
 7. Design the priority routing architecture for premium vs standard orders:
    - **Option A**: Separate queues (premium-orders, standard-orders) with different consumer allocation
@@ -85,7 +85,7 @@ The architecture team needs to design a messaging solution that guarantees exact
    - Implement the competing consumers pattern for horizontal scaling
    - How do you prevent starvation of standard orders during premium traffic spikes?
 
-### Part 4: Multi-Step Transaction Orchestration
+### Part 4: Multi-Step transaction orchestration
 
 10. Design the order fulfillment saga using Service Bus:
     - Step 1: Verify payment (call Payment Service via queue)
@@ -104,7 +104,7 @@ The architecture team needs to design a messaging solution that guarantees exact
     - Design the manual review process for dead-lettered orders
     - What is the retention policy for dead-letter messages?
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-38"
@@ -201,7 +201,7 @@ Design your DLQ strategy:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Service Bus overview](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview)
 - [Service Bus message sessions (FIFO)](https://learn.microsoft.com/en-us/azure/service-bus-messaging/message-sessions)
@@ -209,7 +209,7 @@ Design your DLQ strategy:
 - [Service Bus dead-letter queues](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues)
 - [Competing Consumers pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A consumer processes an order message and writes to the database, but crashes before calling Complete() on the Service Bus message. What happens?</summary>
@@ -239,11 +239,11 @@ Design your DLQ strategy:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab validates messaging behaviors that matter for the AZ-305 exam: dead-letter queues catching expired messages, duplicate detection preventing double-processing, and topic fan-out delivering one message to multiple subscribers independently.
 
-### Part A - Deploy Service Bus Infrastructure
+### Part a - deploy Service Bus infrastructure
 
 1. Create the resource group and Service Bus namespace:
 
@@ -295,7 +295,7 @@ az servicebus queue show \
   -o table
 ```
 
-### Part B - Dead-Letter Queue Behavior
+### Part b - Dead-Letter Queue behavior
 
 This test proves that messages which expire without being consumed are not silently lost. They move to the dead-letter sub-queue where they can be investigated and reprocessed.
 
@@ -326,7 +326,7 @@ You should see `activeMessages: 0` and `deadLetterMessages: 1`.
 Dead-letter queues catch failed or expired messages so there is no silent data loss. In production, a message that expires or exceeds max delivery count moves to the DLQ automatically. Without this safety net, messages would simply vanish, and you would never know an order was lost. Monitor DLQ depth with alerts -- any non-zero count indicates a processing failure.
 :::
 
-### Part C - Duplicate Detection
+### Part c - duplicate detection
 
 This test proves that Service Bus rejects messages with the same MessageId within the detection window, preventing double-processing at the platform level.
 
@@ -357,7 +357,7 @@ You should see `activeMessages: 1` (not 2). The second send was accepted by the 
 Duplicate detection prevents double-processing at the broker level. The sender receives a success response even when the duplicate is dropped -- this is by design so retry logic does not need to distinguish "new message accepted" from "duplicate dropped." The detection window (here 5 minutes) must cover the maximum duration of client retry attempts. If retries can span longer than the window, duplicates slip through.
 :::
 
-### Part D - Topic Fan-Out
+### Part d - topic Fan-Out
 
 This test proves that a single message published to a topic is independently delivered to all subscriptions, enabling event-driven fan-out without sender coupling.
 

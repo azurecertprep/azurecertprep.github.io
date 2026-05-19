@@ -5,7 +5,7 @@ title: "Challenge 10: Design a Resource Tagging Strategy"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 10: Design a Resource Tagging Strategy
+# Challenge 10: design a Resource tagging strategy
 
 :::info Estimated Time and Cost
 
@@ -21,39 +21,39 @@ The VP of Engineering has mandated a comprehensive tagging strategy that address
 
 The challenge is enforcement: Cloudvista has 15 development teams, each using different deployment tools (Terraform, Bicep, Azure CLI, Portal). Some teams are disciplined about tagging; others ignore it entirely. The solution must enforce minimum required tags while allowing teams to add custom tags for their own operational needs. Resources that cannot be tagged (some child resources) must be accounted for through parent resource tagging or alternative attribution methods.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a strategy for resource tagging
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Tag Taxonomy Design
+### Part 1: tag taxonomy design
 
 1. Design the complete tag taxonomy for Cloudvista. Categorize tags into: mandatory (must exist on every resource), conditional (required in specific contexts), and optional (team-discretion). For each tag, specify: tag name, allowed values (free-form vs. controlled vocabulary), and purpose.
 2. Define minimum required tags for cost attribution. These must enable Finance to generate reports showing cost by: business unit, project/application, cost center, and environment.
 3. Define operational tags that support incident response. At minimum: resource owner (individual or team), support tier (P1-P4), and deployment mechanism.
 4. Define security and compliance tags: data classification level (public, internal, confidential, restricted), regulatory scope (GDPR, SOC2, HIPAA), and whether the resource handles PII.
 
-### Part 2: Tag Enforcement with Azure Policy
+### Part 2: tag enforcement with Azure Policy
 
 5. Design Azure Policy definitions to enforce the mandatory tags. For each mandatory tag, determine the appropriate policy effect: should missing tags be denied (prevent creation), audited (flag non-compliance), or auto-remediated (inherit or apply a default value)?
 6. Create a policy strategy for tag value validation. Determine which tags need controlled vocabularies (only specific values allowed) versus free-form text.
 7. Design a remediation strategy for the 1,400+ existing resources that lack tags. Determine whether to use Azure Policy remediation tasks with `modify` effect, bulk scripting, or a manual triage process.
 8. Address tag inheritance limitations. Azure tags do not automatically inherit from resource groups or subscriptions to child resources. Design a solution for ensuring resources inherit parent tags (options: Azure Policy with `modify` effect, deployment templates, or post-deployment automation).
 
-### Part 3: Cost Allocation and Reporting
+### Part 3: cost allocation and reporting
 
 9. Design how tags integrate with Azure Cost Management. Specify which tags will be used as cost allocation dimensions, how untagged resources will be attributed, and how shared resources (hub networking, monitoring) will be allocated across business units.
 10. Address resources that cannot be tagged (certain child resources, classic resources). Define an alternative cost attribution method for these resources.
 11. Define a process for tag hygiene: how stale tag values are detected (e.g., an owner who left the company), who is responsible for updating them, and how often tag compliance is reviewed.
 
-### Part 4: Naming Conventions and Automation
+### Part 4: naming conventions and automation
 
 12. Design tag naming conventions: case sensitivity handling (Azure tags are case-insensitive for keys but case-sensitive for values), maximum lengths (tag name: 512 chars, tag value: 256 chars), and character restrictions.
 13. Define how IaC tools (Terraform, Bicep) should implement tags. Specify a pattern for default tags applied by the CI/CD pipeline (e.g., deployment timestamp, pipeline run ID, git commit SHA) without requiring developer action.
 14. Design a tag compliance dashboard that shows: percentage of resources tagged per team, most common missing tags, and cost of untagged resources.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-10"
@@ -104,7 +104,7 @@ In Terraform, use a `default_tags` block in the provider configuration to automa
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Define your tagging strategy](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging)
 - [Azure tagging decision guide](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming-and-tagging-decision-guide)
@@ -113,7 +113,7 @@ In Terraform, use a `default_tags` block in the provider configuration to automa
 - [Azure Policy built-in definitions for tags](https://learn.microsoft.com/azure/governance/policy/samples/built-in-policies#tags)
 - [Cost allocation with tags in Azure Cost Management](https://learn.microsoft.com/azure/cost-management-billing/costs/cost-analysis-built-in-views)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Cloudvista wants to ensure every new resource in production subscriptions has a "CostCenter" tag before it can be created. However, in development subscriptions, they want to flag non-compliance without blocking. What policy configuration achieves this?</summary>
@@ -143,7 +143,7 @@ In Terraform, use a `default_tags` block in the provider configuration to automa
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

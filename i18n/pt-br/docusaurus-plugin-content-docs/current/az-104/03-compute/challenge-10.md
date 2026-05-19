@@ -16,7 +16,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A equipe de marketing da Contoso precisa de uma aplicação web implantada para uma campanha futura. O site deve suportar implantações sem tempo de inatividade, auto-scaling durante picos de tráfego e backups regulares. Você vai implantá-lo no Azure App Service com boas práticas de produção | deployment slots, autoscale e controles de rede.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -29,7 +29,7 @@ A equipe de marketing da Contoso precisa de uma aplicação web implantada para 
 | Configurar backup para o App Service | Médio |
 | Configurar definições de rede | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | Tradicional | Equivalente no Azure |
 |-------------|---------------------|
@@ -43,13 +43,13 @@ A equipe de marketing da Contoso precisa de uma aplicação web implantada para 
 
 ## Tarefas
 
-### Tarefa 1: Criar um Plano do App Service
+### Tarefa 1: criar um plano do App Service
 
 ```bash
 # Criar um grupo de recursos
 az group create --name rg-appservice-lab --location eastus
 
-# Criar um plano do App Service (Standard S1: necessário para deployment slots)
+# Criar um plano do App Service (Standard s1: necessário para deployment slots)
 az appservice plan create \
   --resource-group rg-appservice-lab \
   --name plan-contoso-web \
@@ -61,10 +61,10 @@ az appservice plan show -g rg-appservice-lab -n plan-contoso-web \
   --query "{Name:name, SKU:sku.name, Tier:sku.tier, Workers:sku.capacity}" -o table
 ```
 
-### Tarefa 2: Criar um Web App
+### Tarefa 2: criar um web App
 
 ```bash
-# Criar um web app com runtime Node.js
+# Criar um web app com runtime node.js
 az webapp create \
   --resource-group rg-appservice-lab \
   --plan plan-contoso-web \
@@ -80,10 +80,10 @@ az webapp show -g rg-appservice-lab -n $APP_NAME \
   --query "{Name:name, State:state, URL:defaultHostName}" -o table
 ```
 
-### Tarefa 3: Implantar Código de Exemplo
+### Tarefa 3: implantar código de exemplo
 
 ```bash
-# Criar uma aplicação Node.js simples
+# Criar uma aplicação node.js simples
 mkdir webapp && cd webapp
 
 cat > index.js << 'EOF'
@@ -126,7 +126,7 @@ az webapp config appsettings set \
 echo "Visite: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Tarefa 4: Criar um Deployment Slot de Staging
+### Tarefa 4: criar um deployment slot de staging
 
 ```bash
 # Criar um slot de staging
@@ -142,7 +142,7 @@ az webapp deployment slot list -g rg-appservice-lab -n $APP_NAME -o table
 echo "URL de Staging: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Tarefa 5: Implantar uma Nova Versão no Staging
+### Tarefa 5: implantar uma nova versão no staging
 
 ```bash
 # Atualizar a versão no staging
@@ -169,7 +169,7 @@ echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 echo "Produção: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Tarefa 6: Trocar Staging e Produção
+### Tarefa 6: trocar staging e produção
 
 ```bash
 # Visualizar o que vai mudar
@@ -187,7 +187,7 @@ echo "Produção: https://$APP_NAME.azurewebsites.net"
 echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Tarefa 7: Configurar Autoscale
+### Tarefa 7: configurar autoscale
 
 ```bash
 # Obter o ID do recurso do plano do App Service
@@ -222,7 +222,7 @@ az monitor autoscale show -g rg-appservice-lab -n autoscale-web \
   --query "profiles[0].rules[].{Metric:metricTrigger.metricName, Op:metricTrigger.operator, Threshold:metricTrigger.threshold, Direction:scaleAction.direction}" -o table
 ```
 
-### Tarefa 8: Configurar Backup
+### Tarefa 8: configurar Backup
 
 ```bash
 # Criar uma conta de armazenamento para backups
@@ -258,10 +258,10 @@ az webapp config backup update \
   --retain-one true
 ```
 
-### Tarefa 9: Configurar Restrições de Acesso
+### Tarefa 9: configurar restrições de acesso
 
 ```bash
-# Adicionar uma restrição de acesso baseada em IP (permitir apenas seu IP)
+# Adicionar uma restrição de acesso baseada em IP (permitir apenas seu ip)
 MY_IP=$(curl -s ifconfig.me)
 
 az webapp config access-restriction add \
@@ -286,7 +286,7 @@ az webapp config access-restriction show \
   -g rg-appservice-lab -n $APP_NAME -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-10"
@@ -300,12 +300,12 @@ az webapp config access-restriction show \
     "Restrições de acesso configuradas no web app"
   ]}
 />
-## Cenários Quebre & Conserte
+## Cenários quebre & conserte
 
-### Cenário A: Implantando no Slot Errado
+### Cenário a: implantando no slot errado
 ```bash
-# Você implantou a v2 em produção em vez de staging. Como reverter?
-# Dica: A versão anterior agora está no slot de staging após um swap.
+# Você implantou a v2 em produção em vez de staging. como reverter?
+# Dica: a versão anterior agora está no slot de staging após um swap.
 az webapp deployment slot swap \
   --resource-group rg-appservice-lab \
   --name $APP_NAME \
@@ -313,7 +313,7 @@ az webapp deployment slot swap \
   --target-slot production
 ```
 
-### Cenário B: Autoscale Min > Max
+### Cenário b: autoscale min > max
 ```bash
 # Tente definir min-count maior que max-count
 az monitor autoscale update \
@@ -323,16 +323,16 @@ az monitor autoscale update \
 # Qual erro você recebe?
 ```
 
-### Cenário C: Slots no Tier Gratuito
+### Cenário c: slots no tier gratuito
 ```bash
-# Crie um plano de tier Gratuito e tente adicionar um slot
+# Crie um plano de tier gratuito e tente adicionar um slot
 az appservice plan create -g rg-appservice-lab -n plan-free --sku F1 --is-linux
 az webapp create -g rg-appservice-lab --plan plan-free --name free-app-$RANDOM --runtime "NODE:18-lts"
 az webapp deployment slot create -g rg-appservice-lab --name free-app-$RANDOM --slot staging
-# Qual erro você recebe? Quais tiers suportam deployment slots?
+# Qual erro você recebe? quais tiers suportam deployment slots?
 ```
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 **1. Quais tiers do plano do App Service suportam deployment slots?**
 

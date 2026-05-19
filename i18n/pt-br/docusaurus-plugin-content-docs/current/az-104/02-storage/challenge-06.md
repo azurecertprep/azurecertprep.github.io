@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 06: Segurança de Storage & Ciclo de Vida
+# Desafio 06: segurança de Storage & ciclo de vida
 
 :::info Tempo e Custo Estimados
 
-**60-75 min** | **Custo estimado**: ~$1.00 (duas storage accounts) | **Peso no Exame: 15-20%**
+**60-75 min** | **Custo estimado**: ~$1.00 (duas storage accounts) | **Peso no Exame: 15-20%
+**
 
 :::
 
@@ -22,14 +23,14 @@ A conta do Azure Storage da Contoso triplicou no último trimestre. O culpado: n
 
 Sua missão: implementar políticas de gerenciamento de ciclo de vida para controlar custos, configurar acesso baseado em identidade e configurar replicação de objetos entre regiões para continuidade de negócios.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Configurar acesso baseado em identidade para Azure Files
 - Criar e configurar políticas de acesso armazenadas
 - Configurar políticas de gerenciamento de ciclo de vida
 - Configurar replicação de objetos entre storage accounts
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -42,7 +43,7 @@ Sua missão: implementar políticas de gerenciamento de ciclo de vida para contr
 
 ## Descrição
 
-### Parte 1: Configurar o Ambiente
+### Parte 1: configurar o ambiente
 
 1. Criar duas storage accounts em regiões diferentes (necessário para replicação de objetos):
 
@@ -111,7 +112,7 @@ echo "Important document for replication test" > repl-test.txt
 az storage blob upload --container-name replicated-data --file repl-test.txt --name repl-test.txt --connection-string "$CONN_PRIMARY"
 ```
 
-### Parte 2: Políticas de Gerenciamento de Ciclo de Vida
+### Parte 2: políticas de gerenciamento de ciclo de vida
 
 4. Criar uma política de gerenciamento de ciclo de vida com as seguintes regras:
 
@@ -241,7 +242,7 @@ az storage account management-policy show \
   --query "policy.rules[].{Name:name, Enabled:enabled}" -o table
 ```
 
-### Parte 3: Acesso Baseado em Identidade para Azure Files
+### Parte 3: acesso baseado em identidade para Azure Files
 
 :::tip Dica
 
@@ -264,7 +265,7 @@ az storage share-rm create \
 <TabItem value="cli" label="Azure CLI">
 
 ```bash
-# Enable Entra ID Kerberos authentication
+# Enable Entra ID kerberos authentication
 az storage account update \
   --name $STORAGE_PRIMARY \
   --resource-group $RG \
@@ -289,7 +290,7 @@ A autenticação completa via Entra ID Kerberos para Azure Files requer configur
 8. Atribuir permissões RBAC no nível do compartilhamento:
 
 ```bash
-# Assign "Storage File Data SMB Share Contributor" role to a user or group
+# Assign "Storage file Data SMB share contributor" role to a user or group
 # This allows read/write access to the file share via SMB
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $RG --query id -o tsv)
@@ -297,9 +298,9 @@ STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $R
 # Replace with your actual user or group object ID
 # USER_ID=$(az ad user show --id "alice@YOUR_TENANT.onmicrosoft.com" --query id -o tsv)
 # az role assignment create \
-#   --assignee $USER_ID \
-#   --role "Storage File Data SMB Share Contributor" \
-#   --scope "$STORAGE_ID/fileServices/default/fileshares/secure-share"
+# --assignee $user_id \
+# --role "Storage file Data SMB share contributor" \
+# --scope "$STORAGE_ID/fileServices/default/fileshares/secure-share"
 ```
 
 :::info Informação
@@ -311,7 +312,7 @@ O acesso baseado em identidade do Azure Files usa um **modelo de permissão de d
 A permissão efetiva é a **interseção** de ambas as camadas | um usuário precisa de acesso tanto no nível do compartilhamento quanto no nível do diretório.
 
 :::
-### Parte 4: Replicação de Objetos
+### Parte 4: replicação de objetos
 
 9. Configurar replicação de objetos da conta primária para a conta secundária:
 
@@ -383,7 +384,7 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
 A replicação de objetos é **assíncrona**. Pode levar vários minutos para os blobs aparecerem na conta de destino. Não há SLA sobre o tempo de replicação para contas padrão.
 
 :::
-### Parte 5: Políticas de Acesso Armazenadas (Revisitadas)
+### Parte 5: políticas de acesso armazenadas (Revisitadas)
 
 12. Criar políticas de acesso armazenadas para controle granular:
 
@@ -436,7 +437,7 @@ az storage container policy delete \
   --connection-string "$CONN_PRIMARY"
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-06"
@@ -544,7 +545,7 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 
 </details>
 
-## Recursos de Aprendizado
+## Recursos de aprendizado
 
 - [Visão geral do gerenciamento de ciclo de vida](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
 - [Configurar política de gerenciamento de ciclo de vida](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-policy-configure)
@@ -553,7 +554,7 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 - [Políticas de acesso armazenadas](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy)
 - [Configurar Microsoft Entra Kerberos para Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-identity-auth-azure-active-directory-enable)
 
-## Quebre & Conserte
+## Quebre & conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -569,7 +570,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 4. **Acesso baseado em identidade negado**: Um usuário tem `Storage File Data SMB Share Contributor` no nível do compartilhamento mas recebe "Access Denied" ao abrir uma pasta. O que está errado? (ACLs NTFS no nível do diretório podem estar restringindo o acesso | lembre-se do modelo de duas camadas.)
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 <details>
 <summary>1. Quais são as condições que você pode usar em regras de gerenciamento de ciclo de vida?</summary>

@@ -5,7 +5,7 @@ title: "Challenge 19: Design an Unstructured Data Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 19: Design an Unstructured Data Solution
+# Challenge 19: design an unstructured Data solution
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The post-production team of 40 editors works from a central office in Los Angele
 
 MediaVault's monthly storage budget is $8,000. They need to minimize cost for archival content while ensuring they can retrieve archived masters within 24 hours when a licensing request arrives. Additionally, their data analytics team wants to run Spark-based processing jobs on metadata files (JSON logs, subtitle files, color grading data) that sit alongside the video content. The company must comply with content licensing regulations that require immutability policies on finalized master copies (no modification or deletion for 5 years after release).
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for storing unstructured data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Storage Service Selection
+### Part 1: Storage Service selection
 
 1. Evaluate the following Azure storage services for each portion of MediaVault's content and recommend the appropriate service for each workload:
    - Azure Blob Storage (block blobs, append blobs, page blobs)
@@ -38,7 +38,7 @@ MediaVault's monthly storage budget is $8,000. They need to minimize cost for ar
 3. Determine whether Azure Data Lake Storage Gen2 (hierarchical namespace enabled on Blob Storage) is appropriate for the metadata files that require Spark processing. Explain the advantages over standard Blob Storage for analytics workloads.
 4. For the 500TB video archive, calculate whether standard Blob Storage (without hierarchical namespace) is more cost-effective than Data Lake Storage Gen2.
 
-### Part 2: Access Tier and Lifecycle Management
+### Part 2: access tier and lifecycle Management
 
 5. Design an access tier strategy for the video content library. Map each content category to the appropriate tier:
    - Hot tier: For active production footage (daily access)
@@ -49,14 +49,14 @@ MediaVault's monthly storage budget is $8,000. They need to minimize cost for ar
 7. Calculate the monthly storage cost for your tiered strategy and compare it to storing everything in the Hot tier. Verify the design fits within the $8,000/month budget.
 8. Document the rehydration process and time for Archive tier content. Compare Standard rehydration (up to 15 hours) vs High Priority rehydration (under 1 hour for objects under 10GB) and their cost implications for the 24-hour retrieval requirement.
 
-### Part 3: Data Protection and Compliance
+### Part 3: Data protection and compliance
 
 9. Design immutability policies for finalized master copies. Evaluate time-based retention policies (WORM - Write Once Read Many) versus legal holds. Determine which approach meets the 5-year no-modification requirement.
 10. Design a data redundancy strategy for each content category. Consider LRS, ZRS, GRS, and GZRS based on the criticality and recoverability of each content type.
 11. Implement soft delete and versioning policies to protect against accidental deletion of active production files. Specify retention periods for deleted files and previous versions.
 12. Design an access control strategy using Azure RBAC and storage account firewall rules. The editing team needs read/write access to active shares, the analytics team needs read-only access to metadata, and archived content should only be accessible through an approval workflow.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-19"
@@ -107,7 +107,7 @@ Azure Blob Storage immutable storage supports two policy types: (1) Time-based r
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Blob Storage access tiers](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
 - [Azure Blob Storage lifecycle management](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
@@ -118,7 +118,7 @@ Azure Blob Storage immutable storage supports two policy types: (1) Time-based r
 - [Archive rehydration overview](https://learn.microsoft.com/en-us/azure/storage/blobs/archive-rehydrate-overview)
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A video editing team of 40 people needs SMB file share access with file locking support. Their workflow requires sustained throughput of 5 GiB/s. Which Azure service should you recommend?</summary>
@@ -148,7 +148,7 @@ Azure Blob Storage immutable storage supports two policy types: (1) Time-based r
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
@@ -218,7 +218,7 @@ az group delete --name rg-mediavault-storage --yes --no-wait
 # If you created a separate Azure NetApp Files account (requires explicit cleanup)
 az group delete --name rg-mediavault-netapp --yes --no-wait
 
-# Note: Immutable storage policies must be unlocked/expired before deletion
+# Note: immutable storage policies must be unlocked/expired before deletion
 # For testing, use unlocked policies that can be removed:
 # az storage container immutability-policy delete --account-name <name> --container-name <name>
 ```

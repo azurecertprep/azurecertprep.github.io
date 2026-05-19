@@ -5,7 +5,7 @@ title: "Desafio 09: Projetar Estrutura de Grupos de Gerenciamento e Assinaturas"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 09: Projetar Estrutura de Grupos de Gerenciamento e Assinaturas
+# Desafio 09: projetar estrutura de grupos de gerenciamento e assinaturas
 
 :::info Tempo Estimado e Custo
 
@@ -21,37 +21,37 @@ O CTO aprovou uma migração para um ambiente multi-assinatura estruturado alinh
 
 Seu design deve equilibrar centralizacao de governança (segurança, conformidade) com autonomia descentralizada de carga de trabalho (cada BU gerencia suas próprias assinaturas). O CFO requer atribuicao de custos no nível de unidade de negocio, e a equipe de segurança precisa de um painel único para relatórios de conformidade em todas as assinaturas.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma estrutura para management groups, assinaturas e resource groups
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Hierarquia de Management Group
+### Parte 1: hierarquia de Management Group
 
 1. Projete uma hierarquia de management group para a Northwind Traders. Inclua no mínimo: uma estratégia de root management group, separacao entre plataforma/serviços compartilhados e landing zones de carga de trabalho, e acomodacao para ambientes sandbox/dev que precisam de políticas relaxadas.
 2. Defina quantos níveis de profundidade a hierarquia deve ter e justifique a profundidade. Documente os trade-offs de hierarquias profundas (direcionamento granular de políticas) versus hierarquias rasas (gerenciamento mais simples, limite Azure de 6 níveis de profundidade).
 3. Especifique como as duas futuras aquisições serao integradas na hierarquia sem reestruturar management groups existentes.
 4. Defina o modelo de herança de governança: quais políticas devem ser aplicadas no nível raiz (afetando todas as assinaturas) versus níveis inferiores de management group.
 
-### Parte 2: Design de Assinatura
+### Parte 2: design de assinatura
 
 5. Determine a estratégia de assinatura para cada unidade de negocio. Avalie e escolha entre: uma assinatura por ambiente por BU, uma assinatura por carga de trabalho, ou um modelo hibrido. Documente o raciocinio.
 6. Projete o modelo de assinatura de serviços compartilhados / plataforma. Determine se networking, monitoramento e serviços de identidade residem em uma única assinatura de plataforma ou sao divididos (ex.: assinatura de conectividade, assinatura de gerenciamento, assinatura de identidade conforme CAF).
 7. Especifique como assinaturas sandbox devem ser tratadas: quem pode cria-las, quais limites de gastos se aplicam, e como sao impedidas de se conectar a redes de produção.
 8. Defina atribuicoes RBAC no nível de assinatura. Determine quais funções (Owner, Contributor, Reader, personalizada) cada persona (lider de BU, desenvolvedor, SRE, equipe de segurança) recebe em cada nível de assinatura.
 
-### Parte 3: Estratégia de Resource Group
+### Parte 3: estratégia de Resource Group
 
 9. Projete uma convencao de nomes e padrão de organização de resource groups. Defina se resource groups sao organizados por aplicação, por ciclo de vida (implantar junto/excluir junto), por tipo de recurso, ou uma combinacao.
 10. Especifique políticas e locks no nível de resource group. Determine quais resource groups precisam de locks CanNotDelete e quais precisam de locks ReadOnly.
 11. Defina um processo para gerenciamento de ciclo de vida de resource groups: quem os cria, sob quais condições, e como resource groups orfaos sao identificados e limpos.
 
-### Parte 4: Convencoes de Nomenclatura
+### Parte 4: convencoes de nomenclatura
 
 12. Crie um padrão de convencao de nomenclatura para management groups, assinaturas e resource groups que codifique: ambiente, unidade de negocio, região e propósito. Garanta que nomes sejam globalmente únicos onde necessário e dentro dos limites de comprimento.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-09"
@@ -102,7 +102,7 @@ Assinaturas sandbox precisam de tratamento especial: coloque-as em um management
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure landing zone management group hierarchy](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org-management-groups)
 - [Subscription organization and governance](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org-subscriptions)
@@ -111,7 +111,7 @@ Assinaturas sandbox precisam de tratamento especial: coloque-as em um management
 - [Management group design considerations](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org-management-groups)
 - [Subscription vending](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/subscription-vending)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A equipe de segurança da Northwind quer aplicar uma política que impeca qualquer recurso de ser criado sem uma tag "CostCenter". Isso deve se aplicar a TODAS as assinaturas incluindo futuras aquisições. Onde esta política deve ser atribuida?</summary>
@@ -150,7 +150,7 @@ az account management-group delete --name "mg-northwind-sandbox"
 az account management-group delete --name "mg-northwind-landing-zones"
 az account management-group delete --name "mg-northwind-platform"
 
-# Note: You cannot delete a management group that has child subscriptions or MGs.
+# Note: you cannot delete a management group that has child subscriptions or MGs.
 # Move subscriptions out first:
 # az account management-group subscription add --name "yourTargetMG" --subscription "sub-id"
 ```

@@ -3,7 +3,7 @@ sidebar_position: 99
 title: "Coverage Matrix"
 ---
 
-# Coverage Matrix
+# Coverage matrix
 
 Every skill from the [official AZ-104 study guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104) (as of April 17, 2026) mapped to the challenge that covers it.
 

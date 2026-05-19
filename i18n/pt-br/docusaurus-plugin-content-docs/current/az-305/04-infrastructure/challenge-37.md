@@ -5,7 +5,7 @@ title: "Desafio 37: Projetar uma Solução Serverless"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 37: Projetar uma Solução Serverless
+# Desafio 37: projetar uma solução serverless
 
 :::info Tempo Estimado e Custo
 
@@ -21,14 +21,14 @@ Além da API de venda de ingressos em tempo real, TicketBlitz tem vários requis
 
 A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar apenas pelo tempo real de execução. Eles precisam de um design que lide tanto com o trafego extremo em rajadas quanto com o processamento batch em background com otimização de custo apropriada para cada padrão.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução baseada em serverless
 - Recomendar uma solução de computacao para processamento batch
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao de Plano Azure Functions
+### Parte 1: selecao de plano Azure Functions
 
 1. Avalie os planos de hospedagem Azure Functions para a API de venda de ingressos (0 a 100K requisicoes/segundo em rajada):
 
@@ -46,7 +46,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
 
 3. Avalie se o plano Flex Consumption com instâncias always-ready fornece o melhor equilibrio de capacidade de burst e mitigacao de cold-start para esta carga de trabalho.
 
-### Parte 2: Design de Processamento em Background
+### Parte 2: design de processamento em background
 
 4. Projete o pipeline de geracao de ingressos PDF:
    - Trigger: Mensagem na fila apos compra bem-sucedida
@@ -65,7 +65,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - Avalie: Azure Functions com fan-out baseado em fila vs. Azure Batch para este volume
    - Qual é o tempo de execução esperado e custo para 50K registros?
 
-### Parte 3: Orquestração com Durable Functions
+### Parte 3: orquestração com Durable Functions
 
 7. Projete o workflow de pacote de ingressos VIP usando Durable Functions:
    - Etapa 1: Reservar assentos selecionados (chamar Seats API)
@@ -85,7 +85,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - Como você implementa o padrão Saga (transações compensatorias)?
    - Qual é a política de retry para falhas transientes vs falhas permanentes?
 
-### Parte 4: Mitigacao de Cold Start e Otimização de Custo
+### Parte 4: mitigacao de cold start e otimização de custo
 
 10. Compare estratégias de mitigacao de cold start:
     - Instâncias pré-aquecidas (plano Premium): Sempre rodando, sem cold start, custo base maior
@@ -103,7 +103,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
     - Timer trigger (batch) -> Processamento de reembolsos -> Payment API
     - HTTP trigger (VIP) -> Orquestração Durable -> múltiplas APIs backend
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-37"
@@ -187,7 +187,7 @@ Functions e preferido porque: precificacao por execução e mais barata para tar
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Functions hosting options](https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale)
 - [Azure Functions Flex Consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/flex-consumption-plan)
@@ -195,7 +195,7 @@ Functions e preferido porque: precificacao por execução e mais barata para tar
 - [Choose between Azure Functions and Logic Apps](https://learn.microsoft.com/en-us/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs)
 - [Azure Batch overview](https://learn.microsoft.com/en-us/azure/batch/batch-technical-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um function app no plano Consumption experimenta cold starts de 3-5 segundos durante uma venda relampago. O negocio requer tempo de resposta sub-200ms para a primeira requisicao. Qual mudança de plano resolve isso?</summary>
@@ -225,7 +225,7 @@ Functions e preferido porque: precificacao por execução e mais barata para tar
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

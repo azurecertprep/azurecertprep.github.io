@@ -12,7 +12,8 @@ import TabItem from '@theme/TabItem';
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%**
+**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%
+**
 
 :::
 
@@ -22,7 +23,7 @@ Contoso's application team stores user profile images, log files, and reports in
 
 Understanding the difference between Blob Storage and Azure Files | and when to use each | is critical for the AZ-104 exam. This challenge gives you hands-on experience with both.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create and configure blob containers
 - Create and configure file shares
@@ -32,7 +33,7 @@ Understanding the difference between Blob Storage and Azure Files | and when to 
 - Configure soft delete for Azure Files
 - Configure file share snapshots
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -46,7 +47,7 @@ Understanding the difference between Blob Storage and Azure Files | and when to 
 
 ## Description
 
-### Part 1: Set Up the Environment
+### Part 1: set up the environment
 
 1. Create a resource group and storage account:
 
@@ -69,7 +70,7 @@ az storage account create \
 CONN_STRING=$(az storage account show-connection-string --name $STORAGE_NAME --resource-group $RG -o tsv)
 ```
 
-### Part 2: Blob Containers & Access Tiers
+### Part 2: Blob Containers & access tiers
 
 2. Create three blob containers with different access levels:
 
@@ -126,7 +127,7 @@ az storage blob list --container-name archive --connection-string "$CONN_STRING"
   --query "[].{Name:name, Tier:properties.blobTier}" -o table
 ```
 
-### Part 3: Soft Delete for Blobs & Containers
+### Part 3: soft delete for blobs & Containers
 
 7. Enable soft delete for blobs with a 14-day retention period:
 
@@ -162,7 +163,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
 az storage blob undelete --container-name app-data --name profiles/alice.txt --connection-string "$CONN_STRING"
 ```
 
-### Part 4: Blob Versioning
+### Part 4: Blob versioning
 
 10. Enable blob versioning:
 
@@ -184,7 +185,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
   --query "[?name=='profiles/alice.txt'].{Name:name, VersionId:versionId, IsCurrentVersion:isCurrentVersion}" -o table
 ```
 
-### Part 5: Blob Snapshots
+### Part 5: Blob snapshots
 
 12. Create a snapshot of a blob:
 
@@ -199,7 +200,7 @@ az storage blob list --container-name app-data --connection-string "$CONN_STRING
   --query "[?snapshot!=null].{Name:name, Snapshot:snapshot}" -o table
 ```
 
-### Part 6: Azure Files | Create & Configure
+### Part 6: Azure Files | create & configure
 
 14. Create an Azure File share for the finance team:
 
@@ -259,7 +260,7 @@ sudo mount -t cifs //$STORAGE_NAME.file.core.windows.net/finance-share /mnt/fina
 </TabItem>
 </Tabs>
 
-### Part 7: File Share Snapshots & Soft Delete
+### Part 7: file share snapshots & soft delete
 
 17. Enable soft delete for Azure Files:
 
@@ -284,7 +285,7 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
   --query "[?name=='finance-share'].{Name:name, Snapshot:snapshot}" -o table
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-05"
@@ -344,14 +345,14 @@ az storage share list --connection-string "$CONN_STRING" --include-snapshots \
 Archived blobs cannot be read directly. You must first **rehydrate** them:
 
 ```bash
-# Change tier from Archive to Hot (standard priority: up to 15 hours)
+# Change tier from archive to hot (standard priority: up to 15 hours)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
   --tier Hot \
   --connection-string "$CONN_STRING"
 
-# High priority rehydration (faster, more expensive: under 1 hour for < 10 GB)
+# High priority rehydration (faster, more expensive: under 1 hour for < 10 gb)
 az storage blob set-tier \
   --container-name archive \
   --name reports/q3-2024.txt \
@@ -393,7 +394,7 @@ If port 445 is blocked, alternatives include:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Blob Storage overview](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
 - [Access tiers for blob data](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
@@ -402,7 +403,7 @@ If port 445 is blocked, alternatives include:
 - [Azure Files overview](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction)
 - [Azure Files planning guide](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-planning)
 
-## Break & Fix
+## Break & fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -414,7 +415,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 4. **Snapshot vs. versioning overlap**: Enable both versioning and snapshots on the same container. Upload a file, create a snapshot, then overwrite the file. How many copies exist now? (Original version, snapshot of original, and new current version = 3 copies.)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the cost difference between Hot, Cool, and Archive tiers?</summary>

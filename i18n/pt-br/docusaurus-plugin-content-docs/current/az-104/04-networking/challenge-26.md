@@ -5,7 +5,7 @@ title: "Desafio 26: Network Watcher & Diagnósticos"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 26: Network Watcher & Diagnósticos
+# Desafio 26: Network watcher & diagnósticos
 
 :::info Tempo e Custo Estimados
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. está solucionando problemas de conectividade entre suas VMs do Azure e serviços externos. A equipe de rede precisa usar ferramentas de diagnóstico do Azure para identificar por que certas conexões falham, verificar se as regras NSG estão corretas, rastrear fluxos de pacotes e configurar monitoramento contínuo. Você deve se tornar proficiente com o kit completo de ferramentas do Network Watcher.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Habilitar e usar o Azure Network Watcher
 - Usar IP Flow Verify para testar regras NSG
@@ -28,7 +28,7 @@ A Contoso Ltd. está solucionando problemas de conectividade entre suas VMs do A
 - Usar a visualização de topologia do Network Watcher
 - Verificar regras de segurança efetivas
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -40,7 +40,7 @@ A Contoso Ltd. está solucionando problemas de conectividade entre suas VMs do A
 | Diagrama de topologia de rede (Visio) | Network Watcher Topology |
 | ping / telnet para testar portas | Connection Troubleshoot |
 
-## Configuração Inicial
+## Configuração inicial
 
 ```bash
 # Variables
@@ -121,10 +121,10 @@ az vm create \
 
 ## Tarefas
 
-### Tarefa 1: Habilitar o Network Watcher
+### Tarefa 1: habilitar o Network watcher
 
 ```bash
-# Network Watcher is auto-enabled for most subscriptions
+# Network watcher is auto-enabled for most subscriptions
 # Verify it exists for your region
 az network watcher list -o table
 
@@ -139,7 +139,7 @@ az network watcher list \
   --query "[?location=='$LOCATION'] | [0].{Name:name, Location:location, State:provisioningState}" -o table
 ```
 
-### Tarefa 2: IP Flow Verify
+### Tarefa 2: IP flow verify
 
 Teste se o tráfego é permitido ou negado pelas regras NSG:
 
@@ -151,7 +151,7 @@ VM_WEB_NIC=$(az vm show -g $RG -n vm-web \
 VM_WEB_IP=$(az vm show -g $RG -n vm-web -d \
   --query "privateIps" -o tsv)
 
-# Test: Can internet reach port 80 on the web VM? (Should ALLOW)
+# Test: can internet reach port 80 on the web VM? (Should allow)
 az network watcher test-ip-flow \
   --direction Inbound \
   --protocol Tcp \
@@ -160,7 +160,7 @@ az network watcher test-ip-flow \
   --vm $VM_WEB_ID \
   --nic $VM_WEB_NIC
 
-# Test: Can internet reach port 22 on the web VM? (Should DENY)
+# Test: can internet reach port 22 on the web VM? (Should deny)
 az network watcher test-ip-flow \
   --direction Inbound \
   --protocol Tcp \
@@ -169,7 +169,7 @@ az network watcher test-ip-flow \
   --vm $VM_WEB_ID \
   --nic $VM_WEB_NIC
 
-# Test: Can the web VM reach the internet on port 443? (Should ALLOW)
+# Test: can the web VM reach the internet on port 443? (Should allow)
 az network watcher test-ip-flow \
   --direction Outbound \
   --protocol Tcp \
@@ -184,7 +184,7 @@ az network watcher test-ip-flow \
 IP Flow Verify informa qual regra NSG (nome e prioridade) está permitindo ou negando o tráfego. Verifica tanto o NSG no nível da NIC quanto no nível da sub-rede. Esta é a maneira mais rápida de diagnosticar problemas de "por que não consigo conectar?".
 
 :::
-### Tarefa 3: Análise de Next Hop
+### Tarefa 3: análise de next hop
 
 Determine o próximo salto para o tráfego a partir de uma VM:
 
@@ -212,7 +212,7 @@ az network watcher show-next-hop \
   --dest-ip 192.168.1.1
 ```
 
-### Tarefa 4: Packet Capture
+### Tarefa 4: packet capture
 
 ```bash
 # Create a storage account for packet captures
@@ -236,7 +236,7 @@ az network watcher packet-capture show \
   --location $LOCATION \
   --name capture-web-traffic
 
-# Generate some traffic (from another terminal or using the VM)
+# Generate some traffic (from another terminal or using the vm)
 az vm run-command invoke \
   --resource-group $RG \
   --name vm-web \
@@ -262,10 +262,10 @@ az network watcher packet-capture delete \
 Capturas de pacotes são armazenadas como arquivos .cap na conta de armazenamento. Você pode baixar e analisá-los com o Wireshark. O agente do Network Watcher deve estar instalado na VM (instalado automaticamente quando você cria uma captura).
 
 :::
-### Tarefa 5: Connection Monitor
+### Tarefa 5: connection Monitor
 
 ```bash
-# Create a Connection Monitor to continuously test connectivity
+# Create a connection Monitor to continuously test connectivity
 az network watcher connection-monitor create \
   --name cm-web-to-internet \
   --location $LOCATION \
@@ -303,7 +303,7 @@ az network watcher connection-monitor show \
   --name cm-web-to-internet
 ```
 
-### Tarefa 6: NSG Flow Logs
+### Tarefa 6: NSG flow logs
 
 ```bash
 # Create a Log Analytics workspace for flow logs
@@ -355,7 +355,7 @@ az network watcher flow-log show \
 5. Habilite Traffic Analytics com workspace do Log Analytics
 6. Defina o intervalo de processamento (10 minutos recomendado)
 
-### Tarefa 7: Connection Troubleshoot
+### Tarefa 7: connection troubleshoot
 
 ```bash
 # One-time connectivity check from VM to destination
@@ -383,7 +383,7 @@ az network watcher test-connectivity \
   --protocol Tcp
 ```
 
-### Tarefa 8: Visualização de Topologia e Regras de Segurança Efetivas
+### Tarefa 8: visualização de topologia e regras de segurança efetivas
 
 ```bash
 # Generate network topology
@@ -409,7 +409,7 @@ az network nic list-effective-nsg \
 3. Visualize a lista combinada de todas as regras NSG aplicáveis (nível NIC + sub-rede)
 4. Identifique qual regra está permitindo ou bloqueando o tráfego
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-26"
@@ -425,9 +425,9 @@ az network nic list-effective-nsg \
     "Regras de segurança efetivas revisadas para impacto combinado de NSG (NIC + sub-rede)"
   ]}
 />
-## Cenários de Quebrar & Consertar
+## Cenários de quebrar & consertar
 
-### Cenário A: VM Não Consegue Alcançar a Internet
+### Cenário a: VM não consegue alcançar a internet
 
 ```bash
 # Add a deny-all outbound rule to the NSG
@@ -443,7 +443,7 @@ az network nsg rule create \
   --protocol "*" \
   --access Deny
 
-# Diagnose with IP Flow Verify
+# Diagnose with IP flow verify
 az network watcher test-ip-flow \
   --direction Outbound \
   --protocol Tcp \
@@ -452,21 +452,21 @@ az network watcher test-ip-flow \
   --vm $VM_WEB_ID \
   --nic $VM_WEB_NIC
 
-# Output will show: "Access: Deny, Rule: BlockOutbound"
+# Output will show: "Access: deny, rule: BlockOutbound"
 
-# Fix: Remove the blocking rule
+# Fix: remove the blocking rule
 az network nsg rule delete \
   --resource-group $RG \
   --nsg-name nsg-web \
   --name BlockOutbound
 ```
 
-### Cenário B: Roteamento Assimétrico Causa Descartes
+### Cenário b: roteamento assimétrico causa descartes
 
 ```bash
 # Add a UDR that routes response traffic differently than request traffic
 # This causes asymmetric routing (responses take different path than requests)
-# Diagnose with Next Hop to see unexpected routing
+# Diagnose with next hop to see unexpected routing
 az network watcher show-next-hop \
   --resource-group $RG \
   --vm vm-web \
@@ -476,22 +476,22 @@ az network watcher show-next-hop \
 # If next hop shows "VirtualAppliance" but no NVA exists, traffic is black-holed
 ```
 
-### Cenário C: Connection Monitor Mostra Falhas
+### Cenário c: connection Monitor mostra falhas
 
 ```bash
-# Check Connection Monitor for failures
+# Check connection Monitor for failures
 az network watcher connection-monitor show \
   --location $LOCATION \
   --name cm-web-to-db
 
 # Common causes:
-# 1. No service listening on destination port
+# 1. no service listening on destination port
 # 2. NSG blocking the port
 # 3. OS-level firewall (iptables/ufw) blocking
-# Diagnose: Use IP Flow Verify + Connection Troubleshoot
+# Diagnose: use IP flow verify + connection troubleshoot
 ```
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 **1. Qual é a diferença entre Connection Monitor e Connection Troubleshoot?**
 
@@ -565,7 +565,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Visão geral do Azure Network Watcher](https://learn.microsoft.com/azure/network-watcher/network-watcher-monitoring-overview)
 - [IP Flow Verify](https://learn.microsoft.com/azure/network-watcher/network-watcher-ip-flow-verify-overview)

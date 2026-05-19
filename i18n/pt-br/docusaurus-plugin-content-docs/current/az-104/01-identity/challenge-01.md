@@ -5,11 +5,12 @@ title: "Challenge 01 | Entra ID: Users & Groups"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 01: Entra ID: Usuários & Grupos
+# Desafio 01: Entra ID: usuários & grupos
 
 :::info Tempo e Custo Estimados
 
-**45-60 min** | **Custo estimado**: Gratuito | **Peso no Exame: 20-25%**
+**45-60 min** | **Custo estimado**: Gratuito | **Peso no Exame: 20-25%
+**
 
 :::
 
@@ -19,7 +20,7 @@ Você acabou de ingressar na Contoso Ltd. como o novo Administrador Azure. Sua p
 
 Este desafio cobre a base de tudo no Azure | identidade. Sem usuários, grupos e gerenciamento adequado de acesso, nada mais funciona.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar usuários e grupos
 - Gerenciar propriedades de usuários e grupos
@@ -27,7 +28,7 @@ Este desafio cobre a base de tudo no Azure | identidade. Sem usuários, grupos e
 - Gerenciar usuários externos
 - Configurar redefinição de senha por autoatendimento (SSPR)
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -43,7 +44,7 @@ Este desafio cobre a base de tudo no Azure | identidade. Sem usuários, grupos e
 
 Sua missão é:
 
-### Parte 1: Criar Usuários
+### Parte 1: criar usuários
 
 1. Criar 3 usuários internos no seu tenant do Entra ID:
    - `alice@SEU_TENANT.onmicrosoft.com` | Nome de exibição: Alice Johnson, Departamento: IT, Cargo: Cloud Engineer
@@ -52,30 +53,30 @@ Sua missão é:
 
 2. Configurar Alice com uma senha temporária que deve ser alterada no primeiro login.
 
-### Parte 2: Criar Grupos
+### Parte 2: criar grupos
 
 3. Criar os seguintes grupos de segurança:
    - `IT-Team` | Membros: Alice, Carol
    - `Finance-Team` | Membros: Bob
    - `All-Employees` | Membros: Alice, Bob, Carol (use uma regra de associação dinâmica baseada no departamento)
 
-### Parte 3: Gerenciar Propriedades
+### Parte 3: gerenciar propriedades
 
 4. Atualizar a localização de uso do Bob para "US" (necessário para atribuição de licença)
 5. Desabilitar a conta da Carol (simular uma funcionária em licença)
 6. Atualizar a descrição do grupo `IT-Team` para "IT department security group"
 
-### Parte 4: Usuários Externos
+### Parte 4: usuários externos
 
 7. Convidar um usuário externo (convidado) | use qualquer email ao qual você tenha acesso
 8. Adicionar o usuário convidado ao grupo `All-Employees`
 
-### Parte 5: Redefinição de Senha por Autoatendimento
+### Parte 5: redefinição de senha por autoatendimento
 
 9. Habilitar SSPR para o grupo `IT-Team`
 10. Configurar o SSPR para exigir 1 método de autenticação (email)
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-01"
@@ -114,7 +115,7 @@ az ad user create \
   --password "TempP@ss123!" \
   --force-change-password-next-sign-in true
 
-# Definir departamento e cargo via Microsoft Graph
+# Definir departamento e cargo via Microsoft graph
 ALICE_ID=$(az ad user show --id "alice@$DOMAIN" --query id -o tsv)
 az rest --method patch \
   --url "https://graph.microsoft.com/v1.0/users/$ALICE_ID" \
@@ -143,7 +144,7 @@ az ad group member add --group "IT-Team" --member-id $ALICE_ID
 <summary>Dica 4: Convidando um usuário externo</summary>
 
 ```bash
-# Invite an external user via Microsoft Graph API
+# Invite an external user via Microsoft graph API
 az rest --method post \
   --url "https://graph.microsoft.com/v1.0/invitations" \
   --body '{
@@ -170,7 +171,7 @@ A configuração do SSPR é feita preferencialmente pelo Portal do Azure:
 :::
 </details>
 
-## Recursos de Aprendizado
+## Recursos de aprendizado
 
 - [Criar usuários no Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-create-delete-users)
 - [Criar grupos e adicionar membros](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-manage-groups)
@@ -178,7 +179,7 @@ A configuração do SSPR é feita preferencialmente pelo Portal do Azure:
 - [Configurar SSPR](https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr)
 - [Regras de associação dinâmica](https://learn.microsoft.com/en-us/entra/identity/users/groups-dynamic-membership)
 
-## Quebre & Conserte
+## Quebre & conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -186,7 +187,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 2. **Mistério na associação de grupo**: Remova Bob do `Finance-Team`, depois verifique se ele ainda pode acessar recursos atribuídos a esse grupo. Quanto tempo leva para a alteração se propagar?
 3. **Acesso de convidado deu errado**: Convide um usuário convidado mas não o atribua a nenhum grupo. Ele consegue ver algo no seu tenant? Qual é o nível de acesso padrão para convidados?
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 <details>
 <summary>1. Qual é a diferença entre um grupo de segurança e um grupo do Microsoft 365?</summary>

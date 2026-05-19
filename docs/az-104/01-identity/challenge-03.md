@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 03: Azure Policy & Governance
+# Challenge 03: Azure Policy & governance
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: Free (policy evaluation) | **Exam Weight: 15-20%**
+**60-75 min** | **Estimated cost**: Free (policy evaluation) | **Exam Weight: 15-20%
+**
 
 :::
 
@@ -22,7 +23,7 @@ The CTO of Contoso Ltd. just came back from a cloud security conference and is w
 
 Azure Policy is your enforcement engine. Think of it as Group Policy for the cloud | but instead of controlling desktop settings, you're controlling what resources can be created and how they must be configured.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create and manage Azure Policy assignments
 - Create and manage policy definitions and initiatives
@@ -33,7 +34,7 @@ Azure Policy is your enforcement engine. Think of it as Group Policy for the clo
 - Configure and manage Azure Advisor recommendations
 - Configure and manage budgets and cost alerts
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -49,7 +50,7 @@ Azure Policy is your enforcement engine. Think of it as Group Policy for the clo
 
 ## Description
 
-### Part 1: Resource Groups & Tags
+### Part 1: Resource Groups & tags
 
 1. Create two resource groups for this challenge:
 
@@ -69,7 +70,7 @@ az group create --name rg-policy-dev --location eastus --tags Environment=Develo
 az resource list --tag Environment=Production -o table
 ```
 
-### Part 2: Azure Policy | Require Tags
+### Part 2: Azure Policy | require tags
 
 4. Assign the built-in policy **"Require a tag and its value on resources"** to `rg-policy-prod`:
    - Tag name: `CostCenter`
@@ -98,14 +99,14 @@ az storage account create \
   --tags CostCenter=IT-001
 ```
 
-### Part 3: Azure Policy | Allowed Locations
+### Part 3: Azure Policy | allowed locations
 
 7. Assign the built-in policy **"Allowed locations"** to `rg-policy-prod`:
    - Allowed locations: East US, West US 2
 
 8. Test by trying to create a resource in `rg-policy-prod` using a disallowed location (e.g., West Europe)
 
-### Part 4: Policy Initiative
+### Part 4: Policy initiative
 
 9. Create a policy initiative (policy set) called `Contoso-Governance` that includes:
    - Require `CostCenter` tag on resources
@@ -114,7 +115,7 @@ az storage account create \
 
 10. Assign the initiative to `rg-policy-dev`
 
-### Part 5: Resource Locks
+### Part 5: Resource locks
 
 11. Create a **CanNotDelete** lock on `rg-policy-prod`:
 
@@ -128,7 +129,7 @@ az lock create --name "PreventDeletion" \
 12. Try to delete the resource group (it should fail)
 13. Create a **ReadOnly** lock on a specific resource within the group
 
-### Part 6: Azure Advisor & Budgets
+### Part 6: Azure advisor & budgets
 
 14. Check Azure Advisor recommendations for your subscription:
 
@@ -169,7 +170,7 @@ Budget alerts via CLI require additional configuration for notification threshol
 </TabItem>
 </Tabs>
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-03"
@@ -297,7 +298,7 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Policy overview](https://learn.microsoft.com/en-us/azure/governance/policy/overview)
 - [Azure Policy built-in definitions](https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies)
@@ -306,7 +307,7 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 - [Management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
 - [Azure Advisor](https://learn.microsoft.com/en-us/azure/advisor/advisor-overview)
 
-## Break & Fix
+## Break & fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -318,7 +319,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 4. **Inherited tag confusion**: You tagged a resource group with `Environment=Production`, but resources inside it don't have the tag. Is this expected? (Yes | tags are NOT inherited from resource groups to resources by default. Use the `Inherit a tag from the resource group` policy to enable this.)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the difference between Deny, Audit, and Append policy effects?</summary>

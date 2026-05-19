@@ -5,7 +5,7 @@ title: "Desafio 18: Gerenciamento de Custos & Azure Advisor"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 18: Gerenciamento de Custos & Azure Advisor
+# Desafio 18: gerenciamento de custos & Azure advisor
 
 :::info Tempo Estimado e Custo
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A conta mensal do Azure da Contoso Ltd. cresceu de $5.000 para $45.000 em seis meses, e o CFO está exigindo respostas. Ninguém sabe qual departamento está gastando o quê, não há alertas quando os orçamentos são excedidos, e o CTO suspeita que existem recursos ociosos queimando dinheiro. Você foi encarregado de implementar uma estratégia abrangente de gerenciamento de custos usando Azure Cost Management, orçamentos, alertas e recomendações do Azure Advisor.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -27,7 +27,7 @@ A conta mensal do Azure da Contoso Ltd. cresceu de $5.000 para $45.000 em seis m
 | Interpretar recomendações de custo do Azure Advisor | Médio |
 | Configurar grupos de ação para alertas de custo | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
@@ -41,7 +41,7 @@ A conta mensal do Azure da Contoso Ltd. cresceu de $5.000 para $45.000 em seis m
 
 ## Tarefas
 
-### Tarefa 1: Configurar Tags de Recursos para Alocação de Custos
+### Tarefa 1: configurar tags de recursos para alocação de custos
 
 Crie uma estratégia consistente de tagging e aplique tags aos recursos existentes:
 
@@ -70,7 +70,7 @@ az vm create \
   --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=API
 ```
 
-### Tarefa 2: Criar um Orçamento com Alertas
+### Tarefa 2: criar um orçamento com alertas
 
 Crie um orçamento mensal com múltiplos limites de alerta:
 
@@ -101,7 +101,7 @@ az consumption budget create \
 
 
 :::
-### Tarefa 3: Configurar Visualizações de Análise de Custos
+### Tarefa 3: configurar visualizações de análise de custos
 
 Explore a análise de custos no Portal do Azure:
 
@@ -130,7 +130,7 @@ az rest --method post \
   --body '{"type":"ActualCost","timeframe":"MonthToDate","dataset":{"granularity":"None","grouping":[{"type":"TagKey","name":"Department"}]}}'
 ```
 
-### Tarefa 4: Configurar Exportações de Custos
+### Tarefa 4: configurar exportações de custos
 
 Configure a exportação automatizada de dados de custo para uma conta de armazenamento:
 
@@ -157,10 +157,10 @@ az costmanagement export create \
   --schedule-status Active
 ```
 
-### Tarefa 5: Revisar Recomendações do Azure Advisor
+### Tarefa 5: revisar recomendações do Azure advisor
 
 ```bash
-# Listar todas as recomendações do Advisor
+# Listar todas as recomendações do advisor
 az advisor recommendation list -o table
 
 # Filtrar apenas recomendações de custo
@@ -186,7 +186,7 @@ Navegue até **Azure Advisor** > aba **Custo** para ver:
 
 
 :::
-### Tarefa 6: Implementar Notificações de Gastos com Action Groups
+### Tarefa 6: implementar notificações de gastos com action Groups
 
 ```bash
 # Criar um grupo de ação para alertas de custo
@@ -203,7 +203,7 @@ az monitor action-group show \
   --query "{Name:name, Receivers:emailReceivers[].{Name:name, Email:emailAddress}}" -o json
 ```
 
-### Tarefa 7: Impor Tagging com Azure Policy
+### Tarefa 7: impor tagging com Azure Policy
 
 Aplique uma política que nega a criação de recursos sem a tag CostCenter obrigatória:
 
@@ -220,7 +220,7 @@ az policy assignment create \
   --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-cost-lab" \
   --params '{"tagName": {"value": "CostCenter"}}'
 
-# Teste: Tentar criar um recurso sem a tag (deve falhar após a política entrar em vigor)
+# Teste: tentar criar um recurso sem a tag (deve falhar após a política entrar em vigor)
 az storage account create \
   --name stnotagtest$RANDOM \
   --resource-group rg-cost-lab \
@@ -228,7 +228,7 @@ az storage account create \
   --sku Standard_LRS
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-18"
@@ -272,13 +272,13 @@ Para visualizar custos, você precisa no mínimo da função **Cost Management R
 
 </details>
 
-## Quebrar & Consertar
+## Quebrar & consertar
 
-### Cenário A: Orçamento Não Está Alertando
+### Cenário a: orçamento não está alertando
 
 Você criou um orçamento com um limite de $100, mas os gastos chegaram a $120 e nenhum alerta foi enviado. Investigue: Um grupo de ação foi configurado? O endereço de email é válido? Verifique as condições de alerta do orçamento e certifique-se de que "real" vs "previsto" está configurado corretamente.
 
-### Cenário B: Recursos Sem Tags
+### Cenário b: recursos sem tags
 
 Execute uma consulta para encontrar todos os recursos em um grupo de recursos que estão sem a tag CostCenter. Como você remedia recursos existentes sem tags? (Resposta: Use tarefas de remediação de política com efeitos "Modify" ou "DeployIfNotExists".)
 
@@ -288,11 +288,11 @@ az resource list --resource-group rg-cost-lab \
   --query "[?tags.CostCenter==null].{Name:name, Type:type}" -o table
 ```
 
-### Cenário C: Falhas na Exportação de Custos
+### Cenário c: falhas na exportação de custos
 
 Sua exportação diária de custos parou de funcionar. Verifique o status da exportação e causas comuns: rotação de chave da conta de armazenamento, contêiner excluído ou restrições de acesso de rede na conta de armazenamento.
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Qual é a diferença entre alertas de orçamento reais e previstos?</summary>
@@ -352,7 +352,7 @@ az group delete --name rg-cost-lab --yes --no-wait
 echo "Limpeza concluída. Dados de custo ainda podem aparecer por 24-48 horas."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Visão geral do Azure Cost Management](https://learn.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview)
 - [Criar e gerenciar orçamentos](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets)

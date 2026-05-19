@@ -5,7 +5,7 @@ title: "Challenge 14: Azure Monitor & Alerts"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 14: Azure Monitor & Alerts
+# Desafio 14: Azure Monitor & alerts
 
 :::info Tempo e Custo Estimados
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso precisa de observabilidade em todo o ambiente Azure. O mandato do CTO é claro: **"Se você não pode monitorar, não pode gerenciar."** Seu trabalho é configurar o Azure Monitor, criar alertas e provar que a equipe consegue detectar e responder a problemas antes dos clientes.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Interpretar métricas no Azure Monitor
 - Configurar configurações de log no Azure Monitor
@@ -26,7 +26,7 @@ A Contoso precisa de observabilidade em todo o ambiente Azure. O mandato do CTO 
 - Configurar monitoramento para VMs, armazenamento e redes usando Azure Monitor Insights
 - Usar Azure Network Watcher e Connection Monitor
 
-## Referência Sysadmin ➜ Azure
+## Referência sysadmin ➜ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -49,7 +49,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1: Criar um Log Analytics Workspace
+### Tarefa 1: criar um Log Analytics workspace
 
 ```bash
 az monitor log-analytics workspace create \
@@ -58,7 +58,7 @@ az monitor log-analytics workspace create \
   --location $LOCATION
 ```
 
-### Tarefa 2: Implantar uma VM e Habilitar VM Insights
+### Tarefa 2: implantar uma VM e habilitar VM Insights
 
 Implante uma VM e habilite o Azure Monitor VM Insights para coletar dados de desempenho e dependência.
 
@@ -79,7 +79,7 @@ Habilite o VM Insights pelo Portal do Azure: **VM → Insights → Habilitar**.
 O VM Insights instala automaticamente o Azure Monitor Agent e configura uma regra de coleta de dados (DCR).
 
 :::
-### Tarefa 3: Explorar Métricas do Azure Monitor
+### Tarefa 3: explorar métricas do Azure Monitor
 
 Navegue até **Azure Monitor → Métricas** (ou a aba Métricas da VM) e explore:
 
@@ -89,7 +89,7 @@ Navegue até **Azure Monitor → Métricas** (ou a aba Métricas da VM) e explor
 
 Tente fixar um gráfico em um dashboard.
 
-### Tarefa 4: Configurar Diagnostic Settings
+### Tarefa 4: configurar diagnostic settings
 
 Envie logs e métricas da plataforma para o Log Analytics:
 
@@ -104,7 +104,7 @@ VM_ID=$(az vm show \
   --name vm-monitored \
   --query id -o tsv)
 
-# Enable diagnostic settings (via Portal for VMs, or CLI for supported resources)
+# Enable diagnostic settings (via portal for VMs, or CLI for supported resources)
 # For a storage account example:
 az monitor diagnostic-settings create \
   --name diag-to-law \
@@ -118,7 +118,7 @@ az monitor diagnostic-settings create \
 Pode levar **15–30 minutos** para os dados de log aparecerem no Log Analytics após habilitar as configurações de diagnóstico. Isso é normal.
 
 :::
-### Tarefa 5: Escrever Consultas KQL
+### Tarefa 5: escrever consultas KQL
 
 Abra **Log Analytics → Logs** e execute estas consultas:
 
@@ -168,7 +168,7 @@ Perf
 
 </details>
 
-### Tarefa 6: Criar um Action Group
+### Tarefa 6: criar um action Group
 
 Crie um grupo de ação que envia notificações por email:
 
@@ -180,7 +180,7 @@ az monitor action-group create \
   --action email ops-email yourname@contoso.com
 ```
 
-### Tarefa 7: Criar um Alerta de Métrica
+### Tarefa 7: criar um alerta de métrica
 
 Crie um alerta que dispara quando a CPU excede 80% por 5 minutos:
 
@@ -199,7 +199,7 @@ az monitor metrics alert create \
   --description "CPU usage exceeded 80% for 5 minutes"
 ```
 
-### Tarefa 8: Criar um Alerta de Log
+### Tarefa 8: criar um alerta de Log
 
 Crie um alerta baseado em uma consulta KQL | por exemplo, detectar um padrão específico de erro nos logs:
 
@@ -216,13 +216,13 @@ Use o Portal do Azure: **Monitor → Alertas → Criar → Regra de alerta de lo
 
 </details>
 
-### Tarefa 9: Habilitar Storage Insights
+### Tarefa 9: habilitar Storage Insights
 
 1. Crie uma conta de armazenamento (se você não tiver uma)
 2. Navegue até **Azure Monitor → Contas de armazenamento** (ou **Conta de armazenamento → Insights**)
 3. Explore: métricas de transação, latência, disponibilidade, tendências de capacidade
 
-### Tarefa 10: Usar o Network Watcher
+### Tarefa 10: usar o Network watcher
 
 Explore estas ferramentas do Network Watcher:
 
@@ -231,7 +231,7 @@ Explore estas ferramentas do Network Watcher:
 3. **Connection Troubleshoot** | Verifique a conectividade de uma VM para um destino
 
 ```bash
-# IP Flow Verify example
+# IP flow verify example
 az network watcher test-ip-flow \
   --direction Inbound \
   --local 10.0.0.4:80 \
@@ -241,7 +241,7 @@ az network watcher test-ip-flow \
   --resource-group $RG
 ```
 
-## Quebre & Conserte
+## Quebre & conserte
 
 ### Quebre
 1. **Alerta sem ação** | Crie uma regra de alerta mas não anexe um grupo de ação. Acione a condição. Observe: o alerta dispara no portal mas nenhuma notificação é enviada. Por quê?
@@ -252,7 +252,7 @@ az network watcher test-ip-flow \
 - Entenda que a ingestão de logs tem um atraso (15–30 min) | isso é comportamento esperado, não um bug
 - Use a tabela **Heartbeat** para verificar que o agente está conectado
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 1. **Qual é a diferença entre Métricas e Logs no Azure Monitor?**
    - Métricas = dados numéricos de séries temporais, quase em tempo real, armazenados em um banco de dados de séries temporais
@@ -277,7 +277,7 @@ az network watcher test-ip-flow \
 az group delete --name $RG --yes --no-wait
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-14"

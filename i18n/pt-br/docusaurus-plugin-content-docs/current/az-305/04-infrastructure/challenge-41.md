@@ -5,7 +5,7 @@ title: "Desafio 41: Projetar uma Estratégia de Cache"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 41: Projetar uma Estratégia de Cache
+# Desafio 41: projetar uma estratégia de cache
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O padrão de acesso da plataforma e fortemente enviesado para leitura: feeds sao
 
 A equipe de engenharia precisa de uma estratégia de caching abrangente que enderece múltiplas camadas: CDN para ativos estaticos, caching em nível de aplicação para feeds computados, e caching de sessão para estado do usuário. Eles também devem projetar lógica de invalidacao de cache que garanta que usuários vejam novos posts dentro de 30 segundos da publicacao sem sobrecarregar os serviços de origem.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de caching para aplicações
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Avaliar Camadas de Caching e Selecionar Configuração Redis
+### Parte 1: avaliar camadas de caching e selecionar configuração redis
 
 1. Compare as opcoes de camada do Azure Cache for Redis (Basic, Standard, Premium, Enterprise, Enterprise Flash) e documente as diferencas de recursos relevantes para este cenário (clustering, geo-replicação, persistência, tamanho de dados, SLA de disponibilidade).
 2. Determine qual camada e tamanho de instância Redis e apropriado para:
@@ -36,7 +36,7 @@ A equipe de engenharia precisa de uma estratégia de caching abrangente que ende
    - Cache de conteúdo compartilhado: 100.000 itens em alta, média de 5KB cada
 3. Projete o schema de chaves e política de despejo para cada tipo de cache. Documente a estratégia de TTL para dados de sessão vs dados de feed vs conteúdo compartilhado.
 
-### Parte 2: Projetar CDN e Caching de Borda
+### Parte 2: projetar CDN e caching de borda
 
 4. Compare as capacidades de caching do Azure Front Door com perfis do Azure CDN para servir ativos estaticos (imagens, videos, bundles CSS/JS). Documente quando usar cada um.
 5. Projete regras de cache para diferentes tipos de conteúdo:
@@ -45,20 +45,20 @@ A equipe de engenharia precisa de uma estratégia de caching abrangente que ende
    - Respostas de API para conteúdo em alta (muda a cada 5 minutos)
 6. Projete uma estratégia de purge de cache para quando usuários atualizam sua foto de perfil ou excluem um post.
 
-### Parte 3: Implementar Padrões de Caching em Nível de Aplicação
+### Parte 3: implementar padrões de caching em nível de aplicação
 
 7. Projete um padrão cache-aside (lazy loading) para geracao de feed do usuário. Documente o caminho de leitura (verificar cache, fallback para origem, popular cache) e o caminho de escrita (invalidar cache em novo post).
 8. Avalie caching write-through vs write-behind para o sistema de notificações onde garantias de entrega importam. Documente os trade-offs de cada abordagem.
 9. Projete uma estratégia de cache warming para feeds populares que nunca devem experimentar um cache miss frio (contas de celebridades, paginas de marcas com milhões de seguidores).
 10. Projete um padrão circuit breaker para quando o Redis ficar indisponivel. Qual é o fallback? Como você previne thundering herd quando o cache volta?
 
-### Parte 4: Invalidacao de Cache e Consistência
+### Parte 4: invalidacao de cache e consistência
 
 11. Projete um sistema de invalidacao de cache orientado a eventos usando Azure Event Grid ou Service Bus que propague mudanças de conteúdo para todas as camadas de cache dentro do SLA de 30 segundos.
 12. Documente como você lida com cache stampede (múltiplas requisicoes simultaneas para a mesma chave expirada) usando locking distribuido ou coalescencia de requisicoes.
 13. Crie um plano de monitoramento que rastreie taxa de hit do cache, percentis de latência (p50, p95, p99), utilizacao de memoria e taxa de despejo.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-41"
@@ -109,7 +109,7 @@ Calcule as necessidades de memoria considerando: overhead de serializacao (JSON 
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Cache for Redis overview](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview)
 - [Azure Cache for Redis service tiers](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview#service-tiers)
@@ -118,7 +118,7 @@ Calcule as necessidades de memoria considerando: overhead de serializacao (JSON 
 - [Best practices for Azure Cache for Redis](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-best-practices-development)
 - [Azure Architecture Center - Caching guidance](https://learn.microsoft.com/en-us/azure/architecture/best-practices/caching)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma plataforma de midia social precisa de latência de leitura sub-milissegundo para dados de sessão com 99,99% de disponibilidade em duas regiões com escritas ativas-ativas. Qual camada do Azure Cache for Redis é necessária?</summary>
@@ -148,7 +148,7 @@ Calcule as necessidades de memoria considerando: overhead de serializacao (JSON 
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

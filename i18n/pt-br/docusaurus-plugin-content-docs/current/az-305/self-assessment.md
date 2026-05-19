@@ -5,11 +5,11 @@ title: "Estou Pronto?"
 
 import SelfAssessment from '@site/src/components/SelfAssessment';
 
-# Estou Pronto para o AZ-305?
+# Estou pronto para o AZ-305?
 
 O AZ-305 é um exame de **nível expert**. Diferente do AZ-104, que testa habilidades de implementação, o AZ-305 testa sua capacidade de **projetar soluções** que atendam requisitos de negócio e tecnicos. Você ja deve ter forte experiência em administração do Azure antes de tentar este exame.
 
-## Checklist de Autoavaliação
+## Checklist de autoavaliação
 
 Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revisar | ❌ Novo para Mim
 
@@ -27,7 +27,7 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-### Habilidades de Arquitetura e Design
+### Habilidades de arquitetura e design
 
 <SelfAssessment
   storageKey="az305-architecture"
@@ -42,7 +42,7 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-### Identidade e Governanca
+### Identidade e governanca
 
 <SelfAssessment
   storageKey="az305-identity"
@@ -55,7 +55,7 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-### Dados e Armazenamento
+### Dados e armazenamento
 
 <SelfAssessment
   storageKey="az305-data"
@@ -68,7 +68,7 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-### Continuidade de Negócios
+### Continuidade de negócios
 
 <SelfAssessment
   storageKey="az305-bcdr"
@@ -81,7 +81,7 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-### Infraestrutura e Rede
+### Infraestrutura e rede
 
 <SelfAssessment
   storageKey="az305-infra"
@@ -95,18 +95,18 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-## Como Interpretar Seus Resultados
+## Como interpretar seus resultados
 
-### Maioria ✅: Você esta pronto!
+### Maioria ✅: você esta pronto!
 Va para o [Desafio 01](/docs/az-305/identity-governance-monitoring/challenge-01) e comece a projetar.
 
-### Mistura de ✅ e ⚠️: Você esta quase pronto
+### Mistura de ✅ e ⚠️: você esta quase pronto
 Foque nós domínios onde você marcou ⚠️. Use os **Recursos de Aprendizado** em cada desafio para preencher lacunas. Considere revisar o [caminho de aprendizado Microsoft Learn para AZ-305](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305#two-ways-to-prepare).
 
-### Maioria ⚠️ ou ❌: Construa sua base primeiro
+### Maioria ⚠️ ou ❌: construa sua base primeiro
 O AZ-305 se baseia no conhecimento do AZ-104. Se você ainda não completou, faça os [desafios do AZ-104](/docs/az-104/overview) primeiro, ou adquira 6-12 meses de experiência prática com Azure antes de tentar este exame.
 
-## Diferenças Principais do AZ-104
+## Diferenças principais do AZ-104
 
 | Aspecto | AZ-104 | AZ-305 |
 |---------|--------|--------|

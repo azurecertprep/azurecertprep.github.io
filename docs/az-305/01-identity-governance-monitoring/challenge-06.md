@@ -5,7 +5,7 @@ title: "Challenge 06: Design Authorization for Azure Resources"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 06: Design Authorization for Azure Resources
+# Challenge 06: design authorization for Azure resources
 
 :::info Estimated Time and Cost
 
@@ -24,15 +24,15 @@ The current access model is broken: most engineers have Contributor on the entir
 
 The CTO has mandated a zero-trust authorization model: least privilege by default, just-in-time elevation when needed, and no standing production access for any engineer. Your task is to design and partially implement this model.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for authorizing access to Azure resources
 - Recommend an identity management solution
 - Recommend a solution for managing compliance
 
-## Design Tasks
+## Design tasks
 
-### Part 1: RBAC Scope Hierarchy Design
+### Part 1: RBAC scope hierarchy design
 
 1. Design the RBAC scope hierarchy for Fabrikam:
 
@@ -55,7 +55,7 @@ Management Group (Fabrikam Root)
    - Security auditors (read-only access across all subscriptions)
    - Cost analysts (read-only access to billing and cost data only)
 
-### Part 2: Custom Role Design
+### Part 2: custom role design
 
 3. Design a custom RBAC role for product team engineers that allows:
    - Deploy and manage App Services, Functions, and Container Apps
@@ -72,7 +72,7 @@ Management Group (Fabrikam Root)
    - Cannot modify data or delete resources
    - Cannot change networking or security configurations
 
-### Part 3: Attribute-Based Access Control (ABAC)
+### Part 3: Attribute-Based access control (abac)
 
 5. Design ABAC conditions for storage account access:
    - Engineers can only access blobs in containers tagged with their team name
@@ -81,7 +81,7 @@ Management Group (Fabrikam Root)
 
 6. Implement one ABAC condition using Azure CLI that restricts blob access based on container name or blob index tags.
 
-### Part 4: Just-in-Time Access Design
+### Part 4: Just-in-Time access design
 
 7. Design the just-in-time (JIT) access workflow for production incidents:
    - Who can request elevated access?
@@ -96,7 +96,7 @@ Management Group (Fabrikam Root)
    - Maximum active duration (4 hours for incidents)
    - Alert configuration when any production role is activated
 
-### Part 5: Deny Assignments and Resource Locks
+### Part 5: deny assignments and Resource locks
 
 9. Design deny assignments and resource locks for critical resources:
    - Prevent any user (including Owners) from deleting the production SQL Server
@@ -105,13 +105,13 @@ Management Group (Fabrikam Root)
 
 10. Implement resource locks and a deny assignment (or document why deny assignments are limited to managed applications).
 
-### Part 6: Implement Proof of Concept
+### Part 6: implement proof of concept
 
 11. Create a custom RBAC role definition for the "Product Team Engineer" role.
 
 12. Create a role assignment at the resource group scope for a test user.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-06"
@@ -201,8 +201,8 @@ az role assignment create \
 Azure ABAC (Attribute-Based Access Control) adds conditions to role assignments. Conditions use `@Resource` and `@Principal` attributes:
 
 ```bash
-# Assign Storage Blob Data Reader with ABAC condition
-# Condition: User can only read blobs in containers matching their team tag
+# Assign Storage Blob Data reader with ABAC condition
+# Condition: user can only read blobs in containers matching their team tag
 az role assignment create \
   --assignee-object-id "<user-or-group-id>" \
   --role "Storage Blob Data Reader" \
@@ -226,7 +226,7 @@ Conditions support: `StringEquals`, `StringNotEquals`, `StringLike`, `StringStar
 Resource locks prevent accidental deletion or modification:
 
 ```bash
-# Create a CanNotDelete lock on production SQL Server
+# Create a CanNotDelete lock on production SQL server
 az lock create \
   --name "protect-prod-sql" \
   --resource-group rg-team-alpha-data-prod \
@@ -278,7 +278,7 @@ Configure in Portal: Entra ID > Privileged Identity Management > Azure Resources
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure RBAC overview](https://learn.microsoft.com/en-us/azure/role-based-access-control/overview)
 - [Custom roles for Azure resources](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles)
@@ -288,7 +288,7 @@ Configure in Portal: Entra ID > Privileged Identity Management > Azure Resources
 - [Deny assignments in Azure](https://learn.microsoft.com/en-us/azure/role-based-access-control/deny-assignments)
 - [Best practices for Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/best-practices)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A junior developer needs to deploy App Services in their team's development resource group but should not be able to delete the resource group or modify networking resources. The built-in Contributor role is too broad. What should you recommend?</summary>
@@ -318,7 +318,7 @@ Configure in Portal: Entra ID > Privileged Identity Management > Azure Resources
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

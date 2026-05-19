@@ -5,7 +5,7 @@ title: "Challenge 41: Design a Caching Strategy"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 41: Design a Caching Strategy
+# Challenge 41: design a caching strategy
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The platform's access pattern is heavily read-biased: feeds are read approximate
 
 The engineering team needs a comprehensive caching strategy that addresses multiple layers: CDN for static assets, application-level caching for computed feeds, and session caching for user state. They must also design cache invalidation logic that ensures users see new posts within 30 seconds of publication without overwhelming the origin services.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a caching solution for applications
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Evaluate Caching Tiers and Select Redis Configuration
+### Part 1: evaluate caching tiers and select redis configuration
 
 1. Compare Azure Cache for Redis tier options (Basic, Standard, Premium, Enterprise, Enterprise Flash) and document the feature differences relevant to this scenario (clustering, geo-replication, persistence, data size, availability SLA).
 2. Determine which Redis tier and instance size is appropriate for:
@@ -36,7 +36,7 @@ The engineering team needs a comprehensive caching strategy that addresses multi
    - Shared content cache: 100,000 trending items, average 5KB each
 3. Design the key schema and eviction policy for each cache type. Document TTL strategy for session data vs. feed data vs. shared content.
 
-### Part 2: Design CDN and Edge Caching
+### Part 2: design CDN and edge caching
 
 4. Compare Azure Front Door caching capabilities with Azure CDN profiles for serving static assets (images, videos, CSS/JS bundles). Document when to use each.
 5. Design cache rules for different content types:
@@ -45,20 +45,20 @@ The engineering team needs a comprehensive caching strategy that addresses multi
    - API responses for trending content (changes every 5 minutes)
 6. Design a cache purge strategy for when users update their profile photo or delete a post.
 
-### Part 3: Implement Application-Level Caching Patterns
+### Part 3: implement Application-Level caching patterns
 
 7. Design a cache-aside (lazy loading) pattern for user feed generation. Document the read path (check cache, fallback to origin, populate cache) and the write path (invalidate cache on new post).
 8. Evaluate write-through vs. write-behind caching for the notification system where delivery guarantees matter. Document trade-offs of each approach.
 9. Design a cache warming strategy for popular feeds that should never experience a cold cache miss (celebrity accounts, brand pages with millions of followers).
 10. Design a circuit breaker pattern for when Redis becomes unavailable. What is the fallback? How do you prevent thundering herd when the cache comes back?
 
-### Part 4: Cache Invalidation and Consistency
+### Part 4: cache invalidation and consistency
 
 11. Design an event-driven cache invalidation system using Azure Event Grid or Service Bus that propagates content changes to all cache layers within the 30-second SLA.
 12. Document how you handle cache stampede (multiple simultaneous requests for the same expired key) using distributed locking or request coalescing.
 13. Create a monitoring plan that tracks cache hit ratio, latency percentiles (p50, p95, p99), memory utilization, and eviction rate.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-41"
@@ -109,7 +109,7 @@ Calculate memory needs considering: serialization overhead (JSON is 2-3x larger 
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Cache for Redis overview](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview)
 - [Azure Cache for Redis service tiers](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview#service-tiers)
@@ -118,7 +118,7 @@ Calculate memory needs considering: serialization overhead (JSON is 2-3x larger 
 - [Best practices for Azure Cache for Redis](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-best-practices-development)
 - [Azure Architecture Center - Caching guidance](https://learn.microsoft.com/en-us/azure/architecture/best-practices/caching)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A social media platform needs sub-millisecond read latency for session data with 99.99% availability across two regions with active-active writes. Which Azure Cache for Redis tier is required?</summary>
@@ -148,7 +148,7 @@ Calculate memory needs considering: serialization overhead (JSON is 2-3x larger 
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

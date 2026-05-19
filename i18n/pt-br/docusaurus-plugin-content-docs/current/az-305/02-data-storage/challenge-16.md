@@ -5,7 +5,7 @@ title: "Desafio 16: Projetar Escalabilidade de Banco de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 16: Projetar Escalabilidade de Banco de Dados
+# Desafio 16: projetar escalabilidade de banco de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ A arquitetura atual usa um único Azure SQL Database (Business Critical, 8 vCore
 
 Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e de baixa latência ao banco de dados no US East; (2) Leitores em todo o mundo devem experimentar latência de consulta inferior a 100ms para recuperação de artigos; (3) O sistema deve lidar com picos de trafego de leitura de 10x sem intervencao manual; (4) Consistência de dados entre regiões pode tolerar até 5 segundos de atraso de replicação para consultas de leitura; (5) A solução deve ser economica, reduzindo quando o trafego normaliza.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para escalabilidade de banco de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Arquitetura de Read Scale-Out
+### Parte 1: arquitetura de read Scale-Out
 
 1. Projete uma estratégia de read scale-out que separe as cargas de trabalho de leitura e escrita. Determine como rotear editores de conteúdo para a instância primária (leitura-escrita) e leitores para replicas somente leitura.
 2. Avalie as seguintes opcoes para fornecer replicas de leitura e recomende a melhor combinacao para os requisitos da GNN:
@@ -38,20 +38,20 @@ Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e d
 3. Determine o número e posicionamento ideais de replicas de leitura para servir leitores na América do Norte, Europa e Asia-Pacifico com latência inferior a 100ms.
 4. Projete a estratégia de connection string para aplicações rotearem trafego de leitura para replicas (ApplicationIntent=ReadOnly, ou conexão direta para geo-replicas).
 
-### Parte 2: Tratamento de Picos de Trafego
+### Parte 2: tratamento de picos de trafego
 
 5. Projete uma abordagem de auto-scaling para replicas de leitura durante eventos de noticias urgentes. Considere named replicas Hyperscale que podem ser escaladas independentemente é criadas sob demanda.
 6. Avalie se elastic pools poderiam ajudar a gerenciar uma frota de bancos de dados de replicas de leitura durante períodos de pico.
 7. Projete uma camada de cache (Azure Cache for Redis ou cache em nível de aplicação) para reduzir a carga do banco de dados durante picos. Determine quais consultas se beneficiam mais do cache e valores de TTL apropriados.
 8. Calcule a capacidade de replica de leitura necessária durante um pico de 10x (500.000 consultas/segundo) e projete um plano de escalonamento que alcance isso sem provisionar excessivamente durante períodos normais.
 
-### Parte 3: Escalabilidade de Escrita e Distribuição de Dados
+### Parte 3: escalabilidade de escrita e distribuição de dados
 
 9. Avalie se a carga de trabalho de escrita (500 operações/segundo) requer escalonamento além de um único primário. Discuta cenários onde sharding ou particionamento de escrita poderiam ser necessários no futuro.
 10. Projete uma topologia de geo-replicação que forneça tanto recuperação de desastres quanto read scale-out. Determine o modo de replicação apropriado (sincrono vs assincrono) e atraso de replicação aceitavel.
 11. Proponha uma estratégia de monitoramento e alertas para detectar quando replicas de leitura ficam atrasadas em relação ao primário e quando o trafego se aproxima dos limites de capacidade. Identifique metricas-chave para monitorar (atraso de replicação, utilizacao de DTU/vCore, contagem de conexões).
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-16"
@@ -102,7 +102,7 @@ Active geo-replication no Azure SQL Database usa replicação assincrona. O atra
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Read scale-out in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/read-scale-out)
 - [Active geo-replication](https://learn.microsoft.com/en-us/azure/azure-sql/database/active-geo-replication-overview)
@@ -111,7 +111,7 @@ Active geo-replication no Azure SQL Database usa replicação assincrona. O atra
 - [Azure Cache for Redis overview](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview)
 - [Elastic pools for Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/elastic-pool-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma aplicação global precisa de replicas de leitura em 3 regiões com a capacidade de escalar independentemente a computacao de cada replica. Qual recurso do Azure SQL Database você deve usar?</summary>
@@ -147,7 +147,7 @@ Active geo-replication no Azure SQL Database usa replicação assincrona. O atra
 # Delete the resource group containing all GNN database resources
 az group delete --name rg-gnn-databases --yes --no-wait
 
-# Delete the Redis cache resource group (if created separately)
+# Delete the redis cache resource group (if created separately)
 az group delete --name rg-gnn-cache --yes --no-wait
 ```
 

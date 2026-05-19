@@ -5,7 +5,7 @@ title: "Challenge 22: Design a Data Integration Pipeline"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 22: Design a Data Integration Pipeline
+# Challenge 22: design a Data integration pipeline
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The current process relies on manual CSV exports and email attachments, resultin
 
 Your challenge is to design and implement a data integration solution using Azure Data Factory (or Synapse Pipelines), including orchestration across multiple sources, a self-hosted integration runtime for on-premises connectivity, appropriate trigger mechanisms, and comprehensive monitoring.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for data integration
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Select Integration Service and Design Architecture
+### Part 1: select integration Service and design architecture
 
 1. Create a decision matrix comparing these integration services for FreshMart's requirements:
    - Azure Data Factory
@@ -46,7 +46,7 @@ Your challenge is to design and implement a data integration solution using Azur
    - Destination (Synapse Analytics dedicated SQL pool)
    - Orchestration flow (master pipeline with child pipelines)
 
-### Part 2: Implement Data Factory Pipelines
+### Part 2: implement Data factory pipelines
 
 4. Deploy an Azure Data Factory instance and create the following linked services:
    - Azure SQL Database (simulating on-premises SQL Server via self-hosted IR)
@@ -71,7 +71,7 @@ Your challenge is to design and implement a data integration solution using Azur
    - Implement pagination for large result sets
    - Map the API response to the staging format
 
-### Part 3: Orchestration, Triggers, and Error Handling
+### Part 3: orchestration, triggers, and error handling
 
 8. Create a master orchestration pipeline that:
    - Executes the three source pipelines (stores, SAP, Salesforce) in parallel
@@ -86,7 +86,7 @@ Your challenge is to design and implement a data integration solution using Azur
     - Log pipeline run metadata (start time, duration, rows copied, errors) to a monitoring table
     - Design an alerting rule using Azure Monitor for consecutive pipeline failures
 
-### Part 4: ETL vs ELT Design Decision
+### Part 4: ETL vs ELT design decision
 
 11. Document your decision between ETL (transform in Data Factory using Data Flows) versus ELT (load raw data to staging, transform in Synapse using SQL):
     - For store sales data: small transformations (currency conversion, date formatting)
@@ -96,7 +96,7 @@ Your challenge is to design and implement a data integration solution using Azur
 
 12. If using ELT, create stored procedures in Synapse that transform staged data into the final star schema (fact and dimension tables).
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-22"
@@ -147,7 +147,7 @@ Data Factory provides built-in monitoring through Azure Monitor with metrics lik
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Data Factory overview](https://learn.microsoft.com/en-us/azure/data-factory/introduction)
 - [Copy activity in Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-overview)
@@ -157,7 +157,7 @@ Data Factory provides built-in monitoring through Azure Monitor with metrics lik
 - [Data flows in Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview)
 - [Monitor Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/monitor-visually)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. FreshMart's SAP system is on-premises behind a corporate firewall. Which component enables Azure Data Factory to access this data without opening inbound firewall ports?</summary>
@@ -187,7 +187,7 @@ Data Factory provides built-in monitoring through Azure Monitor with metrics lik
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

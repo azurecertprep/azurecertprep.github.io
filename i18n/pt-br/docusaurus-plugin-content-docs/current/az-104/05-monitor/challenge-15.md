@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 O desastre aconteceu na Contoso | um desenvolvedor acidentalmente excluiu dados de produção. A gerência está exigindo respostas: *"Por que não havia um backup?"* Seu trabalho é implementar o Azure Backup e o Azure Site Recovery para que isso nunca mais aconteça.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar um Recovery Services vault
 - Criar um Azure Backup vault
@@ -27,7 +27,7 @@ O desastre aconteceu na Contoso | um desenvolvedor acidentalmente excluiu dados 
 - Realizar failover para uma região secundária
 - Configurar e interpretar relatórios e alertas para backups
 
-## Referência Sysadmin ➜ Azure
+## Referência sysadmin ➜ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -50,7 +50,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1: Criar um Recovery Services Vault
+### Tarefa 1: criar um Recovery Services Vault
 
 ```bash
 az backup vault create \
@@ -64,7 +64,7 @@ az backup vault create \
 Recovery Services vaults são usados para backup de VM e Azure Site Recovery. O vault deve estar na **mesma região** das VMs que você deseja fazer backup.
 
 :::
-### Tarefa 2: Criar uma Política de Backup
+### Tarefa 2: criar uma política de Backup
 
 Crie uma política de backup personalizada: backups diários às 2:00 da manhã, retenção de 30 dias.
 
@@ -90,7 +90,7 @@ az backup policy set \
 
 </details>
 
-### Tarefa 3: Habilitar Backup para uma VM
+### Tarefa 3: habilitar Backup para uma VM
 
 Implante uma VM e habilite o backup:
 
@@ -112,7 +112,7 @@ az backup protection enable-for-vm \
   --policy-name DefaultPolicy
 ```
 
-### Tarefa 4: Acionar um Backup Sob Demanda
+### Tarefa 4: acionar um Backup sob demanda
 
 ```bash
 az backup protection backup-now \
@@ -128,7 +128,7 @@ az backup protection backup-now \
 O primeiro backup pode levar **30–60 minutos** dependendo do tamanho da VM. Você pode acompanhar o progresso na aba **Backup Jobs** do vault.
 
 :::
-### Tarefa 5: Restaurar uma VM a partir do Backup
+### Tarefa 5: restaurar uma VM a partir do Backup
 
 Quando o backup for concluído, restaure-o para uma nova VM:
 
@@ -153,7 +153,7 @@ az backup recoverypoint list \
 
 </details>
 
-### Tarefa 6: Criar um Azure Backup Vault
+### Tarefa 6: criar um Azure Backup Vault
 
 Azure Backup vaults são usados para cargas de trabalho mais novas como backup de blob e Azure Database for PostgreSQL.
 
@@ -165,7 +165,7 @@ az dataprotection backup-vault create \
   --storage-setting "[{type:LocallyRedundant,datastore-type:VaultStore}]"
 ```
 
-### Tarefa 7: Configurar Backup de Blob (Camada Operacional)
+### Tarefa 7: configurar Backup de Blob (Camada operacional)
 
 1. Crie uma conta de armazenamento
 2. Configure backup operacional para blobs (restauração point-in-time)
@@ -183,7 +183,7 @@ Isso habilita a restauração point-in-time para blobs | nenhuma cópia de backu
 
 </details>
 
-### Tarefa 8: Configurar Azure Site Recovery
+### Tarefa 8: configurar Azure Site Recovery
 
 Habilite a replicação para uma VM em uma região secundária:
 
@@ -199,7 +199,7 @@ Habilite a replicação para uma VM em uma região secundária:
 O Site Recovery replica os discos da VM de forma assíncrona para a região de destino. A replicação inicial pode levar 30–60 minutos dependendo do tamanho do disco.
 
 :::
-### Tarefa 9: Executar um Test Failover
+### Tarefa 9: executar um test failover
 
 Após a replicação inicial ser concluída:
 
@@ -214,13 +214,13 @@ Após a replicação inicial ser concluída:
 Sempre limpe os recursos do test failover | eles continuam gerando cobranças até serem removidos.
 
 :::
-### Tarefa 10: Configurar Relatórios de Backup
+### Tarefa 10: configurar relatórios de Backup
 
 1. Vá para **Backup center → Relatórios de backup**
 2. Configure o Log Analytics workspace como fonte de dados
 3. Explore: integridade dos itens de backup, tendências de jobs de backup, consumo de armazenamento
 
-### Tarefa 11: Configurar Alertas de Backup
+### Tarefa 11: configurar alertas de Backup
 
 Configure alertas para jobs de backup com falha:
 
@@ -228,7 +228,7 @@ Configure alertas para jobs de backup com falha:
 2. Crie uma regra de alerta para **Falha de backup**
 3. Anexe um grupo de ação para notificação por email
 
-## Quebre & Conserte
+## Quebre & conserte
 
 ### Quebre
 1. **Excluir um vault com itens protegidos** | Tente excluir o Recovery Services vault enquanto ele ainda tem itens de backup. Observe o erro: *"O vault não pode ser excluído pois existem recursos dentro do vault."*
@@ -238,7 +238,7 @@ Configure alertas para jobs de backup com falha:
 - Para excluir um vault: primeiro pare a proteção de backup, exclua os dados de backup, depois exclua o vault
 - Mova ou recrie o vault na mesma região da VM
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 1. **Recovery Services vault vs Azure Backup vault?**
    - Recovery Services vault: VMs, SQL em Azure VM, Azure Files, Azure Site Recovery
@@ -260,10 +260,10 @@ Configure alertas para jobs de backup com falha:
 ## Limpeza
 
 ```bash
-# IMPORTANT: Must stop protection before deleting vault
-# 1. Stop backup and delete backup data for each protected item
-# 2. Disable Site Recovery replication
-# 3. Then delete the resource group
+# IMPORTANT: must stop protection before deleting vault
+# 1. stop backup and delete backup data for each protected item
+# 2. disable Site Recovery replication
+# 3. then delete the resource group
 
 az group delete --name $RG --yes --no-wait
 ```
@@ -277,7 +277,7 @@ Se a exclusão do vault falhar, siga esta ordem:
 4. Exclua o grupo de recursos
 
 :::
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-15"

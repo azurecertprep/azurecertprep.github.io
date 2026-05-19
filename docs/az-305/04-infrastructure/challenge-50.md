@@ -5,7 +5,7 @@ title: "Challenge 50: Design a Complete Azure Solution (Cross-Domain Capstone)"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 50: Design a Complete Azure Solution (Cross-Domain Capstone)
+# Challenge 50: design a complete Azure solution (Cross-Domain capstone)
 
 :::info Estimated Time and Cost
 
@@ -32,7 +32,7 @@ The business requirements include:
 
 This capstone challenge integrates all 4 exam domains: Identity/Governance/Monitoring, Data Storage, Business Continuity, and Infrastructure. Design the complete architecture.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Design solutions for logging and monitoring
 - Design authentication and authorization solutions
@@ -48,9 +48,9 @@ This capstone challenge integrates all 4 exam domains: Identity/Governance/Monit
 - Recommend a solution to optimize network security
 - Recommend a load-balancing and routing solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Identity, Governance, and Monitoring (Domain 1)
+### Part 1: identity, governance, and monitoring (Domain 1)
 
 1. Design the identity architecture:
    - Patient authentication: Azure AD B2C with multi-factor authentication, social identity providers, self-service password reset
@@ -68,7 +68,7 @@ This capstone challenge integrates all 4 exam domains: Identity/Governance/Monit
    - Custom dashboards for operations team (real-time patient wait times, doctor utilization, platform health)
    - Audit logging for compliance (who accessed which patient record, when, from where)
 
-### Part 2: Data Storage Design (Domain 2)
+### Part 2: Data Storage design (Domain 2)
 
 4. Design the data storage architecture for each data type:
    - Patient records (structured, relational): Azure SQL Database or Cosmos DB? Consider query patterns, consistency requirements, and multi-region needs
@@ -87,7 +87,7 @@ This capstone challenge integrates all 4 exam domains: Identity/Governance/Monit
    - Data masking for non-production environments
    - Backup and retention policies (7-year retention for medical records per regulation)
 
-### Part 3: Business Continuity Design (Domain 3)
+### Part 3: Business continuity design (Domain 3)
 
 7. Design the high availability architecture for 99.99% SLA:
    - Calculate composite SLA across all services in the critical path
@@ -104,7 +104,7 @@ This capstone challenge integrates all 4 exam domains: Identity/Governance/Monit
    - Blob Storage: soft delete, versioning, immutability policies for compliance
    - Document RPO/RTO for non-critical systems (analytics: RPO 1 hour, RTO 4 hours)
 
-### Part 4: Infrastructure and Compute Design (Domain 4)
+### Part 4: infrastructure and compute design (Domain 4)
 
 10. Design the compute architecture:
     - Video consultation service: what compute platform handles 5,000 concurrent WebRTC sessions? (Azure Communication Services or custom media server on AKS?)
@@ -122,7 +122,7 @@ This capstone challenge integrates all 4 exam domains: Identity/Governance/Monit
     - Network segmentation: web tier, API tier, data tier with NSGs
     - No public internet exposure for any backend service
 
-### Part 5: Architecture Diagram
+### Part 5: architecture diagram
 
 13. Create a comprehensive architecture diagram (using the Mermaid diagram block below as a starting template) that shows:
     - All Azure services selected
@@ -183,7 +183,7 @@ graph TB
     FN_US --> SQL_US
 ```
 
-### Part 6: Well-Architected Framework Assessment
+### Part 6: Well-Architected Framework assessment
 
 14. Evaluate your design against each pillar of the Azure Well-Architected Framework:
 
@@ -212,7 +212,7 @@ graph TB
 - How does appointment scheduling handle 10,000 concurrent users?
 - What caching strategy reduces database load?
 
-### Part 7: Cost Estimation
+### Part 7: cost estimation
 
 15. Produce a monthly cost estimate broken down by service category:
     - Compute (Container Apps, Functions, AKS if used)
@@ -224,7 +224,7 @@ graph TB
     - Verify total fits within $50K/month budget
     - Identify cost optimization opportunities (reserved capacity, autoscale-to-zero, tiered storage)
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-50"
@@ -275,7 +275,7 @@ Key cost drivers in this architecture: Cosmos DB multi-region (use autoscale to 
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/)
 - [Azure Architecture Center - Healthcare](https://learn.microsoft.com/en-us/azure/architecture/industries/healthcare)
@@ -286,7 +286,7 @@ Key cost drivers in this architecture: Cosmos DB multi-region (use autoscale to 
 - [HIPAA compliance on Azure](https://learn.microsoft.com/en-us/azure/compliance/offerings/offering-hipaa-us)
 - [Azure Front Door with Private Link origins](https://learn.microsoft.com/en-us/azure/frontdoor/private-link)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Your architecture uses Cosmos DB with multi-region writes for appointment scheduling (99.999% SLA) and Azure Container Apps for the API tier (99.95% SLA). The critical path goes through both. What is the composite SLA and how do you improve it?</summary>
@@ -316,7 +316,7 @@ Key cost drivers in this architecture: Cosmos DB multi-region (use autoscale to 
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
@@ -390,7 +390,7 @@ This mini-deployment validates your design decisions with real Azure resources. 
 
 ```bash
 # Delete all resources created in this capstone challenge
-# IMPORTANT: This challenge may have created resources across multiple regions
+# IMPORTANT: this challenge may have created resources across multiple regions
 az group delete --name rg-az305-challenge50-eastus --yes --no-wait
 az group delete --name rg-az305-challenge50-uksouth --yes --no-wait
 az group delete --name rg-az305-challenge50-centralindia --yes --no-wait

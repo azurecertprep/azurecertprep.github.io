@@ -5,7 +5,7 @@ title: "Challenge 18: Design a Semi-Structured Data Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 18: Design a Semi-Structured Data Solution
+# Challenge 18: design a Semi-Structured Data solution
 
 :::info Estimated Time and Cost
 
@@ -21,34 +21,34 @@ The platform has two primary access patterns. First, operators need real-time da
 
 SensorGrid's budget for the data layer is $3,000/month. The CTO wants to minimize operational overhead (no managing clusters or shards manually) and requires multi-region availability with automatic failover. The engineering team has experience with MongoDB query syntax from a previous project but is open to other APIs if the trade-offs justify it. Data retention policy requires hot data for 90 days, after which it should be archived or moved to cold storage to control costs.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for storing semi-structured data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Service and API Selection
+### Part 1: Service and API selection
 
 1. Evaluate Azure Cosmos DB as the primary data store for SensorGrid's requirements. Compare it against alternatives (Azure Table Storage, MongoDB Atlas on Azure) and justify your recommendation.
 2. Select the most appropriate Cosmos DB API for this workload. Compare NoSQL (native), MongoDB, PostgreSQL, Cassandra, and Gremlin APIs. Consider the team's MongoDB experience, the query patterns required, and long-term flexibility.
 3. If you recommend the NoSQL API, explain how SQL-like queries and the change feed provide advantages over the MongoDB API for this IoT scenario. If you recommend MongoDB API, explain how wire protocol compatibility reduces migration effort.
 4. Evaluate whether Azure Table Storage could handle any portion of this workload at lower cost (for simpler key-value lookups of device state).
 
-### Part 2: Data Modeling and Partitioning
+### Part 2: Data modeling and partitioning
 
 5. Design the partition key strategy for the telemetry events container. Evaluate candidates: device ID, facility ID, device type, timestamp, or a synthetic key combining multiple fields. Consider the access patterns (point reads by device, range queries by time, queries by facility).
 6. Calculate the expected RU (Request Unit) consumption for the two primary access patterns: (a) point read of latest device state, (b) query returning 1 hour of history for a single device. Estimate the provisioned throughput needed.
 7. Design the document structure for telemetry events. Decide whether to store each reading as an individual document or batch multiple readings into a single document (bucketing pattern). Analyze the trade-offs in RU cost, query flexibility, and write throughput.
 8. Design a TTL (time-to-live) strategy to automatically expire data after 90 days, reducing storage costs without manual cleanup jobs.
 
-### Part 3: Consistency and Global Distribution
+### Part 3: consistency and global distribution
 
 9. Select the appropriate consistency level for each access pattern: (a) real-time dashboard reads (latest device state), (b) historical analytics queries. Evaluate strong, bounded staleness, session, consistent prefix, and eventual consistency. Document the RU cost implications of each level.
 10. Design the multi-region deployment topology. Determine which regions should have write capability (single-write vs multi-write) and how many read regions to deploy given the device distribution.
 11. Evaluate multi-region writes for scenarios where devices in each region write to the nearest Cosmos DB instance. Address conflict resolution strategy (Last Writer Wins vs custom merge procedures).
 12. Design a cost optimization strategy including autoscale throughput, serverless tier for development environments, and hierarchical partition keys for improved data distribution.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-18"
@@ -99,7 +99,7 @@ Autoscale throughput automatically scales between 10% and 100% of a configured m
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Cosmos DB overview](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction)
 - [Choose an API in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/choose-api)
@@ -110,7 +110,7 @@ Autoscale throughput automatically scales between 10% and 100% of a configured m
 - [Distribute data globally with Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally)
 - [Time to Live (TTL) in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/time-to-live)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. An IoT platform ingests 1 million events per second from globally distributed devices. Each event is a 1KB JSON document. Why is document bucketing (batching) critical for cost management in Cosmos DB?</summary>
@@ -140,11 +140,11 @@ Autoscale throughput automatically scales between 10% and 100% of a configured m
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab demonstrates that Cosmos DB architectural decisions -- partition key choice, consistency levels, and TTL -- produce measurable behavioral differences you can observe directly. You will not just create resources; you will see how design choices manifest as RU cost, query performance, and automatic data lifecycle management.
 
-### Step 1: Create the Cosmos DB account and container
+### Step 1: create the Cosmos DB account and container
 
 ```bash
 az group create \
@@ -184,7 +184,7 @@ az cosmosdb sql container create \
 
 Setting `--ttl -1` enables TTL at the container level but requires each document to specify its own TTL value. This gives per-document control over expiration.
 
-### Step 2: Insert documents with different partition keys
+### Step 2: insert documents with different partition keys
 
 Retrieve the account endpoint and key:
 
@@ -248,7 +248,7 @@ for doc in docs:
 "
 ```
 
-### Step 3: Compare single-partition vs cross-partition query cost
+### Step 3: compare single-partition vs cross-partition query cost
 
 ```bash
 python3 -c "
@@ -286,7 +286,7 @@ print(f'RU cost: {container.client_connection.last_response_headers[\"x-ms-reque
 Observe that the cross-partition query costs significantly more RUs than the single-partition query, even when returning fewer or equal results. This is because Cosmos DB must fan out the query to every physical partition. On the AZ-305 exam, questions about "minimizing RU consumption" almost always hinge on whether the query is single-partition or cross-partition. Your partition key choice determines this at design time, not at query time.
 :::
 
-### Step 4: Change consistency level and observe RU impact
+### Step 4: change consistency level and observe RU impact
 
 Lower the account default consistency from Session to Eventual:
 
@@ -326,7 +326,7 @@ print('need to confirm they have the latest write before responding.')
 Consistency levels are a performance lever, not just a correctness knob. Strong consistency costs 2x RUs for reads because it requires quorum confirmation. Session consistency (the default) costs 1x and guarantees read-your-own-writes. Eventual consistency may cost less in multi-region scenarios. On the exam, the correct answer depends on whether the scenario tolerates stale reads -- IoT dashboards often can, financial transactions cannot.
 :::
 
-### Step 5: Test TTL -- automatic document expiration
+### Step 5: test TTL -- automatic document expiration
 
 Insert a document with a short TTL (30 seconds):
 

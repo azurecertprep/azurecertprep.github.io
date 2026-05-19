@@ -5,7 +5,7 @@ title: "Desafio 12: Projetar Governança de Identidade"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 12: Projetar Governança de Identidade
+# Desafio 12: projetar governança de identidade
 
 :::info Tempo Estimado e Custo
 
@@ -21,40 +21,40 @@ O CISO recebeu um mandato do conselho para implementar principios de zero-standi
 
 O desafio é equilibrar rigor de segurança com eficiência operacional. Engenheiros frequentemente precisam de acesso elevado para troubleshooting (mas não permanentemente). Equipes de projeto se formam e dissolvem a cada 3-6 meses, exigindo concessoes dinamicas de acesso. O sistema de RH (Workday) e a fonte autoritativa para eventos de ciclo de vida de funcionários (contratacao, transferencia, desligamento), mas o onboarding de contratados é gerenciado por gerentes de projeto individuais sem sistema centralizado.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para governança de identidade
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Privileged Identity Management (PIM)
+### Parte 1: privileged identity Management (pim)
 
 1. Projete a configuração de PIM para funções de recursos do Azure. Defina quais funções devem ser elegiveis (ativadas sob demanda) versus permanentemente atribuidas. Para cada função privilegiada (Global Administrator, Subscription Owner, Subscription Contributor, Key Vault Administrator), especifique: duracao máxima de ativacao, requisitos de aprovacao e aplicação de MFA.
 2. Projete o PIM para funções de diretório do Entra ID. Determine quais funções de diretório (Global Admin, User Administrator, Security Administrator, Privileged Role Administrator) precisam de políticas de ativacao, e defina o fluxo de trabalho de aprovacao (quem aprova, caminho de escalonamento, condições de auto-aprovacao).
 3. Especifique a configuração de alertas e notificações para PIM. Defina quem recebe notificações quando: uma função e ativada, uma ativacao de função esta pendente de aprovacao, uma atribuicao permanente e feita fora do PIM, ou uma atribuicao elegivel esta prestes a expirar.
 4. Projete a estratégia para as 12 contas de serviço com acesso permanente de Global Administrator. Determine como transiciona-las para acesso de menor privilegio (o que pode exigir dividi-las em múltiplos service principals com atribuicoes de função específicas).
 
-### Parte 2: Access Reviews
+### Parte 2: access reviews
 
 5. Projete o programa de access reviews para a Velocity Dynamics. Defina escopos de revisao: quais grupos, funções, atribuicoes de aplicação e atribuicoes de função de recursos do Azure precisam de revisao periódica. Especifique a frequência de revisao (trimestral, semestral) com base no nível de risco.
 6. Defina a estratégia de atribuicao de revisores. Para cada tipo de revisao, determine quem revisa: gerente revisa acesso de subordinados diretos, proprietarios de grupo revisam membros, proprietarios de recurso revisam acesso a seus recursos, ou auto-atestacao. Aborde cenários onde o revisor designado não responde.
 7. Configure as opcoes de auto-aplicação para access reviews. Determine quando o acesso deve ser automaticamente revogado (revisor não responde em 14 dias, revisor explicitamente nega, recomendacoes indicam acesso não utilizado) versus quando intervencao humana é necessária.
 8. Projete access reviews especificamente para usuários externos/convidados. Defina a cadencia de revisao, criterios para remocao automática (sem login por 90 dias), e o fluxo de notificação antes da revogacao de acesso.
 
-### Parte 3: Entitlement Management
+### Parte 3: entitlement Management
 
 9. Projete access packages para padrões comuns de acesso baseado em função. Crie access packages para: "Engineering Team Member" (recursos básicos do Azure + ferramentas de desenvolvimento), "Production Support" (acesso de leitura a produção + escrita limitada para resposta a incidentes) e "Data Analyst" (acesso ao data lake + ferramentas de BI). Defina quais recursos cada pacote concede e o fluxo de aprovacao.
 10. Projete a estrutura de catálogo de access packages. Determine se deve usar um único catálogo ou múltiplos catálogos (por departamento, por projeto, por nível de sensibilidade). Defina proprietarios de catálogo e suas responsabilidades.
 11. Configure políticas de access packages para diferentes tipos de solicitantes: funcionários internos (auto-aprovado para pacotes básicos), contratados (aprovacao do gerente necessária) e solicitacoes entre departamentos (aprovacao do proprietario do recurso). Defina políticas de expiracao para cada tipo.
 12. Projete organizações conectadas para acesso de contratados. Determine como organizações parceiras externas sao integradas, como seus usuários solicitam access packages e como o acesso e automaticamente removido quando o acordo de parceria termina.
 
-### Parte 4: Lifecycle Workflows
+### Parte 4: lifecycle workflows
 
 13. Projete lifecycle workflows disparados por eventos de RH do Workday. Defina workflows para: joiner (novo contratado recebe acesso básico + acesso específico do departamento na data de início), mover (funcionario muda de departamento, acesso antigo revogado, novo acesso concedido), e leaver (todo acesso revogado no último dia, conta desabilitada, licencas recuperadas apos 30 dias).
 14. Aborde a lacuna de ciclo de vida de contratados (sem sistema de RH centralizado). Projete um processo para onboarding de contratados que garanta: responsabilidade do sponsor, acesso limitado no tempo e desabilitacao automática se a data de termino do contrato passar sem renovacao.
 15. Defina workflows de acesso temporário para trabalho baseado em projetos. Projete como um engenheiro obtem acesso limitado no tempo aos recursos de um projeto específico, e como esse acesso expira automaticamente quando o marco do projeto e concluido.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-12"
@@ -105,7 +105,7 @@ Para contratados sem sinal de sistema de RH: (1) Exija um "sponsor" (funcionario
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [What is Microsoft Entra ID Governance?](https://learn.microsoft.com/entra/id-governance/identity-governance-overview)
 - [Plan a Microsoft Entra access reviews deployment](https://learn.microsoft.com/entra/id-governance/deploy-access-reviews)
@@ -114,7 +114,7 @@ Para contratados sem sinal de sistema de RH: (1) Exija um "sponsor" (funcionario
 - [What are lifecycle workflows?](https://learn.microsoft.com/entra/id-governance/what-are-lifecycle-workflows)
 - [Plan a lifecycle workflow deployment](https://learn.microsoft.com/entra/id-governance/lifecycle-workflows-deployment)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um incidente em produção requer que um engenheiro ative a função de Subscription Owner as 2 da manha. O fluxo de aprovacao padrão requer que o lider da equipe de segurança aprove, mas ele não esta disponível. Como o PIM deve ser configurado para lidar com este cenário?</summary>
@@ -147,12 +147,12 @@ Para contratados sem sinal de sistema de RH: (1) Exija um "sponsor" (funcionario
 ## Limpeza
 
 ```bash
-# Remove PIM role settings (done via Portal or PowerShell/Graph)
+# Remove PIM role settings (done via portal or PowerShell/Graph)
 # Remove access reviews
 # Remove access packages and catalogs
-# These are Entra ID configurations - use the Portal or Microsoft Graph:
+# These are Entra ID configurations - use the portal or Microsoft graph:
 
-# Example: Remove test groups created for this challenge
+# Example: remove test groups created for this challenge
 az ad group delete --group "sg-production-contributors"
 az ad group delete --group "sg-engineering-team"
 az ad group delete --group "sg-data-analysts"

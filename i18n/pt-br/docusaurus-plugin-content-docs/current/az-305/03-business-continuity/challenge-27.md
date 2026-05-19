@@ -5,7 +5,7 @@ title: "Desafio 27: Projetar Backup e Recuperação para Bancos de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 27: Projetar Backup e Recuperação para Bancos de Dados
+# Desafio 27: projetar Backup e recuperação para bancos de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Além do banco de dados de trading, a Apex opera um data warehouse de analytics 
 
 A Apex também opera uma instância Cosmos DB para feeds de dados de mercado em tempo real é um PostgreSQL Flexible Server para suas operações de back-office. Cada um tem diferentes requisitos de backup e recuperação que devem ser abordados na estratégia geral de continuidade de banco de dados.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de backup e recuperação para bancos de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Estratégia de Backup do Azure SQL Database
+### Parte 1: estratégia de Backup do Azure SQL database
 
 1. Projete a configuração de backup para o banco de dados de trading (RPO quase zero):
    - Qual é a frequência padrão de backup para Azure SQL Database? (Full, differential, transaction log)
@@ -56,7 +56,7 @@ az sql db ltr-policy set \
   --week-of-year 1
 ```
 
-### Parte 2: Geo-Restore e Recuperação Cross-Region
+### Parte 2: Geo-Restore e recuperação Cross-Region
 
 4. Avalie as três opcoes de recuperação para Azure SQL Database e mapeie para cada carga de trabalho:
 
@@ -80,7 +80,7 @@ az sql failover-group create \
 
 6. Para o banco de dados de analytics, determine se geo-restore ou um failover group e mais custo-efetivo dados os requisitos de RPO de 1 hora e RTO de 4 horas.
 
-### Parte 3: Cosmos DB Continuous Backup
+### Parte 3: Cosmos DB continuous Backup
 
 7. Projete a estratégia de backup para a instância Cosmos DB de dados de mercado:
    - Compare modo de backup periódico vs. modo de backup continuo
@@ -97,7 +97,7 @@ az sql failover-group create \
    - Você pode restaurar um único container ou deve restaurar a conta inteira?
    - Qual é o tempo aproximado de restauracao para um banco de dados de 100 GB?
 
-### Parte 4: PostgreSQL e Orquestração de Recuperação Cross-Database
+### Parte 4: PostgreSQL e orquestração de recuperação Cross-Database
 
 10. Projete a abordagem de backup para o PostgreSQL Flexible Server:
     - Configure backups automatizados com armazenamento geo-redundante
@@ -109,7 +109,7 @@ az sql failover-group create \
     - Como você trata as referências do Trading DB aos dados de mercado do Cosmos DB?
     - Quais consultas de validação confirmam que cada banco de dados esta recuperado corretamente?
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-27"
@@ -186,7 +186,7 @@ Importante: O modo de backup continuo não pode ser alterado de volta para peri�
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Automated backups in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/automated-backups-overview)
 - [Long-term retention - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/long-term-retention-overview)
@@ -195,7 +195,7 @@ Importante: O modo de backup continuo não pode ser alterado de volta para peri�
 - [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)
 - [Geo-restore - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/recovery-using-backups#geo-restore)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma aplicação financeira requer zero perda de dados (RPO = 0) durante uma falha de zona, mas pode tolerar 5 segundos de perda de dados durante uma falha regional completa. Qual configuração do Azure SQL alcanca isso?</summary>

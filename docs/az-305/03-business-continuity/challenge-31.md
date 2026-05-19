@@ -5,7 +5,7 @@ title: "Challenge 31: Design High Availability for Relational Data"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 31: Design High Availability for Relational Data
+# Challenge 31: design high availability for relational Data
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The primary payroll database is an Azure SQL Database (Business Critical tier, 3
 
 GlobalPay cannot afford ANY data loss during a failover. A mid-processing failover that loses even one transaction could mean incorrect tax calculations for thousands of employees, requiring expensive corrections and regulatory filings. The database must also be available 24/7 because the rolling payroll schedule means some region is always processing.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a high availability solution for relational data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Azure SQL Database HA Architecture
+### Part 1: Azure SQL database HA architecture
 
 1. Evaluate the HA capabilities built into each Azure SQL Database service tier:
 
@@ -48,7 +48,7 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
 
 3. Document how the Business Critical tier achieves zero-RPO zone failure recovery internally (Always On Availability Group architecture with synchronous replicas).
 
-### Part 2: Failover Groups for Cross-Region HA
+### Part 2: failover Groups for Cross-Region HA
 
 4. Design the failover group topology for GlobalPay's multi-region requirement:
    - Primary: East US (Business Critical, 32 vCores)
@@ -69,7 +69,7 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
    - Active geo-replication from East US to Southeast Asia (read-only, manual failover)
    - Document the RPO and RTO for each secondary
 
-### Part 3: Failover Behavior and Application Impact
+### Part 3: failover behavior and Application impact
 
 7. Analyze what happens during an automatic failover event:
    - How does the application connection string change? (It doesn't - failover group endpoint is stable)
@@ -88,7 +88,7 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
    - How does the grace period prevent premature failover?
    - What is the maximum data loss exposure during the grace period?
 
-### Part 4: SQL Managed Instance Business Critical
+### Part 4: SQL managed instance Business Critical
 
 10. GlobalPay is considering migrating to Azure SQL Managed Instance for features like cross-database queries and SQL Agent. Compare HA capabilities:
 
@@ -112,7 +112,7 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
     - Monitor DTU/vCore utilization during payroll runs
     - Track successful connections to failover group endpoint
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-31"
@@ -198,7 +198,7 @@ az sql failover-group create \
 Since failover groups support only one secondary, use active geo-replication for additional read replicas:
 
 ```bash
-# Create geo-replica in Southeast Asia (in addition to failover group secondary in West Europe)
+# Create geo-replica in southeast asia (in addition to failover group secondary in west europe)
 az sql db replica create \
   --resource-group rg-globalpay \
   --server sql-globalpay-eastus \
@@ -217,7 +217,7 @@ For GlobalPay: APAC region uses geo-replica for reporting reads, with manual fai
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [High availability for Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/high-availability-sla-local-zone-redundancy)
 - [Business Critical service tier - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tier-business-critical)
@@ -226,7 +226,7 @@ For GlobalPay: APAC region uses geo-replica for reporting reads, with manual fai
 - [Business continuity overview - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/business-continuity-high-availability-disaster-recover-hadr-overview)
 - [Azure SQL Managed Instance - High availability](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/high-availability-sla-local-zone-redundancy)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. GlobalPay requires zero data loss during failover. Which Azure SQL tier and feature combination guarantees RPO = 0 for zone failures?</summary>
@@ -256,11 +256,11 @@ For GlobalPay: APAC region uses geo-replica for reporting reads, with manual fai
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab proves that Azure SQL failover groups provide automatic DNS redirection during region failover, and that geo-replicated data survives a region switch without application connection string changes.
 
-### Step 1: Create resource groups and SQL servers in two regions
+### Step 1: create resource groups and SQL servers in two regions
 
 ```bash
 az group create --name rg-az305-challenge31 --location eastus
@@ -300,7 +300,7 @@ az sql server create \
   --admin-password "$ADMIN_PASS"
 ```
 
-### Step 2: Create a database on the primary server
+### Step 2: create a database on the primary server
 
 Using General Purpose with 2 vCores to keep lab costs low. The failover behavior is identical regardless of tier.
 
@@ -314,7 +314,7 @@ az sql db create \
   --capacity 2
 ```
 
-### Step 3: Configure the failover group
+### Step 3: configure the failover group
 
 ```bash
 az sql failover-group create \
@@ -328,7 +328,7 @@ az sql failover-group create \
   --add-db payrolldb
 ```
 
-### Step 4: Verify both servers and their roles
+### Step 4: verify both servers and their roles
 
 ```bash
 az sql failover-group show \
@@ -345,7 +345,7 @@ The primary should show "Primary" role and the partner should show "Secondary" r
 The failover group provides two stable DNS endpoints: `<fg-name>.database.windows.net` (read-write, always points to current primary) and `<fg-name>.secondary.database.windows.net` (read-only, always points to secondary). Applications connect to these endpoints instead of individual server names. During failover, DNS updates automatically -- no connection string changes in your application code.
 :::
 
-### Step 5: Allow Azure services and insert test data
+### Step 5: allow Azure services and insert test data
 
 ```bash
 az sql server firewall-rule create \
@@ -373,7 +373,7 @@ az sql db execute \
   --query "CREATE TABLE EmployeePayroll (Id INT PRIMARY KEY, Name NVARCHAR(100), Salary DECIMAL(10,2)); INSERT INTO EmployeePayroll VALUES (1, 'Alice', 85000.00), (2, 'Bob', 92000.00), (3, 'Carol', 78000.00);"
 ```
 
-### Step 6: Verify data replicated to secondary
+### Step 6: verify data replicated to secondary
 
 Wait a few seconds for async geo-replication, then query the secondary:
 
@@ -397,7 +397,7 @@ You should see all 3 rows replicated to the secondary region.
 Cross-region geo-replication is asynchronous, meaning RPO is greater than zero (typically less than 5 seconds). This is a fundamental constraint -- synchronous replication across regions would add unacceptable latency. For the AZ-305 exam, understand that zone-redundant replication within a region is synchronous (RPO = 0), while cross-region replication is always asynchronous (RPO > 0). This distinction drives tier selection for zero-data-loss requirements.
 :::
 
-### Step 7: Initiate manual failover to secondary region
+### Step 7: initiate manual failover to secondary region
 
 ```bash
 echo "Initiating failover to West Europe..."
@@ -407,7 +407,7 @@ az sql failover-group set-primary \
   --name $FG_NAME
 ```
 
-### Step 8: Verify roles have swapped
+### Step 8: verify roles have swapped
 
 ```bash
 az sql failover-group show \
@@ -420,7 +420,7 @@ az sql failover-group show \
 
 The old secondary (West Europe) should now show "Primary" and the old primary (East US) should show "Secondary".
 
-### Step 9: Confirm the failover group listener DNS now points to new primary
+### Step 9: confirm the failover group listener DNS now points to new primary
 
 ```bash
 echo "Failover group read-write endpoint:"
@@ -441,7 +441,7 @@ az sql db execute \
 
 All data is intact on the new primary.
 
-### Step 10: Fail back to original region
+### Step 10: fail back to original region
 
 ```bash
 echo "Failing back to East US..."

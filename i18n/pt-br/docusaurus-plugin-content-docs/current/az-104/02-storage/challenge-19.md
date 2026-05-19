@@ -5,7 +5,7 @@ title: "Desafio 19: AzCopy & Migração de Armazenamento"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 19: AzCopy & Migração de Armazenamento
+# Desafio 19: AzCopy & migração de armazenamento
 
 :::info Tempo Estimado e Custo
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor. Você precisa migrar terabytes de dados blob entre contas de armazenamento, copiar dados entre regiões para recuperação de desastres e configurar sincronização contínua para um file share. A equipe de operações tem usado o Portal do Azure para baixar e re-enviar arquivos manualmente | o que leva dias. Você vai apresentar a eles o AzCopy e o Storage Explorer para movimentação de dados eficiente e de alto desempenho.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -27,7 +27,7 @@ A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor
 | Configurar replicação de objetos | Médio |
 | Usar tokens SAS para autenticação com AzCopy | Alto |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
@@ -41,7 +41,7 @@ A Contoso Ltd. está consolidando armazenamento após adquirir uma empresa menor
 
 ## Tarefas
 
-### Tarefa 1: Configurar o Ambiente do Laboratório
+### Tarefa 1: configurar o ambiente do laboratório
 
 Crie duas contas de armazenamento para simular um cenário de migração:
 
@@ -57,7 +57,7 @@ az storage account create \
   --sku Standard_LRS \
   --kind StorageV2
 
-# Criar conta de armazenamento de destino (região diferente para cenário de DR)
+# Criar conta de armazenamento de destino (região diferente para cenário de dr)
 az storage account create \
   --name stdest$RANDOM \
   --resource-group rg-azcopy-lab \
@@ -99,7 +99,7 @@ az storage blob upload \
 rm -f doc*.txt largefile.bin
 ```
 
-### Tarefa 2: Instalar e Autenticar o AzCopy
+### Tarefa 2: instalar e autenticar o AzCopy
 
 ```bash
 # Verificar se o AzCopy está instalado
@@ -108,7 +108,7 @@ azcopy --version
 # Login com Entra ID (interativo)
 azcopy login
 
-# Alternativa: Login com tenant ID
+# Alternativa: login com tenant ID
 azcopy login --tenant-id $(az account show --query tenantId -o tsv)
 ```
 
@@ -121,7 +121,7 @@ Se o AzCopy não estiver instalado:
 
 
 :::
-### Tarefa 3: Copiar Blobs Entre Contêineres (Mesma Conta)
+### Tarefa 3: copiar blobs entre contêineres (Mesma conta)
 
 ```bash
 # Copiar todos os blobs do contêiner documents para backups (mesma conta)
@@ -138,7 +138,7 @@ az storage blob list \
   --query "[].name" -o tsv
 ```
 
-### Tarefa 4: Copiar Blobs Entre Contas de Armazenamento Usando Tokens SAS
+### Tarefa 4: copiar blobs entre contas de armazenamento usando tokens SAS
 
 Gere tokens SAS e realize a cópia entre contas:
 
@@ -175,7 +175,7 @@ az storage blob list \
   --query "[].{Name:name, Size:properties.contentLength}" -o table
 ```
 
-### Tarefa 5: Operações de Sincronização (Espelhar Origem para Destino)
+### Tarefa 5: operações de sincronização (Espelhar origem para destino)
 
 ```bash
 # Adicionar novos arquivos à origem
@@ -187,13 +187,13 @@ az storage blob upload \
   --account-name $SOURCE_ACCOUNT \
   --auth-mode login
 
-# Sync: Copia apenas arquivos novos/modificados (não exclui extras no destino)
+# Sync: copia apenas arquivos novos/modificados (não exclui extras no destino)
 azcopy sync \
   "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents" \
   "https://$DEST_ACCOUNT.blob.core.windows.net/documents" \
   --recursive
 
-# Sync com flag delete-destination (comportamento de espelho como robocopy /MIR)
+# Sync com flag delete-destination (comportamento de espelho como robocopy /mir)
 azcopy sync \
   "https://$SOURCE_ACCOUNT.blob.core.windows.net/documents" \
   "https://$DEST_ACCOUNT.blob.core.windows.net/documents" \
@@ -203,7 +203,7 @@ azcopy sync \
 rm -f newfile.txt
 ```
 
-### Tarefa 6: Benchmark de Desempenho de Transferência
+### Tarefa 6: benchmark de desempenho de transferência
 
 ```bash
 # Benchmark de desempenho de upload para a conta de destino
@@ -219,7 +219,7 @@ azcopy bench \
   --size-per-file 100M
 ```
 
-### Tarefa 7: Usar AzCopy com Padrões de Inclusão/Exclusão
+### Tarefa 7: usar AzCopy com padrões de Inclusão/Exclusão
 
 ```bash
 # Copiar apenas arquivos .txt
@@ -237,7 +237,7 @@ azcopy copy \
   --exclude-pattern "*.bin"
 ```
 
-### Tarefa 8: Visualizar Histórico de Jobs e Logs
+### Tarefa 8: visualizar histórico de jobs e logs
 
 ```bash
 # Listar jobs recentes do AzCopy
@@ -250,7 +250,7 @@ azcopy jobs show <job-id>
 azcopy env
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-19"
@@ -305,17 +305,17 @@ Defina a variável de ambiente `AZCOPY_CONCURRENCY_VALUE` para aumentar conexõe
 
 </details>
 
-## Quebrar & Consertar
+## Quebrar & consertar
 
-### Cenário A: Token SAS Expirado
+### Cenário a: token SAS expirado
 
 Gere um token SAS com expiração de 1 minuto. Espere 2 minutos, depois tente uma cópia. Observe a mensagem de erro. Como você diagnostica expiração de SAS vs problemas de permissão?
 
-### Cenário B: Contêiner Ausente no Destino
+### Cenário b: contêiner ausente no destino
 
 Tente copiar para um contêiner que não existe no destino. O AzCopy o cria automaticamente? (Resposta: Sim, se o token SAS ou as permissões RBAC permitirem a criação de contêineres.)
 
-### Cenário C: Falha Parcial na Transferência
+### Cenário c: falha parcial na transferência
 
 Durante uma operação de cópia grande, simule uma falha revogando o token SAS no meio da transferência. Use `azcopy jobs resume` para reiniciar o job com falha com um novo token válido.
 
@@ -324,7 +324,7 @@ Durante uma operação de cópia grande, simule uma falha revogando o token SAS 
 azcopy jobs resume <job-id> --source-sas="<new-sas>" --destination-sas="<new-sas>"
 ```
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Qual é a diferença entre azcopy copy e azcopy sync?</summary>
@@ -376,7 +376,7 @@ azcopy logout
 echo "Limpeza concluída."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Introdução ao AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Copiar blobs entre contas com AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-blobs-copy)

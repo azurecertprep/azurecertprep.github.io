@@ -5,7 +5,7 @@ title: "Desafio 22: Discos de VM & Criptografia"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 22: Discos de VM & Criptografia
+# Desafio 22: discos de VM & criptografia
 
 :::info Tempo Estimado e Custo
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. está padronizando o gerenciamento de discos em sua frota de VMs. A equipe de segurança exige que todos os discos sejam criptografados, a equipe de operações precisa de uma estratégia confiável de snapshots e imagens para recuperação de desastres, e a equipe de desenvolvimento quer desempenho de disco mais rápido para seus workloads de banco de dados. Você foi encarregado de implementar uma estratégia abrangente de gerenciamento de discos que cobre tipos de disco, criptografia, snapshots e imagens personalizadas.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -29,7 +29,7 @@ A Contoso Ltd. está padronizando o gerenciamento de discos em sua frota de VMs.
 | Criar imagens personalizadas de VM a partir de VMs generalizadas | Alto |
 | Configurar cache e desempenho de disco | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
@@ -44,7 +44,7 @@ A Contoso Ltd. está padronizando o gerenciamento de discos em sua frota de VMs.
 
 ## Tarefas
 
-### Tarefa 1: Criar o Ambiente do Laboratório
+### Tarefa 1: criar o ambiente do laboratório
 
 ```bash
 # Criar grupo de recursos
@@ -74,7 +74,7 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-disks-lab --query "[0].name" -o tsv)
 ```
 
-### Tarefa 2: Criar e Anexar Managed Disks
+### Tarefa 2: criar e anexar managed disks
 
 Crie discos de diferentes tiers de desempenho e anexe-os:
 
@@ -88,7 +88,7 @@ az disk create \
   --sku Standard_LRS \
   --tags Purpose=Archives Tier=Standard
 
-# Criar um disco de dados Premium SSD (IOPS alto para bancos de dados)
+# Criar um disco de dados Premium SSD (iops alto para bancos de dados)
 az disk create \
   --name disk-data-premium \
   --resource-group rg-disks-lab \
@@ -97,7 +97,7 @@ az disk create \
   --sku Premium_LRS \
   --tags Purpose=Database Tier=Premium
 
-# Anexar o disco Standard à VM (LUN 0)
+# Anexar o disco Standard à VM (lun 0)
 az vm disk attach \
   --resource-group rg-disks-lab \
   --vm-name vm-disk-lab \
@@ -105,7 +105,7 @@ az vm disk attach \
   --lun 0 \
   --caching None
 
-# Anexar o disco Premium à VM (LUN 1)
+# Anexar o disco Premium à VM (lun 1)
 az vm disk attach \
   --resource-group rg-disks-lab \
   --vm-name vm-disk-lab \
@@ -120,10 +120,10 @@ az vm show \
   --query "storageProfile.dataDisks[].{Name:name, SizeGB:diskSizeGb, Lun:lun, Caching:caching}" -o table
 ```
 
-### Tarefa 3: Inicializar e Montar Discos Dentro da VM
+### Tarefa 3: inicializar e montar discos dentro da VM
 
 ```bash
-# Usar Run Command para particionar e montar os discos
+# Usar run command para particionar e montar os discos
 az vm run-command invoke \
   --resource-group rg-disks-lab \
   --name vm-disk-lab \
@@ -152,12 +152,12 @@ az vm run-command invoke \
   '
 ```
 
-### Tarefa 4: Configurar Azure Disk Encryption (ADE)
+### Tarefa 4: configurar Azure disk encryption (ade)
 
 Habilite o Azure Disk Encryption usando Key Vault:
 
 ```bash
-# Habilitar Azure Disk Encryption na VM
+# Habilitar Azure disk encryption na VM
 az vm encryption enable \
   --resource-group rg-disks-lab \
   --name vm-disk-lab \
@@ -183,7 +183,7 @@ O Azure Disk Encryption pode levar de 15 a 30 minutos para ser concluído, depen
 
 
 :::
-### Tarefa 5: Criar Snapshots de Disco
+### Tarefa 5: criar snapshots de disco
 
 Crie snapshots point-in-time para fins de backup:
 
@@ -219,7 +219,7 @@ az snapshot list \
   --query "[].{Name:name, SizeGB:diskSizeGb, Source:creationData.sourceResourceId}" -o table
 ```
 
-### Tarefa 6: Criar um Disco a partir de um Snapshot
+### Tarefa 6: criar um disco a partir de um snapshot
 
 ```bash
 # Criar um novo managed disk a partir do snapshot
@@ -242,12 +242,12 @@ az disk show \
   --query "{Name:name, SizeGB:diskSizeGb, Sku:sku.name, ProvisioningState:provisioningState}" -o table
 ```
 
-### Tarefa 7: Criar uma Imagem Personalizada de VM (Generalizada)
+### Tarefa 7: criar uma imagem personalizada de VM (Generalizada)
 
 Crie uma imagem reutilizável a partir da VM para implantação rápida:
 
 ```bash
-# Primeiro, generalizar a VM (ATENÇÃO: VM não pode ser usada após isso)
+# Primeiro, generalizar a VM (atenção: VM não pode ser usada após isso)
 # Executar o comando de desprovisionamento dentro da VM
 az vm run-command invoke \
   --resource-group rg-disks-lab \
@@ -279,7 +279,7 @@ az image show \
   --query "{Name:name, State:provisioningState, Source:sourceVirtualMachine.id}" -o table
 ```
 
-### Tarefa 8: Implantar uma Nova VM a partir da Imagem Personalizada
+### Tarefa 8: implantar uma nova VM a partir da imagem personalizada
 
 ```bash
 # Criar uma nova VM a partir da imagem personalizada
@@ -300,7 +300,7 @@ az vm run-command invoke \
   --scripts "cat /opt/contoso/logs/setup.log 2>/dev/null || echo 'No pre-config found (expected if image was from fresh VM)'"
 ```
 
-### Tarefa 9: Redimensionar um Managed Disk
+### Tarefa 9: redimensionar um managed disk
 
 ```bash
 # Desalocar a nova VM para redimensionar seu disco de SO
@@ -327,7 +327,7 @@ az vm run-command invoke \
   --scripts "growpart /dev/sda 1 && resize2fs /dev/sda1 && df -h /"
 ```
 
-### Tarefa 10: Comparar Tiers de Desempenho de Disco
+### Tarefa 10: comparar tiers de desempenho de disco
 
 ```bash
 # Visualizar características de desempenho dos discos
@@ -347,7 +347,7 @@ az disk list \
 
 
 :::
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-22"
@@ -403,9 +403,9 @@ Você só pode aumentar o tamanho de um managed disk, nunca diminuir. Se precisa
 
 </details>
 
-## Quebrar & Consertar
+## Quebrar & consertar
 
-### Cenário A: Falha na Criptografia de Disco
+### Cenário a: falha na criptografia de disco
 
 Tente habilitar o ADE em uma VM quando o Key Vault não tem "Habilitado para criptografia de disco" definido. Observe a mensagem de erro e remedie:
 
@@ -415,11 +415,11 @@ az keyvault show --name $KV_NAME \
   --query "{EnabledForDiskEncryption:properties.enabledForDiskEncryption}" -o table
 ```
 
-### Cenário B: Snapshot de VM em Execução
+### Cenário b: snapshot de VM em execução
 
 Crie um snapshot enquanto a VM está em execução e dados estão sendo escritos. O snapshot é crash-consistent ou application-consistent? Quais são as implicações para bancos de dados?
 
-### Cenário C: Desanexar Disco Enquanto Montado
+### Cenário c: desanexar disco enquanto montado
 
 Tente desanexar um disco de dados que está atualmente montado dentro da VM sem desmontar primeiro. O que acontece? (Resposta: A operação de desanexar no nível do Azure pode ter sucesso, mas a VM experimentará erros de I/O naquele ponto de montagem.)
 
@@ -431,7 +431,7 @@ az vm disk detach \
   --name disk-restored-from-snap
 ```
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Qual é a diferença entre Azure Disk Encryption (ADE) e Criptografia no Host?</summary>
@@ -470,13 +470,13 @@ Se a chave de criptografia for perdida ou permanentemente excluída, os discos c
 ## Limpeza
 
 ```bash
-# Excluir o grupo de recursos inteiro e todos os recursos (VMs, discos, snapshots, imagens, Key Vault)
+# Excluir o grupo de recursos inteiro e todos os recursos (VMs, discos, snapshots, imagens, Key vault)
 az group delete --name rg-disks-lab --yes --no-wait
 
 echo "Limpeza concluída. O Key Vault permanecerá em estado de soft-delete."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Visão geral de managed disks](https://learn.microsoft.com/en-us/azure/virtual-machines/managed-disks-overview)
 - [Tipos de disco e desempenho](https://learn.microsoft.com/en-us/azure/virtual-machines/disks-types)

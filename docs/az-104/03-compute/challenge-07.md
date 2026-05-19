@@ -5,7 +5,7 @@ title: "Challenge 07: ARM Templates & Bicep"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 07: ARM Templates & Bicep
+# Challenge 07: ARM templates & Bicep
 
 :::info Estimated Time and Cost
 
@@ -18,7 +18,7 @@ Contoso's CTO has had enough of "it works on my portal" deployments. After a jun
 
 Your job is to take Contoso's first critical resource | a storage account | and define it as an ARM template, then modernize it to Bicep.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -30,7 +30,7 @@ Your job is to take Contoso's first critical resource | a storage account | and 
 | Export a deployment as an ARM template | Medium |
 | Convert an ARM template to Bicep | Medium |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | Traditional | Azure Equivalent |
 |-------------|-----------------|
@@ -43,7 +43,7 @@ Your job is to take Contoso's first critical resource | a storage account | and 
 
 ## Tasks
 
-### Task 1: Examine an ARM Template
+### Task 1: examine an ARM template
 
 Study this ARM template that creates a storage account. Identify the five key sections: `$schema`, `parameters`, `variables`, `resources`, and `outputs`.
 
@@ -94,7 +94,7 @@ Save this as `storage.json`:
 }
 ```
 
-### Task 2: Modify the ARM Template
+### Task 2: modify the ARM template
 
 Add a `environment` tag parameter to the template so every deployed resource gets tagged:
 
@@ -126,7 +126,7 @@ Then add a `tags` property to the resource:
 ```
 </details>
 
-### Task 3: Deploy the ARM Template
+### Task 3: deploy the ARM template
 
 ```bash
 # Create a resource group for this lab
@@ -146,7 +146,7 @@ az deployment group show \
   --query "properties.outputs"
 ```
 
-### Task 4: Export the Deployment
+### Task 4: export the deployment
 
 ```bash
 # Export the entire resource group as an ARM template
@@ -156,7 +156,7 @@ az group export --name rg-iac-lab --output json > exported-template.json
 cat exported-template.json | python -m json.tool | head -50
 ```
 
-### Task 5: Convert ARM to Bicep
+### Task 5: convert ARM to Bicep
 
 ```bash
 # Install/upgrade Bicep CLI
@@ -170,7 +170,7 @@ az bicep decompile --file storage.json
 cat storage.bicep
 ```
 
-### Task 6: Modify the Bicep File
+### Task 6: modify the Bicep file
 
 Add a blob container to the Bicep file:
 
@@ -222,7 +222,7 @@ output storageName string = storageAccount.name
 ```
 </details>
 
-### Task 7: Deploy the Bicep File
+### Task 7: deploy the Bicep file
 
 ```bash
 # Deploy the Bicep file
@@ -241,7 +241,7 @@ STORAGE_NAME=$(az deployment group show \
 az storage container list --account-name $STORAGE_NAME --auth-mode login -o table
 ```
 
-### Task 8: Preview Changes with What-If
+### Task 8: preview changes with What-If
 
 ```bash
 # Run a what-if deployment to preview changes without deploying
@@ -251,7 +251,7 @@ az deployment group what-if \
   --parameters storagePrefix=contoso environment=staging
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-07"
@@ -263,9 +263,9 @@ az deployment group what-if \
     "What-if shows expected changes without deploying"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: Syntax Error
+### Scenario a: syntax error
 Deploy this broken template and fix the error:
 ```bash
 # Introduce a typo in the template (e.g., "Standar_LRS" instead of "Standard_LRS")
@@ -276,28 +276,28 @@ az deployment group create \
   --parameters storagePrefix=contoso
 ```
 
-### Scenario B: Missing Required Parameter
+### Scenario b: missing required parameter
 ```bash
 # Deploy without the required storagePrefix parameter
 az deployment group create \
   --resource-group rg-iac-lab \
   --template-file storage.json \
   --name deploy-broken
-# What error do you get? How does Azure validate parameters?
+# What error do you get? how does Azure validate parameters?
 ```
 
-### Scenario C: Complete Mode Deployment
+### Scenario c: complete mode deployment
 ```bash
-# WARNING: Complete mode deletes resources not in the template!
+# WARNING: complete mode deletes resources not in the template!
 az deployment group what-if \
   --resource-group rg-iac-lab \
   --template-file storage.bicep \
   --parameters storagePrefix=contoso environment=dev \
   --mode Complete
-# Compare the what-if output between Incremental and Complete modes
+# Compare the what-if output between incremental and complete modes
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What is the key difference between ARM templates and Bicep?**
 

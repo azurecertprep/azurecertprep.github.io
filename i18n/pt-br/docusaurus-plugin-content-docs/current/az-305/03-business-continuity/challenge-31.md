@@ -5,7 +5,7 @@ title: "Desafio 31: Projetar Alta Disponibilidade para Dados Relacionais"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 31: Projetar Alta Disponibilidade para Dados Relacionais
+# Desafio 31: projetar alta disponibilidade para dados relacionais
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O banco de dados principal de folha de pagamento é um Azure SQL Database (tier 
 
 A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durante o processamento que perca mesmo uma transação pode significar calculos de impostos incorretos para milhares de funcionários, exigindo correcoes caras e registros regulatorios. O banco de dados também deve estar disponível 24/7 porque o cronograma rotativo de folha significa que alguma região esta sempre processando.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de alta disponibilidade para dados relacionais
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Arquitetura de HA do Azure SQL Database
+### Parte 1: arquitetura de HA do Azure SQL database
 
 1. Avalie as capacidades de HA integradas em cada tier de serviço do Azure SQL Database:
 
@@ -48,7 +48,7 @@ A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durant
 
 3. Documente como o tier Business Critical alcanca recuperação de falha de zona com RPO zero internamente (arquitetura Always On Availability Group com replicas sincronas).
 
-### Parte 2: Failover Groups para HA Cross-Region
+### Parte 2: failover Groups para HA Cross-Region
 
 4. Projete a topologia de failover group para o requisito multi-região da GlobalPay:
    - Primário: East US (Business Critical, 32 vCores)
@@ -69,7 +69,7 @@ A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durant
    - Active geo-replication de East US para Southeast Asia (read-only, failover manual)
    - Documente o RPO e RTO para cada secundário
 
-### Parte 3: Comportamento de Failover e Impacto na Aplicação
+### Parte 3: comportamento de failover e impacto na aplicação
 
 7. Análise o que acontece durante um evento de failover automático:
    - Como a connection string da aplicação muda? (Não muda - endpoint do failover group e estavel)
@@ -88,7 +88,7 @@ A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durant
    - Como o grace period previne failover prematuro?
    - Qual é a exposicao máxima de perda de dados durante o grace period?
 
-### Parte 4: SQL Managed Instance Business Critical
+### Parte 4: SQL managed instance Business Critical
 
 10. A GlobalPay esta considerando migrar para Azure SQL Managed Instance por recursos como consultas cross-database e SQL Agent. Compare as capacidades de HA:
 
@@ -112,7 +112,7 @@ A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durant
     - Monitore utilizacao de DTU/vCore durante execucoes de folha
     - Rastreie conexões bem-sucedidas para o endpoint do failover group
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-31"
@@ -198,7 +198,7 @@ az sql failover-group create \
 Como failover groups suportam apenas um secundário, use active geo-replication para read replicas adicionais:
 
 ```bash
-# Create geo-replica in Southeast Asia (in addition to failover group secondary in West Europe)
+# Create geo-replica in southeast asia (in addition to failover group secondary in west europe)
 az sql db replica create \
   --resource-group rg-globalpay \
   --server sql-globalpay-eastus \
@@ -217,7 +217,7 @@ Para GlobalPay: A região APAC usa geo-replica para leituras de relatórios, com
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [High availability for Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/high-availability-sla-local-zone-redundancy)
 - [Business Critical service tier - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tier-business-critical)
@@ -226,7 +226,7 @@ Para GlobalPay: A região APAC usa geo-replica para leituras de relatórios, com
 - [Business continuity overview - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/business-continuity-high-availability-disaster-recover-hadr-overview)
 - [Azure SQL Managed Instance - High availability](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/high-availability-sla-local-zone-redundancy)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A GlobalPay requer zero perda de dados durante failover. Qual tier e combinacao de recursos do Azure SQL garante RPO = 0 para falhas de zona?</summary>

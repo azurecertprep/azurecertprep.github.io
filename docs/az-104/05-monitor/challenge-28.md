@@ -5,7 +5,7 @@ title: "Challenge 28: Azure Advisor & Service Health"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 28: Azure Advisor & Service Health
+# Challenge 28: Azure advisor & Service health
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. wants proactive monitoring with actionable recommendations across security, performance, cost, reliability, and operational excellence. The CTO has requested that the team regularly reviews Azure Advisor recommendations, tracks improvement over time, and sets up alerts for service health events (outages, planned maintenance, and health advisories) so they are never caught off guard.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Review and interpret Azure Advisor recommendations
 - Configure Advisor alerts for new recommendations
@@ -27,7 +27,7 @@ Contoso Ltd. wants proactive monitoring with actionable recommendations across s
 - Create action groups for notifications
 - Understand Advisor score and improvement tracking
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -58,34 +58,34 @@ This challenge primarily uses Azure Advisor and Service Health, which analyze yo
 :::
 ## Tasks
 
-### Task 1: Review Azure Advisor Recommendations
+### Task 1: review Azure advisor recommendations
 
 ```bash
-# List all Advisor recommendations for the subscription
+# List all advisor recommendations for the subscription
 az advisor recommendation list -o table
 
-# Filter by category: Cost
+# Filter by category: cost
 az advisor recommendation list \
   --category Cost -o table
 
-# Filter by category: Security
+# Filter by category: security
 az advisor recommendation list \
   --category Security -o table
 
-# Filter by category: Performance
+# Filter by category: performance
 az advisor recommendation list \
   --category Performance -o table
 
-# Filter by category: Reliability (High Availability)
+# Filter by category: reliability (High availability)
 az advisor recommendation list \
   --category HighAvailability -o table
 
-# Filter by category: Operational Excellence
+# Filter by category: operational excellence
 az advisor recommendation list \
   --category OperationalExcellence -o table
 
 # Get detailed information about a specific recommendation
-# az advisor recommendation list --category Cost --query "[0]"
+# az advisor recommendation list --category cost --query "[0]"
 ```
 
 **Portal Steps:**
@@ -94,7 +94,7 @@ az advisor recommendation list \
 3. Click into each category to see detailed recommendations
 4. Each recommendation shows: Impact (High/Medium/Low), affected resources, and remediation steps
 
-### Task 2: Understand Advisor Score
+### Task 2: understand advisor score
 
 **Portal Steps:**
 1. Navigate to **Advisor** > **Advisor Score**
@@ -107,10 +107,10 @@ az advisor recommendation list \
    - Operational Excellence
 
 ```bash
-# Check Advisor configuration (what resource groups are included)
+# Check advisor configuration (what resource groups are included)
 az advisor configuration list -o table
 
-# Configure Advisor to exclude specific resource groups (if needed)
+# Configure advisor to exclude specific resource groups (if needed)
 az advisor configuration update \
   --exclude \
   --resource-group "rg-dev-sandbox"
@@ -124,7 +124,7 @@ Advisor Score represents the percentage of Advisor recommendations that have bee
 - Set organizational targets (e.g., maintain above 80%)
 
 :::
-### Task 3: Suppress or Postpone Recommendations
+### Task 3: suppress or postpone recommendations
 
 ```bash
 # List current recommendations
@@ -159,7 +159,7 @@ Suppress recommendations when:
 - The recommendation is a false positive for your workload
 
 :::
-### Task 4: Configure Advisor Alerts
+### Task 4: configure advisor alerts
 
 ```bash
 # First, create an action group for notifications
@@ -169,10 +169,10 @@ az monitor action-group create \
   --short-name AdvisorAG \
   --action email ops-team opsTeam@contoso.com
 
-# Create an Advisor alert for new cost recommendations
+# Create an advisor alert for new cost recommendations
 az advisor recommendation list --category Cost > /dev/null 2>&1
 
-# Create activity log alert for new Advisor recommendations
+# Create activity log alert for new advisor recommendations
 az monitor activity-log alert create \
   --resource-group $RG \
   --name "alert-advisor-cost" \
@@ -191,7 +191,7 @@ az monitor activity-log alert create \
    - Action group: Select or create
 4. Click **Create alert rule**
 
-### Task 5: Configure Service Health Alerts
+### Task 5: configure Service health alerts
 
 ```bash
 # Create alert for service issues (outages) in your region
@@ -237,18 +237,18 @@ az monitor activity-log alert list \
 4. Select action group
 5. Name the alert rule and click **Create**
 
-### Task 6: Check Resource Health
+### Task 6: check Resource health
 
 ```bash
 # Check availability/health status of specific resources
-# Resource Health is primarily a Portal feature, but you can query via REST
+# Resource health is primarily a portal feature, but you can query via REST
 
 # Check VM health via CLI
 az vm get-instance-view \
   --ids $(az vm list -g $RG --query "[].id" -o tsv 2>/dev/null) \
   --query "[].{Name:name, Status:instanceView.statuses[1].displayStatus}" -o table 2>/dev/null
 
-# List resource health events via Activity Log
+# List resource health events via activity Log
 az monitor activity-log list \
   --resource-group $RG \
   --max-events 20 \
@@ -267,7 +267,7 @@ az monitor activity-log list \
 4. Navigate to a specific resource > **Resource Health** blade
 5. View historical health events and root cause analysis
 
-### Task 7: Create Action Groups for Notifications
+### Task 7: create action Groups for notifications
 
 ```bash
 # Create a comprehensive action group with multiple notification channels
@@ -296,13 +296,13 @@ AG_ID=$(az monitor action-group show \
   --query "id" -o tsv)
 
 # az monitor action-group test-notifications create \
-#   --resource-group $RG \
-#   --action-group-name ag-critical-alerts \
-#   --alert-type servicehealth \
-#   --notifications '[{"notificationType":"Email","emailAddress":"ops@contoso.com"}]'
+# --resource-group $rg \
+# --action-group-name ag-critical-alerts \
+# --alert-type servicehealth \
+# --notifications '[{"notificationType":"Email","emailAddress":"ops@contoso.com"}]'
 ```
 
-### Task 8: Review Service Health Dashboard
+### Task 8: review Service health dashboard
 
 **Portal Steps:**
 1. Navigate to **Service Health** in the portal
@@ -318,10 +318,10 @@ AG_ID=$(az monitor action-group show \
    - Recommended actions
 4. Check **Health history** for past events
 
-### Task 9: Implement Advisor Recommendations
+### Task 9: implement advisor recommendations
 
 ```bash
-# Example: Implement a common Advisor recommendation
+# Example: implement a common advisor recommendation
 # (Right-size or shut down underutilized VMs)
 
 # List VMs with recommendations
@@ -329,13 +329,13 @@ az advisor recommendation list \
   --category Cost \
   --query "[?contains(shortDescription.problem, 'virtual machine')]" -o table
 
-# Example: Resize a VM based on Advisor recommendation
-# az vm resize --resource-group $RG --name vm-oversize --size Standard_B1s
+# Example: resize a VM based on advisor recommendation
+# az vm resize --resource-group $rg --name vm-oversize --size Standard_B1s
 
-# Example: Enable soft-delete on Key Vault (security recommendation)
+# Example: enable soft-delete on Key Vault (security recommendation)
 # az keyvault update --name my-kv --enable-soft-delete true
 
-# After implementing, refresh Advisor to verify
+# After implementing, refresh advisor to verify
 az advisor recommendation list --category Cost -o table
 ```
 
@@ -346,7 +346,7 @@ az advisor recommendation list --category Cost -o table
 4. Click **Remediate** (for recommendations with quick-fix)
 5. Or follow the manual steps provided
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-28"
@@ -362,9 +362,9 @@ az advisor recommendation list --category Cost -o table
     "At least one Advisor recommendation implemented or acknowledged"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: Alert Not Firing
+### Scenario a: alert not firing
 
 ```bash
 # Check if action group is correctly configured
@@ -378,33 +378,33 @@ az monitor activity-log alert list \
   --query "[].{Name:name, Enabled:enabled}" -o table
 
 # Common causes:
-# 1. Action group has invalid email/phone
-# 2. Alert rule is disabled
-# 3. Condition scope is too narrow (wrong region/service)
-# 4. Email is going to spam/junk folder
+# 1. action group has invalid email/phone
+# 2. alert rule is disabled
+# 3. condition scope is too narrow (wrong region/service)
+# 4. email is going to spam/junk folder
 
-# Fix: Enable the alert rule
+# Fix: enable the alert rule
 az monitor activity-log alert update \
   --resource-group $RG \
   --name "alert-service-issues" \
   --enabled true
 ```
 
-### Scenario B: Too Many Notifications (Alert Fatigue)
+### Scenario b: too many notifications (Alert fatigue)
 
 ```bash
-# Problem: Getting too many low-impact Advisor notifications
+# Problem: getting too many low-impact advisor notifications
 
-# Fix 1: Suppress low-priority recommendations
+# Fix 1: suppress low-priority recommendations
 az advisor recommendation disable \
   --ids "<recommendation-id>" \
   --days 90
 
-# Fix 2: Create separate action groups for different severities
+# Fix 2: create separate action groups for different severities
 # High impact -> email + SMS + webhook
 # Medium/Low -> email only
 
-# Fix 3: Use alert processing rules to suppress during maintenance windows
+# Fix 3: use alert processing rules to suppress during maintenance windows
 az monitor alert-processing-rule create \
   --resource-group $RG \
   --name "suppress-weekends" \
@@ -414,20 +414,20 @@ az monitor alert-processing-rule create \
   --schedule-recurrence "Saturday" "Sunday"
 ```
 
-### Scenario C: Resource Health Shows Unavailable
+### Scenario c: Resource health shows unavailable
 
 ```bash
-# A VM shows "Unavailable" in Resource Health
+# A VM shows "Unavailable" in Resource health
 # Possible causes:
-# 1. Platform-initiated: Azure host issue (auto-recovery)
-# 2. User-initiated: VM deallocated or stopped
-# 3. Unknown: No health signal
+# 1. platform-initiated: Azure host issue (auto-recovery)
+# 2. user-initiated: VM deallocated or stopped
+# 3. unknown: no health signal
 
 # Check VM status
 az vm get-instance-view -g $RG -n vm-affected \
   --query "instanceView.statuses[].{Code:code, Status:displayStatus}" -o table 2>/dev/null
 
-# Check Activity Log for recent changes
+# Check activity Log for recent changes
 az monitor activity-log list \
   --resource-group $RG \
   --max-events 10 \
@@ -435,7 +435,7 @@ az monitor activity-log list \
   -o table 2>/dev/null
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What are the five Azure Advisor categories?**
 
@@ -517,7 +517,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Azure Advisor overview](https://learn.microsoft.com/azure/advisor/advisor-overview)
 - [Advisor Score](https://learn.microsoft.com/azure/advisor/azure-advisor-score)

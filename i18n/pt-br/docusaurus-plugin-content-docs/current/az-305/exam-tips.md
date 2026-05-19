@@ -3,11 +3,11 @@ sidebar_position: 3
 title: "Dicas e Estratégia para o Exame"
 ---
 
-# Dicas e Estratégia para o Exame
+# Dicas e estratégia para o exame
 
 O AZ-305 testa sua capacidade de tomar decisões de design. Diferente do AZ-104, raramente ha um único comando CLI "correto". Em vez disso, você avaliara cenários e escolhera a melhor solução entre varias opções válidas.
 
-## Formato do Exame
+## Formato do exame
 
 | Detalhe | Valor |
 |---------|-------|
@@ -19,15 +19,15 @@ O AZ-305 testa sua capacidade de tomar decisões de design. Diferente do AZ-104,
 | **Pode voltar?** | Sim, dentro de uma seção. Não, entre seções. |
 | **Labs?** | Sem labs ativos (diferente do AZ-104). Questoes puramente baseadas em cenários. |
 
-## Tipos de Questao que Você Encontrara
+## Tipos de questao que você encontrara
 
-### Múltipla Escolha Baseada em Cenário
+### Múltipla escolha baseada em cenário
 O tipo mais comum. Um cenário de negócio de 2-3 paragrafos seguido de "qual solução atende os requisitos?" Leia os requisitos com atenção. Frequentemente uma única palavra (como "minimizar custo" vs "minimizar tempo de inatividade") muda a resposta correta.
 
-### Múltipla Resposta ("Selecione DUAS/TRES")
+### Múltipla resposta ("Selecione duas/tres")
 Escolha exatamente o número específicado. Comum para questões como "quais DOIS serviços você deve incluir no seu design?"
 
-### Estudo de Caso
+### Estudo de caso
 Um cenário de múltiplas paginas (perfil da empresa, arquitetura existente, requisitos) com 4-7 questões. Você não pode retornar ao estudo de caso após avancar para a próxima seção.
 
 :::warning Estratégia para Estudo de Caso
@@ -36,10 +36,10 @@ Leia a aba de **requisitos** primeiro, depois o **ambiente existente**. A maiori
 
 :::
 
-### Arrastar e Soltar / Ordenacao
+### Arrastar e soltar / ordenacao
 Associe serviços a requisitos, ou ordene etapas de implantação. Comum para planejamento de migração e camadas de arquitetura.
 
-## Como o AZ-305 Difere do AZ-104
+## Como o AZ-305 difere do AZ-104
 
 O modelo mental é completamente diferente:
 
@@ -51,23 +51,23 @@ O modelo mental é completamente diferente:
 
 **O exame testa o PORQUE, não o COMO.**
 
-## Estratégia de Estudo
+## Estratégia de estudo
 
-### Semanas 1-2: Soluções de Infraestrutura (30-35%)
+### Semanas 1-2: soluções de infraestrutura (30-35%)
 Este é o maior domínio. Foque em seleção de computação (VM vs container vs serverless), redes (VPN vs ExpressRoute, árvore de decisão de balanceamento de carga) e arquitetura de aplicação (mensageria, eventos, cache).
 
-### Semanas 3-4: Identidade, Governanca e Monitoramento (25-30%)
+### Semanas 3-4: identidade, governanca e monitoramento (25-30%)
 Conheca padroes de autenticação/autorização, design de Key Vault, hierarquias de management groups e Azure Policy. Monitoramento (Log Analytics, App Insights) conecta-se a todos os outros domínios.
 
-### Semana 5: Armazenamento de Dados + Continuidade de Negócios (35-45% combinado)
+### Semana 5: armazenamento de dados + continuidade de negócios (35-45% combinado)
 Selecao relacional vs não-relacional, decisões de tier/computação, opções de redundância, estratégias de backup/DR, padroes de HA. Esses dois domínios se sobrepoe significativamente.
 
-### Semana 6: Revisao + Prática
+### Semana 6: revisao + prática
 - Faça a [Avaliação Prática Gratuita](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/practice/assessment?assessment-type=practice&assessmentId=15)
 - Revise a [Matriz de Cobertura](/docs/az-305/coverage-matrix) para identificar lacunas
 - Refaça os desafios capstone (13, 24, 33, 50)
 
-## Pegadinhas Comuns do Exame
+## Pegadinhas comuns do exame
 
 :::warning Coisas que pegam as pessoas desprevenidas
 
@@ -84,9 +84,9 @@ Selecao relacional vs não-relacional, decisões de tier/computação, opções 
 
 :::
 
-## Frameworks de Decisao para Memorizar
+## Frameworks de decisao para memorizar
 
-### Árvore de Decisao de Computacao
+### Árvore de decisao de computacao
 - Precisa de controle total do SO? VM
 - Workloads containerizados com orquestração? AKS
 - Servicos HTTP containerizados simples? Container Apps
@@ -94,13 +94,13 @@ Selecao relacional vs não-relacional, decisões de tier/computação, opções 
 - Orquestracao de workflows? Logic Apps ou Durable Functions
 - Processamento em lote (milhares de cores)? Azure Batch
 
-### Árvore de Decisao de Balanceamento de Carga
+### Árvore de decisao de balanceamento de carga
 - HTTP/HTTPS global? Azure Front Door
 - Global não-HTTP (baseado em DNS)? Traffic Manager
 - HTTP regional com WAF? Application Gateway
 - Regional não-HTTP (Camada 4)? Azure Load Balancer
 
-### Árvore de Decisao de Armazenamento
+### Árvore de decisao de armazenamento
 - Relacional + alta compatibilidade? SQL Managed Instance
 - Relacional + PaaS otimizado em custo? Azure SQL Database
 - NoSQL documento + distribuição global? Cosmos DB for NoSQL
@@ -109,7 +109,7 @@ Selecao relacional vs não-relacional, decisões de tier/computação, opções 
 - Analise de big data? Data Lake Storage Gen2
 - Compartilhamentos de arquivo SMB? Azure Files
 
-## Links Úteis
+## Links úteis
 
 | Recurso | Link |
 |---------|------|
@@ -120,7 +120,7 @@ Selecao relacional vs não-relacional, decisões de tier/computação, opções 
 | **Well-Architected Framework** | [Documentacao WAF](https://learn.microsoft.com/en-us/azure/well-architected/) |
 | **Renovação da certificação** | [Renove gratuitamente](https://learn.microsoft.com/en-us/credentials/certifications/renew-your-microsoft-certification) |
 
-## Após a Aprovacao
+## Após a aprovacao
 
 - Sua certificação aparece no seu [perfil Microsoft Learn](https://learn.microsoft.com/en-us/users/) em 24 horas
 - Você recebe o título **Microsoft Certified: Azure Solutions Architect Expert**

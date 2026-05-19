@@ -5,7 +5,7 @@ title: "Desafio 02: Projetar Roteamento e Filtragem de Logs"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 02: Projetar Roteamento e Filtragem de Logs
+# Desafio 02: projetar roteamento e filtragem de logs
 
 :::info Tempo Estimado e Custo
 
@@ -21,15 +21,15 @@ O estado atual e caotico: alguns recursos tem configurações de diagnóstico ap
 
 Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que satisfaca requisitos de conformidade, operacionais e de custos, eliminando fluxos de dados redundantes.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para roteamento de logs
 - Recomendar uma solução de logging
 - Recomendar uma solução de monitoramento
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Arquitetura de Roteamento de Logs
+### Parte 1: arquitetura de roteamento de logs
 
 1. Projete a arquitetura de roteamento para os logs da Contoso considerando estes destinos:
    - **SIEM (Splunk)**: Logs de auditoria de segurança, entrega quase em tempo real
@@ -43,7 +43,7 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
 
 3. Crie um diagrama de fluxo de dados mostrando como os logs se movem dos recursos de origem para cada destino.
 
-### Parte 2: Configuração de Diagnostic Settings
+### Parte 2: configuração de diagnostic settings
 
 4. Projete configurações de diagnóstico para os seguintes tipos de recurso, especificando quais categorias de log vao para quais destinos:
    - Azure Key Vault (logs AuditEvent)
@@ -53,7 +53,7 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
 
 5. Implemente configurações de diagnóstico para pelo menos dois tipos de recurso usando Azure CLI.
 
-### Parte 3: Data Collection Rules
+### Parte 3: Data collection rules
 
 6. Projete data collection rules (DCRs) para filtrar e transformar logs antes da ingestao no Log Analytics:
    - Filtrar requisicoes HTTP de health check (status 200, path "/health") dos logs do App Service
@@ -62,7 +62,7 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
 
 7. Implemente uma DCR usando Azure CLI ou ARM template que demonstre filtragem de logs com uma transformacao KQL.
 
-### Parte 4: Otimização de Custos por Roteamento
+### Parte 4: otimização de custos por roteamento
 
 8. Calcule o impacto de custo de enviar todos os logs para todos os destinos vs. roteamento seletivo. Considere:
    - Custo de ingestao do Log Analytics por GB
@@ -75,7 +75,7 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
    - Tier 2 (Auditoria): Log Analytics + Storage Archive
    - Tier 3 (Verboso): Apenas Storage Archive (com restore opcional)
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-02"
@@ -112,7 +112,7 @@ Uma única diagnostic setting pode enviar para múltiplos destinos simultaneamen
 # Get the resource ID of a Key Vault
 KV_ID=$(az keyvault show --name contoso-prod-kv --query id -o tsv)
 
-# Create diagnostic setting sending audit logs to Event Hub and Storage
+# Create diagnostic setting sending audit logs to event Hub and Storage
 az monitor diagnostic-settings create \
   --name "security-routing" \
   --resource "$KV_ID" \
@@ -212,7 +212,7 @@ az storage account management-policy create \
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Diagnostic settings in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/diagnostic-settings)
 - [Data collection rules overview](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/data-collection-rule-overview)
@@ -221,7 +221,7 @@ az storage account management-policy create \
 - [Archive Azure resource logs to storage account](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/resource-logs)
 - [Azure Monitor cost and usage](https://learn.microsoft.com/en-us/azure/azure-monitor/cost-usage)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A Contoso precisa de logs de auditoria de segurança entregues ao seu SIEM Splunk dentro de 5 minutos e arquivados por 7 anos ao menor custo. Qual combinacao de destinos você deve configurar nas diagnostic settings?</summary>

@@ -6,7 +6,7 @@ title: "Challenge 28: Design Backup & Recovery for Unstructured Data"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 28: Design Backup & Recovery for Unstructured Data
+# Challenge 28: design Backup & Recovery for unstructured Data
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ The biggest operational risk is accidental deletion. Last quarter alone, designe
 
 The challenge is balancing multiple protection layers: instant recovery for the "oops I deleted the wrong folder" scenario, scheduled backups for point-in-time recovery, and immutable archival for long-term compliance. Storage costs are already high at 200 TB, so the backup strategy must be cost-conscious and avoid doubling storage expenses.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a backup and recovery solution for unstructured data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Blob Storage Data Protection Design
+### Part 1: Blob Storage Data protection design
 
 1. Evaluate and configure the following native protection features for the blob storage accounts. For each, document what it protects against, its cost impact, and its limitations:
 
@@ -67,7 +67,7 @@ az storage account blob-service-properties update \
   --container-delete-retention-days 30
 ```
 
-### Part 2: Versioning and Point-in-Time Restore
+### Part 2: versioning and Point-in-Time restore
 
 4. Enable blob versioning and analyze its impact on the 200 TB storage estate:
    - How does versioning affect storage costs when files are frequently overwritten?
@@ -85,7 +85,7 @@ az storage account blob-service-properties update \
    - Can you restore a single container, or must you restore the entire account?
    - What are the limitations? (e.g., cannot be used with Data Lake Storage Gen2 hierarchical namespace)
 
-### Part 3: Azure Backup for Blobs (Vaulted Backup)
+### Part 3: Azure Backup for blobs (Vaulted backup)
 
 7. Design the Azure Backup configuration for blob data using the Backup vault:
    - Compare operational backup (continuous, uses native blob features) vs. vaulted backup (scheduled, stored in vault)
@@ -133,7 +133,7 @@ az dataprotection backup-policy create \
     - "Need to recover files from 2 years ago for legal hold" -> Use which feature?
     - "Storage account was deleted by rogue admin" -> Use which feature?
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-28"
@@ -242,7 +242,7 @@ Restore options:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Soft delete for blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview)
 - [Blob versioning](https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview)
@@ -251,7 +251,7 @@ Restore options:
 - [Back up Azure file shares](https://learn.microsoft.com/en-us/azure/backup/azure-file-share-backup-overview)
 - [Lifecycle management for Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A designer accidentally deleted an entire container with 50,000 files 10 minutes ago. What is the fastest recovery method?</summary>
@@ -281,7 +281,7 @@ Restore options:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
@@ -368,12 +368,12 @@ This mini-deployment validates your design decisions with real Azure resources. 
 az group delete --name rg-az305-challenge28 --yes --no-wait
 az group delete --name rg-creative-assets --yes --no-wait
 
-# Note: If soft delete is enabled, storage data persists until retention expires
+# Note: if soft delete is enabled, storage data persists until retention expires
 # If you need immediate cleanup, disable soft delete first:
 # az storage account blob-service-properties update \
-#   --account-name stvividcreative \
-#   --resource-group rg-creative-assets \
-#   --enable-delete-retention false
+# --account-name stvividcreative \
+# --resource-group rg-creative-assets \
+# --enable-delete-retention false
 ```
 
 ---

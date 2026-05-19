@@ -6,7 +6,7 @@ title: "Challenge 05: Design Identity Management"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 05: Design Identity Management
+# Challenge 05: design identity Management
 
 :::info Estimated Time and Cost
 
@@ -27,15 +27,15 @@ The CISO has identified several critical security gaps in the current identity p
 
 Your task is to design a hybrid identity management solution that synchronizes identities to the cloud while implementing modern security controls for privileged access and identity protection.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend an identity management solution
 - Recommend an authentication solution
 - Recommend a solution for authorizing access to Azure resources
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Hybrid Identity Synchronization
+### Part 1: hybrid identity synchronization
 
 1. Evaluate and recommend the appropriate synchronization method for Woodgrove Bank:
 
@@ -61,7 +61,7 @@ Your task is to design a hybrid identity management solution that synchronizes i
    - Failover authentication method if primary is unavailable
    - Staged rollout approach for migration
 
-### Part 2: Password Protection and Authentication Security
+### Part 2: password protection and authentication security
 
 4. Design password protection for Woodgrove Bank:
    - Microsoft Entra Password Protection (custom banned password list)
@@ -75,7 +75,7 @@ Your task is to design a hybrid identity management solution that synchronizes i
    - Microsoft Authenticator phone sign-in
    - Certificate-based authentication
 
-### Part 3: Privileged Identity Management (PIM)
+### Part 3: privileged identity Management (pim)
 
 6. Design a PIM strategy for the 15 Global Administrator accounts:
    - Eligible vs. active role assignments
@@ -94,7 +94,7 @@ Your task is to design a hybrid identity management solution that synchronizes i
    - Monthly review of guest user access
    - Semi-annual review of Azure subscription Owner assignments
 
-### Part 4: Identity Protection
+### Part 4: identity protection
 
 9. Design Identity Protection policies for Woodgrove Bank:
    - Sign-in risk policy: what actions for low, medium, and high risk
@@ -107,13 +107,13 @@ Your task is to design a hybrid identity management solution that synchronizes i
     - Credentials found in a dark web breach database
     - Anomalous token usage pattern
 
-### Part 5: Implement Proof of Concept
+### Part 5: implement proof of concept
 
 11. Configure Entra ID Password Protection with a custom banned password list.
 
 12. Create a PIM eligible role assignment (using a non-production role) and demonstrate the activation workflow.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-05"
@@ -171,10 +171,10 @@ For Woodgrove Bank's scenario (single forest, three domains, needs PHS + PTA fai
 <summary>Hint 3: Configuring PIM for Global Admin</summary>
 
 ```bash
-# Note: PIM configuration is primarily done through the portal or Microsoft Graph API
-# The following shows the Graph API approach
+# Note: PIM configuration is primarily done through the portal or Microsoft graph API
+# The following shows the graph API approach
 
-# List eligible role assignments for Global Administrator
+# List eligible role assignments for global administrator
 az rest --method get \
   --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleInstances?\$filter=roleDefinitionId eq '62e90394-69f5-4237-9190-012177145e10'"
 
@@ -223,7 +223,7 @@ Key configuration:
 - Risk-based Conditional Access policies supersede the legacy Identity Protection policies
 
 ```bash
-# Conditional Access policy for high sign-in risk (via Graph API)
+# Conditional access policy for high sign-in risk (via graph api)
 az rest --method post \
   --url "https://graph.microsoft.com/v1.0/identity/conditionalAccess/policies" \
   --body '{
@@ -267,13 +267,13 @@ On-premises deployment requires:
 # PowerShell example:
 # Connect-MgGraph -Scopes "Policy.ReadWrite.AuthenticationMethod"
 # Update-MgPolicyAuthenticationMethodPolicy -AuthenticationMethodConfigurations @{
-#   customBannedPasswords = @("woodgrove", "banking123", "finance2024")
+# customBannedPasswords = @("woodgrove", "banking123", "finance2024")
 # }
 ```
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Microsoft Entra Connect Sync documentation](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-azure-ad-connect)
 - [Microsoft Entra Cloud Sync](https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/what-is-cloud-sync)
@@ -283,7 +283,7 @@ On-premises deployment requires:
 - [Passwordless authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-passwordless)
 - [Access reviews](https://learn.microsoft.com/en-us/entra/id-governance/access-reviews-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Woodgrove Bank has a compliance requirement that passwords must never leave their on-premises environment, but they also want Identity Protection leaked credentials detection. Which authentication methods satisfy both requirements?</summary>
@@ -313,7 +313,7 @@ On-premises deployment requires:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

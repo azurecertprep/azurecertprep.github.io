@@ -5,7 +5,7 @@ title: "Challenge 49: Design Network Security and Load Balancing"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 49: Design Network Security and Load Balancing
+# Challenge 49: design Network security and Load balancing
 
 :::info Estimated Time and Cost
 
@@ -21,14 +21,14 @@ The security and reliability requirements are: (1) DDoS protection for all inter
 
 The platform team needs to select the right combination of Azure networking and security services from a crowded landscape: Azure Firewall, WAF, NSG, ASG, Private Link, DDoS Protection, Front Door, Traffic Manager, Application Gateway, and Load Balancer.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution to optimize network security
 - Recommend a load-balancing and routing solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Load Balancing Decision Tree
+### Part 1: Load balancing decision tree
 
 1. Apply the Azure load balancing decision tree to select the appropriate service for each traffic pattern:
    - Internet-facing HTTP/HTTPS traffic (global): evaluate Azure Front Door vs. Traffic Manager + Application Gateway
@@ -45,7 +45,7 @@ The platform team needs to select the right combination of Azure networking and 
    - Application Gateway: Layer 7, regional, WAF (v2), URL routing, SSL termination
    - Load Balancer: Layer 4, regional, TCP/UDP, ultra-low latency, HA ports
 
-### Part 2: Web Application Firewall Design
+### Part 2: web Application Firewall design
 
 4. Design the WAF deployment strategy:
    - WAF on Azure Front Door (global, applied at the edge before traffic reaches the region)
@@ -61,7 +61,7 @@ The platform team needs to select the right combination of Azure networking and 
    - Alert on unusual patterns (sudden spike in blocked requests, new attack vectors)
    - Monthly WAF report for SOC 2 compliance evidence
 
-### Part 3: Network Segmentation and Security
+### Part 3: Network segmentation and security
 
 7. Design the network segmentation strategy:
    - NSG rules: control traffic at subnet level (web tier can reach API tier, API tier can reach data tier, no direct web-to-data)
@@ -76,7 +76,7 @@ The platform team needs to select the right combination of Azure networking and 
    - vs. Application-level isolation (shared infrastructure with data-level tenant separation)
    - Document the trade-offs: cost of dedicated subnets vs. security of full network isolation
 
-### Part 4: DDoS Protection and Threat Detection
+### Part 4: DDoS protection and threat detection
 
 10. Design the DDoS protection strategy:
     - Azure DDoS Network Protection (per VNet, includes cost protection guarantee, WAF integration, telemetry)
@@ -92,7 +92,7 @@ The platform team needs to select the right combination of Azure networking and 
     - Microsoft Defender for Cloud network security recommendations
     - Network Watcher for troubleshooting and packet capture
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-49"
@@ -143,7 +143,7 @@ Private Endpoints bring the PaaS service into your VNet with a private IP (acces
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure load balancing decision tree](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/load-balancing-overview)
 - [Azure Front Door overview](https://learn.microsoft.com/en-us/azure/frontdoor/front-door-overview)
@@ -152,7 +152,7 @@ Private Endpoints bring the PaaS service into your VNet with a private IP (acces
 - [Azure DDoS Protection overview](https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview)
 - [Azure Private Link overview](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A multi-region SaaS application needs global HTTP load balancing with sub-second failover. Why is Azure Front Door preferred over Traffic Manager for this scenario?</summary>
@@ -175,11 +175,11 @@ Private Endpoints bring the PaaS service into your VNet with a private IP (acces
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab proves NSG microsegmentation behavior through direct observation. You will deploy two VMs in separate subnets, apply deny rules, watch traffic get blocked, add allow rules, and confirm fine-grained access control -- all in real time with immediate effect.
 
-### Step 1: Create the resource group and VNet with two subnets
+### Step 1: create the resource group and VNet with two subnets
 
 ```bash
 az group create \
@@ -204,7 +204,7 @@ az network vnet subnet create \
   --address-prefix 10.0.2.0/24
 ```
 
-### Step 2: Deploy a VM in each subnet
+### Step 2: deploy a VM in each subnet
 
 ```bash
 az vm create \
@@ -265,7 +265,7 @@ echo "DB VM IP: $DB_IP"
 By default, VMs within the same VNet can communicate freely across subnets. This is because Azure injects a default "AllowVNetInBound" rule at priority 65000. On the AZ-305 exam, understand that subnets alone do NOT provide isolation -- you need NSGs to enforce segmentation within a VNet.
 :::
 
-### Step 3: Create an NSG with a DENY rule for SSH from web-subnet to db-subnet
+### Step 3: create an NSG with a DENY rule for SSH from web-subnet to db-subnet
 
 ```bash
 az network nsg create \
@@ -297,7 +297,7 @@ az network vnet subnet update \
   --network-security-group nsg-db-subnet
 ```
 
-### Step 4: Test SSH from web-vm to db-vm (expect FAILURE)
+### Step 4: test SSH from web-vm to db-vm (expect failure)
 
 ```bash
 az vm run-command invoke \
@@ -313,7 +313,7 @@ The output should show "PORT 22 BLOCKED" -- the NSG deny rule is in effect.
 NSGs are stateful: if you allow inbound traffic, the return traffic is automatically permitted without needing an explicit outbound rule. This means a single inbound deny rule is sufficient to block a connection -- you do not need matching outbound rules. On the AZ-305 exam, stateful behavior reduces rule complexity significantly compared to stateless firewalls.
 :::
 
-### Step 5: Add an ALLOW rule for port 3306 (simulating database access)
+### Step 5: add an ALLOW rule for port 3306 (simulating database access)
 
 ```bash
 az network nsg rule create \
@@ -339,7 +339,7 @@ az vm run-command invoke \
   --scripts "nohup nc -l -p 3306 &>/dev/null & echo 'Listener started on port 3306'"
 ```
 
-### Step 6: Test connectivity on port 3306 (expect SUCCESS)
+### Step 6: test connectivity on port 3306 (expect success)
 
 ```bash
 az vm run-command invoke \
@@ -355,7 +355,7 @@ The output should show "PORT 3306 OPEN" -- the allow rule permits database traff
 NSG rules are evaluated by priority -- the lowest number wins. In this lab, priority 100 (DenySSH) blocks port 22 while priority 110 (AllowMySQL) permits port 3306. On the AZ-305 exam, always design deny rules with lower priority numbers than allow rules for the same source, and use explicit deny rules (rather than relying on the default deny) for compliance auditing -- auditors want to see intentional security decisions documented in rules.
 :::
 
-### Step 7: View effective security rules on the db-vm NIC
+### Step 7: view effective security rules on the db-vm NIC
 
 ```bash
 DB_NIC=$(az vm show \
@@ -374,7 +374,7 @@ The effective rules show the merged result of your custom rules plus the platfor
 Effective security rules combine subnet-level and NIC-level NSGs. If you have an NSG on both the subnet AND the NIC, traffic must pass BOTH -- they are evaluated independently and both must permit the traffic. On the AZ-305 exam, this dual-evaluation model is frequently tested. The effective rules view is how you troubleshoot "why is my traffic being blocked?" in production.
 :::
 
-### Step 8: Remove the allow rule and verify immediate revocation
+### Step 8: remove the allow rule and verify immediate revocation
 
 ```bash
 az network nsg rule delete \

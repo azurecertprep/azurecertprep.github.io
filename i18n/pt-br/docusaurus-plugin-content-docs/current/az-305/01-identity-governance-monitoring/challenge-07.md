@@ -5,7 +5,7 @@ title: "Desafio 07: Projetar Autorização para Recursos On-Premises"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 07: Projetar Autorização para Recursos On-Premises
+# Desafio 07: projetar autorização para recursos On-Premises
 
 :::info Tempo Estimado e Custo
 
@@ -30,15 +30,15 @@ A empresa deseja:
 
 Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos on-premises, fornecendo acesso remoto seguro sem expor a rede corporativa.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para autorizar acesso a recursos on-premises
 - Recomendar uma solução de autenticação
 - Recomendar uma solução de gerenciamento de identidade
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Matriz de Selecao de Solução
+### Parte 1: matriz de selecao de solução
 
 1. Para cada aplicação, avalie e recomende a solução de acesso apropriada:
 
@@ -55,7 +55,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
    - Impacto na experiência do usuário
    - Implicacoes de licenciamento e custo
 
-### Parte 2: Design do Microsoft Entra Application Proxy
+### Parte 2: design do Microsoft Entra Application proxy
 
 3. Projete a arquitetura do Application Proxy para o HR Portal:
    - Topologia de grupo de conectores (quantos conectores, onde implantados, consideracoes de HA)
@@ -72,7 +72,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 
 5. Implante um conector de Application Proxy (ou documente a arquitetura de implantacao se recursos on-premises não estiverem disponíveis).
 
-### Parte 3: Design do Microsoft Entra Domain Services
+### Parte 3: design do Microsoft Entra domain Services
 
 6. Avalie se o Microsoft Entra Domain Services (Entra DS) e apropriado para a Adventure Works:
    - Quais cenários se beneficiam do Entra DS vs. AD DS tradicional vs. Application Proxy
@@ -86,7 +86,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
    - Como dispositivos gerenciados em nuvem se autenticarao no ERP (NTLM/Kerberos através do Entra DS)
    - Configuração de DNS
 
-### Parte 4: Azure Files para Acesso Hibrido a Arquivos
+### Parte 4: Azure Files para acesso hibrido a arquivos
 
 8. Projete a integração do Azure Files para os compartilhamentos de arquivo de engenharia:
    - Autenticação baseada em identidade (Entra DS, on-prem AD DS, ou Entra Kerberos)
@@ -100,13 +100,13 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
    - Como manter permissões NTFS existentes
    - Conectividade do cliente (private endpoint vs. public endpoint com restrições)
 
-### Parte 5: Implementar Prova de Conceito
+### Parte 5: implementar prova de conceito
 
 10. Crie um compartilhamento Azure Files com autenticação baseada em identidade habilitada.
 
 11. Documente a arquitetura completa de implantacao do Application Proxy para o HR Portal, incluindo posicionamento de conectores, configuração de KCD e políticas de Conditional Access.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-07"
@@ -154,12 +154,12 @@ Para SSO em aplicações IIS usando Windows Integrated Authentication:
 
 ```powershell
 # On Active Directory (domain controller or admin workstation)
-# 1. Register SPN for the backend app service account
+# 1. register SPN for the backend app service account
 setspn -S HTTP/hrportal.adventureworks.local svc_hrportal
 
-# 2. Configure KCD on the connector computer account
-# In AD Users & Computers:
-# Connector computer account > Properties > Delegation tab
+# 2. configure KCD on the connector computer account
+# In AD users & computers:
+# Connector computer account > properties > delegation tab
 # "Trust this computer for delegation to specified services only"
 # "Use any authentication protocol"
 # Add: HTTP/hrportal.adventureworks.local
@@ -207,7 +207,7 @@ az storage account create \
   --sku Standard_LRS \
   --kind StorageV2
 
-# Enable identity-based authentication (on-premises AD DS)
+# Enable identity-based authentication (on-premises AD ds)
 az storage account update \
   --name stadventureworksfiles \
   --resource-group rg-files \
@@ -227,7 +227,7 @@ az storage share-rm create \
   --quota 5120 \
   --access-tier Hot
 
-# Assign share-level RBAC (Storage File Data SMB Share Contributor)
+# Assign share-level RBAC (Storage file Data SMB share contributor)
 az role assignment create \
   --assignee-object-id $(az ad group show -g "Engineering-Team" --query id -o tsv) \
   --role "Storage File Data SMB Share Contributor" \
@@ -259,13 +259,13 @@ Estratégia de migração com coexistencia:
 5. Cutover: redirecione usuários para o Azure Files diretamente (via private endpoint) ou mantenha o File Sync para cache
 
 ```bash
-# Create Storage Sync Service
+# Create Storage sync Service
 az storagesync create \
   --name sync-adventureworks \
   --resource-group rg-files \
   --location eastus
 
-# Create Sync Group
+# Create sync Group
 az storagesync sync-group create \
   --name sg-engineering-cad \
   --storage-sync-service sync-adventureworks \
@@ -274,7 +274,7 @@ az storagesync sync-group create \
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Microsoft Entra Application Proxy](https://learn.microsoft.com/en-us/entra/identity/app-proxy/overview-what-is-app-proxy)
 - [KCD for SSO with Application Proxy](https://learn.microsoft.com/en-us/entra/identity/app-proxy/how-to-configure-sso-with-kcd)
@@ -284,7 +284,7 @@ az storagesync sync-group create \
 - [Enable B2B external collaboration](https://learn.microsoft.com/en-us/entra/external-id/what-is-b2b)
 - [Conditional Access for Application Proxy apps](https://learn.microsoft.com/en-us/entra/identity/app-proxy/how-to-configure-conditional-access)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A Adventure Works tem uma aplicação web IIS on-premises usando Windows Integrated Authentication. Usuários remotos precisam de SSO sem VPN. Qual solução fornece isso com a menor mudança de infraestrutura?</summary>
@@ -324,9 +324,9 @@ az storagesync delete --name sync-adventureworks --resource-group rg-files --yes
 # Delete resource group
 az group delete --name rg-files --yes --no-wait
 
-# Note: Application Proxy connectors are uninstalled from the on-premises server
-# Entra Domain Services deletion is done via the portal:
-# Entra ID > Domain Services > Select domain > Delete
+# Note: Application proxy connectors are uninstalled from the on-premises server
+# Entra domain Services deletion is done via the portal:
+# Entra ID > domain Services > select domain > delete
 
 # Delete any published enterprise applications
 az ad app delete --id $(az ad app list --display-name "HR Portal - App Proxy" --query "[0].appId" -o tsv)

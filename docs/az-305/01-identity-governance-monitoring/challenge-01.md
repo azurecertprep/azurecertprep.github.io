@@ -6,7 +6,7 @@ title: "Challenge 01: Design a Centralized Logging Solution"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 01: Design a Centralized Logging Solution
+# Challenge 01: design a centralized logging solution
 
 :::info Estimated Time and Cost
 
@@ -22,15 +22,15 @@ The CTO has mandated a centralized logging strategy that provides a single pane 
 
 Your task is to design a Log Analytics workspace architecture that balances cost efficiency, access control, compliance requirements, and operational simplicity.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a logging solution
 - Recommend a solution for routing logs
 - Recommend a monitoring solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Workspace Architecture Decision
+### Part 1: workspace architecture decision
 
 1. Evaluate the following workspace strategies for Northwind Traders and recommend one with justification:
    - Single centralized workspace
@@ -55,7 +55,7 @@ Your task is to design a Log Analytics workspace architecture that balances cost
 
 3. Determine the appropriate region(s) for your workspace(s) considering the EU data residency requirement.
 
-### Part 2: Deploy and Configure the Workspace
+### Part 2: deploy and configure the workspace
 
 4. Create the Log Analytics workspace(s) according to your design using Azure CLI.
 
@@ -66,7 +66,7 @@ Your task is to design a Log Analytics workspace architecture that balances cost
 
 6. Set up table-level retention where different data types require different retention periods.
 
-### Part 3: Access Control Design
+### Part 3: access control design
 
 7. Design an access model that satisfies these requirements:
    - Security team: read access to all security logs across all workspaces
@@ -76,13 +76,13 @@ Your task is to design a Log Analytics workspace architecture that balances cost
 
 8. Implement resource-context vs. workspace-context access control where appropriate.
 
-### Part 4: Cost Management
+### Part 4: cost Management
 
 9. Evaluate commitment tier pricing vs. pay-as-you-go for the expected 350 GB/day total ingestion volume.
 
 10. Design a strategy to reduce ingestion costs for verbose but low-priority logs (e.g., debug-level application logs).
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-01"
@@ -148,7 +148,7 @@ az monitor log-analytics workspace table update \
   --name SecurityEvent \
   --retention-time 365
 
-# Set Perf table to 30 days
+# Set perf table to 30 days
 az monitor log-analytics workspace table update \
   --resource-group rg-logging-centralus \
   --workspace-name law-northwind-central \
@@ -190,7 +190,7 @@ Compare: 300 GB commitment tier + 50 GB overage vs. 400 GB commitment tier with 
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Design a Log Analytics workspace architecture](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/workspace-design)
 - [Azure Monitor Logs overview](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs)
@@ -199,7 +199,7 @@ Compare: 300 GB commitment tier + 50 GB overage vs. 400 GB commitment tier with 
 - [Configure data retention and archive](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-retention-configure)
 - [Basic Logs in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/basic-logs-configure)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Northwind Traders has 350 GB/day of log ingestion split across three teams. The security team needs to query all logs, but the analytics team should only see their own data. What is the most cost-effective workspace architecture?</summary>
@@ -229,7 +229,7 @@ Use multiple workspaces when: (1) Data sovereignty/residency requirements mandat
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

@@ -6,7 +6,7 @@ title: "Challenge 03: Design a Monitoring and Alerting Strategy"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 03: Design a Monitoring and Alerting Strategy
+# Challenge 03: design a monitoring and alerting strategy
 
 :::info Estimated Time and Cost
 
@@ -27,15 +27,15 @@ Currently, the team only discovers outages when customers complain on social med
 
 Your task is to design a comprehensive monitoring and alerting strategy that provides early warning of degradation, automated responses to known failure patterns, and executive-level visibility into platform health.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a monitoring solution
 - Recommend a logging solution
 - Recommend a solution for routing logs
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Monitoring Architecture Design
+### Part 1: monitoring architecture design
 
 1. Design the monitoring stack for TailSpin Toys, specifying:
    - Which Azure Monitor features to use for each tier (infrastructure, application, business)
@@ -57,7 +57,7 @@ Your task is to design a comprehensive monitoring and alerting strategy that pro
   storageKey="az305-challenge-03"
 />
 
-### Part 2: Alert Design
+### Part 2: alert design
 
 3. Design alert rules for each SLO, specifying:
    - Metric or log-based alert type
@@ -75,7 +75,7 @@ Your task is to design a comprehensive monitoring and alerting strategy that pro
    - Automated actions (Azure Functions, Logic Apps, runbooks)
    - Escalation paths
 
-### Part 3: Automated Remediation
+### Part 3: automated remediation
 
 6. Design an automated response for the Redis cache exhaustion scenario:
    - Detection: What metric/pattern indicates cache pressure before failure?
@@ -87,7 +87,7 @@ Your task is to design a comprehensive monitoring and alerting strategy that pro
    - HTTP queue length exceeding 100 requests
    - Custom metric: orders-per-second exceeding capacity threshold
 
-### Part 4: Dashboards and Workbooks
+### Part 4: dashboards and workbooks
 
 8. Design an executive dashboard showing:
    - Current SLO compliance (uptime percentage this month)
@@ -100,11 +100,11 @@ Your task is to design a comprehensive monitoring and alerting strategy that pro
    - Drill-down from high-level health to specific failing requests
    - Correlation of alerts with deployment events
 
-### Part 5: Deploy Proof of Concept
+### Part 5: deploy proof of concept
 
 10. Deploy Application Insights and configure at least one alert rule with an action group that demonstrates the end-to-end alerting pipeline.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-03"
@@ -196,7 +196,7 @@ For TailSpin Toys:
 <summary>Hint 4: Autoscale Configuration</summary>
 
 ```bash
-# Create autoscale settings for App Service Plan
+# Create autoscale settings for App Service plan
 az monitor autoscale create \
   --resource-group rg-app \
   --name autoscale-tailspin \
@@ -245,7 +245,7 @@ For the Redis exhaustion scenario, an Automation Runbook could:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Monitor overview](https://learn.microsoft.com/en-us/azure/azure-monitor/overview)
 - [Application Insights overview](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
@@ -255,7 +255,7 @@ For the Redis exhaustion scenario, an Automation Runbook could:
 - [Create and manage action groups](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups)
 - [Distributed tracing with Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. TailSpin Toys needs to detect when their order processing pipeline exceeds 30 seconds. Orders are processed by Azure Functions triggered by Service Bus. Which monitoring approach provides the most accurate measurement?</summary>
@@ -285,7 +285,7 @@ For the Redis exhaustion scenario, an Automation Runbook could:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

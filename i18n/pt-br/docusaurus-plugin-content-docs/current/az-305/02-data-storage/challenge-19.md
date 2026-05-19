@@ -5,7 +5,7 @@ title: "Desafio 19: Projetar uma Solução de Dados Não Estruturados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 19: Projetar uma Solução de Dados Não Estruturados
+# Desafio 19: projetar uma solução de dados não estruturados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ A equipe de pós-produção de 40 editores trabalha de um escritório central em
 
 O orcamento mensal de armazenamento da MediaVault é $8.000. Eles precisam minimizar o custo para conteúdo arquivado enquanto garantem que podem recuperar masters arquivados dentro de 24 horas quando uma solicitacao de licenciamento chega. Adicionalmente, a equipe de analytics de dados quer executar jobs de processamento baseados em Spark em arquivos de metadados (logs JSON, arquivos de legendas, dados de color grading) que ficam junto ao conteúdo de vídeo. A empresa deve cumprir regulamentacoes de licenciamento de conteúdo que exigem políticas de imutabilidade em copias master finalizadas (sem modificacao ou exclusão por 5 anos apos o lancamento).
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para armazenamento de dados não estruturados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao de Serviço de Armazenamento
+### Parte 1: selecao de serviço de armazenamento
 
 1. Avalie os seguintes serviços de armazenamento Azure para cada porcao do conteúdo da MediaVault e recomende o serviço apropriado para cada carga de trabalho:
    - Azure Blob Storage (block blobs, append blobs, page blobs)
@@ -38,7 +38,7 @@ O orcamento mensal de armazenamento da MediaVault é $8.000. Eles precisam minim
 3. Determine se Azure Data Lake Storage Gen2 (hierarchical namespace habilitado no Blob Storage) e apropriado para os arquivos de metadados que requerem processamento Spark. Explique as vantagens sobre o Blob Storage padrão para cargas de trabalho de analytics.
 4. Para o arquivo de vídeo de 500TB, calcule se o Blob Storage padrão (sem hierarchical namespace) e mais economico do que Data Lake Storage Gen2.
 
-### Parte 2: Camada de Acesso e Gerenciamento de Ciclo de Vida
+### Parte 2: camada de acesso e gerenciamento de ciclo de vida
 
 5. Projete uma estratégia de camada de acesso para a biblioteca de conteúdo de vídeo. Mapeie cada categoria de conteúdo para a camada apropriada:
    - Hot tier: Para filmagens de produção ativa (acesso diario)
@@ -49,14 +49,14 @@ O orcamento mensal de armazenamento da MediaVault é $8.000. Eles precisam minim
 7. Calcule o custo mensal de armazenamento para sua estratégia em camadas e compare com armazenar tudo na camada Hot. Verifique se o design cabe no orcamento de $8.000/mes.
 8. Documente o processo de reidratacao e tempo para conteúdo na camada Archive. Compare reidratacao Standard (até 15 horas) vs reidratacao High Priority (menos de 1 hora para objetos menores que 10GB) e suas implicacoes de custo para o requisito de recuperação de 24 horas.
 
-### Parte 3: Proteção de Dados e Compliance
+### Parte 3: proteção de dados e compliance
 
 9. Projete políticas de imutabilidade para copias master finalizadas. Avalie políticas de retencao baseadas em tempo (WORM - Write Once Read Many) versus legal holds. Determine qual abordagem atende ao requisito de 5 anos sem modificacao.
 10. Projete uma estratégia de redundância de dados para cada categoria de conteúdo. Considere LRS, ZRS, GRS e GZRS baseado na criticidade e recuperabilidade de cada tipo de conteúdo.
 11. Implemente políticas de soft delete e versionamento para proteger contra exclusão acidental de arquivos de produção ativos. Especifique períodos de retencao para arquivos excluidos e versoes anteriores.
 12. Projete uma estratégia de controle de acesso usando Azure RBAC e regras de firewall da storage account. A equipe de edicao precisa de acesso de leitura/escrita a shares ativos, a equipe de analytics precisa de acesso somente-leitura a metadados, e conteúdo arquivado deve ser acessível apenas através de um workflow de aprovacao.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-19"
@@ -107,7 +107,7 @@ Armazenamento imutável do Azure Blob Storage suporta dois tipos de política: (
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Blob Storage access tiers](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
 - [Azure Blob Storage lifecycle management](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
@@ -118,7 +118,7 @@ Armazenamento imutável do Azure Blob Storage suporta dois tipos de política: (
 - [Archive rehydration overview](https://learn.microsoft.com/en-us/azure/storage/blobs/archive-rehydrate-overview)
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma equipe de edicao de vídeo de 40 pessoas precisa de acesso a file share SMB com suporte a file locking. O workflow requer throughput sustentado de 5 GiB/s. Qual serviço Azure você deve recomendar?</summary>
@@ -157,7 +157,7 @@ az group delete --name rg-mediavault-storage --yes --no-wait
 # If you created a separate Azure NetApp Files account (requires explicit cleanup)
 az group delete --name rg-mediavault-netapp --yes --no-wait
 
-# Note: Immutable storage policies must be unlocked/expired before deletion
+# Note: immutable storage policies must be unlocked/expired before deletion
 # For testing, use unlocked policies that can be removed:
 # az storage container immutability-policy delete --account-name <name> --container-name <name>
 ```

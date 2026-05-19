@@ -16,7 +16,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso's marketing team needs a web application deployed for an upcoming campaign. The site must support zero-downtime deployments, auto-scaling during traffic spikes, and regular backups. You'll deploy it to Azure App Service with production best practices | deployment slots, autoscale, and networking controls.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -29,7 +29,7 @@ Contoso's marketing team needs a web application deployed for an upcoming campai
 | Configure backup for App Service | Medium |
 | Configure networking settings | Medium |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | Traditional | Azure Equivalent |
 |-------------|-----------------|
@@ -43,13 +43,13 @@ Contoso's marketing team needs a web application deployed for an upcoming campai
 
 ## Tasks
 
-### Task 1: Create an App Service Plan
+### Task 1: create an App Service plan
 
 ```bash
 # Create a resource group
 az group create --name rg-appservice-lab --location eastus
 
-# Create an App Service plan (Standard S1: required for deployment slots)
+# Create an App Service plan (Standard s1: required for deployment slots)
 az appservice plan create \
   --resource-group rg-appservice-lab \
   --name plan-contoso-web \
@@ -61,10 +61,10 @@ az appservice plan show -g rg-appservice-lab -n plan-contoso-web \
   --query "{Name:name, SKU:sku.name, Tier:sku.tier, Workers:sku.capacity}" -o table
 ```
 
-### Task 2: Create a Web App
+### Task 2: create a web App
 
 ```bash
-# Create a web app with Node.js runtime
+# Create a web app with node.js runtime
 az webapp create \
   --resource-group rg-appservice-lab \
   --plan plan-contoso-web \
@@ -80,10 +80,10 @@ az webapp show -g rg-appservice-lab -n $APP_NAME \
   --query "{Name:name, State:state, URL:defaultHostName}" -o table
 ```
 
-### Task 3: Deploy Sample Code
+### Task 3: deploy sample code
 
 ```bash
-# Create a simple Node.js app
+# Create a simple node.js app
 mkdir webapp && cd webapp
 
 cat > index.js << 'EOF'
@@ -126,7 +126,7 @@ az webapp config appsettings set \
 echo "Visit: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Task 4: Create a Staging Deployment Slot
+### Task 4: create a staging deployment slot
 
 ```bash
 # Create a staging slot
@@ -142,7 +142,7 @@ az webapp deployment slot list -g rg-appservice-lab -n $APP_NAME -o table
 echo "Staging URL: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Task 5: Deploy a New Version to Staging
+### Task 5: deploy a new version to staging
 
 ```bash
 # Update the version in staging
@@ -169,7 +169,7 @@ echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 echo "Production: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Task 6: Swap Staging and Production
+### Task 6: swap staging and production
 
 ```bash
 # Preview what will change
@@ -187,7 +187,7 @@ echo "Production: https://$APP_NAME.azurewebsites.net"
 echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 ```
 
-### Task 7: Configure Autoscale
+### Task 7: configure autoscale
 
 ```bash
 # Get the App Service plan resource ID
@@ -222,7 +222,7 @@ az monitor autoscale show -g rg-appservice-lab -n autoscale-web \
   --query "profiles[0].rules[].{Metric:metricTrigger.metricName, Op:metricTrigger.operator, Threshold:metricTrigger.threshold, Direction:scaleAction.direction}" -o table
 ```
 
-### Task 8: Configure Backup
+### Task 8: configure Backup
 
 ```bash
 # Create a storage account for backups
@@ -258,10 +258,10 @@ az webapp config backup update \
   --retain-one true
 ```
 
-### Task 9: Configure Access Restrictions
+### Task 9: configure access restrictions
 
 ```bash
-# Add an IP-based access restriction (allow only your IP)
+# Add an IP-based access restriction (allow only your ip)
 MY_IP=$(curl -s ifconfig.me)
 
 az webapp config access-restriction add \
@@ -286,7 +286,7 @@ az webapp config access-restriction show \
   -g rg-appservice-lab -n $APP_NAME -o table
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-10"
@@ -300,12 +300,12 @@ az webapp config access-restriction show \
     "Access restrictions configured on the web app"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: Deploying to the Wrong Slot
+### Scenario a: deploying to the wrong slot
 ```bash
-# You deployed v2 to production instead of staging. How do you roll back?
-# Hint: The previous version is now in the staging slot after a swap.
+# You deployed v2 to production instead of staging. how do you roll back?
+# Hint: the previous version is now in the staging slot after a swap.
 az webapp deployment slot swap \
   --resource-group rg-appservice-lab \
   --name $APP_NAME \
@@ -313,7 +313,7 @@ az webapp deployment slot swap \
   --target-slot production
 ```
 
-### Scenario B: Autoscale Min > Max
+### Scenario b: autoscale min > max
 ```bash
 # Try setting min-count higher than max-count
 az monitor autoscale update \
@@ -323,16 +323,16 @@ az monitor autoscale update \
 # What error do you get?
 ```
 
-### Scenario C: Slots on Free Tier
+### Scenario c: slots on Free tier
 ```bash
 # Create a Free tier plan and try to add a slot
 az appservice plan create -g rg-appservice-lab -n plan-free --sku F1 --is-linux
 az webapp create -g rg-appservice-lab --plan plan-free --name free-app-$RANDOM --runtime "NODE:18-lts"
 az webapp deployment slot create -g rg-appservice-lab --name free-app-$RANDOM --slot staging
-# What error do you get? Which tiers support deployment slots?
+# What error do you get? which tiers support deployment slots?
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What App Service plan tiers support deployment slots?**
 

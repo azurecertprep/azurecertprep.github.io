@@ -5,7 +5,7 @@ title: "Challenge 09 | Containers in Azure"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 09: Contêineres no Azure
+# Desafio 09: contêineres no Azure
 
 :::info Informação
 
@@ -16,7 +16,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A equipe de desenvolvimento da Contoso containerizou sua aplicação de dashboard interno. O Dockerfile está pronto, mas a equipe tem executado contêineres no laptop de um desenvolvedor. Você precisa configurar a infraestrutura adequada de contêineres no Azure: um registro privado para armazenar imagens e uma plataforma de hospedagem para executá-las em escala.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -26,7 +26,7 @@ A equipe de desenvolvimento da Contoso containerizou sua aplicação de dashboar
 | Gerenciar dimensionamento e escalabilidade de contêineres | Médio |
 | Escolher entre ACI, Container Apps e AKS | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | Tradicional | Equivalente no Azure |
 |-------------|---------------------|
@@ -38,13 +38,13 @@ A equipe de desenvolvimento da Contoso containerizou sua aplicação de dashboar
 
 ## Tarefas
 
-### Tarefa 1: Criar um Azure Container Registry
+### Tarefa 1: criar um Azure Container Registry
 
 ```bash
 # Criar um grupo de recursos
 az group create --name rg-containers-lab --location eastus
 
-# Criar um ACR (SKU Basic para fins de laboratório)
+# Criar um ACR (sku Basic para fins de laboratório)
 # O nome deve ser globalmente único, 5-50 caracteres alfanuméricos
 az acr create \
   --resource-group rg-containers-lab \
@@ -60,7 +60,7 @@ echo "ACR Name: $ACR_NAME"
 az acr show --name $ACR_NAME --query "{Name:name, SKU:sku.name, LoginServer:loginServer}" -o table
 ```
 
-### Tarefa 2: Compilar e Enviar uma Imagem para o ACR
+### Tarefa 2: compilar e enviar uma imagem para o ACR
 
 Use `az acr build` para compilar diretamente na nuvem | sem necessidade de Docker local:
 
@@ -68,7 +68,7 @@ Use `az acr build` para compilar diretamente na nuvem | sem necessidade de Docke
 # Criar um diretório simples para a aplicação
 mkdir container-app && cd container-app
 
-# Criar um Dockerfile simples
+# Criar um dockerfile simples
 cat > Dockerfile << 'EOF'
 FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
@@ -84,7 +84,7 @@ cat > index.html << 'EOF'
 </body></html>
 EOF
 
-# Compilar e enviar usando ACR Tasks (compila na nuvem)
+# Compilar e enviar usando ACR tasks (compila na nuvem)
 az acr build \
   --registry $ACR_NAME \
   --image contoso-dashboard:v1 \
@@ -95,7 +95,7 @@ az acr repository list --name $ACR_NAME -o table
 az acr repository show-tags --name $ACR_NAME --repository contoso-dashboard -o table
 ```
 
-### Tarefa 3: Implantar no Azure Container Instances
+### Tarefa 3: implantar no Azure Container instances
 
 ```bash
 # Obter as credenciais do ACR
@@ -126,7 +126,7 @@ echo "Teste: http://$ACI_FQDN"
 az container logs -g rg-containers-lab -n aci-dashboard
 ```
 
-### Tarefa 4: Criar um Ambiente de Container Apps
+### Tarefa 4: criar um ambiente de Container Apps
 
 ```bash
 # Instalar/atualizar a extensão de Container Apps
@@ -143,7 +143,7 @@ az containerapp env create \
   --location eastus
 ```
 
-### Tarefa 5: Implantar no Container Apps
+### Tarefa 5: implantar no Container Apps
 
 ```bash
 # Habilitar acesso de identidade gerenciada ao ACR (preferível a credenciais de admin)
@@ -165,7 +165,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
   --query "properties.configuration.ingress.fqdn" -o tsv
 ```
 
-### Tarefa 6: Configurar Escalabilidade do Container Apps
+### Tarefa 6: configurar escalabilidade do Container Apps
 
 ```bash
 # Adicionar uma regra de escalabilidade HTTP (escalar quando requisições simultâneas > 10 por réplica)
@@ -186,7 +186,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 az containerapp replica list -g rg-containers-lab -n ca-dashboard -o table
 ```
 
-### Tarefa 7: Comparar ACI vs Container Apps
+### Tarefa 7: comparar ACI vs Container Apps
 
 Execute ambas as implantações e compare:
 
@@ -215,7 +215,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 | **Complexidade** | Muito baixa | Baixa | Alta |
 </details>
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-09"
@@ -228,9 +228,9 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
     "Consegue articular quando usar ACI vs Container Apps vs AKS"
   ]}
 />
-## Cenários Quebre & Conserte
+## Cenários quebre & conserte
 
-### Cenário A: Nome de Imagem Incorreto
+### Cenário a: nome de imagem incorreto
 ```bash
 # Implante o ACI com um nome de imagem digitado errado
 az container create \
@@ -241,10 +241,10 @@ az container create \
   --registry-username $ACR_NAME \
   --registry-password $ACR_PASSWORD \
   --ports 80
-# Qual erro você recebe? Verifique: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
+# Qual erro você recebe? verifique: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
 ```
 
-### Cenário B: Problema de Permissão do ACR
+### Cenário b: problema de permissão do ACR
 ```bash
 # Tente implantar Container Apps sem fornecer credenciais do registro
 az containerapp create \
@@ -257,7 +257,7 @@ az containerapp create \
 # Como você corrige a autenticação do ACR? (Dica: identidade gerenciada ou credenciais de admin)
 ```
 
-### Cenário C: Porta Incorreta
+### Cenário c: porta incorreta
 ```bash
 # Implante com a porta de destino errada
 az containerapp create \
@@ -270,10 +270,10 @@ az containerapp create \
   --registry-password $ACR_PASSWORD \
   --target-port 8080 \
   --ingress external
-# A aplicação roda mas retorna erros 502. Por quê?
+# A aplicação roda mas retorna erros 502. por quê?
 ```
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 **1. Quais são as diferenças entre os SKUs do ACR?**
 

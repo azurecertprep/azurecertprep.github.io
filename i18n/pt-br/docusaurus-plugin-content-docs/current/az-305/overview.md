@@ -3,7 +3,7 @@ sidebar_position: 1
 title: "AZ-305: Arquiteto de Soluções Azure"
 ---
 
-# AZ-305: Projetando Soluções de Infraestrutura Microsoft Azure
+# AZ-305: projetando soluções de infraestrutura Microsoft Azure
 
 :::info Detalhes do Exame
 
@@ -19,7 +19,7 @@ Você deve ter experiência avançada e conhecimento em operações de TI, inclu
 
 **Certificação pré-requisito**: [AZ-104: Azure Administrator Associate](https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/) (recomendado)
 
-## Habilidades em Resumo
+## Habilidades em resumo
 
 | Domínio | Peso | Desafios |
 |---------|------|----------|
@@ -35,7 +35,7 @@ Os desafios sao organizados por domínio do exame. Dentro de cada domínio, os d
 
 :::
 
-## Como Este Exame Difere do AZ-104
+## Como este exame difere do AZ-104
 
 | Aspecto | AZ-104 (Administrador) | AZ-305 (Arquiteto) |
 |---------|------------------------|---------------------|
@@ -45,7 +45,7 @@ Os desafios sao organizados por domínio do exame. Dentro de cada domínio, os d
 | Profundidade do cenário | Tarefas de serviço único | Cenários multi-serviço e multi-requisito |
 | Alinhamento com frameworks | N/A | Well-Architected Framework, CAF |
 
-## Como Este Site Funciona
+## Como este site funciona
 
 Cada desafio segue um formato focado em design:
 
@@ -65,7 +65,7 @@ Cada desafio segue um formato focado em design:
 - **Azure CLI** instalado ou use o [Azure Cloud Shell](https://shell.azure.com)
 - **Compreensao conceitual** de redes, identidade, armazenamento e computação
 
-## Recursos Oficiais de Estudo
+## Recursos oficiais de estudo
 
 - [Guia de Estudo AZ-305](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-305)
 - [Avaliação Prática Gratuita](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/practice/assessment?assessment-type=practice&assessmentId=15)

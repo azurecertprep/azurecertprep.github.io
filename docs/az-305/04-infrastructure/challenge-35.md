@@ -5,7 +5,7 @@ title: "Challenge 35: Design a VM-Based Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 35: Design a VM-Based Solution
+# Challenge 35: design a VM-Based solution
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The firm operates under strict regulatory requirements. Certain workloads proces
 
 Your task is to design a VM-based solution that addresses scale-to-zero economics, data sovereignty through dedicated hardware, ultra-low-latency storage, and network proximity for inter-VM communication, while keeping costs manageable by only paying for resources during the 14-hour active window.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a virtual machine-based solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Scale Set Orchestration Design
+### Part 1: scale set orchestration design
 
 1. Evaluate VMSS orchestration modes for the Monte Carlo workload:
    - **Flexible orchestration**: Supports mixed VM sizes, availability zones, can add existing VMs
@@ -42,7 +42,7 @@ Your task is to design a VM-based solution that addresses scale-to-zero economic
    - Handle mid-day burst to 150+ VMs if risk calculations backlog grows
    - Calculate the monthly cost savings of scale-to-zero versus running 24/7
 
-### Part 2: Dedicated Hardware and Confidential Computing
+### Part 2: dedicated hardware and confidential computing
 
 4. For PII-processing workloads that cannot share hardware with other tenants, evaluate:
    - **Azure Dedicated Hosts**: Physical server dedicated to your organization
@@ -58,7 +58,7 @@ Your task is to design a VM-based solution that addresses scale-to-zero economic
    - What host SKU accommodates your selected VM size?
    - How does host-level maintenance control work?
 
-### Part 3: Ultra-Low-Latency Storage Design
+### Part 3: Ultra-Low-Latency Storage design
 
 7. Compare Azure disk types for the simulation cache requirement (sub-millisecond latency):
 
@@ -74,7 +74,7 @@ Your task is to design a VM-based solution that addresses scale-to-zero economic
 
 9. Design the disk configuration: Should each VM have its own Ultra Disk, or should you use a shared disk architecture? What are the sizing considerations?
 
-### Part 4: Network Proximity and Performance
+### Part 4: Network proximity and performance
 
 10. Design the network architecture to minimize inter-VM latency:
     - Deploy a proximity placement group to co-locate VMs on the same network spine
@@ -88,7 +88,7 @@ Your task is to design a VM-based solution that addresses scale-to-zero economic
 
 12. Design the network topology for simulation VMs that need to exchange intermediate results with sub-1ms latency between each other.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-35"
@@ -171,7 +171,7 @@ For 100+ VMs in a PPG, use intent-based placement: specify VM sizes upfront so A
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Virtual Machine Scale Sets orchestration modes](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes)
 - [Azure Dedicated Hosts](https://learn.microsoft.com/en-us/azure/virtual-machines/dedicated-hosts)
@@ -179,7 +179,7 @@ For 100+ VMs in a PPG, use intent-based placement: specify VM sizes upfront so A
 - [Proximity placement groups](https://learn.microsoft.com/en-us/azure/virtual-machines/co-location)
 - [Accelerated Networking overview](https://learn.microsoft.com/en-us/azure/virtual-network/accelerated-networking-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A VMSS with 100 identical VMs needs to scale from 0 to 100 as fast as possible at a scheduled time. Which orchestration mode and which setting optimizes deployment speed?</summary>
@@ -202,7 +202,7 @@ For 100+ VMs in a PPG, use intent-based placement: specify VM sizes upfront so A
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

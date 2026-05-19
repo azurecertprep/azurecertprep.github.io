@@ -5,7 +5,7 @@ title: "Desafio 21: Extensões de VM & Automação"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 21: Extensões de VM & Automação
+# Desafio 21: extensões de VM & automação
 
 :::info Tempo Estimado e Custo
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. tem uma frota de 50 VMs distribuídas em ambientes de desenvolvimento, staging e produção. A equipe de operações está cansada de fazer SSH manualmente em cada VM para instalar agentes de monitoramento, configurar software e executar scripts de manutenção. Toda vez que uma nova VM é provisionada, alguém esquece uma etapa de configuração, levando a inconsistências. Você foi encarregado de automatizar a configuração pós-implantação usando extensões de VM, Custom Script Extension, Run Command e Azure Automation.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -28,7 +28,7 @@ A Contoso Ltd. tem uma frota de 50 VMs distribuídas em ambientes de desenvolvim
 | Criar e gerenciar runbooks | Médio |
 | Configurar extensão de diagnóstico de VM | Médio |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
@@ -42,7 +42,7 @@ A Contoso Ltd. tem uma frota de 50 VMs distribuídas em ambientes de desenvolvim
 
 ## Tarefas
 
-### Tarefa 1: Criar o Ambiente do Laboratório
+### Tarefa 1: criar o ambiente do laboratório
 
 ```bash
 # Criar grupo de recursos
@@ -69,12 +69,12 @@ az vm create \
   --tags Environment=Development Department=IT
 ```
 
-### Tarefa 2: Implantar Custom Script Extension (Linux)
+### Tarefa 2: implantar custom script extension (Linux)
 
 Instale o Nginx na VM Linux usando a Custom Script Extension:
 
 ```bash
-# Implantar Custom Script Extension para instalar Nginx
+# Implantar custom script extension para instalar nginx
 az vm extension set \
   --resource-group rg-automation-lab \
   --vm-name vm-linux-auto \
@@ -93,12 +93,12 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState, Publisher:publisher}" -o table
 ```
 
-### Tarefa 3: Implantar Custom Script Extension (Windows)
+### Tarefa 3: implantar custom script extension (Windows)
 
 Instale o IIS na VM Windows usando Custom Script Extension:
 
 ```bash
-# Implantar Custom Script Extension para Windows
+# Implantar custom script extension para Windows
 az vm extension set \
   --resource-group rg-automation-lab \
   --vm-name vm-win-auto \
@@ -117,7 +117,7 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState}" -o table
 ```
 
-### Tarefa 4: Usar Custom Script Extension com Script Externo
+### Tarefa 4: usar custom script extension com script externo
 
 Hospede um script de configuração em uma conta de armazenamento e referencie-o:
 
@@ -188,33 +188,33 @@ az vm extension set \
 rm -f configure-vm.sh
 ```
 
-### Tarefa 5: Usar Run Command para Operações Ad-Hoc
+### Tarefa 5: usar run command para operações Ad-Hoc
 
 Execute comandos em VMs sem acesso SSH/RDP:
 
 ```bash
-# Linux: Verificar espaço em disco
+# Linux: verificar espaço em disco
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "df -h && echo '---' && free -m && echo '---' && uptime"
 
-# Linux: Verificar se o Nginx está rodando
+# Linux: verificar se o nginx está rodando
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "systemctl status nginx --no-pager"
 
-# Windows: Obter informações do sistema
+# Windows: obter informações do sistema
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-win-auto \
   --command-id RunPowerShellScript \
   --scripts "Get-ComputerInfo | Select-Object WindowsProductName, OsArchitecture, CsProcessors, OsTotalVisibleMemorySize"
 
-# Windows: Verificar status do IIS
+# Windows: verificar status do IIS
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-win-auto \
@@ -222,7 +222,7 @@ az vm run-command invoke \
   --scripts "Get-Service W3SVC | Format-Table Name, Status, StartType"
 ```
 
-### Tarefa 6: Listar e Gerenciar Extensões de VM
+### Tarefa 6: listar e gerenciar extensões de VM
 
 ```bash
 # Listar todas as extensões em uma VM
@@ -238,10 +238,10 @@ az vm extension image list \
   --query "[].{Name:name, Publisher:publisher}" -o table --latest
 ```
 
-### Tarefa 7: Criar uma Conta do Azure Automation
+### Tarefa 7: criar uma conta do Azure automation
 
 ```bash
-# Criar Conta do Automation
+# Criar conta do automation
 az automation account create \
   --name auto-contoso-ops \
   --resource-group rg-automation-lab \
@@ -254,7 +254,7 @@ az automation account show \
   --query "{Name:name, State:state, Location:location}" -o table
 ```
 
-### Tarefa 8: Criar um Runbook para Iniciar/Parar VMs
+### Tarefa 8: criar um runbook para Iniciar/Parar VMs
 
 ```bash
 # Criar um runbook PowerShell
@@ -322,7 +322,7 @@ az automation runbook publish \
 rm -f stop-dev-vms.ps1
 ```
 
-### Tarefa 9: Agendar o Runbook
+### Tarefa 9: agendar o runbook
 
 ```bash
 # Criar um agendamento (dias úteis às 19h)
@@ -343,7 +343,7 @@ az automation job-schedule create \
   --schedule-name "weekday-evening-shutdown"
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-21"
@@ -391,9 +391,9 @@ Para o runbook gerenciar recursos do Azure, a Conta do Automation precisa de uma
 
 </details>
 
-## Quebrar & Consertar
+## Quebrar & consertar
 
-### Cenário A: Extensão Falha ao Instalar
+### Cenário a: extensão falha ao instalar
 
 Implante uma Custom Script Extension com um erro intencional (ex: referenciando uma URL de arquivo inexistente). Verifique o status da extensão e diagnostique a falha:
 
@@ -405,7 +405,7 @@ az vm extension show \
   --name customScript \
   --query "{Status:provisioningState, Message:instanceView.statuses[0].message}"
 
-# Usar Run Command para verificar logs da extensão
+# Usar run command para verificar logs da extensão
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-linux-auto \
@@ -413,15 +413,15 @@ az vm run-command invoke \
   --scripts "cat /var/log/azure/custom-script/handler.log | tail -20"
 ```
 
-### Cenário B: Timeout do Run Command
+### Cenário b: timeout do run command
 
 Execute um script Run Command que dorme por 5 minutos. O que acontece quando o timeout padrão é excedido? Como você lida com operações de longa duração?
 
-### Cenário C: Falha de Autenticação do Runbook
+### Cenário c: falha de autenticação do runbook
 
 Crie um runbook que tenta acessar recursos, mas a identidade gerenciada da Conta do Automation não tem atribuição RBAC. Observe o erro na saída do job e diagnostique as permissões ausentes.
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Quantas Custom Script Extensions podem executar simultaneamente em uma VM?</summary>
@@ -462,7 +462,7 @@ No Windows:
 ## Limpeza
 
 ```bash
-# Excluir a Conta do Automation
+# Excluir a conta do automation
 az automation account delete \
   --name auto-contoso-ops \
   --resource-group rg-automation-lab \
@@ -474,7 +474,7 @@ az group delete --name rg-automation-lab --yes --no-wait
 echo "Limpeza concluída."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Visão geral de extensões de VM](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/overview)
 - [Custom Script Extension para Linux](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux)

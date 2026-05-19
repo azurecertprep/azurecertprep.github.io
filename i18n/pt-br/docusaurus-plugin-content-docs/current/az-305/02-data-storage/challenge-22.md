@@ -5,7 +5,7 @@ title: "Desafio 22: Projetar um Pipeline de Integração de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 22: Projetar um Pipeline de Integração de Dados
+# Desafio 22: projetar um pipeline de integração de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O processo atual depende de exportacoes manuais de CSV e anexos de e-mail, resul
 
 Seu desafio é projetar é implementar uma solução de integração de dados usando Azure Data Factory (ou Synapse Pipelines), incluindo orquestracao através de múltiplas fontes, um self-hosted integration runtime para conectividade on-premises, mecanismos de trigger apropriados e monitoramento abrangente.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para integração de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecionar Serviço de Integração e Projetar Arquitetura
+### Parte 1: selecionar serviço de integração e projetar arquitetura
 
 1. Crie uma matriz de decisao comparando estes serviços de integração para os requisitos da FreshMart:
    - Azure Data Factory
@@ -46,7 +46,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
    - Destino (Synapse Analytics dedicated SQL pool)
    - Fluxo de orquestracao (pipeline master com pipelines filhos)
 
-### Parte 2: Implementar Pipelines do Data Factory
+### Parte 2: implementar pipelines do Data factory
 
 4. Implante uma instância do Azure Data Factory e crie os seguintes linked services:
    - Azure SQL Database (simulando SQL Server on-premises via self-hosted IR)
@@ -71,7 +71,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
    - Implemente paginacao para conjuntos de resultados grandes
    - Mapeie a resposta da API para o formato de staging
 
-### Parte 3: Orquestração, Triggers e Tratamento de Erros
+### Parte 3: orquestração, triggers e tratamento de erros
 
 8. Crie um pipeline de orquestracao master que:
    - Execute os três pipelines de origem (lojas, SAP, Salesforce) em paralelo
@@ -86,7 +86,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
     - Registre metadados de execução do pipeline (hora de início, duracao, linhas copiadas, erros) em uma tabela de monitoramento
     - Projete uma regra de alerta usando Azure Monitor para falhas consecutivas de pipeline
 
-### Parte 4: Decisao de Design ETL vs ELT
+### Parte 4: decisao de design ETL vs ELT
 
 11. Documente sua decisao entre ETL (transformar no Data Factory usando Data Flows) versus ELT (carregar dados brutos para staging, transformar no Synapse usando SQL):
     - Para dados de vendas das lojas: transformacoes pequenas (conversao de moeda, formatacao de data)
@@ -96,7 +96,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
 
 12. Se usar ELT, crie stored procedures no Synapse que transformem dados staged no star schema final (tabelas fato e dimensão).
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-22"
@@ -147,7 +147,7 @@ Data Factory fornece monitoramento integrado através do Azure Monitor com metri
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Data Factory overview](https://learn.microsoft.com/en-us/azure/data-factory/introduction)
 - [Copy activity in Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-overview)
@@ -157,7 +157,7 @@ Data Factory fornece monitoramento integrado através do Azure Monitor com metri
 - [Data flows in Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview)
 - [Monitor Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/monitor-visually)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. O sistema SAP da FreshMart esta on-premises atras de um firewall corporativo. Qual componente permite que o Azure Data Factory acesse esses dados sem abrir portas de firewall de entrada?</summary>
@@ -187,7 +187,7 @@ Data Factory fornece monitoramento integrado através do Azure Monitor com metri
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

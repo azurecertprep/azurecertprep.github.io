@@ -5,7 +5,7 @@ title: "Challenge 40: Design API Integration"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 40: Design API Integration
+# Challenge 40: design API integration
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ Consumer Type 1 (Internal mobile app): Used by 5,000 healthcare workers daily. R
 
 The architecture must protect backend services from direct exposure, enforce consistent security policies, enable API versioning as the platform evolves, and provide monetization capabilities for the developer program.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for API integration
 
-## Design Tasks
+## Design tasks
 
-### Part 1: API Management Tier Selection
+### Part 1: API Management tier selection
 
 1. Evaluate Azure API Management tiers for this healthcare scenario:
 
@@ -48,7 +48,7 @@ The architecture must protect backend services from direct exposure, enforce con
 
 3. Justify the selection considering: multi-region availability for partner SLAs, VNet integration for HIPAA, developer portal for third-party onboarding, and capacity for 5,000 internal users.
 
-### Part 2: Consumer-Specific Policy Design
+### Part 2: Consumer-Specific Policy design
 
 4. Design API Management policies for each consumer type:
 
@@ -77,7 +77,7 @@ The architecture must protect backend services from direct exposure, enforce con
    - What response does a rate-limited consumer receive (HTTP 429)?
    - How do you communicate remaining quota in response headers?
 
-### Part 3: API Versioning and Lifecycle
+### Part 3: API versioning and lifecycle
 
 6. Design the API versioning strategy:
    - **URL path versioning**: `/api/v1/patients` vs `/api/v2/patients`
@@ -96,7 +96,7 @@ The architecture must protect backend services from direct exposure, enforce con
    - How do you test a new revision before making it current?
    - What is the rollback process if a new revision introduces bugs?
 
-### Part 4: Security, Compliance, and Monetization
+### Part 4: security, compliance, and monetization
 
 9. Design the HIPAA-compliant API security architecture:
    - All traffic must use TLS 1.2+ (configure in APIM policy)
@@ -125,7 +125,7 @@ The architecture must protect backend services from direct exposure, enforce con
     - Create dashboards for API product managers (usage trends, adoption metrics)
     - Alert on SLA breaches for partner APIs
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-40"
@@ -242,7 +242,7 @@ For billing integration, export usage data from APIM Built-in Analytics or Log A
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure API Management overview](https://learn.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
 - [API Management policies reference](https://learn.microsoft.com/en-us/azure/api-management/api-management-policies)
@@ -250,7 +250,7 @@ For billing integration, export usage data from APIM Built-in Analytics or Log A
 - [API versioning in Azure API Management](https://learn.microsoft.com/en-us/azure/api-management/api-management-versions)
 - [Deploy API Management to a virtual network](https://learn.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A healthcare API must ensure that Protected Health Information never traverses the public internet between the API gateway and backend services. Which APIM deployment mode achieves this?</summary>
@@ -280,7 +280,7 @@ For billing integration, export usage data from APIM Built-in Analytics or Log A
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

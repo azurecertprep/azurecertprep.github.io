@@ -5,7 +5,7 @@ title: "Challenge 08: Design Secrets & Certificate Management"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 08: Design Secrets & Certificate Management
+# Challenge 08: design secrets & certificate Management
 
 :::info Estimated Time and Cost
 
@@ -21,37 +21,37 @@ A recent compliance audit flagged several critical issues: API keys were hardcod
 
 Your task is to design a comprehensive secrets and certificate management solution that addresses these compliance gaps while supporting the operational needs of their development teams. The solution must handle automatic certificate renewal, enforce key rotation policies, and provide network isolation for vaults handling the most sensitive payment processing keys. Budget constraints limit the use of Managed HSM to only the most critical workloads.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution to manage secrets, certificates, and keys
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Key Vault Architecture and Segmentation
+### Part 1: Key Vault architecture and segmentation
 
 1. Design a Key Vault topology for Meridian's environment. Determine how many vaults are needed and justify the separation strategy (consider: per-environment, per-application, per-sensitivity-level, or per-compliance-boundary).
 2. Identify which workloads require Azure Key Vault Managed HSM versus standard Key Vault. Document the decision criteria (FIPS 140-2 Level 3 requirements, performance needs, cost justification).
 3. Define the access control model for each vault. Compare vault access policies versus Azure RBAC for Key Vault and recommend which model to use for each vault tier. Justify your choice considering the March 2026 API change making RBAC the default.
 4. Design a naming convention and resource group strategy for the vault hierarchy that supports easy identification of vault purpose, environment, and owning team.
 
-### Part 2: Certificate Lifecycle Management
+### Part 2: certificate lifecycle Management
 
 5. Design a certificate management solution for the 50+ microservice TLS certificates. Address: certificate authority selection (Key Vault integrated CA vs. self-managed), automatic renewal workflows, and notification alerting for certificates approaching expiration.
 6. Define certificate rotation procedures that achieve zero-downtime deployment. Consider how AKS workloads will consume renewed certificates without pod restarts.
 7. Specify how wildcard certificates versus individual service certificates should be used, and document the security trade-offs of each approach.
 
-### Part 3: Secrets and Key Rotation
+### Part 3: secrets and Key rotation
 
 8. Design an automated key rotation policy for the payment gateway API keys. Define rotation frequency, the rotation trigger mechanism, and how applications will detect and consume new key versions.
 9. Define a customer-managed key (CMK) strategy for data-at-rest encryption. Specify key types (RSA vs. EC), key sizes, and how key versioning interacts with encrypted resources.
 10. Design the network security model for vaults. Determine which vaults need private endpoints, which can use service endpoints, and which (if any) can remain publicly accessible. Document the rationale for each decision.
 
-### Part 4: Monitoring and Disaster Recovery
+### Part 4: monitoring and disaster Recovery
 
 11. Design a monitoring and alerting strategy for key vault operations. Include detection of unauthorized access attempts, near-expiry certificates, and throttling events.
 12. Design a backup and disaster recovery strategy for the vault infrastructure. Address regional failover, key backup procedures, and RTO/RPO requirements for the payment platform.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-08"
@@ -102,7 +102,7 @@ Private endpoints provide the strongest network isolation (traffic stays on the 
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Key Vault best practices](https://learn.microsoft.com/azure/key-vault/general/best-practices)
 - [Azure Key Vault security overview](https://learn.microsoft.com/azure/key-vault/general/security-features)
@@ -112,7 +112,7 @@ Private endpoints provide the strongest network isolation (traffic stays on the 
 - [Key Vault private endpoints](https://learn.microsoft.com/azure/key-vault/general/private-link-service)
 - [Encryption and key management in Azure (CAF)](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/encryption-and-keys)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Meridian needs to store a root CA private key that signs all internal service certificates. The key must never leave hardware and must meet FIPS 140-2 Level 3. Which service should they use?</summary>
@@ -142,7 +142,7 @@ Private endpoints provide the strongest network isolation (traffic stays on the 
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

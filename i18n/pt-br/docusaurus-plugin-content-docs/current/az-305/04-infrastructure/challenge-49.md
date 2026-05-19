@@ -5,7 +5,7 @@ title: "Desafio 49: Projetar Segurança de Rede e Balanceamento de Carga"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 49: Projetar Segurança de Rede e Balanceamento de Carga
+# Desafio 49: projetar segurança de rede e balanceamento de carga
 
 :::info Tempo Estimado e Custo
 
@@ -21,14 +21,14 @@ Os requisitos de segurança e confiabilidade sao: (1) Proteção DDoS para todos
 
 A equipe de plataforma precisa selecionar a combinacao certa de serviços de rede e segurança Azure de um cenário amplo: Azure Firewall, WAF, NSG, ASG, Private Link, DDoS Protection, Front Door, Traffic Manager, Application Gateway e Load Balancer.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para otimizar a segurança de rede
 - Recomendar uma solução de balanceamento de carga e roteamento
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Arvore de Decisao de Balanceamento de Carga
+### Parte 1: arvore de decisao de balanceamento de carga
 
 1. Aplique a arvore de decisao de balanceamento de carga Azure para selecionar o serviço apropriado para cada padrão de trafego:
    - Trafego HTTP/HTTPS voltado para internet (global): avalie Azure Front Door vs. Traffic Manager + Application Gateway
@@ -45,7 +45,7 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
    - Application Gateway: Layer 7, regional, WAF (v2), roteamento de URL, terminacao SSL
    - Load Balancer: Layer 4, regional, TCP/UDP, latência ultra-baixa, HA ports
 
-### Parte 2: Design de Web Application Firewall
+### Parte 2: design de web Application Firewall
 
 4. Projete a estratégia de implantacao do WAF:
    - WAF no Azure Front Door (global, aplicado na borda antes do trafego chegar a região)
@@ -61,7 +61,7 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
    - Alerte sobre padrões incomuns (pico repentino em requisicoes bloqueadas, novos vetores de ataque)
    - Relatório mensal do WAF para evidencia de conformidade SOC 2
 
-### Parte 3: Segmentacao de Rede e Segurança
+### Parte 3: segmentacao de rede e segurança
 
 7. Projete a estratégia de segmentacao de rede:
    - Regras NSG: controle trafego no nível de subnet (camada web pode alcancar camada de API, camada de API pode alcancar camada de dados, sem acesso direto web-para-dados)
@@ -76,7 +76,7 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
    - vs. Isolamento no nível de aplicação (infraestrutura compartilhada com separacao de dados por tenant)
    - Documente os trade-offs: custo de subnets dedicadas vs. segurança de isolamento de rede completo
 
-### Parte 4: Proteção DDoS e Detecção de Ameacas
+### Parte 4: proteção DDoS e detecção de ameacas
 
 10. Projete a estratégia de proteção DDoS:
     - Azure DDoS Network Protection (por VNet, inclui garantia de proteção de custos, integração WAF, telemetria)
@@ -92,7 +92,7 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
     - Microsoft Defender for Cloud recomendacoes de segurança de rede
     - Network Watcher para troubleshooting e captura de pacotes
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-49"
@@ -143,7 +143,7 @@ Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP priva
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure load balancing decision tree](https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/load-balancing-overview)
 - [Azure Front Door overview](https://learn.microsoft.com/en-us/azure/frontdoor/front-door-overview)
@@ -152,7 +152,7 @@ Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP priva
 - [Azure DDoS Protection overview](https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview)
 - [Azure Private Link overview](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma aplicação SaaS multi-região precisa de balanceamento de carga HTTP global com failover em menos de um segundo. Por que o Azure Front Door e preferido ao Traffic Manager para este cenário?</summary>
@@ -179,7 +179,7 @@ Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP priva
 
 ```bash
 # Delete all resources created in this challenge
-# WARNING: DDoS Protection plan has monthly cost - verify deletion
+# WARNING: DDoS protection plan has monthly cost - verify deletion
 az group delete --name rg-az305-challenge49 --yes --no-wait
 ```
 

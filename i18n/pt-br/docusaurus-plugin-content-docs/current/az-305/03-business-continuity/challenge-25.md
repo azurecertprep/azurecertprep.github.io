@@ -6,7 +6,7 @@ title: "Desafio 25: Projetar Objetivos e Estratégia de Recuperação"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Desafio 25: Projetar Objetivos e Estratégia de Recuperação
+# Desafio 25: projetar objetivos e estratégia de recuperação
 
 :::info Tempo Estimado e Custo
 
@@ -22,13 +22,13 @@ O CIO categorizou todas as cargas de trabalho em três níveis com base na anál
 
 O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes para proteger todos os três níveis. Você deve projetar uma estratégia de recuperação que aloque adequadamente o orcamento entre os níveis, selecionando o padrão de recuperação correto (hot/warm/cold standby) para cada classe de carga de trabalho, comprovando que o SLA composto atende aos requisitos de disponibilidade.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de recuperação para cargas de trabalho Azure e hibridas que atenda aos objetivos de recuperação
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Análise de Impacto nos Negocios e Objetivos de Recuperação
+### Parte 1: análise de impacto nos negocios e objetivos de recuperação
 
 1. Para cada nível de carga de trabalho, defina formalmente os seguintes parametros de recuperação:
    - Recovery Time Objective (RTO)
@@ -43,7 +43,7 @@ O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes pa
 
 3. Documente o impacto nos negocios de exceder o RTO para cada nível (perda financeira por hora, risco a segurança do paciente, penalidades regulatorias).
 
-### Parte 2: Selecao da Estratégia de Recuperação
+### Parte 2: selecao da estratégia de recuperação
 
 4. Mapeie cada nível de carga de trabalho para o padrão de recuperação apropriado:
    - **Hot standby**: Active-active ou active-passive com replicação em tempo real
@@ -68,7 +68,7 @@ O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes pa
 
 6. Justifique por que hot standby é necessário para o Nível 1, mas seria desperdicar recursos no Nível 3.
 
-### Parte 3: Composicao de SLA e Alocacao de Orcamento
+### Parte 3: composicao de SLA e alocacao de orcamento
 
 7. Calcule o SLA composto para uma carga de trabalho Nível 1 que depende de:
    - Azure Virtual Machines (99,99% com Availability Zones)
@@ -82,7 +82,7 @@ O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes pa
 
 9. Aloque o orcamento de DR de $5.000/mes entre os níveis. Considere que hot standby custa aproximadamente 80-100% dos custos de produção, warm standby custa 30-50%, e cold standby custa 5-10%.
 
-### Parte 4: Documentação da Estratégia de Recuperação
+### Parte 4: documentação da estratégia de recuperação
 
 10. Crie um documento de estratégia de recuperação que mapeie serviços Azure para cada nível:
     - Nível 1: Quais serviços Azure fornecem RTO inferior a um minuto?
@@ -91,7 +91,7 @@ O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes pa
 
 11. Defina o cronograma de testes de DR e criterios de validação para cada nível.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-25"
@@ -170,7 +170,7 @@ Para converter RTO em porcentagem mínima de uptime:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Business continuity and disaster recovery - Cloud Adoption Framework](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-área/management-business-continuity-disaster-recovery)
 - [Azure Well-Architected Framework - Reliability pillar](https://learn.microsoft.com/en-us/azure/well-architected/reliability/)
@@ -178,7 +178,7 @@ Para converter RTO em porcentagem mínima de uptime:
 - [SLA summary for Azure services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services)
 - [Composite SLA calculation](https://learn.microsoft.com/en-us/azure/architecture/framework/resiliency/business-metrics#composite-slas)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma carga de trabalho tem SLA composto de 99,9% mas requer 99,99% de disponibilidade. Qual mudança arquitetural fecha essa lacuna de forma mais eficaz?</summary>
@@ -208,7 +208,7 @@ Para converter RTO em porcentagem mínima de uptime:
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

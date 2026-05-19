@@ -5,7 +5,7 @@ title: "Challenge 36: Design a Container-Based Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 36: Design a Container-Based Solution
+# Challenge 36: design a Container-Based solution
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The 20 microservices fall into three categories: (1) Eight services that require
 
 The migration budget requires minimizing operational overhead where possible. The platform team can manage one Kubernetes cluster but does not have bandwidth to manage multiple clusters or handle day-2 operations for simple workloads.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a container-based solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Container Platform Selection
+### Part 1: Container platform selection
 
 1. Evaluate the three primary Azure container hosting options for each microservice category:
 
@@ -47,7 +47,7 @@ The migration budget requires minimizing operational overhead where possible. Th
 
 3. Document why running all 20 services on AKS would be operationally wasteful, and why running the Category 1 services on Container Apps would be technically insufficient.
 
-### Part 2: AKS Cluster Design
+### Part 2: AKS cluster design
 
 4. Design the AKS cluster for the 8 complex microservices:
    - **Networking**: Compare Azure CNI vs Azure CNI Overlay vs kubenet:
@@ -66,7 +66,7 @@ The migration budget requires minimizing operational overhead where possible. Th
    - KEDA (Kubernetes Event-Driven Autoscaling): For which workloads?
    - Horizontal Pod Autoscaler: CPU/memory thresholds
 
-### Part 3: Container Apps Environment Design
+### Part 3: Container Apps environment design
 
 7. Design the Azure Container Apps environment for the 10 simple HTTP APIs:
    - Environment type: Consumption-only vs Dedicated (workload profiles)?
@@ -78,7 +78,7 @@ The migration budget requires minimizing operational overhead where possible. Th
    - How does Dapr service-to-service invocation work within a Container Apps environment?
    - What is the networking model between Container Apps in the same environment?
 
-### Part 4: Container Registry and Security
+### Part 4: Container Registry and security
 
 9. Design the Azure Container Registry (ACR) strategy:
    - Which ACR tier (Basic, Standard, Premium) meets the requirements?
@@ -93,7 +93,7 @@ The migration budget requires minimizing operational overhead where possible. Th
 
 11. Design the CI/CD pipeline for deploying to both AKS (Helm charts) and Container Apps (revision deployment) from a single container registry.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-36"
@@ -163,7 +163,7 @@ For this scenario, **Premium** is recommended because:
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Comparing Azure container options](https://learn.microsoft.com/en-us/azure/container-apps/compare-options)
 - [AKS networking concepts](https://learn.microsoft.com/en-us/azure/aks/concepts-network)
@@ -171,7 +171,7 @@ For this scenario, **Premium** is recommended because:
 - [Azure Container Registry service tiers](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus)
 - [Dapr integration with Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/dapr-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A team needs to run an Istio service mesh with custom EnvoyFilter resources. Can they use Azure Container Apps?</summary>
@@ -201,7 +201,7 @@ For this scenario, **Premium** is recommended because:
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

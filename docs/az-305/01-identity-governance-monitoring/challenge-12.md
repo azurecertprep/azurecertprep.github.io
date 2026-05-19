@@ -5,7 +5,7 @@ title: "Challenge 12: Design Identity Governance"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 12: Design Identity Governance
+# Challenge 12: design identity governance
 
 :::info Estimated Time and Cost
 
@@ -21,40 +21,40 @@ The CISO has been given a board mandate to implement zero-standing-access princi
 
 The challenge is balancing security rigor with operational efficiency. Engineers frequently need elevated access for troubleshooting (but not permanently). Project teams form and dissolve every 3-6 months, requiring dynamic access grants. The HR system (Workday) is the authoritative source for employee lifecycle events (hire, transfer, terminate), but contractor onboarding is managed by individual project managers with no centralized system.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for identity governance
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Privileged Identity Management (PIM)
+### Part 1: privileged identity Management (pim)
 
 1. Design the PIM configuration for Azure resource roles. Define which roles should be eligible (activated on-demand) versus permanently assigned. For each privileged role (Global Administrator, Subscription Owner, Subscription Contributor, Key Vault Administrator), specify: maximum activation duration, approval requirements, and MFA enforcement.
 2. Design PIM for Entra ID directory roles. Determine which directory roles (Global Admin, User Administrator, Security Administrator, Privileged Role Administrator) need activation policies, and define the approval workflow (who approves, escalation path, auto-approval conditions).
 3. Specify the alerting and notification configuration for PIM. Define who receives notifications when: a role is activated, a role activation is pending approval, a permanent assignment is made outside PIM, or an eligible assignment is about to expire.
 4. Design the strategy for the 12 service accounts with permanent Global Administrator access. Determine how to transition these to least-privilege access (which may require breaking them into multiple service principals with specific role assignments).
 
-### Part 2: Access Reviews
+### Part 2: access reviews
 
 5. Design the access review program for Velocity Dynamics. Define review scopes: which groups, roles, application assignments, and Azure resource role assignments need periodic review. Specify review frequency (quarterly, semi-annually) based on risk level.
 6. Define the reviewer assignment strategy. For each review type, determine who reviews: manager reviews direct reports' access, group owners review membership, resource owners review access to their resources, or self-attestation. Address scenarios where the designated reviewer is unresponsive.
 7. Configure auto-apply settings for access reviews. Determine when access should be automatically revoked (reviewer does not respond within 14 days, reviewer explicitly denies, recommendations indicate unused access) versus when human intervention is required.
 8. Design access reviews specifically for external/guest users. Define the review cadence, criteria for automatic removal (no sign-in for 90 days), and the notification workflow before access revocation.
 
-### Part 3: Entitlement Management
+### Part 3: entitlement Management
 
 9. Design access packages for common role-based access patterns. Create access packages for: "Engineering Team Member" (baseline Azure resources + development tools), "Production Support" (read access to production + limited write for incident response), and "Data Analyst" (access to data lake + BI tools). Define what resources each package grants and the approval workflow.
 10. Design the access package catalog structure. Determine whether to use a single catalog or multiple catalogs (per department, per project, per sensitivity level). Define catalog owners and their responsibilities.
 11. Configure access package policies for different requestor types: internal employees (auto-approved for baseline packages), contractors (manager approval required), and cross-department requests (resource owner approval). Set expiration policies for each type.
 12. Design connected organizations for contractor access. Determine how external partner organizations are onboarded, how their users request access packages, and how access is automatically removed when the partnership agreement ends.
 
-### Part 4: Lifecycle Workflows
+### Part 4: lifecycle workflows
 
 13. Design lifecycle workflows triggered by HR events from Workday. Define workflows for: joiner (new hire receives baseline access + department-specific access on start date), mover (employee changes department, old access revoked, new access granted), and leaver (all access revoked on last day, account disabled, licenses reclaimed after 30 days).
 14. Address the contractor lifecycle gap (no centralized HR system). Design a process for contractor onboarding that ensures: sponsor accountability, time-bound access, and automatic disable if the contract end date passes without renewal.
 15. Define temporary access workflows for project-based work. Design how an engineer gets time-limited access to a specific project's resources, and how that access automatically expires when the project milestone completes.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-12"
@@ -105,7 +105,7 @@ For contractors without an HR system signal: (1) Require a "sponsor" (internal e
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [What is Microsoft Entra ID Governance?](https://learn.microsoft.com/entra/id-governance/identity-governance-overview)
 - [Plan a Microsoft Entra access reviews deployment](https://learn.microsoft.com/entra/id-governance/deploy-access-reviews)
@@ -114,7 +114,7 @@ For contractors without an HR system signal: (1) Require a "sponsor" (internal e
 - [What are lifecycle workflows?](https://learn.microsoft.com/entra/id-governance/what-are-lifecycle-workflows)
 - [Plan a lifecycle workflow deployment](https://learn.microsoft.com/entra/id-governance/lifecycle-workflows-deployment)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A production incident requires an engineer to activate the Subscription Owner role at 2 AM. The standard approval workflow requires the security team lead to approve, but they are unavailable. How should PIM be configured to handle this scenario?</summary>
@@ -144,7 +144,7 @@ For contractors without an HR system signal: (1) Require a "sponsor" (internal e
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

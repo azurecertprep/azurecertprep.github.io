@@ -6,7 +6,7 @@ title: "Challenge 26: Design Backup & Recovery for Compute"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 26: Design Backup & Recovery for Compute
+# Challenge 26: design Backup & Recovery for compute
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ The domain controllers require crash-consistent backups that capture AD replicat
 
 The IT director wants a unified backup strategy managed through Azure Backup Center that provides: different backup frequencies per workload type, cross-region restore capability for disaster recovery, immutable backups to protect against ransomware, and selective disk backup to reduce costs on VMs with large temp/cache disks.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a backup and recovery solution for compute
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Backup Policy Design
+### Part 1: Backup Policy design
 
 1. Design differentiated backup policies for each workload type:
 
@@ -51,7 +51,7 @@ The IT director wants a unified backup strategy managed through Azure Backup Cen
 
 3. Justify why SQL Server VMs need application-consistent snapshots rather than crash-consistent, and what happens if you use crash-consistent for a running SQL database.
 
-### Part 2: Cross-Region Restore and Vault Architecture
+### Part 2: Cross-Region restore and Vault architecture
 
 4. Design the Recovery Services vault topology:
    - How many vaults do you need? (Consider regional requirements and management boundaries)
@@ -82,7 +82,7 @@ az backup vault backup-properties set \
   --cross-region-restore-flag true
 ```
 
-### Part 3: Immutable Vault and Ransomware Protection
+### Part 3: immutable Vault and ransomware protection
 
 7. Design a ransomware-resilient backup strategy using:
    - Immutable vaults (cannot be disabled once enabled with lock)
@@ -104,7 +104,7 @@ az backup vault backup-properties set \
   --soft-delete-duration 30
 ```
 
-### Part 4: Selective Disk Backup and Cost Optimization
+### Part 4: selective disk Backup and cost optimization
 
 10. Several SQL Server VMs have 4 disks each: OS disk (128 GB), data disk (2 TB), log disk (512 GB), and temp disk (256 GB). Design a selective disk backup strategy that:
     - Always backs up OS and data disks
@@ -115,7 +115,7 @@ az backup vault backup-properties set \
 
 12. Set up Backup Center to provide a unified view across all three regions and configure backup reports for compliance auditing.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-26"
@@ -212,7 +212,7 @@ For Azure VMs running as DCs, Azure Backup with application-consistent snapshots
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Overview of Azure VM backup](https://learn.microsoft.com/en-us/azure/backup/backup-azure-vms-introduction)
 - [Back up SQL Server databases in Azure VMs](https://learn.microsoft.com/en-us/azure/backup/backup-azure-sql-database)
@@ -221,7 +221,7 @@ For Azure VMs running as DCs, Azure Backup with application-consistent snapshots
 - [Selective disk backup for Azure VMs](https://learn.microsoft.com/en-us/azure/backup/selective-disk-backup-restore)
 - [Backup Center overview](https://learn.microsoft.com/en-us/azure/backup/backup-center-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company discovers that ransomware has encrypted their production VMs AND deleted their backup recovery points. What Azure Backup feature would have prevented the backup deletion?</summary>
@@ -251,11 +251,11 @@ For Azure VMs running as DCs, Azure Backup with application-consistent snapshots
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab validates the full backup-and-restore lifecycle. You will protect a VM, trigger a backup, simulate disaster by deleting the VM, and restore it from the recovery point. This proves your actual RPO and RTO rather than just confirming resource provisioning.
 
-### Part A - Deploy Infrastructure
+### Part a - deploy infrastructure
 
 1. Create the resource group, Recovery Services vault, and a Linux VM:
 
@@ -328,7 +328,7 @@ az backup protection enable-for-vm \
 RPO depends on backup frequency. A daily schedule means up to 24 hours of data loss in the worst case (disaster strikes just before the next scheduled backup). For workloads that cannot tolerate 24-hour data loss, you need more frequent backups or continuous replication via Azure Site Recovery.
 :::
 
-### Part B - Trigger On-Demand Backup and Verify
+### Part b - trigger On-Demand Backup and verify
 
 4. Trigger an immediate on-demand backup (do not wait for the scheduled time):
 
@@ -371,7 +371,7 @@ az backup recoverypoint list \
 On-demand backup tests the mechanism before a disaster strikes. Many organizations discover their backup configuration is broken only during an actual outage. Testing the full cycle validates that policies, permissions, and network paths are all functional.
 :::
 
-### Part C - Simulate Disaster and Restore
+### Part c - simulate disaster and restore
 
 7. Record the recovery point name, then simulate disaster by deleting the VM:
 
@@ -436,7 +436,7 @@ az backup job list \
 RTO depends on VM size and disk volume. Larger VMs with multi-terabyte disks take significantly longer to restore. The "instant restore" feature uses the snapshot tier (retained for 1-5 days) which restores in minutes rather than hours, because it avoids copying data from the vault. After the instant restore retention expires, restore must pull data from the vault, increasing RTO considerably.
 :::
 
-### Part D - Verify Restored VM
+### Part d - verify restored VM
 
 11. Once the restored VM is created, verify it is running:
 

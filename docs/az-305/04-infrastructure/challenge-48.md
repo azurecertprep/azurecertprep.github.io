@@ -5,7 +5,7 @@ title: "Challenge 48: Design Network Connectivity"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 48: Design Network Connectivity
+# Challenge 48: design Network connectivity
 
 :::info Estimated Time and Cost
 
@@ -21,15 +21,15 @@ The connectivity requirements include: secure site-to-site connections from both
 
 The network team must design a solution that balances cost, performance, and operational complexity while meeting strict regulatory requirements for data residency and network encryption.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a connectivity solution that connects Azure resources to the internet
 - Recommend a connectivity solution that connects Azure resources to on-premises networks
 - Recommend a solution to optimize network performance
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Hybrid Connectivity Design
+### Part 1: hybrid connectivity design
 
 1. Compare connectivity options for the 2 data centers to 3 Azure regions:
    - VPN Gateway (S2S VPN): cost per gateway, bandwidth limits by SKU, encryption overhead
@@ -45,7 +45,7 @@ The network team must design a solution that balances cost, performance, and ope
    - Authentication method: Entra ID, certificate-based, or RADIUS
    - Split tunneling vs. forced tunneling considerations for remote workers
 
-### Part 2: Azure Network Topology
+### Part 2: Azure Network topology
 
 4. Design the Azure VNet architecture across 3 regions:
    - Hub-spoke topology in each region with peered hub VNets
@@ -60,7 +60,7 @@ The network team must design a solution that balances cost, performance, and ope
    - Which subnets need NAT Gateway (application subnets, not gateway subnets)
    - Static outbound IP requirements for third-party API allowlisting
 
-### Part 3: Private Connectivity to PaaS Services
+### Part 3: private connectivity to PaaS Services
 
 7. Design Private Endpoint strategy for Azure PaaS services:
    - Azure SQL Database, Storage Accounts, Key Vault: private endpoint in each region's hub VNet
@@ -73,7 +73,7 @@ The network team must design a solution that balances cost, performance, and ope
    - On-premises to Azure private endpoint DNS resolution flow
 9. Compare Private Endpoint vs. Service Endpoint vs. public access with firewall rules. Document when each approach is appropriate and the security implications of each.
 
-### Part 4: DNS and Routing Optimization
+### Part 4: DNS and routing optimization
 
 10. Design the end-to-end DNS architecture:
     - On-premises DNS servers (Active Directory Integrated DNS)
@@ -91,7 +91,7 @@ The network team must design a solution that balances cost, performance, and ope
     - VPN hub with multiple S2S connections
     - Compare cost and management overhead
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-48"
@@ -142,7 +142,7 @@ Azure DNS Private Resolver replaces the need for custom DNS forwarder VMs in hub
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure ExpressRoute overview](https://learn.microsoft.com/en-us/azure/expressroute/expressroute-introduction)
 - [Azure Virtual WAN overview](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
@@ -151,7 +151,7 @@ Azure DNS Private Resolver replaces the need for custom DNS forwarder VMs in hub
 - [VPN Gateway design](https://learn.microsoft.com/en-us/azure/vpn-gateway/design)
 - [Hub-spoke network topology](https://learn.microsoft.com/en-us/azure/architecture/networking/architecture/hub-spoke)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company has ExpressRoute circuits in New York (connected to East US) and London (connected to UK South). Their Azure workload in Southeast Asia needs private connectivity to both data centers. What do they need?</summary>
@@ -174,11 +174,11 @@ Azure DNS Private Resolver replaces the need for custom DNS forwarder VMs in hub
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab proves VNet isolation and peering behavior through direct observation. You will deploy two VNets, attempt connectivity before peering (it will fail), enable peering, and confirm that private connectivity is established -- all without any public internet exposure.
 
-### Step 1: Create the resource group and two VNets (simulating hub and spoke)
+### Step 1: create the resource group and two VNets (simulating hub and spoke)
 
 ```bash
 az group create \
@@ -208,7 +208,7 @@ az network vnet create \
 VNets in Azure are fully isolated by default -- even VNets in the same subscription, same region, and same resource group cannot communicate. This is secure by design: you must explicitly opt in to connectivity. On the AZ-305 exam, remember that VNet isolation is the starting posture, not openness.
 :::
 
-### Step 2: Deploy a VM in each VNet
+### Step 2: deploy a VM in each VNet
 
 ```bash
 az vm create \
@@ -265,7 +265,7 @@ echo "Hub VM IP: $HUB_IP"
 echo "Spoke VM IP: $SPOKE_IP"
 ```
 
-### Step 3: Test connectivity BEFORE peering (expect FAILURE)
+### Step 3: test connectivity BEFORE peering (expect failure)
 
 ```bash
 az vm run-command invoke \
@@ -281,7 +281,7 @@ The output should show packet loss or "Network is unreachable." This proves the 
 This failure is the critical observation. Many candidates assume VNets in the same region can communicate -- they cannot. The AZ-305 exam tests whether you understand that connectivity must be explicitly designed. Every peering, gateway, or NVA is a deliberate architectural choice.
 :::
 
-### Step 4: Create bidirectional VNet peering
+### Step 4: create bidirectional VNet peering
 
 ```bash
 az network vnet peering create \
@@ -301,7 +301,7 @@ az network vnet peering create \
   --allow-vnet-access
 ```
 
-### Step 5: Verify peering state shows "Connected"
+### Step 5: verify peering state shows "Connected"
 
 ```bash
 az network vnet peering show \
@@ -321,7 +321,7 @@ az network vnet peering show \
 
 Both should return "Connected". A peering in "Initiated" state means only one side was created -- both directions must exist for traffic to flow.
 
-### Step 6: Test connectivity AFTER peering (expect SUCCESS)
+### Step 6: test connectivity AFTER peering (expect success)
 
 ```bash
 az vm run-command invoke \
@@ -337,7 +337,7 @@ The output should show successful replies with round-trip times. The traffic tra
 Peering traffic stays on the Microsoft backbone network and is never exposed to the public internet. This is a key selling point for compliance-sensitive workloads. On the AZ-305 exam, know that peering provides private, low-latency connectivity without requiring VPN gateways or public IPs.
 :::
 
-### Step 7: Examine effective routes to see peering in action
+### Step 7: examine effective routes to see peering in action
 
 ```bash
 HUB_NIC=$(az vm show \

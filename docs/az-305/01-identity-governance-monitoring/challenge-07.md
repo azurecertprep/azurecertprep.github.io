@@ -6,7 +6,7 @@ title: "Challenge 07: Design Authorization for On-Premises Resources"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 07: Design Authorization for On-Premises Resources
+# Challenge 07: design authorization for On-Premises resources
 
 :::info Estimated Time and Cost
 
@@ -31,15 +31,15 @@ The company wants to:
 
 Your task is to design solutions that bridge cloud identities with on-premises resources, providing secure remote access without exposing the corporate network.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for authorizing access to on-premises resources
 - Recommend an authentication solution
 - Recommend an identity management solution
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Solution Selection Matrix
+### Part 1: solution selection matrix
 
 1. For each application, evaluate and recommend the appropriate access solution:
 
@@ -61,7 +61,7 @@ Your task is to design solutions that bridge cloud identities with on-premises r
    - User experience impact
    - Licensing and cost implications
 
-### Part 2: Microsoft Entra Application Proxy Design
+### Part 2: Microsoft Entra Application proxy design
 
 3. Design the Application Proxy architecture for the HR Portal:
    - Connector group topology (how many connectors, where deployed, HA considerations)
@@ -78,7 +78,7 @@ Your task is to design solutions that bridge cloud identities with on-premises r
 
 5. Deploy an Application Proxy connector (or document the deployment architecture if on-premises resources are not available).
 
-### Part 3: Microsoft Entra Domain Services Design
+### Part 3: Microsoft Entra domain Services design
 
 6. Evaluate whether Microsoft Entra Domain Services (Entra DS) is appropriate for Adventure Works:
    - Which scenarios benefit from Entra DS vs. traditional AD DS vs. Application Proxy
@@ -92,7 +92,7 @@ Your task is to design solutions that bridge cloud identities with on-premises r
    - How cloud-managed devices will authenticate to the ERP (NTLM/Kerberos through Entra DS)
    - DNS configuration
 
-### Part 4: Azure Files for Hybrid File Access
+### Part 4: Azure Files for hybrid file access
 
 8. Design Azure Files integration for the engineering file shares:
    - Identity-based authentication (Entra DS, on-prem AD DS, or Entra Kerberos)
@@ -106,13 +106,13 @@ Your task is to design solutions that bridge cloud identities with on-premises r
    - How to maintain existing NTFS permissions
    - Client connectivity (private endpoint vs. public endpoint with restrictions)
 
-### Part 5: Implement Proof of Concept
+### Part 5: implement proof of concept
 
 10. Create an Azure Files share with identity-based authentication enabled.
 
 11. Document the complete Application Proxy deployment architecture for the HR Portal, including connector placement, KCD setup, and Conditional Access policies.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-07"
@@ -160,12 +160,12 @@ For SSO to IIS apps using Windows Integrated Authentication:
 
 ```powershell
 # On Active Directory (domain controller or admin workstation)
-# 1. Register SPN for the backend app service account
+# 1. register SPN for the backend app service account
 setspn -S HTTP/hrportal.adventureworks.local svc_hrportal
 
-# 2. Configure KCD on the connector computer account
-# In AD Users & Computers:
-# Connector computer account > Properties > Delegation tab
+# 2. configure KCD on the connector computer account
+# In AD users & computers:
+# Connector computer account > properties > delegation tab
 # "Trust this computer for delegation to specified services only"
 # "Use any authentication protocol"
 # Add: HTTP/hrportal.adventureworks.local
@@ -213,7 +213,7 @@ az storage account create \
   --sku Standard_LRS \
   --kind StorageV2
 
-# Enable identity-based authentication (on-premises AD DS)
+# Enable identity-based authentication (on-premises AD ds)
 az storage account update \
   --name stadventureworksfiles \
   --resource-group rg-files \
@@ -233,7 +233,7 @@ az storage share-rm create \
   --quota 5120 \
   --access-tier Hot
 
-# Assign share-level RBAC (Storage File Data SMB Share Contributor)
+# Assign share-level RBAC (Storage file Data SMB share contributor)
 az role assignment create \
   --assignee-object-id $(az ad group show -g "Engineering-Team" --query id -o tsv) \
   --role "Storage File Data SMB Share Contributor" \
@@ -265,13 +265,13 @@ Migration strategy with coexistence:
 5. Cutover: redirect users to Azure Files directly (via private endpoint) or maintain File Sync for caching
 
 ```bash
-# Create Storage Sync Service
+# Create Storage sync Service
 az storagesync create \
   --name sync-adventureworks \
   --resource-group rg-files \
   --location eastus
 
-# Create Sync Group
+# Create sync Group
 az storagesync sync-group create \
   --name sg-engineering-cad \
   --storage-sync-service sync-adventureworks \
@@ -280,7 +280,7 @@ az storagesync sync-group create \
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Microsoft Entra Application Proxy](https://learn.microsoft.com/en-us/entra/identity/app-proxy/overview-what-is-app-proxy)
 - [KCD for SSO with Application Proxy](https://learn.microsoft.com/en-us/entra/identity/app-proxy/how-to-configure-sso-with-kcd)
@@ -290,7 +290,7 @@ az storagesync sync-group create \
 - [Enable B2B external collaboration](https://learn.microsoft.com/en-us/entra/external-id/what-is-b2b)
 - [Conditional Access for Application Proxy apps](https://learn.microsoft.com/en-us/entra/identity/app-proxy/how-to-configure-conditional-access)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Adventure Works has an on-premises IIS web application using Windows Integrated Authentication. Remote users need SSO without VPN. Which solution provides this with the least infrastructure change?</summary>
@@ -320,7 +320,7 @@ az storagesync sync-group create \
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

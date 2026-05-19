@@ -5,15 +5,15 @@ title: "Am I Ready?"
 
 import SelfAssessment from '@site/src/components/SelfAssessment';
 
-# Am I Ready for the AZ-305?
+# Am i ready for the AZ-305?
 
 The AZ-305 is an **expert-level** exam. Unlike AZ-104, which tests implementation skills, AZ-305 tests your ability to **design solutions** that meet business and technical requirements. You should already have strong Azure administration experience before attempting this exam.
 
-## Self-Assessment Checklist
+## Self-Assessment checklist
 
 Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New to Me
 
-### Azure Administration (Prerequisite)
+### Azure administration (Prerequisite)
 
 <SelfAssessment
   storageKey="az305-admin-prereq"
@@ -27,7 +27,7 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-### Architecture & Design Skills
+### Architecture & design skills
 
 <SelfAssessment
   storageKey="az305-architecture"
@@ -42,7 +42,7 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-### Identity & Governance
+### Identity & governance
 
 <SelfAssessment
   storageKey="az305-identity"
@@ -68,7 +68,7 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-### Business Continuity
+### Business continuity
 
 <SelfAssessment
   storageKey="az305-bcdr"
@@ -81,7 +81,7 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-### Infrastructure & Networking
+### Infrastructure & networking
 
 <SelfAssessment
   storageKey="az305-infra"
@@ -95,18 +95,18 @@ Click each row to cycle through: ✅ Comfortable | ⚠️ Need Review | ❌ New 
   ]}
 />
 
-## How to Interpret Your Results
+## How to interpret your results
 
-### Mostly ✅: You're ready!
+### Mostly ✅: you're ready!
 Jump to [Challenge 01](/docs/az-305/identity-governance-monitoring/challenge-01) and start designing.
 
-### Mix of ✅ and ⚠️: You're almost ready
+### Mix of ✅ and ⚠️: you're almost ready
 Focus on the domains where you marked ⚠️. Use the **Learning Resources** in each challenge to fill gaps. Consider reviewing the [Microsoft Learn path for AZ-305](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305#two-ways-to-prepare).
 
-### Mostly ⚠️ or ❌: Build your foundation first
+### Mostly ⚠️ or ❌: build your foundation first
 The AZ-305 builds on AZ-104 knowledge. If you haven't already, complete the [AZ-104 challenges](/docs/az-104/overview) first, or gain 6-12 months of hands-on Azure experience before attempting this exam.
 
-## Key Differences from AZ-104
+## Key differences from AZ-104
 
 | Aspect | AZ-104 | AZ-305 |
 |--------|--------|--------|

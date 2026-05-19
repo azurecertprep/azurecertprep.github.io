@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 03: Azure Policy & Governança
+# Desafio 03: Azure Policy & governança
 
 :::info Tempo e Custo Estimados
 
-**60-75 min** | **Custo estimado**: Gratuito (avaliação de política) | **Peso no Exame: 15-20%**
+**60-75 min** | **Custo estimado**: Gratuito (avaliação de política) | **Peso no Exame: 15-20%
+**
 
 :::
 
@@ -22,7 +23,7 @@ O CTO da Contoso Ltd. acabou de voltar de uma conferência de segurança em nuve
 
 Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para a nuvem | mas em vez de controlar configurações de desktop, você está controlando quais recursos podem ser criados e como eles devem ser configurados.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar e gerenciar atribuições de Azure Policy
 - Criar e gerenciar definições e iniciativas de política
@@ -33,7 +34,7 @@ Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para 
 - Configurar e gerenciar recomendações do Azure Advisor
 - Configurar e gerenciar orçamentos e alertas de custo
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -49,7 +50,7 @@ Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para 
 
 ## Descrição
 
-### Parte 1: Grupos de Recursos & Tags
+### Parte 1: grupos de recursos & tags
 
 1. Criar dois grupos de recursos para este desafio:
 
@@ -69,7 +70,7 @@ az group create --name rg-policy-dev --location eastus --tags Environment=Develo
 az resource list --tag Environment=Production -o table
 ```
 
-### Parte 2: Azure Policy | Exigir Tags
+### Parte 2: Azure Policy | exigir tags
 
 4. Atribuir a política interna **"Require a tag and its value on resources"** ao `rg-policy-prod`:
    - Nome da tag: `CostCenter`
@@ -98,14 +99,14 @@ az storage account create \
   --tags CostCenter=IT-001
 ```
 
-### Parte 3: Azure Policy | Localizações Permitidas
+### Parte 3: Azure Policy | localizações permitidas
 
 7. Atribuir a política interna **"Allowed locations"** ao `rg-policy-prod`:
    - Localizações permitidas: East US, West US 2
 
 8. Testar tentando criar um recurso no `rg-policy-prod` usando uma localização não permitida (ex: West Europe)
 
-### Parte 4: Iniciativa de Política
+### Parte 4: iniciativa de política
 
 9. Criar uma iniciativa de política (conjunto de políticas) chamada `Contoso-Governance` que inclua:
    - Exigir tag `CostCenter` em recursos
@@ -114,7 +115,7 @@ az storage account create \
 
 10. Atribuir a iniciativa ao `rg-policy-dev`
 
-### Parte 5: Bloqueios de Recursos
+### Parte 5: bloqueios de recursos
 
 11. Criar um bloqueio **CanNotDelete** no `rg-policy-prod`:
 
@@ -128,7 +129,7 @@ az lock create --name "PreventDeletion" \
 12. Tentar excluir o grupo de recursos (deve falhar)
 13. Criar um bloqueio **ReadOnly** em um recurso específico dentro do grupo
 
-### Parte 6: Azure Advisor & Orçamentos
+### Parte 6: Azure advisor & orçamentos
 
 14. Verificar recomendações do Azure Advisor para sua assinatura:
 
@@ -169,7 +170,7 @@ Alertas de orçamento via CLI requerem configuração adicional para limites de 
 </TabItem>
 </Tabs>
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-03"
@@ -297,7 +298,7 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 
 </details>
 
-## Recursos de Aprendizado
+## Recursos de aprendizado
 
 - [Visão geral do Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/overview)
 - [Definições internas do Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies)
@@ -306,7 +307,7 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 - [Management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
 - [Azure Advisor](https://learn.microsoft.com/en-us/azure/advisor/advisor-overview)
 
-## Quebre & Conserte
+## Quebre & conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -318,7 +319,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 4. **Confusão com tag herdada**: Você marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele não têm a tag. Isso é esperado? (Sim | tags NÃO são herdadas de grupos de recursos para recursos por padrão. Use a política `Inherit a tag from the resource group` para habilitar isso.)
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 <details>
 <summary>1. Qual é a diferença entre os efeitos de política Deny, Audit e Append?</summary>

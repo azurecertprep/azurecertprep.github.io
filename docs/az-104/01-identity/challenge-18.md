@@ -5,7 +5,7 @@ title: "Challenge 18: Cost Management & Azure Advisor"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 18: Cost Management & Azure Advisor
+# Challenge 18: cost Management & Azure advisor
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd.'s monthly Azure bill has grown from $5,000 to $45,000 in six months, and the CFO is demanding answers. Nobody knows which department is spending what, there are no alerts when budgets are exceeded, and the CTO suspects there are idle resources burning money. You have been tasked with implementing a comprehensive cost management strategy using Azure Cost Management, budgets, alerts, and Azure Advisor recommendations.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -27,7 +27,7 @@ Contoso Ltd.'s monthly Azure bill has grown from $5,000 to $45,000 in six months
 | Interpret Azure Advisor cost recommendations | Medium |
 | Configure action groups for cost alerts | Medium |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -41,7 +41,7 @@ Contoso Ltd.'s monthly Azure bill has grown from $5,000 to $45,000 in six months
 
 ## Tasks
 
-### Task 1: Set Up Resource Tags for Cost Allocation
+### Task 1: set up Resource tags for cost allocation
 
 Create a consistent tagging strategy and apply tags to existing resources:
 
@@ -70,7 +70,7 @@ az vm create \
   --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=API
 ```
 
-### Task 2: Create a Budget with Alerts
+### Task 2: create a budget with alerts
 
 Create a monthly budget with multiple alert thresholds:
 
@@ -101,7 +101,7 @@ az consumption budget create \
 
 
 :::
-### Task 3: Configure Cost Analysis Views
+### Task 3: configure cost analysis views
 
 Explore cost analysis in the Azure Portal:
 
@@ -130,7 +130,7 @@ az rest --method post \
   --body '{"type":"ActualCost","timeframe":"MonthToDate","dataset":{"granularity":"None","grouping":[{"type":"TagKey","name":"Department"}]}}'
 ```
 
-### Task 4: Configure Cost Exports
+### Task 4: configure cost exports
 
 Set up automated cost data export to a storage account:
 
@@ -157,10 +157,10 @@ az costmanagement export create \
   --schedule-status Active
 ```
 
-### Task 5: Review Azure Advisor Recommendations
+### Task 5: review Azure advisor recommendations
 
 ```bash
-# List all Advisor recommendations
+# List all advisor recommendations
 az advisor recommendation list -o table
 
 # Filter for cost recommendations only
@@ -186,7 +186,7 @@ Navigate to **Azure Advisor** > **Cost** tab to see:
 
 
 :::
-### Task 6: Implement Spending Notifications with Action Groups
+### Task 6: implement spending notifications with action Groups
 
 ```bash
 # Create an action group for cost alerts
@@ -203,7 +203,7 @@ az monitor action-group show \
   --query "{Name:name, Receivers:emailReceivers[].{Name:name, Email:emailAddress}}" -o json
 ```
 
-### Task 7: Enforce Tagging with Azure Policy
+### Task 7: enforce tagging with Azure Policy
 
 Apply a policy that denies resource creation without the required CostCenter tag:
 
@@ -220,7 +220,7 @@ az policy assignment create \
   --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-cost-lab" \
   --params '{"tagName": {"value": "CostCenter"}}'
 
-# Test: Try creating a resource without the tag (should fail after policy takes effect)
+# Test: try creating a resource without the tag (should fail after policy takes effect)
 az storage account create \
   --name stnotagtest$RANDOM \
   --resource-group rg-cost-lab \
@@ -228,7 +228,7 @@ az storage account create \
   --sku Standard_LRS
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-18"
@@ -272,13 +272,13 @@ To view costs, you need at minimum the **Cost Management Reader** role or **Read
 
 </details>
 
-## Break and Fix
+## Break and fix
 
-### Scenario A: Budget Not Alerting
+### Scenario a: budget not alerting
 
 You created a budget with a $100 threshold, but spending reached $120 and no alert was sent. Investigate: Was an action group configured? Is the email address valid? Check budget alert conditions and ensure "actual" vs "forecasted" is set correctly.
 
-### Scenario B: Untagged Resources
+### Scenario b: untagged resources
 
 Run a query to find all resources in a resource group that are missing the CostCenter tag. How do you remediate existing untagged resources? (Answer: Use policy remediation tasks with "Modify" or "DeployIfNotExists" effects.)
 
@@ -288,11 +288,11 @@ az resource list --resource-group rg-cost-lab \
   --query "[?tags.CostCenter==null].{Name:name, Type:type}" -o table
 ```
 
-### Scenario C: Cost Export Failures
+### Scenario c: cost export failures
 
 Your daily cost export stopped working. Check the export status and common causes: storage account key rotation, deleted container, or network access restrictions on the storage account.
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the difference between actual and forecasted budget alerts?</summary>
@@ -352,7 +352,7 @@ az group delete --name rg-cost-lab --yes --no-wait
 echo "Cleanup complete. Cost data may still appear for 24-48 hours."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Azure Cost Management overview](https://learn.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview)
 - [Create and manage budgets](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets)

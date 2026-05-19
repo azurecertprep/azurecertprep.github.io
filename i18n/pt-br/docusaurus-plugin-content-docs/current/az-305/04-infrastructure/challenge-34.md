@@ -6,7 +6,7 @@ title: "Desafio 34: Projetar Computação para Requisitos de Carga de Trabalho"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Desafio 34: Projetar Computação para Requisitos de Carga de Trabalho
+# Desafio 34: projetar computação para requisitos de carga de trabalho
 
 :::info Tempo Estimado e Custo
 
@@ -22,13 +22,13 @@ As três cargas de trabalho sao: (1) Um frontend web voltado ao cliente e camada
 
 Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho, determinar o melhor modelo de precos (instâncias reservadas, spot ou pay-as-you-go), e dimensionar corretamente cada implantacao para ficar dentro do orcamento de $8.000/mes enquanto atende todos os requisitos de desempenho.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Especificar componentes de uma solução de computacao baseada em requisitos de carga de trabalho
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Análise de Carga de Trabalho e Selecao de Familia de VM
+### Parte 1: análise de carga de trabalho e selecao de familia de VM
 
 1. Análise o perfil de computacao de cada carga de trabalho e mapeie-o para a familia de VM Azure apropriada:
    - Web frontend: CPU sustentada baixa, demanda burstable, alta disponibilidade necessária
@@ -43,7 +43,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 
 3. Documente por que as familias não selecionadas sao inadequadas para cada carga de trabalho (ex: por que B-series e errada para treinamento sustentado de ML, por que N-series e desperdicar recursos para um web frontend).
 
-### Parte 2: Otimização do Modelo de Precos
+### Parte 2: otimização do modelo de precos
 
 4. Determine o modelo de precos ideal para cada carga de trabalho:
    - **Pay-as-you-go**: Flexibilidade total, maior custo por hora
@@ -58,7 +58,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 
 6. Determine se uma Reserved Instance de 1 ano ou 3 anos faz sentido para o motor de processamento de dados que executa 24/7. Calcule pontos de equilibrio.
 
-### Parte 3: Dimensionamento Correto e Alocacao de Orcamento
+### Parte 3: dimensionamento correto e alocacao de orcamento
 
 7. Proponha SKUs de VM específicos para cada carga de trabalho:
    - Web frontend: Selecione o tamanho B-series ou D-series apropriado baseado em 2.000 usuários simultaneos
@@ -81,7 +81,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 
 9. Verifique que o total permanece dentro de $8.000/mes. Se exceder o orcamento, identifique estratégias de otimização (SKUs menores, menos horas, precos diferentes).
 
-### Parte 4: Consideracoes de Disponibilidade e Escalabilidade
+### Parte 4: consideracoes de disponibilidade e escalabilidade
 
 10. Projete a estratégia de disponibilidade para cada carga de trabalho:
     - Web frontend: Qual construcao de disponibilidade fornece SLA de 99,9%?
@@ -90,7 +90,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 
 11. Documente a abordagem de escalabilidade para o web frontend: Em qual limite de CPU o auto-scaling deve ser acionado? Qual é a contagem mínima e máxima de instâncias?
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-34"
@@ -151,7 +151,7 @@ Se os requisitos de GPU forem maiores (ex: NC24s_v3 com 4 GPUs), os custos aumen
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Sizes for virtual machines in Azure](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview)
 - [B-series burstable VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/b-family)
@@ -159,7 +159,7 @@ Se os requisitos de GPU forem maiores (ex: NC24s_v3 com 4 GPUs), os custos aumen
 - [Azure Reserved VM Instances](https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/save-compute-costs-reservations)
 - [GPU optimized VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/gpu-accelerated/overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma carga de trabalho executa a 10% de CPU por 22 horas/dia e depois dispara para 95% de CPU por 2 horas. Qual serie de VM e mais custo-efetiva?</summary>
@@ -189,7 +189,7 @@ Se os requisitos de GPU forem maiores (ex: NC24s_v3 com 4 GPUs), os custos aumen
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

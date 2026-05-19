@@ -5,7 +5,7 @@ title: "Challenge 43: Design Automated Deployment"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 43: Design Automated Deployment
+# Challenge 43: design automated deployment
 
 :::info Estimated Time and Cost
 
@@ -21,20 +21,20 @@ The CTO has mandated zero-downtime deployments with automatic rollback when heal
 
 The team is split between using GitHub Actions (already used for CI) and Azure DevOps (used by the platform team for release management). They need a recommendation that accounts for both teams' expertise while standardizing on a deployment approach that scales to 50 services within a year.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend an automated deployment solution for applications
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Infrastructure as Code Strategy
+### Part 1: infrastructure as code strategy
 
 1. Compare Bicep, Terraform, and ARM templates for managing Azure infrastructure. Document the trade-offs in terms of: learning curve, state management, multi-cloud support, module ecosystem, and Azure-native integration.
 2. Design an IaC repository structure that supports 10 microservices across 3 environments (dev, staging, production) and 2 regions. Address: shared infrastructure (VNet, Key Vault, Container Registry) vs. service-specific infrastructure.
 3. Design a strategy for managing IaC state. For Terraform, compare remote state backends (Azure Storage, Terraform Cloud). For Bicep, document how idempotent deployments handle state implicitly.
 4. Implement drift detection: how do you identify when manual changes have been made to infrastructure outside of IaC?
 
-### Part 2: CI/CD Pipeline Design
+### Part 2: CI/CD pipeline design
 
 5. Compare GitHub Actions and Azure DevOps Pipelines for this scenario. Consider: integration with existing tools, approval gates, environment protection rules, deployment history, and RBAC for production deployments.
 6. Design a container image promotion pipeline:
@@ -44,20 +44,20 @@ The team is split between using GitHub Actions (already used for CI) and Azure D
    - Promote to production registry tag after manual approval
 7. Design the deployment pipeline to include pre-deployment validation (what-if for IaC, health check endpoints ready), deployment execution, post-deployment verification (smoke tests, synthetic monitoring), and automatic rollback trigger.
 
-### Part 3: Deployment Strategies
+### Part 3: deployment strategies
 
 8. Design a blue-green deployment strategy for the stateless API services using Azure Container Apps revisions or App Service deployment slots. Document traffic routing, health validation, and instant rollback procedure.
 9. Design a canary deployment strategy for the payment processing service where you route 5% of traffic to the new version, monitor error rates for 10 minutes, then progressively increase to 25%, 50%, and 100%.
 10. Design a rolling deployment strategy for the background worker services where you update instances one at a time with health checks between each. Document how you handle in-flight messages during updates.
 11. Document your strategy for database schema migrations during zero-downtime deployments (expand-contract pattern, backward-compatible migrations).
 
-### Part 4: Rollback and Recovery
+### Part 4: rollback and Recovery
 
 12. Define health check criteria that trigger automatic rollback: HTTP response codes, response latency percentiles, error rate thresholds, and custom business metrics.
 13. Design a rollback procedure for each deployment strategy (blue-green: swap back, canary: route 100% to old, rolling: stop and revert).
 14. Document how you handle the "deployment succeeded but caused performance degradation" scenario that only manifests under production load after 30 minutes.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-43"
@@ -108,7 +108,7 @@ For zero-downtime database changes: (1) Expand phase: add new columns/tables wit
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Container Apps blue-green deployment](https://learn.microsoft.com/en-us/azure/container-apps/blue-green-deployment)
 - [Set up staging environments in Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots)
@@ -117,7 +117,7 @@ For zero-downtime database changes: (1) Expand phase: add new columns/tables wit
 - [Azure DevOps multi-stage pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/stages)
 - [Deployment best practices](https://learn.microsoft.com/en-us/azure/architecture/framework/devops/release-engineering-cd)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A team uses Terraform to manage Azure infrastructure. After a deployment, they discover someone manually scaled a VM through the Azure portal. What happens on the next `terraform apply`?</summary>
@@ -140,7 +140,7 @@ For zero-downtime database changes: (1) Expand phase: add new columns/tables wit
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

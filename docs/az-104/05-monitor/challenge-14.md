@@ -5,7 +5,7 @@ title: "Challenge 14: Azure Monitor & Alerts"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 14: Azure Monitor & Alerts
+# Challenge 14: Azure Monitor & alerts
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso needs observability across their Azure environment. The CTO's mandate is clear: **"If you can't monitor it, you can't manage it."** Your job is to set up Azure Monitor, create alerts, and prove the team can detect and respond to issues before customers do.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Interpret metrics in Azure Monitor
 - Configure log settings in Azure Monitor
@@ -26,7 +26,7 @@ Contoso needs observability across their Azure environment. The CTO's mandate is
 - Configure monitoring for VMs, storage, and networks using Azure Monitor Insights
 - Use Azure Network Watcher and Connection Monitor
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -49,7 +49,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1: Create a Log Analytics Workspace
+### Task 1: create a Log Analytics workspace
 
 ```bash
 az monitor log-analytics workspace create \
@@ -58,7 +58,7 @@ az monitor log-analytics workspace create \
   --location $LOCATION
 ```
 
-### Task 2: Deploy a VM and Enable VM Insights
+### Task 2: deploy a VM and enable VM Insights
 
 Deploy a VM, then enable Azure Monitor VM Insights to collect performance and dependency data.
 
@@ -79,7 +79,7 @@ Enable VM Insights via the Azure Portal: **VM → Insights → Enable**.
 VM Insights automatically installs the Azure Monitor Agent and configures a data collection rule (DCR).
 
 :::
-### Task 3: Explore Azure Monitor Metrics
+### Task 3: explore Azure Monitor metrics
 
 Navigate to **Azure Monitor → Metrics** (or the VM's Metrics blade) and explore:
 
@@ -89,7 +89,7 @@ Navigate to **Azure Monitor → Metrics** (or the VM's Metrics blade) and explor
 
 Try pinning a chart to a dashboard.
 
-### Task 4: Configure Diagnostic Settings
+### Task 4: configure diagnostic settings
 
 Send platform logs and metrics to Log Analytics:
 
@@ -104,7 +104,7 @@ VM_ID=$(az vm show \
   --name vm-monitored \
   --query id -o tsv)
 
-# Enable diagnostic settings (via Portal for VMs, or CLI for supported resources)
+# Enable diagnostic settings (via portal for VMs, or CLI for supported resources)
 # For a storage account example:
 az monitor diagnostic-settings create \
   --name diag-to-law \
@@ -118,7 +118,7 @@ az monitor diagnostic-settings create \
 It can take **15–30 minutes** for log data to appear in Log Analytics after enabling diagnostic settings. This is normal.
 
 :::
-### Task 5: Write KQL Queries
+### Task 5: write KQL queries
 
 Open **Log Analytics → Logs** and run these queries:
 
@@ -168,7 +168,7 @@ Perf
 
 </details>
 
-### Task 6: Create an Action Group
+### Task 6: create an action Group
 
 Create an action group that sends email notifications:
 
@@ -180,7 +180,7 @@ az monitor action-group create \
   --action email ops-email yourname@contoso.com
 ```
 
-### Task 7: Create a Metric Alert
+### Task 7: create a metric alert
 
 Create an alert that fires when CPU exceeds 80% for 5 minutes:
 
@@ -199,7 +199,7 @@ az monitor metrics alert create \
   --description "CPU usage exceeded 80% for 5 minutes"
 ```
 
-### Task 8: Create a Log Alert
+### Task 8: create a Log alert
 
 Create an alert based on a KQL query | e.g., detect a specific error pattern in logs:
 
@@ -216,13 +216,13 @@ Use the Azure Portal: **Monitor → Alerts → Create → Log alert rule**
 
 </details>
 
-### Task 9: Enable Storage Insights
+### Task 9: enable Storage Insights
 
 1. Create a storage account (if you don't have one)
 2. Navigate to **Azure Monitor → Storage accounts** (or **Storage account → Insights**)
 3. Explore: transaction metrics, latency, availability, capacity trends
 
-### Task 10: Use Network Watcher
+### Task 10: use Network watcher
 
 Explore these Network Watcher tools:
 
@@ -231,7 +231,7 @@ Explore these Network Watcher tools:
 3. **Connection Troubleshoot** | Check connectivity from a VM to a destination
 
 ```bash
-# IP Flow Verify example
+# IP flow verify example
 az network watcher test-ip-flow \
   --direction Inbound \
   --local 10.0.0.4:80 \
@@ -241,18 +241,18 @@ az network watcher test-ip-flow \
   --resource-group $RG
 ```
 
-## Break & Fix
+## Break & fix
 
-### Break It
+### Break it
 1. **Alert without action** | Create an alert rule but don't attach an action group. Trigger the condition. Notice: the alert fires in the portal but no notification is sent. Why?
 2. **Empty log results** | Query logs immediately after enabling diagnostic settings. Results are empty. Is this broken?
 
-### Fix It
+### Fix it
 - Attach the action group to the alert rule
 - Understand that log ingestion has a delay (15–30 min) | this is expected behavior, not a bug
 - Use **Heartbeat** table to verify the agent is connected
 
-## Knowledge Check
+## Knowledge check
 
 1. **What is the difference between Metrics and Logs in Azure Monitor?**
    - Metrics = numeric time-series data, near real-time, stored in a time-series database
@@ -277,7 +277,7 @@ az network watcher test-ip-flow \
 az group delete --name $RG --yes --no-wait
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-14"

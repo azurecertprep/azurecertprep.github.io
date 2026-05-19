@@ -5,7 +5,7 @@ title: "Desafio 27: Log Analytics & KQL em Profundidade"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 27: Log Analytics & KQL em Profundidade
+# Desafio 27: Log Analytics & KQL em profundidade
 
 :::info Tempo e Custo Estimados
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. precisa de logging centralizado com capacidades de consulta poderosas para atender tanto necessidades de conformidade quanto operacionais. A equipe de operações deve coletar logs de VMs, recursos do Azure e aplicações em um único workspace do Log Analytics, e então escrever consultas KQL para analisar desempenho, detectar anomalias e criar visualizações em workbooks.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar e configurar workspace do Log Analytics
 - Configurar definições de log no Azure Monitor
@@ -28,7 +28,7 @@ A Contoso Ltd. precisa de logging centralizado com capacidades de consulta poder
 - Criar Azure Monitor Workbooks com visualizações
 - Configurar diagnostic settings para recursos do Azure
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -40,7 +40,7 @@ A Contoso Ltd. precisa de logging centralizado com capacidades de consulta poder
 | Arquivos de configuração collectd / Telegraf | Data Collection Rules (DCR) |
 | Encaminhamento do Windows Event Viewer | Coleta de Windows Event Log via DCR |
 
-## Configuração Inicial
+## Configuração inicial
 
 ```bash
 # Variables
@@ -53,7 +53,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1: Criar um Workspace do Log Analytics
+### Tarefa 1: criar um workspace do Log Analytics
 
 ```bash
 # Create Log Analytics workspace
@@ -88,7 +88,7 @@ O SKU PerGB2018 cobra por GB ingerido. Para o exame, conheça estas opções:
 - **Daily cap**: Pode definir um limite diário de ingestão para controlar custos
 
 :::
-### Tarefa 2: Implantar VMs Alvo para Monitoramento
+### Tarefa 2: implantar VMs alvo para monitoramento
 
 ```bash
 # Create a VNet
@@ -131,7 +131,7 @@ az vm run-command invoke \
   --scripts "sudo apt-get update && sudo apt-get install -y nginx && sudo systemctl start nginx"
 ```
 
-### Tarefa 3: Criar Data Collection Rules (DCR)
+### Tarefa 3: criar Data collection rules (dcr)
 
 ```bash
 # Get workspace resource ID
@@ -164,10 +164,10 @@ az monitor data-collection rule create \
 az monitor data-collection rule list --resource-group $RG -o table
 ```
 
-### Tarefa 4: Instalar Azure Monitor Agent e Associar DCRs
+### Tarefa 4: instalar Azure Monitor agent e associar DCRs
 
 ```bash
-# Install Azure Monitor Agent on Linux VM
+# Install Azure Monitor agent on Linux VM
 az vm extension set \
   --resource-group $RG \
   --vm-name vm-linux-web \
@@ -176,7 +176,7 @@ az vm extension set \
   --version 1.0 \
   --enable-auto-upgrade true
 
-# Install Azure Monitor Agent on Windows VM
+# Install Azure Monitor agent on Windows VM
 az vm extension set \
   --resource-group $RG \
   --vm-name vm-win-app \
@@ -222,10 +222,10 @@ O AMA substitui o agente legado do Log Analytics (MMA/OMS) e a extensão de Diag
 - Para o exame AZ-104, foque no AMA + DCR (abordagem moderna)
 
 :::
-### Tarefa 5: Configurar Diagnostic Settings para Recursos do Azure
+### Tarefa 5: configurar diagnostic settings para recursos do Azure
 
 ```bash
-# Enable diagnostic settings for the VNet (sending to Log Analytics)
+# Enable diagnostic settings for the VNet (sending to Log analytics)
 VNET_ID=$(az network vnet show -g $RG -n vnet-monitored --query "id" -o tsv)
 
 az monitor diagnostic-settings create \
@@ -254,7 +254,7 @@ az monitor diagnostic-settings categories list \
 4. Escolha destinos: workspace do Log Analytics, conta de armazenamento, Event Hub
 5. Clique em **Save**
 
-### Tarefa 6: Escrever Consultas KQL
+### Tarefa 6: escrever consultas KQL
 
 :::tip Dica
 
@@ -320,13 +320,13 @@ Perf
 | evaluate pivot(CounterName, any(AvgValue))
 ```
 
-### Tarefa 7: Criar Consultas Salvas e Funções
+### Tarefa 7: criar consultas salvas e funções
 
 ```bash
-# Save a query via the Portal:
-# 1. Run the query in Log Analytics > Logs
-# 2. Click "Save" > "Save as query"
-# 3. Name: "High CPU VMs", Category: "Performance"
+# Save a query via the portal:
+# 1. run the query in Log Analytics > logs
+# 2. click "Save" > "Save as query"
+# 3. name: "High CPU VMs", category: "Performance"
 
 # Create a function (reusable query) via CLI
 az monitor log-analytics workspace saved-search create \
@@ -343,7 +343,7 @@ az monitor log-analytics workspace saved-search list \
   --workspace-name law-contoso-ops -o table
 ```
 
-### Tarefa 8: Criar um Workbook com Visualizações
+### Tarefa 8: criar um workbook com visualizações
 
 **Passos no Portal (Workbooks requerem Portal):**
 
@@ -391,7 +391,7 @@ Perf
 
 4. Clique em **Save** e nomeie o workbook "Contoso Operations Dashboard"
 
-### Tarefa 9: Configurar Definições do Workspace
+### Tarefa 9: configurar definições do workspace
 
 ```bash
 # Set daily ingestion cap (cost control)
@@ -421,7 +421,7 @@ az monitor log-analytics workspace show \
   --query "{Name:name, Retention:retentionInDays, DailyCapGB:workspaceCapping.dailyQuotaGb}" -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-27"
@@ -437,9 +437,9 @@ az monitor log-analytics workspace show \
     "Daily cap e retenção do workspace configurados"
   ]}
 />
-## Cenários de Quebrar & Consertar
+## Cenários de quebrar & consertar
 
-### Cenário A: Nenhum Dado Aparecendo no Log Analytics
+### Cenário a: nenhum dado aparecendo no Log Analytics
 
 ```bash
 # Check if AMA extension is installed and healthy
@@ -457,11 +457,11 @@ az monitor data-collection rule show \
 # Common causes:
 # 1. AMA extension not installed or failed
 # 2. DCR not associated with the VM
-# 3. Workspace ID mismatch in DCR
-# 4. Wait time (data takes 5-15 minutes to appear)
+# 3. workspace ID mismatch in DCR
+# 4. wait time (data takes 5-15 minutes to appear)
 ```
 
-### Cenário B: Consulta KQL Não Retorna Resultados
+### Cenário b: consulta KQL não retorna resultados
 
 ```kusto
 // Common mistake: Wrong table name
@@ -477,7 +477,7 @@ search *
 | order by Count desc
 ```
 
-### Cenário C: Daily Cap Atingido
+### Cenário c: daily cap atingido
 
 ```bash
 # Symptom: Data stops flowing into workspace
@@ -487,7 +487,7 @@ az monitor log-analytics workspace show \
   --workspace-name law-contoso-ops \
   --query "workspaceCapping"
 
-# Fix: Increase or remove the daily cap
+# Fix: increase or remove the daily cap
 az monitor log-analytics workspace update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
@@ -495,7 +495,7 @@ az monitor log-analytics workspace update \
 # (-1 removes the cap)
 ```
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 **1. Qual é a diferença entre Data Collection Rules e Diagnostic Settings?**
 
@@ -569,7 +569,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Visão geral dos Logs do Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs)
 - [Workspace do Log Analytics](https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview)

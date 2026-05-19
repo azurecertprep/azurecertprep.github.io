@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 02: RBAC & Gerenciamento de Acesso
+# Desafio 02: RBAC & gerenciamento de acesso
 
 :::info Tempo e Custo Estimados
 
-**45-60 min** | **Custo estimado**: Gratuito | **Peso no Exame: 20-25%**
+**45-60 min** | **Custo estimado**: Gratuito | **Peso no Exame: 20-25%
+**
 
 :::
 
@@ -22,7 +23,7 @@ Agora que a Contoso Ltd. tem usuários e grupos no Entra ID, você precisa contr
 
 RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armazenamento, excluir um grupo de recursos | é controlada por funções atribuídas a identidades em escopos específicos. Se errar nisso, você vai bloquear sua equipe ou expor seu ambiente.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Gerenciar funções internas do Azure
 - Atribuir funções em diferentes escopos (grupo de gerenciamento, assinatura, grupo de recursos, recurso)
@@ -30,7 +31,7 @@ RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armaz
 - Criar e atribuir funções personalizadas
 - Gerenciar atribuições de funções do Microsoft Entra
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -45,7 +46,7 @@ RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armaz
 
 ## Descrição
 
-### Parte 1: Explorar Funções Internas
+### Parte 1: explorar funções internas
 
 1. Listar as 4 funções internas fundamentais e entender o que cada uma permite:
    - **Owner** | Acesso total a todos os recursos + pode atribuir funções a outros
@@ -58,7 +59,7 @@ RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armaz
    - Storage Blob Data Reader
    - Network Contributor
 
-### Parte 2: Atribuir Funções em Diferentes Escopos
+### Parte 2: atribuir funções em diferentes escopos
 
 :::warning Atenção
 
@@ -75,13 +76,13 @@ az group create --name rg-rbac-challenge --location eastus
 5. Atribuir a função **Contributor** para o grupo `IT-Team` no escopo do **grupo de recursos** (`rg-rbac-challenge`)
 6. Atribuir a função **Virtual Machine Contributor** para Bob no escopo do **grupo de recursos**
 
-### Parte 3: Verificar & Interpretar Acesso
+### Parte 3: verificar & interpretar acesso
 
 7. Listar todas as atribuições de função para Alice | ela deve ter Reader no nível da assinatura e (herdado via IT-Team) Contributor no nível do grupo de recursos
 8. Verificar o acesso efetivo do Bob no grupo de recursos
 9. Listar todas as atribuições de função no escopo do grupo de recursos
 
-### Parte 4: Criar uma Função Personalizada
+### Parte 4: criar uma função personalizada
 
 10. Criar uma função personalizada chamada `VM-Reader` com as seguintes permissões:
     - **Ações permitidas**: `Microsoft.Compute/virtualMachines/read`, `Microsoft.Compute/virtualMachines/instanceView/read`, `Microsoft.Network/networkInterfaces/read`
@@ -90,12 +91,12 @@ az group create --name rg-rbac-challenge --location eastus
 
 11. Atribuir a função personalizada `VM-Reader` para Carol no escopo do grupo de recursos
 
-### Parte 5: Auditar Acesso
+### Parte 5: auditar acesso
 
 12. Gerar um relatório de todas as atribuições de função na sua assinatura
 13. Encontrar todos os usuários com a função **Owner** em qualquer escopo
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-02"
@@ -136,7 +137,7 @@ Get-AzRoleDefinition | Where-Object {
   $_.Name -in @('Owner','Contributor','Reader','User Access Administrator')
 } | Select-Object Name, Description | Format-Table
 
-# See details for Contributor
+# See details for contributor
 Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 ```
 
@@ -160,13 +161,13 @@ Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 ALICE_ID=$(az ad user show --id "alice@YOUR_TENANT.onmicrosoft.com" --query id -o tsv)
 
-# Assign Reader to Alice at subscription scope
+# Assign reader to alice at subscription scope
 az role assignment create \
   --assignee $ALICE_ID \
   --role "Reader" \
   --scope "/subscriptions/$SUBSCRIPTION_ID"
 
-# Assign Contributor to IT-Team at resource group scope
+# Assign contributor to IT-Team at resource group scope
 IT_GROUP_ID=$(az ad group show --group "IT-Team" --query id -o tsv)
 az role assignment create \
   --assignee $IT_GROUP_ID \
@@ -224,7 +225,7 @@ az role definition create --role-definition vm-reader-role.json
 <summary>Dica 5: Encontrando todos os Owners na assinatura</summary>
 
 ```bash
-# Find all Owner assignments
+# Find all owner assignments
 az role assignment list --all --role "Owner" -o table
 
 # More detailed output
@@ -234,7 +235,7 @@ az role assignment list --all --role "Owner" \
 
 </details>
 
-## Recursos de Aprendizado
+## Recursos de aprendizado
 
 - [Funções internas do Azure](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
 - [Atribuir funções do Azure usando Azure CLI](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli)
@@ -242,7 +243,7 @@ az role assignment list --all --role "Owner" \
 - [Entender definições de funções](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
 - [Entender escopo para Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview)
 
-## Quebre & Conserte
+## Quebre & conserte
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 
@@ -257,7 +258,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 4. **Atribuições órfãs**: Exclua a conta da Alice, depois liste as atribuições de função. Você verá uma atribuição com um principal "Unknown" ou "Identity not found". Como você limpa essas atribuições?
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 <details>
 <summary>1. Qual é a diferença principal entre Owner e Contributor?</summary>

@@ -6,7 +6,7 @@ title: "Challenge 29: Design a Disaster Recovery Plan"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 29: Design a Disaster Recovery Plan
+# Challenge 29: design a disaster Recovery plan
 
 :::info Estimated Time and Cost
 
@@ -22,15 +22,15 @@ After a 4-hour outage last Black Friday caused by a storage subsystem failure in
 
 This challenge combines all backup and DR skills from the previous challenges into a complete, end-to-end disaster recovery plan using Azure Site Recovery, geo-replicated databases, and automated failover routing. You will design the replication strategy, create recovery plans with sequenced failover, and validate the design meets all requirements within budget.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a recovery solution for Azure and hybrid workloads that meets recovery objectives
 - Recommend a backup and recovery solution for compute
 - Recommend a backup and recovery solution for databases
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Azure Site Recovery for Compute Tiers
+### Part 1: Azure Site Recovery for compute tiers
 
 1. Design the Azure Site Recovery (ASR) configuration for the web and API tiers:
    - Web tier: 4 VMs behind a load balancer (stateless, session stored in Redis)
@@ -45,11 +45,11 @@ az group create --name rg-shopstream-dr --location westus2
 
 # Note: ASR configuration typically uses the portal or PowerShell
 # Conceptual configuration:
-# Source: East US 2, Target: West US 2
+# Source: east US 2, target: west US 2
 # Replication policy: 
-#   - Recovery point retention: 24 hours
-#   - App-consistent snapshot frequency: 4 hours
-#   - Crash-consistent replication: continuous (RPO ~30 seconds)
+# - Recovery point retention: 24 hours
+# - app-consistent snapshot frequency: 4 hours
+# - crash-consistent replication: continuous (rpo ~30 seconds)
 ```
 
 3. Document the network configuration for the DR site:
@@ -58,7 +58,7 @@ az group create --name rg-shopstream-dr --location westus2
    - Public IP addresses for load balancers in DR region
    - DNS strategy for cutover (Azure DNS with low TTL or Traffic Manager)
 
-### Part 2: Database Tier DR Strategy
+### Part 2: database tier DR strategy
 
 4. Design the database replication strategy for each data store:
 
@@ -88,7 +88,7 @@ az group create --name rg-shopstream-dr --location westus2
    - What is the RPO for storage geo-replication?
    - How do you redirect reads to the secondary endpoint during an outage?
 
-### Part 3: Recovery Plan Orchestration
+### Part 3: Recovery plan orchestration
 
 8. Create a sequenced recovery plan that defines failover order:
    - **Group 1**: Database tier (SQL failover group activates first)
@@ -108,7 +108,7 @@ az group create --name rg-shopstream-dr --location westus2
     - Define failover threshold (how many failed probes before switching?)
     - Calculate total failover time: detection + DNS propagation + VM startup
 
-### Part 4: Failback and DR Testing
+### Part 4: failback and DR testing
 
 11. Design the failback procedure after the primary region recovers:
     - Re-protect (reverse replication from DR back to primary)
@@ -129,7 +129,7 @@ az group create --name rg-shopstream-dr --location westus2
     - Storage GRS replication cost
     - Total monthly cost vs. $3K budget
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-29"
@@ -242,7 +242,7 @@ For ShopStream's 5-minute web tier RTO: Front Door is preferred (faster detectio
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [About Azure Site Recovery](https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-overview)
 - [Set up disaster recovery for Azure VMs](https://learn.microsoft.com/en-us/azure/site-recovery/azure-to-azure-tutorial-enable-replication)
@@ -251,7 +251,7 @@ For ShopStream's 5-minute web tier RTO: Front Door is preferred (faster detectio
 - [Azure Front Door traffic routing](https://learn.microsoft.com/en-us/azure/frontdoor/front-door-traffic-acceleration)
 - [Geo-replication for Azure Cache for Redis](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-geo-replication)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A 3-tier application has RTO requirements of 5 min (web), 10 min (API), and 30 sec (database). Why must the database tier fail over FIRST in the recovery plan?</summary>
@@ -281,7 +281,7 @@ For ShopStream's 5-minute web tier RTO: Front Door is preferred (faster detectio
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

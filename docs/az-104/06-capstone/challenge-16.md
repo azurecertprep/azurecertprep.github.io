@@ -5,7 +5,7 @@ title: "Challenge 16: Capstone: Day in the Life of an Azure Admin"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 16: Capstone: Day in the Life of an Azure Admin
+# Challenge 16: capstone: day in the life of an Azure admin
 
 :::info Estimated Time and Cost
 
@@ -33,7 +33,7 @@ done
 
 ---
 
-## Ticket 1: Identity Crisis
+## Ticket 1: identity crisis
 
 **Domain: Manage Microsoft Entra ID Identities and Governance**
 
@@ -84,7 +84,7 @@ az ad group member add \
 
 </details>
 
-### Root Cause
+### Root cause
 The user was provisioned by an automated script that failed partway through | the account was created but left in a disabled state, no initial password was set, and the group assignment step was skipped.
 
 ---
@@ -111,7 +111,7 @@ az storage account show \
   --resource-group rg-az104-capstone-storage \
   --query networkRuleSet
 
-# Check if the default action is Deny
+# Check if the default action is deny
 az storage account show \
   --name stcontoso \
   --resource-group rg-az104-capstone-storage \
@@ -131,7 +131,7 @@ Generate a new SAS token or update firewall rules to allow the analytics team's 
 <summary>Fix Commands</summary>
 
 ```bash
-# Option A: Generate a new SAS token
+# Option a: generate a new SAS token
 END_DATE=$(date -u -d "+7 days" '+%Y-%m-%dT%H:%MZ')
 az storage account generate-sas \
   --account-name stcontoso \
@@ -141,7 +141,7 @@ az storage account generate-sas \
   --expiry $END_DATE \
   -o tsv
 
-# Option B: Add IP to firewall allow list
+# Option b: add IP to firewall allow list
 az storage account network-rule add \
   --account-name stcontoso \
   --resource-group rg-az104-capstone-storage \
@@ -150,12 +150,12 @@ az storage account network-rule add \
 
 </details>
 
-### Root Cause
+### Root cause
 The SAS token generated last week had a 7-day expiry and expired overnight. Additionally, a security team member added firewall rules to the storage account but didn't add the analytics team's IP.
 
 ---
 
-## Ticket 3: VM Down
+## Ticket 3: VM down
 
 **Domain: Deploy and Manage Azure Compute Resources**
 
@@ -215,12 +215,12 @@ az vm auto-shutdown \
 
 </details>
 
-### Root Cause
+### Root cause
 A developer enabled auto-shutdown at 7:00 PM for their dev VM but accidentally applied it to the production VM. The activity log shows the shutdown was triggered by the `Microsoft.DevTestLab` resource provider.
 
 ---
 
-## Ticket 4: Network Lockout
+## Ticket 4: Network lockout
 
 **Domain: Configure and Manage Virtual Networking**
 
@@ -247,13 +247,13 @@ az network nic list-effective-nsg \
   --resource-group rg-az104-capstone-network \
   --name vm-web-01-nic
 
-# Check LB health probe status (via Portal: LB > Insights)
+# Check LB health probe status (via portal: LB > insights)
 az network lb probe show \
   --resource-group rg-az104-capstone-network \
   --lb-name lb-web \
   --name hp-https
 
-# Use Network Watcher IP flow verify
+# Use Network watcher IP flow verify
 az network watcher test-ip-flow \
   --direction Inbound \
   --local 10.0.0.4:443 \
@@ -294,12 +294,12 @@ az network lb probe show \
 
 </details>
 
-### Root Cause
+### Root cause
 The security team added a `DenyAllInbound` rule at priority 200, which overrides the default rules. They forgot to add an explicit `Allow` rule for port 443 before the deny rule.
 
 ---
 
-## Ticket 5: Where Are My Alerts?
+## Ticket 5: where are my alerts?
 
 **Domain: Monitor and Maintain Azure Resources**
 
@@ -361,12 +361,12 @@ For backup alerts: Configure via **Recovery Services vault → Alerts → Config
 
 </details>
 
-### Root Cause
+### Root cause
 The action group had the wrong email (a typo | `ops@contso.com` instead of `ops@contoso.com`). The VM availability alert was created but left in a disabled state during testing and never re-enabled. Backup alerts were never configured.
 
 ---
 
-## Knowledge Check: Exam-Style Questions
+## Knowledge check: Exam-Style questions
 
 **Question 1** *(Identity)*
 A user reports they cannot sign in to the Azure Portal. Their account exists in Microsoft Entra ID. Which should you check FIRST?
@@ -429,7 +429,7 @@ for i in identity storage compute network monitor; do
 done
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-16"

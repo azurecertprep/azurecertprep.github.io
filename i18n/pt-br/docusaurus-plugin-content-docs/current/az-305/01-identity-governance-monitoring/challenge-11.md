@@ -5,7 +5,7 @@ title: "Desafio 11: Projetar uma Solução de Conformidade"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 11: Projetar uma Solução de Conformidade
+# Desafio 11: projetar uma solução de conformidade
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ No mes passado, um desenvolvedor junior acidentalmente criou uma storage account
 
 A equipe de conformidade consiste em apenas duas pessoas e não pode revisar manualmente cada implantacao. Eles precisam de uma abordagem de policy-as-code que escale com o crescimento da organização (planejam dobrar sua presença no Azure em 18 meses). Algumas equipes de desenvolvimento tem exceções legitimas - a equipe de telemedicina precisa de endereços IP públicos para seus servidores de sinalizacao WebRTC, e a equipe de ciencia de dados precisa de SKUs de VM com GPU que não estao na lista padrão aprovada. A solução deve acomodar essas exceções sem comprometer a postura geral de conformidade.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para gerenciamento de conformidade
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design do Framework de Políticas
+### Parte 1: design do Framework de políticas
 
 1. Projete a estrutura de iniciativas de Azure Policy para a HealthBridge. Defina iniciativas separadas para: controles regulatorios HIPAA, padrões de segurança internos e governança de custos. Determine se deve usar a iniciativa HIPAA HITRUST integrada como esta, personaliza-la ou construir uma iniciativa customizada.
 2. Para cada categoria de política abaixo, especifique o efeito da política e justificativa:
@@ -39,7 +39,7 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
 3. Projete a hierarquia de atribuicao de políticas. Determine quais políticas se aplicam em qual nível de management group ou subscription, considerando que algumas políticas devem ser universais enquanto outras sao específicas de ambiente (ex.: mais rigorosas em produção do que em desenvolvimento).
 4. Defina um processo para criar é gerenciar definicoes de políticas customizadas versus usar políticas integradas. Identifique quais requisitos da HealthBridge sao atendidos por políticas integradas e quais requerem definicoes customizadas.
 
-### Parte 2: Gerenciamento de Excecoes
+### Parte 2: gerenciamento de excecoes
 
 5. Projete um fluxo de trabalho de isencao para equipes com exceções de conformidade legitimas. Defina: quem pode conceder isencoes, qual documentação é necessária, se isencoes sao limitadas no tempo (waiver) ou permanentes (mitigated), e como isencoes sao rastreadas para fins de auditoria.
 6. Para o requisito de IP público da equipe de telemedicina, projete o mecanismo específico de isencao. Escolha entre: isencoes de Azure Policy no escopo do resource group, um management group separado com políticas diferentes, ou uma política customizada com condições de exclusão.
@@ -51,13 +51,13 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
 9. Especifique os requisitos de managed identity para tarefas de remediacao. Defina as atribuicoes de função necessárias, o principio de menor privilegio para identidades de remediacao e o escopo de suas permissões.
 10. Projete um mecanismo de detecção e correcao de desvios. Determine como lidar com recursos que estavam em conformidade na criação mas desviaram (ex.: alguem desabilitou a criptografia apos a implantacao inicial).
 
-### Parte 4: Relatorios de Conformidade
+### Parte 4: relatorios de conformidade
 
 11. Projete a solução de dashboard e relatórios de conformidade. Especifique como o relatório mensal do conselho e gerado, quais metricas inclui (percentual de conformidade por iniciativa, tendencia ao longo do tempo, principais violacoes) e como o dashboard de conformidade regulatoria no Microsoft Defender for Cloud se integra com o Azure Policy.
 12. Defina alertas para violacoes críticas de conformidade. Determine quais violacoes disparam alertas imediatos (ex.: acesso anonimo a blobs habilitado) versus quais sao aceitaveis para incluir em relatórios semanais de conformidade.
 13. Projete a trilha de auditoria para evidencias de conformidade. Especifique como demonstrar aos auditores HIPAA que controles sao continuamente aplicados (retencao de Activity Log, logs de avaliação de políticas, histórico de isencoes).
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-11"
@@ -108,7 +108,7 @@ Combine três fontes de dados para relatórios abrangentes: (1) Estados de confo
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Policy overview](https://learn.microsoft.com/azure/governance/policy/overview)
 - [Azure Policy effects](https://learn.microsoft.com/azure/governance/policy/concepts/effect-basics)
@@ -118,7 +118,7 @@ Combine três fontes de dados para relatórios abrangentes: (1) Estados de confo
 - [Regulatory compliance in Microsoft Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/regulatory-compliance-dashboard)
 - [Tutorial: Create a custom policy definition](https://learn.microsoft.com/azure/governance/policy/tutorials/create-custom-policy-definition)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A HealthBridge implanta uma política com efeito `deny` que impede storage accounts sem chaves gerenciadas pelo cliente. Uma storage account existente que foi criada antes da política não possui CMK. Este recurso sera bloqueado de atualizações?</summary>

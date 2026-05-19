@@ -5,7 +5,7 @@ title: "Challenge 16: Design Database Scalability"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 16: Design Database Scalability
+# Challenge 16: design database scalability
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The current architecture uses a single Azure SQL Database (Business Critical, 8 
 
 GNN's requirements are: (1) Writers must always have consistent, low-latency access to the database in US East; (2) Readers worldwide should experience sub-100ms query latency for article retrieval; (3) The system must handle 10x read traffic spikes without manual intervention; (4) Data consistency between regions can tolerate up to 5 seconds of replication lag for read queries; (5) The solution must be cost-effective, scaling down when traffic normalizes.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for database scalability
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Read Scale-Out Architecture
+### Part 1: read Scale-Out architecture
 
 1. Design a read scale-out strategy that separates the read and write workloads. Determine how to route content editors to the primary (read-write) instance and readers to read-only replicas.
 2. Evaluate the following options for providing read replicas and recommend the best combination for GNN's requirements:
@@ -38,20 +38,20 @@ GNN's requirements are: (1) Writers must always have consistent, low-latency acc
 3. Determine the optimal number and placement of read replicas to serve readers in North America, Europe, and Asia-Pacific with sub-100ms latency.
 4. Design the connection string strategy for applications to route read traffic to replicas (ApplicationIntent=ReadOnly, or direct connection to geo-replicas).
 
-### Part 2: Handling Traffic Spikes
+### Part 2: handling Traffic spikes
 
 5. Design an auto-scaling approach for read replicas during breaking news events. Consider Hyperscale named replicas that can be independently scaled and created on-demand.
 6. Evaluate whether elastic pools could help manage a fleet of read-replica databases during spike periods.
 7. Design a caching layer (Azure Cache for Redis or application-level caching) to reduce database load during spikes. Determine which queries benefit most from caching and appropriate TTL values.
 8. Calculate the required read replica capacity during a 10x spike (500,000 queries/second) and design a scaling plan that achieves this without over-provisioning during normal periods.
 
-### Part 3: Write Scalability and Data Distribution
+### Part 3: write scalability and Data distribution
 
 9. Evaluate whether the write workload (500 operations/second) requires scaling beyond a single primary. Discuss scenarios where sharding or write partitioning might be necessary in the future.
 10. Design a geo-replication topology that provides both disaster recovery and read scale-out. Determine the appropriate replication mode (synchronous vs asynchronous) and acceptable replication lag.
 11. Propose a monitoring and alerting strategy to detect when read replicas fall behind the primary and when traffic approaches capacity limits. Identify key metrics to track (replication lag, DTU/vCore utilization, connection count).
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-16"
@@ -102,7 +102,7 @@ Active geo-replication in Azure SQL Database uses asynchronous replication. Typi
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Read scale-out in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/read-scale-out)
 - [Active geo-replication](https://learn.microsoft.com/en-us/azure/azure-sql/database/active-geo-replication-overview)
@@ -111,7 +111,7 @@ Active geo-replication in Azure SQL Database uses asynchronous replication. Typi
 - [Azure Cache for Redis overview](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview)
 - [Elastic pools for Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/elastic-pool-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A global application needs read replicas in 3 regions with the ability to independently scale each replica's compute. Which Azure SQL Database feature should you use?</summary>
@@ -141,7 +141,7 @@ Active geo-replication in Azure SQL Database uses asynchronous replication. Typi
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
@@ -189,7 +189,7 @@ This mini-deployment validates your design decisions with real Azure resources. 
 # Delete the resource group containing all GNN database resources
 az group delete --name rg-gnn-databases --yes --no-wait
 
-# Delete the Redis cache resource group (if created separately)
+# Delete the redis cache resource group (if created separately)
 az group delete --name rg-gnn-cache --yes --no-wait
 ```
 

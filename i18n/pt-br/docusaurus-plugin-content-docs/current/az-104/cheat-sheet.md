@@ -3,7 +3,7 @@ sidebar_position: 5
 title: "Azure CLI Cheat Sheet"
 ---
 
-# Guia Rápido do Azure CLI
+# Guia rápido do Azure CLI
 
 Referência rápida para os comandos mais comuns do Azure CLI, organizados por domínio do exame. Salve esta página nos favoritos.
 
@@ -30,10 +30,10 @@ az group list --output table
 az group delete --name myRG --yes --no-wait
 ```
 
-## Identidade e Governança
+## Identidade e governança
 
 ```bash
-# Entra ID Users
+# Entra ID users
 az ad user create --display-name "John Doe" --user-principal-name john@contoso.com --password "P@ssw0rd!"
 az ad user list --output table
 az ad user delete --id john@contoso.com
@@ -96,7 +96,7 @@ az storage account management-policy create --account-name mystorageacct --resou
 ## Computação
 
 ```bash
-# Virtual Machines
+# Virtual machines
 az vm create --resource-group myRG --name myVM --image Ubuntu2204 --admin-username azureuser --generate-ssh-keys
 az vm list --resource-group myRG --output table
 az vm start --resource-group myRG --name myVM
@@ -124,7 +124,7 @@ az acr create --resource-group myRG --name myacr --sku Basic
 az acr build --registry myacr --image myapp:v1 .
 az acr login --name myacr
 
-# Container Instances
+# Container instances
 az container create --resource-group myRG --name mycontainer --image nginx --ports 80 --dns-name-label myapp
 
 # Container Apps
@@ -159,15 +159,15 @@ az network lb create --resource-group myRG --name myLB --sku Standard --public-i
 az network dns zone create --resource-group myRG --name contoso.com
 az network dns record-set a add-record --resource-group myRG --zone-name contoso.com --record-set-name www --ipv4-address 1.2.3.4
 
-# Azure Bastion
+# Azure bastion
 az network bastion create --resource-group myRG --name myBastion --vnet-name myVNet --public-ip-address myBastionIP
 
-# Network Watcher
+# Network watcher
 az network watcher show-topology --resource-group myRG
 az network watcher test-ip-flow --resource-group myRG --vm myVM --direction Inbound --protocol TCP --local 10.0.0.4:80 --remote 1.2.3.4:*
 ```
 
-## Monitorar e Manter
+## Monitorar e manter
 
 ```bash
 # Azure Monitor

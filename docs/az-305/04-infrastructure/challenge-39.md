@@ -5,7 +5,7 @@ title: "Challenge 39: Design an Event-Driven Architecture"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 39: Design an Event-Driven Architecture
+# Challenge 39: design an Event-Driven architecture
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ Scenario 1 (Real-time alerts): When a temperature sensor exceeds 35C or occupanc
 
 The challenge is designing an event-driven architecture that routes events to the appropriate processing pipeline based on the latency and durability requirements of each scenario.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend an event-driven architecture
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Event Ingestion Service Selection
+### Part 1: event ingestion Service selection
 
 1. Compare Azure event ingestion services for 2,000-5,000 events/second:
 
@@ -51,7 +51,7 @@ The challenge is designing an event-driven architecture that routes events to th
    - How many throughput units (Standard) or processing units (Premium)?
    - What is the partition key strategy? (Building ID? Sensor type? Floor?)
 
-### Part 2: Real-Time Alert Processing (Scenario 1)
+### Part 2: Real-Time alert processing (Scenario 1)
 
 4. Design the real-time alert pipeline (2-second latency requirement):
    - Event source: Event Hubs (or IoT Hub route)
@@ -65,7 +65,7 @@ The challenge is designing an event-driven architecture that routes events to th
 
 6. For the 2-second SLA, which processing option provides the lowest latency? Design the alert rule logic (e.g., temperature > 35C for 3 consecutive readings within 30 seconds, to avoid false positives from sensor noise).
 
-### Part 3: Event Distribution with Event Grid (Scenario 4)
+### Part 3: event distribution with event Grid (Scenario 4)
 
 7. Design the automated response system using Event Grid:
    - Define custom events for building conditions (OccupancyZero, EnergyAnomaly, TemperatureExceedance)
@@ -85,7 +85,7 @@ The challenge is designing an event-driven architecture that routes events to th
    - How does Event Grid guarantee delivery to all subscribers?
    - What happens if one subscriber is temporarily unavailable?
 
-### Part 4: Event Archive and Long-Term Storage (Scenario 3)
+### Part 4: event archive and Long-Term Storage (Scenario 3)
 
 10. Design the event archival strategy for 7-year retention:
     - **Event Hubs Capture**: Automatically writes events to Azure Storage or Data Lake in Avro format
@@ -103,7 +103,7 @@ The challenge is designing an event-driven architecture that routes events to th
     - Curated datasets in Parquet (aggregated, optimized for analytics)
     - How does the ML team query 7 years of sensor data efficiently?
 
-### Part 5: Consumer Group Strategy
+### Part 5: consumer Group strategy
 
 13. Design the consumer group allocation for Event Hubs:
     - Consumer Group 1: Real-time alert processor (Stream Analytics)
@@ -113,7 +113,7 @@ The challenge is designing an event-driven architecture that routes events to th
 
 14. Explain why each consumer needs its own consumer group and what happens if two different applications share a consumer group.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-39"
@@ -198,7 +198,7 @@ Lifecycle management policy automates tier transitions. Total estimated cost: ap
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Event Hubs overview](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about)
 - [Azure Event Grid overview](https://learn.microsoft.com/en-us/azure/event-grid/overview)
@@ -206,7 +206,7 @@ Lifecycle management policy automates tier transitions. Total estimated cost: ap
 - [IoT Hub message routing](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c)
 - [Choose between Azure messaging services](https://learn.microsoft.com/en-us/azure/service-bus-messaging/compare-messaging-services)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Two applications read from the same Event Hub using the same consumer group. What problem occurs?</summary>
@@ -236,11 +236,11 @@ Lifecycle management policy automates tier transitions. Total estimated cost: ap
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab validates Event Grid's reactive architecture by observing events flow from resource changes to a storage queue in near-real-time. You will prove that events are pushed without polling, that subscription filters reduce noise, and that event-driven decoupling works at the platform level.
 
-### Part A - Deploy Event Grid Infrastructure
+### Part a - deploy event Grid infrastructure
 
 1. Create the resource group:
 
@@ -289,7 +289,7 @@ az eventgrid system-topic create \
   --location eastus
 ```
 
-### Part B - Subscribe to Resource Creation Events
+### Part b - subscribe to Resource creation events
 
 4. Create an event subscription that routes resource write (creation) events to the storage queue:
 
@@ -312,7 +312,7 @@ az eventgrid system-topic event-subscription create \
 Event Grid enables reactive architectures without polling. The storage queue receives events pushed by the platform within seconds of the resource change occurring. No consumer needs to poll Azure Resource Manager asking "did anything change?" -- the platform notifies subscribers proactively. This reduces latency and eliminates wasted API calls.
 :::
 
-### Part C - Trigger an Event and Verify Delivery
+### Part c - trigger an event and verify delivery
 
 5. Trigger an event by creating a simple resource (a second storage account) in the resource group:
 
@@ -346,7 +346,7 @@ You should see one or more messages in the queue. Each message contains the Even
 Filtering at the subscription level reduces unnecessary processing. By specifying `--included-event-types`, only resource write events reach the queue. Without filtering, delete events, action events, and other noise would also arrive, forcing the consumer to discard irrelevant messages. This filtering happens at the Event Grid platform level -- the messages never even reach the queue endpoint.
 :::
 
-### Part D - Filtered Subscription (Selective Routing)
+### Part d - filtered Subscription (Selective routing)
 
 8. Create a second queue and a filtered subscription that only captures storage account events:
 

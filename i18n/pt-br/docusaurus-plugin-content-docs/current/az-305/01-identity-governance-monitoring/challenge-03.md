@@ -6,7 +6,7 @@ title: "Desafio 03: Projetar uma Estratégia de Monitoramento e Alertas"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Desafio 03: Projetar uma Estratégia de Monitoramento e Alertas
+# Desafio 03: projetar uma estratégia de monitoramento e alertas
 
 :::info Tempo Estimado e Custo
 
@@ -27,15 +27,15 @@ Atualmente, a equipe só descobre interrupcoes quando clientes reclamam nas rede
 
 Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que forneça aviso antecipado de degradacao, respostas automatizadas a padrões de falha conhecidos e visibilidade em nível executivo sobre a saúde da plataforma.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de monitoramento
 - Recomendar uma solução de logging
 - Recomendar uma solução para roteamento de logs
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design da Arquitetura de Monitoramento
+### Parte 1: design da arquitetura de monitoramento
 
 1. Projete a stack de monitoramento para a TailSpin Toys, especificando:
    - Quais recursos do Azure Monitor usar para cada camada (infraestrutura, aplicação, negocios)
@@ -57,7 +57,7 @@ Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que
   storageKey="az305-challenge-03"
 />
 
-### Parte 2: Design de Alertas
+### Parte 2: design de alertas
 
 3. Projete regras de alerta para cada SLO, especificando:
    - Tipo de alerta baseado em metrica ou log
@@ -75,7 +75,7 @@ Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que
    - Ações automatizadas (Azure Functions, Logic Apps, runbooks)
    - Caminhos de escalação
 
-### Parte 3: Remediacao Automatizada
+### Parte 3: remediacao automatizada
 
 6. Projete uma resposta automatizada para o cenário de esgotamento do cache Redis:
    - Detecção: Qual metrica/padrão indica pressao no cache antes da falha?
@@ -87,7 +87,7 @@ Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que
    - Comprimento da fila HTTP excedendo 100 requisicoes
    - Metrica customizada: pedidos-por-segundo excedendo o threshold de capacidade
 
-### Parte 4: Dashboards e Workbooks
+### Parte 4: dashboards e workbooks
 
 8. Projete um dashboard executivo mostrando:
    - Conformidade atual com SLO (percentual de uptime neste mes)
@@ -100,11 +100,11 @@ Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que
    - Drill-down da saúde de alto nível até requisicoes específicas com falha
    - Correlacao de alertas com eventos de deployment
 
-### Parte 5: Implantar Prova de Conceito
+### Parte 5: implantar prova de conceito
 
 10. Implante o Application Insights e configure pelo menos uma regra de alerta com um action group que demonstre o pipeline de alertas de ponta a ponta.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-03"
@@ -196,7 +196,7 @@ Para a TailSpin Toys:
 <summary>Dica 4: Configuração de Autoscale</summary>
 
 ```bash
-# Create autoscale settings for App Service Plan
+# Create autoscale settings for App Service plan
 az monitor autoscale create \
   --resource-group rg-app \
   --name autoscale-tailspin \
@@ -245,7 +245,7 @@ Para o cenário de esgotamento do Redis, um Automation Runbook poderia:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Monitor overview](https://learn.microsoft.com/en-us/azure/azure-monitor/overview)
 - [Application Insights overview](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
@@ -255,7 +255,7 @@ Para o cenário de esgotamento do Redis, um Automation Runbook poderia:
 - [Create and manage action groups](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups)
 - [Distributed tracing with Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A TailSpin Toys precisa detectar quando o pipeline de processamento de pedidos excede 30 segundos. Os pedidos sao processados por Azure Functions acionadas por Service Bus. Qual abordagem de monitoramento fornece a medicao mais precisa?</summary>

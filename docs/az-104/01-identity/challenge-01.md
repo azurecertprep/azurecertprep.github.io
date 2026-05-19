@@ -5,11 +5,12 @@ title: "Challenge 01: Entra ID: Users & Groups"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 01: Entra ID: Users & Groups
+# Challenge 01: Entra ID: users & Groups
 
 :::info Estimated Time and Cost
 
-**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%**
+**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%
+**
 
 :::
 
@@ -19,7 +20,7 @@ You just joined Contoso Ltd. as the new Azure Administrator. Your first task: se
 
 This challenge covers the foundation of everything in Azure | identity. Without users, groups, and proper access management, nothing else works.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create users and groups
 - Manage user and group properties
@@ -27,7 +28,7 @@ This challenge covers the foundation of everything in Azure | identity. Without 
 - Manage external users
 - Configure self-service password reset (SSPR)
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -43,7 +44,7 @@ This challenge covers the foundation of everything in Azure | identity. Without 
 
 Your mission is to:
 
-### Part 1: Create Users
+### Part 1: create users
 
 1. Create 3 internal users in your Entra ID tenant:
    - `alice@YOUR_TENANT.onmicrosoft.com` | Display name: Alice Johnson, Department: IT, Job title: Cloud Engineer
@@ -52,30 +53,30 @@ Your mission is to:
 
 2. Set up Alice with a temporary password that must be changed on first login.
 
-### Part 2: Create Groups
+### Part 2: create Groups
 
 3. Create the following security groups:
    - `IT-Team` | Members: Alice, Carol
    - `Finance-Team` | Members: Bob
    - `All-Employees` | Members: Alice, Bob, Carol (use a dynamic membership rule based on department)
 
-### Part 3: Manage Properties
+### Part 3: manage properties
 
 4. Update Bob's usage location to "US" (required for license assignment)
 5. Disable Carol's account (simulate an employee on leave)
 6. Update the `IT-Team` group description to "IT department security group"
 
-### Part 4: External Users
+### Part 4: external users
 
 7. Invite an external user (guest) | use any email you have access to
 8. Add the guest user to the `All-Employees` group
 
-### Part 5: Self-Service Password Reset
+### Part 5: Self-Service password reset
 
 9. Enable SSPR for the `IT-Team` group
 10. Configure SSPR to require 1 authentication method (email)
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-01"
@@ -114,7 +115,7 @@ az ad user create \
   --password "TempP@ss123!" \
   --force-change-password-next-sign-in true
 
-# Set department and job title via Microsoft Graph
+# Set department and job title via Microsoft graph
 ALICE_ID=$(az ad user show --id "alice@$DOMAIN" --query id -o tsv)
 az rest --method patch \
   --url "https://graph.microsoft.com/v1.0/users/$ALICE_ID" \
@@ -143,7 +144,7 @@ az ad group member add --group "IT-Team" --member-id $ALICE_ID
 <summary>Hint 4: Inviting an external user</summary>
 
 ```bash
-# Invite an external user via Microsoft Graph API
+# Invite an external user via Microsoft graph API
 az rest --method post \
   --url "https://graph.microsoft.com/v1.0/invitations" \
   --body '{
@@ -170,7 +171,7 @@ SSPR configuration is best done through the Azure Portal:
 :::
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Create users in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-create-delete-users)
 - [Create groups and add members](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-manage-groups)
@@ -178,7 +179,7 @@ SSPR configuration is best done through the Azure Portal:
 - [Configure SSPR](https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr)
 - [Dynamic membership rules](https://learn.microsoft.com/en-us/entra/identity/users/groups-dynamic-membership)
 
-## Break & Fix
+## Break & fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -186,7 +187,7 @@ After completing the challenge, try these troubleshooting scenarios:
 2. **Group membership mystery**: Remove Bob from `Finance-Team`, then check if he can still access resources assigned to that group. How long does it take for the change to propagate?
 3. **Guest access gone wrong**: Invite a guest user but don't assign them to any group. Can they see anything in your tenant? What's the default access level for guests?
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the difference between a security group and a Microsoft 365 group?</summary>

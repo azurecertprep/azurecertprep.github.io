@@ -5,7 +5,7 @@ title: "Challenge 17: Management Groups & Subscriptions"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 17: Management Groups & Subscriptions
+# Challenge 17: Management Groups & subscriptions
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. is growing fast. What started as a single Azure subscription has ballooned into six subscriptions across three departments (IT, Finance, and Engineering). The CTO wants a governance hierarchy that enforces policies consistently across all subscriptions without duplicating effort. Your job is to design and implement a management group structure that mirrors the company's organizational chart and apply governance at the right levels.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -27,7 +27,7 @@ Contoso Ltd. is growing fast. What started as a single Azure subscription has ba
 | Implement resource locks across subscriptions | Medium |
 | Apply RBAC at management group scope | High |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -40,7 +40,7 @@ Contoso Ltd. is growing fast. What started as a single Azure subscription has ba
 
 ## Tasks
 
-### Task 1: Create a Management Group Hierarchy
+### Task 1: create a Management Group hierarchy
 
 Design and create the following management group structure:
 
@@ -100,7 +100,7 @@ Navigate to **Azure Portal** > **Management groups**. Click **+ Create** and spe
 
 
 :::
-### Task 2: Move a Subscription into a Management Group
+### Task 2: move a Subscription into a Management Group
 
 Move your current subscription into the `mg-dev` management group:
 
@@ -120,7 +120,7 @@ az account management-group show \
   --recurse
 ```
 
-### Task 3: Assign Azure Policy at Management Group Scope
+### Task 3: assign Azure Policy at Management Group scope
 
 Apply the built-in policy "Require a tag and its value on resources" at the `mg-production` scope:
 
@@ -138,7 +138,7 @@ az policy assignment create \
   --params '{"tagName": {"value": "Environment"}, "tagValue": {"value": "Production"}}'
 ```
 
-### Task 4: Apply RBAC at Management Group Level
+### Task 4: apply RBAC at Management Group level
 
 Grant a user the "Reader" role at the `mg-contoso` management group scope (cascading to all subscriptions):
 
@@ -146,7 +146,7 @@ Grant a user the "Reader" role at the `mg-contoso` management group scope (casca
 # Get user object ID (replace with your test user)
 USER_ID=$(az ad user show --id "alice@yourtenant.onmicrosoft.com" --query id -o tsv)
 
-# Assign Reader role at management group scope
+# Assign reader role at management group scope
 az role assignment create \
   --assignee "$USER_ID" \
   --role "Reader" \
@@ -158,7 +158,7 @@ az role assignment list \
   --query "[?principalId=='$USER_ID']" -o table
 ```
 
-### Task 5: Move a Subscription Between Management Groups
+### Task 5: move a Subscription between Management Groups
 
 Simulate a department reorganization by moving the subscription from `mg-dev` to `mg-sandbox`:
 
@@ -180,7 +180,7 @@ az account management-group show \
   --recurse
 ```
 
-### Task 6: Query the Management Group Hierarchy
+### Task 6: query the Management Group hierarchy
 
 ```bash
 # View the full hierarchy
@@ -194,7 +194,7 @@ az account management-group show \
   --query "{Name:name, Children:children[].{Name:name, Children:children[].name}}"
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-17"
@@ -237,21 +237,21 @@ Moving a subscription between management groups changes which policies and RBAC 
 
 </details>
 
-## Break and Fix
+## Break and fix
 
-### Scenario A: Policy Conflict
+### Scenario a: Policy conflict
 
 Assign two conflicting policies at different levels: one requiring tag "Environment=Production" at mg-production and another requiring "Environment=Development" at mg-dev. Try to deploy a resource in a subscription under mg-dev. What happens when contradictory policies exist at different levels?
 
-### Scenario B: Orphaned Subscription
+### Scenario b: orphaned Subscription
 
 Remove your subscription from all custom management groups. Where does it appear? (Answer: It returns to the Tenant Root Group.) How do you find subscriptions that are not in any custom management group?
 
-### Scenario C: Locked Out
+### Scenario c: locked out
 
 Assign a Deny RBAC assignment at a management group scope. What happens to users who previously had access through subscription-level assignments? How do deny assignments interact with allow assignments?
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. How many levels deep can management groups be nested?</summary>
@@ -284,7 +284,7 @@ By default, **any user** in the Entra ID tenant can create management groups. Th
 ## Cleanup
 
 ```bash
-# Remove subscription from custom MG (returns to Tenant Root Group)
+# Remove subscription from custom MG (returns to tenant root group)
 SUB_ID=$(az account show --query id -o tsv)
 az account management-group subscription remove \
   --name "mg-sandbox" \
@@ -295,8 +295,8 @@ az policy assignment delete \
   --name "require-env-tag-prod" \
   --scope "/providers/Microsoft.Management/managementGroups/mg-production" 2>/dev/null
 
-# Remove RBAC assignment (replace USER_ID)
-# az role assignment delete --assignee "$USER_ID" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso"
+# Remove RBAC assignment (replace user_id)
+# az role assignment delete --assignee "$user_id" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso"
 
 # Delete management groups (bottom-up order required)
 az account management-group delete --name "mg-sandbox" 2>/dev/null
@@ -310,7 +310,7 @@ az account management-group delete --name "mg-contoso" 2>/dev/null
 echo "Cleanup complete."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Organize resources with management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
 - [Create management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/create-management-group-portal)

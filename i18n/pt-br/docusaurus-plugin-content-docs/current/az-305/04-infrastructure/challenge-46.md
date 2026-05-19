@@ -5,7 +5,7 @@ title: "Desafio 46: Projetar Migração de Banco de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 46: Projetar Migração de Banco de Dados
+# Desafio 46: projetar migração de banco de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Os requisitos de migração variam significativamente entre bancos de dados: o b
 
 A equipe de DBAs precisa de uma estratégia de migração abrangente que enderece avaliação de compatibilidade, selecao de serviço alvo (Azure SQL Database vs. Managed Instance vs. SQL em VM, e decisoes equivalentes para PostgreSQL e MySQL), método de migração (online vs. offline) e validação pós-migração para cada banco de dados.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para migrar bancos de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Avaliação de Compatibilidade
+### Parte 1: avaliação de compatibilidade
 
 1. Projete a abordagem de avaliação para cada engine de banco de dados:
    - SQL Server: Use avaliação de migração Azure SQL (Data Migration Assistant ou Azure Migrate) para identificar problemas de compatibilidade, recursos bloqueadores e alvo recomendado (Azure SQL DB, SQL MI ou SQL em VM)
@@ -42,7 +42,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
    - Tamanho de banco de dados > 100GB (Azure SQL DB Hyperscale ou SQL MI)
 3. Crie uma matriz de decisao mapeando cada banco de dados para seu alvo Azure recomendado com justificativa.
 
-### Parte 2: Estratégia de Migração Online vs. Offline
+### Parte 2: estratégia de migração online vs. offline
 
 4. Categorize cada banco de dados para migração online (replicação continua) vs. offline (copia única):
    - Online: bancos de dados que requerem < 5 minutos de inatividade (e-commerce, serviços em tempo real)
@@ -57,7 +57,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
    - Lag de replicação de change data capture (CDC) continuo
    - Coordenacao da janela de cutover
 
-### Parte 3: Cenários de Migração Complexos
+### Parte 3: cenários de migração complexos
 
 7. Projete a estratégia de migração para o banco de dados SQL Server de e-commerce de 2TB com requisito de 5 minutos de inatividade:
    - Pre-stage: configure Azure SQL MI com service tier e dimensionamento apropriados
@@ -74,7 +74,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
    - Defina criterios de validação para declarar o alvo Azure como autoritativo
    - Documente o processo de sign-off de conformidade
 
-### Parte 4: Validação e Otimização Pos-Migração
+### Parte 4: validação e otimização Pos-Migração
 
 10. Projete procedimentos de validação pós-migração:
     - Integridade de dados: comparacao de contagem de linhas, validação de checksum em tabelas-chave
@@ -87,7 +87,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
     - Query performance insights para identificar queries com regressao
 12. Documente a estratégia de rollback para cada migração de banco de dados: o que dispara um rollback, por quanto tempo você pode manter capacidade de rollback, e qual reconciliacao de dados é necessária se Azure foi primário por algum período.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-46"
@@ -138,7 +138,7 @@ Para um banco de dados de 2TB sobre uma conexão ExpressRoute de 1Gbps: tempo te
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Database Migration Service overview](https://learn.microsoft.com/en-us/azure/dms/dms-overview)
 - [Azure SQL migration assessment](https://learn.microsoft.com/en-us/azure/azure-sql/migration-guides/managed-instance/sql-server-to-managed-instance-overview)
@@ -147,7 +147,7 @@ Para um banco de dados de 2TB sobre uma conexão ExpressRoute de 1Gbps: tempo te
 - [DMS supported migration scenarios](https://learn.microsoft.com/en-us/azure/dms/resource-scenario-status)
 - [Azure SQL Managed Instance features](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/sql-managed-instance-paas-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um banco de dados SQL Server 2012 usa consultas cross-database, SQL Agent jobs e tem tamanho de 500GB. Qual alvo Azure e apropriado e por que?</summary>

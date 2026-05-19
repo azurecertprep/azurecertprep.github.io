@@ -5,7 +5,7 @@ title: "Challenge 46: Design Database Migration"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 46: Design Database Migration
+# Challenge 46: design database migration
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The migration requirements vary significantly across databases: the e-commerce d
 
 The DBA team needs a comprehensive migration strategy that addresses compatibility assessment, target service selection (Azure SQL Database vs. Managed Instance vs. SQL on VM, and equivalent decisions for PostgreSQL and MySQL), migration method (online vs. offline), and post-migration validation for each database.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for migrating databases
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Compatibility Assessment
+### Part 1: compatibility assessment
 
 1. Design the assessment approach for each database engine:
    - SQL Server: Use Azure SQL Migration assessment (Data Migration Assistant or Azure Migrate) to identify compatibility issues, blocking features, and recommended target (Azure SQL DB, SQL MI, or SQL on VM)
@@ -42,7 +42,7 @@ The DBA team needs a comprehensive migration strategy that addresses compatibili
    - Database size > 100GB (Azure SQL DB Hyperscale or SQL MI)
 3. Create a decision matrix mapping each database to its recommended Azure target with justification.
 
-### Part 2: Online vs. Offline Migration Strategy
+### Part 2: online vs. offline migration strategy
 
 4. Categorize each database for online (continuous replication) vs. offline (one-time copy) migration:
    - Online: databases requiring < 5 minutes downtime (e-commerce, real-time services)
@@ -57,7 +57,7 @@ The DBA team needs a comprehensive migration strategy that addresses compatibili
    - Ongoing change data capture (CDC) replication lag
    - Cutover window coordination
 
-### Part 3: Complex Migration Scenarios
+### Part 3: complex migration scenarios
 
 7. Design the migration strategy for the 2TB e-commerce SQL Server database with 5-minute downtime requirement:
    - Pre-stage: configure Azure SQL MI with appropriate service tier and sizing
@@ -74,7 +74,7 @@ The DBA team needs a comprehensive migration strategy that addresses compatibili
    - Define validation criteria for declaring the Azure target authoritative
    - Document the compliance sign-off process
 
-### Part 4: Post-Migration Validation and Optimization
+### Part 4: Post-Migration validation and optimization
 
 10. Design post-migration validation procedures:
     - Data integrity: row count comparison, checksum validation on key tables
@@ -87,7 +87,7 @@ The DBA team needs a comprehensive migration strategy that addresses compatibili
     - Query performance insights for identifying regressed queries
 12. Document the rollback strategy for each database migration: what triggers a rollback, how long can you maintain rollback capability, and what data reconciliation is needed if Azure was primary for any period.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-46"
@@ -138,7 +138,7 @@ For a 2TB database over a 1Gbps ExpressRoute connection: theoretical transfer ti
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Database Migration Service overview](https://learn.microsoft.com/en-us/azure/dms/dms-overview)
 - [Azure SQL migration assessment](https://learn.microsoft.com/en-us/azure/azure-sql/migration-guides/managed-instance/sql-server-to-managed-instance-overview)
@@ -147,7 +147,7 @@ For a 2TB database over a 1Gbps ExpressRoute connection: theoretical transfer ti
 - [DMS supported migration scenarios](https://learn.microsoft.com/en-us/azure/dms/resource-scenario-status)
 - [Azure SQL Managed Instance features](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/sql-managed-instance-paas-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A SQL Server 2012 database uses cross-database queries, SQL Agent jobs, and a 500GB database size. Which Azure target is appropriate and why?</summary>
@@ -177,7 +177,7 @@ For a 2TB database over a 1Gbps ExpressRoute connection: theoretical transfer ti
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

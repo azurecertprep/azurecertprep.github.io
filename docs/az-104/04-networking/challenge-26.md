@@ -5,7 +5,7 @@ title: "Challenge 26: Network Watcher & Diagnostics"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 26: Network Watcher & Diagnostics
+# Challenge 26: Network watcher & diagnostics
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. is troubleshooting connectivity issues between their Azure VMs and external services. The network team needs to use Azure diagnostic tools to identify why certain connections fail, verify NSG rules are correct, trace packet flows, and set up continuous monitoring. You must become proficient with Network Watcher's full toolkit.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Enable and use Azure Network Watcher
 - Use IP Flow Verify to test NSG rules
@@ -28,7 +28,7 @@ Contoso Ltd. is troubleshooting connectivity issues between their Azure VMs and 
 - Use Network Watcher topology view
 - Check effective security rules
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -121,10 +121,10 @@ az vm create \
 
 ## Tasks
 
-### Task 1: Enable Network Watcher
+### Task 1: enable Network watcher
 
 ```bash
-# Network Watcher is auto-enabled for most subscriptions
+# Network watcher is auto-enabled for most subscriptions
 # Verify it exists for your region
 az network watcher list -o table
 
@@ -139,7 +139,7 @@ az network watcher list \
   --query "[?location=='$LOCATION'] | [0].{Name:name, Location:location, State:provisioningState}" -o table
 ```
 
-### Task 2: IP Flow Verify
+### Task 2: IP flow verify
 
 Test whether traffic is allowed or denied by NSG rules:
 
@@ -151,7 +151,7 @@ VM_WEB_NIC=$(az vm show -g $RG -n vm-web \
 VM_WEB_IP=$(az vm show -g $RG -n vm-web -d \
   --query "privateIps" -o tsv)
 
-# Test: Can internet reach port 80 on the web VM? (Should ALLOW)
+# Test: can internet reach port 80 on the web VM? (Should allow)
 az network watcher test-ip-flow \
   --direction Inbound \
   --protocol Tcp \
@@ -160,7 +160,7 @@ az network watcher test-ip-flow \
   --vm $VM_WEB_ID \
   --nic $VM_WEB_NIC
 
-# Test: Can internet reach port 22 on the web VM? (Should DENY)
+# Test: can internet reach port 22 on the web VM? (Should deny)
 az network watcher test-ip-flow \
   --direction Inbound \
   --protocol Tcp \
@@ -169,7 +169,7 @@ az network watcher test-ip-flow \
   --vm $VM_WEB_ID \
   --nic $VM_WEB_NIC
 
-# Test: Can the web VM reach the internet on port 443? (Should ALLOW)
+# Test: can the web VM reach the internet on port 443? (Should allow)
 az network watcher test-ip-flow \
   --direction Outbound \
   --protocol Tcp \
@@ -184,7 +184,7 @@ az network watcher test-ip-flow \
 IP Flow Verify tells you which NSG rule (name and priority) is allowing or denying traffic. It checks both the NIC-level NSG and subnet-level NSG. This is the fastest way to diagnose "why can't I connect?" issues.
 
 :::
-### Task 3: Next Hop Analysis
+### Task 3: next hop analysis
 
 Determine the next hop for traffic from a VM:
 
@@ -212,7 +212,7 @@ az network watcher show-next-hop \
   --dest-ip 192.168.1.1
 ```
 
-### Task 4: Packet Capture
+### Task 4: packet capture
 
 ```bash
 # Create a storage account for packet captures
@@ -236,7 +236,7 @@ az network watcher packet-capture show \
   --location $LOCATION \
   --name capture-web-traffic
 
-# Generate some traffic (from another terminal or using the VM)
+# Generate some traffic (from another terminal or using the vm)
 az vm run-command invoke \
   --resource-group $RG \
   --name vm-web \
@@ -262,10 +262,10 @@ az network watcher packet-capture delete \
 Packet captures are stored as .cap files in the storage account. You can download and analyze them with Wireshark. The Network Watcher agent must be installed on the VM (automatically installed when you create a capture).
 
 :::
-### Task 5: Connection Monitor
+### Task 5: connection Monitor
 
 ```bash
-# Create a Connection Monitor to continuously test connectivity
+# Create a connection Monitor to continuously test connectivity
 az network watcher connection-monitor create \
   --name cm-web-to-internet \
   --location $LOCATION \
@@ -303,7 +303,7 @@ az network watcher connection-monitor show \
   --name cm-web-to-internet
 ```
 
-### Task 6: NSG Flow Logs
+### Task 6: NSG flow logs
 
 ```bash
 # Create a Log Analytics workspace for flow logs
@@ -355,7 +355,7 @@ az network watcher flow-log show \
 5. Enable Traffic Analytics with Log Analytics workspace
 6. Set processing interval (10 minutes recommended)
 
-### Task 7: Connection Troubleshoot
+### Task 7: connection troubleshoot
 
 ```bash
 # One-time connectivity check from VM to destination
@@ -383,7 +383,7 @@ az network watcher test-connectivity \
   --protocol Tcp
 ```
 
-### Task 8: Topology View and Effective Security Rules
+### Task 8: topology view and effective security rules
 
 ```bash
 # Generate network topology
@@ -409,7 +409,7 @@ az network nic list-effective-nsg \
 3. View the combined list of all applicable NSG rules (NIC + subnet level)
 4. Identify which rule is allowing or blocking traffic
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-26"
@@ -425,9 +425,9 @@ az network nic list-effective-nsg \
     "Effective security rules reviewed for combined NIC + subnet NSG impact"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: VM Cannot Reach Internet
+### Scenario a: VM cannot reach internet
 
 ```bash
 # Add a deny-all outbound rule to the NSG
@@ -443,7 +443,7 @@ az network nsg rule create \
   --protocol "*" \
   --access Deny
 
-# Diagnose with IP Flow Verify
+# Diagnose with IP flow verify
 az network watcher test-ip-flow \
   --direction Outbound \
   --protocol Tcp \
@@ -452,21 +452,21 @@ az network watcher test-ip-flow \
   --vm $VM_WEB_ID \
   --nic $VM_WEB_NIC
 
-# Output will show: "Access: Deny, Rule: BlockOutbound"
+# Output will show: "Access: deny, rule: BlockOutbound"
 
-# Fix: Remove the blocking rule
+# Fix: remove the blocking rule
 az network nsg rule delete \
   --resource-group $RG \
   --nsg-name nsg-web \
   --name BlockOutbound
 ```
 
-### Scenario B: Asymmetric Routing Causes Drops
+### Scenario b: asymmetric routing causes drops
 
 ```bash
 # Add a UDR that routes response traffic differently than request traffic
 # This causes asymmetric routing (responses take different path than requests)
-# Diagnose with Next Hop to see unexpected routing
+# Diagnose with next hop to see unexpected routing
 az network watcher show-next-hop \
   --resource-group $RG \
   --vm vm-web \
@@ -476,22 +476,22 @@ az network watcher show-next-hop \
 # If next hop shows "VirtualAppliance" but no NVA exists, traffic is black-holed
 ```
 
-### Scenario C: Connection Monitor Shows Failures
+### Scenario c: connection Monitor shows failures
 
 ```bash
-# Check Connection Monitor for failures
+# Check connection Monitor for failures
 az network watcher connection-monitor show \
   --location $LOCATION \
   --name cm-web-to-db
 
 # Common causes:
-# 1. No service listening on destination port
+# 1. no service listening on destination port
 # 2. NSG blocking the port
 # 3. OS-level firewall (iptables/ufw) blocking
-# Diagnose: Use IP Flow Verify + Connection Troubleshoot
+# Diagnose: use IP flow verify + connection troubleshoot
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What is the difference between Connection Monitor and Connection Troubleshoot?**
 
@@ -565,7 +565,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Azure Network Watcher overview](https://learn.microsoft.com/azure/network-watcher/network-watcher-monitoring-overview)
 - [IP Flow Verify](https://learn.microsoft.com/azure/network-watcher/network-watcher-ip-flow-verify-overview)

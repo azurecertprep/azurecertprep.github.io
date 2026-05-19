@@ -113,22 +113,6 @@ const az305Challenges = [
   { num: '50', title: 'Complete Azure Solution (Capstone)', domain: 'capstone', href: '/docs/az-305/infrastructure/challenge-50' },
 ];
 
-const referenceTable = [
-  { onprem: 'Active Directory', azure: 'Microsoft Entra ID', desc: 'Identity & access management' },
-  { onprem: 'Group Policy (GPO)', azure: 'Azure Policy', desc: 'Compliance & governance' },
-  { onprem: 'File server (SMB)', azure: 'Azure Files', desc: 'Managed file shares' },
-  { onprem: 'NAS / SAN', azure: 'Azure Blob Storage', desc: 'Object & block storage' },
-  { onprem: 'Hyper-V / VMware', azure: 'Azure Virtual Machines', desc: 'Compute workloads' },
-  { onprem: 'IIS / Apache', azure: 'Azure App Service', desc: 'Web app hosting' },
-  { onprem: 'Docker host', azure: 'Azure Container Apps', desc: 'Container workloads' },
-  { onprem: 'VLAN / Subnet', azure: 'Azure VNet / Subnet', desc: 'Network isolation' },
-  { onprem: 'Firewall rules', azure: 'NSG / Azure Firewall', desc: 'Traffic control' },
-  { onprem: 'DNS server', azure: 'Azure DNS', desc: 'Name resolution' },
-  { onprem: 'F5 / HAProxy', azure: 'Azure Load Balancer', desc: 'Traffic distribution' },
-  { onprem: 'Nagios / Zabbix', azure: 'Azure Monitor', desc: 'Monitoring & alerts' },
-  { onprem: 'Veeam / SCDPM', azure: 'Azure Backup', desc: 'Backup & recovery' },
-  { onprem: 'DR site', azure: 'Azure Site Recovery', desc: 'Disaster recovery' },
-];
 
 function HomepageHeader() {
   return (
@@ -220,41 +204,6 @@ function AZ305ChallengeGrid() {
               </Link>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ReferenceTable() {
-  return (
-    <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
-      <div className="container">
-        <div className="section-heading">
-          <Heading as="h2">Sysadmin ↔ Azure</Heading>
-          <p>You already know the concepts. Here's how they translate to Azure.</p>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          <div className="reference-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>On-Prem / Sysadmin</th>
-                  <th>Azure Equivalent</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {referenceTable.map((row, idx) => (
-                  <tr key={idx}>
-                    <td><code>{row.onprem}</code></td>
-                    <td><strong>{row.azure}</strong></td>
-                    <td>{row.desc}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </section>
@@ -370,7 +319,7 @@ export default function Home() {
         <AZ305ChallengeGrid />
         <CertificationCoverage />
         <ExamRoadmap />
-        <ReferenceTable />
+
       </main>
     </Layout>
   );

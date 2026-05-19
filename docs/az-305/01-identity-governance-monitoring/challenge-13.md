@@ -5,7 +5,7 @@ title: "Challenge 13: Design Governance for a Multi-Team Organization"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 13: Design Governance for a Multi-Team Organization
+# Challenge 13: design governance for a Multi-Team organization
 
 :::info Estimated Time and Cost
 
@@ -21,30 +21,30 @@ The current state is unsustainable. Contoso has 45 Azure subscriptions with no c
 
 The CTO has allocated budget for a comprehensive governance redesign. The solution must: (1) provide complete client data isolation with provable compliance boundaries, (2) enable per-engagement cost tracking for accurate client billing, (3) enforce industry-specific compliance policies without manual per-engagement configuration, (4) automate consultant access lifecycle tied to engagement assignments, and (5) scale to support a planned growth to 60+ concurrent engagements within two years. This is the culmination of your governance design work - integrating management group structure, tagging, policy, and identity governance into a cohesive solution.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a structure for management groups, subscriptions, and resource groups
 - Recommend a strategy for resource tagging
 - Recommend a solution for managing compliance
 - Recommend a solution for identity governance
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Management Group and Subscription Architecture
+### Part 1: Management Group and Subscription architecture
 
 1. Design the complete management group hierarchy for Contoso Consulting. Consider groups for: platform/shared services, industry-specific landing zones (healthcare, financial, retail), sandbox/training environments, and decommissioned engagements. Reference the design patterns from Challenge 09.
 2. Define the subscription strategy for client engagements. Decide: one subscription per engagement, one subscription per client (with resource groups per engagement), or one subscription per industry. Justify the choice considering data isolation, cost tracking, policy inheritance, and scale limits.
 3. Design the shared services model. Determine how hub networking (Azure Firewall, DNS, VPN), centralized monitoring, and identity services are structured. All engagement environments must route through a central firewall for egress filtering and logging.
 4. Define the engagement lifecycle for subscriptions: how a new engagement subscription is provisioned (subscription vending), how it is configured with the correct policies based on client industry, and how it is decommissioned (data retained per contract, resources deleted, subscription moved to "Decommissioned" management group).
 
-### Part 2: Tagging Strategy for Client Billing
+### Part 2: tagging strategy for client billing
 
 5. Design the mandatory tag taxonomy for Contoso. Include tags for: client name, engagement ID, industry vertical, engagement manager, billing code, start date, and expected end date. Reference the patterns from Challenge 10.
 6. Define how tags enable per-engagement cost attribution for client billing. Address shared costs (networking, monitoring, security tools) that must be allocated proportionally across engagements.
 7. Design tag enforcement policies. Determine which tags use `deny` (must exist before resource creation), which use `modify` (auto-inherit from resource group), and which use `audit` (flag for follow-up). Consider that engagement teams use different IaC tools and some manual Portal deployments.
 8. Address the tag migration plan for the 45 existing subscriptions. Determine how to normalize inconsistent tag names ("Client" vs. "Customer" vs. "Project") into the new standard taxonomy.
 
-### Part 3: Industry-Specific Compliance Policies
+### Part 3: Industry-Specific compliance Policies
 
 9. Design policy initiatives for each industry vertical:
    - **Healthcare (HIPAA):** encryption at rest with CMK, no public endpoints, audit logging required, PHI data classification tags mandatory
@@ -54,20 +54,20 @@ The CTO has allocated budget for a comprehensive governance redesign. The soluti
 11. Define the exemption process for cross-industry requirements. Some engagements span multiple regulatory frameworks (e.g., a healthcare client that also processes payments). Design how overlapping compliance requirements are handled.
 12. Design the compliance reporting structure. Each client contract requires monthly compliance attestation. Define how per-engagement compliance reports are generated showing adherence to the specific regulatory framework applicable to that engagement.
 
-### Part 4: Identity Governance for Consultant Rotation
+### Part 4: identity governance for consultant rotation
 
 13. Design access packages for engagement-level access (reference Challenge 12). Create access package templates for: "Engagement Contributor" (deploy resources within the engagement subscription), "Engagement Reader" (client stakeholder read-only access), and "Engagement Admin" (full control for the engagement lead). Each package should be scoped to a specific engagement.
 14. Design the consultant rotation workflow. When a consultant is assigned to a new engagement (by their resource manager in the project management tool), they should automatically receive the appropriate access package. When removed from an engagement, access should be revoked within 24 hours.
 15. Design the engagement lifecycle integration with access reviews. Configure quarterly access reviews for each engagement where the engagement manager attests that all team members still need access. Define what happens when an engagement officially ends (all access packages expire, guest accounts for client stakeholders are disabled).
 16. Design the privileged access model for engagement environments. Determine how "break glass" emergency access works within a client's isolated environment, who has standing privileged access (if anyone), and how PIM eligibility is scoped per engagement.
 
-### Part 5: Operational Integration
+### Part 5: operational integration
 
 17. Design a "new engagement onboarding" automation that orchestrates the entire setup: subscription provisioning, management group placement, policy inheritance verification, tag application, access package creation, and hub network peering. Define the inputs (client name, industry, engagement team roster, duration) and the expected outputs.
 18. Design monitoring and alerting for governance drift across all 30-40 concurrent engagements. Define how the central governance team detects and responds to: a subscription with compliance violations, an engagement with orphaned access (consultants no longer assigned but still have access), or a subscription approaching cost thresholds.
 19. Design the engagement offboarding process: data retention per contractual obligations, resource deletion after retention period, subscription cleanup, access revocation for all team members and guest accounts, and movement of the subscription to the "Decommissioned" management group.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-13"
@@ -118,7 +118,7 @@ The offboarding sequence must be ordered: (1) Notify all team members that acces
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Cloud Adoption Framework landing zone architecture](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/)
 - [Management group and subscription organization](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org)
@@ -128,7 +128,7 @@ The offboarding sequence must be ordered: (1) Notify all team members that acces
 - [Tagging strategy for Azure](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging)
 - [Azure landing zone FAQ](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/faq)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Contoso onboards a new healthcare client engagement. The onboarding automation creates a subscription and places it under the "Healthcare" management group. What compliance policies are automatically enforced without any additional configuration?</summary>
@@ -158,7 +158,7 @@ The offboarding sequence must be ordered: (1) Notify all team members that acces
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

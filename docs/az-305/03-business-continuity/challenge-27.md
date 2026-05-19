@@ -6,7 +6,7 @@ title: "Challenge 27: Design Backup & Recovery for Databases"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 27: Design Backup & Recovery for Databases
+# Challenge 27: design Backup & Recovery for databases
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ In addition to the trading database, Apex operates an analytics data warehouse (
 
 Apex also runs a Cosmos DB instance for real-time market data feeds and a PostgreSQL Flexible Server for their back-office operations. Each has different backup and recovery requirements that must be addressed in the overall database continuity strategy.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a backup and recovery solution for databases
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Azure SQL Database Backup Strategy
+### Part 1: Azure SQL database Backup strategy
 
 1. Design the backup configuration for the trading database (near-zero RPO):
    - What is the default backup frequency for Azure SQL Database? (Full, differential, transaction log)
@@ -88,7 +88,7 @@ az sql failover-group create \
 
 6. For the analytics database, determine whether geo-restore or a failover group is more cost-effective given the 1-hour RPO and 4-hour RTO requirements.
 
-### Part 3: Cosmos DB Continuous Backup
+### Part 3: Cosmos DB continuous Backup
 
 7. Design the backup strategy for the Cosmos DB market data instance:
    - Compare periodic backup mode vs. continuous backup mode
@@ -105,7 +105,7 @@ az sql failover-group create \
    - Can you restore a single container or must you restore the entire account?
    - What is the approximate restore time for a 100 GB database?
 
-### Part 4: PostgreSQL and Cross-Database Recovery Orchestration
+### Part 4: PostgreSQL and Cross-Database Recovery orchestration
 
 10. Design the backup approach for the PostgreSQL Flexible Server:
     - Configure automated backups with geo-redundant storage
@@ -117,7 +117,7 @@ az sql failover-group create \
     - How do you handle the trading DB's references to Cosmos DB market data?
     - What validation queries confirm each database is recovered correctly?
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-27"
@@ -194,7 +194,7 @@ Important: Continuous backup mode cannot be changed back to periodic once enable
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Automated backups in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/automated-backups-overview)
 - [Long-term retention - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/long-term-retention-overview)
@@ -203,7 +203,7 @@ Important: Continuous backup mode cannot be changed back to periodic once enable
 - [Backup and restore in Azure Database for PostgreSQL - Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-backup-restore)
 - [Geo-restore - Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/recovery-using-backups#geo-restore)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A financial application requires zero data loss (RPO = 0) during a zone failure but can tolerate 5 seconds of data loss during a full region failure. Which Azure SQL configuration achieves this?</summary>
@@ -233,7 +233,7 @@ Important: Continuous backup mode cannot be changed back to periodic once enable
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

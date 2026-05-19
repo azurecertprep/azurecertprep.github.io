@@ -5,7 +5,7 @@ title: "Challenge 16: Capstone | Day in the Life of an Azure Admin"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 16: Capstone | Um Dia na Vida de um Administrador Azure
+# Desafio 16: capstone | um dia na vida de um administrador Azure
 
 :::info Tempo e Custo Estimados
 
@@ -33,7 +33,7 @@ done
 
 ---
 
-## Ticket 1: Crise de Identidade
+## Ticket 1: crise de identidade
 
 **Domínio: Gerenciar Identidades e Governança do Microsoft Entra ID**
 
@@ -84,7 +84,7 @@ az ad group member add \
 
 </details>
 
-### Causa Raiz
+### Causa raiz
 O usuário foi provisionado por um script automatizado que falhou no meio do processo | a conta foi criada mas ficou em estado desabilitado, nenhuma senha inicial foi definida, e a etapa de atribuição de grupo foi pulada.
 
 ---
@@ -111,7 +111,7 @@ az storage account show \
   --resource-group rg-az104-capstone-storage \
   --query networkRuleSet
 
-# Check if the default action is Deny
+# Check if the default action is deny
 az storage account show \
   --name stcontoso \
   --resource-group rg-az104-capstone-storage \
@@ -131,7 +131,7 @@ Gere um novo token SAS ou atualize as regras de firewall para permitir o IP da e
 <summary>Comandos de Correção</summary>
 
 ```bash
-# Option A: Generate a new SAS token
+# Option a: generate a new SAS token
 END_DATE=$(date -u -d "+7 days" '+%Y-%m-%dT%H:%MZ')
 az storage account generate-sas \
   --account-name stcontoso \
@@ -141,7 +141,7 @@ az storage account generate-sas \
   --expiry $END_DATE \
   -o tsv
 
-# Option B: Add IP to firewall allow list
+# Option b: add IP to firewall allow list
 az storage account network-rule add \
   --account-name stcontoso \
   --resource-group rg-az104-capstone-storage \
@@ -150,12 +150,12 @@ az storage account network-rule add \
 
 </details>
 
-### Causa Raiz
+### Causa raiz
 O token SAS gerado na semana passada tinha validade de 7 dias e expirou durante a noite. Além disso, um membro da equipe de segurança adicionou regras de firewall à conta de armazenamento mas não incluiu o IP da equipe de analytics.
 
 ---
 
-## Ticket 3: VM Fora do Ar
+## Ticket 3: VM fora do ar
 
 **Domínio: Implantar e Gerenciar Recursos de Computação do Azure**
 
@@ -215,12 +215,12 @@ az vm auto-shutdown \
 
 </details>
 
-### Causa Raiz
+### Causa raiz
 Um desenvolvedor habilitou o desligamento automático às 19:00 para sua VM de desenvolvimento, mas acidentalmente aplicou na VM de produção. O log de atividades mostra que o desligamento foi acionado pelo provedor de recursos `Microsoft.DevTestLab`.
 
 ---
 
-## Ticket 4: Bloqueio de Rede
+## Ticket 4: bloqueio de rede
 
 **Domínio: Configurar e Gerenciar Redes Virtuais**
 
@@ -247,13 +247,13 @@ az network nic list-effective-nsg \
   --resource-group rg-az104-capstone-network \
   --name vm-web-01-nic
 
-# Check LB health probe status (via Portal: LB > Insights)
+# Check LB health probe status (via portal: LB > insights)
 az network lb probe show \
   --resource-group rg-az104-capstone-network \
   --lb-name lb-web \
   --name hp-https
 
-# Use Network Watcher IP flow verify
+# Use Network watcher IP flow verify
 az network watcher test-ip-flow \
   --direction Inbound \
   --local 10.0.0.4:443 \
@@ -294,12 +294,12 @@ az network lb probe show \
 
 </details>
 
-### Causa Raiz
+### Causa raiz
 A equipe de segurança adicionou uma regra `DenyAllInbound` com prioridade 200, que substitui as regras padrão. Eles esqueceram de adicionar uma regra explícita de `Allow` para a porta 443 antes da regra de negação.
 
 ---
 
-## Ticket 5: Cadê Meus Alertas?
+## Ticket 5: cadê meus alertas?
 
 **Domínio: Monitorar e Manter Recursos do Azure**
 
@@ -361,12 +361,12 @@ Para alertas de backup: Configure via **Recovery Services vault → Alertas → 
 
 </details>
 
-### Causa Raiz
+### Causa raiz
 O grupo de ação tinha o email errado (um erro de digitação | `ops@contso.com` em vez de `ops@contoso.com`). O alerta de disponibilidade de VM foi criado mas ficou em estado desabilitado durante os testes e nunca foi reabilitado. Os alertas de backup nunca foram configurados.
 
 ---
 
-## Teste seus Conhecimentos: Questões Estilo Exame
+## Teste seus conhecimentos: questões estilo exame
 
 **Questão 1** *(Identidade)*
 Um usuário relata que não consegue fazer login no Portal do Azure. A conta dele existe no Microsoft Entra ID. O que você deve verificar PRIMEIRO?
@@ -429,7 +429,7 @@ for i in identity storage compute network monitor; do
 done
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-16"

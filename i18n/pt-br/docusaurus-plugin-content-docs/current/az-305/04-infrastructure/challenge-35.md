@@ -5,7 +5,7 @@ title: "Desafio 35: Projetar uma Solução Baseada em VM"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 35: Projetar uma Solução Baseada em VM
+# Desafio 35: projetar uma solução baseada em VM
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ A empresa opera sob requisitos regulatorios rigorosos. Certas cargas de trabalho
 
 Sua tarefa é projetar uma solução baseada em VM que enderece economia de scale-to-zero, soberania de dados através de hardware dedicado, armazenamento de ultra-baixa-latência e proximidade de rede para comunicação inter-VM, mantendo os custos gerenciáveis pagando apenas por recursos durante a janela ativa de 14 horas.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução baseada em maquinas virtuais
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design de Orquestração de Scale Set
+### Parte 1: design de orquestração de scale set
 
 1. Avalie os modos de orquestracao do VMSS para a carga de trabalho Monte Carlo:
    - **Orquestração Flexible**: Suporta tamanhos mistos de VM, zonas de disponibilidade, pode adicionar VMs existentes
@@ -42,7 +42,7 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
    - Lidar com burst no meio do dia para mais de 150 VMs se o backlog de calculos de risco crescer
    - Calcular a economia mensal de custos de scale-to-zero versus rodar 24/7
 
-### Parte 2: Hardware Dedicado e Computação Confidencial
+### Parte 2: hardware dedicado e computação confidencial
 
 4. Para cargas de trabalho que processam PII e não podem compartilhar hardware com outros locatarios, avalie:
    - **Azure Dedicated Hosts**: Servidor físico dedicado a sua organização
@@ -58,7 +58,7 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
    - Qual SKU de host acomoda o tamanho de VM selecionado?
    - Como funciona o controle de manutenção no nível do host?
 
-### Parte 3: Design de Armazenamento de Ultra-Baixa-Latência
+### Parte 3: design de armazenamento de Ultra-Baixa-Latência
 
 7. Compare os tipos de disco Azure para o requisito de cache de simulacao (latência sub-milissegundo):
 
@@ -74,7 +74,7 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
 
 9. Projete a configuração de disco: Cada VM deve ter seu próprio Ultra Disk, ou você deve usar uma arquitetura de disco compartilhado? Quais sao as consideracoes de dimensionamento?
 
-### Parte 4: Proximidade de Rede e Performance
+### Parte 4: proximidade de rede e performance
 
 10. Projete a arquitetura de rede para minimizar latência inter-VM:
     - Implante um proximity placement group para co-localizar VMs no mesmo spine de rede
@@ -88,7 +88,7 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
 
 12. Projete a topologia de rede para VMs de simulacao que precisam trocar resultados intermediarios com latência sub-1ms entre si.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-35"
@@ -171,7 +171,7 @@ Para 100+ VMs em um PPG, use posicionamento baseado em intent: especifique os ta
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Virtual Machine Scale Sets orchestration modes](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes)
 - [Azure Dedicated Hosts](https://learn.microsoft.com/en-us/azure/virtual-machines/dedicated-hosts)
@@ -179,7 +179,7 @@ Para 100+ VMs em um PPG, use posicionamento baseado em intent: especifique os ta
 - [Proximity placement groups](https://learn.microsoft.com/en-us/azure/virtual-machines/co-location)
 - [Accelerated Networking overview](https://learn.microsoft.com/en-us/azure/virtual-network/accelerated-networking-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um VMSS com 100 VMs identicas precisa escalar de 0 para 100 o mais rápido possível em um horario agendado. Qual modo de orquestracao e qual configuração otimiza a velocidade de implantacao?</summary>
@@ -202,7 +202,7 @@ Para 100+ VMs em um PPG, use posicionamento baseado em intent: especifique os ta
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

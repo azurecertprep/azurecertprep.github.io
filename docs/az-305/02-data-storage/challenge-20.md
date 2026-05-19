@@ -5,7 +5,7 @@ title: "Challenge 20: Design Data Storage for Cost & Performance"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 20: Design Data Storage for Cost and Performance
+# Challenge 20: design Data Storage for cost and performance
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The CFO has raised an urgent concern: the current monthly storage bill is $15,00
 
 Your task is to design a tiered storage strategy that balances cost optimization with performance requirements, leveraging Azure Storage access tiers, reserved capacity pricing, lifecycle management policies, and caching layers where appropriate.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a data storage solution to balance features, performance, and costs
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Analyze Current Storage and Define Tier Strategy
+### Part 1: analyze current Storage and define tier strategy
 
 1. Create a resource group for this challenge and deploy a Standard general-purpose v2 storage account.
 2. Document the current pricing for each access tier (Hot, Cool, Cold, Archive) including per-GB storage costs, read/write operation costs, and data retrieval costs in your chosen region.
@@ -37,7 +37,7 @@ Your task is to design a tiered storage strategy that balances cost optimization
    - Compliance archives (60TB, accessed less than once per year) - evaluate Cold vs Archive tier
 4. Calculate the projected monthly cost for your proposed tier allocation versus keeping everything in Hot tier.
 
-### Part 2: Implement Lifecycle Management Policies
+### Part 2: implement lifecycle Management Policies
 
 5. Create a lifecycle management policy that automatically transitions blobs between tiers based on last access time:
    - Move blobs not accessed for 30 days from Hot to Cool
@@ -46,7 +46,7 @@ Your task is to design a tiered storage strategy that balances cost optimization
 6. Enable last access time tracking on the storage account to support access-time-based policies.
 7. Create a second policy rule that deletes temporary processing blobs (prefix: `temp/`) after 7 days.
 
-### Part 3: Evaluate Reserved Capacity and Caching
+### Part 3: evaluate reserved capacity and caching
 
 8. Calculate the savings from purchasing 100TB of Azure Storage reserved capacity (1-year commitment) versus pay-as-you-go pricing for the stable baseline storage.
 9. Design a caching strategy for the ML training data using Azure Cache for Redis or Azure HPC Cache. Document:
@@ -55,7 +55,7 @@ Your task is to design a tiered storage strategy that balances cost optimization
    - Cost of the caching layer versus the performance benefit
 10. Create a decision matrix comparing Standard vs Premium storage account performance tiers for the ML workload, considering IOPS, throughput, and latency requirements.
 
-### Part 4: Design for Growth
+### Part 4: design for growth
 
 11. Document how your design scales from 100TB to 500TB while maintaining the $10K/month budget constraint.
 12. Design a monitoring solution using Azure Monitor metrics to track:
@@ -63,7 +63,7 @@ Your task is to design a tiered storage strategy that balances cost optimization
     - Access patterns per tier (to validate lifecycle policy effectiveness)
     - Cost alerts when monthly spend approaches budget threshold
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-20"
@@ -114,7 +114,7 @@ Premium block blob storage accounts use SSDs and are optimized for workloads req
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Blob Storage access tiers](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
 - [Optimize costs with Azure Storage reserved capacity](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-reserved-capacity)
@@ -123,7 +123,7 @@ Premium block blob storage accounts use SSDs and are optimized for workloads req
 - [Premium block blob storage accounts](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-block-blob-premium)
 - [Azure HPC Cache overview](https://learn.microsoft.com/en-us/azure/hpc-cache/hpc-cache-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company stores 50TB of log data that is written once and read approximately twice per month for compliance audits. Which access tier minimizes total cost (storage + operations)?</summary>
@@ -153,11 +153,11 @@ Premium block blob storage accounts use SSDs and are optimized for workloads req
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab demonstrates that Azure Storage access tiers are not just pricing categories -- they produce fundamentally different behavior. Archive tier is genuinely offline (reads fail), last-access-time tracking enables intelligent automation, and lifecycle policies operate without application changes. You will observe these behaviors directly.
 
-### Step 1: Create a storage account with last-access-time tracking
+### Step 1: create a storage account with last-access-time tracking
 
 ```bash
 az group create \
@@ -203,7 +203,7 @@ az storage container create \
   --account-key "$STORAGE_KEY"
 ```
 
-### Step 2: Upload the same file to Hot, Cool, and Archive tiers
+### Step 2: upload the same file to hot, cool, and archive tiers
 
 Create a sample file:
 
@@ -247,7 +247,7 @@ az storage blob upload \
   --tier Archive
 ```
 
-### Step 3: Compare blob properties across tiers
+### Step 3: compare blob properties across tiers
 
 ```bash
 echo "=== Hot Tier Blob ==="
@@ -286,7 +286,7 @@ az storage blob show \
 All three blobs have the same content and size, but the tier metadata differs. The storage cost per GB varies dramatically: Hot is roughly 20x more expensive per GB than Archive. However, the trade-off is access behavior -- as you will see in the next step, Archive tier is not just "cheaper storage" but fundamentally offline storage.
 :::
 
-### Step 4: Attempt to download from Archive tier -- observe failure
+### Step 4: attempt to download from archive tier -- observe failure
 
 Download from Hot tier (succeeds instantly):
 
@@ -320,7 +320,7 @@ The download fails with an error indicating the blob is in an offline tier. Arch
 This is the single most important behavioral difference in Azure Storage tiering: Archive is OFFLINE storage. It is not "slow storage" -- it is inaccessible storage that requires an explicit rehydration operation taking hours. On the AZ-305 exam, if a scenario requires "immediate access to compliance data during an audit," Archive tier is the WRONG answer regardless of its cost savings. The exam tests whether you understand that Archive introduces hours of latency, not just higher per-operation costs.
 :::
 
-### Step 5: Initiate rehydration and check status
+### Step 5: initiate rehydration and check status
 
 Start rehydration with High priority:
 
@@ -352,7 +352,7 @@ The blob shows `rehydrate-pending-to-hot` status. High priority rehydration can 
 Rehydration is not instant even with High priority. Designing for Archive tier means designing for eventual access -- you need a process to handle the delay. Common patterns include: (1) keeping a metadata index in Hot tier so you know WHAT is archived without reading it, (2) maintaining a "last 30 days" copy in Cool tier for recent compliance queries, and (3) triggering rehydration proactively when an audit is announced rather than when data is requested.
 :::
 
-### Step 6: Apply a lifecycle management policy based on last access time
+### Step 6: apply a lifecycle management policy based on last access time
 
 ```bash
 az storage account management-policy create \
@@ -406,7 +406,7 @@ az storage account management-policy create \
   }'
 ```
 
-### Step 7: Verify the policy was applied
+### Step 7: verify the policy was applied
 
 ```bash
 az storage account management-policy show \

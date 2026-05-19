@@ -3,11 +3,11 @@ sidebar_position: 4
 title: "Exam Tips & Strategy"
 ---
 
-# Exam Tips & Strategy
+# Exam tips & strategy
 
 The AZ-104 is a proctored exam with specific question formats. Knowing how the exam works is almost as important as knowing the content.
 
-## Exam Format
+## Exam format
 
 | Detail | Value |
 |--------|-------|
@@ -18,18 +18,18 @@ The AZ-104 is a proctored exam with specific question formats. Knowing how the e
 | **Penalty for wrong answers** | None | always answer every question |
 | **Can you go back?** | Yes, within a section. No, between sections. |
 
-## Question Types You'll See
+## Question types you'll see
 
-### Multiple Choice
+### Multiple choice
 Standard "pick one" or "pick two" answers. Read carefully | "which TWO" means exactly two.
 
 ### Drag-and-Drop
 Match items from a list to targets. Common for ordering deployment steps or matching services to requirements.
 
-### Hot Area
+### Hot area
 Click on the correct area of a screenshot or diagram. Common for Portal-based questions ("where would you click to configure X?").
 
-### Case Study
+### Case study
 A multi-page scenario with 4-7 questions. You can navigate between questions within the case study but cannot return after moving to the next section.
 
 :::warning Case Study Strategy
@@ -37,7 +37,7 @@ A multi-page scenario with 4-7 questions. You can navigate between questions wit
 Read the **requirements** tab first, then the scenario. Many case study questions only need specific details | don't try to memorize everything.
 
 :::
-### Active Lab
+### Active lab
 A real Azure Portal environment where you complete tasks. You have limited time and a restricted set of actions.
 
 :::tip Lab Strategy
@@ -56,23 +56,23 @@ Labs are scored on the **end state**, not the steps you take. If the CLI fails, 
 
 **Tip**: Don't spend more than 2 minutes on any single question in your first pass. Flag it and move on.
 
-## Study Strategy
+## Study strategy
 
-### Week 1-2: Identity & Governance + Storage (Challenges 01-06)
+### Week 1-2: identity & governance + Storage (Challenges 01-06)
 These domains are 35-45% of the exam. Start here because Entra ID and RBAC concepts appear in questions across ALL domains.
 
-### Week 3-4: Compute + Networking (Challenges 07-13)
+### Week 3-4: compute + networking (Challenges 07-13)
 These are the most hands-on domains. Spend extra time on VMs, App Service, VNets, and NSGs | they're heavily tested.
 
-### Week 5: Monitoring + Capstone (Challenges 14-16)
+### Week 5: monitoring + capstone (Challenges 14-16)
 Monitoring is 10-15% but the concepts (Azure Monitor, KQL, alerts) connect everything together.
 
-### Week 6: Review + Practice
+### Week 6: review + practice
 - Take the [Free Practice Assessment](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104/practice/assessment?assessment-type=practice&assessmentId=21)
 - Review the [Coverage Matrix](/docs/az-104/coverage-matrix) | any gaps?
 - Redo Break & Fix scenarios from each challenge
 
-## Common Exam Gotchas
+## Common exam gotchas
 
 :::warning Things that catch people off guard
 
@@ -86,7 +86,7 @@ Monitoring is 10-15% but the concepts (Azure Monitor, KQL, alerts) connect every
 8. **Custom DNS names** for App Service require a CNAME or A record + TXT verification
 
 :::
-## Useful Links
+## Useful links
 
 | Resource | Link |
 |----------|------|
@@ -96,7 +96,7 @@ Monitoring is 10-15% but the concepts (Azure Monitor, KQL, alerts) connect every
 | **Exam Replay offer** | [Exam Deals](https://learn.microsoft.com/en-us/credentials/certifications/deals) |
 | **Certification renewal** | [Renew for free](https://learn.microsoft.com/en-us/credentials/certifications/renew-your-microsoft-certification) |
 
-## After You Pass 🎉
+## After you pass 🎉
 
 - Your certification appears on your [Microsoft Learn profile](https://learn.microsoft.com/en-us/users/) within 24 hours
 - You get a **digital badge** via Credly that you can share on LinkedIn

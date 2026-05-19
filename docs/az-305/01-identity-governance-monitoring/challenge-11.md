@@ -5,7 +5,7 @@ title: "Challenge 11: Design a Compliance Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 11: Design a Compliance Solution
+# Challenge 11: design a compliance solution
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ Last month, a junior developer accidentally created a storage account with anony
 
 The compliance team consists of only two people and cannot manually review every deployment. They need a policy-as-code approach that scales with the organization's growth (they plan to double their Azure footprint within 18 months). Some development teams have legitimate exceptions - the telehealth team needs public IP addresses for their WebRTC signaling servers, and the data science team needs GPU-enabled VM SKUs not on the standard approved list. The solution must accommodate these exceptions without undermining the overall compliance posture.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for managing compliance
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Policy Framework Design
+### Part 1: Policy Framework design
 
 1. Design the Azure Policy initiative structure for HealthBridge. Define separate initiatives for: HIPAA regulatory controls, internal security standards, and cost governance. Determine whether to use the built-in HIPAA HITRUST initiative as-is, customize it, or build a custom initiative.
 2. For each policy category below, specify the policy effect and justification:
@@ -39,7 +39,7 @@ The compliance team consists of only two people and cannot manually review every
 3. Design the policy assignment hierarchy. Determine which policies apply at which management group or subscription level, considering that some policies must be universal while others are environment-specific (e.g., stricter in production than development).
 4. Define a process for creating and managing custom policy definitions versus using built-in policies. Identify which of HealthBridge's requirements are met by built-in policies and which require custom definitions.
 
-### Part 2: Exception Management
+### Part 2: exception Management
 
 5. Design an exemption workflow for teams with legitimate compliance exceptions. Define: who can grant exemptions, what documentation is required, whether exemptions are time-bound (waiver) or permanent (mitigated), and how exemptions are tracked for audit purposes.
 6. For the telehealth team's public IP requirement, design the specific exemption mechanism. Choose between: Azure Policy exemptions at the resource group scope, a separate management group with different policies, or a custom policy with exclusion conditions.
@@ -51,13 +51,13 @@ The compliance team consists of only two people and cannot manually review every
 9. Specify the managed identity requirements for remediation tasks. Define the role assignments needed, the principle of least privilege for remediation identities, and the scope of their permissions.
 10. Design a drift detection and correction mechanism. Determine how to handle resources that were compliant at creation but drifted out of compliance (e.g., someone disabled encryption after initial deployment).
 
-### Part 4: Compliance Reporting
+### Part 4: compliance reporting
 
 11. Design the compliance dashboard and reporting solution. Specify how the monthly board report is generated, what metrics it includes (compliance percentage per initiative, trend over time, top violations), and how the regulatory compliance dashboard in Microsoft Defender for Cloud integrates with Azure Policy.
 12. Define alerting for critical compliance violations. Determine which violations trigger immediate alerts (e.g., anonymous blob access enabled) versus which are acceptable to include in weekly compliance reports.
 13. Design the audit trail for compliance evidence. Specify how to demonstrate to HIPAA auditors that controls are continuously enforced (Activity Log retention, policy evaluation logs, exemption history).
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-11"
@@ -108,7 +108,7 @@ Combine three data sources for comprehensive reporting: (1) Azure Policy complia
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Policy overview](https://learn.microsoft.com/azure/governance/policy/overview)
 - [Azure Policy effects](https://learn.microsoft.com/azure/governance/policy/concepts/effect-basics)
@@ -118,7 +118,7 @@ Combine three data sources for comprehensive reporting: (1) Azure Policy complia
 - [Regulatory compliance in Microsoft Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/regulatory-compliance-dashboard)
 - [Tutorial: Create a custom policy definition](https://learn.microsoft.com/azure/governance/policy/tutorials/create-custom-policy-definition)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. HealthBridge deploys a policy with `deny` effect that prevents storage accounts without customer-managed keys. An existing storage account that was created before the policy lacks CMK. Will this resource be blocked from updates?</summary>
@@ -148,7 +148,7 @@ Combine three data sources for comprehensive reporting: (1) Azure Policy complia
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

@@ -5,7 +5,7 @@ title: "Challenge 21: VM Extensions & Automation"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 21: VM Extensions & Automation
+# Challenge 21: VM extensions & automation
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. has a fleet of 50 VMs across development, staging, and production environments. The operations team is tired of manually SSH-ing into each VM to install monitoring agents, configure software, and run maintenance scripts. Every time a new VM is provisioned, someone forgets a configuration step, leading to inconsistency. You are tasked with automating post-deployment configuration using VM extensions, Custom Script Extension, Run Command, and Azure Automation.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -28,7 +28,7 @@ Contoso Ltd. has a fleet of 50 VMs across development, staging, and production e
 | Create and manage runbooks | Medium |
 | Configure VM diagnostics extension | Medium |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -42,7 +42,7 @@ Contoso Ltd. has a fleet of 50 VMs across development, staging, and production e
 
 ## Tasks
 
-### Task 1: Create the Lab Environment
+### Task 1: create the lab environment
 
 ```bash
 # Create resource group
@@ -69,12 +69,12 @@ az vm create \
   --tags Environment=Development Department=IT
 ```
 
-### Task 2: Deploy Custom Script Extension (Linux)
+### Task 2: deploy custom script extension (Linux)
 
 Install Nginx on the Linux VM using the Custom Script Extension:
 
 ```bash
-# Deploy Custom Script Extension to install Nginx
+# Deploy custom script extension to install nginx
 az vm extension set \
   --resource-group rg-automation-lab \
   --vm-name vm-linux-auto \
@@ -93,12 +93,12 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState, Publisher:publisher}" -o table
 ```
 
-### Task 3: Deploy Custom Script Extension (Windows)
+### Task 3: deploy custom script extension (Windows)
 
 Install IIS on the Windows VM using Custom Script Extension:
 
 ```bash
-# Deploy Custom Script Extension for Windows
+# Deploy custom script extension for Windows
 az vm extension set \
   --resource-group rg-automation-lab \
   --vm-name vm-win-auto \
@@ -117,7 +117,7 @@ az vm extension show \
   --query "{Name:name, Status:provisioningState}" -o table
 ```
 
-### Task 4: Use Custom Script Extension with External Script
+### Task 4: use custom script extension with external script
 
 Host a configuration script in a storage account and reference it:
 
@@ -188,33 +188,33 @@ az vm extension set \
 rm -f configure-vm.sh
 ```
 
-### Task 5: Use Run Command for Ad-Hoc Operations
+### Task 5: use run command for Ad-Hoc operations
 
 Run commands on VMs without SSH/RDP access:
 
 ```bash
-# Linux: Check disk space
+# Linux: check disk space
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "df -h && echo '---' && free -m && echo '---' && uptime"
 
-# Linux: Check if Nginx is running
+# Linux: check if nginx is running
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "systemctl status nginx --no-pager"
 
-# Windows: Get system information
+# Windows: get system information
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-win-auto \
   --command-id RunPowerShellScript \
   --scripts "Get-ComputerInfo | Select-Object WindowsProductName, OsArchitecture, CsProcessors, OsTotalVisibleMemorySize"
 
-# Windows: Check IIS status
+# Windows: check IIS status
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-win-auto \
@@ -222,7 +222,7 @@ az vm run-command invoke \
   --scripts "Get-Service W3SVC | Format-Table Name, Status, StartType"
 ```
 
-### Task 6: List and Manage VM Extensions
+### Task 6: list and manage VM extensions
 
 ```bash
 # List all extensions on a VM
@@ -238,10 +238,10 @@ az vm extension image list \
   --query "[].{Name:name, Publisher:publisher}" -o table --latest
 ```
 
-### Task 7: Create an Azure Automation Account
+### Task 7: create an Azure automation account
 
 ```bash
-# Create Automation Account
+# Create automation account
 az automation account create \
   --name auto-contoso-ops \
   --resource-group rg-automation-lab \
@@ -254,7 +254,7 @@ az automation account show \
   --query "{Name:name, State:state, Location:location}" -o table
 ```
 
-### Task 8: Create a Runbook for VM Start/Stop
+### Task 8: create a runbook for VM Start/Stop
 
 ```bash
 # Create a PowerShell runbook
@@ -322,10 +322,10 @@ az automation runbook publish \
 rm -f stop-dev-vms.ps1
 ```
 
-### Task 9: Schedule the Runbook
+### Task 9: schedule the runbook
 
 ```bash
-# Create a schedule (weekdays at 7 PM)
+# Create a schedule (weekdays at 7 pm)
 az automation schedule create \
   --resource-group rg-automation-lab \
   --automation-account-name auto-contoso-ops \
@@ -343,7 +343,7 @@ az automation job-schedule create \
   --schedule-name "weekday-evening-shutdown"
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-21"
@@ -391,9 +391,9 @@ For the runbook to manage Azure resources, the Automation Account needs a manage
 
 </details>
 
-## Break and Fix
+## Break and fix
 
-### Scenario A: Extension Fails to Install
+### Scenario a: extension fails to install
 
 Deploy a Custom Script Extension with an intentional error (e.g., referencing a non-existent file URL). Check the extension status and diagnose the failure:
 
@@ -405,7 +405,7 @@ az vm extension show \
   --name customScript \
   --query "{Status:provisioningState, Message:instanceView.statuses[0].message}"
 
-# Use Run Command to check extension logs
+# Use run command to check extension logs
 az vm run-command invoke \
   --resource-group rg-automation-lab \
   --name vm-linux-auto \
@@ -413,15 +413,15 @@ az vm run-command invoke \
   --scripts "cat /var/log/azure/custom-script/handler.log | tail -20"
 ```
 
-### Scenario B: Run Command Timeout
+### Scenario b: run command timeout
 
 Execute a Run Command script that sleeps for 5 minutes. What happens when the default timeout is exceeded? How do you handle long-running operations?
 
-### Scenario C: Runbook Authentication Failure
+### Scenario c: runbook authentication failure
 
 Create a runbook that tries to access resources but the Automation Account managed identity has no RBAC assignment. Observe the error in the job output and diagnose the missing permissions.
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. How many Custom Script Extensions can run simultaneously on a VM?</summary>
@@ -462,7 +462,7 @@ On Windows:
 ## Cleanup
 
 ```bash
-# Delete the Automation Account
+# Delete the automation account
 az automation account delete \
   --name auto-contoso-ops \
   --resource-group rg-automation-lab \
@@ -474,7 +474,7 @@ az group delete --name rg-automation-lab --yes --no-wait
 echo "Cleanup complete."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [VM extensions overview](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/overview)
 - [Custom Script Extension for Linux](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux)

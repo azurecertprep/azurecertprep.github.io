@@ -6,7 +6,7 @@ title: "Desafio 28: Projetar Backup e Recuperação para Dados Não Estruturados
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Desafio 28: Projetar Backup e Recuperação para Dados Não Estruturados
+# Desafio 28: projetar Backup e recuperação para dados não estruturados
 
 :::info Tempo Estimado e Custo
 
@@ -22,13 +22,13 @@ O maior risco operacional e a delecao acidental. Somente no último trimestre, d
 
 O desafio é equilibrar múltiplas camadas de proteção: recuperação instantanea para o cenário "ops, deletei a pasta errada", backups programados para recuperação point-in-time, e arquivamento imutável para conformidade de longo prazo. Os custos de armazenamento já sao altos com 200 TB, entao a estratégia de backup deve ser consciente de custos e evitar dobrar as despesas de armazenamento.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de backup e recuperação para dados não estruturados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design de Proteção de Dados no Blob Storage
+### Parte 1: design de proteção de dados no Blob Storage
 
 1. Avalie e configure os seguintes recursos nativos de proteção para as contas de blob storage. Para cada um, documente contra o que protege, seu impacto no custo e suas limitacoes:
 
@@ -67,7 +67,7 @@ az storage account blob-service-properties update \
   --container-delete-retention-days 30
 ```
 
-### Parte 2: Versionamento e Point-in-Time Restore
+### Parte 2: versionamento e Point-in-Time restore
 
 4. Habilite blob versioning e análise seu impacto no patrimonio de armazenamento de 200 TB:
    - Como o versionamento afeta os custos de armazenamento quando arquivos sao frequentemente sobrescritos?
@@ -85,7 +85,7 @@ az storage account blob-service-properties update \
    - Você pode restaurar um único container, ou deve restaurar a conta inteira?
    - Quais sao as limitacoes? (por exemplo, não pode ser usado com hierarchical namespace do Data Lake Storage Gen2)
 
-### Parte 3: Azure Backup para Blobs (Vaulted Backup)
+### Parte 3: Azure Backup para blobs (Vaulted backup)
 
 7. Projete a configuração do Azure Backup para dados blob usando o Backup vault:
    - Compare operational backup (continuo, usa recursos nativos do blob) vs. vaulted backup (programado, armazenado no vault)
@@ -115,7 +115,7 @@ az dataprotection backup-policy create \
    - Vaulted backup suporta cross-region restore
    - Vaulted backup tem custos adicionais de armazenamento
 
-### Parte 4: Backup e Recuperação do Azure Files
+### Parte 4: Backup e recuperação do Azure Files
 
 10. A equipe de design usa Azure Files (Premium, share de 10 TB) para colaboracao ativa em projetos. Projete a estratégia de backup:
     - Azure Backup para Azure Files usa share snapshots
@@ -133,7 +133,7 @@ az dataprotection backup-policy create \
     - "Preciso recuperar arquivos de 2 anos atras para retencao legal" -> Usar qual recurso?
     - "A conta de armazenamento foi deletada por um administrador malicioso" -> Usar qual recurso?
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-28"
@@ -242,7 +242,7 @@ Opcoes de restauracao:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Soft delete for blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview)
 - [Blob versioning](https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview)
@@ -251,7 +251,7 @@ Opcoes de restauracao:
 - [Back up Azure file shares](https://learn.microsoft.com/en-us/azure/backup/azure-file-share-backup-overview)
 - [Lifecycle management for Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um designer acidentalmente deletou um container inteiro com 50.000 arquivos 10 minutos atras. Qual é o método de recuperação mais rápido?</summary>
@@ -287,12 +287,12 @@ Opcoes de restauracao:
 # Delete resource groups
 az group delete --name rg-creative-assets --yes --no-wait
 
-# Note: If soft delete is enabled, storage data persists until retention expires
+# Note: if soft delete is enabled, storage data persists until retention expires
 # If you need immediate cleanup, disable soft delete first:
 # az storage account blob-service-properties update \
-#   --account-name stvividcreative \
-#   --resource-group rg-creative-assets \
-#   --enable-delete-retention false
+# --account-name stvividcreative \
+# --resource-group rg-creative-assets \
+# --enable-delete-retention false
 ```
 
 ---

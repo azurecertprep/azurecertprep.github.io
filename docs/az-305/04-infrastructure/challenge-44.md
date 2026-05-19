@@ -5,7 +5,7 @@ title: "Challenge 44: Design a Migration Strategy Using CAF"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 44: Design a Migration Strategy Using CAF
+# Challenge 44: design a migration strategy using CAF
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The current environment includes: 80 Windows Server VMs (running IIS web applica
 
 The IT team has limited cloud experience (2 engineers with AZ-104 certification) and the organization has no existing Azure landing zone. They need a structured migration plan using the Microsoft Cloud Adoption Framework that addresses organizational readiness, technical planning, and phased execution.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Evaluate a migration solution that leverages the Microsoft Cloud Adoption Framework for Azure
 
-## Design Tasks
+## Design tasks
 
-### Part 1: CAF Strategy and Planning Phase
+### Part 1: CAF strategy and planning phase
 
 1. Apply the CAF Strategy methodology: define business motivations (data center exit, cost reduction, modernization), business outcomes (measurable KPIs), and financial justification for the migration.
 2. Create a rationalization plan using the 5 Rs for a representative sample of workloads:
@@ -38,7 +38,7 @@ The IT team has limited cloud experience (2 engineers with AZ-104 certification)
    - File servers (Rehost? Replace with Azure Files/SharePoint?)
 3. Design a migration wave plan that groups workloads into 4-6 waves based on: dependency mapping, business criticality, technical complexity, and compliance requirements. Document which workloads go in each wave and why.
 
-### Part 2: CAF Ready Phase - Landing Zone Design
+### Part 2: CAF ready phase - landing zone design
 
 4. Design an Azure landing zone using the CAF enterprise-scale architecture. Document:
    - Management group hierarchy (root, platform, workloads, sandbox)
@@ -52,7 +52,7 @@ The IT team has limited cloud experience (2 engineers with AZ-104 certification)
    - Security baselines (encryption, network restrictions)
 6. Design the shared services infrastructure that must be deployed before any workload migration: VPN/ExpressRoute connectivity, DNS resolution, monitoring (Log Analytics), security (Microsoft Defender for Cloud).
 
-### Part 3: CAF Adopt Phase - Migration Execution
+### Part 3: CAF adopt phase - migration execution
 
 7. Design the assessment process using Azure Migrate:
    - Discovery and inventory (agentless vs. agent-based)
@@ -67,13 +67,13 @@ The IT team has limited cloud experience (2 engineers with AZ-104 certification)
    - Decommissioning and lease exit (month 18)
 9. Design a testing and validation strategy for each migration wave: pre-migration testing, migration execution, post-migration validation, performance benchmarking, and user acceptance testing.
 
-### Part 4: CAF Govern and Manage Phase
+### Part 4: CAF govern and manage phase
 
 10. Design the ongoing governance model: who approves new Azure resource deployments, how cost is allocated back to business units, how compliance is continuously monitored.
 11. Create a risk register for the migration identifying top 5 risks (e.g., undiscovered dependencies, performance degradation, extended downtime) with mitigation strategies for each.
 12. Define success metrics for each CAF phase: Strategy (business case approved), Plan (assessment complete), Ready (landing zone deployed), Adopt (workloads migrated with SLA met), Govern (policies enforced), Manage (operations running).
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-44"
@@ -124,7 +124,7 @@ SOX and FDA 21 CFR Part 11 compliance require: audit trails (Azure Activity Log,
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Microsoft Cloud Adoption Framework overview](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/overview)
 - [CAF migration methodology](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/migrate/)
@@ -133,7 +133,7 @@ SOX and FDA 21 CFR Part 11 compliance require: audit trails (Azure Activity Log,
 - [Azure Migrate overview](https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview)
 - [CAF enterprise-scale landing zone](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company has 200 servers to migrate with an 18-month deadline. The migration team wants to assess all servers before migrating any. What CAF principle does this violate and what is the recommended approach?</summary>
@@ -163,7 +163,7 @@ SOX and FDA 21 CFR Part 11 compliance require: audit trails (Azure Activity Log,
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

@@ -5,7 +5,7 @@ title: "Challenge 21: Design Data Durability & Protection"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 21: Design Data Durability and Protection
+# Challenge 21: design Data durability and protection
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The firm's compliance officer has mandated the following: all finalized document
 
 Your challenge is to design a comprehensive data protection strategy that combines the right redundancy option for each data category, implements immutability policies for regulatory compliance, and provides rapid recovery mechanisms for operational errors.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a data solution for protection and durability
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Design Redundancy Strategy
+### Part 1: design redundancy strategy
 
 1. Create a resource group and deploy three storage accounts, each representing a different data category:
    - `active-cases` - for daily attorney access (requires highest availability)
@@ -40,14 +40,14 @@ Your challenge is to design a comprehensive data protection strategy that combin
    - Cost implications relative to LRS baseline
 3. Create a decision matrix comparing all six redundancy options with columns for: durability (nines), availability SLA, read access during outage, regional failure protection, and relative cost.
 
-### Part 2: Implement Data Protection Features
+### Part 2: implement Data protection features
 
 4. Enable blob soft delete on the active-cases storage account with a 30-day retention period. Test by deleting and recovering a blob.
 5. Enable container soft delete with 14-day retention to protect against accidental container deletion.
 6. Enable blob versioning on the active-cases account to maintain previous versions of modified documents. Upload a file, modify it, and demonstrate version history.
 7. Enable point-in-time restore for the active-cases account. Document the requirements (versioning, change feed, and soft delete must all be enabled) and the maximum restore window.
 
-### Part 3: Implement Immutability Policies
+### Part 3: implement immutability Policies
 
 8. On the finalized-docs storage account, create a container with a time-based immutability policy:
    - Set retention period to 2,555 days (7 years)
@@ -59,7 +59,7 @@ Your challenge is to design a comprehensive data protection strategy that combin
    - Document how legal holds interact with time-based retention policies
 10. Design a policy for transitioning documents from mutable (active case) to immutable (finalized) status, including the workflow triggers and validation steps.
 
-### Part 4: Design Backup and Recovery
+### Part 4: design Backup and Recovery
 
 11. Configure Azure Backup for blob storage on the active-cases account:
     - Create a backup vault and backup policy
@@ -71,7 +71,7 @@ Your challenge is to design a comprehensive data protection strategy that combin
     - Regional failover using GRS for disaster scenarios
     - Recovery from accidental container deletion
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-21"
@@ -122,7 +122,7 @@ With GRS/GZRS, failover to the secondary region is customer-initiated (not autom
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
 - [Soft delete for blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview)
@@ -132,7 +132,7 @@ With GRS/GZRS, failover to the secondary region is customer-initiated (not autom
 - [Azure Backup for Azure Blobs](https://learn.microsoft.com/en-us/azure/backup/blob-backup-overview)
 - [Best practices for data protection](https://learn.microsoft.com/en-us/azure/storage/blobs/data-protection-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A storage account uses GRS. During a regional outage in the primary region, can applications read data from the secondary region?</summary>
@@ -162,7 +162,7 @@ With GRS/GZRS, failover to the secondary region is customer-initiated (not autom
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

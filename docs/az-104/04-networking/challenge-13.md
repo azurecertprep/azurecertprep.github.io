@@ -5,7 +5,7 @@ title: "Challenge 13: DNS & Load Balancing"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 13: DNS & Load Balancing
+# Challenge 13: DNS & Load balancing
 
 :::info Estimated Time and Cost
 
@@ -17,13 +17,13 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso's web application needs DNS resolution and load balancing for high availability. The operations team wants to move away from on-prem DNS servers and hardware load balancers to Azure-native services. Your job is to configure Azure DNS for name resolution and Azure Load Balancer to distribute traffic across multiple VMs.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Configure Azure DNS
 - Configure internal and public load balancer
 - Troubleshoot load balancing
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Traditional | Azure Equivalent |
 |---|---|
@@ -45,7 +45,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tasks
 
-### Task 1: Create an Azure DNS Zone
+### Task 1: create an Azure DNS zone
 
 Create a DNS zone for a subdomain. Since you likely don't own `contoso.com`, use a subdomain like `lab.contoso.com` for practice.
 
@@ -60,7 +60,7 @@ az network dns zone create \
 You don't need to own the domain to create a DNS zone in Azure | you just won't be able to resolve it publicly unless you delegate NS records from the parent domain.
 
 :::
-### Task 2: Add DNS Records
+### Task 2: add DNS records
 
 Add the following record types to your DNS zone:
 
@@ -96,7 +96,7 @@ az network dns record-set txt add-record \
 
 </details>
 
-### Task 3: Create a Public Standard Load Balancer
+### Task 3: create a public Standard Load Balancer
 
 Create a Standard SKU public load balancer with a frontend IP configuration.
 
@@ -110,7 +110,7 @@ az network lb create \
   --public-ip-address lb-pip
 ```
 
-### Task 4: Create a Backend Pool with 2 VMs
+### Task 4: create a backend pool with 2 VMs
 
 Deploy two VMs and add them to the load balancer's backend pool.
 
@@ -145,7 +145,7 @@ done
 
 </details>
 
-### Task 5: Create a Health Probe
+### Task 5: create a health probe
 
 Create an HTTP health probe on port 80.
 
@@ -159,7 +159,7 @@ az network lb probe create \
   --path /
 ```
 
-### Task 6: Create a Load Balancing Rule
+### Task 6: create a Load balancing rule
 
 Create a rule that maps frontend port 80 to backend port 80.
 
@@ -176,7 +176,7 @@ az network lb rule create \
   --backend-port 80
 ```
 
-### Task 7: Test Load Balancing
+### Task 7: test Load balancing
 
 Access the load balancer's public IP in a browser or with `curl`. Refresh multiple times and observe that responses come from different VMs.
 
@@ -190,7 +190,7 @@ echo "Load Balancer IP: $LB_IP"
 # curl http://$LB_IP (repeat several times)
 ```
 
-### Task 8: Create an Internal Load Balancer
+### Task 8: create an internal Load Balancer
 
 Create a second load balancer for internal (private) backend services.
 
@@ -212,7 +212,7 @@ Note: No `--public-ip-address` flag | this makes it internal.
 
 </details>
 
-### Task 9: Troubleshoot Load Balancing
+### Task 9: troubleshoot Load balancing
 
 Check the health probe status and verify backend pool health.
 
@@ -223,7 +223,7 @@ az network lb probe show \
   --lb-name lb-web \
   --name hp-http
 
-# Check backend pool health (via Portal: Load Balancer > Insights)
+# Check backend pool health (via portal: Load Balancer > insights)
 # Or check individual VM health:
 az vm get-instance-view \
   --resource-group $RG \
@@ -231,18 +231,18 @@ az vm get-instance-view \
   --query instanceView.statuses
 ```
 
-## Break & Fix
+## Break & fix
 
-### Break It
+### Break it
 1. **Misconfigure the health probe** | Change the probe to check port 8080 instead of 80 (or use path `/healthz` when the web server doesn't have that endpoint). Observe that all backend instances show as unhealthy.
 2. **Add a broken VM** | Add a third VM to the backend pool that doesn't have a web server running on port 80. Check how the LB handles it.
 
-### Fix It
+### Fix it
 - Correct the health probe port/path back to the working configuration
 - Verify backend health returns to normal
 - Observe that the LB automatically stops sending traffic to unhealthy instances
 
-## Knowledge Check
+## Knowledge check
 
 1. **What are the key differences between Basic and Standard Load Balancer SKUs?**
    - Standard supports availability zones, has an SLA, and is zone-redundant by default
@@ -266,7 +266,7 @@ az vm get-instance-view \
 az group delete --name $RG --yes --no-wait
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-13"

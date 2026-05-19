@@ -6,7 +6,7 @@ title: "Challenge 34: Design Compute for Workload Requirements"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 34: Design Compute for Workload Requirements
+# Challenge 34: design compute for workload requirements
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ The three workloads are: (1) A customer-facing web frontend and API layer that h
 
 Your task is to select the optimal VM family/series for each workload, determine the best pricing model (reserved instances, spot, or pay-as-you-go), and right-size each deployment to stay within the $8,000/month budget while meeting all performance requirements.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Specify components of a compute solution based on workload requirements
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Workload Analysis and VM Family Selection
+### Part 1: workload analysis and VM family selection
 
 1. Analyze each workload's compute profile and map it to the appropriate Azure VM family:
    - Web frontend: Low sustained CPU, burstable demand, high availability required
@@ -43,7 +43,7 @@ Your task is to select the optimal VM family/series for each workload, determine
 
 3. Document why the non-selected families are inappropriate for each workload (e.g., why B-series is wrong for sustained ML training, why N-series is wasteful for a web frontend).
 
-### Part 2: Pricing Model Optimization
+### Part 2: pricing model optimization
 
 4. Determine the optimal pricing model for each workload:
    - **Pay-as-you-go**: Full flexibility, highest per-hour cost
@@ -58,7 +58,7 @@ Your task is to select the optimal VM family/series for each workload, determine
 
 6. Determine whether a 1-year or 3-year Reserved Instance makes sense for the data processing engine that runs 24/7. Calculate break-even points.
 
-### Part 3: Right-Sizing and Budget Allocation
+### Part 3: Right-Sizing and budget allocation
 
 7. Propose specific VM SKUs for each workload:
    - Web frontend: Select the appropriate B-series or D-series size based on 2,000 concurrent users
@@ -81,7 +81,7 @@ Your task is to select the optimal VM family/series for each workload, determine
 
 9. Verify the total stays within $8,000/month. If it exceeds the budget, identify optimization strategies (smaller SKUs, fewer hours, different pricing).
 
-### Part 4: Availability and Scaling Considerations
+### Part 4: availability and scaling considerations
 
 10. Design the availability strategy for each workload:
     - Web frontend: What availability construct provides 99.9% SLA?
@@ -90,7 +90,7 @@ Your task is to select the optimal VM family/series for each workload, determine
 
 11. Document the scaling approach for the web frontend: At what CPU threshold should auto-scaling trigger? What is the minimum and maximum instance count?
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-34"
@@ -151,7 +151,7 @@ If GPU requirements are larger (e.g., NC24s_v3 with 4 GPUs), costs increase sign
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Sizes for virtual machines in Azure](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview)
 - [B-series burstable VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/b-family)
@@ -159,7 +159,7 @@ If GPU requirements are larger (e.g., NC24s_v3 with 4 GPUs), costs increase sign
 - [Azure Reserved VM Instances](https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/save-compute-costs-reservations)
 - [GPU optimized VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/gpu-accelerated/overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A workload runs at 10% CPU for 22 hours/day then spikes to 95% CPU for 2 hours. Which VM series is most cost-effective?</summary>
@@ -189,11 +189,11 @@ If GPU requirements are larger (e.g., NC24s_v3 with 4 GPUs), costs increase sign
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab proves that VMSS autoscale responds to real CPU metrics, scales out under load, and scales back in when load subsides. You will observe the full autoscale lifecycle including the cool-down period behavior.
 
-### Step 1: Create resource group and deploy VMSS with autoscale
+### Step 1: create resource group and deploy VMSS with autoscale
 
 ```bash
 az group create --name rg-az305-challenge34 --location eastus
@@ -211,7 +211,7 @@ az vmss create \
   --upgrade-policy-mode automatic
 ```
 
-### Step 2: Configure autoscale rules
+### Step 2: configure autoscale rules
 
 ```bash
 VMSS_ID=$(az vmss show \
@@ -245,7 +245,7 @@ az monitor autoscale rule create \
   --cooldown 5
 ```
 
-### Step 3: Verify initial state (minimum 2 instances)
+### Step 3: verify initial state (minimum 2 instances)
 
 ```bash
 az vmss list-instances \
@@ -267,7 +267,7 @@ echo "Current instance count: $INSTANCE_COUNT (should be 2)"
 The minimum instance count (2) represents your baseline capacity -- the floor below which the system will never scale. For production workloads, set this to handle your off-peak traffic without any autoscale intervention. If minimum is too low, users experience latency during the 1-2 minutes it takes for new instances to spin up and become ready.
 :::
 
-### Step 4: Generate CPU load on instances
+### Step 4: generate CPU load on instances
 
 Install the stress utility and generate sustained CPU load:
 
@@ -323,7 +323,7 @@ az vmss list-instances \
   --query "length([])"
 ```
 
-### Step 6: Check autoscale activity log
+### Step 6: check autoscale activity log
 
 ```bash
 az monitor autoscale show \
@@ -345,7 +345,7 @@ az monitor activity-log list \
 Autoscale scale-out is designed to be aggressive (respond quickly to protect user experience), while scale-in is conservative (10-minute default cool-down to prevent flapping). The cool-down period after a scale-out prevents the system from immediately scaling in when new instances temporarily reduce average CPU. For the AZ-305 exam, remember: scale-out reacts in 1-2 minutes, but new instances need another 1-2 minutes to start serving traffic -- plan for 3-4 minutes total response time.
 :::
 
-### Step 7: Wait for load to finish and observe scale-in
+### Step 7: wait for load to finish and observe scale-in
 
 The stress command has a 300-second (5-minute) timeout. After it completes, CPU will drop and scale-in should trigger.
 

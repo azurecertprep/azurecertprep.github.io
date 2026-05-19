@@ -3,11 +3,11 @@ sidebar_position: 3
 title: "Exam Tips & Strategy"
 ---
 
-# Exam Tips & Strategy
+# Exam tips & strategy
 
 The AZ-305 tests your ability to make design decisions. Unlike AZ-104, there's rarely a single "correct" CLI command. Instead, you'll evaluate scenarios and choose the best solution from several valid options.
 
-## Exam Format
+## Exam format
 
 | Detail | Value |
 |--------|-------|
@@ -19,15 +19,15 @@ The AZ-305 tests your ability to make design decisions. Unlike AZ-104, there's r
 | **Can you go back?** | Yes, within a section. No, between sections. |
 | **Labs?** | No active labs (unlike AZ-104). Pure scenario-based questions. |
 
-## Question Types You'll See
+## Question types you'll see
 
-### Scenario-Based Multiple Choice
+### Scenario-Based multiple choice
 The most common type. A 2-3 paragraph business scenario followed by "which solution meets the requirements?" Read the requirements carefully. Often one word (like "minimize cost" vs "minimize downtime") changes the correct answer.
 
-### Multiple Answer ("Select TWO/THREE")
+### Multiple answer ("Select two/three")
 Pick exactly the number specified. Common for questions like "which TWO services should you include in your design?"
 
-### Case Study
+### Case study
 A multi-page scenario (company profile, existing architecture, requirements) with 4-7 questions. You cannot return to the case study after moving to the next section.
 
 :::warning Case Study Strategy
@@ -36,10 +36,10 @@ Read the **requirements** tab first, then the **existing environment**. Most que
 
 :::
 
-### Drag-and-Drop / Ordering
+### Drag-and-Drop / ordering
 Match services to requirements, or order deployment steps. Common for migration planning and architecture layering.
 
-## How AZ-305 Differs from AZ-104
+## How AZ-305 differs from AZ-104
 
 The mental model is completely different:
 
@@ -51,23 +51,23 @@ The mental model is completely different:
 
 **The exam tests WHY, not HOW.**
 
-## Study Strategy
+## Study strategy
 
-### Weeks 1-2: Infrastructure Solutions (30-35%)
+### Weeks 1-2: infrastructure solutions (30-35%)
 This is the largest domain. Focus on compute selection (VM vs container vs serverless), networking (VPN vs ExpressRoute, load balancing decision tree), and application architecture (messaging, events, caching).
 
-### Weeks 3-4: Identity, Governance & Monitoring (25-30%)
+### Weeks 3-4: identity, governance & monitoring (25-30%)
 Know authentication/authorization patterns, Key Vault design, management group hierarchies, and Azure Policy. Monitoring (Log Analytics, App Insights) connects to every other domain.
 
-### Week 5: Data Storage + Business Continuity (35-45% combined)
+### Week 5: Data Storage + Business continuity (35-45% combined)
 Relational vs non-relational selection, tier/compute decisions, redundancy options, backup/DR strategies, HA patterns. These two domains overlap heavily.
 
-### Week 6: Review + Practice
+### Week 6: review + practice
 - Take the [Free Practice Assessment](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/practice/assessment?assessment-type=practice&assessmentId=15)
 - Review the [Coverage Matrix](/docs/az-305/coverage-matrix) for any gaps
 - Redo the capstone challenges (13, 24, 33, 50)
 
-## Common Exam Gotchas
+## Common exam gotchas
 
 :::warning Things that catch people off guard
 
@@ -84,9 +84,9 @@ Relational vs non-relational selection, tier/compute decisions, redundancy optio
 
 :::
 
-## Decision Frameworks to Memorize
+## Decision frameworks to memorize
 
-### Compute Decision Tree
+### Compute decision tree
 - Need full OS control? VM
 - Containerized workloads with orchestration? AKS
 - Simple containerized HTTP services? Container Apps
@@ -94,13 +94,13 @@ Relational vs non-relational selection, tier/compute decisions, redundancy optio
 - Workflow orchestration? Logic Apps or Durable Functions
 - Batch processing (thousands of cores)? Azure Batch
 
-### Load Balancing Decision Tree
+### Load balancing decision tree
 - Global HTTP/HTTPS? Azure Front Door
 - Global non-HTTP (DNS-based)? Traffic Manager
 - Regional HTTP with WAF? Application Gateway
 - Regional non-HTTP (Layer 4)? Azure Load Balancer
 
-### Storage Decision Tree
+### Storage decision tree
 - Relational + high compatibility? SQL Managed Instance
 - Relational + cost-optimized PaaS? Azure SQL Database
 - NoSQL document + global distribution? Cosmos DB for NoSQL
@@ -109,7 +109,7 @@ Relational vs non-relational selection, tier/compute decisions, redundancy optio
 - Big data analytics? Data Lake Storage Gen2
 - SMB file shares? Azure Files
 
-## Useful Links
+## Useful links
 
 | Resource | Link |
 |----------|------|
@@ -120,7 +120,7 @@ Relational vs non-relational selection, tier/compute decisions, redundancy optio
 | **Well-Architected Framework** | [WAF Documentation](https://learn.microsoft.com/en-us/azure/well-architected/) |
 | **Certification renewal** | [Renew for free](https://learn.microsoft.com/en-us/credentials/certifications/renew-your-microsoft-certification) |
 
-## After You Pass
+## After you pass
 
 - Your certification appears on your [Microsoft Learn profile](https://learn.microsoft.com/en-us/users/) within 24 hours
 - You earn the **Microsoft Certified: Azure Solutions Architect Expert** title

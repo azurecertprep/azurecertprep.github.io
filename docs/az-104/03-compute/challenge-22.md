@@ -5,7 +5,7 @@ title: "Challenge 22: VM Disks & Encryption"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 22: VM Disks & Encryption
+# Challenge 22: VM disks & encryption
 
 :::info Estimated Time and Cost
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso Ltd. is standardizing disk management across their VM fleet. The security team requires all disks to be encrypted, the operations team needs a reliable snapshot and imaging strategy for disaster recovery, and the development team wants faster disk performance for their database workloads. You are tasked with implementing a comprehensive disk management strategy that covers disk types, encryption, snapshots, and custom images.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -29,7 +29,7 @@ Contoso Ltd. is standardizing disk management across their VM fleet. The securit
 | Create custom VM images from generalized VMs | High |
 | Configure disk caching and performance | Medium |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -44,7 +44,7 @@ Contoso Ltd. is standardizing disk management across their VM fleet. The securit
 
 ## Tasks
 
-### Task 1: Create the Lab Environment
+### Task 1: create the lab environment
 
 ```bash
 # Create resource group
@@ -74,12 +74,12 @@ az keyvault create \
 KV_NAME=$(az keyvault list -g rg-disks-lab --query "[0].name" -o tsv)
 ```
 
-### Task 2: Create and Attach Managed Disks
+### Task 2: create and attach managed disks
 
 Create disks of different performance tiers and attach them:
 
 ```bash
-# Create a Standard HDD data disk (cost-effective, low IOPS)
+# Create a Standard HDD data disk (cost-effective, low iops)
 az disk create \
   --name disk-data-standard \
   --resource-group rg-disks-lab \
@@ -97,7 +97,7 @@ az disk create \
   --sku Premium_LRS \
   --tags Purpose=Database Tier=Premium
 
-# Attach the Standard disk to the VM (LUN 0)
+# Attach the Standard disk to the VM (lun 0)
 az vm disk attach \
   --resource-group rg-disks-lab \
   --vm-name vm-disk-lab \
@@ -105,7 +105,7 @@ az vm disk attach \
   --lun 0 \
   --caching None
 
-# Attach the Premium disk to the VM (LUN 1)
+# Attach the Premium disk to the VM (lun 1)
 az vm disk attach \
   --resource-group rg-disks-lab \
   --vm-name vm-disk-lab \
@@ -120,10 +120,10 @@ az vm show \
   --query "storageProfile.dataDisks[].{Name:name, SizeGB:diskSizeGb, Lun:lun, Caching:caching}" -o table
 ```
 
-### Task 3: Initialize and Mount Disks Inside the VM
+### Task 3: initialize and mount disks inside the VM
 
 ```bash
-# Use Run Command to partition and mount the disks
+# Use run command to partition and mount the disks
 az vm run-command invoke \
   --resource-group rg-disks-lab \
   --name vm-disk-lab \
@@ -152,12 +152,12 @@ az vm run-command invoke \
   '
 ```
 
-### Task 4: Configure Azure Disk Encryption (ADE)
+### Task 4: configure Azure disk encryption (ade)
 
 Enable Azure Disk Encryption using Key Vault:
 
 ```bash
-# Enable Azure Disk Encryption on the VM
+# Enable Azure disk encryption on the VM
 az vm encryption enable \
   --resource-group rg-disks-lab \
   --name vm-disk-lab \
@@ -183,7 +183,7 @@ Azure Disk Encryption can take 15-30 minutes to complete, depending on disk size
 
 
 :::
-### Task 5: Create Disk Snapshots
+### Task 5: create disk snapshots
 
 Create point-in-time snapshots for backup purposes:
 
@@ -219,7 +219,7 @@ az snapshot list \
   --query "[].{Name:name, SizeGB:diskSizeGb, Source:creationData.sourceResourceId}" -o table
 ```
 
-### Task 6: Create a Disk from a Snapshot
+### Task 6: create a disk from a snapshot
 
 ```bash
 # Create a new managed disk from the snapshot
@@ -242,12 +242,12 @@ az disk show \
   --query "{Name:name, SizeGB:diskSizeGb, Sku:sku.name, ProvisioningState:provisioningState}" -o table
 ```
 
-### Task 7: Create a Custom VM Image (Generalized)
+### Task 7: create a custom VM image (Generalized)
 
 Create a reusable image from the VM for rapid deployment:
 
 ```bash
-# First, generalize the VM (WARNING: VM cannot be used after this)
+# First, generalize the VM (warning: VM cannot be used after this)
 # Run the deprovisioning command inside the VM
 az vm run-command invoke \
   --resource-group rg-disks-lab \
@@ -279,7 +279,7 @@ az image show \
   --query "{Name:name, State:provisioningState, Source:sourceVirtualMachine.id}" -o table
 ```
 
-### Task 8: Deploy a New VM from the Custom Image
+### Task 8: deploy a new VM from the custom image
 
 ```bash
 # Create a new VM from the custom image
@@ -300,7 +300,7 @@ az vm run-command invoke \
   --scripts "cat /opt/contoso/logs/setup.log 2>/dev/null || echo 'No pre-config found (expected if image was from fresh VM)'"
 ```
 
-### Task 9: Resize a Managed Disk
+### Task 9: resize a managed disk
 
 ```bash
 # Deallocate the new VM to resize its OS disk
@@ -327,7 +327,7 @@ az vm run-command invoke \
   --scripts "growpart /dev/sda 1 && resize2fs /dev/sda1 && df -h /"
 ```
 
-### Task 10: Compare Disk Performance Tiers
+### Task 10: compare disk performance tiers
 
 ```bash
 # View disk performance characteristics
@@ -347,7 +347,7 @@ az disk list \
 
 
 :::
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-22"
@@ -403,9 +403,9 @@ You can only increase the size of a managed disk, never decrease it. If you need
 
 </details>
 
-## Break and Fix
+## Break and fix
 
-### Scenario A: Disk Encryption Failure
+### Scenario a: disk encryption failure
 
 Try enabling ADE on a VM when the Key Vault does not have "Enabled for disk encryption" set. Observe the error message and remediate:
 
@@ -415,11 +415,11 @@ az keyvault show --name $KV_NAME \
   --query "{EnabledForDiskEncryption:properties.enabledForDiskEncryption}" -o table
 ```
 
-### Scenario B: Snapshot from Running VM
+### Scenario b: snapshot from running VM
 
 Create a snapshot while the VM is running and data is being written. Is the snapshot crash-consistent or application-consistent? What are the implications for databases?
 
-### Scenario C: Detach Disk While Mounted
+### Scenario c: detach disk while mounted
 
 Attempt to detach a data disk that is currently mounted inside the VM without unmounting first. What happens? (Answer: The detach operation at the Azure level may succeed, but the VM will experience I/O errors on that mount point.)
 
@@ -431,7 +431,7 @@ az vm disk detach \
   --name disk-restored-from-snap
 ```
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What is the difference between Azure Disk Encryption (ADE) and Encryption at Host?</summary>
@@ -470,13 +470,13 @@ If the encryption key is lost or permanently deleted, the encrypted disks become
 ## Cleanup
 
 ```bash
-# Delete the entire resource group and all resources (VMs, disks, snapshots, images, Key Vault)
+# Delete the entire resource group and all resources (VMs, disks, snapshots, images, Key vault)
 az group delete --name rg-disks-lab --yes --no-wait
 
 echo "Cleanup complete. Key Vault will remain in soft-delete state."
 ```
 
-## Learning Resources
+## Learning resources
 
 - [Managed disks overview](https://learn.microsoft.com/en-us/azure/virtual-machines/managed-disks-overview)
 - [Disk types and performance](https://learn.microsoft.com/en-us/azure/virtual-machines/disks-types)

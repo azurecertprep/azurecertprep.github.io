@@ -5,7 +5,7 @@ title: "Challenge 24: Design an End-to-End Data Platform"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 24: Design an End-to-End Data Platform
+# Challenge 24: design an End-to-End Data platform
 
 :::info Estimated Time and Cost
 
@@ -21,7 +21,7 @@ The VP of Engineering has secured a $25,000/month budget to build a unified data
 
 This is the Domain 2 capstone challenge. You will synthesize design decisions from Challenges 14-23 to architect TechMart's complete data platform, justifying each technology choice against alternatives and demonstrating how the components integrate into a cohesive whole.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for storing relational data
 - Recommend a database service tier and compute tier
@@ -32,9 +32,9 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
 - Recommend a solution for data integration
 - Recommend a solution for data analysis
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Transactional Data Layer (Orders and Payments)
+### Part 1: transactional Data layer (Orders and payments)
 
 1. Select the relational database service for order processing. Create a decision matrix comparing:
    - Azure SQL Database (single database vs elastic pool)
@@ -54,7 +54,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
    - Long-term backup retention for compliance (7-year LTR policy)
    - Geo-replication for disaster recovery (active geo-replication vs failover groups)
 
-### Part 2: Semi-Structured Data Layer (Product Catalog and Reviews)
+### Part 2: Semi-Structured Data layer (Product catalog and reviews)
 
 4. Design the product catalog store using Azure Cosmos DB:
    - Select the appropriate API (NoSQL, MongoDB, PostgreSQL) with rationale
@@ -72,7 +72,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
    - Select the appropriate consistency level (evaluate Strong vs Bounded Staleness vs Session vs Eventual for an e-commerce catalog)
    - Calculate the cost of multi-region replication vs single-region at current scale
 
-### Part 3: Unstructured Data Layer (Media Storage)
+### Part 3: unstructured Data layer (Media storage)
 
 7. Design the media storage architecture for product images and videos (10TB, growing 2TB/month):
    - Storage account type and performance tier selection
@@ -84,7 +84,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
    - Event Grid integration for triggering Azure Functions on blob creation
    - Design storage naming conventions and folder structure for efficient access patterns
 
-### Part 4: Real-Time Recommendations Engine
+### Part 4: Real-Time recommendations engine
 
 9. Design the real-time recommendation system:
    - Ingestion: capture browsing events (product views, cart additions, purchases) via Event Hubs
@@ -97,7 +97,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
     - Cosmos DB change feed triggers recommendation recalculation for related products
     - Redis cache is refreshed with new recommendations (TTL-based expiration for stale data)
 
-### Part 5: Reporting Pipeline and Compliance Archive
+### Part 5: reporting pipeline and compliance archive
 
 11. Design the nightly reporting pipeline using Azure Data Factory or Synapse Pipelines:
     - Extract from: Azure SQL Database (orders), Cosmos DB (products/reviews), Storage (media metadata)
@@ -111,7 +111,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
     - Redundancy: RA-GZRS for regulatory requirements (geo-redundant with read access)
     - Lifecycle management: automatic transition from Cool to Archive after 1 year
 
-### Part 6: Unified Architecture and Budget
+### Part 6: unified architecture and budget
 
 13. Create a comprehensive architecture diagram showing all components and their data flows:
     - Transactional tier (Azure SQL Database)
@@ -130,7 +130,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
     - Data Factory + Synapse: pipeline runs + compute
     - Total must not exceed $25,000/month
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-24"
@@ -181,7 +181,7 @@ Use events and change feeds to keep tiers synchronized without tight coupling: (
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure SQL Database overview](https://learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview)
 - [Azure Cosmos DB for NoSQL](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/)
@@ -193,7 +193,7 @@ Use events and change feeds to keep tiers synchronized without tight coupling: (
 - [Azure Data Factory overview](https://learn.microsoft.com/en-us/azure/data-factory/introduction)
 - [Azure Architecture Center - E-commerce reference](https://learn.microsoft.com/en-us/azure/architecture/industries/retail)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. TechMart needs the product catalog to handle 50,000 reads/second during flash sales with global buyers. The catalog has 500,000 products across 200 categories. Which Cosmos DB configuration is most appropriate?</summary>
@@ -223,7 +223,7 @@ Use events and change feeds to keep tiers synchronized without tight coupling: (
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

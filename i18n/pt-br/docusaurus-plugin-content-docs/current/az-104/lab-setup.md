@@ -3,7 +3,7 @@ sidebar_position: 3
 title: "Lab Setup"
 ---
 
-# Configuração do Laboratório
+# Configuração do laboratório
 
 Todo desafio requer uma assinatura do Azure e ferramentas de linha de comando. Esta página orienta você em ambas as opções de configuração.
 
@@ -34,7 +34,7 @@ az account show --output table
 az account set --subscription "YOUR_SUBSCRIPTION_NAME"
 ```
 
-## Opção 2: Configuração Local
+## Opção 2: configuração local
 
 Se você preferir trabalhar localmente, instale estas ferramentas:
 
@@ -59,7 +59,7 @@ jq --version
 
 Você precisa de uma assinatura do Azure para todos os desafios, exceto o Desafio 07 (ARM/Bicep pode ser validado localmente).
 
-### Opções Gratuitas
+### Opções gratuitas
 
 | Opção | Crédito | Duração | Cartão de Crédito Necessário? |
 |-------|---------|---------|-------------------------------|
@@ -72,7 +72,7 @@ Você precisa de uma assinatura do Azure para todos os desafios, exceto o Desafi
 Gerenciamento de custos | Todos os desafios incluem scripts de limpeza. **Sempre execute a limpeza após cada desafio** para evitar cobranças inesperadas. O custo total para todos os 28 desafios é estimado em ~$5 com a limpeza adequada.
 
 :::
-## Convenção de Nomenclatura de Recursos
+## Convenção de nomenclatura de recursos
 
 Usamos uma convenção de nomenclatura consistente em todos os desafios:
 
@@ -83,7 +83,7 @@ vm-az104-XX                   # Virtual machines
 vnet-az104-XX                 # Virtual networks
 ```
 
-## Script de Configuração Rápida
+## Script de configuração rápida
 
 Execute isto uma vez para configurar variáveis comuns usadas em todos os desafios:
 

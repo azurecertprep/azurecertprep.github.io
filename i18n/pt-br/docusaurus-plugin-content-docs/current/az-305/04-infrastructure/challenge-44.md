@@ -5,7 +5,7 @@ title: "Desafio 44: Projetar uma Estratégia de Migração Usando CAF"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 44: Projetar uma Estratégia de Migração Usando CAF
+# Desafio 44: projetar uma estratégia de migração usando CAF
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O ambiente atual inclui: 80 VMs Windows Server (executando aplicações web IIS 
 
 A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificacao AZ-104) e a organização não tem landing zone Azure existente. Eles precisam de um plano de migração estruturado usando o Microsoft Cloud Adoption Framework que enderece prontidao organizacional, planejamento técnico e execução em fases.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Avaliar uma solução de migração que utiliza o Microsoft Cloud Adoption Framework for Azure
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Fase de Estratégia e Planejamento CAF
+### Parte 1: fase de estratégia e planejamento CAF
 
 1. Aplique a metodologia de Estratégia do CAF: defina motivacoes de negocio (saida do data center, redução de custos, modernizacao), resultados de negocio (KPIs mensuraveis) e justificativa financeira para a migração.
 2. Crie um plano de racionalizacao usando os 5 Rs para uma amostra representativa de workloads:
@@ -38,7 +38,7 @@ A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificaca
    - Servidores de arquivo (Rehost? Replace com Azure Files/SharePoint?)
 3. Projete um plano de ondas de migração que agrupe workloads em 4-6 ondas baseado em: mapeamento de dependências, criticidade de negocio, complexidade técnica e requisitos de conformidade. Documente quais workloads vao em cada onda e por que.
 
-### Parte 2: Fase Ready do CAF - Design da Landing Zone
+### Parte 2: fase ready do CAF - design da landing zone
 
 4. Projete uma landing zone Azure usando a arquitetura enterprise-scale do CAF. Documente:
    - Hierarquia de management groups (root, platform, workloads, sandbox)
@@ -52,7 +52,7 @@ A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificaca
    - Baselines de segurança (criptografia, restrições de rede)
 6. Projete a infraestrutura de serviços compartilhados que deve ser implantada antes de qualquer migração de workload: conectividade VPN/ExpressRoute, resolução DNS, monitoramento (Log Analytics), segurança (Microsoft Defender for Cloud).
 
-### Parte 3: Fase Adopt do CAF - Execução da Migração
+### Parte 3: fase adopt do CAF - execução da migração
 
 7. Projete o processo de avaliação usando Azure Migrate:
    - Descoberta e inventário (agentless vs. agent-based)
@@ -67,13 +67,13 @@ A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificaca
    - Descomissionamento e saida do contrato (mes 18)
 9. Projete uma estratégia de teste e validação para cada onda de migração: teste pré-migração, execução da migração, validação pós-migração, benchmarking de performance e teste de aceitacao do usuário.
 
-### Parte 4: Fase Govern e Manage do CAF
+### Parte 4: fase govern e manage do CAF
 
 10. Projete o modelo de governança continua: quem aprova novas implantacoes de recursos Azure, como o custo e alocado de volta para unidades de negocio, como a conformidade e monitorada continuamente.
 11. Crie um registro de riscos para a migração identificando os 5 principais riscos (ex: dependências não descobertas, degradacao de performance, tempo de inatividade prolongado) com estratégias de mitigacao para cada.
 12. Defina metricas de sucesso para cada fase do CAF: Strategy (business case aprovado), Plan (avaliação completa), Ready (landing zone implantada), Adopt (workloads migrados com SLA atendido), Govern (políticas aplicadas), Manage (operações funcionando).
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-44"
@@ -124,7 +124,7 @@ Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Acti
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Microsoft Cloud Adoption Framework overview](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/overview)
 - [CAF migration methodology](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/migrate/)
@@ -133,7 +133,7 @@ Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Acti
 - [Azure Migrate overview](https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview)
 - [CAF enterprise-scale landing zone](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma empresa tem 200 servidores para migrar com prazo de 18 meses. A equipe de migração quer avaliar todos os servidores antes de migrar qualquer um. Qual principio do CAF isso viola e qual é a abordagem recomendada?</summary>

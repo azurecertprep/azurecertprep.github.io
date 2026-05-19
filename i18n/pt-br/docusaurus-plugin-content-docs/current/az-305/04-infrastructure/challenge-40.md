@@ -5,7 +5,7 @@ title: "Desafio 40: Projetar Integração de API"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 40: Projetar Integração de API
+# Desafio 40: projetar integração de API
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Tipo de Consumidor 1 (Aplicativo movel interno): Usado por 5.000 profissionais d
 
 A arquitetura deve proteger os serviços backend de exposicao direta, aplicar políticas de segurança consistentes, permitir versionamento de API conforme a plataforma evolui, é fornecer capacidades de monetizacao para o programa de desenvolvedores.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para integração de API
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao da Camada do API Management
+### Parte 1: selecao da camada do API Management
 
 1. Avalie as camadas do Azure API Management para este cenário de saúde:
 
@@ -48,7 +48,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
 
 3. Justifique a selecao considerando: disponibilidade multi-região para SLAs de parceiros, integração VNet para HIPAA, portal do desenvolvedor para onboarding de terceiros, e capacidade para 5.000 usuários internos.
 
-### Parte 2: Design de Políticas por Consumidor
+### Parte 2: design de políticas por consumidor
 
 4. Projete políticas do API Management para cada tipo de consumidor:
 
@@ -77,7 +77,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
    - Qual resposta um consumidor com limite excedido recebe (HTTP 429)?
    - Como você comunica a cota restante nos headers de resposta?
 
-### Parte 3: Versionamento de API e Ciclo de Vida
+### Parte 3: versionamento de API e ciclo de vida
 
 6. Projete a estratégia de versionamento de API:
    - **Versionamento por caminho de URL**: `/api/v1/patients` vs `/api/v2/patients`
@@ -96,7 +96,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
    - Como você testa uma nova revisao antes de torna-la corrente?
    - Qual é o processo de rollback se uma nova revisao introduzir bugs?
 
-### Parte 4: Segurança, Conformidade e Monetizacao
+### Parte 4: segurança, conformidade e monetizacao
 
 9. Projete a arquitetura de segurança de API compatível com HIPAA:
    - Todo trafego deve usar TLS 1.2+ (configurar na política do APIM)
@@ -125,7 +125,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
     - Criar dashboards para gerentes de produto de API (tendencias de uso, metricas de adocao)
     - Alertar sobre violacoes de SLA para APIs de parceiros
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-40"
@@ -242,7 +242,7 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure API Management overview](https://learn.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
 - [API Management policies reference](https://learn.microsoft.com/en-us/azure/api-management/api-management-policies)
@@ -250,7 +250,7 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 - [API versioning in Azure API Management](https://learn.microsoft.com/en-us/azure/api-management/api-management-versions)
 - [Deploy API Management to a virtual network](https://learn.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma API de saúde deve garantir que Informações de Saúde Protegidas nunca trafeguem pela internet pública entre o API gateway e os serviços backend. Qual modo de implantacao do APIM alcanca isso?</summary>
@@ -280,7 +280,7 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

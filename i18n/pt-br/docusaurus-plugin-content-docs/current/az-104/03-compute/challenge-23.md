@@ -5,7 +5,7 @@ title: "Desafio 23: Configuração Avançada do App Service"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 23: Configuração Avançada do App Service
+# Desafio 23: configuração avançada do App Service
 
 :::info Tempo e Custo Estimados
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. está reforçando a segurança da sua aplicação web de produção hospedada no Azure App Service. As equipes de segurança e operações exigem mapeamento de domínio personalizado com imposição de TLS, backups automatizados e restrições de acesso em nível de rede. Você deve configurar o App Service para atender aos padrões de produção empresarial, incluindo integração com VNet e conectividade híbrida.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Configurar certificados e TLS para App Service
 - Mapear nomes DNS personalizados para App Service
@@ -26,7 +26,7 @@ A Contoso Ltd. está reforçando a segurança da sua aplicação web de produç�
 - Configurar integração com VNet
 - Configurar restrições de acesso
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -38,7 +38,7 @@ A Contoso Ltd. está reforçando a segurança da sua aplicação web de produç�
 | Proxy reverso com allowlist de IPs | Access Restrictions + Service Endpoints |
 | VPN site-to-site para serviços internos | Hybrid Connections (sem necessidade de VPN) |
 
-## Configuração Inicial
+## Configuração inicial
 
 ```bash
 # Variables
@@ -52,10 +52,10 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1: Criar App Service com Pré-requisitos de Domínio Personalizado
+### Tarefa 1: criar App Service com pré-requisitos de domínio personalizado
 
 ```bash
-# Create App Service plan (Standard required for custom domains + TLS)
+# Create App Service plan (Standard required for custom domains + tls)
 az appservice plan create \
   --resource-group $RG \
   --name plan-contoso-prod \
@@ -73,7 +73,7 @@ az webapp create \
 echo "App URL: https://$APP_NAME.azurewebsites.net"
 ```
 
-### Tarefa 2: Configurar Domínio Personalizado com Verificação DNS
+### Tarefa 2: configurar domínio personalizado com verificação DNS
 
 :::tip Dica
 
@@ -108,9 +108,9 @@ az network dns record-set cname set-record \
 
 # Map the custom domain (requires real DNS delegation in production)
 # az webapp config hostname add \
-#   --resource-group $RG \
-#   --webapp-name $APP_NAME \
-#   --hostname www.contoso-lab.com
+# --resource-group $rg \
+# --webapp-name $app_name \
+# --hostname www.contoso-lab.com
 ```
 
 **Passos no Portal:**
@@ -121,24 +121,24 @@ az network dns record-set cname set-record \
 5. Adicione os registros DNS necessários no seu registrador
 6. Clique em **Validate** e depois em **Add**
 
-### Tarefa 3: Vincular um Certificado TLS (Managed Certificate)
+### Tarefa 3: vincular um certificado TLS (Managed certificate)
 
 ```bash
-# Create an App Service Managed Certificate (free, auto-renewed)
-# Note: Requires custom domain to be validated first
+# Create an App Service managed certificate (free, auto-renewed)
+# Note: requires custom domain to be validated first
 # az webapp config ssl create \
-#   --resource-group $RG \
-#   --name $APP_NAME \
-#   --hostname www.contoso-lab.com
+# --resource-group $rg \
+# --name $app_name \
+# --hostname www.contoso-lab.com
 
 # Bind the certificate to the custom domain
 # az webapp config ssl bind \
-#   --resource-group $RG \
-#   --name $APP_NAME \
-#   --certificate-thumbprint <THUMBPRINT> \
-#   --ssl-type SNI
+# --resource-group $rg \
+# --name $app_name \
+# --certificate-thumbprint <thumbprint> \
+# --ssl-type SNI
 
-# Enforce HTTPS (redirect HTTP to HTTPS)
+# Enforce HTTPS (redirect HTTP to https)
 az webapp update \
   --resource-group $RG \
   --name $APP_NAME \
@@ -162,7 +162,7 @@ az webapp show -g $RG -n $APP_NAME \
 4. Selecione **SNI SSL** como tipo de binding
 5. Em **Protocol Settings**, defina a versão mínima de TLS para **1.2**
 
-### Tarefa 4: Configurar Backup do App Service
+### Tarefa 4: configurar Backup do App Service
 
 ```bash
 # Create storage account for backups
@@ -214,7 +214,7 @@ az webapp config backup show \
 6. Opcionalmente inclua banco de dados vinculado
 7. Clique em **Save**
 
-### Tarefa 5: Configurar Integração com VNet
+### Tarefa 5: configurar integração com VNet
 
 ```bash
 # Create a VNet for integration
@@ -237,7 +237,7 @@ az webapp vnet-integration list \
   --resource-group $RG \
   --name $APP_NAME -o table
 
-# Configure "Route All" to send all outbound traffic through the VNet
+# Configure "Route all" to send all outbound traffic through the VNet
 az webapp config appsettings set \
   --resource-group $RG \
   --name $APP_NAME \
@@ -249,7 +249,7 @@ az webapp config appsettings set \
 A sub-rede de integração deve ser delegada a Microsoft.Web/serverFarms e não deve conter outros recursos. Use uma sub-rede /24 ou /26 dedicada à integração com App Service.
 
 :::
-### Tarefa 6: Configurar Restrições de Acesso (Regras de Permitir/Negar IP)
+### Tarefa 6: configurar restrições de acesso (Regras de Permitir/Negar ip)
 
 ```bash
 # Get your current IP
@@ -298,7 +298,7 @@ az webapp config access-restriction show \
   --name $APP_NAME -o table
 ```
 
-### Tarefa 7: Configurar Hybrid Connections
+### Tarefa 7: configurar hybrid connections
 
 :::tip Dica
 
@@ -320,7 +320,7 @@ Hybrid Connections fornecem conectividade do App Service para recursos on-premis
 az relay namespace list --resource-group $RG -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-23"
@@ -335,12 +335,12 @@ az relay namespace list --resource-group $RG -o table
     "Conceito de Hybrid Connection compreendido"
   ]}
 />
-## Cenários de Quebrar & Consertar
+## Cenários de quebrar & consertar
 
-### Cenário A: Backup Falha com Erro de Armazenamento
+### Cenário a: Backup falha com erro de armazenamento
 
 ```bash
-# Simulate: Revoke the SAS token by regenerating storage keys
+# Simulate: revoke the SAS token by regenerating storage keys
 az storage account keys renew \
   --resource-group $RG \
   --account-name $STORAGE_NAME \
@@ -353,26 +353,26 @@ az webapp config backup create \
   --container-url "$CONTAINER_URL" \
   --backup-name "manual-test"
 
-# Fix: Generate a new SAS token and update the backup configuration
+# Fix: generate a new SAS token and update the backup configuration
 ```
 
-### Cenário B: Integração com VNet Bloqueia Saída
+### Cenário b: integração com VNet bloqueia saída
 
 ```bash
-# After enabling WEBSITE_VNET_ROUTE_ALL, external APIs stop working
+# After enabling website_vnet_route_all, external APIs stop working
 # because the VNet has no internet route.
-# Diagnosis: Check if the VNet has a default route to the internet
+# Diagnosis: check if the VNet has a default route to the internet
 az network vnet subnet show \
   --resource-group $RG \
   --vnet-name vnet-contoso \
   --name subnet-webapp-integration \
   --query "routeTable"
 
-# Fix: Ensure a NAT gateway or route to internet exists
-# Or set WEBSITE_VNET_ROUTE_ALL=0 for split tunneling
+# Fix: ensure a NAT gateway or route to internet exists
+# Or set website_vnet_route_all=0 for split tunneling
 ```
 
-### Cenário C: Restrições de Acesso Bloqueiam Seu Próprio Acesso
+### Cenário c: restrições de acesso bloqueiam seu próprio acesso
 
 ```bash
 # You accidentally denied all traffic including your own IP
@@ -383,7 +383,7 @@ az webapp config access-restriction remove \
   --rule-name "DenyAll"
 ```
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 **1. Qual é a diferença entre App Service Managed Certificates e certificados adquiridos?**
 
@@ -447,7 +447,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Configurar domínios personalizados do App Service](https://learn.microsoft.com/azure/app-service/app-service-web-tutorial-custom-domain)
 - [Certificados TLS/SSL do App Service](https://learn.microsoft.com/azure/app-service/configure-ssl-certificate)

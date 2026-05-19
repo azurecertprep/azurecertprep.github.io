@@ -3,7 +3,7 @@ sidebar_position: 99
 title: "Matriz de Cobertura"
 ---
 
-# Matriz de Cobertura
+# Matriz de cobertura
 
 Cada habilidade do [guia de estudo oficial do AZ-305](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-305) (a partir de 17 de abril de 2026) mapeada para o desafio que a cobre.
 
@@ -137,7 +137,7 @@ Cada habilidade do [guia de estudo oficial do AZ-305](https://learn.microsoft.co
 
 ---
 
-## Resumo da Cobertura
+## Resumo da cobertura
 
 | Domínio | Habilidades | Desafios | Cobertura |
 |---------|-------------|----------|-----------|

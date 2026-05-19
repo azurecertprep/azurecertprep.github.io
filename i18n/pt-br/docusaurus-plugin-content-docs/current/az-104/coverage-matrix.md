@@ -3,7 +3,7 @@ sidebar_position: 99
 title: "Coverage Matrix"
 ---
 
-# Matriz de Cobertura
+# Matriz de cobertura
 
 Todas as habilidades do [guia de estudo oficial do AZ-104](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104) (a partir de 17 de abril de 2026) mapeadas para o desafio que as cobre.
 

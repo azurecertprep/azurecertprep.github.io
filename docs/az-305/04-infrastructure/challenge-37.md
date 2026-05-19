@@ -5,7 +5,7 @@ title: "Challenge 37: Design a Serverless Solution"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 37: Design a Serverless Solution
+# Challenge 37: design a serverless solution
 
 :::info Estimated Time and Cost
 
@@ -21,14 +21,14 @@ In addition to the real-time ticket sales API, TicketBlitz has several backgroun
 
 The engineering team wants to minimize infrastructure management and pay only for actual execution time. They need a design that handles both the extreme burst traffic and the background batch processing with appropriate cost optimization for each pattern.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a serverless-based solution
 - Recommend a compute solution for batch processing
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Azure Functions Plan Selection
+### Part 1: Azure Functions plan selection
 
 1. Evaluate Azure Functions hosting plans for the ticket sales API (0 to 100K requests/second burst):
 
@@ -46,7 +46,7 @@ The engineering team wants to minimize infrastructure management and pay only fo
 
 3. Evaluate whether the Flex Consumption plan with always-ready instances provides the best balance of burst capacity and cold-start mitigation for this workload.
 
-### Part 2: Background Processing Design
+### Part 2: background processing design
 
 4. Design the PDF ticket generation pipeline:
    - Trigger: Queue message after successful purchase
@@ -65,7 +65,7 @@ The engineering team wants to minimize infrastructure management and pay only fo
    - Evaluate: Azure Functions with queue-based fan-out vs. Azure Batch for this volume
    - What is the expected execution time and cost for 50K records?
 
-### Part 3: Durable Functions Orchestration
+### Part 3: Durable Functions orchestration
 
 7. Design the VIP ticket package workflow using Durable Functions:
    - Step 1: Reserve selected seats (call Seats API)
@@ -85,7 +85,7 @@ The engineering team wants to minimize infrastructure management and pay only fo
    - How do you implement the Saga pattern (compensating transactions)?
    - What is the retry policy for transient failures vs permanent failures?
 
-### Part 4: Cold Start Mitigation and Cost Optimization
+### Part 4: cold start mitigation and cost optimization
 
 10. Compare cold start mitigation strategies:
     - Pre-warmed instances (Premium plan): Always running, no cold start, higher base cost
@@ -103,7 +103,7 @@ The engineering team wants to minimize infrastructure management and pay only fo
     - Timer trigger (batch) → Refund processing → Payment API
     - HTTP trigger (VIP) → Durable orchestration → multiple backend APIs
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-37"
@@ -187,7 +187,7 @@ Functions is preferred because: per-execution pricing is cheaper for short tasks
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Functions hosting options](https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale)
 - [Azure Functions Flex Consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/flex-consumption-plan)
@@ -195,7 +195,7 @@ Functions is preferred because: per-execution pricing is cheaper for short tasks
 - [Choose between Azure Functions and Logic Apps](https://learn.microsoft.com/en-us/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs)
 - [Azure Batch overview](https://learn.microsoft.com/en-us/azure/batch/batch-technical-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A function app on the Consumption plan experiences 3-5 second cold starts during a flash sale. The business requires sub-200ms response time for the first request. Which plan change solves this?</summary>
@@ -225,7 +225,7 @@ Functions is preferred because: per-execution pricing is cheaper for short tasks
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

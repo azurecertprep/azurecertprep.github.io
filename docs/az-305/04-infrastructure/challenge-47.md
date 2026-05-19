@@ -5,7 +5,7 @@ title: "Challenge 47: Design Unstructured Data Migration"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 47: Design Unstructured Data Migration
+# Challenge 47: design unstructured Data migration
 
 :::info Estimated Time and Cost
 
@@ -21,13 +21,13 @@ The challenge: their internet connection is 100Mbps dedicated. A simple calculat
 
 Additional constraints: content must remain accessible to editors in Los Angeles during the entire migration period (no freeze on production). New content is generated at a rate of 5TB per week. Some content has specific retention requirements (contractual obligations to retain raw footage for 7 years). The archive (1.2PB) is rarely accessed (less than once per quarter) while active productions (800TB) are accessed daily.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for migrating unstructured data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Network Bandwidth Analysis and Tool Selection
+### Part 1: Network bandwidth analysis and tool selection
 
 1. Calculate the transfer time for 2PB of data using each available method:
    - Online transfer at 100Mbps (theoretical vs. realistic with protocol overhead)
@@ -44,7 +44,7 @@ Additional constraints: content must remain accessible to editors in Los Angeles
    - Azure File Sync: continuous sync with cloud tiering
    - Document when to use each tool and their limitations
 
-### Part 2: Azure Data Box Planning
+### Part 2: Azure Data box planning
 
 4. Calculate the number of Azure Data Box devices needed to transfer 2PB:
    - Standard Data Box: 80TB usable capacity per device
@@ -59,7 +59,7 @@ Additional constraints: content must remain accessible to editors in Los Angeles
    - Post-ingestion: verify file count, total size, and spot-check checksums
    - Handle failed or corrupt transfers (re-copy specific folders)
 
-### Part 3: Ongoing Synchronization During Migration
+### Part 3: ongoing synchronization during migration
 
 7. Design the ongoing sync architecture for the 5TB/week of new content generated during migration:
    - Azure File Sync agent on the NAS gateway server for continuous replication
@@ -75,7 +75,7 @@ Additional constraints: content must remain accessible to editors in Los Angeles
    - Redirect all local editors to Azure Files or a local cache
    - Decommission on-premises NAS arrays
 
-### Part 4: Storage Tier Optimization
+### Part 4: Storage tier optimization
 
 10. Design the Azure storage tier strategy for the migrated content:
     - Active productions (800TB, accessed daily): Hot tier or Premium file shares
@@ -84,7 +84,7 @@ Additional constraints: content must remain accessible to editors in Los Angeles
 11. Design lifecycle management policies that automatically tier content based on access patterns post-migration.
 12. Calculate the total Azure storage cost for 2PB across tiers and compare to the current on-premises NAS total cost of ownership (hardware, power, cooling, floor space, IT labor, disaster recovery).
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-47"
@@ -135,7 +135,7 @@ Files in Azure Blob Storage Archive tier are offline and cannot be read directly
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Data Box overview](https://learn.microsoft.com/en-us/azure/databox/data-box-overview)
 - [Azure Data Box Heavy overview](https://learn.microsoft.com/en-us/azure/databox/data-box-heavy-overview)
@@ -144,7 +144,7 @@ Files in Azure Blob Storage Archive tier are offline and cannot be read directly
 - [Azure File Sync overview](https://learn.microsoft.com/en-us/azure/storage/file-sync/file-sync-introduction)
 - [Choose an Azure solution for data transfer](https://learn.microsoft.com/en-us/azure/storage/common/storage-choose-data-transfer-solution)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company has 2PB of data and a 100Mbps internet connection. They order 3 Data Box Heavy devices. During the 15-day shipping/ingestion cycle, 5TB of new data is generated. How do you handle the delta?</summary>
@@ -167,7 +167,7 @@ Files in Azure Blob Storage Archive tier are offline and cannot be read directly
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 04: Storage Accounts & Access
+# Challenge 04: Storage accounts & access
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%**
+**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%
+**
 
 :::
 
@@ -22,7 +23,7 @@ Contoso's application team needs a centralized storage solution. The legacy file
 
 Storage accounts are one of the most tested topics on the AZ-104 exam. You'll need to know every access method, every redundancy option, and every security control inside and out.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Create and configure storage accounts
 - Configure Azure Storage redundancy
@@ -34,7 +35,7 @@ Storage accounts are one of the most tested topics on the AZ-104 exam. You'll ne
 - Upload and manage data with AzCopy
 - Configure Azure Storage Explorer
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -50,7 +51,7 @@ Storage accounts are one of the most tested topics on the AZ-104 exam. You'll ne
 
 ## Description
 
-### Part 1: Create a Storage Account
+### Part 1: create a Storage account
 
 1. Create a resource group and storage account:
 
@@ -80,7 +81,7 @@ az storage account show --name $STORAGE_NAME --resource-group $RG \
   --query "{Name:name, SKU:sku.name, Kind:kind, AccessTier:accessTier, TLS:minimumTlsVersion}" -o table
 ```
 
-### Part 2: Configure Redundancy
+### Part 2: configure redundancy
 
 3. View the current redundancy setting (should be LRS)
 4. Change the redundancy from LRS to GRS:
@@ -91,7 +92,7 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --sku Standa
 
 5. Verify the change and understand what each redundancy option provides
 
-### Part 3: Access Keys & SAS Tokens
+### Part 3: access keys & SAS tokens
 
 6. Retrieve the storage account access keys:
 
@@ -146,7 +147,7 @@ az storage container generate-sas \
   -o tsv
 ```
 
-### Part 4: Stored Access Policies
+### Part 4: stored access Policies
 
 10. Create a stored access policy on the container:
 
@@ -186,7 +187,7 @@ az storage container generate-sas \
 # Get your public IP
 MY_IP=$(curl -s https://api.ipify.org)
 
-# Set default action to Deny
+# Set default action to deny
 az storage account update --name $STORAGE_NAME --resource-group $RG --default-action Deny
 
 # Add your IP to the allow list
@@ -206,7 +207,7 @@ az storage account network-rule add --account-name $STORAGE_NAME --resource-grou
 
 13. Verify that you can still access the storage account from your IP
 
-### Part 6: Rotate Access Keys
+### Part 6: rotate access keys
 
 14. Regenerate one of the storage account access keys:
 
@@ -239,7 +240,7 @@ SAS_TOKEN=$(az storage account generate-sas \
 azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcontainer?$SAS_TOKEN" --recursive
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-04"
@@ -304,14 +305,14 @@ STORAGE_NAME="stchallenge$(date +%s | tail -c 8)"
 If you configure the firewall and lock yourself out:
 
 ```bash
-# Option 1: Allow your current IP
+# Option 1: allow your current IP
 MY_IP=$(curl -s https://api.ipify.org)
 az storage account network-rule add --account-name $STORAGE_NAME --resource-group $RG --ip-address $MY_IP
 
-# Option 2: Reset to allow all networks (temporary!)
+# Option 2: reset to allow all networks (temporary!)
 az storage account update --name $STORAGE_NAME --resource-group $RG --default-action Allow
 
-# Option 3: Use Azure Cloud Shell (always allowed via "trusted services")
+# Option 3: use Azure Cloud Shell (always allowed via "trusted services")
 ```
 
 :::info
@@ -328,13 +329,13 @@ Azure Cloud Shell and trusted Azure services can always access storage accounts 
 # Login to AzCopy with Entra ID (no SAS needed)
 azcopy login
 
-# Upload using Entra ID auth (requires Storage Blob Data Contributor role)
+# Upload using Entra ID auth (requires Storage Blob Data contributor role)
 azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcontainer" --recursive
 ```
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Storage account overview](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview)
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
@@ -343,7 +344,7 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 - [Get started with AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Manage storage account keys](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage)
 
-## Break & Fix
+## Break & fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -355,7 +356,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 4. **Wrong redundancy**: Create a storage account with LRS, then try to change it directly to RA-GZRS. Does it work? (Some redundancy changes require intermediate steps or data migration.)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What are the three types of SAS tokens and when would you use each?</summary>

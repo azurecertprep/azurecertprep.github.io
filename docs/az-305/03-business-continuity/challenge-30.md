@@ -6,7 +6,7 @@ title: "Challenge 30: Design High Availability for Compute"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 30: Design High Availability for Compute
+# Challenge 30: design high availability for compute
 
 :::info Estimated Time and Cost
 
@@ -22,13 +22,13 @@ The current architecture runs on 8 VMs behind an Azure Load Balancer in a single
 
 Some components of FedBenefits are legacy .NET Framework applications that cannot be easily containerized, while newer microservices run on .NET 8 and could leverage PaaS offerings. The architecture must accommodate both IaaS (VMs for legacy) and PaaS (App Service for modern) workloads while achieving the 99.99% composite SLA target. Budget allows for upgrading to zone-redundant infrastructure but not for a full multi-region active-active deployment.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a high availability solution for compute
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Availability Sets vs. Availability Zones
+### Part 1: availability sets vs. availability zones
 
 1. Analyze why the current availability set deployment failed to meet the 99.99% target:
    - What SLA does an availability set provide? (99.95%)
@@ -48,7 +48,7 @@ Some components of FedBenefits are legacy .NET Framework applications that canno
 
 3. Determine which Azure regions support availability zones and confirm East US 2 support. Document any VM SKU restrictions for zone deployments.
 
-### Part 2: Zone-Redundant Load Balancing
+### Part 2: Zone-Redundant Load balancing
 
 4. Design the load balancing architecture for zone-redundant VMs:
    - Standard Load Balancer (zone-redundant frontend) distributing across 3 zones
@@ -89,7 +89,7 @@ done
    - Unhealthy threshold: 2 consecutive failures
    - Calculate: How quickly is a failed VM removed from rotation?
 
-### Part 3: Virtual Machine Scale Sets (VMSS)
+### Part 3: Virtual machine scale sets (vmss)
 
 7. Evaluate whether VMSS would be more appropriate than individual VMs for the web tier:
 
@@ -118,7 +118,7 @@ done
    - Scale-in: Remove 1 instance when average CPU < 30% for 10 minutes
    - Schedule-based scaling: Pre-scale to 12 instances during open enrollment (January)
 
-### Part 4: PaaS High Availability (App Service)
+### Part 4: PaaS high availability (App service)
 
 10. Design the deployment for the .NET 8 microservices using Azure App Service:
     - Which App Service plan tier supports availability zones? (Premium v3 or above)
@@ -143,7 +143,7 @@ az appservice plan create \
     - Modern tier: Zone-redundant App Service (99.99%) = ?
     - Combined application SLA (both tiers must be available): ?
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-30"
@@ -251,7 +251,7 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Availability zones overview](https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview)
 - [Virtual Machine Scale Sets - Flexible orchestration](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes)
@@ -260,7 +260,7 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 - [SLA for Virtual Machines](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services)
 - [Autoscale overview for VMSS](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-autoscale-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A government portal requires 99.99% uptime. The current deployment uses an availability set with 4 VMs. Why is this insufficient, and what change is needed?</summary>
@@ -290,11 +290,11 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab proves that zone-redundant VMSS with a Standard Load Balancer survives a full availability zone failure without manual intervention. You will observe traffic rerouting in real time.
 
-### Step 1: Deploy zone-redundant VMSS with 6 instances
+### Step 1: deploy zone-redundant VMSS with 6 instances
 
 ```bash
 az group create --name rg-az305-challenge30 --location eastus
@@ -314,7 +314,7 @@ az vmss create \
   --upgrade-policy-mode automatic
 ```
 
-### Step 2: Install nginx on all instances to serve hostname
+### Step 2: install nginx on all instances to serve hostname
 
 ```bash
 az vmss extension set \
@@ -333,7 +333,7 @@ az vmss update-instances \
   --instance-ids "*"
 ```
 
-### Step 3: Verify zone distribution
+### Step 3: verify zone distribution
 
 ```bash
 az vmss list-instances \
@@ -349,7 +349,7 @@ You should see 2 instances per zone (6 total across zones 1, 2, and 3).
 Zone-balanced distribution is critical for capacity planning. With 6 instances across 3 zones, losing one zone leaves 4 instances (67% capacity). Your minimum instance count must be calculated as: (instances needed at peak) * 3/2, rounded up, so that N-1 zones still handle full load.
 :::
 
-### Step 4: Observe traffic distribution across zones
+### Step 4: observe traffic distribution across zones
 
 ```bash
 LB_IP=$(az network public-ip show \
@@ -369,7 +369,7 @@ done
 
 You should see responses from instances across all 3 zones, demonstrating round-robin distribution.
 
-### Step 5: Simulate a zone failure
+### Step 5: simulate a zone failure
 
 Identify and deallocate all instances in Zone 1:
 
@@ -390,14 +390,14 @@ for id in $ZONE1_INSTANCES; do
 done
 ```
 
-### Step 6: Wait for health probes to detect the failure
+### Step 6: wait for health probes to detect the failure
 
 ```bash
 echo "Waiting 20 seconds for health probes to mark Zone 1 instances as unhealthy..."
 sleep 20
 ```
 
-### Step 7: Verify traffic routes only to surviving zones
+### Step 7: verify traffic routes only to surviving zones
 
 ```bash
 echo "Traffic after Zone 1 failure:"
@@ -413,7 +413,7 @@ Only hostnames from Zone 2 and Zone 3 instances should appear. Zone 1 instances 
 The Standard Load Balancer with health probes automatically removed failed instances from rotation. No manual intervention, no DNS changes, no application-level failover logic. This is the behavior that justifies the 99.99% SLA -- the system self-heals at the infrastructure layer. For the AZ-305 exam, remember that this automatic rerouting only works with Standard SKU load balancers; Basic SKU does not support zone-redundant frontends.
 :::
 
-### Step 8: Confirm remaining capacity
+### Step 8: confirm remaining capacity
 
 ```bash
 az vmss list-instances \
@@ -433,7 +433,7 @@ az vmss list-instances \
 
 You should see 4 running instances across zones 2 and 3 only.
 
-### Step 9: Restore Zone 1 and verify full recovery
+### Step 9: restore zone 1 and verify full recovery
 
 ```bash
 for id in $ZONE1_INSTANCES; do

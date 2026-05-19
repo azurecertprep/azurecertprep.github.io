@@ -5,7 +5,7 @@ title: "Desafio 15: Projetar Camadas de Serviço e Computação de Banco de Dado
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 15: Projetar Camadas de Serviço e Computação de Banco de Dados
+# Desafio 15: projetar camadas de serviço e computação de banco de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,33 +21,33 @@ CloudTenant tem três camadas de carga de trabalho distintas. A camada "Standard
 
 A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e deseja reduzi-lo em pelo menos 30% sem degradar a experiência do cliente. O VP de Engenharia quer entender os trade-offs entre os modelos de compra DTU e vCore e se a computacao serverless poderia ajudar com o problema de custos fora do horario comercial.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma camada de serviço e camada de computacao de banco de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao de Modelo de Compra
+### Parte 1: selecao de modelo de compra
 
 1. Compare os modelos de compra DTU e vCore para as cargas de trabalho da CloudTenant. Documente as vantagens e desvantagens de cada modelo para seus padrões de uso específicos.
 2. Recomende qual modelo de compra usar para cada camada de cliente (Standard, Premium, Enterprise) e justifique sua escolha.
 3. Determine se os bancos de dados da camada Standard se beneficiariam da simplicidade do modelo DTU ou da flexibilidade do modelo vCore em escalar computacao e armazenamento independentemente.
 
-### Parte 2: Atribuicao de Camada de Serviço
+### Parte 2: atribuicao de camada de serviço
 
 4. Para a camada Standard (250 bancos de dados), recomende a camada de serviço apropriada (General Purpose, Business Critical ou Hyperscale). Considere o requisito de SLA de 99,99% e restrições de custo.
 5. Para a camada Premium (45 bancos de dados), avalie se a camada Business Critical é necessária para latência inferior a 5ms e suporte a In-Memory OLTP. Identifique quaisquer abordagens alternativas.
 6. Para a camada Enterprise (5 bancos de dados excedendo 4TB), explique por que Hyperscale e a camada apropriada e descreva sua arquitetura (cache multi-camada, backups baseados em snapshots, named replicas).
 7. Documente o tamanho máximo de banco de dados, replicas de leitura e SLA de disponibilidade para cada camada de serviço.
 
-### Parte 3: Otimização da Camada de Computação
+### Parte 3: otimização da camada de computação
 
 8. Avalie a computacao serverless para os bancos de dados da camada Standard. Calcule a economia potencial dado o padrão de uso (ativo 9 horas em dias úteis, uso mínimo caso contrario). Considere o atraso de auto-pause e as implicacoes de latência de cold-start.
 9. Determine se computacao provisionada com capacidade reservada (termos de 1 ano ou 3 anos) seria mais economica do que serverless para qualquer uma das camadas de carga de trabalho.
 10. Projete uma estratégia de auto-scaling para a camada Enterprise usando named replicas Hyperscale para lidar com cargas de trabalho de leitura imprevisiveis sem provisionar excessivamente o primário.
 11. Calcule o custo mensal projetado apos a otimização e verifique se atinge a meta de redução de 30%.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-15"
@@ -97,7 +97,7 @@ Capacidade reservada do Azure SQL Database oferece desconto de 30-65% comparado 
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure SQL Database purchasing models](https://learn.microsoft.com/en-us/azure/azure-sql/database/purchasing-models)
 - [Azure SQL Database service tiers](https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tiers-general-purpose-business-critical)
@@ -108,7 +108,7 @@ Capacidade reservada do Azure SQL Database oferece desconto de 30-65% comparado 
 - [DTU-based resource limits](https://learn.microsoft.com/en-us/azure/azure-sql/database/resource-limits-dtu-single-databases)
 - [vCore-based resource limits](https://learn.microsoft.com/en-us/azure/azure-sql/database/resource-limits-vcore-single-databases)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um banco de dados e muito utilizado durante o horario comercial mas tem atividade quase zero a noite e nos finais de semana. A aplicação pode tolerar um atraso de cold start de 1-2 minutos para a primeira conexão apos inatividade. Qual camada de computacao minimiza o custo?</summary>
@@ -147,7 +147,7 @@ az group delete --name rg-cloudtenant-premium --yes --no-wait
 az group delete --name rg-cloudtenant-enterprise --yes --no-wait
 
 # Cancel any reserved capacity purchases (if testing in a lab, use a short-term reservation)
-# Note: Reserved capacity cancellations may incur early termination fees
+# Note: reserved capacity cancellations may incur early termination fees
 ```
 
 ---

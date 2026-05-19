@@ -5,7 +5,7 @@ title: "Challenge 14: Design a Relational Data Platform"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 14: Design a Relational Data Platform
+# Challenge 14: design a relational Data platform
 
 :::info Estimated Time and Cost
 
@@ -21,32 +21,32 @@ The CTO has set a firm budget of $2,000/month for all database workloads in Azur
 
 ShopWave also requires that all databases support automated backups with at least 7-day point-in-time restore, and that the transactional database has a 99.99% SLA. The company operates exclusively in the US East region today but plans to expand to Europe within 18 months.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a solution for storing relational data
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Service Selection
+### Part 1: Service selection
 
 1. For each of ShopWave's three databases, recommend the most appropriate Azure service (Azure SQL Database, Azure SQL Managed Instance, Azure Database for PostgreSQL Flexible Server, or Azure Database for MySQL Flexible Server). Justify each selection based on compatibility requirements, feature needs, and migration complexity.
 2. For the transactional SQL Server database, determine whether a single database or an elastic pool deployment model is more appropriate given the workload characteristics.
 3. Evaluate whether Azure SQL Managed Instance would be a better fit than Azure SQL Database for the transactional workload. Document at least three factors in your decision.
 4. Identify which features of PostgreSQL Flexible Server (versus Single Server, which is retired) support the acquired company's extension requirements.
 
-### Part 2: Migration Planning
+### Part 2: migration planning
 
 5. Design a migration approach for each database. Specify whether you would use online or offline migration, and which tool (Azure Database Migration Service, native backup/restore, or data replication) is most appropriate.
 6. Determine the minimum downtime migration strategy for the transactional database, considering it processes orders 24/7.
 7. Identify any schema or application changes required for the PostgreSQL migration to retain PostGIS and pg_trgm functionality.
 
-### Part 3: Cost Optimization
+### Part 3: cost optimization
 
 8. Estimate the monthly cost for your proposed architecture and verify it fits within the $2,000/month budget. Consider compute, storage, and backup costs.
 9. Identify at least two cost optimization strategies (such as reserved capacity, right-sizing, or workload consolidation) that could reduce the total monthly spend by 20% or more.
 10. Design a strategy for the future European expansion that minimizes additional cost while meeting data residency requirements.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-14"
@@ -97,7 +97,7 @@ Elastic pools are cost-effective when you have multiple databases with varying a
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Features comparison: Azure SQL Database and Azure SQL Managed Instance](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison)
 - [Azure SQL Database overview](https://learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview)
@@ -106,7 +106,7 @@ Elastic pools are cost-effective when you have multiple databases with varying a
 - [Azure Database Migration Service](https://learn.microsoft.com/en-us/azure/dms/dms-overview)
 - [Choose the right deployment option in Azure SQL](https://learn.microsoft.com/en-us/azure/azure-sql/azure-sql-iaas-vs-paas-what-is-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. A company needs to migrate a SQL Server database that uses Service Broker, cross-database queries, and SQL Server Agent jobs. Which Azure service should they use?</summary>
@@ -136,7 +136,7 @@ Elastic pools are cost-effective when you have multiple databases with varying a
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
@@ -185,7 +185,7 @@ This mini-deployment validates your design decisions with real Azure resources. 
 # Delete the resource group containing all database resources
 az group delete --name rg-shopwave-data --yes --no-wait
 
-# If you created a Database Migration Service instance
+# If you created a database migration Service instance
 az group delete --name rg-shopwave-dms --yes --no-wait
 ```
 

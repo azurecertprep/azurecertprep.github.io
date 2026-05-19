@@ -5,15 +5,15 @@ title: "Am I Ready?"
 
 import SelfAssessment from '@site/src/components/SelfAssessment';
 
-# Estou Pronto para o AZ-104?
+# Estou pronto para o AZ-104?
 
 Antes de mergulhar nos desafios, reserve alguns minutos para avaliar sua prontidão. O AZ-104 pressupõe que você já possui conhecimento fundamental de conceitos de TI e alguma experiência com o Azure.
 
-## Lista de Autoavaliação
+## Lista de autoavaliação
 
 Clique em cada linha para alternar: ✅ Confortável | ⚠️ Preciso Revisar | ❌ Novo para Mim
 
-### Conhecimento Geral de TI
+### Conhecimento geral de TI
 
 <SelfAssessment
   storageKey="general-it"
@@ -27,7 +27,7 @@ Clique em cada linha para alternar: ✅ Confortável | ⚠️ Preciso Revisar | 
   ]}
 />
 
-### Conhecimento Específico do Azure
+### Conhecimento específico do Azure
 
 <SelfAssessment
   storageKey="azure-specific"
@@ -41,15 +41,15 @@ Clique em cada linha para alternar: ✅ Confortável | ⚠️ Preciso Revisar | 
   ]}
 />
 
-## Como Interpretar Seus Resultados
+## Como interpretar seus resultados
 
-### Maioria ✅: Você está pronto!
+### Maioria ✅: você está pronto!
 Vá direto para a [Configuração do Laboratório](/docs/az-104/lab-setup) e comece o Desafio 01.
 
-### Mistura de ✅ e ⚠️: Você está quase pronto
+### Mistura de ✅ e ⚠️: você está quase pronto
 Comece os desafios, mas reserve um tempo extra para os tópicos desconhecidos. Use a seção **Recursos de Aprendizado** em cada desafio para preencher as lacunas.
 
-### Vários ❌: Comece pelos fundamentos primeiro
+### Vários ❌: comece pelos fundamentos primeiro
 Considere estes recursos antes de começar:
 - [AZ-900: Azure Fundamentals](https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/) | Trilha de aprendizado gratuita cobrindo todos os conceitos básicos
 - [Tour pelo Azure Portal](https://learn.microsoft.com/en-us/azure/azure-portal/azure-portal-overview) | Familiarize-se com a navegação no Portal
@@ -60,7 +60,7 @@ Considere estes recursos antes de começar:
 Nenhuma experiência com o Azure? Tudo bem! A certificação AZ-900 (Azure Fundamentals) é um excelente ponto de partida. É um exame mais leve que constrói a base necessária para o AZ-104. Muitas pessoas fazem o AZ-900 primeiro e depois o AZ-104.
 
 :::
-## Expectativas de Experiência
+## Expectativas de experiência
 
 De acordo com a Microsoft, candidatos ao AZ-104 devem ter:
 

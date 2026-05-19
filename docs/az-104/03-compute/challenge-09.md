@@ -16,7 +16,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Contoso's development team has containerized their internal dashboard application. The Dockerfile is ready, but the team has been running containers on a developer's laptop. You need to set up proper container infrastructure in Azure: a private registry to store images, and a hosting platform to run them at scale.
 
-## Exam Skills Covered
+## Exam skills covered
 
 | Skill | Weight |
 |-------|--------|
@@ -26,7 +26,7 @@ Contoso's development team has containerized their internal dashboard applicatio
 | Manage container sizing and scaling | Medium |
 | Choose between ACI, Container Apps, and AKS | Medium |
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | Traditional | Azure Equivalent |
 |-------------|-----------------|
@@ -38,7 +38,7 @@ Contoso's development team has containerized their internal dashboard applicatio
 
 ## Tasks
 
-### Task 1: Create an Azure Container Registry
+### Task 1: create an Azure Container Registry
 
 ```bash
 # Create a resource group
@@ -60,7 +60,7 @@ echo "ACR Name: $ACR_NAME"
 az acr show --name $ACR_NAME --query "{Name:name, SKU:sku.name, LoginServer:loginServer}" -o table
 ```
 
-### Task 2: Build and Push an Image to ACR
+### Task 2: build and push an image to ACR
 
 Use `az acr build` to build directly in the cloud | no local Docker needed:
 
@@ -68,7 +68,7 @@ Use `az acr build` to build directly in the cloud | no local Docker needed:
 # Create a simple app directory
 mkdir container-app && cd container-app
 
-# Create a simple Dockerfile
+# Create a simple dockerfile
 cat > Dockerfile << 'EOF'
 FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
@@ -84,7 +84,7 @@ cat > index.html << 'EOF'
 </body></html>
 EOF
 
-# Build and push using ACR Tasks (builds in the cloud)
+# Build and push using ACR tasks (builds in the cloud)
 az acr build \
   --registry $ACR_NAME \
   --image contoso-dashboard:v1 \
@@ -95,7 +95,7 @@ az acr repository list --name $ACR_NAME -o table
 az acr repository show-tags --name $ACR_NAME --repository contoso-dashboard -o table
 ```
 
-### Task 3: Deploy to Azure Container Instances
+### Task 3: deploy to Azure Container instances
 
 ```bash
 # Get ACR credentials
@@ -126,7 +126,7 @@ echo "Test: http://$ACI_FQDN"
 az container logs -g rg-containers-lab -n aci-dashboard
 ```
 
-### Task 4: Create a Container Apps Environment
+### Task 4: create a Container Apps environment
 
 ```bash
 # Install/update the Container Apps extension
@@ -143,7 +143,7 @@ az containerapp env create \
   --location eastus
 ```
 
-### Task 5: Deploy to Container Apps
+### Task 5: deploy to Container Apps
 
 ```bash
 # Enable managed identity access to ACR (preferred over admin credentials)
@@ -165,7 +165,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
   --query "properties.configuration.ingress.fqdn" -o tsv
 ```
 
-### Task 6: Configure Container Apps Scaling
+### Task 6: configure Container Apps scaling
 
 ```bash
 # Add an HTTP scaling rule (scale when concurrent requests > 10 per replica)
@@ -186,7 +186,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 az containerapp replica list -g rg-containers-lab -n ca-dashboard -o table
 ```
 
-### Task 7: Compare ACI vs Container Apps
+### Task 7: compare ACI vs Container Apps
 
 Run both deployments and compare:
 
@@ -215,7 +215,7 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 | **Complexity** | Very low | Low | High |
 </details>
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-09"
@@ -228,9 +228,9 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
     "Can articulate when to use ACI vs Container Apps vs AKS"
   ]}
 />
-## Break & Fix Scenarios
+## Break & fix scenarios
 
-### Scenario A: Wrong Image Name
+### Scenario a: wrong image name
 ```bash
 # Deploy ACI with a misspelled image name
 az container create \
@@ -241,10 +241,10 @@ az container create \
   --registry-username $ACR_NAME \
   --registry-password $ACR_PASSWORD \
   --ports 80
-# What error do you get? Check: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
+# What error do you get? check: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
 ```
 
-### Scenario B: ACR Permission Issue
+### Scenario b: ACR permission issue
 ```bash
 # Try deploying Container Apps without providing registry credentials
 az containerapp create \
@@ -257,7 +257,7 @@ az containerapp create \
 # How do you fix ACR authentication? (Hint: managed identity or admin credentials)
 ```
 
-### Scenario C: Port Mismatch
+### Scenario c: port mismatch
 ```bash
 # Deploy with wrong target port
 az containerapp create \
@@ -270,10 +270,10 @@ az containerapp create \
   --registry-password $ACR_PASSWORD \
   --target-port 8080 \
   --ingress external
-# The app runs but returns 502 errors. Why?
+# The app runs but returns 502 errors. why?
 ```
 
-## Knowledge Check
+## Knowledge check
 
 **1. What are the differences between ACR SKUs?**
 

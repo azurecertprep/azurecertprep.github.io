@@ -5,7 +5,7 @@ title: "Desafio 04: Projetar Autenticação para Aplicações Cloud-Native"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 04: Projetar Autenticação para Aplicações Cloud-Native
+# Desafio 04: projetar autenticação para aplicações Cloud-Native
 
 :::info Tempo Estimado e Custo
 
@@ -25,15 +25,15 @@ Ambas as aplicações compartilham uma API backend comum hospedada no Azure App 
 
 Sua tarefa é projetar a arquitetura completa de autenticação para ambas as aplicações e seus serviços backend.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de autenticação
 - Recomendar uma solução de gerenciamento de identidade
 - Recomendar uma solução para autorizar acesso a recursos do Azure
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Selecao da Estratégia de Autenticação
+### Parte 1: selecao da estratégia de autenticação
 
 1. Para cada aplicação, determine a plataforma de identidade apropriada:
 
@@ -49,7 +49,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 
 2. Justifique por que você escolheu Microsoft Entra ID vs. Azure AD B2C vs. Azure AD B2B para cada aplicação. Documente cenários onde a alternativa seria mais apropriada.
 
-### Parte 2: Design de Autenticação do Portal Interno
+### Parte 2: design de autenticação do portal interno
 
 3. Projete o conjunto de políticas de Conditional Access para o Portal de Operações Internas:
    - Política 1: Exigir MFA para todos os usuários
@@ -62,7 +62,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
    - Tempo de vida do token e comportamento de refresh
    - Abordagem de gerenciamento de sessão
 
-### Parte 3: Design de Autenticação da Plataforma de Clientes
+### Parte 3: design de autenticação da plataforma de clientes
 
 5. Projete a configuração do Azure AD B2C para a plataforma de clientes:
    - User flows vs. custom policies: qual abordagem e por que
@@ -75,7 +75,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
    - Claims customizados (nível de fidelidade, nível de assinatura)
    - Consideracoes de tempo de vida do token para cenários de consumidor
 
-### Parte 4: Autenticação Serviço-a-Serviço
+### Parte 4: autenticação Serviço-a-Serviço
 
 7. Projete a estratégia de managed identity para a API backend:
    - System-assigned vs. user-assigned managed identity (é por que)
@@ -85,13 +85,13 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 
 8. Para cenários onde managed identity não esta disponível (por exemplo, chamadas a APIs de terceiros), projete uma abordagem segura de gerenciamento de credenciais usando Key Vault.
 
-### Parte 5: Implementar Prova de Conceito
+### Parte 5: implementar prova de conceito
 
 9. Registre uma aplicação no Entra ID para o Portal Interno com redirect URIs e permissões de API apropriadas.
 
 10. Crie uma managed identity para um App Service e conceda acesso a um Key Vault.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-04"
@@ -149,7 +149,7 @@ Principio de design: Comece com uma política baseline exigindo MFA para todos o
 <summary>Dica 3: Configuração de App Registration e Managed Identity</summary>
 
 ```bash
-# Register the Internal Portal app
+# Register the internal portal app
 az ad app create \
   --display-name "Relecloud Internal Portal" \
   --sign-in-audience "AzureADMyOrg" \
@@ -227,7 +227,7 @@ Para a plataforma de clientes da Relecloud, **user flows** sao suficientes porqu
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Microsoft Entra ID documentation](https://learn.microsoft.com/en-us/entra/identity/)
 - [Azure AD B2C overview](https://learn.microsoft.com/en-us/azure/active-directory-b2c/overview)
@@ -236,7 +236,7 @@ Para a plataforma de clientes da Relecloud, **user flows** sao suficientes porqu
 - [Microsoft identity platform and OAuth 2.0 flows](https://learn.microsoft.com/en-us/entra/identity-platform/v2-app-types)
 - [B2C user flows and custom policies](https://learn.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A plataforma de clientes da Relecloud precisa suportar cadastro com email, Google e Facebook para mais de 100.000 consumidores. A equipe de marketing quer uma pagina de login totalmente personalizada. Qual solução de identidade você deve recomendar?</summary>

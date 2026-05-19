@@ -5,7 +5,7 @@ title: "Desafio 30: Projetar Alta Disponibilidade para Computação"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 30: Projetar Alta Disponibilidade para Computação
+# Desafio 30: projetar alta disponibilidade para computação
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ A arquitetura atual executa em 8 VMs atras de um Azure Load Balancer em um únic
 
 Alguns componentes do FedBenefits sao aplicações legadas .NET Framework que não podem ser facilmente containerizadas, enquanto microsservicos mais novos executam em .NET 8 e poderiam aproveitar ofertas PaaS. A arquitetura deve acomodar tanto IaaS (VMs para legado) quanto PaaS (App Service para moderno) enquanto alcanca a meta de SLA composto de 99,99%. O orcamento permite upgrade para infraestrutura zone-redundant mas não para uma implantacao multi-região active-active completa.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de alta disponibilidade para computacao
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Availability Sets vs. Availability Zones
+### Parte 1: availability sets vs. availability zones
 
 1. Análise por que a implantacao atual com availability set falhou em atingir a meta de 99,99%:
    - Qual SLA um availability set fornece? (99,95%)
@@ -47,7 +47,7 @@ Alguns componentes do FedBenefits sao aplicações legadas .NET Framework que n�
 
 3. Determine quais regiões Azure suportam availability zones e confirme o suporte para East US 2. Documente quaisquer restrições de SKU de VM para implantacoes em zona.
 
-### Parte 2: Load Balancing Zone-Redundant
+### Parte 2: Load balancing Zone-Redundant
 
 4. Projete a arquitetura de load balancing para VMs zone-redundant:
    - Standard Load Balancer (frontend zone-redundant) distribuindo entre 3 zonas
@@ -88,7 +88,7 @@ done
    - Limite de não saudavel: 2 falhas consecutivas
    - Calcule: Com que rapidez uma VM falhada e removida da rotacao?
 
-### Parte 3: Virtual Machine Scale Sets (VMSS)
+### Parte 3: Virtual machine scale sets (vmss)
 
 7. Avalie se VMSS seria mais apropriado que VMs individuais para a camada web:
 
@@ -112,7 +112,7 @@ done
    - Scale-in: Remova 1 instância quando CPU média < 30% por 10 minutos
    - Scaling baseado em cronograma: Pre-escale para 12 instâncias durante inscricao aberta (Janeiro)
 
-### Parte 4: Alta Disponibilidade PaaS (App Service)
+### Parte 4: alta disponibilidade PaaS (App service)
 
 10. Projete a implantacao para os microsservicos .NET 8 usando Azure App Service:
     - Qual tier de App Service plan suporta availability zones? (Premium v3 ou acima)
@@ -137,7 +137,7 @@ az appservice plan create \
     - Camada moderna: App Service zone-redundant (99,99%) = ?
     - SLA combinado da aplicação (ambas camadas devem estar disponíveis): ?
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-30"
@@ -245,7 +245,7 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Availability zones overview](https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview)
 - [Virtual Machine Scale Sets - Flexible orchestration](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes)
@@ -254,7 +254,7 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 - [SLA for Virtual Machines](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services)
 - [Autoscale overview for VMSS](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-autoscale-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Um portal governamental requer 99,99% de uptime. A implantacao atual usa um availability set com 4 VMs. Por que isso é insuficiente, e qual mudança é necessária?</summary>
@@ -284,7 +284,7 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

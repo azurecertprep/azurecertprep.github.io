@@ -5,7 +5,7 @@ title: "Desafio 08: Projetar Gerenciamento de Segredos e Certificados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 08: Projetar Gerenciamento de Segredos e Certificados
+# Desafio 08: projetar gerenciamento de segredos e certificados
 
 :::info Tempo Estimado e Custo
 
@@ -21,37 +21,37 @@ Uma auditoria de conformidade recente sinalizou vários problemas críticos: cha
 
 Sua tarefa é projetar uma solução abrangente de gerenciamento de segredos e certificados que enderece essas lacunas de conformidade enquanto suporta as necessidades operacionais de suas equipes de desenvolvimento. A solução deve lidar com renovacao automática de certificados, aplicar políticas de rotacao de chaves é fornecer isolamento de rede para vaults que manipulam as chaves de processamento de pagamento mais sensíveis. Restricoes orcamentarias limitam o uso de Managed HSM apenas para as cargas de trabalho mais críticas.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para gerenciar segredos, certificados e chaves
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Arquitetura e Segmentacao de Key Vault
+### Parte 1: arquitetura e segmentacao de Key Vault
 
 1. Projete uma topologia de Key Vault para o ambiente da Meridian. Determine quantos vaults sao necessários e justifique a estratégia de separacao (considere: por ambiente, por aplicação, por nível de sensibilidade, ou por fronteira de conformidade).
 2. Identifique quais cargas de trabalho requerem Azure Key Vault Managed HSM versus Key Vault padrão. Documente os criterios de decisao (requisitos FIPS 140-3 Level 3, necessidades de desempenho, justificativa de custo).
 3. Defina o modelo de controle de acesso para cada vault. Compare vault access policies versus Azure RBAC para Key Vault e recomende qual modelo usar para cada nível de vault. Justifique sua escolha considerando a mudança de API de marco de 2026 tornando RBAC o padrão.
 4. Projete uma convencao de nomes e estratégia de resource group para a hierarquia de vaults que suporte fácil identificacao do propósito do vault, ambiente e equipe proprietaria.
 
-### Parte 2: Gerenciamento de Ciclo de Vida de Certificados
+### Parte 2: gerenciamento de ciclo de vida de certificados
 
 5. Projete uma solução de gerenciamento de certificados para os mais de 50 certificados TLS de microsservicos. Enderece: selecao de autoridade certificadora (CA integrada ao Key Vault vs. autogerenciada), fluxos de trabalho de renovacao automática, e alertas de notificação para certificados se aproximando da expiracao.
 6. Defina procedimentos de rotacao de certificados que alcancem implantacao sem downtime. Considere como cargas de trabalho AKS consumirao certificados renovados sem reinicializacao de pods.
 7. Especifique como certificados wildcard versus certificados de serviço individual devem ser usados, e documente os trade-offs de segurança de cada abordagem.
 
-### Parte 3: Rotacao de Segredos e Chaves
+### Parte 3: rotacao de segredos e chaves
 
 8. Projete uma política de rotacao automatizada de chaves para as chaves de API de gateway de pagamento. Defina frequência de rotacao, o mecanismo de gatilho de rotacao, e como aplicações detectarao e consumirao novas versoes de chave.
 9. Defina uma estratégia de customer-managed key (CMK) para criptografia de dados em repouso. Especifique tipos de chave (RSA vs. EC), tamanhos de chave, e como o versionamento de chaves interage com recursos criptografados.
 10. Projete o modelo de segurança de rede para vaults. Determine quais vaults precisam de private endpoints, quais podem usar service endpoints, e quais (se houver) podem permanecer publicamente acessiveis. Documente a justificativa para cada decisao.
 
-### Parte 4: Monitoramento e Recuperação de Desastres
+### Parte 4: monitoramento e recuperação de desastres
 
 11. Projete uma estratégia de monitoramento e alertas para operações de key vault. Inclua detecção de tentativas de acesso não autorizado, certificados proximos da expiracao e eventos de throttling.
 12. Projete uma estratégia de backup e recuperação de desastres para a infraestrutura de vault. Enderece failover regional, procedimentos de backup de chaves e requisitos de RTO/RPO para a plataforma de pagamento.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-08"
@@ -102,7 +102,7 @@ Private endpoints fornecem o isolamento de rede mais forte (trafego permanece no
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Key Vault best practices](https://learn.microsoft.com/azure/key-vault/general/best-practices)
 - [Azure Key Vault security overview](https://learn.microsoft.com/azure/key-vault/general/security-features)
@@ -112,7 +112,7 @@ Private endpoints fornecem o isolamento de rede mais forte (trafego permanece no
 - [Key Vault private endpoints](https://learn.microsoft.com/azure/key-vault/general/private-link-service)
 - [Encryption and key management in Azure (CAF)](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/encryption-and-keys)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A Meridian precisa armazenar uma chave privada de CA raiz que assina todos os certificados de serviço internos. A chave nunca deve sair do hardware e deve atender FIPS 140-3 Level 3. Qual serviço eles devem usar?</summary>
@@ -150,7 +150,7 @@ az group delete --name rg-keyvault-prod --yes --no-wait
 az group delete --name rg-keyvault-dev --yes --no-wait
 az group delete --name rg-keyvault-hsm --yes --no-wait
 
-# If you created a Managed HSM (note: HSM deletion has a purge protection period)
+# If you created a managed HSM (note: HSM deletion has a purge protection period)
 # az keyvault purge --hsm-name meridian-payment-hsm
 ```
 

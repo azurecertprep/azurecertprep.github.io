@@ -5,7 +5,7 @@ title: "Desafio 43: Projetar Implantação Automatizada"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 43: Projetar Implantação Automatizada
+# Desafio 43: projetar implantação automatizada
 
 :::info Tempo Estimado e Custo
 
@@ -21,20 +21,20 @@ O CTO determinou implantacoes com zero tempo de inatividade com rollback automá
 
 A equipe esta dividida entre usar GitHub Actions (já usado para CI) e Azure DevOps (usado pela equipe de plataforma para gerenciamento de releases). Eles precisam de uma recomendacao que considere a experiência de ambas as equipes enquanto padroniza uma abordagem de implantacao que escale para 50 serviços dentro de um ano.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de implantacao automatizada para aplicações
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Estratégia de Infrastructure as Code
+### Parte 1: estratégia de infrastructure as code
 
 1. Compare Bicep, Terraform e ARM templates para gerenciar infraestrutura Azure. Documente os trade-offs em termos de: curva de aprendizado, gerenciamento de estado, suporte multi-cloud, ecossistema de módulos e integração nativa com Azure.
 2. Projete uma estrutura de repositório IaC que suporte 10 microsservicos em 3 ambientes (dev, staging, produção) e 2 regiões. Enderece: infraestrutura compartilhada (VNet, Key Vault, Container Registry) vs. infraestrutura específica de serviço.
 3. Projete uma estratégia para gerenciar o estado do IaC. Para Terraform, compare backends de estado remoto (Azure Storage, Terraform Cloud). Para Bicep, documente como implantacoes idempotentes lidam com estado implicitamente.
 4. Implemente detecção de drift: como você identifica quando mudanças manuais foram feitas na infraestrutura fora do IaC?
 
-### Parte 2: Design do Pipeline CI/CD
+### Parte 2: design do pipeline CI/CD
 
 5. Compare GitHub Actions e Azure DevOps Pipelines para este cenário. Considere: integração com ferramentas existentes, gates de aprovacao, regras de proteção de ambiente, histórico de implantacao e RBAC para implantacoes em produção.
 6. Projete um pipeline de promocao de imagem de container:
@@ -44,20 +44,20 @@ A equipe esta dividida entre usar GitHub Actions (já usado para CI) e Azure Dev
    - Promover para tag de registro produção apos aprovacao manual
 7. Projete o pipeline de implantacao para incluir validação pré-implantacao (what-if para IaC, endpoints de health check prontos), execução da implantacao, verificação pós-implantacao (smoke tests, monitoramento sintetico) e gatilho de rollback automático.
 
-### Parte 3: Estratégias de Implantação
+### Parte 3: estratégias de implantação
 
 8. Projete uma estratégia de implantacao blue-green para os serviços de API stateless usando revisoes do Azure Container Apps ou deployment slots do App Service. Documente roteamento de trafego, validação de saúde e procedimento de rollback instantaneo.
 9. Projete uma estratégia de implantacao canary para o serviço de processamento de pagamentos onde você roteia 5% do trafego para a nova versao, monitora taxas de erro por 10 minutos, e entao aumenta progressivamente para 25%, 50% e 100%.
 10. Projete uma estratégia de implantacao rolling para os serviços de worker em background onde você atualiza instâncias uma por vez com health checks entre cada uma. Documente como você lida com mensagens em andamento durante atualizações.
 11. Documente sua estratégia para migracoes de schema de banco de dados durante implantacoes com zero tempo de inatividade (padrão expand-contract, migracoes backward-compatible).
 
-### Parte 4: Rollback e Recuperação
+### Parte 4: rollback e recuperação
 
 12. Defina criterios de health check que disparam rollback automático: códigos de resposta HTTP, percentis de latência de resposta, limiares de taxa de erro e metricas de negocio customizadas.
 13. Projete um procedimento de rollback para cada estratégia de implantacao (blue-green: swap de volta, canary: rotear 100% para antigo, rolling: parar e reverter).
 14. Documente como você lida com o cenário "implantacao bem-sucedida mas causou degradacao de performance" que só se manifesta sob carga de produção apos 30 minutos.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-43"
@@ -108,7 +108,7 @@ Para mudanças de banco de dados com zero tempo de inatividade: (1) Fase Expand:
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Container Apps blue-green deployment](https://learn.microsoft.com/en-us/azure/container-apps/blue-green-deployment)
 - [Set up staging environments in Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots)
@@ -117,7 +117,7 @@ Para mudanças de banco de dados com zero tempo de inatividade: (1) Fase Expand:
 - [Azure DevOps multi-stage pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/stages)
 - [Deployment best practices](https://learn.microsoft.com/en-us/azure/architecture/framework/devops/release-engineering-cd)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma equipe usa Terraform para gerenciar infraestrutura Azure. Apos uma implantacao, eles descobrem que alguem escalou manualmente uma VM pelo portal Azure. O que acontece no próximo `terraform apply`?</summary>
@@ -140,7 +140,7 @@ Para mudanças de banco de dados com zero tempo de inatividade: (1) Fase Expand:
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

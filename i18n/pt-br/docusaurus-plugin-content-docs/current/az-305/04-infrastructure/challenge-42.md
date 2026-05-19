@@ -5,7 +5,7 @@ title: "Desafio 42: Projetar Gerenciamento de Configuracao de Aplicações"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 42: Projetar Gerenciamento de Configuracao de Aplicações
+# Desafio 42: projetar gerenciamento de configuracao de aplicações
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ A equipe de plataforma precisa de uma solução centralizada de gerenciamento de
 
 Além disso, valores de configuração sensíveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso apropriados, enquanto configurações não-sensíveis (feature flags, timeouts, tamanhos de pool de conexão) devem ser facilmente gerenciáveis por product owners sem intervencao de engenharia.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de gerenciamento de configuração de aplicação
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Projetar Arquitetura de Configuração Centralizada
+### Parte 1: projetar arquitetura de configuração centralizada
 
 1. Implante um store do Azure App Configuration e projete uma convencao de nomenclatura de chaves que suporte 30 serviços em 4 ambientes. Considere usar labels para diferenciacao de ambientes vs stores separados por ambiente.
 2. Projete uma hierarquia de configuração que suporte:
@@ -36,13 +36,13 @@ Além disso, valores de configuração sensíveis (senhas de banco de dados, API
    - Overrides específicos de ambiente (ex.: connection strings de banco de dados por ambiente)
 3. Documente os trade-offs entre usar um único store do App Configuration com labels vs múltiplos stores (um por ambiente). Considere custo, granularidade de controle de acesso e raio de explosao de configurações incorretas.
 
-### Parte 2: Integrar Referencias do Key Vault
+### Parte 2: integrar referencias do Key Vault
 
 4. Projete uma solução que armazene valores sensíveis no Azure Key Vault enquanto os referência a partir do App Configuration. Documente como as referências do Key Vault funcionam e como as aplicações as resolvem em tempo de execução.
 5. Defina limites de controle de acesso: quais equipes podem gerenciar configuração não-sensível (product owners) vs secrets (equipe de segurança) vs feature flags (lideres de engenharia).
 6. Projete uma estratégia de rotacao de secrets que atualize secrets do Key Vault sem exigir reinicializacao da aplicação. Documente como os intervalos de atualização de configuração interagem com a resolução de referências do Key Vault.
 
-### Parte 3: Gerenciamento de Features e Rollout Gradual
+### Parte 3: gerenciamento de features e rollout gradual
 
 7. Projete um sistema de feature flags usando o gerenciamento de features do App Configuration que suporte:
    - Flags booleanas on/off (kill switches)
@@ -52,7 +52,7 @@ Além disso, valores de configuração sensíveis (senhas de banco de dados, API
 8. Projete uma estratégia de rollout para um novo recurso de processamento de pagamentos: comece com usuários internos, expanda para 5% dos usuários externos, monitore taxas de erro, depois aumente para 25%, 50% e 100%.
 9. Documente como implementar um kill switch instantaneo que desabilite um recurso em todos os 30 serviços dentro de 60 segundos sem reimplantacao.
 
-### Parte 4: Atualização de Configuração e Monitoramento
+### Parte 4: atualização de configuração e monitoramento
 
 10. Projete uma estratégia de atualização de configuração que equilibre frescor com desempenho. Compare atualização baseada em polling (padrão sentinel key) vs atualização baseada em push (notificações do Event Grid).
 11. Projete uma solução de monitoramento e alerta que detecte:
@@ -61,7 +61,7 @@ Além disso, valores de configuração sensíveis (senhas de banco de dados, API
     - Mudancas de estado de feature flags
 12. Documente como snapshots do App Configuration podem ser usados para criar conjuntos de configuração point-in-time para consistência de implantacao e cenários de rollback.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-42"
@@ -112,7 +112,7 @@ Snapshots do App Configuration criam uma copia imutável e point-in-time de key-
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure App Configuration overview](https://learn.microsoft.com/en-us/azure/azure-app-configuration/overview)
 - [Use Key Vault references in App Configuration](https://learn.microsoft.com/en-us/azure/azure-app-configuration/use-key-vault-references-dotnet-core)
@@ -121,7 +121,7 @@ Snapshots do App Configuration criam uma copia imutável e point-in-time de key-
 - [Azure App Configuration snapshots](https://learn.microsoft.com/en-us/azure/azure-app-configuration/concept-snapshots)
 - [Enable dynamic configuration with push refresh](https://learn.microsoft.com/en-us/azure/azure-app-configuration/enable-dynamic-configuration-push-refresh)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma empresa usa um único store do App Configuration com labels para separar ambientes. Um desenvolvedor acidentalmente aplica a label "Production" a um valor de configuração de teste. Como a arquitetura poderia prevenir isso?</summary>
@@ -151,7 +151,7 @@ Snapshots do App Configuration criam uma copia imutável e point-in-time de key-
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

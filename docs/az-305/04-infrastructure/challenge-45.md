@@ -5,7 +5,7 @@ title: "Challenge 45: Design Server and Application Migration"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 45: Design Server and Application Migration
+# Challenge 45: design server and Application migration
 
 :::info Estimated Time and Cost
 
@@ -25,14 +25,14 @@ Following the Cloud Adoption Framework strategy developed for Precision Manufact
 
 The migration team needs to categorize each workload group, select the appropriate Azure target (IaaS vs PaaS), recommend specific migration tools, and design a validation strategy.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Evaluate on-premises servers, data, and applications for migration
 - Recommend a solution for migrating workloads to infrastructure as a service (IaaS) and platform as a service (PaaS)
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Assessment and Discovery Analysis
+### Part 1: assessment and discovery analysis
 
 1. Review the Azure Migrate assessment output and create a workload categorization matrix with columns for: workload name, current platform, dependencies discovered, Azure readiness status (ready, conditionally ready, not ready), recommended target, and migration tool.
 2. For each workload group, document the assessment criteria that determine IaaS vs. PaaS target:
@@ -41,7 +41,7 @@ The migration team needs to categorize each workload group, select the appropria
    - Are there blocking dependencies? (specific OS version, kernel modules, local services)
 3. Identify the "blockers" for each conditionally-ready workload and document the remediation steps needed before migration (e.g., upgrade .NET Framework version, remove hard-coded IPs, externalize session state).
 
-### Part 2: IaaS Migration Strategy
+### Part 2: IaaS migration strategy
 
 4. Design the IaaS migration approach for workloads that cannot move to PaaS:
    - AD domain controllers: migrate using Azure Migrate Server Migration with pre-staged Entra Connect
@@ -53,7 +53,7 @@ The migration team needs to categorize each workload group, select the appropria
    - Document the replication bandwidth requirements for migrating 200 servers within the timeline
 6. Design the VM sizing strategy: compare "as-on-premises" sizing (match current specs) vs. "performance-based" sizing (right-size based on actual utilization data from the 30-day assessment).
 
-### Part 3: PaaS Migration Strategy
+### Part 3: PaaS migration strategy
 
 7. Design the PaaS migration path for eligible web applications:
    - .NET Framework IIS apps: evaluate Azure App Service (Windows) compatibility using App Service Migration Assistant
@@ -66,7 +66,7 @@ The migration team needs to categorize each workload group, select the appropria
    - Push container images to Azure Container Registry
    - Deploy to Container Apps with environment configuration mapped from on-premises Docker Compose
 
-### Part 4: Testing and Validation
+### Part 4: testing and validation
 
 10. Design a pre-migration testing checklist for each workload type:
     - Network connectivity validation (DNS resolution, port accessibility, latency to dependencies)
@@ -76,7 +76,7 @@ The migration team needs to categorize each workload group, select the appropria
 11. Design a parallel-run strategy for critical workloads where both on-premises and Azure run simultaneously, with traffic gradually shifted to Azure using Azure Traffic Manager or DNS-based cutover.
 12. Define rollback criteria and procedures: at what point is a migration considered failed, and how do you revert (re-enable on-premises VM, update DNS, restore from replication)?
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-45"
@@ -127,7 +127,7 @@ Azure File Sync allows on-premises Windows file servers to remain operational wh
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure Migrate overview](https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview)
 - [Azure Migrate server assessment](https://learn.microsoft.com/en-us/azure/migrate/concepts-assessment-calculation)
@@ -136,7 +136,7 @@ Azure File Sync allows on-premises Windows file servers to remain operational wh
 - [Extended Security Updates for Windows Server](https://learn.microsoft.com/en-us/windows-server/get-started/extended-security-updates-overview)
 - [Migrate servers to Azure using Azure Migrate](https://learn.microsoft.com/en-us/azure/migrate/tutorial-migrate-vmware)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. An IIS application uses Windows Authentication and accesses a local file share at D:\AppData. Azure App Service Migration Assistant reports it as "conditionally ready." What are the blocking factors and remediation options?</summary>
@@ -166,7 +166,7 @@ Azure File Sync allows on-premises Windows file servers to remain operational wh
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 

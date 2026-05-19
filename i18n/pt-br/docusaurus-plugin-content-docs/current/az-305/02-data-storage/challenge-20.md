@@ -5,7 +5,7 @@ title: "Desafio 20: Projetar Armazenamento de Dados para Custo e Desempenho"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 20: Projetar Armazenamento de Dados para Custo e Desempenho
+# Desafio 20: projetar armazenamento de dados para custo e desempenho
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O CFO levantou uma preocupação urgente: a conta mensal atual de armazenamento 
 
 Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre otimização de custos com requisitos de desempenho, aproveitando camadas de acesso do Azure Storage, precos de capacidade reservada, políticas de gerenciamento de ciclo de vida e camadas de cache onde apropriado.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de armazenamento de dados que equilibre recursos, desempenho e custos
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Analisar Armazenamento Atual e Definir Estratégia de Camadas
+### Parte 1: analisar armazenamento atual e definir estratégia de camadas
 
 1. Crie um resource group para este desafio é implante uma storage account Standard general-purpose v2.
 2. Documente o preco atual para cada camada de acesso (Hot, Cool, Cold, Archive) incluindo custos de armazenamento por GB, custos de operação de leitura/escrita e custos de recuperação de dados na região escolhida.
@@ -37,7 +37,7 @@ Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre
    - Arquivos de compliance (60TB, acessados menos de uma vez por ano) - avalie camada Cold vs Archive
 4. Calcule o custo mensal projetado para sua alocacao de camadas proposta versus manter tudo na camada Hot.
 
-### Parte 2: Implementar Políticas de Gerenciamento de Ciclo de Vida
+### Parte 2: implementar políticas de gerenciamento de ciclo de vida
 
 5. Crie uma política de gerenciamento de ciclo de vida que transicione automaticamente blobs entre camadas baseado no tempo de último acesso:
    - Mover blobs não acessados por 30 dias de Hot para Cool
@@ -46,7 +46,7 @@ Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre
 6. Habilite o rastreamento de tempo de último acesso na storage account para suportar políticas baseadas em tempo de acesso.
 7. Crie uma segunda regra de política que deleta blobs de processamento temporário (prefixo: `temp/`) apos 7 dias.
 
-### Parte 3: Avaliar Capacidade Reservada e Cache
+### Parte 3: avaliar capacidade reservada e cache
 
 8. Calcule a economia de comprar 100TB de capacidade reservada do Azure Storage (compromisso de 1 ano) versus preco pay-as-you-go para o armazenamento baseline estavel.
 9. Projete uma estratégia de cache para os dados de treinamento ML usando Azure Cache for Redis ou Azure HPC Cache. Documente:
@@ -55,7 +55,7 @@ Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre
    - Custo da camada de cache versus o beneficio de desempenho
 10. Crie uma matriz de decisao comparando camadas de desempenho Standard vs Premium de storage account para a carga de trabalho ML, considerando IOPS, throughput e requisitos de latência.
 
-### Parte 4: Projetar para Crescimento
+### Parte 4: projetar para crescimento
 
 11. Documente como seu design escala de 100TB para 500TB enquanto mantem a restrição de orcamento de $10K/mes.
 12. Projete uma solução de monitoramento usando metricas do Azure Monitor para rastrear:
@@ -63,7 +63,7 @@ Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre
     - Padrões de acesso por camada (para validar efetividade da política de ciclo de vida)
     - Alertas de custo quando o gasto mensal se aproxima do limite do orcamento
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-20"
@@ -114,7 +114,7 @@ Contas de Premium block blob storage usam SSDs e sao otimizadas para cargas de t
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Blob Storage access tiers](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview)
 - [Optimize costs with Azure Storage reserved capacity](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-reserved-capacity)
@@ -123,7 +123,7 @@ Contas de Premium block blob storage usam SSDs e sao otimizadas para cargas de t
 - [Premium block blob storage accounts](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-block-blob-premium)
 - [Azure HPC Cache overview](https://learn.microsoft.com/en-us/azure/hpc-cache/hpc-cache-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma empresa armazena 50TB de dados de log que sao escritos uma vez e lidos aproximadamente duas vezes por mes para auditorias de compliance. Qual camada de acesso minimiza o custo total (armazenamento + operações)?</summary>
@@ -153,7 +153,7 @@ Contas de Premium block blob storage usam SSDs e sao otimizadas para cargas de t
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

@@ -5,7 +5,7 @@ title: "Desafio 10: Projetar uma Estratégia de Marcação de Recursos"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 10: Projetar uma Estratégia de Marcação de Recursos
+# Desafio 10: projetar uma estratégia de marcação de recursos
 
 :::info Tempo Estimado e Custo
 
@@ -21,39 +21,39 @@ O VP de Engenharia determinou uma estratégia abrangente de tagging que atende a
 
 O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada uma usando diferentes ferramentas de implantacao (Terraform, Bicep, Azure CLI, Portal). Algumas equipes sao disciplinadas com tagging; outras ignoram completamente. A solução deve aplicar tags minimas obrigatorias enquanto permite que as equipes adicionem tags personalizadas para suas próprias necessidades operacionais. Recursos que não podem receber tags (alguns recursos filhos) devem ser contabilizados através de tagging do recurso pai ou métodos alternativos de atribuicao.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma estratégia para tagging de recursos
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Design da Taxonomia de Tags
+### Parte 1: design da taxonomia de tags
 
 1. Projete a taxonomia completa de tags para a Cloudvista. Categorize as tags em: obrigatorias (devem existir em todos os recursos), condicionais (obrigatorias em contextos específicos) e opcionais (a criterio da equipe). Para cada tag, especifique: nome da tag, valores permitidos (texto livre vs. vocabulario controlado) e propósito.
 2. Defina as tags minimas obrigatorias para atribuicao de custos. Estas devem permitir que o Financeiro gere relatórios mostrando custo por: unidade de negocio, projeto/aplicação, centro de custo e ambiente.
 3. Defina tags operacionais que suportem resposta a incidentes. No mínimo: proprietario do recurso (individuo ou equipe), nível de suporte (P1-P4) e mecanismo de implantacao.
 4. Defina tags de segurança e conformidade: nível de classificacao de dados (público, interno, confidencial, restrito), escopo regulatorio (GDPR, SOC2, HIPAA) e se o recurso lida com PII.
 
-### Parte 2: Aplicação de Tags com Azure Policy
+### Parte 2: aplicação de tags com Azure Policy
 
 5. Projete definicoes de Azure Policy para aplicar as tags obrigatorias. Para cada tag obrigatória, determine o efeito de política apropriado: tags ausentes devem ser negadas (impedir criação), auditadas (sinalizar não conformidade) ou auto-remediadas (herdar ou aplicar um valor padrão)?
 6. Crie uma estratégia de política para validação de valores de tags. Determine quais tags precisam de vocabularios controlados (apenas valores específicos permitidos) versus texto livre.
 7. Projete uma estratégia de remediacao para os mais de 1.400 recursos existentes que não possuem tags. Determine se deve usar tarefas de remediacao do Azure Policy com efeito `modify`, scripts em massa ou um processo de triagem manual.
 8. Aborde as limitacoes de herança de tags. Tags do Azure não herdam automaticamente de resource groups ou subscriptions para recursos filhos. Projete uma solução para garantir que recursos herdem tags do pai (opcoes: Azure Policy com efeito `modify`, templates de implantacao ou automacao pós-implantacao).
 
-### Parte 3: Alocacao de Custos e Relatorios
+### Parte 3: alocacao de custos e relatorios
 
 9. Projete como as tags se integram com o Azure Cost Management. Especifique quais tags serao usadas como dimensoes de alocacao de custos, como recursos sem tags serao atribuidos e como recursos compartilhados (networking hub, monitoramento) serao alocados entre unidades de negocio.
 10. Aborde recursos que não podem receber tags (certos recursos filhos, recursos classicos). Defina um método alternativo de atribuicao de custos para estes recursos.
 11. Defina um processo para higiene de tags: como valores de tags obsoletos sao detectados (ex.: um proprietario que saiu da empresa), quem é responsável por atualiza-los e com que frequência a conformidade de tags e revisada.
 
-### Parte 4: Convencoes de Nomenclatura e Automacao
+### Parte 4: convencoes de nomenclatura e automacao
 
 12. Projete convencoes de nomenclatura de tags: tratamento de sensibilidade a maiusculas/minusculas (tags do Azure sao case-insensitive para chaves mas case-sensitive para valores), comprimentos maximos (nome da tag: 512 caracteres, valor da tag: 256 caracteres) e restrições de caracteres.
 13. Defina como ferramentas de IaC (Terraform, Bicep) devem implementar tags. Especifique um padrão para tags padrão aplicadas pelo pipeline de CI/CD (ex.: timestamp de implantacao, ID de execução do pipeline, SHA do commit git) sem exigir acao do desenvolvedor.
 14. Projete um dashboard de conformidade de tags que mostre: percentual de recursos com tags por equipe, tags ausentes mais comuns e custo de recursos sem tags.
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-10"
@@ -104,7 +104,7 @@ No Terraform, use um bloco `default_tags` na configuração do provider para apl
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Define your tagging strategy](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging)
 - [Azure tagging decision guide](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming-and-tagging-decision-guide)
@@ -113,7 +113,7 @@ No Terraform, use um bloco `default_tags` na configuração do provider para apl
 - [Azure Policy built-in definitions for tags](https://learn.microsoft.com/azure/governance/policy/samples/built-in-policies#tags)
 - [Cost allocation with tags in Azure Cost Management](https://learn.microsoft.com/azure/cost-management-billing/costs/cost-analysis-built-in-views)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A Cloudvista quer garantir que todo novo recurso em subscriptions de produção tenha uma tag "CostCenter" antes de poder ser criado. No entanto, em subscriptions de desenvolvimento, eles querem sinalizar não conformidade sem bloquear. Qual configuração de política alcanca isso?</summary>

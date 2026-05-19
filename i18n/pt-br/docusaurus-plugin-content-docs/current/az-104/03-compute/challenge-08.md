@@ -5,7 +5,7 @@ title: "Challenge 08 | Virtual Machines & Scale Sets"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 08: Virtual Machines & Scale Sets
+# Desafio 08: Virtual machines & scale sets
 
 :::info Informação
 
@@ -21,7 +21,7 @@ Máquinas virtuais geram cobranças enquanto estão em execução. **Desaloque t
 
 A Contoso precisa implantar uma frota de servidores web para sua aplicação voltada ao cliente. Comece com uma única VM Linux para validar a configuração, depois escale para um VM Scale Set (VMSS) para a carga de trabalho de produção. A infraestrutura deve suportar falhas de zona de disponibilidade e escalar automaticamente durante picos de tráfego.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |------------|------|
@@ -33,7 +33,7 @@ A Contoso precisa implantar uma frota de servidores web para sua aplicação vol
 | Implantar e configurar VM Scale Sets | Alto |
 | Configurar autoscale de VMSS | Alto |
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | Tradicional | Equivalente no Azure |
 |-------------|---------------------|
@@ -46,13 +46,13 @@ A Contoso precisa implantar uma frota de servidores web para sua aplicação vol
 
 ## Tarefas
 
-### Tarefa 1: Criar uma VM Linux com Chaves SSH
+### Tarefa 1: criar uma VM Linux com chaves SSH
 
 ```bash
 # Criar um grupo de recursos
 az group create --name rg-vm-lab --location eastus
 
-# Criar uma VM Ubuntu com autenticação por chave SSH
+# Criar uma VM ubuntu com autenticação por chave SSH
 az vm create \
   --resource-group rg-vm-lab \
   --name vm-web-01 \
@@ -72,7 +72,7 @@ VM_IP=$(az vm show -g rg-vm-lab -n vm-web-01 -d --query publicIps -o tsv)
 echo "SSH com: ssh azureuser@$VM_IP"
 ```
 
-### Tarefa 2: Anexar e Montar um Disco de Dados
+### Tarefa 2: anexar e montar um disco de dados
 
 ```bash
 # Anexar um disco de dados de 128 GB
@@ -113,7 +113,7 @@ df -h /data
 ```
 </details>
 
-### Tarefa 3: Redimensionar a VM
+### Tarefa 3: redimensionar a VM
 
 ```bash
 # Listar tamanhos disponíveis na localização da VM
@@ -130,7 +130,7 @@ az vm show -g rg-vm-lab -n vm-web-01 \
   --query "hardwareProfile.vmSize" -o tsv
 ```
 
-### Tarefa 4: Mover uma VM para Outro Grupo de Recursos
+### Tarefa 4: mover uma VM para outro grupo de recursos
 
 ```bash
 # Criar um grupo de recursos de destino
@@ -139,12 +139,12 @@ az group create --name rg-vm-prod --location eastus
 # Obter o ID do recurso da VM
 VM_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query id -o tsv)
 
-# Mover a VM e todos os recursos dependentes (NIC, disco, IP público, NSG)
+# Mover a VM e todos os recursos dependentes (nic, disco, IP público, nsg)
 az resource move \
   --destination-group rg-vm-prod \
   --ids $VM_ID
 
-# NOTA: Mover VMs também requer mover recursos dependentes.
+# NOTA: mover VMs também requer mover recursos dependentes.
 # Liste todos os recursos para obter seus IDs:
 az resource list -g rg-vm-lab --query "[].id" -o tsv
 ```
@@ -159,7 +159,7 @@ az resource move --destination-group rg-vm-prod --ids $RESOURCE_IDS
 ```
 </details>
 
-### Tarefa 5: Criar um Availability Set e Implantar uma VM
+### Tarefa 5: criar um availability set e implantar uma VM
 
 ```bash
 # Criar um availability set
@@ -181,10 +181,10 @@ az vm create \
   --no-wait
 ```
 
-### Tarefa 6: Criar um VMSS com Autoscale
+### Tarefa 6: criar um VMSS com autoscale
 
 ```bash
-# Criar um VM Scale Set com 2 instâncias
+# Criar um VM scale set com 2 instâncias
 az vmss create \
   --resource-group rg-vm-lab \
   --name vmss-web \
@@ -224,7 +224,7 @@ az monitor autoscale rule create \
   --scale in 1
 ```
 
-### Tarefa 7: Testar o Autoscale com Carga
+### Tarefa 7: testar o autoscale com carga
 
 ```bash
 # Obter o IP público do load balancer
@@ -245,7 +245,7 @@ az monitor autoscale show -g rg-vm-lab -n autoscale-vmss-web \
 az vmss list-instances -g rg-vm-lab -n vmss-web -o table
 ```
 
-### Tarefa 8: Desalocar para Parar Cobranças
+### Tarefa 8: desalocar para parar cobranças
 
 ```bash
 # Desalocar a VM standalone (para a cobrança de computação)
@@ -258,7 +258,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-08"
@@ -273,9 +273,9 @@ az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
     "Todas as VMs desalocadas ao terminar"
   ]}
 />
-## Cenários Quebre & Conserte
+## Cenários quebre & conserte
 
-### Cenário A: Tamanho de VM Indisponível
+### Cenário a: tamanho de VM indisponível
 ```bash
 # Tente redimensionar para um tamanho não disponível na zona atual
 az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
@@ -283,13 +283,13 @@ az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
 # az vm list-vm-resize-options -g rg-vm-lab -n vm-web-avset -o table
 ```
 
-### Cenário B: Mover VM com IP Público
+### Cenário b: mover VM com IP público
 ```bash
 # Tente mover uma VM enquanto ela tem recursos dependentes no grupo de origem
-# Qual erro você recebe? Quais recursos devem ser movidos juntos?
+# Qual erro você recebe? quais recursos devem ser movidos juntos?
 ```
 
-### Cenário C: Conflito de Contagem de Instâncias do VMSS
+### Cenário c: conflito de contagem de instâncias do VMSS
 ```bash
 # Tente definir min-count maior que max-count
 az monitor autoscale update \
@@ -298,7 +298,7 @@ az monitor autoscale update \
   --min-count 10 --max-count 5
 ```
 
-## Teste seus Conhecimentos
+## Teste seus conhecimentos
 
 **1. Qual é a diferença entre parar e desalocar uma VM?**
 

@@ -3,7 +3,7 @@ sidebar_label: "AZ-104 Solutions"
 sidebar_position: 1
 ---
 
-# Guia do Instrutor AZ-104: Soluções Completas
+# Guia do instrutor AZ-104: soluções completas
 
 :::danger Apenas para Instrutores & Facilitadores
 
@@ -18,14 +18,14 @@ Este documento contém **soluções completas** para todos os 28 desafios. Os al
 :::
 ---
 
-## Desafio 01: Entra ID: Usuários & Grupos
+## Desafio 01: Entra ID: usuários & grupos
 
 > **Estimativa de tempo do instrutor**: 30–45 min (alunos: 45–60 min) | Domínio: Identidade & Governança
 
-### Solução Completa
+### Solução completa
 
 ```bash
-# Step 0: Get your tenant domain
+# Step 0: get your tenant domain
 DOMAIN=$(az rest --method get --url "https://graph.microsoft.com/v1.0/domains" \
   --query "value[?isDefault].id" -o tsv)
 echo "Tenant domain: $DOMAIN"
@@ -34,7 +34,7 @@ echo "Tenant domain: $DOMAIN"
 **Por quê**: Todo tenant Entra ID tem um domínio padrão `*.onmicrosoft.com`. Você precisa disso para a construção do UPN (User Principal Name). Alunos que codificam um nome de domínio fixo terão problemas ao trocar de tenant.
 
 ```bash
-# Part 1: Create 3 users
+# Part 1: create 3 users
 az ad user create \
   --display-name "Alice Johnson" \
   --user-principal-name "alice@$DOMAIN" \
@@ -63,7 +63,7 @@ az ad user create \
 **Por quê**: `--force-change-password-next-sign-in true` é o padrão seguro | os usuários devem definir sua própria senha. O exame testa se você sabe que essa flag existe. As senhas devem atender aos requisitos de complexidade (maiúscula, minúscula, número, caractere especial, 8+ caracteres).
 
 ```bash
-# Part 2: Create groups and add members
+# Part 2: create groups and add members
 az ad group create --display-name "IT-Team" --mail-nickname "it-team"
 az ad group create --display-name "Finance-Team" --mail-nickname "finance-team"
 az ad group create --display-name "All-Employees" --mail-nickname "all-employees"
@@ -85,11 +85,11 @@ az ad group member add --group "All-Employees" --member-id $CAROL_ID
 **Por quê**: O `--mail-nickname` é obrigatório ao criar grupos via CLI | é o alias seguro para email. Operações de membros requerem o Object ID (GUID), não o UPN | um ponto comum de confusão.
 
 ```bash
-# Part 3: Manage properties
-# Set Bob's usage location (required before license assignment)
+# Part 3: manage properties
+# Set bob's usage location (required before license assignment)
 az ad user update --id "bob@$DOMAIN" --usage-location "US"
 
-# Disable Carol's account
+# Disable carol's account
 az ad user update --id "carol@$DOMAIN" --account-enabled false
 
 # Update IT-Team group description
@@ -102,7 +102,7 @@ az rest --method patch \
 **Por quê**: A localização de uso é um pré-requisito para atribuição de licença | o Azure não permite atribuir licenças sem ela porque o licenciamento varia por país. A atualização da descrição do grupo requer a Graph API porque `az ad group update` tem suporte limitado de propriedades.
 
 ```bash
-# Part 4: Invite external user
+# Part 4: invite external user
 az rest --method post \
   --url "https://graph.microsoft.com/v1.0/invitations" \
   --body '{
@@ -119,18 +119,18 @@ az ad group member add --group "All-Employees" --member-id $GUEST_ID
 **Por quê**: Usuários externos (convidados B2B) são convidados via a API de Convites do Microsoft Graph. Eles aparecem como `userType eq 'Guest'` no Entra ID. O exame testa se você conhece a diferença entre os tipos de usuário Member e Guest.
 
 ```bash
-# Part 5: SSPR (Portal steps | cannot be fully configured via CLI)
-# 1. Azure Portal → Microsoft Entra ID → Password reset
-# 2. Set "Self-service password reset enabled" to "Selected"
-# 3. Select group: IT-Team
-# 4. Authentication methods → Number required: 1
-# 5. Check "Email" as allowed method
-# 6. Save
+# Part 5: SSPR (Portal steps | cannot be fully configured via cli)
+# 1. Azure portal → Microsoft Entra ID → password reset
+# 2. set "Self-service password reset enabled" to "Selected"
+# 3. select group: IT-Team
+# 4. authentication methods → number required: 1
+# 5. check "Email" as allowed method
+# 6. save
 ```
 
 **Por quê**: A configuração do SSPR é principalmente uma tarefa do Portal no exame. As configurações principais são: escopo (All/Selected/None), métodos de autenticação necessários (1 ou 2), e quais métodos são permitidos. Os alunos frequentemente perdem que você deve selecionar um grupo específico ao escolher "Selected."
 
-### Erros Comuns
+### Erros comuns
 
 1. **Esquecer `--mail-nickname`** ao criar grupos | a CLI dá erro sem ele
 2. **Usar UPN em vez de Object ID** para `--member-id` | o parâmetro requer GUIDs
@@ -140,11 +140,11 @@ az ad group member add --group "All-Employees" --member-id $GUEST_ID
 
 ---
 
-## Desafio 02: RBAC & Gerenciamento de Acesso
+## Desafio 02: RBAC & gerenciamento de acesso
 
 > **Estimativa de tempo do instrutor**: 30–40 min (alunos: 45–60 min) | Domínio: Identidade & Governança
 
-### Solução Completa
+### Solução completa
 
 ```bash
 # Setup
@@ -157,28 +157,28 @@ az group create --name rg-rbac-challenge --location eastus
 ```
 
 ```bash
-# Part 1: Explore built-in roles
+# Part 1: explore built-in roles
 az role definition list \
   --query "[?roleName=='Owner' || roleName=='Contributor' || roleName=='Reader' || roleName=='User Access Administrator'].{Name:roleName, Description:description}" \
   -o table
 
-# Deep-dive into Contributor's NotActions (key exam topic)
+# Deep-dive into contributor's NotActions (key exam topic)
 az role definition list --name "Contributor" \
   --query "[].permissions[0].notActions" -o json
 # Shows: Microsoft.Authorization/*/Delete, Microsoft.Authorization/*/Write, etc.
-# This is WHY Contributor can't assign roles: those actions are explicitly excluded.
+# This is WHY contributor can't assign roles: those actions are explicitly excluded.
 ```
 
 **Por quê**: Os 4 papéis fundamentais são Owner, Contributor, Reader e User Access Administrator. A distinção crítica do exame é que o Contributor tem `Microsoft.Authorization/*/Write` em NotActions | significando que não pode atribuir papéis. O Owner pode fazer tudo incluindo atribuições de papéis.
 
 ```bash
-# Part 2: Assign roles at different scopes
+# Part 2: assign roles at different scopes
 ALICE_ID=$(az ad user show --id "alice@$DOMAIN" --query id -o tsv)
 BOB_ID=$(az ad user show --id "bob@$DOMAIN" --query id -o tsv)
 CAROL_ID=$(az ad user show --id "carol@$DOMAIN" --query id -o tsv)
 IT_GROUP_ID=$(az ad group show --group "IT-Team" --query id -o tsv)
 
-# Reader for Alice at subscription scope
+# Reader for alice at subscription scope
 az role assignment create \
   --assignee $ALICE_ID \
   --role "Reader" \
@@ -190,7 +190,7 @@ az role assignment create \
   --role "Contributor" \
   --scope "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/rg-rbac-challenge"
 
-# VM Contributor for Bob at resource group scope
+# VM contributor for bob at resource group scope
 az role assignment create \
   --assignee $BOB_ID \
   --role "Virtual Machine Contributor" \
@@ -200,14 +200,14 @@ az role assignment create \
 **Por quê**: O parâmetro `--scope` é o conceito chave. Papéis atribuídos em escopos mais altos (assinatura) são herdados por escopos mais baixos (grupo de recursos → recurso). Alice obtém Reader em todos os lugares; IT-Team obtém Contributor apenas em rg-rbac-challenge. RBAC é **aditivo** | Alice obtém tanto Reader (da atribuição direta) QUANTO Contributor (da associação ao grupo IT-Team) em rg-rbac-challenge.
 
 ```bash
-# Part 3: Verify and interpret access
+# Part 3: verify and interpret access
 az role assignment list --assignee $ALICE_ID -o table
 az role assignment list --resource-group rg-rbac-challenge -o table
 az role assignment list --all --role "Owner" -o table
 ```
 
 ```bash
-# Part 4: Create a custom role
+# Part 4: create a custom role
 cat > vm-reader-role.json << EOF
 {
   "Name": "VM-Reader",
@@ -226,7 +226,7 @@ EOF
 
 az role definition create --role-definition vm-reader-role.json
 
-# Assign custom role to Carol
+# Assign custom role to carol
 az role assignment create \
   --assignee $CAROL_ID \
   --role "VM-Reader" \
@@ -236,13 +236,13 @@ az role assignment create \
 **Por quê**: Papéis personalizados preenchem lacunas quando os papéis embutidos são muito amplos ou muito restritos. O `AssignableScopes` limita ONDE o papel pode ser atribuído | não o que ele pode fazer. Pergunta comum do exame: "Qual é o número máximo de papéis personalizados por tenant?" Resposta: 5.000.
 
 ```bash
-# Part 5: Audit access
+# Part 5: audit access
 az role assignment list --all -o table
 az role assignment list --all --role "Owner" \
   --query "[].{Principal:principalName, Scope:scope, Type:principalType}" -o table
 ```
 
-### Erros Comuns
+### Erros comuns
 
 1. **Usar `--assignee` com UPN para grupos** | grupos precisam de object ID, não de um nome
 2. **Confundir a hierarquia de escopo** | alunos atribuem no escopo de grupo de recursos e esperam que se aplique no nível da assinatura (não funciona assim | a herança vai para BAIXO, não para CIMA)
@@ -252,14 +252,14 @@ az role assignment list --all --role "Owner" \
 
 ---
 
-## Desafio 03: Azure Policy & Governança
+## Desafio 03: Azure Policy & governança
 
 > **Estimativa de tempo do instrutor**: 45–55 min (alunos: 60–75 min) | Domínio: Identidade & Governança
 
-### Solução Completa
+### Solução completa
 
 ```bash
-# Part 1: Create resource groups with tags
+# Part 1: create resource groups with tags
 az group create --name rg-policy-prod --location eastus \
   --tags Environment=Production CostCenter=IT-001 Owner=Coach
 az group create --name rg-policy-dev --location eastus \
@@ -267,7 +267,7 @@ az group create --name rg-policy-dev --location eastus \
 ```
 
 ```bash
-# Part 2: Assign tag policy with Deny effect
+# Part 2: assign tag policy with deny effect
 # Find the built-in policy: "Require a tag and its value on resources"
 az policy definition list \
   --query "[?contains(displayName, 'Require a tag and its value')].{Name:name, DisplayName:displayName}" -o table
@@ -286,7 +286,7 @@ az policy assignment create \
 **Por quê**: O Policy ID `1e30110a-5ceb-460c-a204-c1c3969c6d62` é a política embutida "Require a tag and its value on resources" | ela usa o efeito Deny para bloquear a criação de recursos se o par tag/valor estiver ausente. As políticas levam 5–15 minutos para entrar em vigor.
 
 ```bash
-# Part 3: Assign Allowed Locations policy
+# Part 3: assign allowed locations policy
 # Built-in policy: "Allowed locations"
 # Policy ID: e56962a6-4747-49cd-b67b-bf8b01975c4c
 az policy assignment create \
@@ -298,7 +298,7 @@ az policy assignment create \
 ```
 
 ```bash
-# Part 4: Create a policy initiative
+# Part 4: create a policy initiative
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 
 cat > initiative.json << 'EOF'
@@ -347,16 +347,16 @@ az group delete --name rg-policy-prod --yes 2>&1 || echo "EXPECTED: Lock prevent
 
 # ReadOnly lock on a specific resource (if a storage account exists)
 # az lock create --name "ReadOnlyLock" --lock-type ReadOnly \
-#   --resource-group rg-policy-prod --resource-name <name> --resource-type Microsoft.Storage/storageAccounts
+# --resource-group rg-policy-prod --resource-name <name> --resource-type Microsoft.Storage/storageAccounts
 ```
 
 ```bash
-# Part 6: Advisor and budgets
+# Part 6: advisor and budgets
 az advisor recommendation list \
   --query "[].{Category:category, Impact:impact, Problem:shortDescription.problem}" -o table
 ```
 
-### Erros Comuns
+### Erros comuns
 
 1. **Política não entra em vigor** | alunos testam imediatamente após a atribuição; lembre-os que leva 5–15 minutos. Use `az policy state trigger-scan` para acelerar
 2. **ID de política errado** | existem múltiplas políticas relacionadas a tags; `1e30110a` requer tag E valor, `871b6d14` requer apenas tag
@@ -366,11 +366,11 @@ az advisor recommendation list \
 
 ---
 
-## Desafio 04: Contas de Armazenamento & Acesso
+## Desafio 04: contas de armazenamento & acesso
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60–75 min) | Domínio: Armazenamento
 
-### Solução Completa
+### Solução completa
 
 ```bash
 # Setup
@@ -380,7 +380,7 @@ STORAGE_NAME="ststoragechallenge$(date +%s | tail -c 8)"
 
 az group create --name $RG --location $LOCATION
 
-# Part 1: Create storage account
+# Part 1: create storage account
 az storage account create \
   --name $STORAGE_NAME \
   --resource-group $RG \
@@ -391,14 +391,14 @@ az storage account create \
   --min-tls-version TLS1_2 \
   --tags Environment=Lab CostCenter=IT-001
 
-# Part 2: Change redundancy
+# Part 2: change redundancy
 az storage account update --name $STORAGE_NAME --resource-group $RG --sku Standard_GRS
 ```
 
 **Por quê**: Nomes de armazenamento devem ser globalmente únicos, 3–24 caracteres, apenas letras minúsculas+números. `$RANDOM` ou timestamp garante unicidade. LRS→GRS é uma transição direta suportada; algumas transições (LRS→RA-GZRS) requerem etapas intermediárias | um tópico chave do exame.
 
 ```bash
-# Part 3: Access keys, containers, SAS tokens
+# Part 3: access keys, containers, SAS tokens
 CONN_STRING=$(az storage account show-connection-string \
   --name $STORAGE_NAME --resource-group $RG -o tsv)
 
@@ -425,7 +425,7 @@ az storage container generate-sas \
 **Por quê**: Existem três tipos de SAS | Account (mais amplo), Service (escopado a um serviço) e User Delegation (mais seguro, usa Entra ID). O exame sempre pergunta: "Qual é o mais seguro?" → User Delegation SAS.
 
 ```bash
-# Part 4: Stored access policy
+# Part 4: stored access policy
 az storage container policy create \
   --container-name testcontainer --name "ReadPolicy" \
   --permissions rl --expiry $END_DATE \
@@ -443,7 +443,7 @@ az storage account update --name $STORAGE_NAME --resource-group $RG --default-ac
 az storage account network-rule add \
   --account-name $STORAGE_NAME --resource-group $RG --ip-address $MY_IP
 
-# Part 6: Rotate key
+# Part 6: rotate key
 az storage account keys renew --account-name $STORAGE_NAME --resource-group $RG --key key1
 
 # Part 7: AzCopy
@@ -456,7 +456,7 @@ SAS_TOKEN=$(az storage account generate-sas \
 azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcontainer?$SAS_TOKEN" --recursive
 ```
 
-### Erros Comuns
+### Erros comuns
 
 1. **Falhas de validação do nome de armazenamento** | maiúsculas, hifens ou >24 caracteres
 2. **Bloqueio por firewall** | alunos definem default-action como Deny e esquecem de adicionar seu próprio IP; oriente-os a usar o Cloud Shell (sempre permitido como serviço confiável)
@@ -470,7 +470,7 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60–75 min) | Domínio: Armazenamento
 
-### Solução Completa
+### Solução completa
 
 ```bash
 # Setup
@@ -500,12 +500,12 @@ az storage blob upload --container-name app-data --file profile-bob.txt \
 az storage blob upload --container-name logs --file app-log-2025-01-15.txt \
   --name "2025/01/app-log-2025-01-15.txt" --connection-string "$CONN_STRING"
 
-# Change log blob to Cool tier
+# Change log blob to cool tier
 az storage blob set-tier --container-name logs \
   --name "2025/01/app-log-2025-01-15.txt" --tier Cool \
   --connection-string "$CONN_STRING"
 
-# Upload directly to Archive tier
+# Upload directly to archive tier
 echo "Quarterly Report Q3 2024" > q3-report.txt
 az storage blob upload --container-name archive --file q3-report.txt \
   --name reports/q3-2024.txt --connection-string "$CONN_STRING" --tier Archive
@@ -514,7 +514,7 @@ az storage blob upload --container-name archive --file q3-report.txt \
 **Por quê**: Diretórios virtuais (profiles/, 2025/01/) são apenas convenções de nomenclatura | o blob storage é plano. O `/` no nome cria a aparência de pasta no Storage Explorer. Mudanças de camada entre Hot/Cool/Cold são instantâneas; Archive requer reidratação (horas).
 
 ```bash
-# Part 3: Soft delete
+# Part 3: soft delete
 az storage account blob-service-properties update \
   --account-name $STORAGE_NAME --resource-group $RG \
   --enable-delete-retention true --delete-retention-days 14
@@ -529,7 +529,7 @@ az storage blob delete --container-name app-data --name profiles/alice.txt \
 az storage blob undelete --container-name app-data --name profiles/alice.txt \
   --connection-string "$CONN_STRING"
 
-# Part 4: Versioning
+# Part 4: versioning
 az storage account blob-service-properties update \
   --account-name $STORAGE_NAME --resource-group $RG --enable-versioning true
 
@@ -537,7 +537,7 @@ echo "Updated profile data for Alice | version 2" > profile-alice-v2.txt
 az storage blob upload --container-name app-data --file profile-alice-v2.txt \
   --name profiles/alice.txt --connection-string "$CONN_STRING" --overwrite
 
-# Part 5: Snapshots
+# Part 5: snapshots
 az storage blob snapshot --container-name app-data --name profiles/bob.txt \
   --connection-string "$CONN_STRING"
 
@@ -551,7 +551,7 @@ echo "Budget Report 2025" > budget-2025.txt
 az storage file upload --share-name finance-share --source budget-2025.txt \
   --path "reports/budget-2025.txt" --connection-string "$CONN_STRING"
 
-# Part 7: File share soft delete and snapshots
+# Part 7: file share soft delete and snapshots
 az storage account file-service-properties update \
   --account-name $STORAGE_NAME --resource-group $RG \
   --enable-delete-retention true --delete-retention-days 14
@@ -559,7 +559,7 @@ az storage account file-service-properties update \
 az storage share snapshot --name finance-share --connection-string "$CONN_STRING"
 ```
 
-### Erros Comuns
+### Erros comuns
 
 1. **Tentar ler um blob arquivado** | retorna erro `BlobArchived`; deve reidratar primeiro (até 15 horas padrão, menos de 1 hora alta prioridade)
 2. **Confundir versionamento vs snapshots** | versionamento é automático em cada escrita; snapshots são capturas manuais de ponto no tempo
@@ -569,11 +569,11 @@ az storage share snapshot --name finance-share --connection-string "$CONN_STRING
 
 ---
 
-## Desafio 06: Segurança de Storage & Ciclo de Vida
+## Desafio 06: segurança de Storage & ciclo de vida
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60–75 min) | Domínio: Armazenamento
 
-### Solução Completa
+### Solução completa
 
 ```bash
 # Setup: two storage accounts in different regions
@@ -643,13 +643,13 @@ CONN_SECONDARY=$(az storage account show-connection-string \
 az storage container create --name replicated-data --connection-string "$CONN_PRIMARY"
 az storage container create --name replicated-data --connection-string "$CONN_SECONDARY"
 
-# Object replication is best configured via Portal:
-# Source storage account → Object replication → Create replication rules
+# Object replication is best configured via portal:
+# Source storage account → object replication → create replication rules
 # Source: replicated-data container on primary
 # Destination: replicated-data container on secondary
 ```
 
-### Erros Comuns
+### Erros comuns
 
 1. **Pré-requisitos ausentes para replicação de objetos** | versionamento não habilitado, ou feed de alterações não habilitado na origem
 2. **Sintaxe do JSON da política de ciclo de vida** | alunos frequentemente têm JSON malformado; valide com `python -m json.tool`
@@ -659,34 +659,34 @@ az storage container create --name replicated-data --connection-string "$CONN_SE
 
 ---
 
-## Desafio 07: ARM Templates & Bicep
+## Desafio 07: ARM templates & Bicep
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60 min) | Domínio: Computação (IaC)
 
-### Solução Completa
+### Solução completa
 
 ```bash
 az group create --name rg-iac-lab --location eastus
 
-# Task 1: Save the ARM template (provided in the challenge)
-# Task 2: Add environment tag parameter + tags property to the resource
+# Task 1: save the ARM template (provided in the challenge)
+# Task 2: add environment tag parameter + tags property to the resource
 
-# Task 3: Deploy ARM template
+# Task 3: deploy ARM template
 az deployment group create \
   --resource-group rg-iac-lab \
   --template-file storage.json \
   --parameters storagePrefix=contoso environment=dev \
   --name deploy-storage-v1
 
-# Task 4: Export
+# Task 4: export
 az group export --name rg-iac-lab --output json > exported-template.json
 
-# Task 5: Convert ARM to Bicep
+# Task 5: convert ARM to Bicep
 az bicep install
 az bicep decompile --file storage.json
 
-# Task 6: Modify Bicep (add blob container | see challenge hints)
-# Task 7: Deploy Bicep
+# Task 6: modify Bicep (add blob container | see challenge hints)
+# Task 7: deploy Bicep
 az deployment group create \
   --resource-group rg-iac-lab \
   --template-file storage.bicep \
@@ -702,7 +702,7 @@ az deployment group what-if \
 
 **Por quê**: What-If é crítico para segurança em produção | mostra o que mudaria sem realmente implantar. O exame testa se você sabe a diferença entre os modos de implantação Incremental (padrão, aditivo) e Complete (exclui qualquer coisa que não esteja no template).
 
-### Erros Comuns
+### Erros comuns
 
 1. **Avisos do decompile do Bicep** | a saída pode ter comentários `TODO` ou construções não suportadas; os alunos devem limpar isso manualmente
 2. **Perda de dados no modo Complete** | alunos acidentalmente usam `--mode Complete` e excluem recursos não gerenciados; sempre enfatize que Incremental é o padrão seguro
@@ -712,36 +712,36 @@ az deployment group what-if \
 
 ---
 
-## Desafio 08: Máquinas Virtuais & Scale Sets
+## Desafio 08: máquinas virtuais & scale sets
 
 > **Estimativa de tempo do instrutor**: 45–55 min (alunos: 60–75 min) | Domínio: Computação
 
-### Solução Completa
+### Solução completa
 
 ```bash
 az group create --name rg-vm-lab --location eastus
 
-# Task 1: Create Linux VM
+# Task 1: create Linux VM
 az vm create \
   --resource-group rg-vm-lab --name vm-web-01 \
   --image Ubuntu2204 --size Standard_B1s \
   --admin-username azureuser --generate-ssh-keys \
   --public-ip-sku Standard --output table
 
-# Task 2: Attach data disk
+# Task 2: attach data disk
 az vm disk attach --resource-group rg-vm-lab --vm-name vm-web-01 \
   --name disk-data-01 --size-gb 128 --sku Premium_LRS --new
 # Then SSH in and: lsblk → parted → mkfs.ext4 → mount → fstab
 
-# Task 3: Resize
+# Task 3: resize
 az vm resize --resource-group rg-vm-lab --name vm-web-01 --size Standard_B2s
 
-# Task 4: Move VM (move ALL dependent resources together)
+# Task 4: move VM (move ALL dependent resources together)
 az group create --name rg-vm-prod --location eastus
 RESOURCE_IDS=$(az resource list -g rg-vm-lab --query "[].id" -o tsv | tr '\n' ' ')
 az resource move --destination-group rg-vm-prod --ids $RESOURCE_IDS
 
-# Task 5: Availability set
+# Task 5: availability set
 az vm availability-set create --resource-group rg-vm-lab --name avset-web \
   --platform-fault-domain-count 2 --platform-update-domain-count 5
 
@@ -775,7 +775,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 
 **Por quê**: A distinção crítica é **Stop vs Deallocate**. Parar de dentro do SO mantém o compute reservado (você ainda paga). `az vm deallocate` libera o compute (você para de pagar pelo compute, mas ainda paga por discos/IPs). Esta é uma pergunta muito comum no exame.
 
-### Erros Comuns
+### Erros comuns
 
 1. **Esquecer de desalocar** | alunos deixam VMs rodando e gastam créditos
 2. **Mover VM sem recursos dependentes** | deve mover NIC, disco, IP público, NSG juntos; movimentações parciais falham
@@ -789,7 +789,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 
 > **Estimativa de tempo do instrutor**: 30–40 min (alunos: 45–60 min) | Domínio: Computação
 
-### Solução Completa
+### Solução completa
 
 ```bash
 az group create --name rg-containers-lab --location eastus
@@ -799,7 +799,7 @@ ACR_NAME="contosoreglab$(date +%s | tail -c 8)"
 az acr create --resource-group rg-containers-lab --name $ACR_NAME \
   --sku Basic --admin-enabled true
 
-# Task 2: Build image in the cloud (no local Docker needed!)
+# Task 2: build image in the cloud (no local Docker needed!)
 mkdir container-app && cd container-app
 cat > Dockerfile << 'EOF'
 FROM nginx:alpine
@@ -813,7 +813,7 @@ EOF
 
 az acr build --registry $ACR_NAME --image contoso-dashboard:v1 .
 
-# Task 3: Deploy to ACI
+# Task 3: deploy to ACI
 ACR_LOGIN=$(az acr show --name $ACR_NAME --query loginServer -o tsv)
 ACR_PASSWORD=$(az acr credential show --name $ACR_NAME --query "passwords[0].value" -o tsv)
 
@@ -837,7 +837,7 @@ az containerapp create --resource-group rg-containers-lab --name ca-dashboard \
   --registry-password $ACR_PASSWORD \
   --target-port 80 --ingress external --min-replicas 1 --max-replicas 5
 
-# Task 6: Scaling
+# Task 6: scaling
 az containerapp update --resource-group rg-containers-lab --name ca-dashboard \
   --min-replicas 1 --max-replicas 10 \
   --scale-rule-name http-scaling --scale-rule-type http --scale-rule-http-concurrency 10
@@ -845,7 +845,7 @@ az containerapp update --resource-group rg-containers-lab --name ca-dashboard \
 
 **Por quê**: `az acr build` é o comando chave | ele constrói imagens Docker na nuvem sem precisar do Docker instalado localmente. Este é um cenário comum do exame. A distinção entre ACI (simples/curta duração), Container Apps (microsserviços/APIs) e AKS (Kubernetes completo) é fortemente testada.
 
-### Erros Comuns
+### Erros comuns
 
 1. **Validação do nome ACR** | 5–50 caracteres, apenas alfanumérico (sem hifens!)
 2. **Incompatibilidade de porta** | implantar com `--target-port 8080` quando o container escuta na 80 → erros 502
@@ -859,21 +859,21 @@ az containerapp update --resource-group rg-containers-lab --name ca-dashboard \
 
 > **Estimativa de tempo do instrutor**: 45–55 min (alunos: 60–75 min) | Domínio: Computação
 
-### Solução Completa
+### Solução completa
 
 ```bash
 az group create --name rg-appservice-lab --location eastus
 
-# Task 1: App Service Plan (S1 for slots)
+# Task 1: App Service plan (s1 for slots)
 az appservice plan create --resource-group rg-appservice-lab \
   --name plan-contoso-web --sku S1 --is-linux
 
-# Task 2: Web app
+# Task 2: web app
 APP_NAME="contoso-web-$(date +%s | tail -c 8)"
 az webapp create --resource-group rg-appservice-lab \
   --plan plan-contoso-web --name $APP_NAME --runtime "NODE:18-lts"
 
-# Task 3: Deploy code (zip deploy)
+# Task 3: deploy code (zip deploy)
 mkdir webapp && cd webapp
 cat > index.js << 'EOF'
 const http = require('http');
@@ -895,7 +895,7 @@ az webapp deploy --resource-group rg-appservice-lab --name $APP_NAME \
 az webapp config appsettings set --resource-group rg-appservice-lab \
   --name $APP_NAME --settings APP_VERSION=v1
 
-# Task 4-6: Deployment slots and swap
+# Task 4-6: deployment slots and swap
 az webapp deployment slot create --resource-group rg-appservice-lab \
   --name $APP_NAME --slot staging
 
@@ -906,7 +906,7 @@ az webapp config appsettings set --resource-group rg-appservice-lab \
 az webapp deployment slot swap --resource-group rg-appservice-lab \
   --name $APP_NAME --slot staging --target-slot production
 
-# Task 7: Autoscale
+# Task 7: autoscale
 az monitor autoscale create --resource-group rg-appservice-lab \
   --resource plan-contoso-web --resource-type Microsoft.Web/serverfarms \
   --name autoscale-web --min-count 1 --max-count 5 --count 1
@@ -922,7 +922,7 @@ az monitor autoscale rule create --resource-group rg-appservice-lab \
 
 **Por quê**: Slots de implantação requerem o tier Standard (S1) ou superior | esta é uma pegadinha comum do exame. A operação de swap é atômica: o Azure aquece o slot de staging, depois troca o roteamento. Após o swap, o código antigo de produção está no staging | rollback instantâneo fazendo swap novamente. Configurações marcadas como "slot settings" não são trocadas (ficam fixas no slot).
 
-### Erros Comuns
+### Erros comuns
 
 1. **Tier Free/Basic → sem slots** | alunos tentam criar slots nos planos F1/B1 e ficam confusos com o erro
 2. **Direção do swap de slot** | alunos confundem qual slot vai para onde; staging→production significa que o código do staging se torna produção
@@ -932,11 +932,11 @@ az monitor autoscale rule create --resource-group rg-appservice-lab \
 
 ---
 
-## Desafio 11: Virtual Networks & Subnets
+## Desafio 11: Virtual Networks & subnets
 
 > **Estimativa de tempo do instrutor**: 35–45 min (alunos: 45–60 min) | Domínio: Rede
 
-### Solução Completa
+### Solução completa
 
 ```bash
 az group create --name rg-network-lab --location eastus
@@ -981,7 +981,7 @@ az network route-table route create -g rg-network-lab --route-table-name rt-spok
 az network vnet subnet update -g rg-network-lab --vnet-name vnet-spoke \
   --name snet-workloads --route-table rt-spoke-to-hub
 
-# Network Watcher
+# Network watcher
 SPOKE_PRIVATE_IP=$(az vm show -g rg-network-lab -n vm-spoke -d --query privateIps -o tsv)
 az network watcher test-ip-flow -g rg-network-lab --vm vm-spoke --direction Outbound \
   --protocol TCP --local "$SPOKE_PRIVATE_IP:*" --remote "$HUB_PRIVATE_IP:80"
@@ -991,7 +991,7 @@ az network watcher show-next-hop -g rg-network-lab --vm vm-spoke \
 
 **Por quê**: O peering NÃO é transitivo | se a VNet A tem peering com B e B tem peering com C, A não pode falar com C sem peering direto ou um gateway. UDRs substituem rotas de sistema | a ordem de prioridade é UDR > BGP > Sistema. O IP Flow Verify do Network Watcher verifica apenas NSGs; use Next Hop para problemas de roteamento.
 
-### Erros Comuns
+### Erros comuns
 
 1. **Peering unidirecional** | alunos criam apenas hub→spoke e esquecem spoke→hub; peering requer ambos os lados
 2. **Espaços de endereço sobrepostos** | não é possível fazer peering de VNets com blocos CIDR sobrepostos
@@ -1001,11 +1001,11 @@ az network watcher show-next-hop -g rg-network-lab --vm vm-spoke \
 
 ---
 
-## Desafio 12: Network Security
+## Desafio 12: Network security
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60 min) | Domínio: Rede
 
-### Solução Completa
+### Solução completa
 
 ```bash
 az group create --name rg-netsec-lab --location eastus
@@ -1076,7 +1076,7 @@ az network private-endpoint create -g rg-netsec-lab --name pe-storage \
 
 **Por quê**: A prioridade do NSG importa | **número mais baixo = maior prioridade = avaliado primeiro**. A primeira regra correspondente vence e a avaliação para. ASGs permitem escrever regras usando grupos lógicos (webservers, dbservers) em vez de endereços IP | muito mais fácil de gerenciar em escala. A subnet do Bastion DEVE ser nomeada exatamente `AzureBastionSubnet` e ter no mínimo /26.
 
-### Erros Comuns
+### Erros comuns
 
 1. **Confusão na ordem de prioridade** | número mais baixo = maior prioridade; alunos frequentemente invertem isso
 2. **Nomenclatura da subnet do Bastion** | deve ser exatamente `AzureBastionSubnet`, sensível a maiúsculas; qualquer outro nome falha
@@ -1086,20 +1086,20 @@ az network private-endpoint create -g rg-netsec-lab --name pe-storage \
 
 ---
 
-## Desafio 13: DNS & Load Balancing
+## Desafio 13: DNS & Load balancing
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60 min) | Domínio: Rede
 
-### Solução Completa
+### Solução completa
 
 ```bash
 RG="rg-az104-challenge13"
 az group create --name $RG --location eastus
 
-# DNS Zone
+# DNS zone
 az network dns zone create --resource-group $RG --name lab.contoso.com
 
-# DNS Records
+# DNS records
 az network dns record-set a add-record -g $RG --zone-name lab.contoso.com \
   --record-set-name www --ipv4-address 10.0.0.4
 az network dns record-set cname set-record -g $RG --zone-name lab.contoso.com \
@@ -1125,12 +1125,12 @@ done
 az network lb probe create -g $RG --lb-name lb-web --name hp-http \
   --protocol Http --port 80 --path /
 
-# LB Rule
+# LB rule
 az network lb rule create -g $RG --lb-name lb-web --name rule-http \
   --frontend-ip-name lb-frontend --backend-pool-name lb-backend \
   --probe-name hp-http --protocol Tcp --frontend-port 80 --backend-port 80
 
-# Internal LB (no public IP)
+# Internal LB (no public ip)
 az network lb create -g $RG --name lb-internal --sku Standard \
   --frontend-ip-name lb-internal-frontend --backend-pool-name lb-internal-backend \
   --vnet-name vnet-lb --subnet subnet-backend
@@ -1138,7 +1138,7 @@ az network lb create -g $RG --name lb-internal --sku Standard \
 
 **Por quê**: O LB Standard requer um NSG na subnet (diferente do Basic). Health probes determinam a integridade do backend | se uma VM falhar no probe, o LB para de enviar tráfego para ela. LBs internos não têm IP público | eles usam um IP privado de uma subnet VNet para comunicação backend-para-backend.
 
-### Erros Comuns
+### Erros comuns
 
 1. **LB Standard vs Basic** | Standard requer NSG na subnet, suporta zonas de disponibilidade e tem um SLA; Basic não. Alunos esquecem o requisito de NSG e se perguntam por que o tráfego não flui
 2. **VMs não estão no backend pool** | criar VMs não as adiciona automaticamente ao backend pool do LB; as NICs devem ser associadas
@@ -1148,11 +1148,11 @@ az network lb create -g $RG --name lb-internal --sku Standard \
 
 ---
 
-## Desafio 14: Azure Monitor & Alerts
+## Desafio 14: Azure Monitor & alerts
 
 > **Estimativa de tempo do instrutor**: 40–50 min (alunos: 60 min) | Domínio: Monitorar & Manter
 
-### Solução Completa
+### Solução completa
 
 ```bash
 RG="rg-az104-challenge14"
@@ -1165,7 +1165,7 @@ az monitor log-analytics workspace create -g $RG --workspace-name law-contoso --
 az vm create -g $RG --name vm-monitored --image Ubuntu2204 --size Standard_B2s \
   --admin-username azureuser --generate-ssh-keys
 
-# Enable VM Insights via Portal: VM → Insights → Enable
+# Enable VM Insights via portal: VM → Insights → enable
 
 # Diagnostic settings
 WORKSPACE_ID=$(az monitor log-analytics workspace show -g $RG \
@@ -1179,7 +1179,7 @@ az monitor diagnostic-settings create --name diag-to-law --resource $VM_ID \
 az monitor action-group create -g $RG --name ag-ops-team --short-name OpsTeam \
   --action email ops-email yourname@contoso.com
 
-# Metric alert (CPU > 80%)
+# Metric alert (cpu > 80%)
 az monitor metrics alert create -g $RG --name alert-high-cpu --scopes $VM_ID \
   --condition "avg Percentage CPU > 80" --window-size 5m --evaluation-frequency 1m \
   --action ag-ops-team --severity 2 \
@@ -1212,7 +1212,7 @@ Syslog
 
 **Por quê**: Métricas são séries temporais numéricas (quase em tempo real); Logs são texto estruturado (consultado com KQL). O exame testa operadores KQL essenciais: `where`, `summarize`, `ago()`, `project`, `render`. Severidade de alerta: 0=Crítico, 1=Erro, 2=Aviso, 3=Informativo, 4=Detalhado.
 
-### Erros Comuns
+### Erros comuns
 
 1. **Resultados de log vazios** | dados levam 15–30 minutos para aparecer após habilitar diagnósticos; isso é esperado, não está quebrado
 2. **Alerta sem grupo de ação** | alerta dispara mas ninguém é notificado; alunos esquecem de anexar o grupo de ação
@@ -1226,7 +1226,7 @@ Syslog
 
 > **Estimativa de tempo do instrutor**: 45–55 min (alunos: 60–75 min) | Domínio: Monitorar & Manter
 
-### Solução Completa
+### Solução completa
 
 ```bash
 RG="rg-az104-challenge15"
@@ -1254,12 +1254,12 @@ az dataprotection backup-vault create -g $RG --vault-name bv-contoso \
   --location eastus \
   --storage-setting "[{type:LocallyRedundant,datastore-type:VaultStore}]"
 
-# Site Recovery and blob backup are best configured via Portal (see challenge)
+# Site Recovery and blob backup are best configured via portal (see challenge)
 ```
 
 **Por quê**: Dois tipos de vault | Recovery Services vault (VMs, SQL, Azure Files, Site Recovery) e Azure Backup vault (Blobs, Discos, PostgreSQL). O vault deve estar na mesma região das VMs sendo protegidas. O primeiro backup leva 30–60 min. RPO = perda máxima de dados; RTO = tempo máximo de inatividade | estes termos são favoritos do exame.
 
-### Erros Comuns
+### Erros comuns
 
 1. **Formato do nome do container** | o formato longo `IaasVMContainer;iaasvmcontainerv2;...` é confuso; oriente os alunos a usar `az backup container list` para obter o nome exato
 2. **Incompatibilidade de região do vault** | não é possível fazer backup de uma VM em westus2 com um vault em eastus
@@ -1269,20 +1269,20 @@ az dataprotection backup-vault create -g $RG --vault-name bv-contoso \
 
 ---
 
-## Desafio 16: Capstone: Um Dia na Vida de um Administrador Azure
+## Desafio 16: capstone: um dia na vida de um administrador Azure
 
 > **Estimativa de tempo do instrutor**: 60–80 min (alunos: 90–120 min) | Domínio: Todos os 5 domínios
 
-### Solução Completa
+### Solução completa
 
 **Este desafio é um exercício de troubleshooting | o valor está no processo de diagnóstico, não apenas na correção. Guie os alunos pelos passos de diagnóstico antes de revelar as soluções.**
 
-#### Ticket 1: Crise de Identidade
+#### Ticket 1: crise de identidade
 
 ```bash
-# Diagnose: Is the account enabled?
+# Diagnose: is the account enabled?
 az ad user show --id jordan@contoso.com --query accountEnabled
-# Diagnose: Is Jordan in the Developers group?
+# Diagnose: is jordan in the developers group?
 az ad group member check --group "Developers" \
   --member-id $(az ad user show --id jordan@contoso.com --query id -o tsv)
 
@@ -1299,13 +1299,13 @@ az ad group member add --group "Developers" \
 #### Ticket 2: SOS de Storage
 
 ```bash
-# Diagnose: Check firewall rules and SAS expiry
+# Diagnose: check firewall rules and SAS expiry
 az storage account show --name stcontoso -g rg-az104-capstone-storage \
   --query networkRuleSet.defaultAction
 # If "Deny": check IP allow list
 # Check if SAS token has expired (decode the `se` parameter in the token)
 
-# Fix: Generate new SAS or add IP to firewall
+# Fix: generate new SAS or add IP to firewall
 END_DATE=$(date -u -d "+7 days" '+%Y-%m-%dT%H:%MZ')
 az storage account generate-sas --account-name stcontoso \
   --permissions rwdlacup --resource-types sco --services b --expiry $END_DATE -o tsv
@@ -1313,10 +1313,10 @@ az storage account generate-sas --account-name stcontoso \
 
 **Dica de coaching**: AuthorizationFailure tem três causas comuns: SAS expirado, chaves rotacionadas ou firewall bloqueando. Ensine os alunos a verificar todas as três sistematicamente.
 
-#### Ticket 3: VM Fora do Ar
+#### Ticket 3: VM fora do ar
 
 ```bash
-# Diagnose: Who stopped it?
+# Diagnose: who stopped it?
 az monitor activity-log list -g rg-az104-capstone-compute \
   --query "[?contains(operationName.value,'deallocate')].{Time:eventTimestamp,Caller:caller}" -o table
 # Check auto-shutdown
@@ -1329,16 +1329,16 @@ az vm auto-shutdown -g rg-az104-capstone-compute --name vm-prod-01 --off
 
 **Dica de coaching**: O Log de Atividades é o primeiro lugar para procurar para perguntas "quem/quando/por quê". Ele registra todas as operações do plano de controle com identidade do chamador e timestamps.
 
-#### Ticket 4: Bloqueio de Rede
+#### Ticket 4: bloqueio de rede
 
 ```bash
-# Diagnose: Check NSG rules
+# Diagnose: check NSG rules
 az network nsg rule list -g rg-az104-capstone-network --nsg-name nsg-web -o table
-# Use IP Flow Verify
+# Use IP flow verify
 az network watcher test-ip-flow -g rg-az104-capstone-network --vm vm-web-01 \
   --direction Inbound --protocol TCP --local 10.0.0.4:443 --remote 0.0.0.0:*
 
-# Fix: Add Allow rule BEFORE the Deny rule (lower priority number)
+# Fix: add allow rule BEFORE the deny rule (lower priority number)
 az network nsg rule create -g rg-az104-capstone-network --nsg-name nsg-web \
   --name Allow-HTTPS --priority 100 --direction Inbound --access Allow \
   --protocol Tcp --destination-port-ranges 443
@@ -1346,10 +1346,10 @@ az network nsg rule create -g rg-az104-capstone-network --nsg-name nsg-web \
 
 **Dica de coaching**: Regras NSG são avaliadas do número-mais-baixo-primeiro. Um Deny na prioridade 200 bloqueia tudo | você precisa de um Allow com número mais baixo (ex: 100) para permitir tráfego específico.
 
-#### Ticket 5: Cadê Meus Alertas?
+#### Ticket 5: cadê meus alertas?
 
 ```bash
-# Diagnose: Check action group and alert rule
+# Diagnose: check action group and alert rule
 az monitor action-group show -g rg-az104-capstone-monitor --name ag-ops-team
 # Look for typos in email addresses!
 az monitor metrics alert show -g rg-az104-capstone-monitor \
@@ -1364,7 +1364,7 @@ az monitor metrics alert update -g rg-az104-capstone-monitor \
 
 **Dica de coaching**: Três coisas para verificar quando alertas "não funcionam": (1) A regra de alerta está habilitada? (2) Um grupo de ação está anexado? (3) O grupo de ação está configurado corretamente (erros de digitação em emails são comuns)?
 
-### Erros Comuns
+### Erros comuns
 
 1. **Pular para a correção sem diagnosticar** | alunos querem corrigir imediatamente; force-os a diagnosticar primeiro | o exame recompensa troubleshooting sistemático
 2. **Não verificar o Log de Atividades** | esta é a resposta para toda pergunta "quem/quando/por quê"
@@ -1374,7 +1374,7 @@ az monitor metrics alert update -g rg-az104-capstone-monitor \
 
 ---
 
-## Cronograma de Facilitação do Workshop
+## Cronograma de facilitação do workshop
 
 | Bloco | Duração | Desafios | Foco |
 |-------|---------|----------|------|
@@ -1387,7 +1387,7 @@ az monitor metrics alert update -g rg-az104-capstone-monitor \
 
 **Tempo total do workshop**: ~15,5 horas (3 dias)
 
-### Dicas para Instrutores
+### Dicas para instrutores
 
 1. **Deixe os alunos lutarem** | o aprendizado acontece quando eles depuram seus próprios erros
 2. **Use cenários de quebre & conserte** | estes simulam perguntas reais do exame melhor do que o caminho feliz

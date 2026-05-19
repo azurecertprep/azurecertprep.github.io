@@ -6,7 +6,7 @@ title: "Challenge 04: Design Authentication for Cloud-Native Apps"
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 04: Design Authentication for Cloud-Native Apps
+# Challenge 04: design authentication for Cloud-Native Apps
 
 :::info Estimated Time and Cost
 
@@ -26,15 +26,15 @@ Both applications share a common backend API hosted on Azure App Service that ac
 
 Your task is to design the complete authentication architecture for both applications and their backend services.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend an authentication solution
 - Recommend an identity management solution
 - Recommend a solution for authorizing access to Azure resources
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Authentication Strategy Selection
+### Part 1: authentication strategy selection
 
 1. For each application, determine the appropriate identity platform:
 
@@ -55,7 +55,7 @@ Your task is to design the complete authentication architecture for both applica
 
 2. Justify why you chose Microsoft Entra ID vs. Azure AD B2C vs. Azure AD B2B for each application. Document scenarios where the alternative would be more appropriate.
 
-### Part 2: Internal Portal Authentication Design
+### Part 2: internal portal authentication design
 
 3. Design the Conditional Access policy set for the Internal Operations Portal:
    - Policy 1: Require MFA for all users
@@ -68,7 +68,7 @@ Your task is to design the complete authentication architecture for both applica
    - Token lifetime and refresh behavior
    - Session management approach
 
-### Part 3: Customer Platform Authentication Design
+### Part 3: customer platform authentication design
 
 5. Design the Azure AD B2C configuration for the customer platform:
    - User flows vs. custom policies: which approach and why
@@ -81,7 +81,7 @@ Your task is to design the complete authentication architecture for both applica
    - Custom claims (loyalty tier, subscription level)
    - Token lifetime considerations for consumer scenarios
 
-### Part 4: Service-to-Service Authentication
+### Part 4: Service-to-Service authentication
 
 7. Design the managed identity strategy for the backend API:
    - System-assigned vs. user-assigned managed identity (and why)
@@ -91,13 +91,13 @@ Your task is to design the complete authentication architecture for both applica
 
 8. For scenarios where managed identity is not available (e.g., third-party API calls), design a secure credential management approach using Key Vault.
 
-### Part 5: Implement Proof of Concept
+### Part 5: implement proof of concept
 
 9. Register an application in Entra ID for the Internal Portal with appropriate redirect URIs and API permissions.
 
 10. Create a managed identity for an App Service and grant it access to a Key Vault.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-04"
@@ -155,7 +155,7 @@ Design principle: Start with a baseline policy requiring MFA for all users, then
 <summary>Hint 3: App Registration and Managed Identity Setup</summary>
 
 ```bash
-# Register the Internal Portal app
+# Register the internal portal app
 az ad app create \
   --display-name "Relecloud Internal Portal" \
   --sign-in-audience "AzureADMyOrg" \
@@ -233,7 +233,7 @@ For Relecloud's customer platform, **user flows** are sufficient because the req
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Microsoft Entra ID documentation](https://learn.microsoft.com/en-us/entra/identity/)
 - [Azure AD B2C overview](https://learn.microsoft.com/en-us/azure/active-directory-b2c/overview)
@@ -242,7 +242,7 @@ For Relecloud's customer platform, **user flows** are sufficient because the req
 - [Microsoft identity platform and OAuth 2.0 flows](https://learn.microsoft.com/en-us/entra/identity-platform/v2-app-types)
 - [B2C user flows and custom policies](https://learn.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Relecloud's customer platform needs to support sign-up with email, Google, and Facebook for 100,000+ consumers. The marketing team wants a fully branded login page. Which identity solution should you recommend?</summary>
@@ -274,11 +274,11 @@ For Relecloud's customer platform, **user flows** are sufficient because the req
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 This lab proves that managed identity eliminates stored credentials entirely and that access revocation is instantaneous -- no credential rotation window, no secret expiry waiting period. You will observe the behavioral difference between credential-based and identity-based authentication.
 
-### Step 1: Create the infrastructure
+### Step 1: create the infrastructure
 
 ```bash
 az group create \
@@ -314,7 +314,7 @@ az webapp create \
   --runtime "NODE:18-lts"
 ```
 
-### Step 2: Enable system-assigned managed identity
+### Step 2: enable system-assigned managed identity
 
 ```bash
 az webapp identity assign \
@@ -337,7 +337,7 @@ echo "Managed identity principal: $PRINCIPAL_ID"
 The system-assigned identity was created automatically and is tied to this App Service's lifecycle. If the App Service is deleted, the identity and all its permissions are automatically revoked. This is the "least privilege lifecycle" principle -- permissions exist only as long as the resource exists.
 :::
 
-### Step 3: Store a secret and grant the managed identity access
+### Step 3: store a secret and grant the managed identity access
 
 ```bash
 az keyvault secret set \
@@ -353,7 +353,7 @@ az keyvault set-policy \
   --secret-permissions get list
 ```
 
-### Step 4: Prove passwordless authentication works
+### Step 4: prove passwordless authentication works
 
 ```bash
 az keyvault secret show \
@@ -374,7 +374,7 @@ az keyvault secret list \
 No password, certificate, or connection string was stored anywhere in the application. The identity itself IS the credential. This eliminates an entire class of security vulnerabilities: leaked secrets in source control, expired credentials causing outages, and secrets sprawl across environments.
 :::
 
-### Step 5: Revoke access -- observe instant denial
+### Step 5: revoke access -- observe instant denial
 
 Remove the access policy to simulate a security response:
 
@@ -399,7 +399,7 @@ The command fails immediately with an authorization error. There is no grace per
 Compare this to traditional credential-based auth: if you rotate a password, the old password may remain valid until expiry. With managed identity, removing the access policy produces INSTANT revocation. This is a critical exam topic -- AZ-305 asks about "minimizing the window of exposure" and managed identity reduces that window to zero.
 :::
 
-### Step 6: Restore access and confirm recovery
+### Step 6: restore access and confirm recovery
 
 ```bash
 az keyvault set-policy \
@@ -417,7 +417,7 @@ az keyvault secret show \
 
 Access is restored immediately. No application redeployment required, no new credential to distribute.
 
-### Step 7: Add a user-assigned identity alongside system-assigned
+### Step 7: add a user-assigned identity alongside system-assigned
 
 Create a user-assigned identity:
 

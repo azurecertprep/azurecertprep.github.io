@@ -5,7 +5,7 @@ title: "Desafio 13: Projetar Governança para Organização Multi-Equipe"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 13: Projetar Governança para Organização Multi-Equipe
+# Desafio 13: projetar governança para organização Multi-Equipe
 
 :::info Tempo Estimado e Custo
 
@@ -21,30 +21,30 @@ O estado atual e insustentavel. A Contoso tem 45 subscriptions do Azure sem estr
 
 O CTO alocou orcamento para um redesign abrangente de governança. A solução deve: (1) fornecer isolamento completo de dados do cliente com limites de conformidade comprovanveis, (2) habilitar rastreamento de custos por engajamento para faturamento preciso de clientes, (3) aplicar políticas de conformidade específicas da industria sem configuração manual por engajamento, (4) automatizar o ciclo de vida de acesso de consultores vinculado a atribuicoes de engajamento, e (5) escalar para suportar um crescimento planejado de mais de 60 engajamentos simultaneos em dois anos. Esta e a culminacao do seu trabalho de design de governança - integrando estrutura de management groups, tagging, política e governança de identidade em uma solução coesa.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma estrutura para management groups, subscriptions e resource groups
 - Recomendar uma estratégia para tagging de recursos
 - Recomendar uma solução para gerenciamento de conformidade
 - Recomendar uma solução para governança de identidade
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Arquitetura de Management Groups e Subscriptions
+### Parte 1: arquitetura de Management Groups e subscriptions
 
 1. Projete a hierarquia completa de management groups para a Contoso Consulting. Considere grupos para: plataforma/serviços compartilhados, landing zones específicas por industria (saúde, financeiro, varejo), ambientes sandbox/treinamento e engajamentos descomissionados. Referencie os padrões de design do Challenge 09.
 2. Defina a estratégia de subscription para engajamentos de clientes. Decida: uma subscription por engajamento, uma subscription por cliente (com resource groups por engajamento), ou uma subscription por industria. Justifique a escolha considerando isolamento de dados, rastreamento de custos, herança de políticas e limites de escala.
 3. Projete o modelo de serviços compartilhados. Determine como networking hub (Azure Firewall, DNS, VPN), monitoramento centralizado e serviços de identidade sao estruturados. Todos os ambientes de engajamento devem rotear através de um firewall central para filtragem e logging de saida.
 4. Defina o ciclo de vida do engajamento para subscriptions: como uma nova subscription de engajamento e provisionada (subscription vending), como é configurada com as políticas corretas baseadas na industria do cliente, e como e descomissionada (dados retidos conforme contrato, recursos deletados, subscription movida para management group "Decommissioned").
 
-### Parte 2: Estratégia de Tagging para Faturamento de Clientes
+### Parte 2: estratégia de tagging para faturamento de clientes
 
 5. Projete a taxonomia de tags obrigatorias para a Contoso. Inclua tags para: nome do cliente, ID do engajamento, vertical da industria, gerente do engajamento, código de faturamento, data de início e data de termino esperada. Referencie os padrões do Challenge 10.
 6. Defina como tags habilitam atribuicao de custos por engajamento para faturamento de clientes. Aborde custos compartilhados (networking, monitoramento, ferramentas de segurança) que devem ser alocados proporcionalmente entre engajamentos.
 7. Projete políticas de aplicação de tags. Determine quais tags usam `deny` (devem existir antes da criação do recurso), quais usam `modify` (auto-herdar do resource group), e quais usam `audit` (sinalizar para acompanhamento). Considere que equipes de engajamento usam diferentes ferramentas de IaC e algumas implantacoes manuais via Portal.
 8. Aborde o plano de migração de tags para as 45 subscriptions existentes. Determine como normalizar nomes de tags inconsistentes ("Client" vs. "Customer" vs. "Project") na nova taxonomia padrão.
 
-### Parte 3: Políticas de Conformidade Especificas por Industria
+### Parte 3: políticas de conformidade especificas por industria
 
 9. Projete iniciativas de política para cada vertical de industria:
    - **Saúde (HIPAA):** criptografia em repouso com CMK, sem endpoints públicos, logging de auditoria obrigatório, tags de classificacao de dados PHI obrigatorias
@@ -54,20 +54,20 @@ O CTO alocou orcamento para um redesign abrangente de governança. A solução d
 11. Defina o processo de isencao para requisitos entre industrias. Alguns engajamentos abrangem múltiplos frameworks regulatorios (ex.: um cliente de saúde que também processa pagamentos). Projete como requisitos de conformidade sobrepostos sao tratados.
 12. Projete a estrutura de relatórios de conformidade. Cada contrato de cliente requer atestacao mensal de conformidade. Defina como relatórios de conformidade por engajamento sao gerados mostrando aderencia ao framework regulatorio específico aplicavel aquele engajamento.
 
-### Parte 4: Governança de Identidade para Rotacao de Consultores
+### Parte 4: governança de identidade para rotacao de consultores
 
 13. Projete access packages para acesso no nível de engajamento (referencie o Challenge 12). Crie templates de access packages para: "Engagement Contributor" (implantar recursos dentro da subscription do engajamento), "Engagement Reader" (acesso somente leitura para stakeholders do cliente), e "Engagement Admin" (controle total para o lider do engajamento). Cada pacote deve ter escopo para um engajamento específico.
 14. Projete o workflow de rotacao de consultores. Quando um consultor e atribuido a um novo engajamento (pelo gerente de recursos na ferramenta de gerenciamento de projetos), ele deve receber automaticamente o access package apropriado. Quando removido de um engajamento, o acesso deve ser revogado em 24 horas.
 15. Projete a integração do ciclo de vida do engajamento com access reviews. Configure access reviews trimestrais para cada engajamento onde o gerente de engajamento atesta que todos os membros da equipe ainda precisam de acesso. Defina o que acontece quando um engajamento termina oficialmente (todos os access packages expiram, contas de convidado para stakeholders do cliente sao desabilitadas).
 16. Projete o modelo de acesso privilegiado para ambientes de engajamento. Determine como o acesso de emergencia "break glass" funciona dentro do ambiente isolado de um cliente, quem tem acesso privilegiado permanente (se alguem), e como a elegibilidade PIM tem escopo por engajamento.
 
-### Parte 5: Integração Operacional
+### Parte 5: integração operacional
 
 17. Projete uma automacao de "onboarding de novo engajamento" que orquestra toda a configuração: provisionamento de subscription, posicionamento em management group, verificação de herança de políticas, aplicação de tags, criação de access packages e peering de rede hub. Defina as entradas (nome do cliente, industria, roster da equipe de engajamento, duracao) e as saidas esperadas.
 18. Projete monitoramento e alertas para desvio de governança em todos os 30-40 engajamentos simultaneos. Defina como a equipe central de governança detecta e responde a: uma subscription com violacoes de conformidade, um engajamento com acesso orfao (consultores não mais atribuidos mas ainda com acesso), ou uma subscription se aproximando de limites de custo.
 19. Projete o processo de offboarding do engajamento: retencao de dados conforme obrigacoes contratuais, exclusão de recursos apos período de retencao, limpeza de subscription, revogacao de acesso para todos os membros da equipe e contas de convidado, e movimentacao da subscription para o management group "Decommissioned".
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-13"
@@ -118,7 +118,7 @@ A sequência de offboarding deve ser ordenada: (1) Notifique todos os membros da
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Cloud Adoption Framework landing zone architecture](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/)
 - [Management group and subscription organization](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org)
@@ -128,7 +128,7 @@ A sequência de offboarding deve ser ordenada: (1) Notifique todos os membros da
 - [Tagging strategy for Azure](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging)
 - [Azure landing zone FAQ](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/faq)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. A Contoso integra um novo engajamento de cliente de saúde. A automacao de onboarding cria uma subscription e a posiciona sob o management group "Healthcare". Quais políticas de conformidade sao automaticamente aplicadas sem nenhuma configuração adicional?</summary>
@@ -161,21 +161,21 @@ A sequência de offboarding deve ser ordenada: (1) Notifique todos os membros da
 ## Limpeza
 
 ```bash
-# This capstone challenge creates significant infrastructure. Clean up in order:
+# This capstone challenge creates significant infrastructure. clean up in order:
 
-# 1. Remove access packages and catalogs (via Portal or Graph API)
+# 1. remove access packages and catalogs (via portal or graph api)
 # az rest --method DELETE --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages/<package-id>"
 
-# 2. Remove policy assignments from management groups
+# 2. remove policy assignments from management groups
 az policy assignment delete --name "hipaa-initiative" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso-healthcare"
 az policy assignment delete --name "pcidss-initiative" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso-financial"
 az policy assignment delete --name "retail-privacy" --scope "/providers/Microsoft.Management/managementGroups/mg-contoso-retail"
 
-# 3. Remove test resource groups
+# 3. remove test resource groups
 az group delete --name rg-engagement-demo --yes --no-wait
 az group delete --name rg-contoso-platform --yes --no-wait
 
-# 4. Remove management groups (must remove child subscriptions/MGs first)
+# 4. remove management groups (must remove child subscriptions/MGs first)
 az account management-group delete --name "mg-contoso-decommissioned"
 az account management-group delete --name "mg-contoso-sandbox"
 az account management-group delete --name "mg-contoso-healthcare"

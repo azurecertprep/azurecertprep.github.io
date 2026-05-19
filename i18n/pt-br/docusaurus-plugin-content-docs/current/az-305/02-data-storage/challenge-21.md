@@ -5,7 +5,7 @@ title: "Desafio 21: Projetar Durabilidade e Proteção de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 21: Projetar Durabilidade e Proteção de Dados
+# Desafio 21: projetar durabilidade e proteção de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ O oficial de compliance do escritório mandatou o seguinte: todos os documentos 
 
 Seu desafio é projetar uma estratégia abrangente de proteção de dados que combine a opcao de redundância correta para cada categoria de dados, implemente políticas de imutabilidade para compliance regulatorio, e forneça mecanismos de recuperação rápida para erros operacionais.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de dados para proteção e durabilidade
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Projetar Estratégia de Redundância
+### Parte 1: projetar estratégia de redundância
 
 1. Crie um resource group e implante três storage accounts, cada uma representando uma categoria de dados diferente:
    - `active-cases` - para acesso diario de advogados (requer maior disponibilidade)
@@ -40,14 +40,14 @@ Seu desafio é projetar uma estratégia abrangente de proteção de dados que co
    - Implicacoes de custo relativas a baseline LRS
 3. Crie uma matriz de decisao comparando todas as seis opcoes de redundância com colunas para: durabilidade (nines), SLA de disponibilidade, acesso de leitura durante indisponibilidade, proteção contra falha regional e custo relativo.
 
-### Parte 2: Implementar Recursos de Proteção de Dados
+### Parte 2: implementar recursos de proteção de dados
 
 4. Habilite blob soft delete na storage account active-cases com período de retencao de 30 dias. Teste deletando e recuperando um blob.
 5. Habilite container soft delete com retencao de 14 dias para proteger contra exclusão acidental de container.
 6. Habilite blob versioning na conta active-cases para manter versoes anteriores de documentos modificados. Faca upload de um arquivo, modifique-o e demonstre o histórico de versoes.
 7. Habilite point-in-time restore para a conta active-cases. Documente os requisitos (versioning, change feed e soft delete devem estar todos habilitados) e a janela máxima de restauracao.
 
-### Parte 3: Implementar Políticas de Imutabilidade
+### Parte 3: implementar políticas de imutabilidade
 
 8. Na storage account finalized-docs, crie um container com uma política de imutabilidade baseada em tempo:
    - Defina o período de retencao para 2.555 dias (7 anos)
@@ -59,7 +59,7 @@ Seu desafio é projetar uma estratégia abrangente de proteção de dados que co
    - Documente como legal holds interagem com políticas de retencao baseadas em tempo
 10. Projete uma política para transicionar documentos de mutavel (caso ativo) para imutável (finalizado), incluindo os gatilhos de workflow e etapas de validação.
 
-### Parte 4: Projetar Backup e Recuperação
+### Parte 4: projetar Backup e recuperação
 
 11. Configure Azure Backup para blob storage na conta active-cases:
     - Crie um backup vault e política de backup
@@ -71,7 +71,7 @@ Seu desafio é projetar uma estratégia abrangente de proteção de dados que co
     - Failover regional usando GRS para cenários de desastre
     - Recuperação de exclusão acidental de container
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-21"
@@ -122,7 +122,7 @@ Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (nã
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
 - [Soft delete for blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview)
@@ -132,7 +132,7 @@ Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (nã
 - [Azure Backup for Azure Blobs](https://learn.microsoft.com/en-us/azure/backup/blob-backup-overview)
 - [Best practices for data protection](https://learn.microsoft.com/en-us/azure/storage/blobs/data-protection-overview)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma storage account usa GRS. Durante uma indisponibilidade regional na região primária, aplicações podem ler dados da região secundária?</summary>
@@ -162,7 +162,7 @@ Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (nã
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

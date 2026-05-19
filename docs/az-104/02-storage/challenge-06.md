@@ -8,11 +8,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 06: Storage Security & Lifecycle
+# Challenge 06: Storage security & lifecycle
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam Weight: 15-20%**
+**60-75 min** | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam Weight: 15-20%
+**
 
 :::
 
@@ -22,14 +23,14 @@ Contoso's Azure storage bill tripled last quarter. The culprit: nobody is cleani
 
 Your mission: implement lifecycle management policies to control costs, configure identity-based access, and set up cross-region object replication for business continuity.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Configure identity-based access for Azure Files
 - Create and configure stored access policies
 - Configure lifecycle management policies
 - Configure object replication between storage accounts
 
-## Sysadmin ↔ Azure Reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -42,7 +43,7 @@ Your mission: implement lifecycle management policies to control costs, configur
 
 ## Description
 
-### Part 1: Set Up the Environment
+### Part 1: set up the environment
 
 1. Create two storage accounts in different regions (needed for object replication):
 
@@ -111,7 +112,7 @@ echo "Important document for replication test" > repl-test.txt
 az storage blob upload --container-name replicated-data --file repl-test.txt --name repl-test.txt --connection-string "$CONN_PRIMARY"
 ```
 
-### Part 2: Lifecycle Management Policies
+### Part 2: lifecycle Management Policies
 
 4. Create a lifecycle management policy with the following rules:
 
@@ -241,7 +242,7 @@ az storage account management-policy show \
   --query "policy.rules[].{Name:name, Enabled:enabled}" -o table
 ```
 
-### Part 3: Identity-Based Access for Azure Files
+### Part 3: Identity-Based access for Azure Files
 
 :::tip
 
@@ -264,7 +265,7 @@ az storage share-rm create \
 <TabItem value="cli" label="Azure CLI">
 
 ```bash
-# Enable Entra ID Kerberos authentication
+# Enable Entra ID kerberos authentication
 az storage account update \
   --name $STORAGE_PRIMARY \
   --resource-group $RG \
@@ -289,7 +290,7 @@ Full Entra ID Kerberos authentication for Azure Files requires additional setup 
 8. Assign share-level RBAC permissions:
 
 ```bash
-# Assign "Storage File Data SMB Share Contributor" role to a user or group
+# Assign "Storage file Data SMB share contributor" role to a user or group
 # This allows read/write access to the file share via SMB
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $RG --query id -o tsv)
@@ -297,9 +298,9 @@ STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $R
 # Replace with your actual user or group object ID
 # USER_ID=$(az ad user show --id "alice@YOUR_TENANT.onmicrosoft.com" --query id -o tsv)
 # az role assignment create \
-#   --assignee $USER_ID \
-#   --role "Storage File Data SMB Share Contributor" \
-#   --scope "$STORAGE_ID/fileServices/default/fileshares/secure-share"
+# --assignee $user_id \
+# --role "Storage file Data SMB share contributor" \
+# --scope "$STORAGE_ID/fileServices/default/fileshares/secure-share"
 ```
 
 :::info
@@ -311,7 +312,7 @@ Azure Files identity-based access uses a **two-layer permission model**:
 The effective permission is the **intersection** of both layers | a user needs both share-level and directory-level access.
 
 :::
-### Part 4: Object Replication
+### Part 4: object Replication
 
 9. Set up object replication from the primary account to the secondary account:
 
@@ -383,7 +384,7 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
 Object replication is **asynchronous**. It may take several minutes for blobs to appear in the destination account. There is no SLA on replication time for standard accounts.
 
 :::
-### Part 5: Stored Access Policies (Revisited)
+### Part 5: stored access Policies (Revisited)
 
 12. Create stored access policies for fine-grained control:
 
@@ -436,7 +437,7 @@ az storage container policy delete \
   --connection-string "$CONN_PRIMARY"
 ```
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az104-challenge-06"
@@ -544,7 +545,7 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Lifecycle management overview](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
 - [Configure lifecycle management policy](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-policy-configure)
@@ -553,7 +554,7 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 - [Stored access policies](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy)
 - [Configure Microsoft Entra Kerberos for Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-identity-auth-azure-active-directory-enable)
 
-## Break & Fix
+## Break & fix
 
 After completing the challenge, try these troubleshooting scenarios:
 
@@ -569,7 +570,7 @@ After completing the challenge, try these troubleshooting scenarios:
 
 4. **Identity-based access denied**: A user has `Storage File Data SMB Share Contributor` at the share level but gets "Access Denied" when opening a folder. What's wrong? (Directory-level NTFS ACLs may be restricting access | remember the two-layer model.)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. What are the conditions you can use in lifecycle management rules?</summary>

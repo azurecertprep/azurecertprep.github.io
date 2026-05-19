@@ -3,7 +3,7 @@ sidebar_position: 3
 title: "Lab Setup"
 ---
 
-# Lab Setup
+# Lab setup
 
 Every challenge requires an Azure subscription and command-line tools. This page walks you through both setup options.
 
@@ -34,7 +34,7 @@ az account show --output table
 az account set --subscription "YOUR_SUBSCRIPTION_NAME"
 ```
 
-## Option 2: Local Setup
+## Option 2: local setup
 
 If you prefer to work locally, install these tools:
 
@@ -59,7 +59,7 @@ jq --version
 
 You need an Azure subscription for all challenges except Challenge 07 (ARM/Bicep can be validated locally).
 
-### Free Options
+### Free options
 
 | Option | Credit | Duration | Credit Card Required? |
 |--------|--------|----------|-----------------------|
@@ -72,7 +72,7 @@ You need an Azure subscription for all challenges except Challenge 07 (ARM/Bicep
 All challenges include cleanup scripts. **Always run cleanup after each challenge** to avoid unexpected charges. Total cost for all 28 challenges is estimated at ~$5 with proper cleanup.
 
 :::
-## Resource Naming Convention
+## Resource naming convention
 
 We use a consistent naming convention across all challenges:
 
@@ -83,7 +83,7 @@ vm-az104-XX                   # Virtual machines
 vnet-az104-XX                 # Virtual networks
 ```
 
-## Quick Setup Script
+## Quick setup script
 
 Run this once to set up common variables used across all challenges:
 

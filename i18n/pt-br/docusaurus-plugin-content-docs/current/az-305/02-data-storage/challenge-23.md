@@ -5,7 +5,7 @@ title: "Desafio 23: Projetar uma Solução de Análise de Dados"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 23: Projetar uma Solução de Análise de Dados
+# Desafio 23: projetar uma solução de análise de dados
 
 :::info Tempo Estimado e Custo
 
@@ -21,13 +21,13 @@ Primeiro, o centro de operações precisa de rastreamento de frota em tempo real
 
 Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo real justifica precos premium por velocidade, os dashboards precisam de custos previsiveis, e o treinamento de ML deve minimizar custos mesmo se levar mais tempo para processar. Seu desafio é projetar uma arquitetura de analytics que atenda todas as três necessidades eficientemente sem provisionar excessivamente nenhuma carga de trabalho individual.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para análise de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Projetar Analytics em Tempo Real (Rastreamento de Frota)
+### Parte 1: projetar Analytics em tempo real (Rastreamento de frota)
 
 1. Projete a camada de ingestao para 2 milhões de eventos/segundo de telemetria GPS:
    - Compare Azure Event Hubs (Standard vs Premium vs Dedicated) para este throughput
@@ -44,7 +44,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
    - Detecção de anomalia de velocidade (eventos de desaceleracao subita)
    - Predicao de atraso de entrega (posicao atual + distância restante vs horario agendado)
 
-### Parte 2: Projetar Batch Analytics (Dashboards Operacionais)
+### Parte 2: projetar Batch Analytics (Dashboards operacionais)
 
 4. Projete a camada de data warehouse para dashboards diarios:
    - Compare dedicated SQL pool vs serverless SQL pool no Synapse Analytics:
@@ -63,7 +63,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
    - Calcular KPIs: taxa de entrega no prazo, eficiência de combustivel (milhas por galao), compliance de horas dos motoristas
    - Agendar transformacoes para completar até as 6h para disponibilidade dos dashboards as 7h
 
-### Parte 3: Projetar Analytics Avancado (Treinamento de Modelo ML)
+### Parte 3: projetar Analytics avancado (Treinamento de modelo ml)
 
 7. Projete o data lake histórico para treinamento ML:
    - Comparacao de formato de armazenamento: Parquet vs Delta Lake vs CSV para 6 meses de dados de rotas (~50TB)
@@ -81,7 +81,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
    - Implemente auto-terminacao de cluster apos período de inatividade
    - Calcule o custo mensal de computacao para uma execução de treinamento de 72 horas em um cluster de 20 nos
 
-### Parte 4: Arquitetura Unificada
+### Parte 4: arquitetura unificada
 
 10. Projete como as três cargas de trabalho de analytics compartilham infraestrutura:
     - Data Lake Storage Gen2 compartilhado como a camada de armazenamento central (zonas Bronze/Silver/Gold)
@@ -94,7 +94,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
     - ML: Databricks/Synapse Spark (burst mensal) + ADLS Gen2 storage
     - Identifique quais componentes podem ser pausados/reduzidos quando não estao em uso
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-23"
@@ -145,7 +145,7 @@ Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure Event Hubs overview](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about)
 - [Azure Stream Analytics overview](https://learn.microsoft.com/en-us/azure/stream-analytics/stream-analytics-introduction)
@@ -155,7 +155,7 @@ Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona
 - [Delta Lake on Azure](https://learn.microsoft.com/en-us/azure/databricks/delta/)
 - [Power BI integration with Synapse](https://learn.microsoft.com/en-us/azure/synapse-analytics/get-started-visualize-power-bi)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. TransGlobal precisa detectar quando um caminhao desvia de sua rota planejada dentro de 30 segundos do desvio ocorrer. Qual serviço Azure e mais apropriado para isso, e por que?</summary>
@@ -185,7 +185,7 @@ Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

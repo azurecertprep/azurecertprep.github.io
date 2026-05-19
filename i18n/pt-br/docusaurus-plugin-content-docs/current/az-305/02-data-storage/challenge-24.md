@@ -5,7 +5,7 @@ title: "Desafio 24: Projetar uma Plataforma de Dados Completa"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 24: Projetar uma Plataforma de Dados Completa
+# Desafio 24: projetar uma plataforma de dados completa
 
 :::info Tempo Estimado e Custo
 
@@ -21,7 +21,7 @@ O VP de Engenharia garantiu um orcamento de $25.000/mes para construir uma plata
 
 Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design dos Challenges 14-23 para arquitetar a plataforma de dados completa da TechMart, justificando cada escolha de tecnologia contra alternativas e demonstrando como os componentes se integram em um todo coeso.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução para armazenamento de dados relacionais
 - Recomendar uma camada de serviço e camada de computacao de banco de dados
@@ -32,9 +32,9 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
 - Recomendar uma solução para integração de dados
 - Recomendar uma solução para análise de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Camada de Dados Transacionais (Pedidos e Pagamentos)
+### Parte 1: camada de dados transacionais (Pedidos e pagamentos)
 
 1. Selecione o serviço de banco de dados relacional para processamento de pedidos. Crie uma matriz de decisao comparando:
    - Azure SQL Database (banco de dados único vs elastic pool)
@@ -54,7 +54,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Retencao de backup de longo prazo para compliance (política LTR de 7 anos)
    - Geo-replicação para recuperação de desastres (active geo-replication vs failover groups)
 
-### Parte 2: Camada de Dados Semi-Estruturados (Catálogo de Produtos e Avaliacoes)
+### Parte 2: camada de dados Semi-Estruturados (Catálogo de produtos e avaliacoes)
 
 4. Projete o armazenamento do catálogo de produtos usando Azure Cosmos DB:
    - Selecione a API apropriada (NoSQL, MongoDB, PostgreSQL) com justificativa
@@ -72,7 +72,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Selecione o nível de consistência apropriado (avalie Strong vs Bounded Staleness vs Session vs Eventual para um catálogo de e-commerce)
    - Calcule o custo de replicação multi-região vs região única na escala atual
 
-### Parte 3: Camada de Dados Não Estruturados (Armazenamento de Midia)
+### Parte 3: camada de dados não estruturados (Armazenamento de midia)
 
 7. Projete a arquitetura de armazenamento de midia para imagens e videos de produtos (10TB, crescendo 2TB/mes):
    - Selecao de tipo de storage account e camada de desempenho
@@ -84,7 +84,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Integração Event Grid para acionar Azure Functions na criação de blob
    - Projete convencoes de nomeacao de armazenamento e estrutura de pastas para padrões de acesso eficientes
 
-### Parte 4: Motor de Recomendacoes em Tempo Real
+### Parte 4: motor de recomendacoes em tempo real
 
 9. Projete o sistema de recomendacoes em tempo real:
    - Ingestao: capturar eventos de navegacao (visualizacoes de produto, adicoes ao carrinho, compras) via Event Hubs
@@ -97,7 +97,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
     - Change feed do Cosmos DB aciona recalculo de recomendacoes para produtos relacionados
     - Cache Redis e atualizado com novas recomendacoes (expiracao baseada em TTL para dados obsoletos)
 
-### Parte 5: Pipeline de Relatorios e Arquivo de Compliance
+### Parte 5: pipeline de relatorios e arquivo de compliance
 
 11. Projete o pipeline de relatórios noturnos usando Azure Data Factory ou Synapse Pipelines:
     - Extrair de: Azure SQL Database (pedidos), Cosmos DB (produtos/avaliacoes), Storage (metadados de midia)
@@ -111,7 +111,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
     - Redundância: RA-GZRS para requisitos regulatorios (geo-redundante com acesso de leitura)
     - Gerenciamento de ciclo de vida: transicao automática de Cool para Archive apos 1 ano
 
-### Parte 6: Arquitetura Unificada e Orcamento
+### Parte 6: arquitetura unificada e orcamento
 
 13. Crie um diagrama de arquitetura abrangente mostrando todos os componentes e seus fluxos de dados:
     - Camada transacional (Azure SQL Database)
@@ -130,7 +130,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
     - Data Factory + Synapse: execucoes de pipeline + computacao
     - Total não deve exceder $25.000/mes
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-24"
@@ -181,7 +181,7 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Azure SQL Database overview](https://learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview)
 - [Azure Cosmos DB for NoSQL](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/)
@@ -193,7 +193,7 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 - [Azure Data Factory overview](https://learn.microsoft.com/en-us/azure/data-factory/introduction)
 - [Azure Architecture Center - E-commerce reference](https://learn.microsoft.com/en-us/azure/architecture/industries/retail)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. TechMart precisa que o catálogo de produtos lide com 50.000 leituras/segundo durante flash sales com compradores globais. O catálogo tem 500.000 produtos em 200 categorias. Qual configuração do Cosmos DB e mais apropriada?</summary>
@@ -223,7 +223,7 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

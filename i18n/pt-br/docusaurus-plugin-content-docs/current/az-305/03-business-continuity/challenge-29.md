@@ -5,7 +5,7 @@ title: "Desafio 29: Projetar um Plano de Recuperação de Desastres"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 29: Projetar um Plano de Recuperação de Desastres
+# Desafio 29: projetar um plano de recuperação de desastres
 
 :::info Tempo Estimado e Custo
 
@@ -21,15 +21,15 @@ Apos uma interrupcao de 4 horas na última Black Friday causada por uma falha do
 
 Este desafio combina todas as habilidades de backup e DR dos desafios anteriores em um plano completo e end-to-end de disaster recovery usando Azure Site Recovery, bancos de dados geo-replicados e roteamento de failover automatizado. Você projetara a estratégia de replicação, criara planos de recuperação com failover sequenciado é validara que o design atende a todos os requisitos dentro do orcamento.
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Recomendar uma solução de recuperação para cargas de trabalho Azure e hibridas que atenda aos objetivos de recuperação
 - Recomendar uma solução de backup e recuperação para computacao
 - Recomendar uma solução de backup e recuperação para bancos de dados
 
-## Tarefas de Design
+## Tarefas de design
 
-### Parte 1: Azure Site Recovery para Camadas de Computação
+### Parte 1: Azure Site Recovery para camadas de computação
 
 1. Projete a configuração do Azure Site Recovery (ASR) para as camadas web e API:
    - Camada web: 4 VMs atras de um load balancer (stateless, sessão armazenada no Redis)
@@ -44,11 +44,11 @@ az group create --name rg-shopstream-dr --location westus2
 
 # Note: ASR configuration typically uses the portal or PowerShell
 # Conceptual configuration:
-# Source: East US 2, Target: West US 2
+# Source: east US 2, target: west US 2
 # Replication policy: 
-#   - Recovery point retention: 24 hours
-#   - App-consistent snapshot frequency: 4 hours
-#   - Crash-consistent replication: continuous (RPO ~30 seconds)
+# - Recovery point retention: 24 hours
+# - app-consistent snapshot frequency: 4 hours
+# - crash-consistent replication: continuous (rpo ~30 seconds)
 ```
 
 3. Documente a configuração de rede para o site de DR:
@@ -57,7 +57,7 @@ az group create --name rg-shopstream-dr --location westus2
    - Enderecos IP públicos para load balancers na região de DR
    - Estratégia de DNS para cutover (Azure DNS com TTL baixo ou Traffic Manager)
 
-### Parte 2: Estratégia de DR da Camada de Banco de Dados
+### Parte 2: estratégia de DR da camada de banco de dados
 
 4. Projete a estratégia de replicação de banco de dados para cada data store:
 
@@ -82,7 +82,7 @@ az group create --name rg-shopstream-dr --location westus2
    - Qual é o RPO para geo-replicação de armazenamento?
    - Como você redireciona leituras para o endpoint secundário durante uma interrupcao?
 
-### Parte 3: Orquestração do Plano de Recuperação
+### Parte 3: orquestração do plano de recuperação
 
 8. Crie um plano de recuperação sequenciado que define a ordem de failover:
    - **Grupo 1**: Camada de banco de dados (SQL failover group ativa primeiro)
@@ -102,7 +102,7 @@ az group create --name rg-shopstream-dr --location westus2
     - Defina o limite de failover (quantas probes falhadas antes de alternar?)
     - Calcule o tempo total de failover: detecção + propagacao DNS + startup de VM
 
-### Parte 4: Failback e Testes de DR
+### Parte 4: failback e testes de DR
 
 11. Projete o procedimento de failback apos a região primária recuperar:
     - Re-protect (replicação reversa do DR de volta para o primário)
@@ -123,7 +123,7 @@ az group create --name rg-shopstream-dr --location westus2
     - Custo de replicação GRS do armazenamento
     - Custo mensal total vs. orcamento de $3K
 
-## Criterios de Sucesso
+## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-29"
@@ -236,7 +236,7 @@ Para o RTO de 5 minutos da camada web da ShopStream: Front Door e preferido (det
 
 </details>
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [About Azure Site Recovery](https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-overview)
 - [Set up disaster recovery for Azure VMs](https://learn.microsoft.com/en-us/azure/site-recovery/azure-to-azure-tutorial-enable-replication)
@@ -245,7 +245,7 @@ Para o RTO de 5 minutos da camada web da ShopStream: Front Door e preferido (det
 - [Azure Front Door traffic routing](https://learn.microsoft.com/en-us/azure/frontdoor/front-door-traffic-acceleration)
 - [Geo-replication for Azure Cache for Redis](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-geo-replication)
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 <details>
 <summary>1. Uma aplicação de 3 camadas tem requisitos de RTO de 5 min (web), 10 min (API) e 30 seg (banco de dados). Por que a camada de banco de dados deve fazer failover PRIMEIRO no plano de recuperação?</summary>
@@ -275,7 +275,7 @@ Para o RTO de 5 minutos da camada web da ShopStream: Front Door e preferido (det
 
 </details>
 
-## Laboratório de Validação
+## Laboratório de validação
 
 Implante uma prova de conceito mínima para validar seu design:
 

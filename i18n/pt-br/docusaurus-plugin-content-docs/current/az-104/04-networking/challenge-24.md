@@ -5,7 +5,7 @@ title: "Desafio 24: Rotas Definidas pelo Usuário & Controle de Tráfego"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Desafio 24: Rotas Definidas pelo Usuário & Controle de Tráfego
+# Desafio 24: rotas definidas pelo usuário & controle de tráfego
 
 :::info Tempo e Custo Estimados
 
@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Contoso Ltd. possui uma topologia de rede hub-spoke no Azure. A equipe de segurança exige que todo o tráfego destinado à internet a partir das VNets spoke passe por um Network Virtual Appliance (NVA) central na VNet hub para inspeção e registro. Você deve implementar rotas definidas pelo usuário (UDRs) para substituir o roteamento padrão do Azure e impor esse padrão de fluxo de tráfego (túnel forçado).
 
-## Habilidades do Exame Cobertas
+## Habilidades do exame cobertas
 
 - Criar e configurar tabelas de rotas
 - Criar e configurar rotas definidas pelo usuário
@@ -26,7 +26,7 @@ A Contoso Ltd. possui uma topologia de rede hub-spoke no Azure. A equipe de segu
 - Configurar tipos de próximo salto (Virtual Appliance, VNet Gateway, Internet, None)
 - Diagnosticar problemas de roteamento usando rotas efetivas
 
-## Referência Sysadmin ↔ Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Tradicional | Equivalente no Azure |
 |---|---|
@@ -38,7 +38,7 @@ A Contoso Ltd. possui uma topologia de rede hub-spoke no Azure. A equipe de segu
 | `ip route show` / `route print` | Visualização de rotas efetivas |
 | Tabelas de rotas BGP | Propagação de rotas do VNet Gateway |
 
-## Configuração Inicial
+## Configuração inicial
 
 ```bash
 # Variables
@@ -51,7 +51,7 @@ az group create --name $RG --location $LOCATION
 
 ## Tarefas
 
-### Tarefa 1: Criar Topologia de VNet Hub-Spoke
+### Tarefa 1: criar topologia de VNet Hub-Spoke
 
 ```bash
 # Create Hub VNet
@@ -69,7 +69,7 @@ az network vnet subnet create \
   --name GatewaySubnet \
   --address-prefix 10.0.255.0/27
 
-# Create Spoke VNet
+# Create spoke VNet
 az network vnet create \
   --resource-group $RG \
   --name vnet-spoke \
@@ -77,7 +77,7 @@ az network vnet create \
   --subnet-name subnet-workload \
   --subnet-prefix 10.1.1.0/24
 
-# Peer Hub to Spoke
+# Peer Hub to spoke
 az network vnet peering create \
   --resource-group $RG \
   --name hub-to-spoke \
@@ -86,7 +86,7 @@ az network vnet peering create \
   --allow-forwarded-traffic \
   --allow-gateway-transit
 
-# Peer Spoke to Hub
+# Peer spoke to Hub
 az network vnet peering create \
   --resource-group $RG \
   --name spoke-to-hub \
@@ -96,7 +96,7 @@ az network vnet peering create \
   --use-remote-gateways false
 ```
 
-### Tarefa 2: Implantar um Network Virtual Appliance (NVA) Simulado
+### Tarefa 2: implantar um Network Virtual appliance (nva) simulado
 
 ```bash
 # Create NVA VM in the hub
@@ -139,7 +139,7 @@ Para que uma VM do Azure funcione como roteador/NVA, o encaminhamento de IP deve
 Sem ambos, os pacotes encaminhados serão descartados.
 
 :::
-### Tarefa 3: Criar uma Tabela de Rotas
+### Tarefa 3: criar uma tabela de rotas
 
 ```bash
 # Create a route table for the spoke subnet
@@ -160,7 +160,7 @@ az network route-table show \
 Definir `--disable-bgp-route-propagation true` impede que rotas aprendidas via BGP (de gateways VPN/ExpressRoute) sejam injetadas na tabela de rotas. Isso lhe dá controle total sobre o roteamento para aquela sub-rede.
 
 :::
-### Tarefa 4: Criar Rotas Definidas pelo Usuário
+### Tarefa 4: criar rotas definidas pelo usuário
 
 ```bash
 # Route all internet traffic (0.0.0.0/0) through the NVA
@@ -195,7 +195,7 @@ az network route-table route list \
   --route-table-name rt-spoke-workload -o table
 ```
 
-### Tarefa 5: Associar Tabela de Rotas à Sub-rede
+### Tarefa 5: associar tabela de rotas à sub-rede
 
 ```bash
 # Associate the route table with the spoke workload subnet
@@ -213,7 +213,7 @@ az network vnet subnet show \
   --query "{Subnet:name, RouteTable:routeTable.id}" -o table
 ```
 
-### Tarefa 6: Implantar uma VM de Carga de Trabalho e Verificar o Roteamento
+### Tarefa 6: implantar uma VM de carga de trabalho e verificar o roteamento
 
 ```bash
 # Create a workload VM in the spoke
@@ -238,7 +238,7 @@ az network nic show-effective-route-table \
   --name $WORKLOAD_NIC_NAME -o table
 ```
 
-### Tarefa 7: Verificar Rotas Efetivas e Diagnosticar
+### Tarefa 7: verificar rotas efetivas e diagnosticar
 
 ```bash
 # Show effective routes (combines system routes + UDRs)
@@ -249,7 +249,7 @@ az network nic show-effective-route-table \
 # Expected output should show:
 # - 0.0.0.0/0 -> VirtualAppliance (10.0.1.4) [User route]
 # - 10.0.0.0/16 -> VirtualAppliance (10.0.1.4) [User route]
-# - 192.168.0.0/16 -> None [User route - black hole]
+# - 192.168.0.0/16 -> none [User route - black hole]
 # - 10.1.0.0/16 -> VnetLocal [System route]
 ```
 
@@ -258,7 +258,7 @@ az network nic show-effective-route-table \
 2. Compare rotas de Usuário vs rotas de Sistema
 3. Observe que rotas de Usuário substituem rotas de Sistema para o mesmo prefixo
 
-### Tarefa 8: Entender os Tipos de Próximo Salto
+### Tarefa 8: entender os tipos de próximo salto
 
 Crie rotas demonstrando cada tipo de próximo salto:
 
@@ -285,7 +285,7 @@ az network route-table route create \
   --address-prefix 192.168.100.0/24 \
   --next-hop-type VirtualNetworkGateway
 
-# Next-hop: Internet (override to force direct internet path)
+# Next-hop: internet (override to force direct internet path)
 az network route-table route create \
   --resource-group $RG \
   --route-table-name rt-demo-nexthops \
@@ -293,7 +293,7 @@ az network route-table route create \
   --address-prefix 203.0.113.0/24 \
   --next-hop-type Internet
 
-# Next-hop: None (black hole | drop traffic)
+# Next-hop: none (black hole | drop traffic)
 az network route-table route create \
   --resource-group $RG \
   --route-table-name rt-demo-nexthops \
@@ -307,7 +307,7 @@ az network route-table route list \
   --route-table-name rt-demo-nexthops -o table
 ```
 
-### Tarefa 9: Implementar Túnel Forçado
+### Tarefa 9: implementar túnel forçado
 
 :::tip Dica
 
@@ -319,8 +319,8 @@ O túnel forçado redireciona todo o tráfego destinado à internet (0.0.0.0/0) 
 # route-to-internet: 0.0.0.0/0 -> VirtualAppliance (10.0.1.4)
 
 # For VPN-based forced tunneling, you would:
-# 1. Create a VPN Gateway in the hub
-# 2. Configure the default route (0.0.0.0/0) via BGP from on-premises
+# 1. create a VPN Gateway in the hub
+# 2. configure the default route (0.0.0.0/0) via BGP from on-premises
 # 3. OR create a UDR with next-hop VirtualNetworkGateway
 
 # Verify forced tunneling is active
@@ -330,7 +330,7 @@ az network nic show-effective-route-table \
   --query "[?addressPrefix[0]=='0.0.0.0/0']" -o table
 ```
 
-## Critérios de Sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-24"
@@ -346,9 +346,9 @@ az network nic show-effective-route-table \
     "Todos os tipos de próximo salto compreendidos e demonstrados"
   ]}
 />
-## Cenários de Quebrar & Consertar
+## Cenários de quebrar & consertar
 
-### Cenário A: Encaminhamento de IP do NVA Ausente
+### Cenário a: encaminhamento de IP do NVA ausente
 
 ```bash
 # Disable IP forwarding on the NVA NIC
@@ -360,18 +360,18 @@ az network nic update \
 # Try to reach the internet from the workload VM: it will fail
 # because packets reach the NVA but are dropped (not forwarded)
 
-# Diagnosis: Check NIC IP forwarding setting
+# Diagnosis: check NIC IP forwarding setting
 az network nic show -g $RG -n $NVA_NIC_NAME \
   --query "enableIPForwarding"
 
-# Fix: Re-enable IP forwarding
+# Fix: re-enable IP forwarding
 az network nic update \
   --resource-group $RG \
   --name $NVA_NIC_NAME \
   --ip-forwarding true
 ```
 
-### Cenário B: Endereço IP de Próximo Salto Incorreto
+### Cenário b: endereço IP de próximo salto incorreto
 
 ```bash
 # Create a route with wrong NVA IP
@@ -382,8 +382,8 @@ az network route-table route update \
   --next-hop-ip-address 10.0.1.99
 
 # Traffic is now sent to a non-existent IP: packets are black-holed
-# Diagnosis: Check effective routes and verify next-hop IP exists
-# Fix: Update to correct NVA IP (10.0.1.4)
+# Diagnosis: check effective routes and verify next-hop IP exists
+# Fix: update to correct NVA IP (10.0.1.4)
 az network route-table route update \
   --resource-group $RG \
   --route-table-name rt-spoke-workload \
@@ -391,7 +391,7 @@ az network route-table route update \
   --next-hop-ip-address 10.0.1.4
 ```
 
-### Cenário C: Tabela de Rotas Não Associada
+### Cenário c: tabela de rotas não associada
 
 ```bash
 # Disassociate route table from subnet
@@ -402,11 +402,11 @@ az network vnet subnet update \
   --remove routeTable
 
 # Traffic now uses default system routes (direct to internet)
-# Diagnosis: Check subnet configuration
+# Diagnosis: check subnet configuration
 az network vnet subnet show -g $RG --vnet-name vnet-spoke -n subnet-workload \
   --query "routeTable"
 
-# Fix: Re-associate
+# Fix: re-associate
 az network vnet subnet update \
   --resource-group $RG \
   --vnet-name vnet-spoke \
@@ -414,7 +414,7 @@ az network vnet subnet update \
   --route-table rt-spoke-workload
 ```
 
-## Verificação de Conhecimento
+## Verificação de conhecimento
 
 **1. Qual é a ordem de precedência de rotas no Azure?**
 
@@ -476,7 +476,7 @@ az group delete --name $RG --yes --no-wait
 echo "Resources are being deleted in the background."
 ```
 
-## Recursos de Aprendizagem
+## Recursos de aprendizagem
 
 - [Roteamento de tráfego de rede virtual](https://learn.microsoft.com/azure/virtual-network/virtual-networks-udr-overview)
 - [Criar e gerenciar tabelas de rotas](https://learn.microsoft.com/azure/virtual-network/manage-route-table)

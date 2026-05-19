@@ -5,7 +5,7 @@ title: "Challenge 09: Design a Management Group & Subscription Structure"
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 09: Design a Management Group & Subscription Structure
+# Challenge 09: design a Management Group & Subscription structure
 
 :::info Estimated Time and Cost
 
@@ -21,37 +21,37 @@ The CTO has approved a migration to a structured multi-subscription environment 
 
 Your design must balance governance centralization (security, compliance) with decentralized workload autonomy (each BU manages its own subscriptions). The CFO requires cost attribution at the business unit level, and the security team needs a single pane of glass for compliance reporting across all subscriptions.
 
-## Exam Skills Covered
+## Exam skills covered
 
 - Recommend a structure for management groups, subscriptions, and resource groups
 
-## Design Tasks
+## Design tasks
 
-### Part 1: Management Group Hierarchy
+### Part 1: Management Group hierarchy
 
 1. Design a management group hierarchy for Northwind Traders. Include at minimum: a root management group strategy, separation between platform/shared services and workload landing zones, and accommodation for sandbox/dev environments that need relaxed policies.
 2. Define how many levels deep the hierarchy should go and justify the depth. Document the trade-offs of deep hierarchies (granular policy targeting) versus shallow hierarchies (simpler management, Azure limit of 6 levels of depth).
 3. Specify how the two future acquisitions will be onboarded into the hierarchy without restructuring existing management groups.
 4. Define the governance inheritance model: which policies should be applied at the root level (affecting all subscriptions) versus lower management group levels.
 
-### Part 2: Subscription Design
+### Part 2: Subscription design
 
 5. Determine the subscription strategy for each business unit. Evaluate and choose between: one subscription per environment per BU, one subscription per workload, or a hybrid model. Document the reasoning.
 6. Design the shared services / platform subscription model. Determine whether networking, monitoring, and identity services live in a single platform subscription or are split (e.g., connectivity subscription, management subscription, identity subscription per CAF).
 7. Specify how sandbox subscriptions should be handled: who can create them, what spending limits apply, and how they are prevented from connecting to production networks.
 8. Define subscription-level RBAC assignments. Determine which roles (Owner, Contributor, Reader, custom) each persona (BU lead, developer, SRE, security team) receives at each subscription level.
 
-### Part 3: Resource Group Strategy
+### Part 3: Resource Group strategy
 
 9. Design a resource group naming convention and organization pattern. Define whether resource groups are organized by application, by lifecycle (deploy together/delete together), by resource type, or a combination.
 10. Specify resource group-level policies and locks. Determine which resource groups need CanNotDelete locks and which need ReadOnly locks.
 11. Define a process for resource group lifecycle management: who creates them, under what conditions, and how orphaned resource groups are identified and cleaned up.
 
-### Part 4: Naming Conventions
+### Part 4: naming conventions
 
 12. Create a naming convention standard for management groups, subscriptions, and resource groups that encodes: environment, business unit, region, and purpose. Ensure names are globally unique where required and within length limits.
 
-## Success Criteria
+## Success criteria
 
 <SuccessChecklist
   storageKey="az305-challenge-09"
@@ -102,7 +102,7 @@ Sandbox subscriptions need special treatment: place them in a dedicated manageme
 
 </details>
 
-## Learning Resources
+## Learning resources
 
 - [Azure landing zone management group hierarchy](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups)
 - [Subscription organization and governance](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-subscriptions)
@@ -111,7 +111,7 @@ Sandbox subscriptions need special treatment: place them in a dedicated manageme
 - [Management group design considerations](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups)
 - [Subscription vending](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/subscription-vending)
 
-## Knowledge Check
+## Knowledge check
 
 <details>
 <summary>1. Northwind's security team wants to enforce a policy that prevents any resource from being created without a "CostCenter" tag. This must apply to ALL subscriptions including future acquisitions. Where should this policy be assigned?</summary>
@@ -141,7 +141,7 @@ Sandbox subscriptions need special treatment: place them in a dedicated manageme
 
 </details>
 
-## Validation Lab
+## Validation lab
 
 Deploy a minimal proof-of-concept to validate your design:
 
