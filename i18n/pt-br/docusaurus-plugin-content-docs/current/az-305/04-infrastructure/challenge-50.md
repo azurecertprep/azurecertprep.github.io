@@ -131,57 +131,127 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
     - Topologia de implantacao multi-região
     - Limites de identidade e controle de acesso
 
-```mermaid
-graph TB
-    subgraph "Global Layer"
-        FD[Azure Front Door + WAF]
-        B2C[Azure AD B2C]
-        TM[Traffic Manager - non-HTTP]
-    end
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" fontFamily="Segoe UI, Arial, sans-serif" style={{maxWidth: '900px', width: '100%'}}>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
 
-    subgraph "US Region - East US"
-        subgraph "Web Tier"
-            WEB_US[Container Apps - Web Frontend]
-        end
-        subgraph "API Tier"
-            API_US[Container Apps - APIs]
-            FN_US[Functions - Prescription Processing]
-        end
-        subgraph "Data Tier"
-            SQL_US[Azure SQL - Patient Records]
-            COSMOS_US[Cosmos DB - Appointments]
-            BLOB_US[Blob Storage - Video Recordings]
-        end
-        subgraph "Messaging"
-            SB_US[Service Bus - Prescription Queue]
-            EG_US[Event Grid]
-        end
-    end
+  {/* Global Layer */}
+  <rect x="20" y="10" width="860" height="80" rx="10" fill="#e8f4fd" stroke="#0078d4" strokeWidth="1.5" strokeDasharray="6,3"/>
+  <text x="450" y="30" textAnchor="middle" fontSize="11" fill="#0078d4" fontWeight="bold">CAMADA GLOBAL</text>
+  <rect x="60" y="40" width="180" height="40" rx="6" fill="#fff" stroke="#0078d4" strokeWidth="1.5"/>
+  <text x="150" y="65" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Azure Front Door + WAF</text>
+  <rect x="360" y="40" width="180" height="40" rx="6" fill="#fff" stroke="#5c2d91" strokeWidth="1.5"/>
+  <text x="450" y="65" textAnchor="middle" fontSize="11" fill="#5c2d91" fontWeight="bold">Azure AD B2C</text>
+  <rect x="660" y="40" width="180" height="40" rx="6" fill="#fff" stroke="#0078d4" strokeWidth="1.5"/>
+  <text x="750" y="65" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Traffic Manager</text>
 
-    subgraph "UK Region - UK South"
-        WEB_UK[Container Apps - Web Frontend]
-        API_UK[Container Apps - APIs]
-        SQL_UK[Azure SQL - Patient Records]
-        COSMOS_UK[Cosmos DB - Appointments]
-    end
+  {/* Arrows from Front Door to regions */}
+  <line x1="110" y1="80" x2="110" y2="130" stroke="#666" strokeWidth="1.2" markerEnd="url(#arr)"/>
+  <line x1="150" y1="80" x2="450" y2="130" stroke="#666" strokeWidth="1.2" markerEnd="url(#arr)"/>
+  <line x1="190" y1="80" x2="750" y2="130" stroke="#666" strokeWidth="1.2" markerEnd="url(#arr)"/>
 
-    subgraph "India Region - Central India"
-        WEB_IN[Container Apps - Web Frontend]
-        API_IN[Container Apps - APIs]
-        SQL_IN[Azure SQL - Patient Records]
-        COSMOS_IN[Cosmos DB - Appointments]
-    end
+  {/* US Region */}
+  <rect x="20" y="130" width="320" height="470" rx="10" fill="#f0f9ff" stroke="#0078d4" strokeWidth="1.5"/>
+  <text x="180" y="150" textAnchor="middle" fontSize="11" fill="#0078d4" fontWeight="bold">US EAST</text>
 
-    FD --> WEB_US
-    FD --> WEB_UK
-    FD --> WEB_IN
-    WEB_US --> API_US
-    API_US --> SQL_US
-    API_US --> COSMOS_US
-    API_US --> SB_US
-    SB_US --> FN_US
-    FN_US --> SQL_US
-```
+  {/* Web Tier */}
+  <rect x="40" y="160" width="280" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="180" y="178" textAnchor="middle" fontSize="10" fill="#666">Camada Web</text>
+  <text x="180" y="198" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Container Apps - Web Frontend</text>
+
+  {/* API Tier */}
+  <rect x="40" y="225" width="280" height="70" rx="6" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="180" y="243" textAnchor="middle" fontSize="10" fill="#666">Camada API</text>
+  <text x="180" y="263" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Container Apps - APIs</text>
+  <text x="180" y="283" textAnchor="middle" fontSize="11" fill="#1a3a5c">Functions - Processamento de Receitas</text>
+
+  {/* Data Tier */}
+  <rect x="40" y="310" width="280" height="90" rx="6" fill="#d5e8d4" stroke="#82b366" strokeWidth="1"/>
+  <text x="180" y="328" textAnchor="middle" fontSize="10" fill="#666">Camada de Dados</text>
+  <text x="180" y="348" textAnchor="middle" fontSize="11" fill="#2e7d32" fontWeight="bold">Azure SQL - Registros de Pacientes</text>
+  <text x="180" y="368" textAnchor="middle" fontSize="11" fill="#2e7d32">Cosmos DB - Agendamentos</text>
+  <text x="180" y="388" textAnchor="middle" fontSize="11" fill="#2e7d32">Blob Storage - Gravações de Vídeo</text>
+
+  {/* Messaging */}
+  <rect x="40" y="415" width="280" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" strokeWidth="1"/>
+  <text x="180" y="433" textAnchor="middle" fontSize="10" fill="#666">Mensageria</text>
+  <text x="180" y="453" textAnchor="middle" fontSize="11" fill="#7f6000" fontWeight="bold">Service Bus - Fila de Receitas</text>
+  <text x="180" y="473" textAnchor="middle" fontSize="11" fill="#7f6000">Event Grid</text>
+
+  {/* Monitoring */}
+  <rect x="40" y="500" width="280" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" strokeWidth="1"/>
+  <text x="180" y="518" textAnchor="middle" fontSize="10" fill="#666">Observabilidade</text>
+  <text x="180" y="538" textAnchor="middle" fontSize="11" fill="#4a235a" fontWeight="bold">Azure Monitor + Log Analytics</text>
+
+  {/* Arrows within US */}
+  <line x1="180" y1="210" x2="180" y2="225" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+  <line x1="180" y1="295" x2="180" y2="310" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+  <line x1="180" y1="400" x2="180" y2="415" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+
+  {/* UK Region */}
+  <rect x="370" y="130" width="230" height="280" rx="10" fill="#f5f0ff" stroke="#5c2d91" strokeWidth="1.5"/>
+  <text x="485" y="150" textAnchor="middle" fontSize="11" fill="#5c2d91" fontWeight="bold">UK SOUTH</text>
+
+  <rect x="390" y="160" width="190" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="485" y="185" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Container Apps - Web</text>
+
+  <rect x="390" y="215" width="190" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="485" y="240" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Container Apps - APIs</text>
+
+  <rect x="390" y="270" width="190" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" strokeWidth="1"/>
+  <text x="485" y="295" textAnchor="middle" fontSize="11" fill="#2e7d32" fontWeight="bold">Azure SQL - Pacientes</text>
+
+  <rect x="390" y="325" width="190" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" strokeWidth="1"/>
+  <text x="485" y="350" textAnchor="middle" fontSize="11" fill="#2e7d32" fontWeight="bold">Cosmos DB - Agendamentos</text>
+
+  {/* Arrows within UK */}
+  <line x1="485" y1="200" x2="485" y2="215" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+  <line x1="485" y1="255" x2="485" y2="270" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+
+  {/* India Region */}
+  <rect x="630" y="130" width="230" height="280" rx="10" fill="#fff8e1" stroke="#f57c00" strokeWidth="1.5"/>
+  <text x="745" y="150" textAnchor="middle" fontSize="11" fill="#e65100" fontWeight="bold">CENTRAL INDIA</text>
+
+  <rect x="650" y="160" width="190" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="745" y="185" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Container Apps - Web</text>
+
+  <rect x="650" y="215" width="190" height="40" rx="6" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="745" y="240" textAnchor="middle" fontSize="11" fill="#1a3a5c" fontWeight="bold">Container Apps - APIs</text>
+
+  <rect x="650" y="270" width="190" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" strokeWidth="1"/>
+  <text x="745" y="295" textAnchor="middle" fontSize="11" fill="#2e7d32" fontWeight="bold">Azure SQL - Pacientes</text>
+
+  <rect x="650" y="325" width="190" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" strokeWidth="1"/>
+  <text x="745" y="350" textAnchor="middle" fontSize="11" fill="#2e7d32" fontWeight="bold">Cosmos DB - Agendamentos</text>
+
+  {/* Arrows within India */}
+  <line x1="745" y1="200" x2="745" y2="215" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+  <line x1="745" y1="255" x2="745" y2="270" stroke="#666" strokeWidth="1" markerEnd="url(#arr)"/>
+
+  {/* Cross-region replication arrows */}
+  <line x1="320" y1="340" x2="390" y2="295" stroke="#27ae60" strokeWidth="1.2" strokeDasharray="4,3" markerEnd="url(#arr)"/>
+  <line x1="580" y1="295" x2="650" y2="295" stroke="#27ae60" strokeWidth="1.2" strokeDasharray="4,3" markerEnd="url(#arr)"/>
+  <text x="450" y="430" textAnchor="middle" fontSize="9" fill="#27ae60">geo-replicação</text>
+
+  {/* Legend */}
+  <rect x="370" y="450" width="510" height="70" rx="6" fill="#fafafa" stroke="#ddd" strokeWidth="1"/>
+  <text x="380" y="468" fontSize="10" fill="#333" fontWeight="bold">Legenda:</text>
+  <rect x="380" y="476" width="12" height="12" fill="#dae8fc" stroke="#6c8ebf" strokeWidth="1"/>
+  <text x="398" y="487" fontSize="10" fill="#555">Computação</text>
+  <rect x="480" y="476" width="12" height="12" fill="#d5e8d4" stroke="#82b366" strokeWidth="1"/>
+  <text x="498" y="487" fontSize="10" fill="#555">Dados</text>
+  <rect x="550" y="476" width="12" height="12" fill="#fff2cc" stroke="#d6b656" strokeWidth="1"/>
+  <text x="568" y="487" fontSize="10" fill="#555">Mensageria</text>
+  <rect x="660" y="476" width="12" height="12" fill="#e1d5e7" stroke="#9673a6" strokeWidth="1"/>
+  <text x="678" y="487" fontSize="10" fill="#555">Monitoramento</text>
+  <line x1="380" y1="505" x2="410" y2="505" stroke="#27ae60" strokeWidth="1.2" strokeDasharray="4,3"/>
+  <text x="418" y="509" fontSize="10" fill="#555">Geo-replicação</text>
+  <line x1="520" y1="505" x2="550" y2="505" stroke="#666" strokeWidth="1.2" markerEnd="url(#arr)"/>
+  <text x="558" y="509" fontSize="10" fill="#555">Fluxo de dados</text>
+</svg>
 
 ### Parte 6: avaliação do Well-Architected Framework
 
