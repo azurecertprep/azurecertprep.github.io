@@ -5,8 +5,8 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
 const stats = [
-  { number: '78', label: 'Desafios' },
-  { number: '2', label: 'Exames' },
+  { number: '129', label: 'Desafios' },
+  { number: '3', label: 'Exames' },
   { number: '100%', label: 'Cobertura' },
   { number: 'v2026.04', label: 'Objetivos do Exame' },
 ];
@@ -57,6 +57,74 @@ const az305DomainLabels = {
   'infra': 'Infraestrutura',
   'capstone': 'Capstone',
 };
+
+const az400DomainLabels = {
+  'processes': 'Processos & Comunicação',
+  'source-control': 'Controle de Código-Fonte',
+  'packages': 'Gerenciamento de Pacotes',
+  'testing': 'Testes',
+  'pipelines': 'Fundamentos de Pipelines',
+  'deployment': 'Estratégias de Implantação',
+  'iac': 'Infraestrutura como Código',
+  'operations': 'Operações de Pipelines',
+  'security': 'Segurança & Conformidade',
+  'instrumentation': 'Instrumentação',
+  'capstone': 'Capstone',
+};
+
+const az400Challenges = [
+  { num: '01', title: 'Planejamento Ágil & Acompanhamento', domain: 'processes', href: '/docs/az-400/processes-communications/challenge-01' },
+  { num: '02', title: 'Colaboração & Comunicação', domain: 'processes', href: '/docs/az-400/processes-communications/challenge-02' },
+  { num: '03', title: 'Feedback & Retrospectivas', domain: 'processes', href: '/docs/az-400/processes-communications/challenge-03' },
+  { num: '04', title: 'Estrutura de Equipes & Autonomia', domain: 'processes', href: '/docs/az-400/processes-communications/challenge-04' },
+  { num: '05', title: 'Planejamento de Releases & Cadência', domain: 'processes', href: '/docs/az-400/processes-communications/challenge-05' },
+  { num: '06', title: 'Coordenação Entre Equipes', domain: 'processes', href: '/docs/az-400/processes-communications/challenge-06' },
+  { num: '07', title: 'Estratégias de Branching', domain: 'source-control', href: '/docs/az-400/source-control/challenge-07' },
+  { num: '08', title: 'Fluxos de Pull Request', domain: 'source-control', href: '/docs/az-400/source-control/challenge-08' },
+  { num: '09', title: 'Estrutura de Repositórios', domain: 'source-control', href: '/docs/az-400/source-control/challenge-09' },
+  { num: '10', title: 'Git Hooks & Automação', domain: 'source-control', href: '/docs/az-400/source-control/challenge-10' },
+  { num: '11', title: 'Estratégias de Merge & Conflitos', domain: 'source-control', href: '/docs/az-400/source-control/challenge-11' },
+  { num: '12', title: 'Monorepo vs Multi-Repo', domain: 'source-control', href: '/docs/az-400/source-control/challenge-12' },
+  { num: '13', title: 'Feeds de Pacotes & Registros', domain: 'packages', href: '/docs/az-400/03a-package-management/challenge-13' },
+  { num: '14', title: 'Estratégias de Versionamento', domain: 'packages', href: '/docs/az-400/03a-package-management/challenge-14' },
+  { num: '15', title: 'Gerenciamento de Dependências', domain: 'packages', href: '/docs/az-400/03a-package-management/challenge-15' },
+  { num: '16', title: 'Estratégia de Testes & Frameworks', domain: 'testing', href: '/docs/az-400/03b-testing-pipelines/challenge-16' },
+  { num: '17', title: 'Testes de Integração & E2E', domain: 'testing', href: '/docs/az-400/03b-testing-pipelines/challenge-17' },
+  { num: '18', title: 'Automação de Testes em Pipelines', domain: 'testing', href: '/docs/az-400/03b-testing-pipelines/challenge-18' },
+  { num: '19', title: 'Pipelines YAML Básico', domain: 'pipelines', href: '/docs/az-400/03c-pipeline-fundamentals/challenge-19' },
+  { num: '20', title: 'Pipelines Multi-Estágio', domain: 'pipelines', href: '/docs/az-400/03c-pipeline-fundamentals/challenge-20' },
+  { num: '21', title: 'Templates de Pipeline & Reuso', domain: 'pipelines', href: '/docs/az-400/03c-pipeline-fundamentals/challenge-21' },
+  { num: '22', title: 'Triggers & Condições', domain: 'pipelines', href: '/docs/az-400/03c-pipeline-fundamentals/challenge-22' },
+  { num: '23', title: 'Agentes & Pools', domain: 'pipelines', href: '/docs/az-400/03c-pipeline-fundamentals/challenge-23' },
+  { num: '24', title: 'Variáveis & Segredos de Pipeline', domain: 'pipelines', href: '/docs/az-400/03c-pipeline-fundamentals/challenge-24' },
+  { num: '25', title: 'Implantação Blue-Green', domain: 'deployment', href: '/docs/az-400/03d-deployment-strategies/challenge-25' },
+  { num: '26', title: 'Releases Canary', domain: 'deployment', href: '/docs/az-400/03d-deployment-strategies/challenge-26' },
+  { num: '27', title: 'Feature Flags', domain: 'deployment', href: '/docs/az-400/03d-deployment-strategies/challenge-27' },
+  { num: '28', title: 'Implantação Progressiva', domain: 'deployment', href: '/docs/az-400/03d-deployment-strategies/challenge-28' },
+  { num: '29', title: 'Gates & Aprovações', domain: 'deployment', href: '/docs/az-400/03d-deployment-strategies/challenge-29' },
+  { num: '30', title: 'Estratégias de Rollback', domain: 'deployment', href: '/docs/az-400/03d-deployment-strategies/challenge-30' },
+  { num: '31', title: 'Bicep & Templates ARM', domain: 'iac', href: '/docs/az-400/03e-infrastructure-as-code/challenge-31' },
+  { num: '32', title: 'Terraform para Azure', domain: 'iac', href: '/docs/az-400/03e-infrastructure-as-code/challenge-32' },
+  { num: '33', title: 'Testes & Validação de IaC', domain: 'iac', href: '/docs/az-400/03e-infrastructure-as-code/challenge-33' },
+  { num: '34', title: 'Cache & Performance de Pipeline', domain: 'operations', href: '/docs/az-400/03f-pipeline-operations/challenge-34' },
+  { num: '35', title: 'Agentes Self-Hosted', domain: 'operations', href: '/docs/az-400/03f-pipeline-operations/challenge-35' },
+  { num: '36', title: 'Monitoramento & Diagnóstico de Pipeline', domain: 'operations', href: '/docs/az-400/03f-pipeline-operations/challenge-36' },
+  { num: '37', title: 'Gerenciamento de Artefatos & Retenção', domain: 'operations', href: '/docs/az-400/03f-pipeline-operations/challenge-37' },
+  { num: '38', title: 'Governança de Pipeline como Código', domain: 'operations', href: '/docs/az-400/03f-pipeline-operations/challenge-38' },
+  { num: '39', title: 'Gerenciamento de Segredos', domain: 'security', href: '/docs/az-400/security-compliance/challenge-39' },
+  { num: '40', title: 'Workload Identity & OIDC', domain: 'security', href: '/docs/az-400/security-compliance/challenge-40' },
+  { num: '41', title: 'Varredura de Dependências', domain: 'security', href: '/docs/az-400/security-compliance/challenge-41' },
+  { num: '42', title: 'Análise Estática de Código', domain: 'security', href: '/docs/az-400/security-compliance/challenge-42' },
+  { num: '43', title: 'Segurança de Contêineres', domain: 'security', href: '/docs/az-400/security-compliance/challenge-43' },
+  { num: '44', title: 'Conformidade & Governança', domain: 'security', href: '/docs/az-400/security-compliance/challenge-44' },
+  { num: '45', title: 'Segurança da Cadeia de Suprimentos', domain: 'security', href: '/docs/az-400/security-compliance/challenge-45' },
+  { num: '46', title: 'Application Insights', domain: 'instrumentation', href: '/docs/az-400/instrumentation/challenge-46' },
+  { num: '47', title: 'Log Analytics & KQL', domain: 'instrumentation', href: '/docs/az-400/instrumentation/challenge-47' },
+  { num: '48', title: 'Alertas & Resposta a Incidentes', domain: 'instrumentation', href: '/docs/az-400/instrumentation/challenge-48' },
+  { num: '49', title: 'Métricas DORA & Dashboards', domain: 'instrumentation', href: '/docs/az-400/instrumentation/challenge-49' },
+  { num: '50', title: 'Engenharia de Confiabilidade', domain: 'instrumentation', href: '/docs/az-400/instrumentation/challenge-50' },
+  { num: '51', title: 'Ciclo de Vida DevOps Completo', domain: 'capstone', href: '/docs/az-400/capstone/challenge-51' },
+];
 
 const az305Challenges = [
   { num: '01', title: 'Registro Centralizado', domain: 'identity-gov', href: '/docs/az-305/identity-governance-monitoring/challenge-01' },
@@ -197,6 +265,12 @@ function HomepageHeader() {
             AZ-305 (50 desafios)
           </Link>
           <Link
+            className="button button--secondary button--lg"
+            style={{marginLeft: '1rem'}}
+            to="/docs/az-400/overview">
+            AZ-400 (51 desafios)
+          </Link>
+          <Link
             className="button button--outline button--lg"
             style={{color: 'white', borderColor: 'white', marginLeft: '1rem'}}
             href="https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1">
@@ -264,9 +338,37 @@ function AZ305ChallengeGrid() {
   );
 }
 
-function CertificationCoverage() {
+function AZ400ChallengeGrid() {
   return (
     <section style={{padding: '2rem 0'}}>
+      <div className="container">
+        <div className="section-heading">
+          <Heading as="h2">AZ-400: DevOps Engineer Expert</Heading>
+          <p>51 desafios práticos — pipelines, segurança, monitoramento e ciclo de vida completo de entrega.</p>
+        </div>
+        <div className="row">
+          {az400Challenges.map((ch) => (
+            <div key={ch.num} className="col col--3" style={{marginBottom: '1rem'}}>
+              <Link to={ch.href} className="challenge-card">
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem'}}>
+                  <span className="challenge-number">{ch.num}</span>
+                  <span className={`domain-badge domain-badge--${ch.domain}`}>
+                    {az400DomainLabels[ch.domain]}
+                  </span>
+                </div>
+                <strong>{ch.title}</strong>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CertificationCoverage() {
+  return (
+    <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
       <div className="container" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Heading as="h2" style={{textAlign: 'center', fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem'}}>100% de Cobertura da Certificação</Heading>
         <p style={{textAlign: 'center', color: 'var(--ifm-color-emphasis-600)', fontSize: '1.1rem', maxWidth: '600px', marginBottom: '2rem'}}>
@@ -278,7 +380,7 @@ function CertificationCoverage() {
             <table style={{width: 'auto', borderCollapse: 'collapse'}}>
               <thead>
                 <tr>
-                  <th style={{textAlign: 'center'}}>Dominio</th>
+                  <th style={{textAlign: 'center'}}>Domínio</th>
                   <th style={{textAlign: 'center'}}>Peso</th>
                 </tr>
               </thead>
@@ -296,7 +398,7 @@ function CertificationCoverage() {
             <table style={{width: 'auto', borderCollapse: 'collapse'}}>
               <thead>
                 <tr>
-                  <th style={{textAlign: 'center'}}>Dominio</th>
+                  <th style={{textAlign: 'center'}}>Domínio</th>
                   <th style={{textAlign: 'center'}}>Peso</th>
                 </tr>
               </thead>
@@ -307,6 +409,27 @@ function CertificationCoverage() {
                 <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--infra">Infraestrutura</span></td><td style={{textAlign: 'center'}}>30-35%</td></tr>
               </tbody>
             </table>
+          </div>
+          <div>
+            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-400 (51 desafios)</h3>
+            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
+              <thead>
+                <tr>
+                  <th style={{textAlign: 'center'}}>Domínio</th>
+                  <th style={{textAlign: 'center'}}>Habilidades</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--processes">Processos & Comunicação</span></td><td style={{textAlign: 'center'}}>6 desafios</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--source-control">Controle de Código-Fonte</span></td><td style={{textAlign: 'center'}}>6 desafios</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--pipelines">Pipelines de Build & Release</span></td><td style={{textAlign: 'center'}}>20 desafios</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--security">Segurança & Conformidade</span></td><td style={{textAlign: 'center'}}>7 desafios</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--instrumentation">Instrumentação</span></td><td style={{textAlign: 'center'}}>5 desafios</td></tr>
+              </tbody>
+            </table>
+            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
+              67 habilidades cobertas | 100% de cobertura do exame
+            </p>
           </div>
         </div>
         <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
@@ -345,9 +468,9 @@ function ExamRoadmap() {
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (50 desafios)</span></td>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}>AZ-400</td>
+              <td style={{textAlign: 'center'}}><strong>AZ-400</strong></td>
               <td style={{textAlign: 'center'}}>DevOps Engineer Expert</td>
-              <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planejado</span></td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (51 desafios)</span></td>
             </tr>
             <tr>
               <td style={{textAlign: 'center'}}>AZ-500</td>
@@ -365,12 +488,13 @@ export default function Home() {
   return (
     <Layout
       title="Preparação Hands-on para Certificação Azure"
-      description="Não estude apenas — construa. Desafios práticos para certificações Azure. AZ-104 e AZ-305 disponíveis.">
+      description="Não estude apenas — construa. Desafios práticos para certificações Azure. AZ-104, AZ-305 e AZ-400 disponíveis.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
         <ChallengeGrid />
         <AZ305ChallengeGrid />
+        <AZ400ChallengeGrid />
         <CertificationCoverage />
         <ExamRoadmap />
       </main>
