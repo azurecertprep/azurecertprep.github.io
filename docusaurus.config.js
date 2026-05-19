@@ -80,6 +80,12 @@ const config = {
             label: 'AZ-305',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'az400Sidebar',
+            position: 'left',
+            label: 'AZ-400',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },
@@ -108,6 +114,10 @@ const config = {
               {
                 label: 'AZ-305: Solutions Architect',
                 to: '/docs/az-305/overview',
+              },
+              {
+                label: 'AZ-400: DevOps Engineer',
+                to: '/docs/az-400/overview',
               },
             ],
           },
