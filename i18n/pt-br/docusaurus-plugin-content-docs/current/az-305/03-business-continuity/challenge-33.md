@@ -17,16 +17,16 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A StreamFlix é uma plataforma de streaming de vídeo atendendo 50 milhões de usuários ativos mensais na América do Norte, Europa e Asia-Pacifico. A plataforma transmite conteúdo de vídeo 4K, gerencia perfis de usuários e histórico de visualizacao, processa recomendacoes em tempo real e trata metadados de licenciamento de conteúdo. A StreamFlix se posicionou como a alternativa "sempre disponível" aos concorrentes, prometendo aos usuários que nunca experimentarao uma tela de buffering ou indisponibilidade de serviço.
 
-A equipe executiva determinou um SLA composto de 99,99% com menos de 50ms de tempo de início de vídeo globalmente e a capacidade de sobreviver a uma falha completa de região Azure com menos de 2 minutos de impacto visivel ao usuário. A plataforma deve estar ativa em 3 regiões simultaneamente (East US 2, North Europe, Japan East), não em uma configuração active-passive. Toda região deve servir trafego de produção o tempo todo, e se qualquer região única falhar, as duas restantes devem absorver seu trafego sem degradacao.
+A equipe executiva determinou um SLA composto de 99,99% com menos de 50ms de tempo de início de vídeo globalmente e a capacidade de sobreviver a uma falha completa de região Azure com menos de 2 minutos de impacto visível ao usuário. A plataforma deve estar ativa em 3 regiões simultaneamente (East US 2, North Europe, Japan East), não em uma configuração active-passive. Toda região deve servir trafego de produção o tempo todo, e se qualquer região única falhar, as duas restantes devem absorver seu trafego sem degradacao.
 
-Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de alta disponibilidade, backup e disaster recovery dos Challenges 25-32 em uma arquitetura multi-região completa e pronta para produção. Você deve calcular o SLA composto matematicamente, provar que atende a meta de 99,99% é demonstrar que cada componente tem redundância apropriada.
+Este e o desafio capstone do Domínio 3. Você combinara todos os conceitos de alta disponibilidade, backup e disaster recovery dos Challenges 25-32 em uma arquitetura multi-região completa e pronta para produção. Você deve calcular o SLA composto matematicamente, provar que atende a meta de 99,99% é demonstrar que cada componente tem redundância aprópriada.
 
 ## Habilidades do exame cobertas
 
 - Recomendar uma solução de alta disponibilidade para computacao
 - Recomendar uma solução de alta disponibilidade para dados relacionais
 - Recomendar uma solução de alta disponibilidade para dados semi-estruturados e não estruturados
-- Recomendar uma solução de recuperação para cargas de trabalho Azure e hibridas que atenda aos objetivos de recuperação
+- Recomendar uma solução de recuperação para cargas de trabalho Azure e híbridas que atenda aos objetivos de recuperação
 
 ## Tarefas de design
 
@@ -48,7 +48,7 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
    - Tempo para detectar: intervalo de health probe x limite
    - Tempo para redirecionar: propagacao do Front Door (quase instantanea, anycast)
    - Impacto ao usuário: requisicoes em andamento para região falhada falham, próxima requisicao vai para região saudavel
-   - Interrupcao total visivel ao usuário: aproximadamente 30-60 segundos
+   - Interrupcao total visível ao usuário: aproximadamente 30-60 segundos
 
 ### Parte 2: camada de computação (Por região)
 
@@ -121,7 +121,7 @@ SLA composto por região = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
     - Multi-região: 1 - (1 - por-região)^3 = ?
     - A arquitetura multi-região atende ou excede 99,99%?
 
-13. Se o SLA composto de região única ficar abaixo de 99,99%, demonstre como a implantacao multi-região active-active recupera a meta:
+13. Se o SLA composto de região única ficar abaixo de 99,99%, demonstre como a implantação multi-região active-active recupera a meta:
     - Mesmo se por-região = 99,9%, multi-região = 1 - (0,001)^3 = 99,9999999%
     - O padrão multi-região active-active compensa SLAs por-região mais baixos
     - Documente premissas: Front Door deve corretamente detectar e rotear ao redor de falhas regionais
@@ -136,7 +136,7 @@ SLA composto por região = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
 
 15. Crie runbooks operacionais para:
     - Failover regional (automatizado via health probes do Front Door)
-    - Verificacao de consistência de dados apos recuperação de região
+    - Verificação de consistência de dados apos recuperação de região
     - Validação de capacidade (2 regiões podem tratar 100% do trafego?)
     - Template de revisao pós-incidente
 
@@ -153,10 +153,10 @@ SLA composto por região = Front Door x AKS x Cosmos DB x SQL x Redis x Storage
   items={[
     "Azure Front Door configured with 3 origin groups and latency-based routing with health probes",
     "Zone-redundant compute deployed in each region with autoscale to absorb regional failure",
-    "Cosmos DB multi-region writes configured with appropriate consistency and conflict resolution",
+    "Cosmos DB multi-region writes configured with apprópriate consistency and conflict resolution",
     "SQL Database failover group and geo-replicas configured for content catalog",
     "Composite SLA calculated mathematically and proven to meet 99.99% target",
-    "Chaos testing plan documented with specific failure scenarios and expected behavior"
+    "Chaos testing plan documented with specific failure scenários and expected behavior"
   ]}
 />
 
@@ -196,7 +196,7 @@ SLA Efetivo = SLA do Front Door x SLA de Backend Multi-região = 0,9999 x ~1,0 =
 - Mais caro mas atende ao requisito de recuperação < 2 minutos
 
 **Active-Passive:**
-- Uma região serve trafego, outras sao standby
+- Uma região serve trafego, outras são standby
 - Failover requer iniciar/escalar região passiva (minutos a horas)
 - Região standby custa menos (capacidade mínima até ativacao)
 - Dados só graváveis na região primária (consistência mais simples)
@@ -221,7 +221,7 @@ Tempo total de failover para StreamFlix:
 - Roteamento: < 1 segundo (Front Door remove origem não saudavel da rotacao)
 - Requisicoes em andamento: podem falhar (timeout de 10-30 segundos no cliente)
 - Retry do usuário: próxima requisicao tem sucesso via origem saudavel
-- **Impacto total visivel ao usuário: aproximadamente 30-60 segundos** (atende requisito < 2 minutos)
+- **Impacto total visível ao usuário: aproximadamente 30-60 segundos** (atende requisito < 2 minutos)
 
 Otimização: Defina intervalo de probe para 5 segundos com limite de 3 = 15 segundos de detecção.
 
@@ -302,7 +302,7 @@ Para o requisito de < 50ms ser atendido globalmente, o CDN não é opcional - e 
 <details>
 <summary>3. A StreamFlix usa Cosmos DB multi-region writes para perfis de usuários. Se um usuário atualizar seu perfil em East US 2 e imediatamente ler de Japan East, o que ele ve com Session consistency?</summary>
 
-**Com Session consistency e multi-region writes, o usuário ve sua própria atualização APENAS se continuar lendo da mesma região (East US 2).** Garantias de Session consistency sao escopadas a um único session token é uma única região. Se a próxima leitura do usuário for roteada para Japan East (ex: porque ele viajou ou Front Door redirecionou), ele pode ver dados desatualizados até a replicação alcancar (tipicamente milissegundos a poucos segundos). Para garantir read-your-own-writes globalmente, a aplicação deve passar o session token e rotear a leitura para a região de escrita, ou usar Bounded Staleness com janela apertada. Na prática, este caso de borda raramente importa para leituras de perfil.
+**Com Session consistency e multi-region writes, o usuário ve sua própria atualização APENAS se continuar lendo da mesma região (East US 2).** Garantias de Session consistency são escopadas a um único session token é uma única região. Se a próxima leitura do usuário for roteada para Japan East (ex: porque ele viajou ou Front Door redirecionou), ele pode ver dados desatualizados até a replicação alcancar (tipicamente milissegundos a poucos segundos). Para garantir read-your-own-writes globalmente, a aplicação deve passar o session token e rotear a leitura para a região de escrita, ou usar Bounded Staleness com janela apertada. Na prática, este caso de borda raramente importa para leituras de perfil.
 
 </details>
 
@@ -375,7 +375,7 @@ az network traffic-manager endpoint list \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
 :::
 
 ## Limpeza

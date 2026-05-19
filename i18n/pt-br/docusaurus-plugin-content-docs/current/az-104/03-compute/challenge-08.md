@@ -333,7 +333,7 @@ az monitor autoscale update \
 <summary>Mostrar Resposta</summary>
 
 - **Uniform**: Todas as instâncias usam o mesmo modelo/configuração de VM. Melhor para cargas de trabalho stateless em grande escala. Suporta até 1.000 instâncias (3.000 com imagens personalizadas).
-- **Flexible**: As instâncias podem misturar tamanhos e configurações de VM. Melhor para cargas de trabalho mistas. Suporta availability zones nativamente. Este é o modo mais novo e recomendado.
+- **Flexible**: As instâncias podem misturar tamanhos e configurações de VM. Melhor para cargas de trabalho mistas. Suporta availability zones nativamente. Este é o modo mais novo é recomendado.
 </details>
 
 ## Limpeza

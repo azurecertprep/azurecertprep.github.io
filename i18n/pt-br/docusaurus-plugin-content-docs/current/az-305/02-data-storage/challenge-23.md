@@ -48,14 +48,14 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
 
 4. Projete a camada de data warehouse para dashboards diarios:
    - Compare dedicated SQL pool vs serverless SQL pool no Synapse Analytics:
-     - Dedicated: DWU provisionado, desempenho previsivel, melhor para consultas concorrentes
+     - Dedicated: DWU provisionado, desempenho previsível, melhor para consultas concorrentes
      - Serverless: pay-per-query, auto-scales, melhor para exploracao ad-hoc
-   - Selecione a opcao apropriada para 50 gerentes consultando dashboards simultaneamente toda manha
-   - Projete o star schema com tabelas fato (entregas, eventos de combustivel, turnos de motoristas) e dimensoes (caminhoes, rotas, motoristas, tempo)
+   - Selecione a opcao aprópriada para 50 gerentes consultando dashboards simultaneamente toda manha
+   - Projete o star schema com tabelas fato (entregas, eventos de combustivel, turnos de motoristas) e dimensões (caminhoes, rotas, motoristas, tempo)
 
 5. Projete a integração com Power BI:
    - Compare DirectQuery (consultas ao vivo contra o Synapse) vs modo Import (refresh agendado)
-   - Projete o modelo semantico com tabelas de agregacao apropriadas para renderizacao rápida de dashboard
+   - Projete o modelo semantico com tabelas de agregacao aprópriadas para renderizacao rápida de dashboard
    - Documente o cronograma de refresh e requisitos de frescor de dados
 
 6. Projete a camada de transformacao de dados que prepara telemetria bruta para consumo dos dashboards:
@@ -127,21 +127,21 @@ Azure Stream Analytics é um serviço totalmente gerenciado com linguagem de con
 <details>
 <summary>Dica 3: Dedicated vs Serverless SQL Pool</summary>
 
-Dedicated SQL pool (anteriormente SQL DW) e provisionado em Data Warehouse Units (DWU) e cobrado por hora independente de consultas rodarem ou não. Excele em cargas de trabalho de consultas previsiveis e concorrentes (como 50 gerentes acessando dashboards simultaneamente). Serverless SQL pool e pay-per-query (por TB de dados processados) sem provisionamento - ideal para exploracao ad-hoc ou consultas infrequentes. Para o cenário de dashboard com alta concorrencia toda manha, dedicated e mais previsivel. Dica: pause o dedicated pool fora do horario comercial (noites/finais de semana) para economizar até 60% em custos de computacao.
+Dedicated SQL pool (anteriormente SQL DW) e provisionado em Data Warehouse Units (DWU) e cobrado por hora independente de consultas rodarem ou não. Excele em cargas de trabalho de consultas previsiveis e concorrentes (como 50 gerentes acessando dashboards simultaneamente). Serverless SQL pool e pay-per-query (por TB de dados processados) sem provisionamento - ideal para exploracao ad-hoc ou consultas infrequentes. Para o cenário de dashboard com alta concorrencia toda manha, dedicated e mais previsível. Dica: pause o dedicated pool fora do horario comercial (noites/finais de semana) para economizar até 60% em custos de computacao.
 
 </details>
 
 <details>
 <summary>Dica 4: Delta Lake para Cargas de Trabalho ML</summary>
 
-Delta Lake adiciona transações ACID, imposicao de esquema e time travel a arquivos Parquet no data lake. Para treinamento ML, os beneficios do Delta Lake incluem: capacidade de ler um snapshot consistente enquanto novos dados estao sendo escritos, evolucao de esquema conforme o formato de telemetria muda, e upserts eficientes para a camada Silver. O leve overhead versus Parquet bruto e negligivel para leituras de treinamento ML e os beneficios de confiabilidade sao significativos para uma plataforma de dados de produção.
+Delta Lake adiciona transações ACID, imposicao de esquema e time travel a arquivos Parquet no data lake. Para treinamento ML, os benefícios do Delta Lake incluem: capacidade de ler um snapshot consistente enquanto novos dados estao sendo escritos, evolucao de esquema conforme o formato de telemetria muda, e upserts eficientes para a camada Silver. O leve overhead versus Parquet bruto e negligivel para leituras de treinamento ML e os benefícios de confiabilidade são significativos para uma plataforma de dados de produção.
 
 </details>
 
 <details>
 <summary>Dica 5: Zonas da Arquitetura Medallion</summary>
 
-Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona Silver: dados limpos, deduplicados, padronizados (esquema validado, tratamento de nulos, conversoes de tipo). Zona Gold: agregados de nível de negocio e tabelas de features prontas para consumo (resumos de viagem, KPIs diarios, vetores de features ML). Cada zona é uma estrutura de pastas no ADLS Gen2, tipicamente particionada por data. A equipe ML le de Silver/Gold; dashboards leem de Gold; tempo real escreve em Bronze.
+Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona Silver: dados limpos, deduplicados, padronizados (esquema validado, tratamento de nulos, conversoes de tipo). Zona Gold: agregados de nível de negócio e tabelas de features prontas para consumo (resumos de viagem, KPIs diarios, vetores de features ML). Cada zona é uma estrutura de pastas no ADLS Gen2, tipicamente particionada por data. A equipe ML le de Silver/Gold; dashboards leem de Gold; tempo real escreve em Bronze.
 
 </details>
 
@@ -158,16 +158,16 @@ Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona
 ## Verificação de conhecimento
 
 <details>
-<summary>1. TransGlobal precisa detectar quando um caminhao desvia de sua rota planejada dentro de 30 segundos do desvio ocorrer. Qual serviço Azure e mais apropriado para isso, e por que?</summary>
+<summary>1. TransGlobal precisa detectar quando um caminhao desvia de sua rota planejada dentro de 30 segundos do desvio ocorrer. Qual serviço Azure e mais aprópriado para isso, e por que?</summary>
 
-**Azure Stream Analytics com um dataset de referência geoespacial.** Stream Analytics suporta funções geoespaciais integradas (ST_WITHIN, ST_DISTANCE) que podem comparar coordenadas GPS de entrada contra poligonos de geofence armazenados como dados de referência. Com janelas temporais tao pequenas quanto 1 segundo, pode detectar desvios dentro do requisito de 30 segundos. A linguagem de consulta tipo SQL o torna acessível para a equipe, e a natureza totalmente gerenciada elimina operações de cluster. Spark Streaming também poderia funcionar mas introduz complexidade desnecessaria e latência mais alta para este cenário simples de correspondencia de padrões.
+**Azure Stream Analytics com um dataset de referência geoespacial.** Stream Analytics suporta funções geoespaciais integradas (ST_WITHIN, ST_DISTANCE) que podem comparar coordenadas GPS de entrada contra poligonos de geofence armazenados como dados de referência. Com janelas temporais tao pequenas quanto 1 segundo, pode detectar desvios dentro do requisito de 30 segundos. A linguagem de consulta tipo SQL o torna acessível para a equipe, e a natureza totalmente gerenciada elimina operações de cluster. Spark Streaming também poderia funcionar mas introduz complexidade desnecessária e latência mais alta para este cenário simples de correspondencia de padrões.
 
 </details>
 
 <details>
-<summary>2. Os dashboards diarios sao consultados por 50 gerentes simultaneamente entre 7h e 9h. Fora desses horarios, ninguém consulta o warehouse. Qual opcao de SQL pool minimiza custos enquanto garante desempenho consistente durante horarios de pico?</summary>
+<summary>2. Os dashboards diarios são consultados por 50 gerentes simultaneamente entre 7h e 9h. Fora desses horarios, ninguém consulta o warehouse. Qual opcao de SQL pool minimiza custos enquanto garante desempenho consistente durante horarios de pico?</summary>
 
-**Dedicated SQL pool com auto-pause ou agendamento de pausa manual.** Durante o pico das 7-9h, dedicated SQL pool fornece computacao DWU garantida para desempenho de consulta consistente entre 50 usuários concorrentes. Fora desses horarios, o pool pode ser pausado (zero custo de computacao, apenas cobrangas de armazenamento). Serverless SQL pool escalaria por consulta mas o desempenho pode variar com 50 consultas de dashboard complexas concorrentes, e o custo se torna imprevisivel. O padrão de horarios de pico previsiveis com zero uso fora do pico torna o dedicated pool com pausa/retomada a escolha mais economica.
+**Dedicated SQL pool com auto-pause ou agendamento de pausa manual.** Durante o pico das 7-9h, dedicated SQL pool fornece computacao DWU garantida para desempenho de consulta consistente entre 50 usuários concorrentes. Fora desses horarios, o pool pode ser pausado (zero custo de computacao, apenas cobrangas de armazenamento). Serverless SQL pool escalaria por consulta mas o desempenho pode variar com 50 consultas de dashboard complexas concorrentes, e o custo se torna imprevisível. O padrão de horarios de pico previsiveis com zero uso fora do pico torna o dedicated pool com pausa/retomada a escolha mais economica.
 
 </details>
 
@@ -181,7 +181,7 @@ Zona Bronze: dados brutos como-estao das fontes (JSON, CSV, Parquet bruto). Zona
 <details>
 <summary>4. Qual é a vantagem de usar a arquitetura medallion (Bronze/Silver/Gold) em vez de carregar dados brutos diretamente no data warehouse?</summary>
 
-**Separacao de preocupações, reprocessabilidade e suporte a múltiplos consumidores.** Bronze preserva dados brutos exatamente como recebidos (trilha de auditoria, capacidade de reprocessamento). Silver fornece uma camada limpa e validada que múltiplos consumidores podem usar (dashboards, ML, consultas ad-hoc) sem cada um reimplementar lógica de qualidade de dados. Gold fornece visoes otimizadas para casos de uso específicos. Se a lógica de transformacao mudar, você reprocessa de Bronze sem re-ingerir dos sistemas de origem. Isso desacopla a confiabilidade de ingestao da corretude de transformacao e permite que cada carga de trabalho de analytics consuma dados no nível de qualidade apropriado.
+**Separacao de preocupações, reprocessabilidade e suporte a múltiplos consumidores.** Bronze preserva dados brutos exatamente como recebidos (trilha de auditoria, capacidade de reprocessamento). Silver fornece uma camada limpa e validada que múltiplos consumidores podem usar (dashboards, ML, consultas ad-hoc) sem cada um reimplementar lógica de qualidade de dados. Gold fornece visoes otimizadas para casos de uso específicos. Se a lógica de transformacao mudar, você reprocessa de Bronze sem re-ingerir dos sistemas de origem. Isso desacopla a confiabilidade de ingestao da corretude de transformacao e permite que cada carga de trabalho de analytics consuma dados no nível de qualidade aprópriado.
 
 </details>
 
@@ -236,7 +236,7 @@ az synapse workspace show \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

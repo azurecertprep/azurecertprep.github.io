@@ -18,7 +18,7 @@ import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 A Northwind Traders é uma empresa de varejo de médio porte que cresceu rapidamente por meio de aquisições. Atualmente opera cargas de trabalho em três assinaturas Azure: uma para TI corporativa, uma para sua plataforma de e-commerce e uma para a equipe de análise de dados. Cada equipe gerencia logs de forma independente, resultando em pontos cegos ao solucionar incidentes entre equipes e nenhuma visão unificada para auditorias de segurança.
 
-O CTO determinou uma estratégia centralizada de logging que forneça um painel único para visibilidade operacional, respeitando requisitos de soberania de dados (dados da UE devem permanecer em regiões da UE). A equipe de segurança precisa de acesso a todos os logs relevantes de segurança, mas a equipe de análise deve ver apenas seus próprios logs de aplicação. O volume mensal de logs e estimado em 50 GB para TI corporativa, 200 GB para e-commerce e 100 GB para análise.
+O CTO determinou uma estratégia centralizada de logging que forneça um painel único para visibilidade operacional, respeitando requisitos de soberania de dados (dados da UE devem permanecer em regiões da UE). A equipe de segurança precisa de acesso a todos os logs relevantes de segurança, mas a equipe de análise deve ver apenas seus próprios logs de aplicação. O volume mensal de logs é estimado em 50 GB para TI corporativa, 200 GB para e-commerce e 100 GB para análise.
 
 Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilibre eficiência de custos, controle de acesso, requisitos de conformidade e simplicidade operacional.
 
@@ -30,15 +30,15 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
 
 ## Tarefas de design
 
-### Parte 1: decisao de arquitetura de workspace
+### Parte 1: decisão de arquitetura de workspace
 
 1. Avalie as seguintes estratégias de workspace para a Northwind Traders e recomende uma com justificativa:
    - Workspace único centralizado
    - Um workspace por assinatura
    - Um workspace por equipe/função
-   - Abordagem hibrida (workspace de segurança + workspaces operacionais)
+   - Abordagem híbrida (workspace de segurança + workspaces operacionais)
 
-2. Documente os trade-offs da arquitetura escolhida usando esta matriz de decisao:
+2. Documente os trade-offs da arquitetura escolhida usando esta matriz de decisão:
 
 <DecisionMatrix
   title="Log Analytics Workspace Architecture"
@@ -53,18 +53,18 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
   storageKey="az305-challenge-01"
 />
 
-3. Determine a(s) região(oes) apropriada(s) para seu(s) workspace(s) considerando o requisito de residencia de dados da UE.
+3. Determine a(s) região(oes) aprópriada(s) para seu(s) workspace(s) considerando o requisito de residência de dados da UE.
 
 ### Parte 2: implantar e configurar o workspace
 
 4. Crie o(s) workspace(s) do Log Analytics de acordo com seu design usando Azure CLI.
 
-5. Configure a política de retencao de dados do workspace:
+5. Configure a política de retenção de dados do workspace:
    - Logs de segurança: 365 dias (requisito de conformidade)
    - Logs operacionais: 90 dias
    - Dados de desempenho: 30 dias
 
-6. Configure retencao por tabela onde diferentes tipos de dados requerem diferentes períodos de retencao.
+6. Configure retenção por tabela onde diferentes tipos de dados requerem diferentes períodos de retenção.
 
 ### Parte 3: design de controle de acesso
 
@@ -74,7 +74,7 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
    - Equipe de análise: acesso de leitura apenas ao seu próprio workspace
    - Equipe de plataforma: acesso administrativo completo a todos os workspaces
 
-8. Implemente controle de acesso resource-context vs. workspace-context onde apropriado.
+8. Implemente controle de acesso resource-context vs. workspace-context onde aprópriado.
 
 ### Parte 4: gerenciamento de custos
 
@@ -88,8 +88,8 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
   storageKey="az305-challenge-01"
   items={[
     "Documented workspace architecture decision with clear justification for chosen approach",
-    "Log Analytics workspace(s) deployed in appropriate region(s)",
-    "Data retention configured per table with compliance-appropriate durations",
+    "Log Analytics workspace(s) deployed in apprópriate region(s)",
+    "Data retention configured per table with compliance-apprópriate durations",
     "Access control model designed using resource-context or workspace-context permissions",
     "Commitment tier pricing evaluated with cost comparison documented",
     "EU data residency requirement addressed in the design"
@@ -102,11 +102,11 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
 <summary>Dica 1: Melhores Práticas de Arquitetura de Workspace</summary>
 
 A Microsoft recomenda minimizar o número de workspaces. Um workspace único fornece a correlacao entre recursos mais fácil e simplifica o gerenciamento. No entanto, você precisa de múltiplos workspaces quando:
-- Requisitos de residencia de dados exigem separacao regional
+- Requisitos de residência de dados exigem separacao regional
 - Isolamento estrito de acesso é necessário (além do que o RBAC em nível de tabela fornece)
 - Você precisa de limites de cobranca separados
 
-Para a maioria das organizações, uma abordagem hibrida com um workspace central de segurança (Microsoft Sentinel) mais um ou dois workspaces operacionais é ideal.
+Para a maioria das organizações, uma abordagem híbrida com um workspace central de segurança (Microsoft Sentinel) mais um ou dois workspaces operacionais é ideal.
 
 </details>
 
@@ -138,7 +138,7 @@ az monitor log-analytics workspace create \
 <details>
 <summary>Dica 3: Retencao em Nível de Tabela</summary>
 
-Você pode definir diferentes períodos de retencao por tabela dentro de um workspace. Isso é fundamental para equilibrar conformidade (retencao longa para segurança) com custo (retencao curta para logs verbosos):
+Você pode definir diferentes períodos de retenção por tabela dentro de um workspace. Isso é fundamental para equilibrar conformidade (retenção longa para segurança) com custo (retenção curta para logs verbosos):
 
 ```bash
 # Set SecurityEvent table to 365 days
@@ -183,7 +183,7 @@ az role assignment create \
 Com 350 GB/dia de ingestao total, o commitment tier de 300 GB/dia oferece economia significativa em relação ao pay-as-you-go. Consideracoes importantes de preco:
 - Pay-as-you-go: cobrado por GB ingerido
 - Commitment tiers: 100, 200, 300, 400, 500+ GB/dia com descontos crescentes
-- Dados retidos além do período incluso (primeiros 31 dias gratuitos) sao cobrados por GB/mes
+- Dados retidos além do período incluso (primeiros 31 dias gratuitos) são cobrados por GB/mes
 - O tier Basic Logs e mais barato para dados de alto volume e consultas infrequentes
 
 Compare: commitment tier de 300 GB + 50 GB de excedente vs. commitment tier de 400 GB com capacidade não utilizada.
@@ -204,14 +204,14 @@ Compare: commitment tier de 300 GB + 50 GB de excedente vs. commitment tier de 4
 <details>
 <summary>1. A Northwind Traders tem 350 GB/dia de ingestao de logs divididos entre três equipes. A equipe de segurança precisa consultar todos os logs, mas a equipe de análise deve ver apenas seus próprios dados. Qual é a arquitetura de workspace mais economica?</summary>
 
-**Uma abordagem hibrida com um workspace único usando controle de acesso resource-context** e a mais economica. Um workspace único qualifica-se para o commitment tier de 300 GB/dia (desconto significativo), enquanto o RBAC resource-context garante que a equipe de análise veja apenas logs de seus próprios recursos. A equipe de segurança recebe Log Analytics Reader em nível de workspace para visibilidade completa. Adicione um segundo workspace apenas se a residencia de dados da UE exigir separacao física.
+**Uma abordagem híbrida com um workspace único usando controle de acesso resource-context** e a mais economica. Um workspace único qualifica-se para o commitment tier de 300 GB/dia (desconto significativo), enquanto o RBAC resource-context garante que a equipe de análise veja apenas logs de seus próprios recursos. A equipe de segurança recebe Log Analytics Reader em nível de workspace para visibilidade completa. Adicione um segundo workspace apenas se a residência de dados da UE exigir separacao física.
 
 </details>
 
 <details>
 <summary>2. Uma empresa precisa reter logs de segurança por 7 anos mas deseja minimizar custos. Qual combinacao de recursos deve ser usada?</summary>
 
-**Use retencao em nível de tabela com tier de arquivo.** Defina a retencao interativa para 90 dias para consultas ativas, depois configure a retencao total (arquivo) para 2.555 dias (7 anos). Dados arquivados custam significativamente menos que retencao interativa, mas requerem um search job ou restore para consulta. Alternativamente, exporte logs para uma Storage Account com tier cool/archive para o armazenamento de longo prazo mais barato.
+**Use retenção em nível de tabela com tier de arquivo.** Defina a retenção interativa para 90 dias para consultas ativas, depois configure a retenção total (arquivo) para 2.555 dias (7 anos). Dados arquivados custam significativamente menos que retenção interativa, mas requerem um search job ou restore para consulta. Alternativamente, exporte logs para uma Storage Account com tier cool/archive para o armazenamento de longo prazo mais barato.
 
 </details>
 
@@ -225,7 +225,7 @@ Compare: commitment tier de 300 GB + 50 GB de excedente vs. commitment tier de 4
 <details>
 <summary>4. Quando você deve usar múltiplos workspaces do Log Analytics em vez de um workspace único?</summary>
 
-Use múltiplos workspaces quando: (1) Requisitos de soberania/residencia de dados exigem localizacoes geograficas diferentes, (2) Você precisa de limites rigidos de cobranca entre unidades de negocio, (3) Você tem requisitos estritos de isolamento de tenant (provedores de serviço multi-tenant), ou (4) Conformidade requer segregação de dados que não pode ser alcancada com RBAC em nível de tabela. Evite múltiplos workspaces apenas para controle de acesso, pois resource-context e RBAC em nível de tabela lidam com a maioria dos cenários dentro de um único workspace.
+Use múltiplos workspaces quando: (1) Requisitos de soberania/residência de dados exigem localizacoes geograficas diferentes, (2) Você precisa de limites rigidos de cobranca entre unidades de negócio, (3) Você tem requisitos estritos de isolamento de tenant (provedores de serviço multi-tenant), ou (4) Conformidade requer segregação de dados que não pode ser alcancada com RBAC em nível de tabela. Evite múltiplos workspaces apenas para controle de acesso, pois resource-context e RBAC em nível de tabela lidam com a maioria dos cenários dentro de um único workspace.
 
 </details>
 

@@ -199,7 +199,7 @@ az account management-group show \
 <SuccessChecklist
   storageKey="az104-challenge-17"
   items={[
-    "A hierarquia de grupos de gerenciamento corresponde à estrutura especificada (5 grupos sob mg-contoso)",
+    "A hierarquia de grupos de gerenciamento corresponde à estrutura específicada (5 grupos sob mg-contoso)",
     "Pelo menos uma assinatura está posicionada dentro de um grupo de gerenciamento",
     "Azure Policy está atribuída no escopo mg-production",
     "Atribuição de função RBAC existe no escopo mg-contoso",

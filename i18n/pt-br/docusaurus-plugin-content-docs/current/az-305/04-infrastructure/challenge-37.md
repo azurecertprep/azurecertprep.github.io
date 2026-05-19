@@ -17,9 +17,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 TicketBlitz é uma plataforma de venda de ingressos para eventos que experimenta variabilidade extrema de trafego. Quando um show popular ou evento esportivo entra em venda, a plataforma recebe de 0 a 100,000 requisicoes por segundo em questao de segundos. Entre esses eventos de venda (que acontecem 2-3 vezes por semana), o trafego cai para quase zero. A abordagem atual de infraestrutura fixa desperdica orcamento significativo: servidores ficam ociosos 95% do tempo mas devem ser superprovisionados para lidar com os 5% de carga de pico.
 
-Além da API de venda de ingressos em tempo real, TicketBlitz tem vários requisitos de processamento em background: (1) Gerar ingressos PDF personalizados com QR codes apos cada compra (tolerante a latência, 10-30 segundos aceitavel). (2) Enviar emails de confirmacao e notificações SMS apos geracao do ingresso. (3) Processar um batch noturno de 50,000 registros de reembolso de um processador de pagamentos parceiro, aplicando regras de negocio e atualizando o banco de dados. (4) Orquestrar um workflow multi-etapa para pacotes de ingressos VIP que inclui selecao de assentos, serviços adicionais, processamento de pagamento e confirmacao, todos devendo completar atomicamente.
+Além da API de venda de ingressos em tempo real, TicketBlitz tem vários requisitos de processamento em background: (1) Gerar ingressos PDF personalizados com QR codes apos cada compra (tolerante a latência, 10-30 segundos aceitavel). (2) Enviar emails de confirmacao e notificações SMS apos geracao do ingresso. (3) Processar um batch noturno de 50,000 registros de reembolso de um processador de pagamentos parceiro, aplicando regras de negócio e atualizando o banco de dados. (4) Orquestrar um workflow multi-etapa para pacotes de ingressos VIP que inclui seleção de assentos, serviços adicionais, processamento de pagamento e confirmacao, todos devendo completar atomicamente.
 
-A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar apenas pelo tempo real de execução. Eles precisam de um design que lide tanto com o trafego extremo em rajadas quanto com o processamento batch em background com otimização de custo apropriada para cada padrão.
+A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar apenas pelo tempo real de execução. Eles precisam de um design que lide tanto com o trafego extremo em rajadas quanto com o processamento batch em background com otimização de custo aprópriada para cada padrão.
 
 ## Habilidades do exame cobertas
 
@@ -28,7 +28,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
 
 ## Tarefas de design
 
-### Parte 1: selecao de plano Azure Functions
+### Parte 1: seleção de plano Azure Functions
 
 1. Avalie os planos de hospedagem Azure Functions para a API de venda de ingressos (0 a 100K requisicoes/segundo em rajada):
 
@@ -39,7 +39,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
 | Premium (EP1-EP3) | 100 instâncias | Nenhum (pré-aquecido) | Sim | Por segundo + instâncias min |
 | Dedicated (ASP) | 10-30 instâncias | Nenhum | Sim | Mensal fixo |
 
-2. Determine qual plano e apropriado para a API de venda de ingressos. Considere:
+2. Determine qual plano e aprópriado para a API de venda de ingressos. Considere:
    - 100,000 requisicoes/segundo requer quantas instâncias a ~100 requisicoes/segundo por instância?
    - Cold start durante um evento de venda causaria compras falhadas. Quao crítica e a eliminacao de cold starts?
    - O limite de 200 instâncias do plano Consumption é suficiente?
@@ -52,7 +52,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - Trigger: Mensagem na fila apos compra bem-sucedida
    - Processamento: Gerar PDF com QR code (intensivo em CPU, 2-5 segundos por ingresso)
    - Saida: Armazenar PDF no blob storage, disparar etapa de notificação
-   - Qual plano de Functions e apropriado (pode tolerar cold start, sensível a custo)?
+   - Qual plano de Functions e aprópriado (pode tolerar cold start, sensível a custo)?
 
 5. Projete o serviço de notificação email/SMS:
    - Deve ser Azure Functions ou Logic Apps?
@@ -80,7 +80,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - **Human interaction**: Timeout se usuário não completar em 15 minutos
    - **Monitor**: Verificar status do pagamento até confirmado ou falhado
 
-9. Projete o tratamento de erros para a orquestracao:
+9. Projete o tratamento de erros para a orquestração:
    - O que acontece se a etapa de pagamento falhar apos os assentos serem reservados?
    - Como você implementa o padrão Saga (transações compensatorias)?
    - Qual é a política de retry para falhas transientes vs falhas permanentes?
@@ -109,7 +109,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
   storageKey="az305-challenge-37"
   items={[
     "Plano de Functions correto selecionado para API de venda de ingressos com justificativa de cold-start",
-    "Processamento em background projetado com triggers apropriados (queue, timer, blob)",
+    "Processamento em background projetado com triggers aprópriados (queue, timer, blob)",
     "Orquestração Durable Functions projetada para workflow VIP com tratamento de erros e padrão Saga",
     "Comparacao Azure Batch vs Functions documentada para carga batch noturna de 50K",
     "Comparacao de custo completada entre tipos de plano para todos os padrões de carga de trabalho",
@@ -142,7 +142,7 @@ Escolha **Logic Apps** quando:
 - Padrões de integração: B2B, EDI, SAP, Salesforce
 
 Escolha **Azure Functions** quando:
-- Lógica de negocio customizada é necessária (calculos complexos, transformacao de dados)
+- Lógica de negócio customizada é necessária (calculos complexos, transformacao de dados)
 - Você precisa de latência sub-segundo
 - A equipe prefere desenvolvimento code-first
 - Controle granular sobre retries, concorrencia e batching
@@ -198,16 +198,16 @@ Functions e preferido porque: precificacao por execução e mais barata para tar
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Um function app no plano Consumption experimenta cold starts de 3-5 segundos durante uma venda relampago. O negocio requer tempo de resposta sub-200ms para a primeira requisicao. Qual mudança de plano resolve isso?</summary>
+<summary>1. Um function app no plano Consumption experimenta cold starts de 3-5 segundos durante uma venda relampago. O negócio requer tempo de resposta sub-200ms para a primeira requisicao. Qual mudança de plano resolve isso?</summary>
 
-**Mude para o plano Flex Consumption com instâncias always-ready configuradas.** Instâncias always-ready sao pré-provisionadas é mantidas aquecidas, eliminando cold start para requisicoes tratadas por essas instâncias. Configure instâncias always-ready suficientes para lidar com o burst inicial enquanto a plataforma escala instâncias adicionais. Alternativamente, o plano Premium com instâncias minimas definidas como 1+ elimina cold starts inteiramente, mas com custo base maior. O plano Flex Consumption oferece um meio-termo: instâncias always-ready para baseline com scaling por execução além disso.
+**Mude para o plano Flex Consumption com instâncias always-ready configuradas.** Instâncias always-ready são pré-provisionadas é mantidas aquecidas, eliminando cold start para requisicoes tratadas por essas instâncias. Configure instâncias always-ready suficientes para lidar com o burst inicial enquanto a plataforma escala instâncias adicionais. Alternativamente, o plano Premium com instâncias minimas definidas como 1+ elimina cold starts inteiramente, mas com custo base maior. O plano Flex Consumption oferece um meio-termo: instâncias always-ready para baseline com scaling por execução além disso.
 
 </details>
 
 <details>
 <summary>2. Um workflow precisa enviar um email via SendGrid, aguardar confirmacao do usuário (até 24 horas), e entao processar o pedido. Por que Durable Functions e melhor que uma Function padrão com timer?</summary>
 
-**Durable Functions suporta nativamente o padrão "wait for external event" com persistência de estado por dias.** Uma Function padrão com timer precisaria consultar um banco de dados para status de confirmacao, desperdicando execucoes e adicionando latência. O `WaitForExternalEvent` do Durable Functions suspende a orquestracao sem consumir recursos até que o evento chegue ou o timeout expire. O estado do orchestrator e persistido no Azure Storage, entao mesmo se a infraestrutura escalar para zero durante o período de espera, o workflow retoma exatamente de onde parou quando o evento chega.
+**Durable Functions suporta nativamente o padrão "wait for external event" com persistência de estado por dias.** Uma Function padrão com timer precisaria consultar um banco de dados para status de confirmacao, desperdicando execucoes e adicionando latência. O `WaitForExternalEvent` do Durable Functions suspende a orquestração sem consumir recursos até que o evento chegue ou o timeout expire. O estado do orchestrator e persistido no Azure Storage, entao mesmo se a infraestrutura escalar para zero durante o período de espera, o workflow retoma exatamente de onde parou quando o evento chega.
 
 </details>
 
@@ -221,7 +221,7 @@ Functions e preferido porque: precificacao por execução e mais barata para tar
 <details>
 <summary>4. Por que o plano Consumption e insuficiente para uma carga de trabalho que precisa fazer burst para 100,000 requisicoes por segundo?</summary>
 
-**O plano Consumption tem um limite máximo de escala de 200 instâncias.** A aproximadamente 100 requisicoes/segundo por instância, 200 instâncias podem lidar com apenas 20,000 requisicoes/segundo, que é 5x abaixo do requisito de 100,000 requisicoes/segundo. Adicionalmente, o plano Consumption escala reativamente (adicionando instâncias baseado na carga observada), o que introduz atraso durante bursts subitos. O plano Flex Consumption suporta até 1,000 instâncias e inclui instâncias always-ready que sao pré-provisionadas antes do burst chegar, tornando-o adequado para cenários de escala extrema.
+**O plano Consumption tem um limite máximo de escala de 200 instâncias.** A aproximadamente 100 requisicoes/segundo por instância, 200 instâncias podem lidar com apenas 20,000 requisicoes/segundo, que é 5x abaixo do requisito de 100,000 requisicoes/segundo. Adicionalmente, o plano Consumption escala reativamente (adicionando instâncias baseado na carga observada), o que introduz atraso durante bursts subitos. O plano Flex Consumption suporta até 1,000 instâncias e inclui instâncias always-ready que são pré-provisionadas antes do burst chegar, tornando-o adequado para cenários de escala extrema.
 
 </details>
 
@@ -260,7 +260,7 @@ az functionapp show --resource-group rg-az305-challenge37 \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

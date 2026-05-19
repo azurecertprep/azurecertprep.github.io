@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Meridian Financial Services é uma empresa de tecnologia financeira de médio porte que processa transações de pagamento para mais de 200 parceiros comerciais. Sua plataforma consiste em mais de 50 microsservicos rodando no Azure Kubernetes Service, cada um exigindo certificados TLS para autenticação mutua. A empresa também gerencia chaves de API para 30 integracoes externas de gateway de pagamento e usa chaves de criptografia gerenciadas pelo cliente para proteção de dados em repouso em múltiplas storage accounts e bancos de dados.
+A Meridian Financial Services é uma empresa de tecnologia financeira de médio porte que processa transações de pagamento para mais de 200 parceiros comerciais. Sua plataforma consiste em mais de 50 microsserviços rodando no Azure Kubernetes Service, cada um exigindo certificados TLS para autenticação mutua. A empresa também gerencia chaves de API para 30 integracoes externas de gateway de pagamento e usa chaves de criptografia gerenciadas pelo cliente para proteção de dados em repouso em múltiplas storage accounts e bancos de dados.
 
 Uma auditoria de conformidade recente sinalizou vários problemas críticos: chaves de API estavam hardcoded em arquivos de configuração de aplicação, três certificados TLS expiraram sem aviso causando uma interrupcao de 4 horas, e chaves de criptografia para diferentes clientes estavam armazenadas no mesmo vault sem separacao. O CISO da empresa determinou um redesign completo da arquitetura de gerenciamento de segredos para atender aos requisitos PCI-DSS, que exigem separacao estrita de chaves entre ambientes de produção e não-produção, trilhas de auditoria para todo acesso a chaves, e armazenamento de chaves com suporte de hardware para operações criptograficas.
 
@@ -29,22 +29,22 @@ Sua tarefa é projetar uma solução abrangente de gerenciamento de segredos e c
 
 ### Parte 1: arquitetura e segmentacao de Key Vault
 
-1. Projete uma topologia de Key Vault para o ambiente da Meridian. Determine quantos vaults sao necessários e justifique a estratégia de separacao (considere: por ambiente, por aplicação, por nível de sensibilidade, ou por fronteira de conformidade).
-2. Identifique quais cargas de trabalho requerem Azure Key Vault Managed HSM versus Key Vault padrão. Documente os criterios de decisao (requisitos FIPS 140-3 Level 3, necessidades de desempenho, justificativa de custo).
+1. Projete uma topologia de Key Vault para o ambiente da Meridian. Determine quantos vaults são necessários e justifique a estratégia de separacao (considere: por ambiente, por aplicação, por nível de sensibilidade, ou por fronteira de conformidade).
+2. Identifique quais cargas de trabalho requerem Azure Key Vault Managed HSM versus Key Vault padrão. Documente os critérios de decisão (requisitos FIPS 140-3 Level 3, necessidades de desempenho, justificativa de custo).
 3. Defina o modelo de controle de acesso para cada vault. Compare vault access policies versus Azure RBAC para Key Vault e recomende qual modelo usar para cada nível de vault. Justifique sua escolha considerando a mudança de API de marco de 2026 tornando RBAC o padrão.
 4. Projete uma convencao de nomes e estratégia de resource group para a hierarquia de vaults que suporte fácil identificacao do propósito do vault, ambiente e equipe proprietaria.
 
 ### Parte 2: gerenciamento de ciclo de vida de certificados
 
-5. Projete uma solução de gerenciamento de certificados para os mais de 50 certificados TLS de microsservicos. Enderece: selecao de autoridade certificadora (CA integrada ao Key Vault vs. autogerenciada), fluxos de trabalho de renovacao automática, e alertas de notificação para certificados se aproximando da expiracao.
-6. Defina procedimentos de rotacao de certificados que alcancem implantacao sem downtime. Considere como cargas de trabalho AKS consumirao certificados renovados sem reinicializacao de pods.
+5. Projete uma solução de gerenciamento de certificados para os mais de 50 certificados TLS de microsserviços. Enderece: seleção de autoridade certificadora (CA integrada ao Key Vault vs. autogerenciada), fluxos de trabalho de renovacao automática, e alertas de notificação para certificados se aproximando da expiracao.
+6. Defina procedimentos de rotacao de certificados que alcancem implantação sem downtime. Considere como cargas de trabalho AKS consumirao certificados renovados sem reinicializacao de pods.
 7. Especifique como certificados wildcard versus certificados de serviço individual devem ser usados, e documente os trade-offs de segurança de cada abordagem.
 
 ### Parte 3: rotacao de segredos e chaves
 
 8. Projete uma política de rotacao automatizada de chaves para as chaves de API de gateway de pagamento. Defina frequência de rotacao, o mecanismo de gatilho de rotacao, e como aplicações detectarao e consumirao novas versoes de chave.
 9. Defina uma estratégia de customer-managed key (CMK) para criptografia de dados em repouso. Especifique tipos de chave (RSA vs. EC), tamanhos de chave, e como o versionamento de chaves interage com recursos criptografados.
-10. Projete o modelo de segurança de rede para vaults. Determine quais vaults precisam de private endpoints, quais podem usar service endpoints, e quais (se houver) podem permanecer publicamente acessiveis. Documente a justificativa para cada decisao.
+10. Projete o modelo de segurança de rede para vaults. Determine quais vaults precisam de private endpoints, quais podem usar service endpoints, e quais (se houver) podem permanecer públicamente acessiveis. Documente a justificativa para cada decisão.
 
 ### Parte 4: monitoramento e recuperação de desastres
 
@@ -84,7 +84,7 @@ Managed HSM fornece hardware validado FIPS 140-3 Level 3, armazenamento de chave
 <details>
 <summary>Dica 3: RBAC vs. Access Policies</summary>
 
-Azure RBAC para Key Vault fornece permissões granulares, por chave/segredo/certificado usando atribuicoes de função Azure padrão. Suporta Conditional Access e PIM (acesso just-in-time). A partir da atualização de API de marco de 2026 (versao 2026-02-01), RBAC e o padrão para novos vaults. Vault access policies sao legadas é limitadas a granularidade em nível de vault (você não pode conceder acesso a um único segredo dentro de um vault). Para novos designs, prefira RBAC. As funções integradas incluem: Key Vault Secrets Officer, Key Vault Certificates Officer, Key Vault Crypto Officer e Key Vault Reader.
+Azure RBAC para Key Vault fornece permissões granulares, por chave/segredo/certificado usando atribuicoes de função Azure padrão. Suporta Conditional Access e PIM (acesso just-in-time). A partir da atualização de API de marco de 2026 (versao 2026-02-01), RBAC e o padrão para novos vaults. Vault access policies são legadas é limitadas a granularidade em nível de vault (você não pode conceder acesso a um único segredo dentro de um vault). Para novos designs, prefira RBAC. As funções integradas incluem: Key Vault Secrets Officer, Key Vault Certificates Officer, Key Vault Crypto Officer e Key Vault Reader.
 
 </details>
 
@@ -98,7 +98,7 @@ Key Vault suporta autoridades certificadoras integradas (DigiCert e GlobalSign) 
 <details>
 <summary>Dica 5: Design de Isolamento de Rede</summary>
 
-Private endpoints fornecem o isolamento de rede mais forte (trafego permanece no backbone da Microsoft). Use private endpoints para vaults contendo chaves de criptografia de produção e segredos de processamento de pagamento. Service endpoints sao uma alternativa mais simples para vaults acessados apenas de redes virtuais Azure. Acesso público pode permanecer habilitado (com regras de firewall) para vaults acessados por pipelines de CI/CD ou estacoes de trabalho de desenvolvedores, mas restrinja o acesso a faixas de IP conhecidas. Considere que a resolução DNS de private endpoint requer zonas de Azure Private DNS ou configuração de DNS personalizada em sua rede.
+Private endpoints fornecem o isolamento de rede mais forte (trafego permanece no backbone da Microsoft). Use private endpoints para vaults contendo chaves de criptografia de produção e segredos de processamento de pagamento. Service endpoints são uma alternativa mais simples para vaults acessados apenas de redes virtuais Azure. Acesso público pode permanecer habilitado (com regras de firewall) para vaults acessados por pipelines de CI/CD ou estacoes de trabalho de desenvolvedores, mas restrinja o acesso a faixas de IP conhecidas. Considere que a resolução DNS de private endpoint requer zonas de Azure Private DNS ou configuração de DNS personalizada em sua rede.
 
 </details>
 

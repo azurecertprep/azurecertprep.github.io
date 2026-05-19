@@ -16,11 +16,11 @@ import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 ## Introdução
 
-A Vivid Creative Agency é uma empresa de design de 200 pessoas que produz campanhas publicitarias para clientes da Fortune 500. Seus ativos criativos totalizando 200 TB incluem fotografia em alta resolução (arquivos RAW, 50-100 MB cada), projetos de vídeo 4K/8K (arquivos individuais de até 500 GB), arquivos de projeto Adobe (Photoshop, Premiere, After Effects) e entregaveis de clientes em vários formatos. Todos os ativos sao armazenados no Azure Blob Storage e Azure Files (para workspaces de projeto compartilhados).
+A Vivid Creative Agency é uma empresa de design de 200 pessoas que produz campanhas publicitarias para clientes da Fortune 500. Seus ativos criativos totalizando 200 TB incluem fotografia em alta resolução (arquivos RAW, 50-100 MB cada), projetos de vídeo 4K/8K (arquivos individuais de até 500 GB), arquivos de projeto Adobe (Photoshop, Premiere, After Effects) e entregaveis de clientes em vários formatos. Todos os ativos são armazenados no Azure Blob Storage e Azure Files (para workspaces de projeto compartilhados).
 
-O maior risco operacional e a delecao acidental. Somente no último trimestre, designers acidentalmente deletaram a pasta errada três vezes, uma vez perdendo 2 semanas de trabalho em uma campanha de $500K. O processo de recuperação existente requeria restauracao a partir de backups noturnos, significando que até 24 horas de trabalho poderiam ser perdidas. O diretor criativo exige recuperação em menos de uma hora para delecoes recentes, enquanto o CFO insiste em proteção de arquivo de longo prazo (alguns contratos de clientes requerem retencao de ativos por 7 anos pós-campanha).
+O maior risco operacional e a delecao acidental. Somente no último trimestre, designers acidentalmente deletaram a pasta errada três vezes, uma vez perdendo 2 semanas de trabalho em uma campanha de $500K. O processo de recuperação existente requeria restauração a partir de backups noturnos, significando que até 24 horas de trabalho poderiam ser perdidas. O diretor criativo exige recuperação em menos de uma hora para delecoes recentes, enquanto o CFO insiste em proteção de arquivo de longo prazo (alguns contratos de clientes requerem retenção de ativos por 7 anos pós-campanha).
 
-O desafio é equilibrar múltiplas camadas de proteção: recuperação instantanea para o cenário "ops, deletei a pasta errada", backups programados para recuperação point-in-time, e arquivamento imutável para conformidade de longo prazo. Os custos de armazenamento já sao altos com 200 TB, entao a estratégia de backup deve ser consciente de custos e evitar dobrar as despesas de armazenamento.
+O desafio é equilibrar múltiplas camadas de proteção: recuperação instantanea para o cenário "ops, deletei a pasta errada", backups programados para recuperação point-in-time, e arquivamento imutável para conformidade de longo prazo. Os custos de armazenamento já são altos com 200 TB, entao a estratégia de backup deve ser consciente de custos e evitar dobrar as despesas de armazenamento.
 
 ## Habilidades do exame cobertas
 
@@ -45,9 +45,9 @@ O desafio é equilibrar múltiplas camadas de proteção: recuperação instanta
 />
 
 2. Projete uma estratégia de proteção em camadas:
-   - **Camada 1 (Recuperação instantanea)**: Quais recursos fornecem restauracao self-service em minutos?
-   - **Camada 2 (Backup programado)**: O que fornece backup diario com retencao de 30 dias?
-   - **Camada 3 (Arquivo de longo prazo)**: O que fornece retencao de 7 anos com custo mais baixo?
+   - **Camada 1 (Recuperação instantanea)**: Quais recursos fornecem restauração self-service em minutos?
+   - **Camada 2 (Backup programado)**: O que fornece backup diario com retenção de 30 dias?
+   - **Camada 3 (Arquivo de longo prazo)**: O que fornece retenção de 7 anos com custo mais baixo?
 
 3. Configure blob soft delete e container soft delete para as contas de armazenamento de produção:
 
@@ -70,9 +70,9 @@ az storage account blob-service-properties update \
 ### Parte 2: versionamento e Point-in-Time restore
 
 4. Habilite blob versioning e análise seu impacto no patrimonio de armazenamento de 200 TB:
-   - Como o versionamento afeta os custos de armazenamento quando arquivos sao frequentemente sobrescritos?
-   - Para arquivos de vídeo que sao raramente modificados, o versionamento e custo-efetivo?
-   - Para arquivos de projeto Adobe que sao salvos centenas de vezes diariamente, qual é o risco de custo?
+   - Como o versionamento afeta os custos de armazenamento quando arquivos são frequentemente sobrescritos?
+   - Para arquivos de vídeo que são raramente modificados, o versionamento e custo-efetivo?
+   - Para arquivos de projeto Adobe que são salvos centenas de vezes diariamente, qual é o risco de custo?
 
 5. Projete regras de lifecycle management para gerenciar custos de versoes:
    - Mova versoes anteriores para o tier Cool apos 7 dias
@@ -81,16 +81,16 @@ az storage account blob-service-properties update \
 
 6. Configure point-in-time restore e entenda seus pré-requisitos:
    - Quais outros recursos devem estar habilitados para point-in-time restore funcionar?
-   - Qual é o período máximo de retencao para point-in-time restore?
+   - Qual é o período máximo de retenção para point-in-time restore?
    - Você pode restaurar um único container, ou deve restaurar a conta inteira?
-   - Quais sao as limitacoes? (por exemplo, não pode ser usado com hierarchical namespace do Data Lake Storage Gen2)
+   - Quais são as limitacoes? (por exemplo, não pode ser usado com hierarchical namespace do Data Lake Storage Gen2)
 
 ### Parte 3: Azure Backup para blobs (Vaulted backup)
 
 7. Projete a configuração do Azure Backup para dados blob usando o Backup vault:
    - Compare operational backup (continuo, usa recursos nativos do blob) vs. vaulted backup (programado, armazenado no vault)
    - Qual abordagem funciona para o patrimonio de 200 TB dadas as restrições de custo?
-   - Qual é a frequência de backup e faixa de retencao para vaulted blob backup?
+   - Qual é a frequência de backup e faixa de retenção para vaulted blob backup?
 
 8. Configure uma política de operational backup para os ativos criativos:
 
@@ -119,18 +119,18 @@ az dataprotection backup-policy create \
 
 10. A equipe de design usa Azure Files (Premium, share de 10 TB) para colaboracao ativa em projetos. Projete a estratégia de backup:
     - Azure Backup para Azure Files usa share snapshots
-    - Configure backup diario com retencao de 30 dias
+    - Configure backup diario com retenção de 30 dias
     - Configure backup anual para conformidade (armazenado como snapshot)
 
 11. Compare as limitacoes de backup do Azure Files com backup de blob:
     - Número máximo de snapshots por share (200)
     - Custos de armazenamento de snapshot (diferencial, apenas blocos alterados)
-    - Opcoes de restauracao: restauracao de share completo vs. restauracao individual de arquivo/pasta
+    - Opcoes de restauração: restauração de share completo vs. restauração individual de arquivo/pasta
 
-12. Crie uma arvore de decisao para a equipe de recuperação:
+12. Crie uma arvore de decisão para a equipe de recuperação:
     - "Deletei acidentalmente um arquivo 5 minutos atras" -> Usar qual recurso?
     - "Preciso recuperar uma pasta de ontem" -> Usar qual recurso?
-    - "Preciso recuperar arquivos de 2 anos atras para retencao legal" -> Usar qual recurso?
+    - "Preciso recuperar arquivos de 2 anos atras para retenção legal" -> Usar qual recurso?
     - "A conta de armazenamento foi deletada por um administrador malicioso" -> Usar qual recurso?
 
 ## Criterios de sucesso
@@ -139,11 +139,11 @@ az dataprotection backup-policy create \
   storageKey="az305-challenge-28"
   items={[
     "Layered protection strategy documented with soft delete, versioning, and backup vault",
-    "Blob soft delete and container soft delete enabled with appropriate retention periods",
+    "Blob soft delete and container soft delete enabled with apprópriate retention periods",
     "Lifecycle management rules configured to manage versioning costs with tier transitions",
-    "Azure Backup for blobs configured with appropriate backup policy type selected",
-    "Azure Files backup configured with daily snapshots and appropriate retention",
-    "Recovery decision tree created mapping scenarios to correct recovery method"
+    "Azure Backup for blobs configured with apprópriate backup policy type selected",
+    "Azure Files backup configured with daily snapshots and apprópriate retention",
+    "Recovery decision tree created mapping scenários to correct recovery method"
   ]}
 />
 
@@ -213,8 +213,8 @@ Estratégias de mitigacao:
 - Melhor para: proteção contra delecao acidental, corrupcao
 
 **Vaulted backup:**
-- Dados sao copiados para um Backup vault separado
-- Programado (diario/semanal) com retencao configuravel
+- Dados são copiados para um Backup vault separado
+- Programado (diario/semanal) com retenção configuravel
 - Dados sobrevivem a delecao da conta de origem
 - Suporta cross-region restore (com vault GRS)
 - Custo adicional de armazenamento para a copia no vault
@@ -229,12 +229,12 @@ Para Vivid Creative: Use operational backup para proteção do dia a dia + vault
 
 O backup do Azure Files usa share snapshots com estas restrições:
 - Máximo de 200 snapshots por file share
-- Com backup diario: 200 snapshots = ~6,5 meses de retencao máxima
-- Para retencao mais longa: menos snapshots diarios ou use cronograma semanal/mensal
+- Com backup diario: 200 snapshots = ~6,5 meses de retenção máxima
+- Para retenção mais longa: menos snapshots diarios ou use cronograma semanal/mensal
 - Armazenamento de snapshot e diferencial (só armazena blocos alterados desde o snapshot anterior)
 - Exemplo de custo: share de 10 TB com 5% de alteracao diaria = ~500 GB de armazenamento de snapshot para 200 snapshots
 
-Opcoes de restauracao:
+Opcoes de restauração:
 - Restauracao de share completo para um novo share
 - Restauracao individual de arquivo/pasta (recuperação em nível de item)
 - Restaurar para local original ou local alternativo
@@ -256,7 +256,7 @@ Opcoes de restauracao:
 <details>
 <summary>1. Um designer acidentalmente deletou um container inteiro com 50.000 arquivos 10 minutos atras. Qual é o método de recuperação mais rápido?</summary>
 
-**Container soft delete fornece recuperação instantanea do container inteiro deletado.** Com container soft delete habilitado, o container deletado e todo seu conteúdo sao retidos pelo período de retencao configurado (até 365 dias). A recuperação é uma única operação "undelete" que restaura o container inteiro imediatamente. Isso e mais rápido que point-in-time restore (que requer uma operação de restauracao que pode levar tempo proporcional ao tamanho dos dados) e mais rápido que restaurar do backup vault. Container soft delete e especificamente projetado para este cenário de "delecao acidental de container inteiro".
+**Container soft delete fornece recuperação instantanea do container inteiro deletado.** Com container soft delete habilitado, o container deletado e todo seu conteúdo são retidos pelo período de retenção configurado (até 365 dias). A recuperação é uma única operação "undelete" que restaura o container inteiro imediatamente. Isso e mais rápido que point-in-time restore (que requer uma operação de restauração que pode levar tempo proporcional ao tamanho dos dados) e mais rápido que restaurar do backup vault. Container soft delete e específicamente projetado para este cenário de "delecao acidental de container inteiro".
 
 </details>
 
@@ -275,9 +275,9 @@ Opcoes de restauracao:
 </details>
 
 <details>
-<summary>4. Point-in-time restore para blobs tem retencao máxima de 14 dias. Qual alternativa fornece capacidade de recuperação point-in-time mais longa para dados blob?</summary>
+<summary>4. Point-in-time restore para blobs tem retenção máxima de 14 dias. Qual alternativa fornece capacidade de recuperação point-in-time mais longa para dados blob?</summary>
 
-**Blob versioning combinado com lifecycle management fornece recuperação point-in-time estendida.** Enquanto o recurso integrado de point-in-time restore é limitado a 14 dias, blob versioning retem cada versao indefinidamente (até que políticas de lifecycle as deletem). Você pode definir regras de lifecycle para reter versoes por 90, 180 ou 365+ dias. Para recuperação de longo prazo em nível de conformidade (7+ anos), use vaulted backup com retencao estendida configurada na política de backup. O trade-off e que versionamento requer que você identifique a versao específica do blob para restaurar, enquanto point-in-time restore pode reverter um container inteiro atomicamente.
+**Blob versioning combinado com lifecycle management fornece recuperação point-in-time estendida.** Enquanto o recurso integrado de point-in-time restore é limitado a 14 dias, blob versioning retem cada versao indefinidamente (até que políticas de lifecycle as deletem). Você pode definir regras de lifecycle para reter versoes por 90, 180 ou 365+ dias. Para recuperação de longo prazo em nível de conformidade (7+ anos), use vaulted backup com retenção estendida configurada na política de backup. O trade-off e que versionamento requer que você identifique a versao específica do blob para restaurar, enquanto point-in-time restore pode reverter um container inteiro atomicamente.
 
 </details>
 

@@ -18,40 +18,40 @@ import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 O Mercy Regional Health System opera uma rede de hospitais e clinicas atendendo 500.000 pacientes em três estados. Sua infraestrutura de TI suporta tudo, desde sistemas críticos de monitoramento de pacientes até funções administrativas rotineiras. Apos um recente incidente de ransomware em um sistema de saúde vizinho que causou uma interrupcao de 72 horas nos registros de pacientes, o conselho determinou uma estratégia abrangente de disaster recovery.
 
-O CIO categorizou todas as cargas de trabalho em três níveis com base na análise de impacto nos negocios: Nível 1 (crítico) inclui o sistema de Prontuarios Eletronicos (EHR) e monitoramento de pacientes - estes devem recuperar em 1 minuto com zero perda de dados. Nível 2 (importante) inclui o sistema de agendamento, gerenciamento de farmacia e portal de resultados de laboratório - estes podem tolerar até 1 hora de inatividade e 15 minutos de perda de dados. Nível 3 (padrão) inclui RH/folha de pagamento, portais de treinamento e comunicações internas - estes podem tolerar até 24 horas de inatividade e 4 horas de perda de dados.
+O CIO categorizou todas as cargas de trabalho em três níveis com base na análise de impacto nos negócios: Nível 1 (crítico) inclui o sistema de Prontuarios Eletronicos (EHR) e monitoramento de pacientes - estes devem recuperar em 1 minuto com zero perda de dados. Nível 2 (importante) inclui o sistema de agendamento, gerenciamento de farmacia e portal de resultados de laboratório - estes podem tolerar até 1 hora de inatividade e 15 minutos de perda de dados. Nível 3 (padrão) inclui RH/folha de pagamento, portais de treinamento e comúnicações internas - estes podem tolerar até 24 horas de inatividade e 4 horas de perda de dados.
 
 O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes para proteger todos os três níveis. Você deve projetar uma estratégia de recuperação que aloque adequadamente o orcamento entre os níveis, selecionando o padrão de recuperação correto (hot/warm/cold standby) para cada classe de carga de trabalho, comprovando que o SLA composto atende aos requisitos de disponibilidade.
 
 ## Habilidades do exame cobertas
 
-- Recomendar uma solução de recuperação para cargas de trabalho Azure e hibridas que atenda aos objetivos de recuperação
+- Recomendar uma solução de recuperação para cargas de trabalho Azure e híbridas que atenda aos objetivos de recuperação
 
 ## Tarefas de design
 
-### Parte 1: análise de impacto nos negocios e objetivos de recuperação
+### Parte 1: análise de impacto nos negócios e objetivos de recuperação
 
 1. Para cada nível de carga de trabalho, defina formalmente os seguintes parametros de recuperação:
    - Recovery Time Objective (RTO)
    - Recovery Point Objective (RPO)
    - Recovery Level Objective (RLO) - qual nível de funcionalidade e aceitavel durante a recuperação
-   - Maximum Tolerable Downtime (MTD) - o máximo absoluto antes que a viabilidade do negocio seja ameacada
+   - Maximum Tolerable Downtime (MTD) - o máximo absoluto antes que a viabilidade do negócio seja ameacada
 
 2. Calcule a porcentagem de uptime necessária para cada nível:
    - Nível 1: RTO de 1 minuto implica qual porcentagem de SLA?
    - Nível 2: RTO de 1 hora implica qual porcentagem de SLA?
    - Nível 3: RTO de 24 horas implica qual porcentagem de SLA?
 
-3. Documente o impacto nos negocios de exceder o RTO para cada nível (perda financeira por hora, risco a segurança do paciente, penalidades regulatorias).
+3. Documente o impacto nos negócios de exceder o RTO para cada nível (perda financeira por hora, risco a segurança do paciente, penalidades regulatorias).
 
-### Parte 2: selecao da estratégia de recuperação
+### Parte 2: seleção da estratégia de recuperação
 
-4. Mapeie cada nível de carga de trabalho para o padrão de recuperação apropriado:
+4. Mapeie cada nível de carga de trabalho para o padrão de recuperação aprópriado:
    - **Hot standby**: Active-active ou active-passive com replicação em tempo real
    - **Warm standby**: Replica em escala reduzida que pode ser ampliada durante o failover
    - **Cold standby**: Infraestrutura definida como código, implantada sob demanda durante desastres
    - **Backup only**: Backups regulares com recuperação a partir do zero
 
-5. Complete esta matriz de decisao para cada nível:
+5. Complete esta matriz de decisão para cada nível:
 
 <DecisionMatrix
   title="DR Strategy by Workload Tier"
@@ -89,7 +89,7 @@ O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes pa
     - Nível 2: Quais serviços fornecem RTO de 1 hora com custo moderado?
     - Nível 3: Quais serviços permitem recuperação em 24 horas com custo mínimo?
 
-11. Defina o cronograma de testes de DR e criterios de validação para cada nível.
+11. Defina o cronograma de testes de DR e critérios de validação para cada nível.
 
 ## Criterios de sucesso
 
@@ -97,11 +97,11 @@ O desafio é significativo: Mercy tem um orcamento de DR de apenas $5.000/mes pa
   storageKey="az305-challenge-25"
   items={[
     "RTO, RPO, RLO, and MTD defined for all three workload tiers with business justification",
-    "Appropriate recovery pattern (hot/warm/cold) selected for each tier with cost analysis",
+    "Apprópriate recovery pattern (hot/warm/cold) selected for each tier with cost analysis",
     "Composite SLA calculated correctly using multiplication formula",
     "Budget allocation across tiers documented with cost-per-tier breakdown totaling $5K/month",
     "Recovery strategy maps specific Azure services to each tier's requirements",
-    "DR testing schedule defined with appropriate frequency per tier"
+    "DR testing schedule defined with apprópriate frequency per tier"
   ]}
 />
 
@@ -127,7 +127,7 @@ Por exemplo, circuitos ExpressRoute duplos: 1 - (1 - 0,9995)^2 = 0,99999975
 
 Custos mensais aproximados para uma aplicação tipica de 3 camadas (web + app + DB):
 - **Hot standby** (active-active): $3.000-4.000/mes (replica completa em execução)
-- **Warm standby** (replica em escala reduzida): $800-1.500/mes (SKUs minimos, pode escalar)
+- **Warm standby** (replica em escala reduzida): $800-1.500/mes (SKUs mínimos, pode escalar)
 - **Cold standby** (IaC + backups): $100-300/mes (apenas armazenamento para backups/templates)
 - **Backup only**: $50-150/mes (apenas armazenamento do vault de backup)
 
@@ -147,12 +147,12 @@ Sugestao de alocacao de orcamento: Nível 1 recebe 60-70%, Nível 2 recebe 20-30
 **RTO de 1 hora (Nível 2)**:
 - Azure Site Recovery (RPO de 15 minutos, minutos para failover)
 - Azure SQL geo-restore
-- Reimplantacao de VM a partir de imagens gerenciadas
+- Reimplantação de VM a partir de imagens gerenciadas
 
 **RTO de 24 horas (Nível 3)**:
-- Azure Backup com restauracao
-- Reimplantacao a partir de templates ARM/Bicep
-- Backups em cold storage com restauracao manual
+- Azure Backup com restauração
+- Reimplantação a partir de templates ARM/Bicep
+- Backups em cold storage com restauração manual
 
 </details>
 
@@ -183,14 +183,14 @@ Para converter RTO em porcentagem mínima de uptime:
 <details>
 <summary>1. Uma carga de trabalho tem SLA composto de 99,9% mas requer 99,99% de disponibilidade. Qual mudança arquitetural fecha essa lacuna de forma mais eficaz?</summary>
 
-**Adicionar redundância multi-região com failover automático.** Quando uma implantacao em região única não consegue atingir o SLA alvo apenas pela multiplicacao de componentes, implantar em uma segunda região e usar um balanceador de carga global (Azure Front Door ou Traffic Manager) cria caminhos de disponibilidade paralelos. A formula se torna: 1 - (1 - 0,999)^2 = 0,999999 (99,9999%), que excede o requisito. A contrapartida e aumento de custo e complexidade de sincronizacao de dados.
+**Adicionar redundância multi-região com failover automático.** Quando uma implantação em região única não consegue atingir o SLA alvo apenas pela multiplicacao de componentes, implantar em uma segunda região e usar um balanceador de carga global (Azure Front Door ou Traffic Manager) cria caminhos de disponibilidade paralelos. A formula se torna: 1 - (1 - 0,999)^2 = 0,999999 (99,9999%), que excede o requisito. A contrapartida e aumento de custo e complexidade de sincronizacao de dados.
 
 </details>
 
 <details>
 <summary>2. Por que você escolheria warm standby ao inves de hot standby para uma carga de trabalho Nível 2 com RTO de 1 hora?</summary>
 
-**Warm standby custa 30-50% da produção versus 80-100% para hot standby, e o RTO de 1 hora fornece tempo suficiente para escalar os recursos.** Hot standby mantem uma replica em capacidade total funcionando o tempo todo, o que é desnecessario quando você tem 60 minutos para detectar a falha, acionar o failover e escalar uma replica mínima. Warm standby mantem uma versao em escala reduzida em execução (por exemplo, SKUs de VM menores, databases com DTU mais baixo) que pode ser escalada para capacidade de produção dentro da janela de RTO.
+**Warm standby custa 30-50% da produção versus 80-100% para hot standby, e o RTO de 1 hora fornece tempo suficiente para escalar os recursos.** Hot standby mantem uma replica em capacidade total funcionando o tempo todo, o que é desnecessário quando você tem 60 minutos para detectar a falha, acionar o failover e escalar uma replica mínima. Warm standby mantem uma versao em escala reduzida em execução (por exemplo, SKUs de VM menores, databases com DTU mais baixo) que pode ser escalada para capacidade de produção dentro da janela de RTO.
 
 </details>
 
@@ -204,7 +204,7 @@ Para converter RTO em porcentagem mínima de uptime:
 <details>
 <summary>4. Qual é a diferenca principal entre RTO e MTD (Maximum Tolerable Downtime)?</summary>
 
-**RTO e o tempo alvo de recuperação para sistemas de TI; MTD e o tempo máximo absoluto antes que o próprio negocio seja ameacado.** O RTO deve sempre ser menor que o MTD para fornecer uma margem de segurança. Por exemplo, o sistema EHR de um hospital pode ter um RTO de 1 minuto (meta para restaurar o serviço) mas um MTD de 15 minutos (além do qual a segurança do paciente esta em risco e violacoes regulatorias ocorrem). A diferenca entre RTO e MTD e sua margem de segurança para complicacoes inesperadas na recuperação.
+**RTO e o tempo alvo de recuperação para sistemas de TI; MTD e o tempo máximo absoluto antes que o próprio negócio seja ameacado.** O RTO deve sempre ser menor que o MTD para fornecer uma margem de segurança. Por exemplo, o sistema EHR de um hospital pode ter um RTO de 1 minuto (meta para restaurar o serviço) mas um MTD de 15 minutos (além do qual a segurança do paciente esta em risco e violacoes regulatorias ocorrem). A diferenca entre RTO e MTD e sua margem de segurança para complicacoes inesperadas na recuperação.
 
 </details>
 
@@ -273,7 +273,7 @@ az vm list \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
 :::
 
 ## Limpeza

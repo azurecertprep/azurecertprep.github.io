@@ -17,13 +17,13 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 Seguindo a estratégia do Cloud Adoption Framework desenvolvida para a Precision Manufacturing (Challenge 44), a equipe de migração completou uma descoberta de 30 dias usando appliances do Azure Migrate em ambos os data centers. A avaliação revela 200 servidores com a seguinte distribuição:
 
-**VMs Windows (80):** 35 aplicações web IIS (.NET Framework 4.5-4.8), 15 servidores de arquivo (50TB total de armazenamento compartilhado), 10 controladores de dominio Active Directory e infraestrutura de suporte (ADFS, ADCS, NPS), 12 servidores de aplicação executando serviços Windows customizados, 8 Remote Desktop Session Hosts.
+**VMs Windows (80):** 35 aplicações web IIS (.NET Framework 4.5-4.8), 15 servidores de arquivo (50TB total de armazenamento compartilhado), 10 controladores de domínio Active Directory e infraestrutura de suporte (ADFS, ADCS, NPS), 12 servidores de aplicação executando serviços Windows customizados, 8 Remote Desktop Session Hosts.
 
 **VMs Linux (50):** 20 servidores web (12 Apache com PHP, 8 Nginx com Node.js), 15 servidores de aplicação (Python Flask/Django), 10 servidores utilitarios (monitoramento, logging, agendamento), 5 aplicações containerizadas já executando Docker.
 
 **Aplicações legadas (40):** 8 aplicações com endereços IP hard-coded na configuração, 12 aplicações com dependências em versoes específicas de SO (Windows Server 2012 R2), 10 aplicações com dependências de sistema de arquivos local, 10 aplicações com integracoes de terceiros não documentadas.
 
-A equipe de migração precisa categorizar cada grupo de workload, selecionar o alvo Azure apropriado (IaaS vs PaaS), recomendar ferramentas de migração específicas é projetar uma estratégia de validação.
+A equipe de migração precisa categorizar cada grupo de workload, selecionar o alvo Azure aprópriado (IaaS vs PaaS), recomendar ferramentas de migração específicas é projetar uma estratégia de validação.
 
 ## Habilidades do exame cobertas
 
@@ -35,7 +35,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
 ### Parte 1: análise de avaliação e descoberta
 
 1. Revise a saida da avaliação do Azure Migrate e crie uma matriz de categorizacao de workloads com colunas para: nome do workload, plataforma atual, dependências descobertas, status de prontidao Azure (pronto, condicionalmente pronto, não pronto), alvo recomendado e ferramenta de migração.
-2. Para cada grupo de workload, documente os criterios de avaliação que determinam o alvo IaaS vs. PaaS:
+2. Para cada grupo de workload, documente os critérios de avaliação que determinam o alvo IaaS vs. PaaS:
    - Pode executar em PaaS sem mudanças de código? (versao do framework, dependências de SO, uso de armazenamento local)
    - Se beneficia de recursos PaaS? (auto-scaling, patching gerenciado, HA integrado)
    - Existem dependências bloqueadoras? (versao específica de SO, módulos de kernel, serviços locais)
@@ -44,11 +44,11 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
 ### Parte 2: estratégia de migração IaaS
 
 4. Projete a abordagem de migração IaaS para workloads que não podem mover para PaaS:
-   - Controladores de dominio AD: migrar usando Azure Migrate Server Migration com Entra Connect pré-configurado
+   - Controladores de domínio AD: migrar usando Azure Migrate Server Migration com Entra Connect pré-configurado
    - Workloads Windows Server 2012 R2: enderece fim de suporte com Extended Security Updates no Azure
-   - Serviços Windows customizados com dependências locais: Azure VM com dimensionamento de VM apropriado
-5. Selecione o método de replicação apropriado do Azure Migrate para cada tipo de workload:
-   - Replicação agentless (VMs VMware): beneficios e limitacoes
+   - Serviços Windows customizados com dependências locais: Azure VM com dimensionamento de VM aprópriado
+5. Selecione o método de replicação aprópriado do Azure Migrate para cada tipo de workload:
+   - Replicação agentless (VMs VMware): benefícios e limitacoes
    - Replicação agent-based (servidores físicos, Hyper-V): quando necessário
    - Documente os requisitos de largura de banda de replicação para migrar 200 servidores dentro da timeline
 6. Projete a estratégia de dimensionamento de VM: compare dimensionamento "as-on-premises" (corresponder specs atuais) vs. dimensionamento "baseado em performance" (right-size baseado em dados reais de utilizacao da avaliação de 30 dias).
@@ -61,7 +61,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
    - Aplicações containerizadas: Azure Container Apps ou Azure Kubernetes Service
 8. Projete o caminho de migração para servidores de arquivo:
    - Avaliar Azure Files vs. Azure NetApp Files baseado em requisitos de protocolo (SMB, NFS), tiers de performance e tamanho
-   - Projetar Azure File Sync para cenários hibridos durante o período de transicao da migração
+   - Projetar Azure File Sync para cenários híbridos durante o período de transicao da migração
 9. Projete o caminho de migração para as 5 aplicações já containerizadas:
    - Push de imagens de container para Azure Container Registry
    - Implantar em Container Apps com configuração de ambiente mapeada do Docker Compose on-premises
@@ -74,7 +74,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
     - Benchmarking de performance (comparar performance da Azure VM com baseline on-premises)
     - Integridade de dados (comparacao de hash de arquivos, verificacoes de consistência de banco de dados)
 11. Projete uma estratégia de execução paralela para workloads críticos onde tanto on-premises quanto Azure funcionam simultaneamente, com trafego gradualmente desviado para Azure usando Azure Traffic Manager ou cutover baseado em DNS.
-12. Defina criterios e procedimentos de rollback: em que ponto uma migração e considerada falha, e como você reverte (reabilitar VM on-premises, atualizar DNS, restaurar da replicação)?
+12. Defina critérios e procedimentos de rollback: em que ponto uma migração e considerada falha, e como você reverte (reabilitar VM on-premises, atualizar DNS, restaurar da replicação)?
 
 ## Criterios de sucesso
 
@@ -116,14 +116,14 @@ O Azure App Service Migration Assistant escaneia aplicações web IIS e produz u
 <details>
 <summary>Dica 4: Extended Security Updates no Azure</summary>
 
-Windows Server 2012/2012 R2 atingiu fim de suporte, mas VMs executando no Azure recebem Extended Security Updates (ESU) gratuitas automaticamente. Isso torna o Azure um alvo atraente para workloads legados que não podem ser atualizados imediatamente. O beneficio ESU se aplica a Azure VMs, Azure Stack HCI e Azure VMware Solution. Isso remove a dependência "atualizar antes de migrar" e permite rehost seguido de modernizacao em data posterior.
+Windows Server 2012/2012 R2 atingiu fim de suporte, mas VMs executando no Azure recebem Extended Security Updates (ESU) gratuitas automaticamente. Isso torna o Azure um alvo atraente para workloads legados que não podem ser atualizados imediatamente. O benefício ESU se aplica a Azure VMs, Azure Stack HCI e Azure VMware Solution. Isso remove a dependência "atualizar antes de migrar" e permite rehost seguido de modernizacao em data posterior.
 
 </details>
 
 <details>
 <summary>Dica 5: Arquitetura do Azure File Sync</summary>
 
-Azure File Sync permite que servidores de arquivo Windows on-premises permanecam operacionais enquanto sincronizam com Azure Files. Ele suporta cloud tiering (arquivos quentes permanecem locais, arquivos frios sao movidos para Azure com um ponteiro local). Durante a migração, você pode configurar Azure File Sync para replicar todos os dados para Azure, validar acessibilidade, entao fazer cutover apontando clientes diretamente para Azure Files ou mantendo o servidor on-premises como cache. Isso permite migração gradual sem cutover rigido.
+Azure File Sync permite que servidores de arquivo Windows on-premises permanecam operacionais enquanto sincronizam com Azure Files. Ele suporta cloud tiering (arquivos quentes permanecem locais, arquivos frios são movidos para Azure com um ponteiro local). Durante a migração, você pode configurar Azure File Sync para replicar todos os dados para Azure, validar acessibilidade, entao fazer cutover apontando clientes diretamente para Azure Files ou mantendo o servidor on-premises como cache. Isso permite migração gradual sem cutover rigido.
 
 </details>
 
@@ -139,7 +139,7 @@ Azure File Sync permite que servidores de arquivo Windows on-premises permanecam
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Uma aplicação IIS usa Windows Authentication e acessa um compartilhamento de arquivo local em D:\AppData. O App Service Migration Assistant reporta como "condicionalmente pronto." Quais sao os fatores bloqueadores e opcoes de remediacao?</summary>
+<summary>1. Uma aplicação IIS usa Windows Authentication e acessa um compartilhamento de arquivo local em D:\AppData. O App Service Migration Assistant reporta como "condicionalmente pronto." Quais são os fatores bloqueadores e opcoes de remediacao?</summary>
 
 **Dois bloqueadores: Windows Authentication e dependência de sistema de arquivos local.** Opcoes de remediacao: (1) Para Windows Authentication: trocar para autenticação Entra ID (mudança de código), ou usar App Service com hybrid connections/integração VNet para alcancar AD on-premises (mudança de arquitetura), ou manter em IaaS. (2) Para sistema de arquivos local: migrar arquivos para Azure Blob Storage com mudanças de código da aplicação, ou usar Azure Files montado como drive no App Service (limitado ao tier Premium), ou manter em IaaS. Se qualquer remediacao for muito custosa, rehost em uma VM Windows.
 
@@ -155,7 +155,7 @@ Azure File Sync permite que servidores de arquivo Windows on-premises permanecam
 <details>
 <summary>3. Cinco aplicações containerizadas executam Docker em VMs Linux. Devem migrar para Azure Container Apps, AKS ou VMs executando Docker?</summary>
 
-**Azure Container Apps e o alvo recomendado para a maioria das aplicações containerizadas de pequeno a médio porte.** Container Apps fornece infraestrutura Kubernetes gerenciada sem overhead de gerenciamento de cluster, autoscaling integrado (incluindo escalar para zero), suporte Dapr integrado e implantacoes baseadas em revisao. Escolha AKS se: as aplicações precisam de configurações Kubernetes customizadas, requisitos de rede específicos, ou a equipe já gerencia Kubernetes. Escolha VMs com Docker somente se: as aplicações requerem recursos específicos do kernel Linux, configurações Docker customizadas, ou tem dependências rigidas na orquestracao Docker Compose que não pode ser facilmente mapeada para Container Apps ou AKS.
+**Azure Container Apps e o alvo recomendado para a maioria das aplicações containerizadas de pequeno a médio porte.** Container Apps fornece infraestrutura Kubernetes gerenciada sem overhead de gerenciamento de cluster, autoscaling integrado (incluindo escalar para zero), suporte Dapr integrado e implantacoes baseadas em revisao. Escolha AKS se: as aplicações precisam de configurações Kubernetes customizadas, requisitos de rede específicos, ou a equipe já gerencia Kubernetes. Escolha VMs com Docker somente se: as aplicações requerem recursos específicos do kernel Linux, configurações Docker customizadas, ou tem dependências rigidas na orquestração Docker Compose que não pode ser facilmente mapeada para Container Apps ou AKS.
 
 </details>
 

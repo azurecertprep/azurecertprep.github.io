@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-O Woodgrove Bank é uma instituição financeira com 8.000 funcionários em 12 escritórios. Eles possuem um ambiente maduro de Active Directory on-premises (domain controllers Windows Server 2019, forest única, três dominios) que gerencia todas as identidades de funcionários, group policies e acesso a aplicações. Eles estao migrando para um modelo de nuvem hibrida com Microsoft 365 e workloads Azure, mas não podem abandonar o AD on-premises devido a aplicações legadas de linha de negocios que requerem autenticação Kerberos.
+O Woodgrove Bank é uma instituição financeira com 8.000 funcionários em 12 escritórios. Eles possuem um ambiente maduro de Active Directory on-premises (domain controllers Windows Server 2019, forest única, três domínios) que gerencia todas as identidades de funcionários, group policies e acesso a aplicações. Eles estao migrando para um modelo de nuvem híbrida com Microsoft 365 e workloads Azure, mas não podem abandonar o AD on-premises devido a aplicações legadas de linha de negócios que requerem autenticação Kerberos.
 
 O CISO identificou várias lacunas críticas de segurança na postura de identidade atual:
 - 15 contas de Global Administrator sem revisoes de acesso ou ativacao com tempo limitado
@@ -24,7 +24,7 @@ O CISO identificou várias lacunas críticas de segurança na postura de identid
 - Senhas sincronizadas do AD sem proteção de senha nativa na nuvem
 - Ex-contratados ainda possuem contas ativas descobertas durante uma auditoria recente
 
-Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que sincronize identidades para a nuvem enquanto implementa controles modernos de segurança para acesso privilegiado e proteção de identidade.
+Sua tarefa é projetar uma solução de gerenciamento de identidade híbrida que sincronize identidades para a nuvem enquanto implementa controles modernos de segurança para acesso privilegiado e proteção de identidade.
 
 ## Habilidades do exame cobertas
 
@@ -34,9 +34,9 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
 
 ## Tarefas de design
 
-### Parte 1: sincronizacao de identidade hibrida
+### Parte 1: sincronizacao de identidade híbrida
 
-1. Avalie e recomende o método de sincronizacao apropriado para o Woodgrove Bank:
+1. Avalie e recomende o método de sincronizacao aprópriado para o Woodgrove Bank:
 
 | Method | Description | When to Use |
 |--------|-------------|-------------|
@@ -45,14 +45,14 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
 | Federation (AD FS) | On-prem federation service | |
 
 2. Projete a topologia de sincronizacao considerando:
-   - Forest única, três dominios
+   - Forest única, três domínios
    - Quais objetos sincronizar (usuários, grupos, contatos, dispositivos)
-   - Estratégia de filtragem (baseada em OU, baseada em atributo ou baseada em dominio)
+   - Estratégia de filtragem (baseada em OU, baseada em atributo ou baseada em domínio)
    - Password hash synchronization vs. pass-through authentication vs. federation
 
 3. Projete a hierarquia de método de autenticação:
    - Método de autenticação primário para recursos na nuvem
-   - Método de autenticação de failover se o primário estiver indisponivel
+   - Método de autenticação de failover se o primário estiver indisponível
    - Abordagem de staged rollout para migração
 
 ### Parte 2: proteção de senha e segurança de autenticação
@@ -114,8 +114,8 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
   items={[
     "Synchronization method selected with documented justification considering multi-domain topology",
     "Authentication method hierarchy designed with primary and failover methods",
-    "PIM configured for privileged roles with appropriate activation duration and approval workflows",
-    "Identity Protection policies designed for sign-in risk and user risk scenarios",
+    "PIM configured for privileged roles with apprópriate activation duration and approval workflows",
+    "Identity Protection policies designed for sign-in risk and user risk scenários",
     "Password protection strategy covers both cloud and on-premises with banned password list",
     "Access review schedule defined for all privileged role types"
   ]}
@@ -138,7 +138,7 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
 - Suporta cenários de multi-forest desconectados
 - Recursos limitados: sem device writeback, sem pass-through authentication
 
-Para o cenário do Woodgrove Bank (forest única, três dominios, precisa de PHS + failover PTA), **Entra Connect Sync** e a melhor escolha porque suporta o conjunto completo de recursos necessário para um ambiente empresarial complexo incluindo password writeback e staged rollout.
+Para o cenário do Woodgrove Bank (forest única, três domínios, precisa de PHS + failover PTA), **Entra Connect Sync** e a melhor escolha porque suporta o conjunto completo de recursos necessário para um ambiente empresarial complexo incluindo password writeback e staged rollout.
 
 </details>
 
@@ -147,7 +147,7 @@ Para o cenário do Woodgrove Bank (forest única, três dominios, precisa de PHS
 
 **Password Hash Synchronization (PHS)**:
 - Hashes de hashes de senha sincronizados para a nuvem (double-hashed, não senhas reais)
-- Funciona mesmo se o AD on-prem estiver indisponivel (resiliência)
+- Funciona mesmo se o AD on-prem estiver indisponível (resiliência)
 - Necessário para detecção de credenciais vazadas do Identity Protection
 - Implantação e manutenção mais simples
 
@@ -251,10 +251,10 @@ Para o Woodgrove Bank, adicione termos específicos da empresa:
 - Localizacoes de escritórios
 - Abreviacoes internas comuns
 
-A implantacao on-premises requer:
+A implantação on-premises requer:
 - Serviço Azure AD Password Protection Proxy (pelo menos um por forest)
 - Agente Azure AD Password Protection DC (em cada DC)
-- Nenhuma conectividade com a internet necessária dos DCs (o proxy lida com a comunicação)
+- Nenhuma conectividade com a internet necessária dos DCs (o proxy lida com a comúnicação)
 
 ```bash
 # Configure custom banned passwords (Portal or PowerShell)
@@ -282,7 +282,7 @@ A implantacao on-premises requer:
 <details>
 <summary>1. O Woodgrove Bank tem um requisito de conformidade de que senhas nunca devem sair do ambiente on-premises, mas também querem detecção de credenciais vazadas do Identity Protection. Quais métodos de autenticação satisfazem ambos os requisitos?</summary>
 
-**Esses requisitos sao mutuamente exclusivos.** A detecção de credenciais vazadas no Identity Protection requer password hash synchronization (PHS) porque compara hashes armazenados na nuvem contra bancos de dados de credenciais vazadas conhecidas. Se a conformidade proibe estritamente hashes de senha na nuvem, você deve escolher: usar Pass-Through Authentication (PTA) para conformidade e perder a detecção de credenciais vazadas, OU usar PHS para ganhar Identity Protection ao custo de ter hashes na nuvem. A orientacao da Microsoft e que hashes PHS sao double-hashed e extremamente seguros. A maioria das organizações aceita PHS pelos beneficios de segurança obtidos.
+**Esses requisitos são mutuamente exclusivos.** A detecção de credenciais vazadas no Identity Protection requer password hash synchronization (PHS) porque compara hashes armazenados na nuvem contra bancos de dados de credenciais vazadas conhecidas. Se a conformidade proibe estritamente hashes de senha na nuvem, você deve escolher: usar Pass-Through Authentication (PTA) para conformidade e perder a detecção de credenciais vazadas, OU usar PHS para ganhar Identity Protection ao custo de ter hashes na nuvem. A orientacao da Microsoft e que hashes PHS são double-hashed e extremamente seguros. A maioria das organizações aceita PHS pelos benefícios de segurança obtidos.
 
 </details>
 
@@ -294,14 +294,14 @@ A implantacao on-premises requer:
 </details>
 
 <details>
-<summary>3. A empresa tem três dominios AD em uma forest. Eles precisam sincronizar usuários de dois dominios mas excluir o terceiro (dominio legado sendo descomissionado). Qual abordagem de filtragem eles devem usar?</summary>
+<summary>3. A empresa tem três domínios AD em uma forest. Eles precisam sincronizar usuários de dois domínios mas excluir o terceiro (domínio legado sendo descomissionado). Qual abordagem de filtragem eles devem usar?</summary>
 
-**Filtragem baseada em dominio no Microsoft Entra Connect Sync.** Durante o assistente de instalacao do Entra Connect Sync, você pode selecionar quais dominios incluir na sincronizacao. Desmarque o dominio legado completamente. Alternativamente, use filtragem baseada em OU se você precisar de controle mais fino dentro dos dominios (sincronizar OUs específicas enquanto exclui outras). Filtragem baseada em dominio e a abordagem mais simples e sustentavel quando o limite de exclusão se alinha com os limites de dominio. Lembre-se de também configurar o escopo de sincronizacao para excluir contas desabilitadas dos dominios restantes.
+**Filtragem baseada em domínio no Microsoft Entra Connect Sync.** Durante o assistente de instalacao do Entra Connect Sync, você pode selecionar quais domínios incluir na sincronizacao. Desmarque o domínio legado completamente. Alternativamente, use filtragem baseada em OU se você precisar de controle mais fino dentro dos domínios (sincronizar OUs específicas enquanto exclui outras). Filtragem baseada em domínio e a abordagem mais simples e sustentavel quando o limite de exclusão se alinha com os limites de domínio. Lembre-se de também configurar o escopo de sincronizacao para excluir contas desabilitadas dos domínios restantes.
 
 </details>
 
 <details>
-<summary>4. As credenciais de um funcionario sao detectadas em um banco de dados de vazamento na dark web. O Identity Protection sinaliza o risco do usuário como "high." Qual resposta automatizada deve ocorrer?</summary>
+<summary>4. As credenciais de um funcionario são detectadas em um banco de dados de vazamento na dark web. O Identity Protection sinaliza o risco do usuário como "high." Qual resposta automatizada deve ocorrer?</summary>
 
 **A política de risco de usuário deve forcar uma troca segura de senha.** Quando o risco do usuário e "high" devido a credenciais vazadas: (1) A política de Conditional Access baseada em risco e acionada no próximo sign-in, (2) O usuário e obrigado a realizar MFA (provando que é o usuário legitimo), (3) Apos MFA, ele deve trocar sua senha, (4) A nova senha e validada contra a lista de senhas banidas, (5) Se SSPR com writeback on-premises estiver configurado, a nova senha e escrita de volta no AD on-prem, (6) Apos troca de senha bem-sucedida, o risco do usuário e automaticamente remediado (resetado para nenhum). Se o usuário não conseguir completar MFA, o acesso e bloqueado aguardando intervencao do administrador.
 

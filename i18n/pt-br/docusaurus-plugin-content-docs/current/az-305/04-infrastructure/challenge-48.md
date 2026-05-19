@@ -19,7 +19,7 @@ A NexaGlobal é uma empresa multinacional de serviços financeiros com escritór
 
 Os requisitos de conectividade incluem: conexões site-to-site seguras de ambos os data centers para todas as regiões Azure, VPN point-to-site para 2.000 trabalhadores remotos, acesso privado a serviços Azure PaaS (Azure SQL, Storage, Key Vault) sem expo-los a internet, roteamento otimizado para aplicações de trading sensíveis a latência (requisitos de milissegundos de um digito), resolução DNS que funcione perfeitamente entre o ambiente local e todas as regiões Azure, e conectividade de filiais para 15 escritórios satelite com necessidades variadas de largura de banda (10-100Mbps cada).
 
-A equipe de rede deve projetar uma solução que equilibre custo, performance e complexidade operacional enquanto atende requisitos regulatorios rigorosos para residencia de dados e criptografia de rede.
+A equipe de rede deve projetar uma solução que equilibre custo, performance e complexidade operacional enquanto atende requisitos regulatorios rigorosos para residência de dados e criptografia de rede.
 
 ## Habilidades do exame cobertas
 
@@ -29,14 +29,14 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
 
 ## Tarefas de design
 
-### Parte 1: design de conectividade hibrida
+### Parte 1: design de conectividade híbrida
 
 1. Compare as opcoes de conectividade para os 2 data centers com 3 regiões Azure:
    - VPN Gateway (S2S VPN): custo por gateway, limites de largura de banda por SKU, overhead de criptografia
    - ExpressRoute: Standard vs. Premium, opcoes de largura de banda (50Mbps a 10Gbps), locais de peering
    - ExpressRoute com failover VPN: design para alta disponibilidade
 2. Projete a topologia ExpressRoute:
-   - Quantos circuitos ExpressRoute sao necessários? (um por data center? compartilhado?)
+   - Quantos circuitos ExpressRoute são necessários? (um por data center? compartilhado?)
    - Standard vs. Premium SKU (Premium necessário para conectividade cross-region/global)
    - ExpressRoute Global Reach para conectividade direta data center-a-data center via backbone da Microsoft
    - Redundância: circuitos duplos por localização ou circuito único com backup VPN
@@ -71,7 +71,7 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
    - VNet links para resolução DNS de todos os spokes
    - Encaminhamento condicional do DNS local para o Azure Private DNS (via forwarders DNS nas VNets hub)
    - Fluxo de resolução DNS do ambiente local para private endpoint Azure
-9. Compare Private Endpoint vs. Service Endpoint vs. acesso público com regras de firewall. Documente quando cada abordagem e apropriada e as implicacoes de segurança de cada uma.
+9. Compare Private Endpoint vs. Service Endpoint vs. acesso público com regras de firewall. Documente quando cada abordagem e aprópriada e as implicacoes de segurança de cada uma.
 
 ### Parte 4: DNS e otimização de roteamento
 
@@ -96,7 +96,7 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
 <SuccessChecklist
   storageKey="az305-challenge-48"
   items={[
-    "Topologia ExpressRoute projetada com selecao de SKU, modelo de redundância e justificativa para Global Reach",
+    "Topologia ExpressRoute projetada com seleção de SKU, modelo de redundância e justificativa para Global Reach",
     "Arquitetura de VNet Azure aborda topologia hub-spoke em 3 regiões com planejamento de espaço de endereço",
     "Estratégia de Private Endpoint cobre serviços PaaS com resolução DNS tanto do ambiente local quanto do Azure",
     "Arquitetura DNS habilita resolução entre ambiente local, zonas privadas Azure e DNS público",
@@ -138,7 +138,7 @@ O ExpressRoute FastPath melhora a performance do caminho de dados ao bypassar o 
 <details>
 <summary>Dica 5: Azure DNS Private Resolver</summary>
 
-O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de encaminhamento DNS nas VNets hub. Ele fornece: endpoints de entrada (ambiente local pode consultar zonas Azure Private DNS), endpoints de saida (VMs Azure podem resolver zonas DNS locais via regras de encaminhamento). Este é um serviço gerenciado com SLA de 99,99%, sem gerenciamento de VM e escalabilidade automática. Implante na VNet hub com rulesets de encaminhamento que especificam os IPs dos servidores DNS locais para suas zonas de dominio corporativo.
+O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de encaminhamento DNS nas VNets hub. Ele fornece: endpoints de entrada (ambiente local pode consultar zonas Azure Private DNS), endpoints de saida (VMs Azure podem resolver zonas DNS locais via regras de encaminhamento). Este é um serviço gerenciado com SLA de 99,99%, sem gerenciamento de VM e escalabilidade automática. Implante na VNet hub com rulesets de encaminhamento que específicam os IPs dos servidores DNS locais para suas zonas de domínio corporativo.
 
 </details>
 

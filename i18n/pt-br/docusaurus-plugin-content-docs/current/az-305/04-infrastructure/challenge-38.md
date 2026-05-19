@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-MegaMart é um marketplace online processando 500,000 pedidos por dia em 10,000 vendedores. O pipeline de processamento de pedidos e a espinha dorsal do negocio, e qualquer falha na entrega de mensagens significa receita perdida e relacionamentos danificados com vendedores. O sistema atual tem três problemas críticos: (1) pedidos duplicados sao ocasionalmente processados quando retries ocorrem durante timeouts de rede, custando a empresa $200K/ano em reembolsos duplicados; (2) clientes premium (pagando $99/ano para processamento prioritario) veem seus pedidos processados na mesma velocidade que clientes do tier gratuito, violando o SLA premium; (3) pedidos complexos que requerem orquestracao multi-etapa (verificação de pagamento, reserva de inventário, geracao de etiqueta de envio) as vezes ficam presos em um estado inconsistente quando um serviço downstream falha.
+MegaMart é um marketplace online processando 500,000 pedidos por dia em 10,000 vendedores. O pipeline de processamento de pedidos e a espinha dorsal do negócio, e qualquer falha na entrega de mensagens significa receita perdida e relacionamentos danificados com vendedores. O sistema atual tem três problemas críticos: (1) pedidos duplicados são ocasionalmente processados quando retries ocorrem durante timeouts de rede, custando a empresa $200K/ano em reembolsos duplicados; (2) clientes premium (pagando $99/ano para processamento prioritario) veem seus pedidos processados na mesma velocidade que clientes do tier gratuito, violando o SLA premium; (3) pedidos complexos que requerem orquestração multi-etapa (verificação de pagamento, reserva de inventário, geracao de etiqueta de envio) as vezes ficam presos em um estado inconsistente quando um serviço downstream falha.
 
 A equipe de arquitetura precisa projetar uma solução de mensageria que garanta processamento exactly-once, suporte roteamento de mensagens baseado em prioridade, lide com transações multi-etapa de forma confiável e mantenha garantias de entrega mesmo quando serviços downstream experimentam indisponibilidades prolongadas (até 4 horas).
 
@@ -25,7 +25,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
 
 ## Tarefas de design
 
-### Parte 1: selecao de serviço de mensageria
+### Parte 1: seleção de serviço de mensageria
 
 1. Compare serviços de mensageria Azure para o pipeline de processamento de pedidos:
 
@@ -39,7 +39,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
 | Tamanho max da fila | 1-80 GB | 500 TB | N/A (entrega push) |
 | Garantia de entrega | At-least-once / At-most-once | At-least-once | At-least-once |
 
-2. Justifique por que Azure Service Bus é necessário ao inves de Storage Queues para este cenário. Identifique quais recursos específicos (sessions, detecção de duplicatas, dead-letter, transações) mapeiam para quais problemas de negocio.
+2. Justifique por que Azure Service Bus é necessário ao inves de Storage Queues para este cenário. Identifique quais recursos específicos (sessions, detecção de duplicatas, dead-letter, transações) mapeiam para quais problemas de negócio.
 
 3. Determine se o tier Standard ou Premium do Service Bus é necessário. Considere:
    - Volume de mensagens: 500,000 pedidos/dia = ~350/minuto em média, 2,000/minuto em pico
@@ -51,7 +51,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
 4. Projete a estratégia de detecção de duplicatas:
    - Service Bus fornece detecção de duplicatas dentro de uma janela de tempo configuravel (até 7 dias)
    - Para que o `MessageId` deve ser definido nas mensagens de pedido? (Order ID? Transaction ID?)
-   - Qual é a janela de tempo de detecção de duplicatas apropriada para retries de pedidos?
+   - Qual é a janela de tempo de detecção de duplicatas aprópriada para retries de pedidos?
    - Como isso interage com lógica de retry do lado do cliente?
 
 5. Implemente o padrão de processamento exactly-once no lado do consumidor:
@@ -93,7 +93,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
     - Etapa 3: Gerar etiqueta de envio (chamar Shipping Service via fila)
     - Cada etapa deve completar ou disparar compensacao para etapas anteriores
 
-11. Implemente mensageria confiável para a orquestracao:
+11. Implemente mensageria confiável para a orquestração:
     - Use Service Bus sessions para manter ordem de operações por pedido (session ID = Order ID)
     - Use transações para atomicamente receber uma mensagem e enviar a mensagem da próxima etapa
     - Use dead-letter queues para mensagens que falham apos número máximo de tentativas de retry
@@ -102,7 +102,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
     - Quais condições devem enviar uma mensagem para a dead-letter queue?
     - Como mensagens dead-lettered devem ser monitoradas e alertadas?
     - Projete o processo de revisao manual para pedidos dead-lettered
-    - Qual é a política de retencao para mensagens dead-letter?
+    - Qual é a política de retenção para mensagens dead-letter?
 
 ## Criterios de sucesso
 
@@ -110,7 +110,7 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
   storageKey="az305-challenge-38"
   items={[
     "Service Bus selecionado ao inves de Storage Queues com justificativa baseada em recursos",
-    "Detecção de duplicatas configurada com estratégia de MessageId e janela de tempo apropriadas",
+    "Detecção de duplicatas configurada com estratégia de MessageId e janela de tempo aprópriadas",
     "Padrão de processamento exactly-once projetado usando PeekLock e consumidores idempotentes",
     "Arquitetura de roteamento por prioridade escolhida (filas separadas ou topic subscriptions) com alocacao de consumidores",
     "Orquestração saga multi-etapa usa sessions e transações para consistência",
@@ -124,9 +124,9 @@ A equipe de arquitetura precisa projetar uma solução de mensageria que garanta
 <summary>Dica 1: Configuração de Detecção de Duplicatas</summary>
 
 A detecção de duplicatas do Service Bus funciona mantendo uma tabela hash de MessageIds por uma janela configuravel:
-- Defina `MessageId` para um identificador com significado de negocio (ex.: `OrderId` ou `OrderId-AttemptTimestamp`)
+- Defina `MessageId` para um identificador com significado de negócio (ex.: `OrderId` ou `OrderId-AttemptTimestamp`)
 - Configure `DuplicateDetectionHistoryTimeWindow` para cobrir sua janela de retry (ex.: 10 minutos para retries de API)
-- Mensagens com o mesmo MessageId dentro da janela sao silenciosamente descartadas
+- Mensagens com o mesmo MessageId dentro da janela são silenciosamente descartadas
 - O remetente recebe sucesso (não sabe que a mensagem foi deduplicada)
 
 Importante: Isso apenas previne envios duplicados. Para prevenir processamento duplicado, você ainda precisa de consumidores idempotentes (usando PeekLock + store de deduplicacao no banco de dados).
@@ -150,7 +150,7 @@ Topic: orders
 
 Beneficios sobre filas separadas:
 - Publicador único (não precisa de lógica de roteamento)
-- Filtros sao avaliados no lado do servidor (sem filtragem no lado do cliente)
+- Filtros são avaliados no lado do servidor (sem filtragem no lado do cliente)
 - Facil adicionar novos níveis de prioridade sem alterar produtores
 - Cada subscription tem sua própria dead-letter queue
 
@@ -186,7 +186,7 @@ Se qualquer operação falhar, todas sofrem rollback. Isso garante que nenhuma m
 <details>
 <summary>Dica 4: Melhores Práticas de Dead-Letter Queue</summary>
 
-Mensagens sao dead-lettered quando:
+Mensagens são dead-lettered quando:
 - MaxDeliveryCount e excedido (padrão: 10 tentativas)
 - TTL da mensagem expira
 - Avaliação de filtro de subscription falha
@@ -214,21 +214,21 @@ Projete sua estratégia de DLQ:
 <details>
 <summary>1. Um consumidor processa uma mensagem de pedido e escreve no banco de dados, mas crasheia antes de chamar Complete() na mensagem do Service Bus. O que acontece?</summary>
 
-**O lock da mensagem expira e a mensagem se torna disponível para reprocessamento.** No modo PeekLock, a mensagem e bloqueada por uma duracao configuravel (padrão 30 segundos, máximo 5 minutos). Se o consumidor não chamar Complete() antes do lock expirar (devido a crash ou timeout), Service Bus torna a mensagem visivel para outros consumidores. A contagem de entregas incrementa. Para prevenir processamento duplo, o consumidor deve verificar no banco de dados se o pedido já foi processado antes de re-executar a lógica de negocio (processamento idempotente). Apos MaxDeliveryCount ser atingido, a mensagem e dead-lettered.
+**O lock da mensagem expira e a mensagem se torna disponível para reprocessamento.** No modo PeekLock, a mensagem e bloqueada por uma duracao configuravel (padrão 30 segundos, máximo 5 minutos). Se o consumidor não chamar Complete() antes do lock expirar (devido a crash ou timeout), Service Bus torna a mensagem visível para outros consumidores. A contagem de entregas incrementa. Para prevenir processamento duplo, o consumidor deve verificar no banco de dados se o pedido já foi processado antes de re-executar a lógica de negócio (processamento idempotente). Apos MaxDeliveryCount ser atingido, a mensagem e dead-lettered.
 
 </details>
 
 <details>
-<summary>2. Por que Azure Storage Queues sao insuficientes para um sistema de processamento de pedidos que requer semantica de entrega exactly-once?</summary>
+<summary>2. Por que Azure Storage Queues são insuficientes para um sistema de processamento de pedidos que requer semantica de entrega exactly-once?</summary>
 
-**Storage Queues carecem de detecção de duplicatas, transações, dead-letter queues e message sessions.** Sem detecção de duplicatas integrada, a aplicação deve implementar sua própria lógica de deduplicacao inteiramente. Sem transações, você não pode atomicamente receber uma mensagem e enviar uma mensagem de acompanhamento. Sem dead-letter queues, mensagens venenosas devem ser tratadas manualmente. Sem sessions, ordenacao FIFO por cliente e impossível. Storage Queues sao projetadas para cenários simples de alto volume onde entrega at-least-once e aceitavel e a aplicação lida com toda semantica avancada por conta própria.
+**Storage Queues carecem de detecção de duplicatas, transações, dead-letter queues e message sessions.** Sem detecção de duplicatas integrada, a aplicação deve implementar sua própria lógica de deduplicacao inteiramente. Sem transações, você não pode atomicamente receber uma mensagem e enviar uma mensagem de acompanhamento. Sem dead-letter queues, mensagens venenosas devem ser tratadas manualmente. Sem sessions, ordenacao FIFO por cliente e impossível. Storage Queues são projetadas para cenários simples de alto volume onde entrega at-least-once e aceitavel e a aplicação lida com toda semantica avancada por conta própria.
 
 </details>
 
 <details>
 <summary>3. Um pedido requer pagamento, depois reserva de inventário, depois geracao de etiqueta de envio. Se a reserva de inventário falhar, como o sistema deve compensar?</summary>
 
-**Emita uma transação compensatória para reverter o pagamento, e entao notifique o cliente.** Este e o padrão Saga: cada etapa tem uma acao de compensacao correspondente. Usando Service Bus sessions (session ID = Order ID), o orquestrador rastreia quais etapas completaram. Quando a Etapa 2 (inventário) falha, o orquestrador envia uma mensagem "reverter pagamento" para a fila do Payment Service. Transações do Service Bus garantem que "envio da mensagem de compensacao" e "complete da mensagem original" sao atomicos. A dead-letter queue captura pedidos que falham na compensacao, requerendo revisao manual.
+**Emita uma transação compensatória para reverter o pagamento, e entao notifique o cliente.** Este e o padrão Saga: cada etapa tem uma acao de compensacao correspondente. Usando Service Bus sessions (session ID = Order ID), o orquestrador rastreia quais etapas completaram. Quando a Etapa 2 (inventário) falha, o orquestrador envia uma mensagem "reverter pagamento" para a fila do Payment Service. Transações do Service Bus garantem que "envio da mensagem de compensacao" e "complete da mensagem original" são atomicos. A dead-letter queue captura pedidos que falham na compensacao, requerendo revisao manual.
 
 </details>
 
@@ -288,7 +288,7 @@ az servicebus namespace authorization-rule list \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A GlobalPay Corporation processa folha de pagamento para 100.000 funcionários em 15 paises abrangendo América do Norte, Europa e Asia-Pacifico. As execucoes de folha sao processos batch críticos em tempo que devem ser concluidos até a meia-noite no fuso horario local de cada pais, com resultados disponíveis para transferencias bancarias até as 6:00 AM. Se uma execução de folha falhar ou dados forem perdidos durante o processamento, a janela de re-execução e extremamente apertada, e folha de pagamento perdida aciona penalidades regulatorias imediatas em múltiplas jurisdicoes.
+A GlobalPay Corporation processa folha de pagamento para 100.000 funcionários em 15 paises abrangendo América do Norte, Europa e Asia-Pacifico. As execucoes de folha são processos batch críticos em tempo que devem ser concluidos até a meia-noite no fuso horario local de cada pais, com resultados disponíveis para transferencias bancarias até as 6:00 AM. Se uma execução de folha falhar ou dados forem perdidos durante o processamento, a janela de re-execução e extremamente apertada, e folha de pagamento perdida aciona penalidades regulatorias imediatas em múltiplas jurisdicoes.
 
 O banco de dados principal de folha de pagamento é um Azure SQL Database (tier Business Critical, 32 vCores) em East US, com read replicas em West Europe e Southeast Asia para relatórios regionais. O sistema processa folha em ondas rotativas: Asia-Pacifico executa primeiro (comecando as 15:00 UTC), Europa executa em seguida (comecando as 21:00 UTC), e América do Norte por último (comecando as 05:00 UTC). Durante cada execução, o banco de dados lida com operações intensivas de escrita (calculos de salario, retencoes de impostos, deducoes) seguidas por leituras pesadas (gerando contracheques, formularios fiscais, arquivos bancarios).
 
@@ -74,8 +74,8 @@ A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durant
 7. Análise o que acontece durante um evento de failover automático:
    - Como a connection string da aplicação muda? (Não muda - endpoint do failover group e estavel)
    - O que acontece com transações em andamento? (Rollback no antigo primário)
-   - Quanto tempo o banco de dados fica indisponivel durante o failover?
-   - Qual é o grace period, e quais sao os trade-offs de defini-lo mais curto vs. mais longo?
+   - Quanto tempo o banco de dados fica indisponível durante o failover?
+   - Qual é o grace period, e quais são os trade-offs de defini-lo mais curto vs. mais longo?
 
 8. Projete a lógica de retry em nível de aplicação para cenários de failover:
    - Codigos de erro transientes para retry: 40613, 40197, 40501, 49918
@@ -118,10 +118,10 @@ A GlobalPay não pode perder NENHUM dado durante um failover. Um failover durant
   storageKey="az305-challenge-31"
   items={[
     "Business Critical tier selected with justification for zero-RPO and sub-30s failover",
-    "Failover group configured with appropriate grace period for automatic failover",
+    "Failover group configured with apprópriate grace period for automatic failover",
     "Multi-region read access topology designed (failover group + active geo-replication)",
     "Application retry logic designed for transient failover errors",
-    "Split-brain scenario analyzed with grace period trade-offs documented",
+    "Split-brain scenário analyzed with grace period trade-offs documented",
     "Monitoring and alerting configured for replication lag and failover events"
   ]}
 />
@@ -139,7 +139,7 @@ O tier Business Critical do Azure SQL Database usa uma arquitetura baseada em Al
 - Um secundário esta disponível como endpoint read-only (sem custo extra)
 
 Configuração zone-redundant:
-- Replicas sao distribuidas entre availability zones
+- Replicas são distribuidas entre availability zones
 - Sobrevive a falha completa de zona com zero perda de dados
 - SLA aumenta de 99,99% para 99,995%
 
@@ -159,7 +159,7 @@ Durante o grace period:
 - Primário esta inalcancavel (confirmado pelo monitoramento do Azure)
 - Nenhuma escrita é possível (banco de dados e efetivamente read-only via secundário)
 - Apos o grace period expirar: failover automático aciona, promovendo secundário a primário
-- Quaisquer transações confirmadas no antigo primário mas ainda não replicadas para o secundário sao PERDIDAS
+- Quaisquer transações confirmadas no antigo primário mas ainda não replicadas para o secundário são PERDIDAS
 
 Para GlobalPay: Defina grace period para 1 hora. Durante esse tempo, processamento de folha para, mas nenhum dado e perdido. Se o primário recuperar dentro de 1 hora, nenhum failover ocorre. A pausa de 1 hora e aceitavel dado que a janela de processamento de folha e de 6+ horas.
 
@@ -176,7 +176,7 @@ Beneficios para a aplicação:
 - Nenhuma mudança de connection string necessária durante failover
 - TTL DNS para endpoints do failover group e 30 segundos
 - Apos failover, novas conexões roteiam para o novo primário dentro de ~30 segundos
-- Conexoes existentes sao descartadas e devem reconectar (lógica de retry trata isso)
+- Conexoes existentes são descartadas e devem reconectar (lógica de retry trata isso)
 
 ```bash
 # Create failover group
@@ -231,7 +231,7 @@ Para GlobalPay: A região APAC usa geo-replica para leituras de relatórios, com
 <details>
 <summary>1. A GlobalPay requer zero perda de dados durante failover. Qual tier e combinacao de recursos do Azure SQL garante RPO = 0 para falhas de zona?</summary>
 
-**Tier Business Critical com zone redundancy habilitado.** Business Critical usa replicação sincrona para 3 replicas secundarias (Always On AG). Com zone redundancy, essas replicas sao distribuidas entre availability zones. Toda transação deve ser confirmada em TODAS as replicas antes do cliente receber reconhecimento, garantindo zero perda de dados para qualquer falha de zona única. O tier General Purpose também suporta zone redundancy mas armazena dados em armazenamento remoto com diferentes caracteristicas de HA. Para failover cross-region, RPO e aproximadamente 5 segundos (assincrono) porque replicação sincrona entre regiões não é possível devido a latência.
+**Tier Business Critical com zone redundancy habilitado.** Business Critical usa replicação sincrona para 3 replicas secundarias (Always On AG). Com zone redundancy, essas replicas são distribuidas entre availability zones. Toda transação deve ser confirmada em TODAS as replicas antes do cliente receber reconhecimento, garantindo zero perda de dados para qualquer falha de zona única. O tier General Purpose também suporta zone redundancy mas armazena dados em armazenamento remoto com diferentes caracteristicas de HA. Para failover cross-region, RPO e aproximadamente 5 segundos (assincrono) porque replicação sincrona entre regiões não é possível devido a latência.
 
 </details>
 
@@ -245,7 +245,7 @@ Para GlobalPay: A região APAC usa geo-replica para leituras de relatórios, com
 <details>
 <summary>3. Durante um failover automático de failover group, o que acontece com um processo batch de folha que tem uma transação em andamento inserindo 10.000 registros de salario?</summary>
 
-**A transação em andamento sofre rollback no antigo primário, e a aplicação deve detectar a desconexao e retentar.** Quando o failover ocorre, o antigo primário se torna read-only (ou indisponivel), e quaisquer transações não confirmadas sofrem rollback. O novo primário tem todas as transações previamente confirmadas (aquelas replicadas antes da falha). A aplicação recebe um erro de conexão (SQL error 40613 ou erro transiente similar), e a lógica de retry deve: reconectar ao endpoint do failover group (que agora resolve para o novo primário), detectar quais registros já foram confirmados, e retomar o batch a partir do último ponto confirmado. Isso requer design de batch idempotente com checkpointing.
+**A transação em andamento sofre rollback no antigo primário, e a aplicação deve detectar a desconexao e retentar.** Quando o failover ocorre, o antigo primário se torna read-only (ou indisponível), e quaisquer transações não confirmadas sofrem rollback. O novo primário tem todas as transações previamente confirmadas (aquelas replicadas antes da falha). A aplicação recebe um erro de conexão (SQL error 40613 ou erro transiente similar), e a lógica de retry deve: reconectar ao endpoint do failover group (que agora resolve para o novo primário), detectar quais registros já foram confirmados, e retomar o batch a partir do último ponto confirmado. Isso requer design de batch idempotente com checkpointing.
 
 </details>
 

@@ -63,7 +63,7 @@ Cada habilidade do [guia de estudo oficial do AZ-305](https://learn.microsoft.co
 | Habilidade | Desafio |
 |------------|---------|
 | Recomendar uma solução para integração de dados | [Desafio 22](/docs/az-305/data-storage/challenge-22) |
-| Recomendar uma solução para analise de dados | [Desafio 23](/docs/az-305/data-storage/challenge-23) |
+| Recomendar uma solução para análise de dados | [Desafio 23](/docs/az-305/data-storage/challenge-23) |
 
 **Capstone do Domínio**: [Desafio 24](/docs/az-305/data-storage/challenge-24) (plataforma de dados ponta a ponta)
 

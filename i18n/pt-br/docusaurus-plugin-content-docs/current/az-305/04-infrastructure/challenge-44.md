@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Precision Manufacturing é uma empresa de manufatura de médio porte operando 200 servidores em 2 data centers on-premises (primário em Chicago, DR em Dallas). O contrato de locacao do data center em Chicago expira em 18 meses, e o contrato da instalacao de Dallas expira 6 meses depois. O CEO se comprometeu a migrar inteiramente para Azure em vez de renovar os contratos, projetando uma redução de custos de 30% em 3 anos.
 
-O ambiente atual inclui: 80 VMs Windows Server (executando aplicações web IIS em .NET Framework 4.x, servidores de arquivo, controladores de dominio Active Directory), 50 VMs Linux (servidores web Apache/Nginx, aplicações Python customizadas, servidores de build Jenkins), 30 instâncias SQL Server (versoes variando de 2012 a 2022, algumas com consultas cross-database) e 40 aplicações legadas com dependências não documentadas. Algumas aplicações tem requisitos de conformidade (SOX para sistemas financeiros, FDA 21 CFR Part 11 para gerenciamento de qualidade).
+O ambiente atual inclui: 80 VMs Windows Server (executando aplicações web IIS em .NET Framework 4.x, servidores de arquivo, controladores de domínio Active Directory), 50 VMs Linux (servidores web Apache/Nginx, aplicações Python customizadas, servidores de build Jenkins), 30 instâncias SQL Server (versoes variando de 2012 a 2022, algumas com consultas cross-database) e 40 aplicações legadas com dependências não documentadas. Algumas aplicações tem requisitos de conformidade (SOX para sistemas financeiros, FDA 21 CFR Part 11 para gerenciamento de qualidade).
 
 A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificacao AZ-104) e a organização não tem landing zone Azure existente. Eles precisam de um plano de migração estruturado usando o Microsoft Cloud Adoption Framework que enderece prontidao organizacional, planejamento técnico e execução em fases.
 
@@ -29,14 +29,14 @@ A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificaca
 
 ### Parte 1: fase de estratégia e planejamento CAF
 
-1. Aplique a metodologia de Estratégia do CAF: defina motivacoes de negocio (saida do data center, redução de custos, modernizacao), resultados de negocio (KPIs mensuraveis) e justificativa financeira para a migração.
+1. Aplique a metodologia de Estratégia do CAF: defina motivacoes de negócio (saida do data center, redução de custos, modernizacao), resultados de negócio (KPIs mensuraveis) e justificativa financeira para a migração.
 2. Crie um plano de racionalizacao usando os 5 Rs para uma amostra representativa de workloads:
-   - Controladores de dominio Active Directory (Rehost? Rearchitect para Entra ID?)
+   - Controladores de domínio Active Directory (Rehost? Rearchitect para Entra ID?)
    - Aplicações .NET Framework 4.x IIS (Rehost para VMs? Refactor para App Service?)
    - Instâncias SQL Server 2012 (Rehost para SQL em VM? Refactor para Azure SQL MI?)
    - Servidores de build Jenkins (Rehost? Replace com Azure DevOps/GitHub Actions?)
    - Servidores de arquivo (Rehost? Replace com Azure Files/SharePoint?)
-3. Projete um plano de ondas de migração que agrupe workloads em 4-6 ondas baseado em: mapeamento de dependências, criticidade de negocio, complexidade técnica e requisitos de conformidade. Documente quais workloads vao em cada onda e por que.
+3. Projete um plano de ondas de migração que agrupe workloads em 4-6 ondas baseado em: mapeamento de dependências, criticidade de negócio, complexidade técnica e requisitos de conformidade. Documente quais workloads vao em cada onda e por que.
 
 ### Parte 2: fase ready do CAF - design da landing zone
 
@@ -44,7 +44,7 @@ A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificaca
    - Hierarquia de management groups (root, platform, workloads, sandbox)
    - Estratégia de subscriptions (única vs. múltiplas subscriptions por ambiente)
    - Topologia de rede (hub-spoke com hub em cada região)
-   - Integração de identidade (identidade hibrida com Entra Connect)
+   - Integração de identidade (identidade híbrida com Entra Connect)
 5. Defina guardrails de governança para a landing zone usando Azure Policy:
    - Regiões permitidas (requisito de conformidade)
    - Tags obrigatorias (centro de custo, ambiente, proprietario)
@@ -69,7 +69,7 @@ A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificaca
 
 ### Parte 4: fase govern e manage do CAF
 
-10. Projete o modelo de governança continua: quem aprova novas implantacoes de recursos Azure, como o custo e alocado de volta para unidades de negocio, como a conformidade e monitorada continuamente.
+10. Projete o modelo de governança continua: quem aprova novas implantacoes de recursos Azure, como o custo e alocado de volta para unidades de negócio, como a conformidade e monitorada continuamente.
 11. Crie um registro de riscos para a migração identificando os 5 principais riscos (ex: dependências não descobertas, degradacao de performance, tempo de inatividade prolongado) com estratégias de mitigacao para cada.
 12. Defina metricas de sucesso para cada fase do CAF: Strategy (business case aprovado), Plan (avaliação completa), Ready (landing zone implantada), Adopt (workloads migrados com SLA atendido), Govern (políticas aplicadas), Manage (operações funcionando).
 
@@ -106,7 +106,7 @@ A Microsoft fornece aceleradores de landing zone (anteriormente implementações
 <details>
 <summary>Dica 3: Sequenciamento de Ondas de Migração</summary>
 
-Sequencie ondas por dependência e risco: Onda 1 deve ser workloads de baixo risco e bem compreendidos para construir confiança da equipe é validar a landing zone. Ondas intermediarias lidam com a massa de workloads padrão. Ondas finais abordam workloads complexos com dependências dificeis. Nunca coloque controladores de dominio ou DNS na primeira onda. Considere "gravidade de dependência" - se 20 servidores dependem de um banco de dados compartilhado, o banco de dados deve migrar na mesma onda ou antes.
+Sequencie ondas por dependência e risco: Onda 1 deve ser workloads de baixo risco e bem compreendidos para construir confiança da equipe é validar a landing zone. Ondas intermediarias lidam com a massa de workloads padrão. Ondas finais abordam workloads complexos com dependências dificeis. Nunca coloque controladores de domínio ou DNS na primeira onda. Considere "gravidade de dependência" - se 20 servidores dependem de um banco de dados compartilhado, o banco de dados deve migrar na mesma onda ou antes.
 
 </details>
 
@@ -138,7 +138,7 @@ Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Acti
 <details>
 <summary>1. Uma empresa tem 200 servidores para migrar com prazo de 18 meses. A equipe de migração quer avaliar todos os servidores antes de migrar qualquer um. Qual principio do CAF isso viola e qual é a abordagem recomendada?</summary>
 
-**Isso viola o principio "iterar e aprender" e arrisca paralisia por análise.** O CAF recomenda uma abordagem incremental: avalie uma onda piloto (10-20 servidores), migre-os para validar a landing zone e processos, entao aplique licoes aprendidas nas ondas subsequentes. Tentar avaliar completamente todos os 200 servidores antes de migrar qualquer um consome meses da timeline sem entregar valor de negocio. Use "racionalizacao assumida" (assuma rehost) para planejamento inicial e refine avaliacoes onda a onda.
+**Isso viola o principio "iterar e aprender" e arrisca paralisia por análise.** O CAF recomenda uma abordagem incremental: avalie uma onda piloto (10-20 servidores), migre-os para validar a landing zone e processos, entao aplique licoes aprendidas nas ondas subsequentes. Tentar avaliar completamente todos os 200 servidores antes de migrar qualquer um consome meses da timeline sem entregar valor de negócio. Use "racionalizacao assumida" (assuma rehost) para planejamento inicial e refine avaliacoes onda a onda.
 
 </details>
 

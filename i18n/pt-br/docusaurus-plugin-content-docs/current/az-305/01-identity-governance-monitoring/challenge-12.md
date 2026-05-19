@@ -39,14 +39,14 @@ O desafio é equilibrar rigor de segurança com eficiência operacional. Engenhe
 5. Projete o programa de access reviews para a Velocity Dynamics. Defina escopos de revisao: quais grupos, funções, atribuicoes de aplicação e atribuicoes de função de recursos do Azure precisam de revisao periódica. Especifique a frequência de revisao (trimestral, semestral) com base no nível de risco.
 6. Defina a estratégia de atribuicao de revisores. Para cada tipo de revisao, determine quem revisa: gerente revisa acesso de subordinados diretos, proprietarios de grupo revisam membros, proprietarios de recurso revisam acesso a seus recursos, ou auto-atestacao. Aborde cenários onde o revisor designado não responde.
 7. Configure as opcoes de auto-aplicação para access reviews. Determine quando o acesso deve ser automaticamente revogado (revisor não responde em 14 dias, revisor explicitamente nega, recomendacoes indicam acesso não utilizado) versus quando intervencao humana é necessária.
-8. Projete access reviews especificamente para usuários externos/convidados. Defina a cadencia de revisao, criterios para remocao automática (sem login por 90 dias), e o fluxo de notificação antes da revogacao de acesso.
+8. Projete access reviews específicamente para usuários externos/convidados. Defina a cadencia de revisao, critérios para remocao automática (sem login por 90 dias), e o fluxo de notificação antes da revogacao de acesso.
 
 ### Parte 3: entitlement Management
 
 9. Projete access packages para padrões comuns de acesso baseado em função. Crie access packages para: "Engineering Team Member" (recursos básicos do Azure + ferramentas de desenvolvimento), "Production Support" (acesso de leitura a produção + escrita limitada para resposta a incidentes) e "Data Analyst" (acesso ao data lake + ferramentas de BI). Defina quais recursos cada pacote concede e o fluxo de aprovacao.
 10. Projete a estrutura de catálogo de access packages. Determine se deve usar um único catálogo ou múltiplos catálogos (por departamento, por projeto, por nível de sensibilidade). Defina proprietarios de catálogo e suas responsabilidades.
 11. Configure políticas de access packages para diferentes tipos de solicitantes: funcionários internos (auto-aprovado para pacotes básicos), contratados (aprovacao do gerente necessária) e solicitacoes entre departamentos (aprovacao do proprietario do recurso). Defina políticas de expiracao para cada tipo.
-12. Projete organizações conectadas para acesso de contratados. Determine como organizações parceiras externas sao integradas, como seus usuários solicitam access packages e como o acesso e automaticamente removido quando o acordo de parceria termina.
+12. Projete organizações conectadas para acesso de contratados. Determine como organizações parceiras externas são integradas, como seus usuários solicitam access packages e como o acesso e automaticamente removido quando o acordo de parceria termina.
 
 ### Parte 4: lifecycle workflows
 
@@ -59,10 +59,10 @@ O desafio é equilibrar rigor de segurança com eficiência operacional. Engenhe
 <SuccessChecklist
   storageKey="az305-challenge-12"
   items={[
-    "Designed PIM configuration eliminating permanent privileged access with appropriate activation policies",
+    "Designed PIM configuration eliminating permanent privileged access with apprópriate activation policies",
     "Created access review program covering groups, roles, and guest users with auto-apply settings",
     "Designed entitlement management access packages for common role-based access patterns",
-    "Specified lifecycle workflows for joiner/mover/leaver scenarios integrated with HR system",
+    "Specified lifecycle workflows for joiner/mover/leaver scenários integrated with HR system",
     "Addressed contractor lifecycle management with time-bound access and sponsor accountability",
     "Defined alerting and escalation procedures for governance events"
   ]}
@@ -87,7 +87,7 @@ Configure revisoes com: auto-aplicação de resultados habilitada (remove acesso
 <details>
 <summary>Dica 3: Estrutura de Entitlement Management</summary>
 
-Access packages agrupam acesso a recursos relacionados: grupos (para RBAC), atribuicoes de função de aplicação e sites SharePoint em uma única unidade solicitavel. Use catálogos para organizar pacotes por dominio (ex.: "Engineering Catalog" de propriedade do VP de Engenharia). Cada access package pode ter múltiplas políticas (diferentes fluxos de aprovacao para diferentes tipos de solicitantes). Defina expiracao para corresponder a duracao esperada de necessidade: 365 dias para pacotes baseados em função de funcionários (com access review antes da expiracao), 90-180 dias para pacotes de contratados, 30 dias para acesso temporário de projeto.
+Access packages agrupam acesso a recursos relacionados: grupos (para RBAC), atribuicoes de função de aplicação e sites SharePoint em uma única unidade solicitavel. Use catálogos para organizar pacotes por domínio (ex.: "Engineering Catalog" de propriedade do VP de Engenharia). Cada access package pode ter múltiplas políticas (diferentes fluxos de aprovacao para diferentes tipos de solicitantes). Defina expiracao para corresponder a duracao esperada de necessidade: 365 dias para pacotes baseados em função de funcionários (com access review antes da expiracao), 90-180 dias para pacotes de contratados, 30 dias para acesso temporário de projeto.
 
 </details>
 
@@ -119,7 +119,7 @@ Para contratados sem sinal de sistema de RH: (1) Exija um "sponsor" (funcionario
 <details>
 <summary>1. Um incidente em produção requer que um engenheiro ative a função de Subscription Owner as 2 da manha. O fluxo de aprovacao padrão requer que o lider da equipe de segurança aprove, mas ele não esta disponível. Como o PIM deve ser configurado para lidar com este cenário?</summary>
 
-**Configure um caminho de escalonamento no fluxo de trabalho de aprovacao.** O PIM suporta aprovacao multinivel com escalonamento. Configure o aprovador primário como o lider da equipe de segurança, com um aprovador de escalonamento (ex.: um grupo da equipe de segurança ou o CISO) que é notificado se a solicitacao não for aprovada em 30-60 minutos. Alternativamente, para cenários de emergencia, configure uma conta "break glass" com acesso permanente de Owner (armazenada com segurança, uso monitorado, acesso revisado mensalmente). Algumas organizações também criam uma função PIM separada de "Emergency Access" com um timeout de aprovacao mais curto e alertas.
+**Configure um caminho de escalonamento no fluxo de trabalho de aprovacao.** O PIM suporta aprovacao multinível com escalonamento. Configure o aprovador primário como o lider da equipe de segurança, com um aprovador de escalonamento (ex.: um grupo da equipe de segurança ou o CISO) que é notificado se a solicitacao não for aprovada em 30-60 minutos. Alternativamente, para cenários de emergencia, configure uma conta "break glass" com acesso permanente de Owner (armazenada com segurança, uso monitorado, acesso revisado mensalmente). Algumas organizações também criam uma função PIM separada de "Emergency Access" com um timeout de aprovacao mais curto e alertas.
 
 </details>
 
@@ -138,9 +138,9 @@ Para contratados sem sinal de sistema de RH: (1) Exija um "sponsor" (funcionario
 </details>
 
 <details>
-<summary>4. Um funcionario transfere do departamento de Engenharia para o departamento de Vendas. Seu registro no Workday e atualizado. Quais ações de lifecycle workflow devem ser disparadas para garantir acesso apropriado?</summary>
+<summary>4. Um funcionario transfere do departamento de Engenharia para o departamento de Vendas. Seu registro no Workday e atualizado. Quais ações de lifecycle workflow devem ser disparadas para garantir acesso aprópriado?</summary>
 
-**Um lifecycle workflow de "mover" deve ser disparado na mudança de atributo de departamento.** O workflow deve: (1) Remover o funcionario de grupos específicos de Engenharia (revogando acesso a recursos do Azure, atribuicoes de aplicação), (2) Adicionar o funcionario a grupos específicos de Vendas, (3) Revogar quaisquer access packages de Engenharia (ou deixa-los expirar), (4) Opcionalmente disparar uma access review de qualquer acesso remanescente que o usuário possui para garantir que nada inapropriado seja transferido. O gatilho em lifecycle workflows e a mudança de atributo (departamento de "Engineering" para "Sales") sincronizada do Workday via provisionamento do Entra ID. Um período de graca (ex.: 7 dias) antes de remover o acesso antigo pode ser configurado para lidar com períodos de transicao.
+**Um lifecycle workflow de "mover" deve ser disparado na mudança de atributo de departamento.** O workflow deve: (1) Remover o funcionario de grupos específicos de Engenharia (revogando acesso a recursos do Azure, atribuicoes de aplicação), (2) Adicionar o funcionario a grupos específicos de Vendas, (3) Revogar quaisquer access packages de Engenharia (ou deixa-los expirar), (4) Opcionalmente disparar uma access review de qualquer acesso remanescente que o usuário possui para garantir que nada inaprópriado seja transferido. O gatilho em lifecycle workflows e a mudança de atributo (departamento de "Engineering" para "Sales") sincronizada do Workday via provisionamento do Entra ID. Um período de graca (ex.: 7 dias) antes de remover o acesso antigo pode ser configurado para lidar com períodos de transicao.
 
 </details>
 

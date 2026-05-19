@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A ShopStream é uma plataforma de e-commerce de médio porte atendendo 2 milhões de clientes ativos com $50M em receita anual. Sua plataforma funciona como uma arquitetura classica de 3 camadas no Azure: uma camada web (frontend e CDN), uma camada de API (processamento de pedidos, gerenciamento de inventário, integração com gateway de pagamento), é uma camada de banco de dados (Azure SQL para transações, Redis para estado de sessão, Azure Storage para imagens de produtos). A implantacao primária esta em East US 2.
+A ShopStream é uma plataforma de e-commerce de médio porte atendendo 2 milhões de clientes ativos com $50M em receita anual. Sua plataforma funciona como uma arquitetura classica de 3 camadas no Azure: uma camada web (frontend e CDN), uma camada de API (processamento de pedidos, gerenciamento de inventário, integração com gateway de pagamento), é uma camada de banco de dados (Azure SQL para transações, Redis para estado de sessão, Azure Storage para imagens de produtos). A implantação primária esta em East US 2.
 
 Apos uma interrupcao de 4 horas na última Black Friday causada por uma falha do subsistema de armazenamento em sua região primária, a ShopStream perdeu aproximadamente $800K em receita e confiança significativa dos clientes. O conselho determinou um plano abrangente de disaster recovery com os seguintes requisitos rigidos: a camada web deve recuperar em 5 minutos (RTO), a camada de API em 10 minutos (RTO), e a camada de banco de dados deve ter no máximo 5 segundos de perda de dados (RPO). O orcamento de DR é $3.000/mes para infraestrutura secundária em West US 2.
 
@@ -23,7 +23,7 @@ Este desafio combina todas as habilidades de backup e DR dos desafios anteriores
 
 ## Habilidades do exame cobertas
 
-- Recomendar uma solução de recuperação para cargas de trabalho Azure e hibridas que atenda aos objetivos de recuperação
+- Recomendar uma solução de recuperação para cargas de trabalho Azure e híbridas que atenda aos objetivos de recuperação
 - Recomendar uma solução de backup e recuperação para computacao
 - Recomendar uma solução de backup e recuperação para bancos de dados
 
@@ -34,7 +34,7 @@ Este desafio combina todas as habilidades de backup e DR dos desafios anteriores
 1. Projete a configuração do Azure Site Recovery (ASR) para as camadas web e API:
    - Camada web: 4 VMs atras de um load balancer (stateless, sessão armazenada no Redis)
    - Camada API: 6 VMs processando pedidos (stateless exceto por transações em andamento)
-   - Determine frequência de replicação, retencao de pontos de recuperação e snapshots crash-consistent vs. app-consistent
+   - Determine frequência de replicação, retenção de pontos de recuperação e snapshots crash-consistent vs. app-consistent
 
 2. Configure a replicação ASR para uma VM representativa:
 
@@ -68,7 +68,7 @@ az group create --name rg-shopstream-dr --location westus2
 | Azure Storage (imagens) | East US 2 | ? | ? | ? |
 
 5. Configure um Azure SQL failover group para o banco de dados de transações:
-   - Failover automático com grace period apropriado
+   - Failover automático com grace period aprópriado
    - Endpoint read-only para o secundário (pode servir trafego de leitura durante operações normais)
    - Estratégia de connection string que sobrevive ao failover sem alteracoes na aplicação
 
@@ -128,7 +128,7 @@ az group create --name rg-shopstream-dr --location westus2
 <SuccessChecklist
   storageKey="az305-challenge-29"
   items={[
-    "ASR configured for web and API tier VMs with appropriate replication policy",
+    "ASR configured for web and API tier VMs with apprópriate replication policy",
     "SQL failover group configured with automatic failover and validated RPO meets 5-second requirement",
     "Recovery plan created with correct sequencing (DB -> API -> Web -> Traffic)",
     "Traffic routing failover designed with health probes and failover threshold defined",
@@ -143,12 +143,12 @@ az group create --name rg-shopstream-dr --location westus2
 <summary>Dica 1: Replicação ASR e RPO</summary>
 
 Azure Site Recovery fornece:
-- **Replicação continua**: Escritas em disco sao continuamente replicadas para a região destino
+- **Replicação continua**: Escritas em disco são continuamente replicadas para a região destino
 - **RPO**: Tipicamente 30 segundos a 2 minutos para VMs (depende da taxa de alteracao de dados)
 - **Snapshots app-consistent**: A cada 1-12 horas (configuravel) - captura o estado da aplicação
 - **Snapshots crash-consistent**: A cada 5 minutos - captura o estado do disco
 
-Para as camadas web/API stateless da ShopStream, snapshots crash-consistent sao suficientes porque:
+Para as camadas web/API stateless da ShopStream, snapshots crash-consistent são suficientes porque:
 - Sessoes estao no Redis (não na VM)
 - Transações em andamento serao reexecutadas pelo cliente
 - Sem estado de banco de dados local para proteger
@@ -205,7 +205,7 @@ Detalhamento de custo mensal para DR da ShopStream (orcamento de $3.000):
 - **Replicação ASR** (10 VMs): 10 x $25 = $250/mes
 - **Discos gerenciados de replica** (10 VMs, média 256 GB cada): 10 x 256 GB x $0,05 = $128/mes
 - **Secundário do SQL Database** (General Purpose, 8 vCores): ~$800/mes (mas fornece valor de read offload)
-- **Geo-replicação Redis** (Premium P1): ~$450/mes (considere se sessões sao descartaveis)
+- **Geo-replicação Redis** (Premium P1): ~$450/mes (considere se sessões são descartaveis)
 - **Delta de GRS do armazenamento**: ~$200/mes (GRS custa ~2x LRS para 5 TB de imagens)
 - **Egress de rede ASR durante replicação**: ~$50/mes
 
@@ -332,7 +332,7 @@ az backup item list \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
 :::
 
 ## Limpeza

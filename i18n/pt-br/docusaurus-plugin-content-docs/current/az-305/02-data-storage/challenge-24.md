@@ -19,7 +19,7 @@ TechMart é um marketplace de e-commerce conectando 5.000 vendedores com 2 milh�
 
 O VP de Engenharia garantiu um orcamento de $25.000/mes para construir uma plataforma de dados unificada que atende as seguintes necessidades: um banco de dados transacional para processamento de pedidos (latência inferior a 10ms, compliance ACID), um armazenamento flexível para o catálogo de produtos e avaliacoes de clientes (esquema variavel, distribuição global), armazenamento de objetos para imagens e videos de produtos (10TB e crescendo), um motor de recomendacoes em tempo real que sugere produtos baseado em comportamento de navegacao, um pipeline de relatórios noturnos para financas e operações, é um arquivo imutável de 7 anos para registros de transações financeiras (compliance regulatorio).
 
-Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design dos Challenges 14-23 para arquitetar a plataforma de dados completa da TechMart, justificando cada escolha de tecnologia contra alternativas e demonstrando como os componentes se integram em um todo coeso.
+Este e o desafio capstone do Domínio 2. Você ira sintetizar decisoes de design dos Challenges 14-23 para arquitetar a plataforma de dados completa da TechMart, justificando cada escolha de tecnologia contra alternativas e demonstrando como os componentes se integram em um todo coeso.
 
 ## Habilidades do exame cobertas
 
@@ -36,7 +36,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
 
 ### Parte 1: camada de dados transacionais (Pedidos e pagamentos)
 
-1. Selecione o serviço de banco de dados relacional para processamento de pedidos. Crie uma matriz de decisao comparando:
+1. Selecione o serviço de banco de dados relacional para processamento de pedidos. Crie uma matriz de decisão comparando:
    - Azure SQL Database (banco de dados único vs elastic pool)
    - Azure SQL Managed Instance
    - Azure Database for PostgreSQL Flexible Server
@@ -50,14 +50,14 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Separacao leitura/escrita: primário para escritas, replicas para verificacoes de inventário em tempo real
 
 3. Projete a proteção de dados para o banco de dados de pedidos:
-   - Backups automatizados com restauracao point-in-time (período de retencao)
+   - Backups automatizados com restauração point-in-time (período de retenção)
    - Retencao de backup de longo prazo para compliance (política LTR de 7 anos)
    - Geo-replicação para recuperação de desastres (active geo-replication vs failover groups)
 
 ### Parte 2: camada de dados Semi-Estruturados (Catálogo de produtos e avaliacoes)
 
 4. Projete o armazenamento do catálogo de produtos usando Azure Cosmos DB:
-   - Selecione a API apropriada (NoSQL, MongoDB, PostgreSQL) com justificativa
+   - Selecione a API aprópriada (NoSQL, MongoDB, PostgreSQL) com justificativa
    - Projete a estratégia de partition key para produtos (considere: consultas por categoria, vendedor e product ID)
    - Configure throughput: autoscale RU/s com um máximo que lida com pico de navegacao
    - Projete o modelo de dados para produtos com atributos variaveis (eletronicos vs vestuario vs alimentos)
@@ -69,13 +69,13 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
 
 6. Projete distribuição global para expansao internacional:
    - Configure multi-region writes para o catálogo de produtos (vendedores atualizando de diferentes regiões)
-   - Selecione o nível de consistência apropriado (avalie Strong vs Bounded Staleness vs Session vs Eventual para um catálogo de e-commerce)
+   - Selecione o nível de consistência aprópriado (avalie Strong vs Bounded Staleness vs Session vs Eventual para um catálogo de e-commerce)
    - Calcule o custo de replicação multi-região vs região única na escala atual
 
 ### Parte 3: camada de dados não estruturados (Armazenamento de midia)
 
 7. Projete a arquitetura de armazenamento de midia para imagens e videos de produtos (10TB, crescendo 2TB/mes):
-   - Selecao de tipo de storage account e camada de desempenho
+   - Seleção de tipo de storage account e camada de desempenho
    - Estratégia de camada de acesso: novos uploads em Hot, transicao para Cool apos 30 dias (maioria das visualizacoes acontece no primeiro mes)
    - Integração CDN para entrega global de conteúdo (Azure CDN ou Azure Front Door)
 
@@ -97,7 +97,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
     - Change feed do Cosmos DB aciona recalculo de recomendacoes para produtos relacionados
     - Cache Redis e atualizado com novas recomendacoes (expiracao baseada em TTL para dados obsoletos)
 
-### Parte 5: pipeline de relatorios e arquivo de compliance
+### Parte 5: pipeline de relatórios e arquivo de compliance
 
 11. Projete o pipeline de relatórios noturnos usando Azure Data Factory ou Synapse Pipelines:
     - Extrair de: Azure SQL Database (pedidos), Cosmos DB (produtos/avaliacoes), Storage (metadados de midia)
@@ -106,8 +106,8 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
     - Agendar: completar até as 6h diariamente, com lógica de retry e alertas de falha
 
 12. Projete o arquivo de compliance de 7 anos para registros de transações financeiras:
-    - Selecao de camada de armazenamento (Cool ou Archive para otimização de custos)
-    - Política de imutabilidade com retencao baseada em tempo bloqueada (período de 7 anos/2.555 dias)
+    - Seleção de camada de armazenamento (Cool ou Archive para otimização de custos)
+    - Política de imutabilidade com retenção baseada em tempo bloqueada (período de 7 anos/2.555 dias)
     - Redundância: RA-GZRS para requisitos regulatorios (geo-redundante com acesso de leitura)
     - Gerenciamento de ciclo de vida: transicao automática de Cool para Archive apos 1 ano
 
@@ -126,7 +126,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
     - Cosmos DB: RU/s + armazenamento + replicação multi-região
     - Blob Storage: capacidade (por camada) + operações + egress CDN
     - Event Hubs + Stream Analytics: throughput units + streaming units
-    - Redis Cache: selecao de camada e tamanho
+    - Redis Cache: seleção de camada e tamanho
     - Data Factory + Synapse: execucoes de pipeline + computacao
     - Total não deve exceder $25.000/mes
 
@@ -136,7 +136,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
   storageKey="az305-challenge-24"
   items={[
     "Relational database selected with scaling strategy handling 4x peak load without downtime",
-    "Cosmos DB configured with appropriate API, partition key strategy, and consistency level justified",
+    "Cosmos DB configured with apprópriate API, partition key strategy, and consistency level justified",
     "Media storage architecture includes lifecycle management and CDN for global delivery",
     "Real-time recommendations design shows complete data flow from event ingestion to cache serving",
     "Reporting pipeline design covers extraction from 3+ sources with nightly schedule and error handling",
@@ -149,21 +149,21 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
 <details>
 <summary>Dica 1: Design de Partition Key do Cosmos DB</summary>
 
-Para um catálogo de produtos de e-commerce, a escolha da partition key impacta significativamente desempenho e custo. Usar `categoryId` agrupa produtos relacionados para consultas de navegacao mas pode criar hot partitions para categorias populares. Usar `productId` fornece distribuição uniforme mas torna consultas de categoria cross-partition. Um padrão comum e usar uma partition key sintetica como `categoryId-subcategoryId` que equilibra distribuição com localidade de consulta. Para avaliacoes, particione por `productId` já que avaliacoes sao sempre lidas no contexto de uma pagina de produto específica.
+Para um catálogo de produtos de e-commerce, a escolha da partition key impacta significativamente desempenho e custo. Usar `categoryId` agrupa produtos relacionados para consultas de navegacao mas pode criar hot partitions para categorias populares. Usar `productId` fornece distribuição uniforme mas torna consultas de categoria cross-partition. Um padrão comum e usar uma partition key sintetica como `categoryId-subcategoryId` que equilibra distribuição com localidade de consulta. Para avaliacoes, particione por `productId` já que avaliacoes são sempre lidas no contexto de uma pagina de produto específica.
 
 </details>
 
 <details>
 <summary>Dica 2: Escalonamento do Azure SQL Database para Picos</summary>
 
-Para picos sazonais (4x a carga normal), considere: (1) Camada Hyperscale com auto-scale de computacao (0-30 segundos para escalar, sem movimentacao de dados), (2) modelo vCore com read scale-out para consultas de relatórios, ou (3) Camada de computacao Serverless se períodos de pico sao previsiveis mas intermitentes. Elastic pools sao melhores para SaaS multi-tenant com muitos bancos de dados pequenos em vez de um único banco de dados de alto throughput. Para o único banco de dados grande de pedidos da TechMart, Hyperscale ou Business Critical com replicas de leitura e mais apropriado.
+Para picos sazonais (4x a carga normal), considere: (1) Camada Hyperscale com auto-scale de computacao (0-30 segundos para escalar, sem movimentacao de dados), (2) modelo vCore com read scale-out para consultas de relatórios, ou (3) Camada de computacao Serverless se períodos de pico são previsiveis mas intermitentes. Elastic pools são melhores para SaaS multi-tenant com muitos bancos de dados pequenos em vez de um único banco de dados de alto throughput. Para o único banco de dados grande de pedidos da TechMart, Hyperscale ou Business Critical com replicas de leitura e mais aprópriado.
 
 </details>
 
 <details>
 <summary>Dica 3: Arquitetura de Recomendacoes em Tempo Real</summary>
 
-O sistema de recomendacoes não precisa computar recomendacoes em tempo real para cada requisicao. Uma abordagem hibrida funciona melhor: treinar o modelo ML em batch noturno (filtragem colaborativa, fatoracao de matrizes) e armazenar recomendacoes pré-computadas no Redis. Sinais em tempo real (navegacao da sessão atual) ajustam a lista pré-computada usando regras simples (impulsionar categorias visualizadas recentemente, rebaixar itens já comprados). Isso mantem a latência de serviço abaixo de 10ms enquanto ainda é personalizado.
+O sistema de recomendacoes não precisa computar recomendacoes em tempo real para cada requisicao. Uma abordagem híbrida funciona melhor: treinar o modelo ML em batch noturno (filtragem colaborativa, fatoracao de matrizes) e armazenar recomendacoes pré-computadas no Redis. Sinais em tempo real (navegacao da sessão atual) ajustam a lista pré-computada usando regras simples (impulsionar categorias visualizadas recentemente, rebaixar itens já comprados). Isso mantem a latência de serviço abaixo de 10ms enquanto ainda é personalizado.
 
 </details>
 
@@ -177,7 +177,7 @@ Para uma plataforma de dados de e-commerce de $25K/mes, uma alocacao tipica pode
 <details>
 <summary>Dica 5: Padrões de Integração Entre Camadas</summary>
 
-Use eventos e change feeds para manter camadas sincronizadas sem acoplamento forte: (1) Triggers do Azure SQL ou Change Data Capture (CDC) publicam eventos de pedidos no Event Hubs, (2) Change feed do Cosmos DB envia atualizações de produtos/avaliacoes para o pipeline de analytics, (3) Event Grid notifica sistemas downstream de novos uploads de blob, (4) Data Factory orquestra o batch noturno que le de todas as fontes. Evite consultas cross-service diretas em caminhos de produção - cada camada deve ter seu próprio armazenamento de dados otimizado para seu padrão de acesso.
+Use eventos e change feeds para manter camadas sincronizadas sem acoplamento forte: (1) Triggers do Azure SQL ou Change Data Capture (CDC) públicam eventos de pedidos no Event Hubs, (2) Change feed do Cosmos DB envia atualizações de produtos/avaliacoes para o pipeline de analytics, (3) Event Grid notifica sistemas downstream de novos uploads de blob, (4) Data Factory orquestra o batch noturno que le de todas as fontes. Evite consultas cross-service diretas em caminhos de produção - cada camada deve ter seu próprio armazenamento de dados otimizado para seu padrão de acesso.
 
 </details>
 
@@ -196,7 +196,7 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 ## Verificação de conhecimento
 
 <details>
-<summary>1. TechMart precisa que o catálogo de produtos lide com 50.000 leituras/segundo durante flash sales com compradores globais. O catálogo tem 500.000 produtos em 200 categorias. Qual configuração do Cosmos DB e mais apropriada?</summary>
+<summary>1. TechMart precisa que o catálogo de produtos lide com 50.000 leituras/segundo durante flash sales com compradores globais. O catálogo tem 500.000 produtos em 200 categorias. Qual configuração do Cosmos DB e mais aprópriada?</summary>
 
 **Cosmos DB for NoSQL com autoscale throughput (max 50.000 RU/s), particionado por categoria com chave sintetica, e replicas de leitura multi-região.** Autoscale lida com o burst de flash sale sem provisionar excessivamente durante trafego normal (escala para baixo até 10% do máximo). Particionamento por chave sintetica (ex.: `categoryId-subcategoryId`) distribui carga enquanto mantem consultas de navegacao por categoria eficientes. Leituras multi-região colocam dados proximos a compradores globais, reduzindo latência. Session consistency garante que cada comprador veja suas próprias escritas (carrinho, avaliacoes) sem pagar o custo de Strong consistency entre regiões.
 
@@ -205,7 +205,7 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 <details>
 <summary>2. A equipe de compliance requer que registros de transações financeiras armazenados por 7 anos não possam ser modificados ou excluidos por ninguém, incluindo administradores. Qual combinacao de recursos do Azure Storage satisfaz este requisito?</summary>
 
-**Armazenamento imutável de blob com política de retencao baseada em tempo bloqueada (2.555 dias) em uma storage account com redundância RA-GZRS.** A política bloqueada e crítica - uma política desbloqueada pode ser deletada por admins, anulando o propósito de compliance. Uma vez bloqueada, mesmo o proprietario da storage account e o suporte Microsoft não podem deletar os dados antes da expiracao. RA-GZRS garante que os dados sobrevivam a um desastre regional completo com acesso de leitura da região secundária. Protecoes adicionais: habilite resource locks na storage account para prevenir exclusão acidental da conta, e use Azure Policy para impor imutabilidade em novos containers.
+**Armazenamento imutável de blob com política de retenção baseada em tempo bloqueada (2.555 dias) em uma storage account com redundância RA-GZRS.** A política bloqueada e crítica - uma política desbloqueada pode ser deletada por admins, anulando o propósito de compliance. Uma vez bloqueada, mesmo o proprietario da storage account e o suporte Microsoft não podem deletar os dados antes da expiracao. RA-GZRS garante que os dados sobrevivam a um desastre regional completo com acesso de leitura da região secundária. Protecoes adicionais: habilite resource locks na storage account para prevenir exclusão acidental da conta, e use Azure Policy para impor imutabilidade em novos containers.
 
 </details>
 
@@ -297,7 +297,7 @@ az datafactory linked-service list \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

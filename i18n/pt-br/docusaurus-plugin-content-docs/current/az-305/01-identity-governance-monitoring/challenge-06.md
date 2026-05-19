@@ -20,7 +20,7 @@ A Fabrikam Inc. é uma empresa de software com 200 engenheiros organizados em 5 
 - 15 resource groups por assinatura (3 por equipe de produto: compute, data, networking)
 - Resource group de serviços compartilhados em cada assinatura (gerenciado pela equipe de plataforma)
 
-O modelo de acesso atual esta quebrado: a maioria dos engenheiros tem Contributor em toda a assinatura Development, três lideres de equipe tem Owner em Production (acumulado ao longo do tempo sem revisao), e não ha como conceder acesso elevado temporário para resposta a incidentes. No mes passado, um desenvolvedor junior acidentalmente excluiu um banco de dados de produção porque tinha acesso Contributor desnecessario concedido durante uma escalação anterior que nunca foi revogada.
+O modelo de acesso atual esta quebrado: a maioria dos engenheiros tem Contributor em toda a assinatura Development, três lideres de equipe tem Owner em Production (acumulado ao longo do tempo sem revisao), e não ha como conceder acesso elevado temporário para resposta a incidentes. No mes passado, um desenvolvedor junior acidentalmente excluiu um banco de dados de produção porque tinha acesso Contributor desnecessário concedido durante uma escalação anterior que nunca foi revogada.
 
 O CTO determinou um modelo de autorização zero-trust: privilegio mínimo por padrão, elevação just-in-time quando necessário, e nenhum acesso permanente a produção para qualquer engenheiro. Sua tarefa é projetar é implementar parcialmente este modelo.
 
@@ -103,7 +103,7 @@ Management Group (Fabrikam Root)
    - Impedir modificacao de network security groups em produção
    - Permitir apenas a equipe de plataforma modificar resource locks
 
-10. Implemente resource locks é um deny assignment (ou documente por que deny assignments sao limitados a aplicações gerenciadas).
+10. Implemente resource locks é um deny assignment (ou documente por que deny assignments são limitados a aplicações gerenciadas).
 
 ### Parte 6: implementar prova de conceito
 
@@ -116,7 +116,7 @@ Management Group (Fabrikam Root)
 <SuccessChecklist
   storageKey="az305-challenge-06"
   items={[
-    "RBAC scope hierarchy documented with appropriate assignment levels for each user category",
+    "RBAC scope hierarchy documented with apprópriate assignment levels for each user category",
     "Custom role definitions created for Product Team Engineer and Incident Responder",
     "ABAC conditions designed for storage account access with team-based restrictions",
     "Just-in-time access workflow documented with PIM integration for production roles",
@@ -137,7 +137,7 @@ Atribua funções no escopo mais restrito que atenda ao requisito:
 - **Resource**: Acesso a recurso único (raramente necessário, dificil de gerenciar em escala)
 
 Principios-chave:
-- Funções atribuidas em escopos pais sao herdadas por todos os filhos
+- Funções atribuidas em escopos pais são herdadas por todos os filhos
 - Você não pode substituir um Allow herdado com um Deny em um escopo inferior (a menos que use deny assignments)
 - Use grupos para atribuicoes de função, nunca usuários individuais
 - Convencao de nomes para grupos: `rbac-{scope}-{role}` (ex.: `rbac-prod-reader`)
@@ -250,7 +250,7 @@ Importante: Permissões de gerenciamento de locks:
 - Apenas Owner e User Access Administrator tem isso por padrão
 - Você pode criar uma função personalizada que nega `Microsoft.Authorization/locks/delete` para impedir remocao de locks
 
-Nota: Deny assignments não podem ser criados diretamente por usuários. Eles sao criados apenas por Azure Blueprints e Azure Managed Applications para proteger recursos gerenciados.
+Nota: Deny assignments não podem ser criados diretamente por usuários. Eles são criados apenas por Azure Blueprints e Azure Managed Applications para proteger recursos gerenciados.
 
 </details>
 
@@ -300,7 +300,7 @@ Configure no Portal: Entra ID > Privileged Identity Management > Azure Resources
 <details>
 <summary>2. A Fabrikam quer impedir qualquer usuário, incluindo Owners de assinatura, de excluir o SQL Server de produção. Quais mecanismos conseguem isso?</summary>
 
-**Use um resource lock CanNotDelete** no recurso SQL Server. Resource locks se aplicam a todos os usuários independentemente de sua função RBAC (mesmo Owners não podem excluir um recurso bloqueado sem primeiro remover o lock). Para impedir remocao não autorizada do lock, restrinja a permissão `Microsoft.Authorization/locks/delete` apenas a equipe de plataforma, garantindo que outras funções não incluam esta acao. Nota: Deny assignments sao criados apenas por Azure Blueprints e Managed Applications; não podem ser criados manualmente por administradores.
+**Use um resource lock CanNotDelete** no recurso SQL Server. Resource locks se aplicam a todos os usuários independentemente de sua função RBAC (mesmo Owners não podem excluir um recurso bloqueado sem primeiro remover o lock). Para impedir remocao não autorizada do lock, restrinja a permissão `Microsoft.Authorization/locks/delete` apenas a equipe de plataforma, garantindo que outras funções não incluam esta acao. Nota: Deny assignments são criados apenas por Azure Blueprints e Managed Applications; não podem ser criados manualmente por administradores.
 
 </details>
 

@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-CloudCart é uma empresa SaaS migrando 20 microservicos de um cluster Kubernetes on-premises para o Azure. A equipe de engenharia tem níveis variados de expertise em Kubernetes: a equipe de plataforma e proficiente com kubectl, Helm charts e service meshes, mas os desenvolvedores de aplicação apenas querem implantar containers sem gerenciar infraestrutura. A empresa precisa selecionar o serviço correto de hospedagem de containers para cada microservico baseado em seus requisitos operacionais.
+CloudCart é uma empresa SaaS migrando 20 microserviços de um cluster Kubernetes on-premises para o Azure. A equipe de engenharia tem níveis variados de expertise em Kubernetes: a equipe de plataforma e proficiente com kubectl, Helm charts e service meshes, mas os desenvolvedores de aplicação apenas querem implantar containers sem gerenciar infraestrutura. A empresa precisa selecionar o serviço correto de hospedagem de containers para cada microserviço baseado em seus requisitos operacionais.
 
-Os 20 microservicos se dividem em três categorias: (1) Oito serviços que requerem controle granular sobre rede, ingress controllers customizados (NGINX com anotacoes específicas), um service mesh (Istio) para mTLS entre serviços, e operators Kubernetes customizados para failover de banco de dados. (2) Dez serviços que sao APIs HTTP stateless simples precisando apenas de auto-scaling, gerenciamento de revisoes e integração com Dapr para mensageria pub/sub. (3) Dois serviços de inferencia de ML que requerem GPUs NVIDIA para classificacao de imagens em tempo real, processam requisicoes em rajadas e precisam escalar para zero quando nenhuma requisicao de inferencia esta na fila.
+Os 20 microserviços se dividem em três categorias: (1) Oito serviços que requerem controle granular sobre rede, ingress controllers customizados (NGINX com anotacoes específicas), um service mesh (Istio) para mTLS entre serviços, e operators Kubernetes customizados para failover de banco de dados. (2) Dez serviços que são APIs HTTP stateless simples precisando apenas de auto-scaling, gerenciamento de revisoes e integração com Dapr para mensageria pub/sub. (3) Dois serviços de inferencia de ML que requerem GPUs NVIDIA para classificacao de imagens em tempo real, processam requisicoes em rajadas e precisam escalar para zero quando nenhuma requisicao de inferencia esta na fila.
 
 O orcamento de migração requer minimizar overhead operacional onde possível. A equipe de plataforma pode gerenciar um cluster Kubernetes mas não tem largura de banda para gerenciar múltiplos clusters ou lidar com operações day-2 para cargas de trabalho simples.
 
@@ -27,9 +27,9 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 
 ## Tarefas de design
 
-### Parte 1: selecao de plataforma de Container
+### Parte 1: seleção de plataforma de Container
 
-1. Avalie as três principais opcoes de hospedagem de containers Azure para cada categoria de microservico:
+1. Avalie as três principais opcoes de hospedagem de containers Azure para cada categoria de microserviço:
 
 | Criterio | AKS | Azure Container Apps | Azure Container Instances |
 |----------|-----|---------------------|--------------------------|
@@ -40,7 +40,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 | Scale to zero | Sim (com KEDA) | Nativo | N/A (por execução) |
 | Overhead operacional mínimo | Alto | Baixo | Mais baixo |
 
-2. Atribua cada categoria de microservico a plataforma apropriada:
+2. Atribua cada categoria de microserviço a plataforma aprópriada:
    - Categoria 1 (complexo, precisa de primitivas Kubernetes): Qual plataforma e por que?
    - Categoria 2 (APIs HTTP simples com Dapr): Qual plataforma e por que?
    - Categoria 3 (inferencia GPU, scale-to-zero): Qual plataforma e por que?
@@ -49,7 +49,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 
 ### Parte 2: design do cluster AKS
 
-4. Projete o cluster AKS para os 8 microservicos complexos:
+4. Projete o cluster AKS para os 8 microserviços complexos:
    - **Rede**: Compare Azure CNI vs Azure CNI Overlay vs kubenet:
      - kubenet: Simples, usa NAT, limitado a 400 nos, sem suporte Windows
      - Azure CNI: Cada pod recebe um IP da VNet, consome espaço de endereço da subnet
@@ -74,7 +74,7 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
    - Gerenciamento de revisoes: Revisao única vs múltiplas revisoes ativas (divisao de trafego)?
 
 8. Configure a integração Dapr para os Container Apps:
-   - Quais building blocks do Dapr sao necessários (pub/sub, state, service invocation)?
+   - Quais building blocks do Dapr são necessários (pub/sub, state, service invocation)?
    - Como funciona a invocacao service-to-service do Dapr dentro de um ambiente Container Apps?
    - Qual é o modelo de rede entre Container Apps no mesmo ambiente?
 
@@ -88,20 +88,20 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 10. Planeje a postura de segurança de containers:
     - Assinatura de imagens e content trust
     - Varredura de segurança em tempo de execução
-    - Network policies para comunicação pod-to-pod no AKS
+    - Network policies para comúnicação pod-to-pod no AKS
     - Managed identity para pull de imagens (vs. credenciais de admin)
 
-11. Projete o pipeline de CI/CD para implantar tanto no AKS (Helm charts) quanto no Container Apps (implantacao por revisao) a partir de um único container registry.
+11. Projete o pipeline de CI/CD para implantar tanto no AKS (Helm charts) quanto no Container Apps (implantação por revisao) a partir de um único container registry.
 
 ## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-36"
   items={[
-    "Cada categoria de microservico mapeada para a plataforma de container correta com justificativa",
+    "Cada categoria de microserviço mapeada para a plataforma de container correta com justificativa",
     "Modelo de rede AKS selecionado com análise de espaço de endereço IP",
     "Estratégia de node pool projetada com limites de auto-scaling e consideracao de GPU node pool",
-    "Ambiente Container Apps configurado com regras de scaling apropriadas e integração Dapr",
+    "Ambiente Container Apps configurado com regras de scaling aprópriadas e integração Dapr",
     "Tier ACR selecionado com varredura de segurança e acesso por managed identity configurados",
     "Justificativa clara documentada de por que uma única plataforma para todos os 20 serviços e subotima"
   ]}
@@ -110,9 +110,9 @@ O orcamento de migração requer minimizar overhead operacional onde possível. 
 ## Dicas
 
 <details>
-<summary>Dica 1: Arvore de Decisao de Selecao de Plataforma</summary>
+<summary>Dica 1: Arvore de Decisao de Seleção de Plataforma</summary>
 
-Use este fluxo de decisao:
+Use este fluxo de decisão:
 1. O serviço precisa de recursos Kubernetes customizados (CRDs, operators, service mesh)? -> AKS
 2. O serviço precisa de computacao GPU com scale-to-zero? -> Container Apps com GPU workload profiles ou AKS com GPU node pools
 3. E uma API HTTP simples ou processador orientado a eventos? -> Azure Container Apps
@@ -127,7 +127,7 @@ Container Apps e construido sobre AKS internamente mas abstrai o gerenciamento d
 
 **kubenet**: Pods recebem IPs de um espaço de endereço separado (10.244.0.0/16 por padrão). Apenas IPs de nos consomem endereços VNet. Limitado a 400 nos e 250 pods/no. Sem suporte a containers Windows. Simples mas com limitacoes.
 
-**Azure CNI**: Cada pod recebe um IP da VNet. Uma subnet /24 (256 endereços) suporta apenas ~8 nos com 30 pods cada. Você precisa de uma subnet grande (ex.: /16) para 100+ pods. Beneficio: pods sao diretamente enderecaveis da VNet.
+**Azure CNI**: Cada pod recebe um IP da VNet. Uma subnet /24 (256 endereços) suporta apenas ~8 nos com 30 pods cada. Você precisa de uma subnet grande (ex.: /16) para 100+ pods. Beneficio: pods são diretamente enderecaveis da VNet.
 
 **Azure CNI Overlay**: Pods recebem IPs de rede overlay (não IPs da VNet). Nos ainda consomem IPs da VNet. Melhor para clusters grandes que precisam de integração VNet sem consumir espaço massivo de endereços. Suporta até 1,000 nos e 250 pods/no.
 
@@ -149,7 +149,7 @@ Compare o custo operacional: gerenciar um GPU node pool no AKS (configuração d
 </details>
 
 <details>
-<summary>Dica 4: Selecao de Tier ACR</summary>
+<summary>Dica 4: Seleção de Tier ACR</summary>
 
 - **Basic**: 10 GiB de armazenamento, adequado para dev/test
 - **Standard**: 100 GiB de armazenamento, maior throughput, adequado para maioria das cargas de produção
@@ -190,7 +190,7 @@ Para este cenário, **Premium** é recomendado porque:
 <details>
 <summary>3. Por que você escolheria Azure Container Apps ao inves de AKS para APIs HTTP stateless simples?</summary>
 
-**Overhead operacional reduzido com funcionalidade equivalente para cargas de trabalho simples.** Container Apps fornece auto-scaling integrado (incluindo scale-to-zero), implantacoes baseadas em revisao, divisao de trafego, dominios customizados, terminacao TLS e integração Dapr sem requerer gerenciamento de cluster, patching de nos, upgrades de plano de controle ou configuração de rede. Para uma equipe que apenas quer implantar uma imagem de container é definir regras de scaling, Container Apps elimina o trabalho pesado indiferenciado de operações Kubernetes enquanto fornece as mesmas capacidades centrais da plataforma para cargas de trabalho HTTP.
+**Overhead operacional reduzido com funcionalidade equivalente para cargas de trabalho simples.** Container Apps fornece auto-scaling integrado (incluindo scale-to-zero), implantacoes baseadas em revisao, divisao de trafego, domínios customizados, terminacao TLS e integração Dapr sem requerer gerenciamento de cluster, patching de nos, upgrades de plano de controle ou configuração de rede. Para uma equipe que apenas quer implantar uma imagem de container é definir regras de scaling, Container Apps elimina o trabalho pesado indiferenciado de operações Kubernetes enquanto fornece as mesmas capacidades centrais da plataforma para cargas de trabalho HTTP.
 
 </details>
 
@@ -236,7 +236,7 @@ az containerapp show --resource-group rg-az305-challenge36 --name ca-hello \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

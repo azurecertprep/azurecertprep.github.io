@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 :::
 ## Cenário
 
-A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo armazenamento contendo dados financeiros ou de saúde deve usar chaves de criptografia gerenciadas pelo cliente (CMK) para fins de trilha de auditoria. Além disso, dados regulatórios (como registros financeiros e logs de auditoria) devem ser armazenados em contêineres imutáveis (WORM | Write Once, Read Many) onde os dados não podem ser modificados ou excluídos por um período de retenção especificado. Você foi encarregado de implementar esses controles de criptografia e proteção de dados.
+A equipe de compliance da Contoso Ltd. sinalizou um requisito regulatório: todo armazenamento contendo dados financeiros ou de saúde deve usar chaves de criptografia gerenciadas pelo cliente (CMK) para fins de trilha de auditoria. Além disso, dados regulatórios (como registros financeiros e logs de auditoria) devem ser armazenados em contêineres imutáveis (WORM | Write Once, Read Many) onde os dados não podem ser modificados ou excluídos por um período de retenção específicado. Você foi encarregado de implementar esses controles de criptografia e proteção de dados.
 
 ## Habilidades do exame cobertas
 

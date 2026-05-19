@@ -19,7 +19,7 @@ FreshMart é uma rede varejista nacional com 200 lojas, cada uma executando um b
 
 O processo atual depende de exportacoes manuais de CSV e anexos de e-mail, resultando em dados chegando 2-3 dias atrasados, erros frequentes de formatacao e nenhuma visibilidade sobre falhas. O CTO requer um pipeline automatizado e monitorado que entregue todas as três fontes de dados ao warehouse até as 6h diariamente, com retry automático em falhas e alertas por e-mail quando pipelines falham apos todas as tentativas serem esgotadas.
 
-Seu desafio é projetar é implementar uma solução de integração de dados usando Azure Data Factory (ou Synapse Pipelines), incluindo orquestracao através de múltiplas fontes, um self-hosted integration runtime para conectividade on-premises, mecanismos de trigger apropriados e monitoramento abrangente.
+Seu desafio é projetar é implementar uma solução de integração de dados usando Azure Data Factory (ou Synapse Pipelines), incluindo orquestração através de múltiplas fontes, um self-hosted integration runtime para conectividade on-premises, mecanismos de trigger aprópriados e monitoramento abrangente.
 
 ## Habilidades do exame cobertas
 
@@ -29,22 +29,22 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
 
 ### Parte 1: selecionar serviço de integração e projetar arquitetura
 
-1. Crie uma matriz de decisao comparando estes serviços de integração para os requisitos da FreshMart:
+1. Crie uma matriz de decisão comparando estes serviços de integração para os requisitos da FreshMart:
    - Azure Data Factory
    - Synapse Pipelines (integrado dentro do workspace Synapse)
    - Azure Logic Apps
    - Azure Functions com código customizado
 
-   Avalie em: ecossistema de conectores, suporte on-premises, complexidade de orquestracao, capacidades de monitoramento, modelo de custo e requisitos de habilidade da equipe.
+   Avalie em: ecossistema de conectores, suporte on-premises, complexidade de orquestração, capacidades de monitoramento, modelo de custo e requisitos de habilidade da equipe.
 
-2. Documente sua selecao de serviço com justificativa. Considere que a equipe de dados da FreshMart tem experiência em SQL mas experiência limitada em programacao.
+2. Documente sua seleção de serviço com justificativa. Considere que a equipe de dados da FreshMart tem experiência em SQL mas experiência limitada em programacao.
 
 3. Projete a arquitetura de pipeline de alto nível mostrando:
    - Sistemas de origem (200 SQL Servers, SAP, Salesforce)
    - Posicionamento de integration runtime (cloud vs self-hosted)
    - Areas de staging (Azure Data Lake Storage Gen2)
    - Destino (Synapse Analytics dedicated SQL pool)
-   - Fluxo de orquestracao (pipeline master com pipelines filhos)
+   - Fluxo de orquestração (pipeline master com pipelines filhos)
 
 ### Parte 2: implementar pipelines do Data factory
 
@@ -56,7 +56,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
 5. Projete e crie um pipeline parametrizado para a ingestao de dados de vendas das lojas:
    - Use uma atividade Lookup para recuperar a lista de lojas ativas
    - Use uma atividade ForEach para iterar sobre lojas e copiar dados em paralelo
-   - Configure a atividade Copy com consulta de origem, configurações de sink e mapeamento de colunas apropriados
+   - Configure a atividade Copy com consulta de origem, configurações de sink e mapeamento de colunas aprópriados
    - Adicione configurações de tolerância a falhas (pular linhas incompativeis, registrar linhas puladas em log)
 
 6. Projete o pipeline para extracao de dados SAP:
@@ -73,7 +73,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
 
 ### Parte 3: orquestração, triggers e tratamento de erros
 
-8. Crie um pipeline de orquestracao master que:
+8. Crie um pipeline de orquestração master que:
    - Execute os três pipelines de origem (lojas, SAP, Salesforce) em paralelo
    - Aguarde todos os três completarem antes de executar um pipeline de transformacao
    - Use dependência "Upon Completion" (não "Upon Success") para tratar falhas parciais graciosamente
@@ -86,9 +86,9 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
     - Registre metadados de execução do pipeline (hora de início, duracao, linhas copiadas, erros) em uma tabela de monitoramento
     - Projete uma regra de alerta usando Azure Monitor para falhas consecutivas de pipeline
 
-### Parte 4: decisao de design ETL vs ELT
+### Parte 4: decisão de design ETL vs ELT
 
-11. Documente sua decisao entre ETL (transformar no Data Factory usando Data Flows) versus ELT (carregar dados brutos para staging, transformar no Synapse usando SQL):
+11. Documente sua decisão entre ETL (transformar no Data Factory usando Data Flows) versus ELT (carregar dados brutos para staging, transformar no Synapse usando SQL):
     - Para dados de vendas das lojas: transformacoes pequenas (conversao de moeda, formatacao de data)
     - Para dados de inventário SAP: joins complexos através de múltiplas tabelas SAP
     - Para dados do Salesforce: achatamento simples de JSON aninhado
@@ -134,9 +134,9 @@ A atividade ForEach no Data Factory processa itens em paralelo por padrão (até
 </details>
 
 <details>
-<summary>Dica 4: Selecao de Padrão ETL vs ELT</summary>
+<summary>Dica 4: Seleção de Padrão ETL vs ELT</summary>
 
-Escolha ELT quando: o destino tem computacao poderosa (Synapse SQL pool), transformacoes sao expressaveis em SQL, volumes de dados sao grandes e a equipe tem habilidades SQL. Escolha ETL (Data Flows no Data Factory) quando: transformacoes sao complexas (requerendo Spark), você quer depuracao visual, ou o destino carece de capacidade de transformacao. Para a maioria dos cenários de data warehouse empresarial no Azure, ELT com Synapse e preferido porque aproveita o engine MPP para transformacoes em escala.
+Escolha ELT quando: o destino tem computacao poderosa (Synapse SQL pool), transformacoes são expressaveis em SQL, volumes de dados são grandes e a equipe tem habilidades SQL. Escolha ETL (Data Flows no Data Factory) quando: transformacoes são complexas (requerendo Spark), você quer depuracao visual, ou o destino carece de capacidade de transformacao. Para a maioria dos cenários de data warehouse empresarial no Azure, ELT com Synapse e preferido porque aproveita o engine MPP para transformacoes em escala.
 
 </details>
 
@@ -169,21 +169,21 @@ Data Factory fornece monitoramento integrado através do Azure Monitor com metri
 <details>
 <summary>2. A API do Salesforce da equipe de marketing retorna resultados paginados com 2.000 registros por pagina é um token de próxima pagina. Como o pipeline do Data Factory deve tratar isso?</summary>
 
-**Use o conector REST com regras de paginacao.** O conector REST do Data Factory suporta regras de paginacao configuraveis que automaticamente seguem tokens de próxima pagina até que todos os dados sejam recuperados. Você configura a regra de paginacao no linked service REST ou dataset, especificando onde a URL ou token de próxima pagina aparece na resposta (ex.: um header, campo do body ou parametro de query). A atividade Copy trata a iteracao transparentemente sem requerer uma atividade de loop.
+**Use o conector REST com regras de paginacao.** O conector REST do Data Factory suporta regras de paginacao configuraveis que automaticamente seguem tokens de próxima pagina até que todos os dados sejam recuperados. Você configura a regra de paginacao no linked service REST ou dataset, específicando onde a URL ou token de próxima pagina aparece na resposta (ex.: um header, campo do body ou parametro de query). A atividade Copy trata a iteracao transparentemente sem requerer uma atividade de loop.
 
 </details>
 
 <details>
 <summary>3. Um pipeline tem três pipelines filhos paralelos (lojas, SAP, Salesforce). O pipeline SAP falha mas os outros dois tem sucesso. Usando dependência "Upon Completion", o que acontece com o pipeline de transformacao downstream?</summary>
 
-**O pipeline de transformacao ainda executa.** "Upon Completion" significa que a atividade downstream executa independente de se o upstream teve sucesso ou falhou - ela apenas espera a atividade terminar. Isso permite que o pipeline de transformacao trate carregamentos parciais de dados graciosamente (talvez processando apenas as fontes que tiveram sucesso). Em contraste, "Upon Success" pularia a transformacao inteiramente se qualquer upstream falhasse. A escolha de design depende de se carregamentos parciais de dados sao aceitaveis para o negocio.
+**O pipeline de transformacao ainda executa.** "Upon Completion" significa que a atividade downstream executa independente de se o upstream teve sucesso ou falhou - ela apenas espera a atividade terminar. Isso permite que o pipeline de transformacao trate carregamentos parciais de dados graciosamente (talvez processando apenas as fontes que tiveram sucesso). Em contraste, "Upon Success" pularia a transformacao inteiramente se qualquer upstream falhasse. A escolha de design depende de se carregamentos parciais de dados são aceitaveis para o negócio.
 
 </details>
 
 <details>
 <summary>4. Por que você escolheria ELT (carregar e depois transformar no Synapse) em vez de ETL (transformar no Data Factory Data Flows) para carregar 200 bancos de dados de lojas em um warehouse central?</summary>
 
-**O engine MPP (Massively Parallel Processing) do Synapse e otimizado para transformacoes em larga escala em dados já no warehouse.** Carregar dados brutos via atividade Copy (custo mínimo de computacao) e depois executar transformacoes SQL no Synapse aproveita a computacao distribuida do dedicated SQL pool. Data Factory Data Flows usam clusters Spark que devem inicializar (5-7 minutos de cold start), sao cobrados por minuto de computacao e sao mais adequados para transformacoes complexas não-SQL. Para transformacoes expressaveis em SQL (joins, agregacoes, conversoes de tipo), ELT no Synapse e tipicamente mais rápido e mais barato em escala.
+**O engine MPP (Massively Parallel Processing) do Synapse e otimizado para transformacoes em larga escala em dados já no warehouse.** Carregar dados brutos via atividade Copy (custo mínimo de computacao) e depois executar transformacoes SQL no Synapse aproveita a computacao distribuida do dedicated SQL pool. Data Factory Data Flows usam clusters Spark que devem inicializar (5-7 minutos de cold start), são cobrados por minuto de computacao e são mais adequados para transformacoes complexas não-SQL. Para transformacoes expressaveis em SQL (joins, agregacoes, conversoes de tipo), ELT no Synapse e tipicamente mais rápido e mais barato em escala.
 
 </details>
 
@@ -248,7 +248,7 @@ az datafactory linked-service show \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

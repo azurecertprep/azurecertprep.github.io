@@ -359,7 +359,7 @@ Prioridade: UDR > BGP > Rotas de sistema (para o mesmo prefixo).
 
 O IP flow verify verifica se um pacote é permitido ou negado simulando as regras do NSG aplicadas à NIC e subnet de uma VM:
 
-1. Você especifica: VM, direção (entrada/saída), protocolo, IP:porta local, IP:porta remoto
+1. Você específica: VM, direção (entrada/saída), protocolo, IP:porta local, IP:porta remoto
 2. Ele avalia as regras NSG tanto no **NSG no nível da NIC** quanto no **NSG no nível da subnet**
 3. Retorna: Permitir ou Negar, além do nome específico da regra NSG que correspondeu
 

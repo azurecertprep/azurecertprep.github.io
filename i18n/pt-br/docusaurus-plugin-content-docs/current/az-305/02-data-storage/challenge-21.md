@@ -33,37 +33,37 @@ Seu desafio é projetar uma estratégia abrangente de proteção de dados que co
    - `active-cases` - para acesso diario de advogados (requer maior disponibilidade)
    - `finalized-docs` - para documentos legais imutáveis (requer garantias de compliance)
    - `archived-cases` - para recuperação de desastres (requer geo-redundância)
-2. Para cada storage account, selecione e configure a opcao de redundância apropriada entre: LRS, ZRS, GRS, GZRS, RA-GRS ou RA-GZRS. Documente sua justificativa incluindo:
+2. Para cada storage account, selecione e configure a opcao de redundância aprópriada entre: LRS, ZRS, GRS, GZRS, RA-GRS ou RA-GZRS. Documente sua justificativa incluindo:
    - Número de copias e sua distribuição geográfica
    - SLA de disponibilidade alcancado (99,9%, 99,99% ou 99,9999999999% de durabilidade)
    - Capacidades de failover (automático vs manual, RTO/RPO)
    - Implicacoes de custo relativas a baseline LRS
-3. Crie uma matriz de decisao comparando todas as seis opcoes de redundância com colunas para: durabilidade (nines), SLA de disponibilidade, acesso de leitura durante indisponibilidade, proteção contra falha regional e custo relativo.
+3. Crie uma matriz de decisão comparando todas as seis opcoes de redundância com colunas para: durabilidade (nines), SLA de disponibilidade, acesso de leitura durante indisponibilidade, proteção contra falha regional e custo relativo.
 
 ### Parte 2: implementar recursos de proteção de dados
 
-4. Habilite blob soft delete na storage account active-cases com período de retencao de 30 dias. Teste deletando e recuperando um blob.
-5. Habilite container soft delete com retencao de 14 dias para proteger contra exclusão acidental de container.
+4. Habilite blob soft delete na storage account active-cases com período de retenção de 30 dias. Teste deletando e recuperando um blob.
+5. Habilite container soft delete com retenção de 14 dias para proteger contra exclusão acidental de container.
 6. Habilite blob versioning na conta active-cases para manter versoes anteriores de documentos modificados. Faca upload de um arquivo, modifique-o e demonstre o histórico de versoes.
-7. Habilite point-in-time restore para a conta active-cases. Documente os requisitos (versioning, change feed e soft delete devem estar todos habilitados) e a janela máxima de restauracao.
+7. Habilite point-in-time restore para a conta active-cases. Documente os requisitos (versioning, change feed e soft delete devem estar todos habilitados) e a janela máxima de restauração.
 
 ### Parte 3: implementar políticas de imutabilidade
 
 8. Na storage account finalized-docs, crie um container com uma política de imutabilidade baseada em tempo:
-   - Defina o período de retencao para 2.555 dias (7 anos)
+   - Defina o período de retenção para 2.555 dias (7 anos)
    - Faca upload de um documento de teste e verifique que não pode ser excluido ou modificado
    - Documente a diferenca entre políticas bloqueadas e desbloqueadas
 9. Aplique um legal hold a um container específico simulando litigio ativo:
    - Adicione uma tag de legal hold (ex.: "case-2024-meridian-v-smith")
-   - Verifique que blobs sob legal hold não podem ser excluidos mesmo apos a retencao expirar
-   - Documente como legal holds interagem com políticas de retencao baseadas em tempo
+   - Verifique que blobs sob legal hold não podem ser excluidos mesmo apos a retenção expirar
+   - Documente como legal holds interagem com políticas de retenção baseadas em tempo
 10. Projete uma política para transicionar documentos de mutavel (caso ativo) para imutável (finalizado), incluindo os gatilhos de workflow e etapas de validação.
 
 ### Parte 4: projetar Backup e recuperação
 
 11. Configure Azure Backup para blob storage na conta active-cases:
     - Crie um backup vault e política de backup
-    - Defina frequência de backup e regras de retencao
+    - Defina frequência de backup e regras de retenção
     - Documente RPO e RTO para backup operacional vs vaulted
 12. Projete um runbook de recuperação que documenta procedimentos para:
     - Recuperação de blob individual (undelete de soft delete)
@@ -81,7 +81,7 @@ Seu desafio é projetar uma estratégia abrangente de proteção de dados que co
     "Immutability policy configured with locked time-based retention preventing blob deletion",
     "Legal hold applied and verified to block deletion independently of retention policy",
     "Decision matrix comparing all 6 redundancy options across durability, availability, cost, and failover",
-    "Recovery runbook covers at least 4 scenarios with specific steps and expected RTO for each"
+    "Recovery runbook covers at least 4 scenários with specific steps and expected RTO for each"
   ]}
 />
 
@@ -97,21 +97,21 @@ O SLA de disponibilidade depende tanto da opcao de redundância quanto de se o a
 <details>
 <summary>Dica 2: Bloqueio de Política de Imutabilidade</summary>
 
-Uma política de retencao baseada em tempo pode estar em estado bloqueado ou desbloqueado. Enquanto desbloqueada, você pode aumentar ou diminuir o período de retencao ou deletar a política. Uma vez bloqueada, a política não pode ser deletada ou o período de retencao diminuido (apenas aumentado). O bloqueio e irreversível é necessário para compliance SEC 17a-4(f) e CFTC 1.31(d). Sempre teste com políticas desbloqueadas primeiro.
+Uma política de retenção baseada em tempo pode estar em estado bloqueado ou desbloqueado. Enquanto desbloqueada, você pode aumentar ou diminuir o período de retenção ou deletar a política. Uma vez bloqueada, a política não pode ser deletada ou o período de retenção diminuido (apenas aumentado). O bloqueio e irreversível é necessário para compliance SEC 17a-4(f) e CFTC 1.31(d). Sempre teste com políticas desbloqueadas primeiro.
 
 </details>
 
 <details>
 <summary>Dica 3: Pre-requisitos de Point-in-Time Restore</summary>
 
-Point-in-time restore para block blobs requer três recursos habilitados: blob versioning, blob soft delete e blob change feed. A janela máxima de restauracao é limitada ao período de retencao do soft delete ou 365 dias, o que for menor. Funciona apenas com contas Standard general-purpose v2 e não pode restaurar blobs na camada Archive.
+Point-in-time restore para block blobs requer três recursos habilitados: blob versioning, blob soft delete e blob change feed. A janela máxima de restauração é limitada ao período de retenção do soft delete ou 365 dias, o que for menor. Funciona apenas com contas Standard general-purpose v2 e não pode restaurar blobs na camada Archive.
 
 </details>
 
 <details>
 <summary>Dica 4: Legal Holds vs Retencao Baseada em Tempo</summary>
 
-Legal holds e políticas de retencao baseadas em tempo servem propositos diferentes e podem coexistir no mesmo container. Um legal hold previne exclusão indefinidamente até que todas as tags de hold sejam removidas (sem limite de tempo). Retencao baseada em tempo previne exclusão até o período de retencao expirar. Se ambos sao aplicados, o blob não pode ser excluido até que ambas as condições sejam satisfeitas (hold removido E retencao expirada). Legal holds não requerem uma política bloqueada.
+Legal holds e políticas de retenção baseadas em tempo servem propositos diferentes e podem coexistir no mesmo container. Um legal hold previne exclusão indefinidamente até que todas as tags de hold sejam removidas (sem limite de tempo). Retencao baseada em tempo previne exclusão até o período de retenção expirar. Se ambos são aplicados, o blob não pode ser excluido até que ambas as condições sejam satisfeitas (hold removido E retenção expirada). Legal holds não requerem uma política bloqueada.
 
 </details>
 
@@ -142,23 +142,23 @@ Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (nã
 </details>
 
 <details>
-<summary>2. Uma organização precisa armazenar registros financeiros que não podem ser modificados ou excluidos por 7 anos (compliance SEC). Apos configurar uma política de retencao baseada em tempo, qual etapa adicional é necessária para compliance regulatorio?</summary>
+<summary>2. Uma organização precisa armazenar registros financeiros que não podem ser modificados ou excluidos por 7 anos (compliance SEC). Apos configurar uma política de retenção baseada em tempo, qual etapa adicional é necessária para compliance regulatorio?</summary>
 
-**Bloquear a política de imutabilidade.** Uma política de retencao baseada em tempo desbloqueada pode ser deletada ou ter seu período de retencao reduzido, o que não atende aos requisitos SEC 17a-4(f). Bloquear a política e irreversível e garante que ninguém (incluindo proprietarios da storage account ou suporte Microsoft) pode deletar os dados antes do período de retencao expirar. Esta e a etapa que torna a política verdadeiramente compatível com WORM.
+**Bloquear a política de imutabilidade.** Uma política de retenção baseada em tempo desbloqueada pode ser deletada ou ter seu período de retenção reduzido, o que não atende aos requisitos SEC 17a-4(f). Bloquear a política e irreversível e garante que ninguém (incluindo proprietarios da storage account ou suporte Microsoft) pode deletar os dados antes do período de retenção expirar. Esta e a etapa que torna a política verdadeiramente compatível com WORM.
 
 </details>
 
 <details>
-<summary>3. Uma empresa habilitou blob versioning, soft delete (retencao de 14 dias) e point-in-time restore em uma storage account. Um ataque de ransomware criptografa todos os blobs as 14h. O ataque e descoberto as 17h. Qual é a abordagem de recuperação mais rápida?</summary>
+<summary>3. Uma empresa habilitou blob versioning, soft delete (retenção de 14 dias) e point-in-time restore em uma storage account. Um ataque de ransomware criptografa todos os blobs as 14h. O ataque e descoberto as 17h. Qual é a abordagem de recuperação mais rápida?</summary>
 
-**Usar point-in-time restore para restaurar todos os blobs para seu estado as 13h59.** Point-in-time restore pode restaurar todos os blobs em um container (ou a conta inteira) para um ponto anterior no tempo com uma única operação. Isso e mais rápido que restaurar manualmente versoes individuais de blobs ou recuperar blobs individuais. A operação de restauracao cria um novo snapshot consistente da conta no timestamp especificado, revertendo todas as alteracoes feitas apos aquele ponto.
+**Usar point-in-time restore para restaurar todos os blobs para seu estado as 13h59.** Point-in-time restore pode restaurar todos os blobs em um container (ou a conta inteira) para um ponto anterior no tempo com uma única operação. Isso e mais rápido que restaurar manualmente versoes individuais de blobs ou recuperar blobs individuais. A operação de restauração cria um novo snapshot consistente da conta no timestamp específicado, revertendo todas as alteracoes feitas apos aquele ponto.
 
 </details>
 
 <details>
 <summary>4. Qual é a diferenca de durabilidade entre ZRS e GZRS, e quando você escolheria um sobre o outro?</summary>
 
-**ZRS fornece 99,9999999999% (12 nines) de durabilidade dentro de uma única região replicando através de 3 zonas de disponibilidade. GZRS fornece a mesma proteção em nível de zona mais replicação assincrona para uma região secundária, protegendo contra falha regional completa.** Escolha ZRS quando proteção em nível de zona é suficiente e você quer minimizar custo e complexidade. Escolha GZRS quando requisitos regulatorios ou de negocios demandam proteção contra desastres regionais (terremotos, enchentes, indisponibilidades generalizadas afetando uma região Azure inteira).
+**ZRS fornece 99,9999999999% (12 nines) de durabilidade dentro de uma única região replicando através de 3 zonas de disponibilidade. GZRS fornece a mesma proteção em nível de zona mais replicação assincrona para uma região secundária, protegendo contra falha regional completa.** Escolha ZRS quando proteção em nível de zona é suficiente e você quer minimizar custo e complexidade. Escolha GZRS quando requisitos regulatorios ou de negócios demandam proteção contra desastres regionais (terremotos, enchentes, indisponibilidades generalizadas afetando uma região Azure inteira).
 
 </details>
 
@@ -225,7 +225,7 @@ az storage blob show \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

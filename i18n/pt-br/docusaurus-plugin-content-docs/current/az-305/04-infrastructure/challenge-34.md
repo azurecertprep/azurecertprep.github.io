@@ -20,7 +20,7 @@ NeuralForge é uma startup de IA que garantiu financiamento Series B e precisa m
 
 As três cargas de trabalho sao: (1) Um frontend web voltado ao cliente e camada de API que lida com 2.000 usuários simultaneos durante horarios de pico. A utilizacao de CPU raramente excede 30%, mas o serviço deve manter 99,9% de disponibilidade com auto-scaling. (2) Um pipeline de treinamento de modelos de machine learning que executa jobs em lote exigindo GPUs NVIDIA. Os jobs levam 4-8 horas, executam 3-4 vezes por semana, e podem tolerar interrupcao desde que checkpointing esteja habilitado. (3) Um motor de processamento de dados em memoria que realiza engenharia de features em tempo real para inferencia de ML. Esta carga de trabalho requer um mínimo de 256 GB de RAM, executa 24/7 sob carga sustentada, e é CPU-bound durante fases de transformacao de dados.
 
-Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho, determinar o melhor modelo de precos (instâncias reservadas, spot ou pay-as-you-go), e dimensionar corretamente cada implantacao para ficar dentro do orcamento de $8.000/mes enquanto atende todos os requisitos de desempenho.
+Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho, determinar o melhor modelo de precos (instâncias reservadas, spot ou pay-as-you-go), e dimensionar corretamente cada implantação para ficar dentro do orcamento de $8.000/mes enquanto atende todos os requisitos de desempenho.
 
 ## Habilidades do exame cobertas
 
@@ -28,20 +28,20 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 
 ## Tarefas de design
 
-### Parte 1: análise de carga de trabalho e selecao de familia de VM
+### Parte 1: análise de carga de trabalho e seleção de familia de VM
 
-1. Análise o perfil de computacao de cada carga de trabalho e mapeie-o para a familia de VM Azure apropriada:
+1. Análise o perfil de computacao de cada carga de trabalho e mapeie-o para a familia de VM Azure aprópriada:
    - Web frontend: CPU sustentada baixa, demanda burstable, alta disponibilidade necessária
    - Treinamento ML: GPU-intensivo, orientado a lote, tolera interrupcao
    - Processamento de dados: Otimizado para memoria, alta utilizacao sustentada, 256 GB+ RAM
 
-2. Para cada carga de trabalho, avalie estas familias de VM e justifique sua selecao:
+2. Para cada carga de trabalho, avalie estas familias de VM e justifique sua seleção:
    - **B-series** (burstable): Acumula creditos de CPU durante baixa utilizacao, faz burst quando necessário
    - **D-series** (propósito geral): Relação CPU-para-memoria equilibrada para cargas de trabalho de produção
    - **E-series** (otimizada para memoria): Alta relação memoria-para-CPU, até 672 GiB RAM por VM
    - **N-series** (GPU): GPUs NVIDIA para treinamento de ML, inferencia e visualizacao
 
-3. Documente por que as familias não selecionadas sao inadequadas para cada carga de trabalho (ex: por que B-series e errada para treinamento sustentado de ML, por que N-series e desperdicar recursos para um web frontend).
+3. Documente por que as familias não selecionadas são inadequadas para cada carga de trabalho (ex: por que B-series e errada para treinamento sustentado de ML, por que N-series e desperdicar recursos para um web frontend).
 
 ### Parte 2: otimização do modelo de precos
 
@@ -61,9 +61,9 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 ### Parte 3: dimensionamento correto e alocacao de orcamento
 
 7. Proponha SKUs de VM específicos para cada carga de trabalho:
-   - Web frontend: Selecione o tamanho B-series ou D-series apropriado baseado em 2.000 usuários simultaneos
-   - Treinamento ML: Selecione a VM GPU da serie NC ou ND apropriada
-   - Processamento de dados: Selecione a E-series apropriada com 256+ GB RAM
+   - Web frontend: Selecione o tamanho B-series ou D-series aprópriado baseado em 2.000 usuários simultaneos
+   - Treinamento ML: Selecione a VM GPU da serie NC ou ND aprópriada
+   - Processamento de dados: Selecione a E-series aprópriada com 256+ GB RAM
 
 8. Crie uma tabela de alocacao de orcamento:
 
@@ -109,7 +109,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 <details>
 <summary>Dica 1: Modelo de Acumulo de Creditos B-series</summary>
 
-VMs B-series acumulam creditos de CPU quando executam abaixo da linha base (ex: uma B4ms tem uma linha base de 22,5%). Quando seu web app esta ocioso a 5% de CPU, creditos se acumulam. Durante um pico de trafego, a VM pode fazer burst para 100% de CPU usando creditos acumulados. Isso torna a B-series ideal para cargas de trabalho com padrões de utilizacao variaveis. No entanto, uma vez que os creditos se esgotam, o desempenho cai para a linha base. Para cargas de trabalho sustentadas de alta CPU, D-series e mais apropriada porque fornece desempenho consistente sem o modelo de creditos.
+VMs B-series acumulam creditos de CPU quando executam abaixo da linha base (ex: uma B4ms tem uma linha base de 22,5%). Quando seu web app esta ocioso a 5% de CPU, creditos se acumulam. Durante um pico de trafego, a VM pode fazer burst para 100% de CPU usando creditos acumulados. Isso torna a B-series ideal para cargas de trabalho com padrões de utilizacao variaveis. No entanto, uma vez que os creditos se esgotam, o desempenho cai para a linha base. Para cargas de trabalho sustentadas de alta CPU, D-series e mais aprópriada porque fornece desempenho consistente sem o modelo de creditos.
 
 </details>
 
@@ -169,16 +169,16 @@ Se os requisitos de GPU forem maiores (ex: NC24s_v3 com 4 GPUs), os custos aumen
 </details>
 
 <details>
-<summary>2. Por que Spot VMs sao inadequadas para a carga de trabalho de processamento de dados em memoria apesar da economia de custos?</summary>
+<summary>2. Por que Spot VMs são inadequadas para a carga de trabalho de processamento de dados em memoria apesar da economia de custos?</summary>
 
-**A carga de trabalho executa 24/7 sob carga sustentada e não pode tolerar interrupcao.** Spot VMs podem ser removidas com apenas 30 segundos de aviso quando o Azure precisa da capacidade. Para um motor de processamento em memoria, a remocao significa perder todo o estado em memoria e reiniciar o job do zero. A carga de trabalho de processamento de dados não tem limites naturais de checkpoint e requer disponibilidade continua. Reserved Instances sao a escolha correta aqui: fornecem descontos significativos (até 72%) enquanto garantem capacidade sem risco de remocao.
+**A carga de trabalho executa 24/7 sob carga sustentada e não pode tolerar interrupcao.** Spot VMs podem ser removidas com apenas 30 segundos de aviso quando o Azure precisa da capacidade. Para um motor de processamento em memoria, a remocao significa perder todo o estado em memoria e reiniciar o job do zero. A carga de trabalho de processamento de dados não tem limites naturais de checkpoint e requer disponibilidade continua. Reserved Instances são a escolha correta aqui: fornecem descontos significativos (até 72%) enquanto garantem capacidade sem risco de remocao.
 
 </details>
 
 <details>
 <summary>3. Uma startup precisa de VMs GPU para treinamento de ML que executa 4 horas por semana. Devem usar Reserved Instances ou Spot?</summary>
 
-**Spot VMs.** Com apenas 16 GPU-horas por mes de utilizacao, uma Reserved Instance desperdicaria aproximadamente 98% da capacidade comprometida (uma reserva cobre todas as 730 horas em um mes). Spot VMs fornecem até 90% de desconto sobre pay-as-you-go e sao ideais para cargas de trabalho em lote interruptiveis. O pipeline de treinamento deve implementar checkpointing para lidar com remocoes. O ponto de equilibrio para Reserved Instances em VMs GPU e tipicamente acima de 40-50% de utilizacao (300+ horas/mes).
+**Spot VMs.** Com apenas 16 GPU-horas por mes de utilizacao, uma Reserved Instance desperdicaria aproximadamente 98% da capacidade comprometida (uma reserva cobre todas as 730 horas em um mes). Spot VMs fornecem até 90% de desconto sobre pay-as-you-go e são ideais para cargas de trabalho em lote interruptiveis. O pipeline de treinamento deve implementar checkpointing para lidar com remocoes. O ponto de equilibrio para Reserved Instances em VMs GPU e tipicamente acima de 40-50% de utilizacao (300+ horas/mes).
 
 </details>
 
@@ -223,7 +223,7 @@ az vm show --resource-group rg-az305-challenge34 --name vm-burst-test \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

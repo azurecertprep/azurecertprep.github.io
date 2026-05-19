@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-SensorGrid é uma plataforma de IoT industrial que monitora 50.000 dispositivos implantados em instalacoes de manufatura na América do Norte, Europa e Asia-Pacifico. Cada dispositivo transmite eventos de telemetria (temperatura, vibracao, pressao, umidade) a cada 5 segundos, resultando em aproximadamente 1 milhao de eventos por segundo no pico. Os eventos sao documentos JSON com esquema variavel: diferentes tipos de dispositivos incluem diferentes leituras de sensores, versoes de firmware adicionam novos campos ao longo do tempo, e alguns eventos incluem arrays aninhados de sub-leituras.
+SensorGrid é uma plataforma de IoT industrial que monitora 50.000 dispositivos implantados em instalacoes de manufatura na América do Norte, Europa e Asia-Pacifico. Cada dispositivo transmite eventos de telemetria (temperatura, vibracao, pressao, umidade) a cada 5 segundos, resultando em aproximadamente 1 milhao de eventos por segundo no pico. Os eventos são documentos JSON com esquema variavel: diferentes tipos de dispositivos incluem diferentes leituras de sensores, versoes de firmware adicionam novos campos ao longo do tempo, e alguns eventos incluem arrays aninhados de sub-leituras.
 
-A plataforma tem dois padrões de acesso primários. Primeiro, operadores precisam de dashboards em tempo real mostrando o estado mais recente de qualquer dispositivo com latência de leitura inferior a 10ms (leituras pontuais por device ID). Segundo, engenheiros executam consultas analiticas historicas abrangendo dias ou semanas de dados para uma instalacao ou tipo de dispositivo específico, onde tempos de resposta de 2-5 segundos sao aceitaveis. O volume de dados atual e 2TB e cresce 500GB por mes.
+A plataforma tem dois padrões de acesso primários. Primeiro, operadores precisam de dashboards em tempo real mostrando o estado mais recente de qualquer dispositivo com latência de leitura inferior a 10ms (leituras pontuais por device ID). Segundo, engenheiros executam consultas analiticas historicas abrangendo dias ou semanas de dados para uma instalacao ou tipo de dispositivo específico, onde tempos de resposta de 2-5 segundos são aceitaveis. O volume de dados atual e 2TB e cresce 500GB por mes.
 
-O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minimizar a sobrecarga operacional (sem gerenciar clusters ou shards manualmente) e requer disponibilidade multi-região com failover automático. A equipe de engenharia tem experiência com sintaxe de consulta MongoDB de um projeto anterior, mas esta aberta a outras APIs se os trade-offs justificarem. A política de retencao de dados requer dados quentes por 90 dias, apos os quais devem ser arquivados ou movidos para armazenamento frio para controlar custos.
+O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minimizar a sobrecarga operacional (sem gerenciar clusters ou shards manualmente) e requer disponibilidade multi-região com failover automático. A equipe de engenharia tem experiência com sintaxe de consulta MongoDB de um projeto anterior, mas esta aberta a outras APIs se os trade-offs justificarem. A política de retenção de dados requer dados quentes por 90 dias, apos os quais devem ser arquivados ou movidos para armazenamento frio para controlar custos.
 
 ## Habilidades do exame cobertas
 
@@ -27,10 +27,10 @@ O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minim
 
 ## Tarefas de design
 
-### Parte 1: selecao de serviço e API
+### Parte 1: seleção de serviço e API
 
 1. Avalie Azure Cosmos DB como o armazenamento de dados primário para os requisitos da SensorGrid. Compare-o com alternativas (Azure Table Storage, MongoDB Atlas no Azure) e justifique sua recomendacao.
-2. Selecione a API Cosmos DB mais apropriada para esta carga de trabalho. Compare as APIs NoSQL (nativa), MongoDB, PostgreSQL, Cassandra e Gremlin. Considere a experiência da equipe com MongoDB, os padrões de consulta necessários e flexibilidade de longo prazo.
+2. Selecione a API Cosmos DB mais aprópriada para esta carga de trabalho. Compare as APIs NoSQL (nativa), MongoDB, PostgreSQL, Cassandra e Gremlin. Considere a experiência da equipe com MongoDB, os padrões de consulta necessários e flexibilidade de longo prazo.
 3. Se você recomendar a API NoSQL, explique como consultas tipo SQL e o change feed fornecem vantagens sobre a API MongoDB para este cenário de IoT. Se recomendar a API MongoDB, explique como a compatibilidade de protocolo wire reduz o esforco de migração.
 4. Avalie se Azure Table Storage poderia lidar com qualquer porcao desta carga de trabalho a um custo menor (para lookups key-value mais simples do estado do dispositivo).
 
@@ -43,8 +43,8 @@ O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minim
 
 ### Parte 3: consistência e distribuição global
 
-9. Selecione o nível de consistência apropriado para cada padrão de acesso: (a) leituras de dashboard em tempo real (estado mais recente do dispositivo), (b) consultas analiticas historicas. Avalie strong, bounded staleness, session, consistent prefix e eventual consistency. Documente as implicacoes de custo de RU de cada nível.
-10. Projete a topologia de implantacao multi-região. Determine quais regiões devem ter capacidade de escrita (single-write vs multi-write) e quantas regiões de leitura implantar dada a distribuição dos dispositivos.
+9. Selecione o nível de consistência aprópriado para cada padrão de acesso: (a) leituras de dashboard em tempo real (estado mais recente do dispositivo), (b) consultas analiticas historicas. Avalie strong, bounded staleness, session, consistent prefix e eventual consistency. Documente as implicacoes de custo de RU de cada nível.
+10. Projete a topologia de implantação multi-região. Determine quais regiões devem ter capacidade de escrita (single-write vs multi-write) e quantas regiões de leitura implantar dada a distribuição dos dispositivos.
 11. Avalie multi-region writes para cenários onde dispositivos em cada região escrevem na instância Cosmos DB mais próxima. Aborde a estratégia de resolução de conflitos (Last Writer Wins vs procedimentos de merge customizados).
 12. Projete uma estratégia de otimização de custos incluindo autoscale throughput, camada serverless para ambientes de desenvolvimento e hierarchical partition keys para melhor distribuição de dados.
 
@@ -55,8 +55,8 @@ O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minim
   items={[
     "Selected and justified the Cosmos DB API choice with clear comparison against alternatives",
     "Designed partition key strategy that avoids hot partitions and supports both access patterns",
-    "Estimated RU consumption and selected appropriate throughput provisioning mode (manual, autoscale, or serverless)",
-    "Selected consistency levels appropriate to each access pattern with documented trade-offs",
+    "Estimated RU consumption and selected apprópriate throughput provisioning mode (manual, autoscale, or serverless)",
+    "Selected consistency levels apprópriate to each access pattern with documented trade-offs",
     "Designed multi-region topology with automatic failover and clear write region strategy",
     "Implemented TTL and data lifecycle strategy to control storage costs within budget"
   ]}
@@ -65,7 +65,7 @@ O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minim
 ## Dicas
 
 <details>
-<summary>Dica 1: Selecao de API do Cosmos DB</summary>
+<summary>Dica 1: Seleção de API do Cosmos DB</summary>
 
 A API NoSQL (anteriormente SQL API) e a API nativa do Cosmos DB com o conjunto de recursos mais rico: linguagem de consulta tipo SQL, change feed, hierarchical partition keys, controle total de indexacao e melhor suporte de SDK. A API MongoDB fornece compatibilidade de protocolo wire para equipes migrando do MongoDB. Para projetos greenfield de IoT, a API NoSQL tipicamente oferece melhor otimização de desempenho e custos de RU mais baixos porque não tem overhead de traducao de protocolo wire. Escolha a API MongoDB apenas se você tiver código de aplicação MongoDB existente que não pode modificar.
 
@@ -95,7 +95,7 @@ Níveis de consistência do Cosmos DB do mais forte ao mais fraco: Strong, Bound
 <details>
 <summary>Dica 5: Autoscale vs Throughput Provisionado</summary>
 
-Autoscale throughput escala automaticamente entre 10% e 100% de um máximo configurado de RU/s. Você paga pelo maior RU/s que o sistema escala em cada hora. E ideal para cargas de trabalho variaveis ou imprevisiveis. Throughput provisionado manual e mais barato quando a carga e previsivel e estavel. Para IoT com 1M eventos/segundo durante picos mas volume menor fora do pico, autoscale previne provisionamento excessivo. Você também pode definir o máximo de autoscale em 4x sua baseline para lidar com picos.
+Autoscale throughput escala automaticamente entre 10% e 100% de um máximo configurado de RU/s. Você paga pelo maior RU/s que o sistema escala em cada hora. E ideal para cargas de trabalho variaveis ou imprevisiveis. Throughput provisionado manual e mais barato quando a carga e previsível e estavel. Para IoT com 1M eventos/segundo durante picos mas volume menor fora do pico, autoscale previne provisionamento excessivo. Você também pode definir o máximo de autoscale em 4x sua baseline para lidar com picos.
 
 </details>
 
@@ -129,14 +129,14 @@ Autoscale throughput escala automaticamente entre 10% e 100% de um máximo confi
 <details>
 <summary>3. Uma aplicação le o estado do dispositivo do Cosmos DB. A leitura deve refletir escritas feitas pela mesma sessão da aplicação, mas leituras de outras regiões podem ser levemente desatualizadas. Qual nível de consistência e mais economico?</summary>
 
-**Session consistency.** Garante read-your-own-writes e leituras monotonicas dentro de uma única sessão de cliente, custando o mesmo que eventual consistency (1x RU para leituras). Strong consistency custaria 2x RUs e é desnecessario já que o requisito exige apenas consistência em nível de sessão. Bounded staleness também funcionaria mas e mais caro que session consistency para escritas em uma única região.
+**Session consistency.** Garante read-your-own-writes e leituras monotonicas dentro de uma única sessão de cliente, custando o mesmo que eventual consistency (1x RU para leituras). Strong consistency custaria 2x RUs e é desnecessário já que o requisito exige apenas consistência em nível de sessão. Bounded staleness também funcionaria mas e mais caro que session consistency para escritas em uma única região.
 
 </details>
 
 <details>
 <summary>4. Quando você deve escolher multi-region writes no Cosmos DB versus single-region writes com leituras multi-região?</summary>
 
-**Escolha multi-region writes quando:** a latência de escrita de regiões remotas e inaceitavel (dispositivos precisam escrever na região mais próxima), ou quando disponibilidade de escrita durante uma indisponibilidade regional é necessária. **Escolha single-region writes quando:** o volume de escrita e gerenciável de uma região, a complexidade de resolução de conflitos e indesejavel, requisitos de consistência sao mais simples, ou custo e a preocupação primária (multi-write adiciona aproximadamente 25% aos custos de RU). Para ingestao IoT de dispositivos globalmente distribuidos onde baixa latência de escrita e crítica, multi-region writes sao frequentemente justificados apesar do custo adicional e complexidade de resolução de conflitos.
+**Escolha multi-region writes quando:** a latência de escrita de regiões remotas e inaceitavel (dispositivos precisam escrever na região mais próxima), ou quando disponibilidade de escrita durante uma indisponibilidade regional é necessária. **Escolha single-region writes quando:** o volume de escrita e gerenciável de uma região, a complexidade de resolução de conflitos e indesejavel, requisitos de consistência são mais simples, ou custo e a preocupação primária (multi-write adiciona aproximadamente 25% aos custos de RU). Para ingestao IoT de dispositivos globalmente distribuidos onde baixa latência de escrita e crítica, multi-region writes são frequentemente justificados apesar do custo adicional e complexidade de resolução de conflitos.
 
 </details>
 

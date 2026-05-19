@@ -386,7 +386,7 @@ Uploads do AzCopy para uma conta de armazenamento falham com "AuthorizationFailu
 - C. A conta de armazenamento foi excluída
 - D. O AzCopy precisa ser atualizado
 
-<details><summary>Resposta</summary>**B.** Um token SAS com validade de 7 dias gerado 8 dias atrás expirou. Gere um novo token SAS com uma validade apropriada.</details>
+<details><summary>Resposta</summary>**B.** Um token SAS com validade de 7 dias gerado 8 dias atrás expirou. Gere um novo token SAS com uma validade aprópriada.</details>
 
 **Questão 3** *(Computação)*
 Uma VM está mostrando como "Parada (desalocada)" e você precisa descobrir o que a parou. Qual ferramenta você deve usar?

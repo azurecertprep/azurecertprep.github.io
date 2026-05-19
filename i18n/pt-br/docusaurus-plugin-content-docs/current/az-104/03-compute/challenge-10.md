@@ -372,7 +372,7 @@ O swap é atômico da perspectiva do usuário | sem tempo de inatividade.
 - App settings (a menos que marcadas como "slot setting"), connection strings, handler mappings, certificados públicos, conteúdo de WebJobs, aplicações virtuais
 
 **Configurações que NÃO são trocadas** (ficam com o slot):
-- Endpoints de publicação, nomes de domínio personalizados, certificados e bindings TLS/SSL, configurações de escala, configurações de diagnóstico, CORS, integração VNet, identidades gerenciadas, configurações terminando em `_EXTENSION_VERSION`
+- Endpoints de públicação, nomes de domínio personalizados, certificados e bindings TLS/SSL, configurações de escala, configurações de diagnóstico, CORS, integração VNet, identidades gerenciadas, configurações terminando em `_EXTENSION_VERSION`
 </details>
 
 **4. Qual é a diferença entre scale-up e scale-out?**

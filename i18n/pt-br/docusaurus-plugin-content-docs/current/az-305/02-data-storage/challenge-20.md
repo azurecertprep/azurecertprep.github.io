@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-DataForge Analytics é uma startup de IA em rápido crescimento que superou sua arquitetura de armazenamento inicial. Hoje eles gerenciam 100TB de dados no Azure, com projeções atingindo 500TB dentro de 12 meses. Seus dados se dividem em três padrões de uso distintos: datasets de treinamento de ML acessados por hora por clusters GPU (dados quentes), arquivos carregados por usuários acessados diariamente através de sua plataforma SaaS (dados mornos) e arquivos de compliance que devem ser retidos por 7 anos mas raramente sao acessados (dados frios).
+DataForge Analytics é uma startup de IA em rápido crescimento que superou sua arquitetura de armazenamento inicial. Hoje eles gerenciam 100TB de dados no Azure, com projeções atingindo 500TB dentro de 12 meses. Seus dados se dividem em três padrões de uso distintos: datasets de treinamento de ML acessados por hora por clusters GPU (dados quentes), arquivos carregados por usuários acessados diariamente através de sua plataforma SaaS (dados mornos) e arquivos de compliance que devem ser retidos por 7 anos mas raramente são acessados (dados frios).
 
 O CFO levantou uma preocupação urgente: a conta mensal atual de armazenamento é $15.000 e cresce linearmente com o volume de dados. A meta é reduzir os custos abaixo de $10.000/mes sem sacrificar o desempenho de leitura em dados quentes que alimentam o pipeline de ML. A equipe de ML relata que qualquer aumento de latência em leituras de dados de treinamento impacta diretamente o tempo de treinamento do modelo e a eficiência de utilizacao da GPU.
 
-Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre otimização de custos com requisitos de desempenho, aproveitando camadas de acesso do Azure Storage, precos de capacidade reservada, políticas de gerenciamento de ciclo de vida e camadas de cache onde apropriado.
+Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre otimização de custos com requisitos de desempenho, aproveitando camadas de acesso do Azure Storage, precos de capacidade reservada, políticas de gerenciamento de ciclo de vida e camadas de cache onde aprópriado.
 
 ## Habilidades do exame cobertas
 
@@ -31,7 +31,7 @@ Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre
 
 1. Crie um resource group para este desafio é implante uma storage account Standard general-purpose v2.
 2. Documente o preco atual para cada camada de acesso (Hot, Cool, Cold, Archive) incluindo custos de armazenamento por GB, custos de operação de leitura/escrita e custos de recuperação de dados na região escolhida.
-3. Projete uma estratégia de camadas que mapeie cada categoria de dados para a camada de acesso apropriada:
+3. Projete uma estratégia de camadas que mapeie cada categoria de dados para a camada de acesso aprópriada:
    - Datasets de treinamento ML (10TB, acessados por hora) - avalie camada Hot vs Premium block blob storage
    - Uploads de usuários (30TB, acessados 1-5 vezes por dia) - avalie camada Cool vs Hot
    - Arquivos de compliance (60TB, acessados menos de uma vez por ano) - avalie camada Cold vs Archive
@@ -50,10 +50,10 @@ Sua tarefa é projetar uma estratégia de armazenamento em camadas que equilibre
 
 8. Calcule a economia de comprar 100TB de capacidade reservada do Azure Storage (compromisso de 1 ano) versus preco pay-as-you-go para o armazenamento baseline estavel.
 9. Projete uma estratégia de cache para os dados de treinamento ML usando Azure Cache for Redis ou Azure HPC Cache. Documente:
-   - Qual solução de cache e apropriada para leituras de datasets grandes
+   - Qual solução de cache e aprópriada para leituras de datasets grandes
    - Taxa de cache hit esperada para datasets de treinamento acessados repetidamente
-   - Custo da camada de cache versus o beneficio de desempenho
-10. Crie uma matriz de decisao comparando camadas de desempenho Standard vs Premium de storage account para a carga de trabalho ML, considerando IOPS, throughput e requisitos de latência.
+   - Custo da camada de cache versus o benefício de desempenho
+10. Crie uma matriz de decisão comparando camadas de desempenho Standard vs Premium de storage account para a carga de trabalho ML, considerando IOPS, throughput e requisitos de latência.
 
 ### Parte 4: projetar para crescimento
 
@@ -110,7 +110,7 @@ Para cargas de trabalho de treinamento ML lendo datasets grandes (multi-TB), Azu
 <details>
 <summary>Dica 5: Premium Block Blob Storage</summary>
 
-Contas de Premium block blob storage usam SSDs e sao otimizadas para cargas de trabalho que requerem latência baixa consistente e altas taxas de transação. Suportam apenas a camada Hot (sem lifecycle tiering) e custam significativamente mais por GB. Sao melhores quando você precisa de latência sub-milissegundo, não apenas alto throughput.
+Contas de Premium block blob storage usam SSDs e são otimizadas para cargas de trabalho que requerem latência baixa consistente e altas taxas de transação. Suportam apenas a camada Hot (sem lifecycle tiering) e custam significativamente mais por GB. Sao melhores quando você precisa de latência sub-milissegundo, não apenas alto throughput.
 
 </details>
 
@@ -126,30 +126,30 @@ Contas de Premium block blob storage usam SSDs e sao otimizadas para cargas de t
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Uma empresa armazena 50TB de dados de log que sao escritos uma vez e lidos aproximadamente duas vezes por mes para auditorias de compliance. Qual camada de acesso minimiza o custo total (armazenamento + operações)?</summary>
+<summary>1. Uma empresa armazena 50TB de dados de log que são escritos uma vez e lidos aproximadamente duas vezes por mes para auditorias de compliance. Qual camada de acesso minimiza o custo total (armazenamento + operações)?</summary>
 
-**Camada Cool.** Embora Archive tenha o custo de armazenamento por GB mais baixo, o padrão de leitura duas vezes ao mes incorreria em custos significativos de recuperação e atrasos de reidratacao de 15 horas. A camada Cold também poderia funcionar, mas Cool fornece um bom equilibrio entre economia no custo de armazenamento (aproximadamente 50% menos que Hot) e custos de operação razoaveis para leituras ocasionais. A insight chave e que Archive só e economico quando os dados sao acessados menos de uma ou duas vezes por ano.
+**Camada Cool.** Embora Archive tenha o custo de armazenamento por GB mais baixo, o padrão de leitura duas vezes ao mes incorreria em custos significativos de recuperação e atrasos de reidratacao de 15 horas. A camada Cold também poderia funcionar, mas Cool fornece um bom equilibrio entre economia no custo de armazenamento (aproximadamente 50% menos que Hot) e custos de operação razoaveis para leituras ocasionais. A insight chave e que Archive só e economico quando os dados são acessados menos de uma ou duas vezes por ano.
 
 </details>
 
 <details>
 <summary>2. Quando a capacidade reservada do Azure Storage NAO fornece economia de custos?</summary>
 
-**Quando o volume de armazenamento e altamente variavel ou diminuindo.** Capacidade reservada requer um compromisso com uma quantidade fixa de armazenamento (incrementos de 100TB ou 1PB). Se o uso real ficar abaixo da quantidade reservada, você paga por capacidade não utilizada. Também não cobre custos de transação, egress ou operações - apenas a cobranca de capacidade por GB. Se sua carga de trabalho e pesada em transações mas leve em armazenamento, capacidade reservada fornece beneficio mínimo.
+**Quando o volume de armazenamento e altamente variavel ou diminuindo.** Capacidade reservada requer um compromisso com uma quantidade fixa de armazenamento (incrementos de 100TB ou 1PB). Se o uso real ficar abaixo da quantidade reservada, você paga por capacidade não utilizada. Também não cobre custos de transação, egress ou operações - apenas a cobranca de capacidade por GB. Se sua carga de trabalho e pesada em transações mas leve em armazenamento, capacidade reservada fornece benefício mínimo.
 
 </details>
 
 <details>
 <summary>3. Uma política de gerenciamento de ciclo de vida move blobs para Archive apos 180 dias. Um usuário precisa ler um blob arquivado imediatamente. O que acontece?</summary>
 
-**A leitura falha até que o blob seja reidratado.** Blobs arquivados estao offline e não podem ser lidos diretamente. O usuário deve primeiro reidratar o blob mudando sua camada para Hot, Cool ou Cold (prioridade standard leva até 15 horas; prioridade alta pode completar em menos de 1 hora para blobs menores que 10GB). Alternativamente, eles podem copiar o blob para um novo blob em uma camada online. Esta é uma consideracao crítica de design - se quaisquer dados de compliance podem precisar de acesso urgente, a camada Archive pode não ser apropriada sem um processo de reidratacao documentado.
+**A leitura falha até que o blob seja reidratado.** Blobs arquivados estao offline e não podem ser lidos diretamente. O usuário deve primeiro reidratar o blob mudando sua camada para Hot, Cool ou Cold (prioridade standard leva até 15 horas; prioridade alta pode completar em menos de 1 hora para blobs menores que 10GB). Alternativamente, eles podem copiar o blob para um novo blob em uma camada online. Esta é uma consideracao crítica de design - se quaisquer dados de compliance podem precisar de acesso urgente, a camada Archive pode não ser aprópriada sem um processo de reidratacao documentado.
 
 </details>
 
 <details>
 <summary>4. Qual é a diferenca primária entre uma storage account Standard general-purpose v2 é uma storage account Premium block blob para cargas de trabalho pesadas em leitura?</summary>
 
-**Consistência de latência e IOPS.** Premium block blob storage usa SSDs e fornece latência consistente de um digito de milissegundos e IOPS mais alto. Contas Standard usam HDDs com latência variavel (tipicamente 5-10ms mas pode ter picos). Premium e precificado por GB (sem camadas de acesso) e custa 2-3x mais por GB que a camada Hot Standard. A decisao de design depende de se a carga de trabalho requer latência baixa consistente (Premium) ou pode tolerar latência variavel em troca de otimização de custos baseada em camadas (Standard).
+**Consistência de latência e IOPS.** Premium block blob storage usa SSDs e fornece latência consistente de um digito de milissegundos e IOPS mais alto. Contas Standard usam HDDs com latência variavel (tipicamente 5-10ms mas pode ter picos). Premium e precificado por GB (sem camadas de acesso) e custa 2-3x mais por GB que a camada Hot Standard. A decisão de design depende de se a carga de trabalho requer latência baixa consistente (Premium) ou pode tolerar latência variavel em troca de otimização de custos baseada em camadas (Standard).
 
 </details>
 
@@ -214,7 +214,7 @@ az storage account management-policy show \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

@@ -254,7 +254,7 @@ Configure alertas para jobs de backup com falha:
    - Diferencial | alterações desde o último backup completo
 
 4. **Site Recovery: failover vs test failover?**
-   - Test failover | valida a replicação sem afetar a produção; cria recursos de teste
+   - Test failover | válida a replicação sem afetar a produção; cria recursos de teste
    - Failover | recuperação de desastre real; transfere a produção para a região secundária
 
 ## Limpeza

@@ -646,7 +646,7 @@ Para uma política recém-criada ou modificada, a primeira execução pode levar
 - Replicação **entre assinaturas**
 - Replicação **entre tenants** (se `AllowCrossTenantReplication` estiver habilitado)
 
-A conta de destino cria a política de replicação e especifica a conta de origem. Ambas as contas devem atender aos pré-requisitos (versionamento, change feed, etc.).
+A conta de destino cria a política de replicação e específica a conta de origem. Ambas as contas devem atender aos pré-requisitos (versionamento, change feed, etc.).
 
 </details>
 

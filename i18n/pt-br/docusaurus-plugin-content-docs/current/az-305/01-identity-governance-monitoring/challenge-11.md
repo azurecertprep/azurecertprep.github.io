@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A HealthBridge Medical Systems é uma empresa de tecnologia em saúde que fornece prontuarios eletronicos (EHR), agendamento de pacientes e plataformas de telemedicina para 150 hospitais e clinicas nos Estados Unidos. Todos os dados de pacientes sao armazenados e processados no Azure, tornando a conformidade com HIPAA um requisito legal. Além do HIPAA, a HealthBridge tem padrões internos que excedem os minimos regulatorios: todas as storage accounts devem usar chaves de criptografia gerenciadas pelo cliente, nenhuma maquina virtual pode usar um endereço IP público, apenas SKUs de VM aprovados podem ser implantados (para controlar custos é garantir conformidade de patches), e todos os recursos devem enviar logs de diagnóstico para um workspace central de Log Analytics.
+A HealthBridge Medical Systems é uma empresa de tecnologia em saúde que fornece prontuarios eletronicos (EHR), agendamento de pacientes e plataformas de telemedicina para 150 hospitais e clinicas nos Estados Unidos. Todos os dados de pacientes são armazenados e processados no Azure, tornando a conformidade com HIPAA um requisito legal. Além do HIPAA, a HealthBridge tem padrões internos que excedem os mínimos regulatorios: todas as storage accounts devem usar chaves de criptografia gerenciadas pelo cliente, nenhuma maquina virtual pode usar um endereço IP público, apenas SKUs de VM aprovados podem ser implantados (para controlar custos é garantir conformidade de patches), e todos os recursos devem enviar logs de diagnóstico para um workspace central de Log Analytics.
 
 No mes passado, um desenvolvedor junior acidentalmente criou uma storage account com acesso anonimo a blobs habilitado em uma subscription de produção. A configuração incorreta foi descoberta 72 horas depois durante uma verificação de rotina, resultando em uma notificação de violacao reportavel. O CISO determinou que a equipe de conformidade implemente guardrails automatizados que impedem a criação de recursos não conformes e auto-remedeiem desvios onde possível. A equipe também deve produzir um relatório mensal de conformidade para o conselho mostrando aderencia aos controles HIPAA e padrões internos.
 
-A equipe de conformidade consiste em apenas duas pessoas e não pode revisar manualmente cada implantacao. Eles precisam de uma abordagem de policy-as-code que escale com o crescimento da organização (planejam dobrar sua presença no Azure em 18 meses). Algumas equipes de desenvolvimento tem exceções legitimas - a equipe de telemedicina precisa de endereços IP públicos para seus servidores de sinalizacao WebRTC, e a equipe de ciencia de dados precisa de SKUs de VM com GPU que não estao na lista padrão aprovada. A solução deve acomodar essas exceções sem comprometer a postura geral de conformidade.
+A equipe de conformidade consiste em apenas duas pessoas e não pode revisar manualmente cada implantação. Eles precisam de uma abordagem de policy-as-code que escale com o crescimento da organização (planejam dobrar sua presença no Azure em 18 meses). Algumas equipes de desenvolvimento tem exceções legitimas - a equipe de telemedicina precisa de endereços IP públicos para seus servidores de sinalizacao WebRTC, e a equipe de ciencia de dados precisa de SKUs de VM com GPU que não estao na lista padrão aprovada. A solução deve acomodar essas exceções sem comprometer a postura geral de conformidade.
 
 ## Habilidades do exame cobertas
 
@@ -36,26 +36,26 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
    - Todo armazenamento deve usar chaves de criptografia gerenciadas pelo cliente (audit vs. deny)
    - Sem endereços IP públicos em VMs (deny com mecanismo de exceção)
    - Logs de diagnóstico devem ser enviados ao Log Analytics central (deployIfNotExists)
-3. Projete a hierarquia de atribuicao de políticas. Determine quais políticas se aplicam em qual nível de management group ou subscription, considerando que algumas políticas devem ser universais enquanto outras sao específicas de ambiente (ex.: mais rigorosas em produção do que em desenvolvimento).
-4. Defina um processo para criar é gerenciar definicoes de políticas customizadas versus usar políticas integradas. Identifique quais requisitos da HealthBridge sao atendidos por políticas integradas e quais requerem definicoes customizadas.
+3. Projete a hierarquia de atribuicao de políticas. Determine quais políticas se aplicam em qual nível de management group ou subscription, considerando que algumas políticas devem ser universais enquanto outras são específicas de ambiente (ex.: mais rigorosas em produção do que em desenvolvimento).
+4. Defina um processo para criar é gerenciar definicoes de políticas customizadas versus usar políticas integradas. Identifique quais requisitos da HealthBridge são atendidos por políticas integradas e quais requerem definicoes customizadas.
 
 ### Parte 2: gerenciamento de excecoes
 
-5. Projete um fluxo de trabalho de isencao para equipes com exceções de conformidade legitimas. Defina: quem pode conceder isencoes, qual documentação é necessária, se isencoes sao limitadas no tempo (waiver) ou permanentes (mitigated), e como isencoes sao rastreadas para fins de auditoria.
+5. Projete um fluxo de trabalho de isencao para equipes com exceções de conformidade legitimas. Defina: quem pode conceder isencoes, qual documentação é necessária, se isencoes são limitadas no tempo (waiver) ou permanentes (mitigated), e como isencoes são rastreadas para fins de auditoria.
 6. Para o requisito de IP público da equipe de telemedicina, projete o mecanismo específico de isencao. Escolha entre: isencoes de Azure Policy no escopo do resource group, um management group separado com políticas diferentes, ou uma política customizada com condições de exclusão.
-7. Para os SKUs de VM não padrão da equipe de ciencia de dados, projete um processo de atualização de parametros de política. Determine como a lista de SKUs aprovados é mantida, quem aprova adicoes e como mudanças sao implantadas sem tempo de inatividade.
+7. Para os SKUs de VM não padrão da equipe de ciencia de dados, projete um processo de atualização de parametros de política. Determine como a lista de SKUs aprovados é mantida, quem aprova adicoes e como mudanças são implantadas sem tempo de inatividade.
 
 ### Parte 3: Auto-Remediacao
 
 8. Projete políticas de auto-remediacao usando o efeito `deployIfNotExists`. Defina quais lacunas de conformidade devem ser automaticamente corrigidas (ex.: habilitar log de diagnóstico, habilitar criptografia) versus quais devem apenas ser sinalizadas (ex.: deletar um IP público pode quebrar um serviço em execução).
 9. Especifique os requisitos de managed identity para tarefas de remediacao. Defina as atribuicoes de função necessárias, o principio de menor privilegio para identidades de remediacao e o escopo de suas permissões.
-10. Projete um mecanismo de detecção e correcao de desvios. Determine como lidar com recursos que estavam em conformidade na criação mas desviaram (ex.: alguem desabilitou a criptografia apos a implantacao inicial).
+10. Projete um mecanismo de detecção e correcao de desvios. Determine como lidar com recursos que estavam em conformidade na criação mas desviaram (ex.: alguem desabilitou a criptografia apos a implantação inicial).
 
-### Parte 4: relatorios de conformidade
+### Parte 4: relatórios de conformidade
 
 11. Projete a solução de dashboard e relatórios de conformidade. Especifique como o relatório mensal do conselho e gerado, quais metricas inclui (percentual de conformidade por iniciativa, tendencia ao longo do tempo, principais violacoes) e como o dashboard de conformidade regulatoria no Microsoft Defender for Cloud se integra com o Azure Policy.
-12. Defina alertas para violacoes críticas de conformidade. Determine quais violacoes disparam alertas imediatos (ex.: acesso anonimo a blobs habilitado) versus quais sao aceitaveis para incluir em relatórios semanais de conformidade.
-13. Projete a trilha de auditoria para evidencias de conformidade. Especifique como demonstrar aos auditores HIPAA que controles sao continuamente aplicados (retencao de Activity Log, logs de avaliação de políticas, histórico de isencoes).
+12. Defina alertas para violacoes críticas de conformidade. Determine quais violacoes disparam alertas imediatos (ex.: acesso anonimo a blobs habilitado) versus quais são aceitaveis para incluir em relatórios semanais de conformidade.
+13. Projete a trilha de auditoria para evidencias de conformidade. Especifique como demonstrar aos auditores HIPAA que controles são continuamente aplicados (retenção de Activity Log, logs de avaliação de políticas, histórico de isencoes).
 
 ## Criterios de sucesso
 
@@ -63,9 +63,9 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
   storageKey="az305-challenge-11"
   items={[
     "Designed policy initiative structure separating regulatory, security, and cost governance concerns",
-    "Selected appropriate policy effects for each compliance requirement with justified rationale",
+    "Selected apprópriate policy effects for each compliance requirement with justified rationale",
     "Created an exemption workflow with time-bound waivers and audit documentation",
-    "Specified auto-remediation policies with appropriate managed identity permissions",
+    "Specified auto-remediation policies with apprópriate managed identity permissions",
     "Designed compliance reporting that produces board-ready monthly summaries",
     "Addressed drift detection for resources that become non-compliant after creation"
   ]}
@@ -74,9 +74,9 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
 ## Dicas
 
 <details>
-<summary>Dica 1: Guia de Selecao de Efeitos de Política</summary>
+<summary>Dica 1: Guia de Seleção de Efeitos de Política</summary>
 
-Escolha efeitos com base no impacto e urgencia: Use `deny` para violacoes de alto risco que nunca devem ocorrer (acesso anonimo a blobs, SKUs de VM não aprovados em produção). Use `audit` durante períodos de implantacao ou para requisitos que precisam de revisao humana antes da aplicação. Use `deployIfNotExists` para configurações que podem ser auto-aplicadas com segurança (configurações de diagnóstico, políticas de backup). Use `modify` para aplicação de tags ou adicao de configurações ausentes que não interrompem workloads em execução. Sempre comece com `audit` e evolua para `deny` apos as equipes terem tido tempo para remediar a não conformidade existente.
+Escolha efeitos com base no impacto e urgencia: Use `deny` para violacoes de alto risco que nunca devem ocorrer (acesso anonimo a blobs, SKUs de VM não aprovados em produção). Use `audit` durante períodos de implantação ou para requisitos que precisam de revisao humana antes da aplicação. Use `deployIfNotExists` para configurações que podem ser auto-aplicadas com segurança (configurações de diagnóstico, políticas de backup). Use `modify` para aplicação de tags ou adicao de configurações ausentes que não interrompem workloads em execução. Sempre comece com `audit` e evolua para `deny` apos as equipes terem tido tempo para remediar a não conformidade existente.
 
 </details>
 
@@ -97,7 +97,7 @@ Isencoes de Azure Policy podem ser: `Waiver` (não conformidade reconhecida com 
 <details>
 <summary>Dica 4: Tarefas de Remediacao e Managed Identity</summary>
 
-Políticas `deployIfNotExists` e `modify` requerem uma managed identity para executar remediacao. Quando você cria uma atribuicao de política com esses efeitos, o Azure automaticamente cria uma system-assigned managed identity e concede as funções especificadas nos `roleDefinitionIds` da definicao de política. Para políticas customizadas, defina cuidadosamente as funções minimas necessárias. Tarefas de remediacao podem ser disparadas manualmente (para recursos existentes) ou automaticamente (para novos recursos não conformes). A remediacao automática aplica-se apenas a recursos recem-avaliados; recursos existentes requerem a criação de uma tarefa de remediacao manual.
+Políticas `deployIfNotExists` e `modify` requerem uma managed identity para executar remediacao. Quando você cria uma atribuicao de política com esses efeitos, o Azure automaticamente cria uma system-assigned managed identity e concede as funções específicadas nos `roleDefinitionIds` da definicao de política. Para políticas customizadas, defina cuidadosamente as funções minimas necessárias. Tarefas de remediacao podem ser disparadas manualmente (para recursos existentes) ou automaticamente (para novos recursos não conformes). A remediacao automática aplica-se apenas a recursos recem-avaliados; recursos existentes requerem a criação de uma tarefa de remediacao manual.
 
 </details>
 
@@ -128,7 +128,7 @@ Combine três fontes de dados para relatórios abrangentes: (1) Estados de confo
 </details>
 
 <details>
-<summary>2. A equipe de conformidade precisa que logs de diagnóstico sejam automaticamente habilitados em todos os novos bancos de dados Azure SQL. Nenhum banco de dados deve ser criado sem logging. Qual efeito de política e mais apropriado?</summary>
+<summary>2. A equipe de conformidade precisa que logs de diagnóstico sejam automaticamente habilitados em todos os novos bancos de dados Azure SQL. Nenhum banco de dados deve ser criado sem logging. Qual efeito de política e mais aprópriado?</summary>
 
 **`deployIfNotExists`.** Este efeito avalia se um recurso relacionado (a configuração de diagnóstico) existe apos o banco de dados Azure SQL ser criado. Se a configuração de diagnóstico não existir, ele implanta automaticamente um template ARM que a cria. Isso não bloqueia a criação do banco de dados (diferente de `deny`) mas garante que o logging seja configurado imediatamente apos a criação. A atribuicao de política precisa de uma managed identity com permissões para criar configurações de diagnóstico nos recursos alvo.
 
@@ -137,14 +137,14 @@ Combine três fontes de dados para relatórios abrangentes: (1) Estados de confo
 <details>
 <summary>3. A equipe de telemedicina tem uma necessidade permanente de IPs públicos em seus servidores WebRTC. A equipe de conformidade quer essa exceção documentada mas não quer que ela impacte negativamente o percentual de conformidade da organização. Qual tipo de isencao devem usar?</summary>
 
-**Isencao Mitigated.** Uma isencao `Mitigated` indica que um controle compensatorio existe (neste caso, os IPs públicos sao protegidos por NSGs, proteção DDoS e WAF). Isencoes mitigated excluem o recurso da avaliação de política inteiramente, entao não aparece como não conforme. Uma isencao `Waiver` ainda mostraria o recurso como não conforme mas não o contaria no percentual de conformidade. Como isso é permanente (não uma exceção temporária), `Mitigated` e apropriado com documentação dos controles compensatorios.
+**Isencao Mitigated.** Uma isencao `Mitigated` indica que um controle compensatorio existe (neste caso, os IPs públicos são protegidos por NSGs, proteção DDoS e WAF). Isencoes mitigated excluem o recurso da avaliação de política inteiramente, entao não aparece como não conforme. Uma isencao `Waiver` ainda mostraria o recurso como não conforme mas não o contaria no percentual de conformidade. Como isso é permanente (não uma exceção temporária), `Mitigated` e aprópriado com documentação dos controles compensatorios.
 
 </details>
 
 <details>
 <summary>4. A HealthBridge atribui uma iniciativa de política com 50 políticas no nível de subscription. Um novo desenvolvedor reclama que a criação de recursos leva mais de 30 segundos a mais do que antes. O que esta acontecendo e como pode ser resolvido?</summary>
 
-**A avaliação de política adiciona latência a requisicoes de criação de recursos.** Cada política com efeito `deny` e `append/modify` deve ser avaliada antes que a requisicao chegue ao resource provider. Com 50 políticas, essa cadeia de avaliação adiciona latência perceptivel. Para resolver: (1) Garanta que políticas usem condições eficientes (evite lógica aninhada complexa), (2) Desabilite políticas que não sao ativamente necessárias (use o efeito `disabled` ao inves de deletar), (3) Use seletores de recurso para limitar a avaliação de política a tipos de recurso específicos ao inves de avaliar todas as 50 políticas contra cada tipo de recurso. Nota: `auditIfNotExists` e `deployIfNotExists` avaliam APOS a criação do recurso e não adicionam latência de criação.
+**A avaliação de política adiciona latência a requisicoes de criação de recursos.** Cada política com efeito `deny` e `append/modify` deve ser avaliada antes que a requisicao chegue ao resource provider. Com 50 políticas, essa cadeia de avaliação adiciona latência perceptivel. Para resolver: (1) Garanta que políticas usem condições eficientes (evite lógica aninhada complexa), (2) Desabilite políticas que não são ativamente necessárias (use o efeito `disabled` ao inves de deletar), (3) Use seletores de recurso para limitar a avaliação de política a tipos de recurso específicos ao inves de avaliar todas as 50 políticas contra cada tipo de recurso. Nota: `auditIfNotExists` e `deployIfNotExists` avaliam APOS a criação do recurso e não adicionam latência de criação.
 
 </details>
 

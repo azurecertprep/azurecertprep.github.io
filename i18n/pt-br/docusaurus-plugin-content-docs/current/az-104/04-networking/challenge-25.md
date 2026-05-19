@@ -141,7 +141,7 @@ az storage account network-rule list \
 
 :::tip Dica
 
-Service endpoints mantêm o tráfego na rede backbone do Azure e restringem o acesso ao PaaS a sub-redes específicas da VNet. O IP público do serviço PaaS ainda é usado para comunicação, mas a origem é identificada pela VNet/sub-rede em vez de um IP público.
+Service endpoints mantêm o tráfego na rede backbone do Azure e restringem o acesso ao PaaS a sub-redes específicas da VNet. O IP público do serviço PaaS ainda é usado para comúnicação, mas a origem é identificada pela VNet/sub-rede em vez de um IP público.
 
 :::
 ### Tarefa 3: configurar private endpoint para Storage

@@ -42,13 +42,13 @@ Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e d
 
 5. Projete uma abordagem de auto-scaling para replicas de leitura durante eventos de noticias urgentes. Considere named replicas Hyperscale que podem ser escaladas independentemente é criadas sob demanda.
 6. Avalie se elastic pools poderiam ajudar a gerenciar uma frota de bancos de dados de replicas de leitura durante períodos de pico.
-7. Projete uma camada de cache (Azure Cache for Redis ou cache em nível de aplicação) para reduzir a carga do banco de dados durante picos. Determine quais consultas se beneficiam mais do cache e valores de TTL apropriados.
+7. Projete uma camada de cache (Azure Cache for Redis ou cache em nível de aplicação) para reduzir a carga do banco de dados durante picos. Determine quais consultas se beneficiam mais do cache e valores de TTL aprópriados.
 8. Calcule a capacidade de replica de leitura necessária durante um pico de 10x (500.000 consultas/segundo) e projete um plano de escalonamento que alcance isso sem provisionar excessivamente durante períodos normais.
 
 ### Parte 3: escalabilidade de escrita e distribuição de dados
 
 9. Avalie se a carga de trabalho de escrita (500 operações/segundo) requer escalonamento além de um único primário. Discuta cenários onde sharding ou particionamento de escrita poderiam ser necessários no futuro.
-10. Projete uma topologia de geo-replicação que forneça tanto recuperação de desastres quanto read scale-out. Determine o modo de replicação apropriado (sincrono vs assincrono) e atraso de replicação aceitavel.
+10. Projete uma topologia de geo-replicação que forneça tanto recuperação de desastres quanto read scale-out. Determine o modo de replicação aprópriado (sincrono vs assincrono) e atraso de replicação aceitavel.
 11. Proponha uma estratégia de monitoramento e alertas para detectar quando replicas de leitura ficam atrasadas em relação ao primário e quando o trafego se aproxima dos limites de capacidade. Identifique metricas-chave para monitorar (atraso de replicação, utilizacao de DTU/vCore, contagem de conexões).
 
 ## Criterios de sucesso
@@ -57,7 +57,7 @@ Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e d
   storageKey="az305-challenge-16"
   items={[
     "Designed read/write separation with clear routing strategy for editors vs readers",
-    "Selected appropriate replica technology with justification (geo-replication, named replicas, or both)",
+    "Selected apprópriate replica technology with justification (geo-replication, named replicas, or both)",
     "Placed read replicas in regions matching reader distribution for sub-100ms latency",
     "Designed auto-scaling strategy for 10x traffic spikes without manual intervention",
     "Included caching layer to reduce direct database load during spikes",
@@ -70,14 +70,14 @@ Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e d
 <details>
 <summary>Dica 1: Opcoes de Replica de Leitura</summary>
 
-Azure SQL Database oferece múltiplos mecanismos de replica de leitura: (1) A camada Business Critical inclui uma replica de leitura integrada gratuita (mesma região); (2) Active geo-replication suporta até 4 secundários legiveis em qualquer região; (3) A camada Hyperscale suporta até 30 named replicas com escalonamento de computacao independente; (4) Auto-failover groups fornecem um endpoint de listener único de leitura-escrita e somente-leitura com failover automático. Para os leitores globais da GNN, geo-replicação ou named replicas Hyperscale em múltiplas regiões sao necessárias.
+Azure SQL Database oferece múltiplos mecanismos de replica de leitura: (1) A camada Business Critical inclui uma replica de leitura integrada gratuita (mesma região); (2) Active geo-replication suporta até 4 secundários legiveis em qualquer região; (3) A camada Hyperscale suporta até 30 named replicas com escalonamento de computacao independente; (4) Auto-failover groups fornecem um endpoint de listener único de leitura-escrita e somente-leitura com failover automático. Para os leitores globais da GNN, geo-replicação ou named replicas Hyperscale em múltiplas regiões são necessárias.
 
 </details>
 
 <details>
 <summary>Dica 2: Hyperscale para Read Scale Elástico</summary>
 
-Named replicas Hyperscale sao ideais para cenários que requerem read scale-out elástico. Diferente das geo-replicas regulares, named replicas podem ser: (1) escaladas independentemente (contagem de vCore diferente do primário), (2) criadas e deletadas dinamicamente (para cenários de burst), (3) direcionadas diretamente via seu próprio endpoint de conexão, (4) colocadas na mesma região do primário. Para tratamento de picos, você pode criar named replicas adicionais sob demanda e rotear trafego excedente para elas.
+Named replicas Hyperscale são ideais para cenários que requerem read scale-out elástico. Diferente das geo-replicas regulares, named replicas podem ser: (1) escaladas independentemente (contagem de vCore diferente do primário), (2) criadas e deletadas dinamicamente (para cenários de burst), (3) direcionadas diretamente via seu próprio endpoint de conexão, (4) colocadas na mesma região do primário. Para tratamento de picos, você pode criar named replicas adicionais sob demanda e rotear trafego excedente para elas.
 
 </details>
 
@@ -98,7 +98,7 @@ Azure Cache for Redis pode descarregar consultas de leitura repetitivas do banco
 <details>
 <summary>Dica 5: Atraso de Geo-Replicação</summary>
 
-Active geo-replication no Azure SQL Database usa replicação assincrona. O atraso tipico de replicação e inferior a 5 segundos, mas pode aumentar durante alto throughput de escrita ou transações grandes. Você pode monitorar o atraso usando a DMV `sys.dm_geo_replication_link_status`, que reporta `replication_lag_sec`. Para a tolerância de 5 segundos da GNN, geo-replicação assincrona e apropriada. Commit sincrono esta disponível apenas dentro da mesma região (HA zone-redundant Business Critical).
+Active geo-replication no Azure SQL Database usa replicação assincrona. O atraso tipico de replicação e inferior a 5 segundos, mas pode aumentar durante alto throughput de escrita ou transações grandes. Você pode monitorar o atraso usando a DMV `sys.dm_geo_replication_link_status`, que reporta `replication_lag_sec`. Para a tolerância de 5 segundos da GNN, geo-replicação assincrona e aprópriada. Commit sincrono esta disponível apenas dentro da mesma região (HA zone-redundant Business Critical).
 
 </details>
 
@@ -116,14 +116,14 @@ Active geo-replication no Azure SQL Database usa replicação assincrona. O atra
 <details>
 <summary>1. Uma aplicação global precisa de replicas de leitura em 3 regiões com a capacidade de escalar independentemente a computacao de cada replica. Qual recurso do Azure SQL Database você deve usar?</summary>
 
-**Named replicas Hyperscale ou active geo-replication.** Para escalonamento independente de computacao, named replicas Hyperscale sao ideais (até 30 replicas, cada uma com alocacao independente de vCore). Active geo-replication também suporta secundários legiveis em até 4 regiões, mas com controle de escalonamento menos granular. Se o escalonamento independente por replica e a prioridade, named replicas Hyperscale sao a melhor escolha.
+**Named replicas Hyperscale ou active geo-replication.** Para escalonamento independente de computacao, named replicas Hyperscale são ideais (até 30 replicas, cada uma com alocacao independente de vCore). Active geo-replication também suporta secundários legiveis em até 4 regiões, mas com controle de escalonamento menos granular. Se o escalonamento independente por replica e a prioridade, named replicas Hyperscale são a melhor escolha.
 
 </details>
 
 <details>
 <summary>2. Como ApplicationIntent=ReadOnly funciona em uma connection string do Azure SQL Database?</summary>
 
-**Ele roteia a conexão para uma replica somente-leitura em vez do primário.** Quando um banco de dados Business Critical ou Hyperscale tem replicas de leitura habilitadas, conexões com `ApplicationIntent=ReadOnly` sao automaticamente direcionadas para uma replica somente-leitura. Isso descarrega consultas de relatórios e analytics do primário sem requerer endpoints de conexão separados. A replica serve dados de read-committed snapshot com atraso mínimo.
+**Ele roteia a conexão para uma replica somente-leitura em vez do primário.** Quando um banco de dados Business Critical ou Hyperscale tem replicas de leitura habilitadas, conexões com `ApplicationIntent=ReadOnly` são automaticamente direcionadas para uma replica somente-leitura. Isso descarrega consultas de relatórios e analytics do primário sem requerer endpoints de conexão separados. A replica serve dados de read-committed snapshot com atraso mínimo.
 
 </details>
 

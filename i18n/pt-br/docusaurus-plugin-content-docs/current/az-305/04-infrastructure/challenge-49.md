@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A CloudTenant SaaS é uma plataforma B2B multi-tenant que atende 500 clientes empresariais. A plataforma expoe APIs REST e dashboards web para a internet, processa dados financeiros sensíveis e deve atender requisitos de conformidade SOC 2 Type II. A arquitetura consiste em uma camada web (frontend), camada de API, camada de processamento em segundo plano e camada de dados compartilhada implantada em 2 regiões Azure (East US e West Europe) para disponibilidade global.
 
-Os requisitos de segurança e confiabilidade sao: (1) Proteção DDoS para todos os endpoints voltados para internet, (2) Web Application Firewall protegendo contra vulnerabilidades OWASP Top 10, (3) Conectividade privada para toda comunicação backend-a-backend (nenhum serviço backend exposto a internet), (4) Balanceamento de carga global com failover automático entre regiões (< 60 segundos de tempo de failover), (5) Micro-segmentacao entre tenants para prevenir movimento lateral se a workload de um tenant for comprometida, (6) Aplicação de TLS 1.3 com gerenciamento centralizado de certificados, e (7) Logging de rede e detecção de ameacas para conformidade de auditoria de segurança.
+Os requisitos de segurança e confiabilidade sao: (1) Proteção DDoS para todos os endpoints voltados para internet, (2) Web Application Firewall protegendo contra vulnerabilidades OWASP Top 10, (3) Conectividade privada para toda comúnicação backend-a-backend (nenhum serviço backend exposto a internet), (4) Balanceamento de carga global com failover automático entre regiões (< 60 segundos de tempo de failover), (5) Micro-segmentacao entre tenants para prevenir movimento lateral se a workload de um tenant for comprometida, (6) Aplicação de TLS 1.3 com gerenciamento centralizado de certificados, e (7) Logging de rede e detecção de ameacas para conformidade de auditoria de segurança.
 
 A equipe de plataforma precisa selecionar a combinacao certa de serviços de rede e segurança Azure de um cenário amplo: Azure Firewall, WAF, NSG, ASG, Private Link, DDoS Protection, Front Door, Traffic Manager, Application Gateway e Load Balancer.
 
@@ -28,12 +28,12 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
 
 ## Tarefas de design
 
-### Parte 1: arvore de decisao de balanceamento de carga
+### Parte 1: arvore de decisão de balanceamento de carga
 
-1. Aplique a arvore de decisao de balanceamento de carga Azure para selecionar o serviço apropriado para cada padrão de trafego:
+1. Aplique a arvore de decisão de balanceamento de carga Azure para selecionar o serviço aprópriado para cada padrão de trafego:
    - Trafego HTTP/HTTPS voltado para internet (global): avalie Azure Front Door vs. Traffic Manager + Application Gateway
    - Trafego não-HTTP voltado para internet (ex.: protocolos TCP customizados): avalie Traffic Manager + Load Balancer
-   - Trafego HTTP interno entre microsservicos: avalie Application Gateway Interno vs. Load Balancer Interno
+   - Trafego HTTP interno entre microsserviços: avalie Application Gateway Interno vs. Load Balancer Interno
    - Trafego TCP/UDP interno: avalie Load Balancer Interno
 2. Projete a arquitetura de balanceamento de carga global:
    - Azure Front Door como ponto de entrada global (anycast, SSL offload, integração WAF)
@@ -47,12 +47,12 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
 
 ### Parte 2: design de web Application Firewall
 
-4. Projete a estratégia de implantacao do WAF:
+4. Projete a estratégia de implantação do WAF:
    - WAF no Azure Front Door (global, aplicado na borda antes do trafego chegar a região)
    - vs. WAF no Application Gateway (regional, aplicado no perimetro da VNet)
    - vs. Ambos (defesa em profundidade: WAF do Front Door para ataques volumetricos/bots, WAF do App Gateway para regras específicas da aplicação)
 5. Configure políticas WAF:
-   - Selecao de versao do OWASP Core Rule Set (CRS) e modo (Detection vs. Prevention)
+   - Seleção de versao do OWASP Core Rule Set (CRS) e modo (Detection vs. Prevention)
    - Regras customizadas para rate limiting específico por tenant (ex.: 1000 requisicoes/minuto por chave de API do tenant)
    - Exclusoes para falsos positivos conhecidos (headers de requisicao específicos, campos do body)
    - Conjunto de regras de proteção contra bots para distinguir bots legitimos de crawlers maliciosos
@@ -69,7 +69,7 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
    - Projete o fluxo NSG para aplicar: internet -> Front Door -> camada web -> camada de API -> camada de dados (sem pular camadas)
 8. Projete a estratégia de Private Link/Private Endpoint para serviços backend:
    - Azure SQL, Cosmos DB, Storage: somente private endpoints (desabilite acesso público totalmente)
-   - Comunicação entre serviços: private endpoints para PaaS, VNet integration para App Service/Container Apps
+   - Comúnicação entre serviços: private endpoints para PaaS, VNet integration para App Service/Container Apps
    - Políticas de Service Endpoint onde Private Link não é necessário
 9. Projete micro-segmentacao para isolamento de tenants:
    - Isolamento no nível de rede (subnets dedicadas por tier de tenant: clientes básicos vs. premium)
@@ -97,8 +97,8 @@ A equipe de plataforma precisa selecionar a combinacao certa de serviços de red
 <SuccessChecklist
   storageKey="az305-challenge-49"
   items={[
-    "Arvore de decisao de balanceamento de carga aplicada com selecao justificada para cada padrão de trafego (HTTP global, HTTP regional, TCP interno)",
-    "Estratégia de implantacao WAF seleciona WAF do Front Door vs WAF do Application Gateway com justificativa de defesa em profundidade",
+    "Arvore de decisão de balanceamento de carga aplicada com seleção justificada para cada padrão de trafego (HTTP global, HTTP regional, TCP interno)",
+    "Estratégia de implantação WAF seleciona WAF do Front Door vs WAF do Application Gateway com justificativa de defesa em profundidade",
     "Segmentacao de rede aplica acesso baseado em camadas (web -> API -> dados) com regras NSG e ASG",
     "Estratégia de Private Endpoint garante que nenhum serviço backend tenha exposicao pública a internet",
     "Tier de proteção DDoS selecionado com justificativa de custo (Network Protection vs IP Protection vs padrão)",
@@ -139,7 +139,7 @@ O Azure DDoS Network Protection tem uma taxa mensal fixa (aproximadamente $2.944
 <details>
 <summary>Dica 5: Private Link vs. Service Endpoints</summary>
 
-Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP privado (acessível do ambiente local via VPN/ExpressRoute, funciona com NSGs). Service Endpoints estendem a identidade da VNet para o serviço PaaS (trafego permanece no backbone Azure, mas o serviço ainda tem um IP público). Para conformidade SOC 2 onde "sem endpoints públicos para backend" é obrigatório, Private Endpoints sao necessários porque permitem desabilitar completamente o acesso público ao serviço PaaS. Service Endpoints não podem garantir que não haja acesso pela internet.
+Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP privado (acessível do ambiente local via VPN/ExpressRoute, funciona com NSGs). Service Endpoints estendem a identidade da VNet para o serviço PaaS (trafego permanece no backbone Azure, mas o serviço ainda tem um IP público). Para conformidade SOC 2 onde "sem endpoints públicos para backend" é obrigatório, Private Endpoints são necessários porque permitem desabilitar completamente o acesso público ao serviço PaaS. Service Endpoints não podem garantir que não haja acesso pela internet.
 
 </details>
 
@@ -157,7 +157,7 @@ Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP priva
 <details>
 <summary>1. Uma aplicação SaaS multi-região precisa de balanceamento de carga HTTP global com failover em menos de um segundo. Por que o Azure Front Door e preferido ao Traffic Manager para este cenário?</summary>
 
-**O Front Door fornece failover instantaneo via anycast; o Traffic Manager depende do TTL do DNS.** O Azure Front Door usa roteamento anycast onde todos os nos de borda compartilham o mesmo endereço IP. Quando um backend se torna indisponivel, o Front Door imediatamente roteia requisicoes para o próximo backend saudavel na camada de rede (< 30 segundos de failover). O Traffic Manager é baseado em DNS: a velocidade de failover depende do TTL do DNS (mínimo 0 segundos configurado, mas clientes fazem cache de respostas DNS). O failover real do Traffic Manager pode levar 30-120 segundos devido ao cache DNS. Para workloads HTTP que requerem failover em menos de um minuto, o Front Door e a escolha correta.
+**O Front Door fornece failover instantaneo via anycast; o Traffic Manager depende do TTL do DNS.** O Azure Front Door usa roteamento anycast onde todos os nos de borda compartilham o mesmo endereço IP. Quando um backend se torna indisponível, o Front Door imediatamente roteia requisicoes para o próximo backend saudavel na camada de rede (< 30 segundos de failover). O Traffic Manager é baseado em DNS: a velocidade de failover depende do TTL do DNS (mínimo 0 segundos configurado, mas clientes fazem cache de respostas DNS). O failover real do Traffic Manager pode levar 30-120 segundos devido ao cache DNS. Para workloads HTTP que requerem failover em menos de um minuto, o Front Door e a escolha correta.
 
 </details>
 
@@ -171,7 +171,7 @@ Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP priva
 <details>
 <summary>3. Sua arquitetura usa NSGs para restringir o acesso da camada de API apenas a subnet da camada web. Um novo requisito precisa que uma ferramenta de monitoramento de terceiros implantada em uma subnet de gerenciamento faca health-check nos endpoints de API. Qual é a abordagem mais sustentavel?</summary>
 
-**Use Application Security Groups (ASGs).** Atribua a NIC da ferramenta de monitoramento a um ASG chamado "MonitoringAgents." Adicione uma regra NSG permitindo ASG:MonitoringAgents alcancar ASG:ApiServers na porta de health check (ex.: 443). Isso e mais sustentavel do que adicionar o CIDR da subnet de gerenciamento a regra existente porque: (1) Se ferramentas de monitoramento mudam de subnet, a associacao ASG acompanha a NIC, (2) Você pode adicionar novas instâncias de monitoramento sem modificar regras NSG, (3) As regras sao lidas como intencao (monitoramento pode alcancar API) em vez de implementação (10.0.3.0/24 pode alcancar 10.0.2.0/24).
+**Use Application Security Groups (ASGs).** Atribua a NIC da ferramenta de monitoramento a um ASG chamado "MonitoringAgents." Adicione uma regra NSG permitindo ASG:MonitoringAgents alcancar ASG:ApiServers na porta de health check (ex.: 443). Isso e mais sustentavel do que adicionar o CIDR da subnet de gerenciamento a regra existente porque: (1) Se ferramentas de monitoramento mudam de subnet, a associacao ASG acompanha a NIC, (2) Você pode adicionar novas instâncias de monitoramento sem modificar regras NSG, (3) As regras são lidas como intencao (monitoramento pode alcancar API) em vez de implementação (10.0.3.0/24 pode alcancar 10.0.2.0/24).
 
 </details>
 

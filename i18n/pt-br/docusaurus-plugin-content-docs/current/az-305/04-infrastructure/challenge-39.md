@@ -17,9 +17,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A SmartSpace Technologies opera uma plataforma de edificios inteligentes que monitora 10.000 sensores IoT implantados em 50 edificios comerciais. Os sensores reportam dados de temperatura, umidade, ocupação e consumo de energia a cada 5 segundos, gerando aproximadamente 120.000 eventos por minuto (2.000 eventos por segundo sustentados, com picos de 5.000/segundo durante o horario de abertura dos edificios). A plataforma deve lidar com quatro cenários distintos de processamento de eventos com diferentes requisitos de latência e durabilidade.
 
-Cenário 1 (Alertas em tempo real): Quando um sensor de temperatura excede 35C ou a ocupação excede os limites de segurança contra incendio, um alerta deve chegar a gerencia do edifício em até 2 segundos. Cenário 2 (Dashboards quase em tempo real): Os dashboards de operações do edifício devem ser atualizados em 10-15 segundos para mostrar as condições atuais em todos os andares. Cenário 3 (Arquivo de eventos): Todos os eventos dos sensores devem ser arquivados por 7 anos para suportar treinamento de modelos de ML e auditorias de conformidade regulatoria. Cenário 4 (Respostas automatizadas): Quando condições específicas sao atendidas (ex.: ocupação cai para zero E consumo de energia excede o limite), a plataforma deve acionar ações automatizadas (ajustar setpoints do HVAC, diminuir luzes, enviar notificações de manutenção).
+Cenário 1 (Alertas em tempo real): Quando um sensor de temperatura excede 35C ou a ocupação excede os limites de segurança contra incendio, um alerta deve chegar a gerencia do edifício em até 2 segundos. Cenário 2 (Dashboards quase em tempo real): Os dashboards de operações do edifício devem ser atualizados em 10-15 segundos para mostrar as condições atuais em todos os andares. Cenário 3 (Arquivo de eventos): Todos os eventos dos sensores devem ser arquivados por 7 anos para suportar treinamento de modelos de ML e auditorias de conformidade regulatoria. Cenário 4 (Respostas automatizadas): Quando condições específicas são atendidas (ex.: ocupação cai para zero E consumo de energia excede o limite), a plataforma deve acionar ações automatizadas (ajustar setpoints do HVAC, diminuir luzes, enviar notificações de manutenção).
 
-O desafio é projetar uma arquitetura orientada a eventos que roteie eventos para o pipeline de processamento apropriado com base nos requisitos de latência e durabilidade de cada cenário.
+O desafio é projetar uma arquitetura orientada a eventos que roteie eventos para o pipeline de processamento aprópriado com base nos requisitos de latência e durabilidade de cada cenário.
 
 ## Habilidades do exame cobertas
 
@@ -27,7 +27,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 
 ## Tarefas de design
 
-### Parte 1: selecao do serviço de ingestao de eventos
+### Parte 1: seleção do serviço de ingestao de eventos
 
 1. Compare os serviços de ingestao de eventos do Azure para 2.000-5.000 eventos/segundo:
 
@@ -47,7 +47,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
    - Qual papel o Event Grid desempenha nesta arquitetura (distribuição de eventos vs ingestao de eventos)?
 
 3. Projete a configuração do Event Hubs:
-   - Quantas particoes sao necessárias para 5.000 eventos/segundo de throughput de pico?
+   - Quantas particoes são necessárias para 5.000 eventos/segundo de throughput de pico?
    - Quantas throughput units (Standard) ou processing units (Premium)?
    - Qual é a estratégia de partition key? (Building ID? Tipo de sensor? Andar?)
 
@@ -75,7 +75,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 8. Configure a filtragem do Event Grid:
    - Filtro de prefixo de subject: `/buildings/building-42/floors/3/`
    - Filtro avancado: `data.temperature > 35 AND data.sensorType == 'ambient'`
-   - Determine qual nível de filtragem (subject vs avancado) e apropriado para cada cenário
+   - Determine qual nível de filtragem (subject vs avancado) e aprópriado para cada cenário
 
 9. Projete o padrão de fan-out:
    - Um evento (ex.: OccupancyZero) deve acionar múltiplas ações simultaneamente:
@@ -83,11 +83,11 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
      - Diminuir luzes (chamar Lighting Control API)
      - Registrar na trilha de auditoria (escrever no Cosmos DB)
    - Como o Event Grid garante a entrega para todos os subscribers?
-   - O que acontece se um subscriber estiver temporariamente indisponivel?
+   - O que acontece se um subscriber estiver temporariamente indisponível?
 
 ### Parte 4: arquivo de eventos e armazenamento de longo prazo (Cenário 3)
 
-10. Projete a estratégia de arquivamento de eventos para retencao de 7 anos:
+10. Projete a estratégia de arquivamento de eventos para retenção de 7 anos:
     - **Event Hubs Capture**: Escreve automaticamente eventos no Azure Storage ou Data Lake em formato Avro
     - Configure a janela de captura: baseada em tempo (a cada 5 minutos) vs baseada em tamanho (a cada 256 MB)
     - Projete a estrutura de pastas: `{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}`
@@ -95,7 +95,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 11. Calcule os requisitos de armazenamento:
     - 120.000 eventos/minuto x 60 x 24 x 365 x 7 anos
     - Tamanho médio do evento: 500 bytes
-    - Armazenamento bruto total: estime e identifique a camada de armazenamento apropriada
+    - Armazenamento bruto total: estime e identifique a camada de armazenamento aprópriada
     - Quando os dados devem migrar da camada Hot para Cool para Archive?
 
 12. Projete a estrutura do data lake para treinamento de modelos de ML:
@@ -139,7 +139,7 @@ Use **IoT Hub** quando você precisa de:
 - Regras de roteamento de mensagens que direcionam eventos para diferentes endpoints com base nas propriedades da mensagem
 
 Use **Event Hubs** diretamente quando:
-- Os dispositivos sao gerenciados por outro sistema (ex.: um gateway que agrega dados de sensores)
+- Os dispositivos são gerenciados por outro sistema (ex.: um gateway que agrega dados de sensores)
 - Você só precisa de ingestao de eventos de alto throughput sem gerenciamento de dispositivos
 - A compatibilidade com o protocolo Kafka é necessária
 
@@ -192,7 +192,7 @@ Calculo:
 Estratégia de camadas de armazenamento:
 - Ultimos 30 dias: Camada Hot ($0,018/GB/mes) para dashboards ativos
 - 30 dias a 1 ano: Camada Cool ($0,01/GB/mes) para análise ad-hoc
-- 1-7 anos: Camada Archive ($0,002/GB/mes) para retencao de conformidade
+- 1-7 anos: Camada Archive ($0,002/GB/mes) para retenção de conformidade
 
 A política de gerenciamento de ciclo de vida automatiza as transicoes entre camadas. Custo total estimado: aproximadamente $300-500/mes para o arquivo completo de 7 anos.
 
@@ -218,7 +218,7 @@ A política de gerenciamento de ciclo de vida automatiza as transicoes entre cam
 <details>
 <summary>2. Por que o Event Grid e melhor que o Event Hubs para o cenário de resposta automatizada (fan-out para múltiplos subscribers)?</summary>
 
-**O Event Grid usa entrega baseada em push para múltiplos subscribers simultaneamente, enquanto o Event Hubs requer que cada subscriber faca pull e mantenha seu próprio offset.** Para respostas automatizadas onde um evento deve acionar 3-5 ações diferentes (HVAC, iluminacao, auditoria), o Event Grid suporta nativamente múltiplas subscriptions por tópico, cada uma recebendo o evento independentemente com sua própria política de retry e configuração de dead-letter. Com Event Hubs, você precisaria que cada handler de acao consultasse o hub, mantivesse checkpoints e processasse todos os eventos mesmo quando apenas um subconjunto e relevante. A filtragem server-side do Event Grid reduz o processamento desnecessario.
+**O Event Grid usa entrega baseada em push para múltiplos subscribers simultaneamente, enquanto o Event Hubs requer que cada subscriber faca pull e mantenha seu próprio offset.** Para respostas automatizadas onde um evento deve acionar 3-5 ações diferentes (HVAC, iluminacao, auditoria), o Event Grid suporta nativamente múltiplas subscriptions por tópico, cada uma recebendo o evento independentemente com sua própria política de retry e configuração de dead-letter. Com Event Hubs, você precisaria que cada handler de acao consultasse o hub, mantivesse checkpoints e processasse todos os eventos mesmo quando apenas um subconjunto e relevante. A filtragem server-side do Event Grid reduz o processamento desnecessário.
 
 </details>
 
@@ -273,7 +273,7 @@ curl -X POST "$TOPIC_ENDPOINT" -H "aeg-sas-key: $TOPIC_KEY" \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

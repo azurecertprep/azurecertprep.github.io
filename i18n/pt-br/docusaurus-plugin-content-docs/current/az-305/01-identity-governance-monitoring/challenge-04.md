@@ -33,9 +33,9 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 
 ## Tarefas de design
 
-### Parte 1: selecao da estratégia de autenticação
+### Parte 1: seleção da estratégia de autenticação
 
-1. Para cada aplicação, determine a plataforma de identidade apropriada:
+1. Para cada aplicação, determine a plataforma de identidade aprópriada:
 
 | Requirement | Internal Portal | Customer Platform |
 |-------------|----------------|-------------------|
@@ -47,7 +47,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 | Branding customization | | |
 | Licensing model | | |
 
-2. Justifique por que você escolheu Microsoft Entra ID vs. Azure AD B2C vs. Azure AD B2B para cada aplicação. Documente cenários onde a alternativa seria mais apropriada.
+2. Justifique por que você escolheu Microsoft Entra ID vs. Azure AD B2C vs. Azure AD B2B para cada aplicação. Documente cenários onde a alternativa seria mais aprópriada.
 
 ### Parte 2: design de autenticação do portal interno
 
@@ -87,7 +87,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 
 ### Parte 5: implementar prova de conceito
 
-9. Registre uma aplicação no Entra ID para o Portal Interno com redirect URIs e permissões de API apropriadas.
+9. Registre uma aplicação no Entra ID para o Portal Interno com redirect URIs e permissões de API aprópriadas.
 
 10. Crie uma managed identity para um App Service e conceda acesso a um Key Vault.
 
@@ -99,7 +99,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
     "Identity platform selection justified for both internal and customer-facing applications",
     "Conditional Access policies designed covering MFA, location, device compliance, and session control",
     "B2C user flow or custom policy approach selected with social identity provider integration designed",
-    "Managed identity strategy documented for all service-to-service authentication scenarios",
+    "Managed identity strategy documented for all service-to-service authentication scenários",
     "App registration created with correct permissions and redirect URIs",
     "Managed identity assigned and Key Vault access verified"
   ]}
@@ -110,7 +110,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 <details>
 <summary>Dica 1: Escolhendo Entre Entra ID, B2C e B2B</summary>
 
-| Scenario | Solution | Reason |
+| Scenário | Solution | Reason |
 |----------|----------|--------|
 | Employees accessing corporate apps | **Entra ID** | Users already exist in corporate directory, Conditional Access, MFA, device compliance |
 | External consumers (self-service sign-up) | **Azure AD B2C** | Separate directory, social identity providers, custom branding, scales to millions |
@@ -124,7 +124,7 @@ Diferenca chave: B2C é um diretório (tenant) completamente separado com suas p
 <details>
 <summary>Dica 2: Design de Políticas de Conditional Access</summary>
 
-Políticas de Conditional Access sao avaliadas como instrucoes IF-THEN: SE uma condição e atendida, ENTAO aplique um controle de acesso.
+Políticas de Conditional Access são avaliadas como instrucoes IF-THEN: SE uma condição e atendida, ENTAO aplique um controle de acesso.
 
 Sinais chave (condições):
 - Associacao a usuário/grupo
@@ -223,7 +223,7 @@ System-assigned vs. User-assigned:
 - Significativamente mais complexas de implementar é manter
 - Necessarias para: provedores MFA customizados, transformacoes complexas de claims, integracoes de REST API no meio do fluxo
 
-Para a plataforma de clientes da Relecloud, **user flows** sao suficientes porque os requisitos (cadastro com email + social, branding, redefinicao de senha) sao padrões. Use custom policies apenas se você precisar de lógica de workflow não padrão.
+Para a plataforma de clientes da Relecloud, **user flows** são suficientes porque os requisitos (cadastro com email + social, branding, redefinicao de senha) são padrões. Use custom policies apenas se você precisar de lógica de workflow não padrão.
 
 </details>
 
@@ -241,7 +241,7 @@ Para a plataforma de clientes da Relecloud, **user flows** sao suficientes porqu
 <details>
 <summary>1. A plataforma de clientes da Relecloud precisa suportar cadastro com email, Google e Facebook para mais de 100.000 consumidores. A equipe de marketing quer uma pagina de login totalmente personalizada. Qual solução de identidade você deve recomendar?</summary>
 
-**Azure AD B2C.** Ele e construido especificamente para aplicações voltadas ao consumidor com: suporte a provedores de identidade social (Google, Facebook, Apple), cadastro self-service com email, UI totalmente customizavel via templates HTML/CSS, diretório de usuários separado que escala para milhões de usuários é um modelo de precificacao baseado em consumo. Entra ID (workforce) exigiria a criação de contas guest para cada consumidor, o que não é escalável. Entra External ID e a evolucao do B2C e também pode ser apropriado.
+**Azure AD B2C.** Ele e construido específicamente para aplicações voltadas ao consumidor com: suporte a provedores de identidade social (Google, Facebook, Apple), cadastro self-service com email, UI totalmente customizavel via templates HTML/CSS, diretório de usuários separado que escala para milhões de usuários é um modelo de precificacao baseado em consumo. Entra ID (workforce) exigiria a criação de contas guest para cada consumidor, o que não é escalável. Entra External ID e a evolucao do B2C e também pode ser aprópriado.
 
 </details>
 

@@ -426,7 +426,7 @@ az monitor log-analytics workspace show \
 <SuccessChecklist
   storageKey="az104-challenge-27"
   items={[
-    "Workspace do Log Analytics criado com SKU e retenção apropriados",
+    "Workspace do Log Analytics criado com SKU e retenção aprópriados",
     "Data Collection Rules criadas para Linux (perf + syslog) e Windows (perf + events)",
     "Azure Monitor Agent instalado em ambas as VMs Linux e Windows",
     "Associações DCR criadas (VMs vinculadas às suas respectivas DCRs)",

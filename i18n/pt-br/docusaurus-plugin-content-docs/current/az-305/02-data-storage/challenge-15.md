@@ -27,7 +27,7 @@ A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e
 
 ## Tarefas de design
 
-### Parte 1: selecao de modelo de compra
+### Parte 1: seleção de modelo de compra
 
 1. Compare os modelos de compra DTU e vCore para as cargas de trabalho da CloudTenant. Documente as vantagens e desvantagens de cada modelo para seus padrões de uso específicos.
 2. Recomende qual modelo de compra usar para cada camada de cliente (Standard, Premium, Enterprise) e justifique sua escolha.
@@ -35,9 +35,9 @@ A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e
 
 ### Parte 2: atribuicao de camada de serviço
 
-4. Para a camada Standard (250 bancos de dados), recomende a camada de serviço apropriada (General Purpose, Business Critical ou Hyperscale). Considere o requisito de SLA de 99,99% e restrições de custo.
+4. Para a camada Standard (250 bancos de dados), recomende a camada de serviço aprópriada (General Purpose, Business Critical ou Hyperscale). Considere o requisito de SLA de 99,99% e restrições de custo.
 5. Para a camada Premium (45 bancos de dados), avalie se a camada Business Critical é necessária para latência inferior a 5ms e suporte a In-Memory OLTP. Identifique quaisquer abordagens alternativas.
-6. Para a camada Enterprise (5 bancos de dados excedendo 4TB), explique por que Hyperscale e a camada apropriada e descreva sua arquitetura (cache multi-camada, backups baseados em snapshots, named replicas).
+6. Para a camada Enterprise (5 bancos de dados excedendo 4TB), explique por que Hyperscale e a camada aprópriada e descreva sua arquitetura (cache multi-camada, backups baseados em snapshots, named replicas).
 7. Documente o tamanho máximo de banco de dados, replicas de leitura e SLA de disponibilidade para cada camada de serviço.
 
 ### Parte 3: otimização da camada de computação
@@ -53,7 +53,7 @@ A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e
   storageKey="az305-challenge-15"
   items={[
     "Clearly articulated DTU vs vCore trade-offs with a recommendation for each workload tier",
-    "Assigned appropriate service tiers (General Purpose, Business Critical, Hyperscale) with documented justification",
+    "Assigned apprópriate service tiers (General Purpose, Business Critical, Hyperscale) with documented justification",
     "Evaluated serverless compute for off-hours cost savings with cold-start trade-off analysis",
     "Designed Hyperscale architecture for the Enterprise tier including named replicas",
     "Projected monthly cost demonstrates at least 30% reduction from current $18,000/month spend"
@@ -86,14 +86,14 @@ Serverless esta disponível apenas no modelo vCore na camada General Purpose (é
 <details>
 <summary>Dica 4: Named Replicas Hyperscale</summary>
 
-Named replicas Hyperscale sao nos de computacao de escala de leitura independentes com seu próprio objetivo de nível de serviço. Diferente das replicas de leitura regulares, elas podem ser escaladas independentemente do primário e podem servir como endpoints de conexão para cargas de trabalho específicas (como relatórios ou analytics). Você pode ter até 30 named replicas por banco de dados primário. Named replicas também estao disponíveis na camada de computacao serverless.
+Named replicas Hyperscale são nos de computacao de escala de leitura independentes com seu próprio objetivo de nível de serviço. Diferente das replicas de leitura regulares, elas podem ser escaladas independentemente do primário e podem servir como endpoints de conexão para cargas de trabalho específicas (como relatórios ou analytics). Você pode ter até 30 named replicas por banco de dados primário. Named replicas também estao disponíveis na camada de computacao serverless.
 
 </details>
 
 <details>
 <summary>Dica 5: Capacidade Reservada</summary>
 
-Capacidade reservada do Azure SQL Database oferece desconto de 30-65% comparado ao preco pay-as-you-go para compromissos de 1 ano ou 3 anos. Reservas se aplicam apenas aos custos de computacao vCore (não armazenamento ou I/O). Para cargas de trabalho com uso de baseline previsivel, combinar capacidade reservada para a baseline com serverless ou auto-scale provisionado para picos pode otimizar custos significativamente.
+Capacidade reservada do Azure SQL Database oferece desconto de 30-65% comparado ao preco pay-as-you-go para compromissos de 1 ano ou 3 anos. Reservas se aplicam apenas aos custos de computacao vCore (não armazenamento ou I/O). Para cargas de trabalho com uso de baseline previsível, combinar capacidade reservada para a baseline com serverless ou auto-scale provisionado para picos pode otimizar custos significativamente.
 
 </details>
 
@@ -125,7 +125,7 @@ Capacidade reservada do Azure SQL Database oferece desconto de 30-65% comparado 
 </details>
 
 <details>
-<summary>3. Um banco de dados cresceu para 8TB e requer restauracao point-in-time quase instantanea independente do tamanho do banco de dados. Qual camada de serviço você deve recomendar?</summary>
+<summary>3. Um banco de dados cresceu para 8TB e requer restauração point-in-time quase instantanea independente do tamanho do banco de dados. Qual camada de serviço você deve recomendar?</summary>
 
 **Hyperscale.** Suporta bancos de dados de até 100TB e usa uma arquitetura de backup baseada em snapshots que fornece backups e restauracoes quase instantaneos independente do tamanho do banco de dados. General Purpose é limitado a 4TB por banco de dados, e Business Critical tem limitacoes de tamanho similares. A arquitetura de armazenamento distribuido do Hyperscale (page servers + log service) permite essa escalabilidade.
 
@@ -134,7 +134,7 @@ Capacidade reservada do Azure SQL Database oferece desconto de 30-65% comparado 
 <details>
 <summary>4. Uma organização tem licencas existentes de SQL Server Enterprise com Software Assurance. Como eles podem reduzir os custos do Azure SQL Database?</summary>
 
-**Azure Hybrid Benefit.** Com o modelo de compra vCore, clientes com Software Assurance ativo em licencas de SQL Server Enterprise ou Standard podem troca-las por tarifas com desconto no Azure SQL Database (economia de até 55%). Este beneficio se aplica a computacao provisionada e serverless no modelo vCore, mas NAO esta disponível com o modelo DTU.
+**Azure Hybrid Benefit.** Com o modelo de compra vCore, clientes com Software Assurance ativo em licencas de SQL Server Enterprise ou Standard podem troca-las por tarifas com desconto no Azure SQL Database (economia de até 55%). Este benefício se aplica a computacao provisionada e serverless no modelo vCore, mas NAO esta disponível com o modelo DTU.
 
 </details>
 

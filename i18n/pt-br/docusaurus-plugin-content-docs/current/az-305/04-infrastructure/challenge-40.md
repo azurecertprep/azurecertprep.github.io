@@ -27,7 +27,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
 
 ## Tarefas de design
 
-### Parte 1: selecao da camada do API Management
+### Parte 1: seleção da camada do API Management
 
 1. Avalie as camadas do Azure API Management para este cenário de saúde:
 
@@ -46,7 +46,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
    - A conectividade de private endpoint para serviços backend é necessária?
    - Qual camada fornece o isolamento de rede necessário para PHI?
 
-3. Justifique a selecao considerando: disponibilidade multi-região para SLAs de parceiros, integração VNet para HIPAA, portal do desenvolvedor para onboarding de terceiros, e capacidade para 5.000 usuários internos.
+3. Justifique a seleção considerando: disponibilidade multi-região para SLAs de parceiros, integração VNet para HIPAA, portal do desenvolvedor para onboarding de terceiros, e capacidade para 5.000 usuários internos.
 
 ### Parte 2: design de políticas por consumidor
 
@@ -75,7 +75,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
 5. Implemente as políticas de rate limiting usando `<rate-limit-by-key>`:
    - Como você diferencia limites de taxa baseado na camada de subscription (gratuito vs pago)?
    - Qual resposta um consumidor com limite excedido recebe (HTTP 429)?
-   - Como você comunica a cota restante nos headers de resposta?
+   - Como você comúnica a cota restante nos headers de resposta?
 
 ### Parte 3: versionamento de API e ciclo de vida
 
@@ -83,13 +83,13 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
    - **Versionamento por caminho de URL**: `/api/v1/patients` vs `/api/v2/patients`
    - **Versionamento por header**: `Api-Version: 2024-01-15`
    - **Versionamento por query string**: `/api/patients?api-version=2024-01-15`
-   - Qual abordagem e mais apropriada para cada tipo de consumidor?
+   - Qual abordagem e mais aprópriada para cada tipo de consumidor?
 
 7. Planeje o ciclo de vida de depreciacao da API:
-   - Anuncio de versao: Como os consumidores sao notificados de novas versoes?
+   - Anuncio de versao: Como os consumidores são notificados de novas versoes?
    - Período de sunset: Por quanto tempo versoes depreciadas permanecem ativas?
    - Breaking changes: O que constitui uma breaking change que requer uma nova versao?
-   - Documentação no portal do desenvolvedor: Como as diferencas entre versoes sao comunicadas?
+   - Documentação no portal do desenvolvedor: Como as diferencas entre versoes são comúnicadas?
 
 8. Projete a estratégia de revisoes dentro de uma versao:
    - Use revisoes do API Management para mudanças não-breaking
@@ -103,7 +103,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
    - Logging de auditoria: Todas as chamadas de API registradas no Azure Monitor com identidade do chamador
    - Mascaramento de dados: Campos sensíveis mascarados nos logs de diagnóstico
    - Proteção de backend: Serviços backend acessiveis apenas a partir do APIM (regras VNet/NSG)
-   - Autenticação por certificado para comunicação com serviços backend (mutual TLS)
+   - Autenticação por certificado para comúnicação com serviços backend (mutual TLS)
 
 10. Projete a experiência do portal do desenvolvedor para consumidores Tipo 3:
     - Registro self-service com verificação de email
@@ -131,7 +131,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
   storageKey="az305-challenge-40"
   items={[
     "Camada Premium do APIM selecionada com justificativa de integração VNet para conformidade HIPAA",
-    "Políticas específicas por consumidor projetadas com autenticação, rate limiting e transformacao de resposta apropriados",
+    "Políticas específicas por consumidor projetadas com autenticação, rate limiting e transformacao de resposta aprópriados",
     "Estratégia de versionamento de API definida com ciclo de vida de depreciacao e gerenciamento de revisoes",
     "Controles de segurança HIPAA implementados (TLS, logging de auditoria, mascaramento de dados, mutual TLS)",
     "Portal do desenvolvedor e modelo de monetizacao projetados com acesso em camadas e cobranca",
@@ -145,7 +145,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
 <summary>Dica 1: APIM Premium para Saúde</summary>
 
 O Azure API Management Premium é necessário para APIs de saúde regulamentadas por HIPAA porque:
-- **Integração VNet (modo interno)**: O gateway APIM e implantado dentro da VNet sem IP público. Serviços backend só sao acessiveis de dentro da VNet. Isso garante que PHI nunca trafegue pela internet pública entre APIM e backends.
+- **Integração VNet (modo interno)**: O gateway APIM e implantado dentro da VNet sem IP público. Serviços backend só são acessiveis de dentro da VNet. Isso garante que PHI nunca trafegue pela internet pública entre APIM e backends.
 - **Private endpoints**: Consumidores podem acessar o APIM via Azure Private Link, mantendo o trafego no backbone da Microsoft.
 - **Multi-região**: Implante o APIM em 2+ regiões para o SLA de 99,9%+ exigido pelos contratos de parceiros.
 - **Self-hosted gateway**: Para hospitais parceiros que precisam de um API gateway on-premises para conformidade local.
@@ -253,9 +253,9 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Uma API de saúde deve garantir que Informações de Saúde Protegidas nunca trafeguem pela internet pública entre o API gateway e os serviços backend. Qual modo de implantacao do APIM alcanca isso?</summary>
+<summary>1. Uma API de saúde deve garantir que Informações de Saúde Protegidas nunca trafeguem pela internet pública entre o API gateway e os serviços backend. Qual modo de implantação do APIM alcanca isso?</summary>
 
-**Modo VNet interno (camada Premium).** No modo interno, o gateway do API Management e implantado dentro de uma VNet com apenas um endereço IP privado. Serviços backend na mesma VNet (ou VNets pareadas) sao acessados via IPs privados. Consumidores externos alcancam o APIM através do Azure Application Gateway ou private endpoints. Isso garante que PHI permaneca na rede privada entre APIM e backends. O modo externo coloca o APIM na VNet mas com um IP público, o que não isola completamente o trafego de backend do caminho da internet.
+**Modo VNet interno (camada Premium).** No modo interno, o gateway do API Management e implantado dentro de uma VNet com apenas um endereço IP privado. Serviços backend na mesma VNet (ou VNets pareadas) são acessados via IPs privados. Consumidores externos alcancam o APIM através do Azure Application Gateway ou private endpoints. Isso garante que PHI permaneca na rede privada entre APIM e backends. O modo externo coloca o APIM na VNet mas com um IP público, o que não isola completamente o trafego de backend do caminho da internet.
 
 </details>
 
@@ -276,7 +276,7 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 <details>
 <summary>4. Uma API evolui de v1 para v2 com uma breaking change (formato do ID do paciente muda de inteiro para GUID). Como você deve gerenciar essa transicao para hospitais parceiros?</summary>
 
-**Publique v2 ao lado de v1, comunique a mudança com 6+ meses de antecedência, e mantenha v1 até que todos os parceiros tenham migrado.** Use versionamento de API do APIM com esquema de caminho de URL (`/v1/patients/123` vs `/v2/patients/abc-def-123`). Ambas as versoes roteiam para versoes de backend apropriadas simultaneamente. Forneça guias de migração no portal do desenvolvedor, rastreie o uso de v1 por parceiro na analitica, e entre em contato proativamente com parceiros que ainda usam v1. Só faca sunset de v1 apos confirmar zero trafego por 30+ dias. Para saúde, permita 12-18 meses de sobreposicao devido aos requisitos de gerenciamento de mudanças regulatorias.
+**Publique v2 ao lado de v1, comunique a mudança com 6+ meses de antecedência, e mantenha v1 até que todos os parceiros tenham migrado.** Use versionamento de API do APIM com esquema de caminho de URL (`/v1/patients/123` vs `/v2/patients/abc-def-123`). Ambas as versoes roteiam para versoes de backend aprópriadas simultaneamente. Forneça guias de migração no portal do desenvolvedor, rastreie o uso de v1 por parceiro na analitica, e entre em contato proativamente com parceiros que ainda usam v1. Só faca sunset de v1 apos confirmar zero trafego por 30+ dias. Para saúde, permita 12-18 meses de sobreposicao devido aos requisitos de gerenciamento de mudanças regulatorias.
 
 </details>
 
@@ -317,7 +317,7 @@ az apim api operation list --resource-group rg-az305-challenge40 \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

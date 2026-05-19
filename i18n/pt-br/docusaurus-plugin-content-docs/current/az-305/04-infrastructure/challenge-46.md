@@ -17,9 +17,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A GlobalRetail Corp opera um estate de dados empresarial de 30 bancos de dados suportando sua plataforma de e-commerce, gerenciamento de cadeia de suprimentos e sistemas de relatórios financeiros. O inventário de bancos de dados inclui: 15 instâncias SQL Server (versoes 2012 a 2022, variando de 50GB a 2TB), 8 bancos de dados PostgreSQL (versoes 11-15, suportando seu catálogo de produtos e serviços de busca), 5 bancos de dados MySQL (suportando CMS legado e plataformas de marketing) e 2 bancos de dados Oracle (suportando seus sistemas ERP e de gerenciamento de armazem).
 
-Os requisitos de migração variam significativamente entre bancos de dados: o banco de dados de e-commerce (SQL Server 2022, 2TB) serve 50.000 transações por hora e não pode tolerar mais de 5 minutos de inatividade. O banco de dados de relatórios financeiros requer um período completo de execução paralela para conformidade de auditoria. Os bancos de dados CMS legados em MySQL sao candidatos para modernizacao. O banco de dados Oracle ERP tem stored procedures complexas com sintaxe específica de Oracle que complica a migração.
+Os requisitos de migração variam significativamente entre bancos de dados: o banco de dados de e-commerce (SQL Server 2022, 2TB) serve 50.000 transações por hora e não pode tolerar mais de 5 minutos de inatividade. O banco de dados de relatórios financeiros requer um período completo de execução paralela para conformidade de auditoria. Os bancos de dados CMS legados em MySQL são candidatos para modernizacao. O banco de dados Oracle ERP tem stored procedures complexas com sintaxe específica de Oracle que complica a migração.
 
-A equipe de DBAs precisa de uma estratégia de migração abrangente que enderece avaliação de compatibilidade, selecao de serviço alvo (Azure SQL Database vs. Managed Instance vs. SQL em VM, e decisoes equivalentes para PostgreSQL e MySQL), método de migração (online vs. offline) e validação pós-migração para cada banco de dados.
+A equipe de DBAs precisa de uma estratégia de migração abrangente que enderece avaliação de compatibilidade, seleção de serviço alvo (Azure SQL Database vs. Managed Instance vs. SQL em VM, e decisoes equivalentes para PostgreSQL e MySQL), método de migração (online vs. offline) e validação pós-migração para cada banco de dados.
 
 ## Habilidades do exame cobertas
 
@@ -40,7 +40,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
    - CLR assemblies (suporte limitado no Azure SQL DB)
    - Linked servers (requer SQL MI ou SQL em VM)
    - Tamanho de banco de dados > 100GB (Azure SQL DB Hyperscale ou SQL MI)
-3. Crie uma matriz de decisao mapeando cada banco de dados para seu alvo Azure recomendado com justificativa.
+3. Crie uma matriz de decisão mapeando cada banco de dados para seu alvo Azure recomendado com justificativa.
 
 ### Parte 2: estratégia de migração online vs. offline
 
@@ -60,7 +60,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
 ### Parte 3: cenários de migração complexos
 
 7. Projete a estratégia de migração para o banco de dados SQL Server de e-commerce de 2TB com requisito de 5 minutos de inatividade:
-   - Pre-stage: configure Azure SQL MI com service tier e dimensionamento apropriados
+   - Pre-stage: configure Azure SQL MI com service tier e dimensionamento aprópriados
    - Replicar: sincronizacao de dados continua do SQL Server on-premises para MI
    - Validar: comparar contagens de registros, checksums e conectividade da aplicação
    - Cutover: parar escritas, permitir replicação alcançar, redirecionar aplicações
@@ -71,7 +71,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
    - Documente trade-offs de cada opcao incluindo custos de licenciamento, esforco de refatoracao de código e timeline
 9. Enderece o requisito de execução paralela do banco de dados financeiro:
    - Projete uma arquitetura de dual-write ou estratégia de read-replica
-   - Defina criterios de validação para declarar o alvo Azure como autoritativo
+   - Defina critérios de validação para declarar o alvo Azure como autoritativo
    - Documente o processo de sign-off de conformidade
 
 ### Parte 4: validação e otimização Pos-Migração
@@ -104,7 +104,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
 ## Dicas
 
 <details>
-<summary>Dica 1: Selecao de Alvo Azure SQL</summary>
+<summary>Dica 1: Seleção de Alvo Azure SQL</summary>
 
 Escolha **Azure SQL Database** para: aplicações cloud-born, workloads de banco de dados único, cenários serverless/sensíveis a custo e aplicações que não usam consultas cross-database ou SQL Agent. Escolha **Azure SQL Managed Instance** para: lift-and-shift de workloads SQL Server, aplicações usando consultas cross-database, linked servers, CLR ou SQL Agent. Escolha **SQL Server em Azure VM** para: aplicações que requerem acesso completo em nível de SO, versoes específicas de SQL Server ou recursos não disponíveis em MI (como FILESTREAM, software de terceiros instalado junto com SQL Server).
 
@@ -113,14 +113,14 @@ Escolha **Azure SQL Database** para: aplicações cloud-born, workloads de banco
 <details>
 <summary>Dica 2: Migração Online com DMS</summary>
 
-Azure Database Migration Service (DMS) para migração online para SQL MI usa log shipping e replicação transacional para sincronizar dados continuamente do SQL Server de origem. O backup completo inicial e restaurado no MI, entao backups de transaction log sao aplicados continuamente. Durante o cutover, a aplicação para de escrever na origem, o backup de log final é aplicado ao MI, e a aplicação reconecta ao MI. Tempo total de inatividade no cutover e tipicamente de segundos a minutos dependendo do tamanho do transaction log final.
+Azure Database Migration Service (DMS) para migração online para SQL MI usa log shipping e replicação transacional para sincronizar dados continuamente do SQL Server de origem. O backup completo inicial e restaurado no MI, entao backups de transaction log são aplicados continuamente. Durante o cutover, a aplicação para de escrever na origem, o backup de log final é aplicado ao MI, e a aplicação reconecta ao MI. Tempo total de inatividade no cutover e tipicamente de segundos a minutos dependendo do tamanho do transaction log final.
 
 </details>
 
 <details>
 <summary>Dica 3: Complexidade da Migração Oracle</summary>
 
-Migracoes de Oracle para Azure sao complexas devido a: stored procedures PL/SQL (sem equivalente direto em T-SQL ou PL/pgSQL), tipos de dados específicos de Oracle (NUMBER, VARCHAR2), sequences, synonyms e package bodies. SSMA pode converter aproximadamente 70-80% do código Oracle para T-SQL automaticamente, mas PL/SQL complexo requer refatoracao manual. Ora2Pg fornece conversao similar para PostgreSQL. Sempre execute uma conversao somente de schema primeiro para avaliar o esforco de refatoracao manual antes de se comprometer com um caminho de migração.
+Migracoes de Oracle para Azure são complexas devido a: stored procedures PL/SQL (sem equivalente direto em T-SQL ou PL/pgSQL), tipos de dados específicos de Oracle (NUMBER, VARCHAR2), sequences, synonyms e package bodies. SSMA pode converter aproximadamente 70-80% do código Oracle para T-SQL automaticamente, mas PL/SQL complexo requer refatoracao manual. Ora2Pg fornece conversao similar para PostgreSQL. Sempre execute uma conversao somente de schema primeiro para avaliar o esforco de refatoracao manual antes de se comprometer com um caminho de migração.
 
 </details>
 
@@ -144,15 +144,15 @@ Para um banco de dados de 2TB sobre uma conexão ExpressRoute de 1Gbps: tempo te
 - [Azure SQL migration assessment](https://learn.microsoft.com/en-us/azure/azure-sql/migration-guides/managed-instance/sql-server-to-managed-instance-overview)
 - [Migration service in Azure Database for PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/migrate/migration-service/overview-migration-service-postgresql)
 - [Migrate Oracle to Azure SQL](https://learn.microsoft.com/en-us/azure/azure-sql/migration-guides/managed-instance/oracle-to-managed-instance-guide)
-- [DMS supported migration scenarios](https://learn.microsoft.com/en-us/azure/dms/resource-scenario-status)
+- [DMS supported migration scenários](https://learn.microsoft.com/en-us/azure/dms/resource-scenário-status)
 - [Azure SQL Managed Instance features](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/sql-managed-instance-paas-overview)
 
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Um banco de dados SQL Server 2012 usa consultas cross-database, SQL Agent jobs e tem tamanho de 500GB. Qual alvo Azure e apropriado e por que?</summary>
+<summary>1. Um banco de dados SQL Server 2012 usa consultas cross-database, SQL Agent jobs e tem tamanho de 500GB. Qual alvo Azure e aprópriado e por que?</summary>
 
-**Azure SQL Managed Instance.** Todos os três requisitos apontam para SQL MI: (1) Consultas cross-database sao suportadas dentro da mesma instância MI mas não no Azure SQL Database, (2) SQL Agent e integrado ao MI com suporte completo de agendamento de jobs mas não disponível no Azure SQL Database, (3) 500GB esta bem dentro dos limites do MI (até 16TB) mas excede limites do tier padrão do Azure SQL Database (requer Hyperscale). Adicionalmente, o nível de compatibilidade do SQL Server 2012 é suportado pelo MI, permitindo lift-and-shift sem mudanças na aplicação.
+**Azure SQL Managed Instance.** Todos os três requisitos apontam para SQL MI: (1) Consultas cross-database são suportadas dentro da mesma instância MI mas não no Azure SQL Database, (2) SQL Agent e integrado ao MI com suporte completo de agendamento de jobs mas não disponível no Azure SQL Database, (3) 500GB esta bem dentro dos limites do MI (até 16TB) mas excede limites do tier padrão do Azure SQL Database (requer Hyperscale). Adicionalmente, o nível de compatibilidade do SQL Server 2012 é suportado pelo MI, permitindo lift-and-shift sem mudanças na aplicação.
 
 </details>
 
@@ -166,7 +166,7 @@ Para um banco de dados de 2TB sobre uma conexão ExpressRoute de 1Gbps: tempo te
 <details>
 <summary>3. Um banco de dados Oracle tem 500 stored procedures com PL/SQL. A equipe quer migrar para Azure SQL Managed Instance. Qual é o risco primário e como você o avalia?</summary>
 
-**Completude da conversao de código e equivalencia funcional.** Conversao de PL/SQL para T-SQL não é 1:1. Execute SSMA contra o schema Oracle para gerar um relatório de avaliação mostrando: porcentagem de código que converte automaticamente, procedures que requerem refatoracao manual, construtos não suportados (transações autonomas, nested tables, pacotes built-in específicos de Oracle). O risco e que os 20-30% que requerem conversao manual contem lógica de negocio crítica. Mitigacao: orce 3-6 meses de esforco de DBA/desenvolvedor para refatoracao, cobertura abrangente de testes de todas as stored procedures, e considere manter Oracle em Azure VM como fallback se o esforco de refatoracao exceder o orcamento.
+**Completude da conversao de código e equivalencia funcional.** Conversao de PL/SQL para T-SQL não é 1:1. Execute SSMA contra o schema Oracle para gerar um relatório de avaliação mostrando: porcentagem de código que converte automaticamente, procedures que requerem refatoracao manual, construtos não suportados (transações autonomas, nested tables, pacotes built-in específicos de Oracle). O risco e que os 20-30% que requerem conversao manual contem lógica de negócio crítica. Mitigacao: orce 3-6 meses de esforco de DBA/desenvolvedor para refatoracao, cobertura abrangente de testes de todas as stored procedures, e considere manter Oracle em Azure VM como fallback se o esforco de refatoracao exceder o orcamento.
 
 </details>
 

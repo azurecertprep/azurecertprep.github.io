@@ -353,7 +353,7 @@ az automation job-schedule create \
     "Script externo da conta de armazenamento executado via Custom Script Extension",
     "Run Command executa comandos ad-hoc com sucesso em ambas as VMs",
     "Todas as extensões instaladas são visíveis via az vm extension list",
-    "Conta do Azure Automation existe com um runbook publicado",
+    "Conta do Azure Automation existe com um runbook públicado",
     "Runbook está vinculado a um agendamento diário",
     "Lógica do runbook identifica corretamente VMs por tag"
   ]}
@@ -387,7 +387,7 @@ Use extensões para configuração repetível e Run Command para troubleshooting
 <details>
 <summary>Dica 4: Identidade da Conta do Automation</summary>
 
-Para o runbook gerenciar recursos do Azure, a Conta do Automation precisa de uma identidade gerenciada (atribuída pelo sistema ou pelo usuário) com funções RBAC apropriadas. Atribua a função "Virtual Machine Contributor" para permitir que o runbook inicie/pare VMs.
+Para o runbook gerenciar recursos do Azure, a Conta do Automation precisa de uma identidade gerenciada (atribuída pelo sistema ou pelo usuário) com funções RBAC aprópriadas. Atribua a função "Virtual Machine Contributor" para permitir que o runbook inicie/pare VMs.
 
 </details>
 
@@ -442,7 +442,7 @@ Apenas **uma** Custom Script Extension pode ser instalada em uma VM por vez. Se 
 <details>
 <summary>3. Qual método de autenticação os runbooks do Azure Automation devem usar?</summary>
 
-A melhor prática moderna é usar **Identidade Gerenciada** (atribuída pelo sistema ou pelo usuário) para a Conta do Automation. A antiga "Run As Account" (service principal com certificado) está descontinuada. Identidades gerenciadas requerem atribuições de função RBAC apropriadas nos recursos alvo.
+A melhor prática moderna é usar **Identidade Gerenciada** (atribuída pelo sistema ou pelo usuário) para a Conta do Automation. A antiga "Run As Account" (service principal com certificado) está descontinuada. Identidades gerenciadas requerem atribuições de função RBAC aprópriadas nos recursos alvo.
 
 </details>
 

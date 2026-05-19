@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A CloudScale Inc. opera uma plataforma de microsservicos com 30 serviços implantados em 4 ambientes (desenvolvimento, teste, staging, produção). Cada serviço mantem seus próprios arquivos de configuração, levando a desvios de configuração que causaram 3 incidentes de produção no último trimestre. Um incidente ocorreu quando um desenvolvedor alterou uma connection string em staging que foi acidentalmente promovida para produção. Outro aconteceu quando uma feature flag foi habilitada globalmente em vez de para um rollout direcionado de 5%.
+A CloudScale Inc. opera uma plataforma de microsserviços com 30 serviços implantados em 4 ambientes (desenvolvimento, teste, staging, produção). Cada serviço mantem seus próprios arquivos de configuração, levando a desvios de configuração que causaram 3 incidentes de produção no último trimestre. Um incidente ocorreu quando um desenvolvedor alterou uma connection string em staging que foi acidentalmente promovida para produção. Outro aconteceu quando uma feature flag foi habilitada globalmente em vez de para um rollout direcionado de 5%.
 
 A equipe de plataforma precisa de uma solução centralizada de gerenciamento de configuração que forneça: uma única fonte de verdade para toda a configuração de serviços, overrides específicos de ambiente sem mudanças de código, feature flags com capacidades de rollout gradual (baseado em porcentagem, direcionamento por usuário, janela temporal), kill switches instantaneos para recursos problematicos, é uma trilha de auditoria de todas as mudanças de configuração.
 
-Além disso, valores de configuração sensíveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso apropriados, enquanto configurações não-sensíveis (feature flags, timeouts, tamanhos de pool de conexão) devem ser facilmente gerenciáveis por product owners sem intervencao de engenharia.
+Além disso, valores de configuração sensíveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso aprópriados, enquanto configurações não-sensíveis (feature flags, timeouts, tamanhos de pool de conexão) devem ser facilmente gerenciáveis por product owners sem intervencao de engenharia.
 
 ## Habilidades do exame cobertas
 
@@ -50,7 +50,7 @@ Além disso, valores de configuração sensíveis (senhas de banco de dados, API
    - Filtros de direcionamento por usuário (habilitar para IDs ou grupos de usuários específicos)
    - Filtros de janela temporal (habilitar apenas durante horario comercial ou datas específicas)
 8. Projete uma estratégia de rollout para um novo recurso de processamento de pagamentos: comece com usuários internos, expanda para 5% dos usuários externos, monitore taxas de erro, depois aumente para 25%, 50% e 100%.
-9. Documente como implementar um kill switch instantaneo que desabilite um recurso em todos os 30 serviços dentro de 60 segundos sem reimplantacao.
+9. Documente como implementar um kill switch instantaneo que desabilite um recurso em todos os 30 serviços dentro de 60 segundos sem reimplantação.
 
 ### Parte 4: atualização de configuração e monitoramento
 
@@ -59,7 +59,7 @@ Além disso, valores de configuração sensíveis (senhas de banco de dados, API
     - Mudancas de configuração (log de auditoria)
     - Falhas de atualização de configuração nas aplicações
     - Mudancas de estado de feature flags
-12. Documente como snapshots do App Configuration podem ser usados para criar conjuntos de configuração point-in-time para consistência de implantacao e cenários de rollback.
+12. Documente como snapshots do App Configuration podem ser usados para criar conjuntos de configuração point-in-time para consistência de implantação e cenários de rollback.
 
 ## Criterios de sucesso
 
@@ -70,7 +70,7 @@ Além disso, valores de configuração sensíveis (senhas de banco de dados, API
     "Integração de referência do Key Vault projetada com separacao de controle de acesso entre configuração e secrets",
     "Sistema de feature flags suporta rollout por porcentagem, direcionamento por usuário, janelas temporais e kill switches",
     "Estratégia de atualização de configuração documentada com padrão sentinel key ou abordagem push do Event Grid",
-    "Estratégia de snapshots definida para consistência de implantacao e capacidade de rollback",
+    "Estratégia de snapshots definida para consistência de implantação e capacidade de rollback",
     "Monitoramento cobre mudanças de configuração, falhas de atualização e transicoes de estado de feature flags"
   ]}
 />
@@ -108,7 +108,7 @@ O Azure App Configuration oferece camadas Free e Standard. A camada Free é limi
 <details>
 <summary>Dica 5: Snapshots para Segurança de Implantação</summary>
 
-Snapshots do App Configuration criam uma copia imutável e point-in-time de key-values. Você pode tirar um snapshot antes da implantacao para que, se mudanças de configuração causarem problemas, você possa reverter instantaneamente todos os serviços para o estado do snapshot. Snapshots também podem ser usados para garantir que todos os serviços em uma implantacao usem a mesma versao de configuração, prevenindo inconsistencia durante implantacoes rolling.
+Snapshots do App Configuration criam uma copia imutável e point-in-time de key-values. Você pode tirar um snapshot antes da implantação para que, se mudanças de configuração causarem problemas, você possa reverter instantaneamente todos os serviços para o estado do snapshot. Snapshots também podem ser usados para garantir que todos os serviços em uma implantação usem a mesma versao de configuração, prevenindo inconsistencia durante implantacoes rolling.
 
 </details>
 
@@ -126,12 +126,12 @@ Snapshots do App Configuration criam uma copia imutável e point-in-time de key-
 <details>
 <summary>1. Uma empresa usa um único store do App Configuration com labels para separar ambientes. Um desenvolvedor acidentalmente aplica a label "Production" a um valor de configuração de teste. Como a arquitetura poderia prevenir isso?</summary>
 
-**Use Azure RBAC com roles customizados ou stores separados.** As opcoes incluem: (1) Usar stores separados do App Configuration por ambiente com diferentes atribuicoes RBAC (desenvolvedores tem acesso de escrita apenas a stores de dev/test), (2) Usar roles RBAC customizados que restringem escritas baseadas em label (ex.: apenas pipelines de CI/CD podem escrever chaves com a label "Production"), (3) Implementar Azure Policy para auditar mudanças de configuração, (4) Usar chaves de acesso somente-leitura do App Configuration para consumidores de produção enquanto apenas o pipeline de implantacao tem acesso de escrita.
+**Use Azure RBAC com roles customizados ou stores separados.** As opcoes incluem: (1) Usar stores separados do App Configuration por ambiente com diferentes atribuicoes RBAC (desenvolvedores tem acesso de escrita apenas a stores de dev/test), (2) Usar roles RBAC customizados que restringem escritas baseadas em label (ex.: apenas pipelines de CI/CD podem escrever chaves com a label "Production"), (3) Implementar Azure Policy para auditar mudanças de configuração, (4) Usar chaves de acesso somente-leitura do App Configuration para consumidores de produção enquanto apenas o pipeline de implantação tem acesso de escrita.
 
 </details>
 
 <details>
-<summary>2. Trinta microsservicos consultam o App Configuration a cada 30 segundos. O configuration store começa a limitar requisicoes. Qual mudança de design reduz o volume de requisicoes mantendo o frescor?</summary>
+<summary>2. Trinta microsserviços consultam o App Configuration a cada 30 segundos. O configuration store começa a limitar requisicoes. Qual mudança de design reduz o volume de requisicoes mantendo o frescor?</summary>
 
 **Implemente o padrão sentinel key com notificações push do Event Grid.** Em vez de 30 serviços cada um consultando N chaves a cada 30 segundos, cada serviço observa apenas uma única chave sentinela. Isso reduz o polling de 30 x N para 30 x 1 requisicoes por intervalo. Melhor ainda, mude para atualização baseada em push usando Event Grid: o App Configuration emite eventos em mudanças de chave, serviços assinam via Event Grid, e só atualizam quando realmente notificados de mudanças. Isso elimina o polling periódico inteiramente e fornece propagacao quase instantanea.
 
@@ -190,7 +190,7 @@ az appconfig feature list --name $APPCONFIG_NAME --output table
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza

@@ -33,11 +33,11 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
 
 1. Projete a arquitetura de roteamento para os logs da Contoso considerando estes destinos:
    - **SIEM (Splunk)**: Logs de auditoria de segurança, entrega quase em tempo real
-   - **Arquivo de longo prazo**: Todos os logs, retencao de 7 anos, menor custo
+   - **Arquivo de longo prazo**: Todos os logs, retenção de 7 anos, menor custo
    - **Log Analytics**: Logs operacionais para alertas e troubleshooting
    - **Processamento de stream em tempo real**: Eventos críticos para resposta automatizada
 
-2. Para cada destino, determine o serviço Azure apropriado:
+2. Para cada destino, determine o serviço Azure aprópriado:
    - Event Hub, Storage Account, Log Analytics workspace ou solução de parceiro
    - Documente por que cada destino foi escolhido em vez de alternativas
 
@@ -45,7 +45,7 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
 
 ### Parte 2: configuração de diagnostic settings
 
-4. Projete configurações de diagnóstico para os seguintes tipos de recurso, especificando quais categorias de log vao para quais destinos:
+4. Projete configurações de diagnóstico para os seguintes tipos de recurso, específicando quais categorias de log vao para quais destinos:
    - Azure Key Vault (logs AuditEvent)
    - Azure SQL Database (SQLSecurityAuditEvents, QueryStoreRuntimeStatistics)
    - Azure App Service (AppServiceHTTPLogs, AppServiceConsoleLogs, AppServiceAppLogs)
@@ -81,7 +81,7 @@ Sua tarefa é projetar uma arquitetura abrangente de roteamento de logs que sati
   storageKey="az305-challenge-02"
   items={[
     "Log routing architecture documented with clear destination justification for each log type",
-    "Diagnostic settings designed for at least 4 resource types with appropriate category-to-destination mapping",
+    "Diagnostic settings designed for at least 4 resource types with apprópriate category-to-destination mapping",
     "At least two diagnostic settings deployed and verified",
     "Data collection rule implemented with KQL transformation that filters unnecessary log entries",
     "Cost comparison documented between full-send and selective routing approaches",
@@ -226,12 +226,12 @@ az storage account management-policy create \
 <details>
 <summary>1. A Contoso precisa de logs de auditoria de segurança entregues ao seu SIEM Splunk dentro de 5 minutos e arquivados por 7 anos ao menor custo. Qual combinacao de destinos você deve configurar nas diagnostic settings?</summary>
 
-**Azure Event Hub para entrega ao SIEM + Azure Storage Account (tier archive) para retencao de longo prazo.** Event Hub fornece streaming quase em tempo real (latência sub-minuto) com integração nativa do Splunk via o add-on Azure Event Hub input. Storage Account com tier archive fornece o menor custo para retencao de 7 anos a aproximadamente $0.001/GB/mes. Você NAO precisa rotear pelo Log Analytics primeiro -- diagnostic settings podem enviar diretamente para Event Hub e Storage simultaneamente.
+**Azure Event Hub para entrega ao SIEM + Azure Storage Account (tier archive) para retenção de longo prazo.** Event Hub fornece streaming quase em tempo real (latência sub-minuto) com integração nativa do Splunk via o add-on Azure Event Hub input. Storage Account com tier archive fornece o menor custo para retenção de 7 anos a aproximadamente $0.001/GB/mes. Você NAO precisa rotear pelo Log Analytics primeiro -- diagnostic settings podem enviar diretamente para Event Hub e Storage simultaneamente.
 
 </details>
 
 <details>
-<summary>2. Uma aplicação gera 100 GB/dia de logs HTTP, mas 60% sao probes de health check (GET /health, status 200). A equipe de operações precisa apenas de logs que não sejam health check para troubleshooting. Como você reduz os custos de ingestao do Log Analytics?</summary>
+<summary>2. Uma aplicação gera 100 GB/dia de logs HTTP, mas 60% são probes de health check (GET /health, status 200). A equipe de operações precisa apenas de logs que não sejam health check para troubleshooting. Como você reduz os custos de ingestao do Log Analytics?</summary>
 
 **Use uma Data Collection Rule (DCR) com uma transformacao KQL** para filtrar requisicoes de health check antes da ingestao. A transformacao `source | where not(CsUriStem == "/health" and ScStatus == 200)` descarta os 60 GB/dia de health probes, reduzindo a ingestao de 100 GB para 40 GB por dia. Isso economiza aproximadamente 60% nos custos de ingestao do Log Analytics. Nota: Se você ainda precisar dos logs completos para conformidade, envie o stream não filtrado para uma Storage Account via uma diagnostic setting separada.
 
@@ -247,7 +247,7 @@ az storage account management-policy create \
 <details>
 <summary>4. Uma empresa quer enviar logs kube-audit do AKS para o Log Analytics para a equipe de operações e para o Event Hub para a equipe de segurança. A equipe de operações precisa apenas de entradas de nível warning e error, mas a equipe de segurança precisa de todas as entradas. Como você deve projetar isso?</summary>
 
-**Crie duas diagnostic settings no cluster AKS:** Uma envia a categoria kube-audit para o Event Hub (sem filtro, para a equipe de segurança). A segunda envia kube-audit para o Log Analytics com uma Data Collection Rule que aplica uma transformacao KQL filtrando apenas níveis warning e error. Dessa forma, a equipe de segurança recebe dados de auditoria completos quase em tempo real, enquanto os custos de ingestao do Log Analytics sao reduzidos excluindo entradas informacionais que a equipe de operações não precisa para alertas.
+**Crie duas diagnostic settings no cluster AKS:** Uma envia a categoria kube-audit para o Event Hub (sem filtro, para a equipe de segurança). A segunda envia kube-audit para o Log Analytics com uma Data Collection Rule que aplica uma transformacao KQL filtrando apenas níveis warning e error. Dessa forma, a equipe de segurança recebe dados de auditoria completos quase em tempo real, enquanto os custos de ingestao do Log Analytics são reduzidos excluindo entradas informacionais que a equipe de operações não precisa para alertas.
 
 </details>
 

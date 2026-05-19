@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Adventure Works Cycles é uma empresa de manufatura com 3.000 funcionários passando por uma transformacao de nuvem hibrida. Enquanto suas novas aplicações sao cloud-native, eles dependem fortemente de várias aplicações legadas on-premises que não podem ser facilmente modernizadas:
+A Adventure Works Cycles é uma empresa de manufatura com 3.000 funcionários passando por uma transformacao de nuvem híbrida. Enquanto suas novas aplicações são cloud-native, eles dependem fortemente de várias aplicações legadas on-premises que não podem ser facilmente modernizadas:
 
 1. **HR Portal**: Uma aplicação ASP.NET baseada em IIS usando Windows Integrated Authentication (Kerberos). Contem dados sensíveis de funcionários e atualmente e acessível apenas pela rede corporativa.
-2. **Engineering File Shares**: Compartilhamentos de arquivo do Windows Server contendo desenhos CAD e especificações de fabricacao. Equipes de engenharia (incluindo 200 trabalhadores remotos) precisam de acesso diario.
-3. **Manufacturing ERP System**: Uma aplicação thick client conectando a um SQL Server on-premises que requer autenticação NTLM com maquinas ingressadas no dominio.
+2. **Engineering File Shares**: Compartilhamentos de arquivo do Windows Server contendo desenhos CAD e específicações de fabricacao. Equipes de engenharia (incluindo 200 trabalhadores remotos) precisam de acesso diario.
+3. **Manufacturing ERP System**: Uma aplicação thick client conectando a um SQL Server on-premises que requer autenticação NTLM com máquinas ingressadas no domínio.
 4. **Supplier Portal**: Uma aplicação web legada usada por 50 fornecedores externos que atualmente requer acesso VPN para ser alcancada.
 
 A empresa deseja:
@@ -38,9 +38,9 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 
 ## Tarefas de design
 
-### Parte 1: matriz de selecao de solução
+### Parte 1: matriz de seleção de solução
 
-1. Para cada aplicação, avalie e recomende a solução de acesso apropriada:
+1. Para cada aplicação, avalie e recomende a solução de acesso aprópriada:
 
 | Application | Requirements | Options to Evaluate | Recommended Solution |
 |-------------|-------------|--------------------|--------------------|
@@ -49,7 +49,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 | Manufacturing ERP (NTLM) | Domain-joined thick client | Azure AD DS, VPN, AVD | |
 | Supplier Portal (external users) | B2B access, no VPN | App Proxy + B2B, SWA, modernize | |
 
-2. Documente os criterios de decisao para cada escolha:
+2. Documente os critérios de decisão para cada escolha:
    - Suporte a protocolo de autenticação (Kerberos, NTLM, header-based)
    - Requisitos de topologia de rede (linha de visão para DCs, posicionamento de conectores)
    - Impacto na experiência do usuário
@@ -70,30 +70,30 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
    - Requisitos de Conditional Access para usuários externos
    - Controles de sessão (frequência de login, requisitos de MFA)
 
-5. Implante um conector de Application Proxy (ou documente a arquitetura de implantacao se recursos on-premises não estiverem disponíveis).
+5. Implante um conector de Application Proxy (ou documente a arquitetura de implantação se recursos on-premises não estiverem disponíveis).
 
 ### Parte 3: design do Microsoft Entra domain Services
 
-6. Avalie se o Microsoft Entra Domain Services (Entra DS) e apropriado para a Adventure Works:
+6. Avalie se o Microsoft Entra Domain Services (Entra DS) e aprópriado para a Adventure Works:
    - Quais cenários se beneficiam do Entra DS vs. AD DS tradicional vs. Application Proxy
-   - Design de VNet para implantacao do Entra DS
+   - Design de VNet para implantação do Entra DS
    - Requisitos de sincronizacao de hash de senha
    - Limitacoes comparadas ao AD DS completo (sem extensões de schema, sem relacoes de confiança, sem flexibilidade de GPO)
 
-7. Projete a implantacao do Entra DS para o cenário do ERP de manufatura:
+7. Projete a implantação do Entra DS para o cenário do ERP de manufatura:
    - Requisitos de VNet e subnet
    - Integração com Entra Connect sync existente
    - Como dispositivos gerenciados em nuvem se autenticarao no ERP (NTLM/Kerberos através do Entra DS)
    - Configuração de DNS
 
-### Parte 4: Azure Files para acesso hibrido a arquivos
+### Parte 4: Azure Files para acesso híbrido a arquivos
 
 8. Projete a integração do Azure Files para os compartilhamentos de arquivo de engenharia:
    - Autenticação baseada em identidade (Entra DS, on-prem AD DS, ou Entra Kerberos)
    - Permissões em nível de compartilhamento (RBAC) vs. permissões em nível de diretório/arquivo (NTFS ACLs)
-   - Selecao de camada de acesso (Hot vs. Cool para arquivos CAD)
+   - Seleção de camada de acesso (Hot vs. Cool para arquivos CAD)
    - Consideracoes de Azure File Sync para cache em filiais
-   - Selecao de protocolo (SMB 3.0 com criptografia)
+   - Seleção de protocolo (SMB 3.0 com criptografia)
 
 9. Projete o caminho de migração dos compartilhamentos de arquivo on-premises para o Azure Files:
    - Estratégia de coexistencia durante a transicao (Azure File Sync como ponte)
@@ -104,7 +104,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 
 10. Crie um compartilhamento Azure Files com autenticação baseada em identidade habilitada.
 
-11. Documente a arquitetura completa de implantacao do Application Proxy para o HR Portal, incluindo posicionamento de conectores, configuração de KCD e políticas de Conditional Access.
+11. Documente a arquitetura completa de implantação do Application Proxy para o HR Portal, incluindo posicionamento de conectores, configuração de KCD e políticas de Conditional Access.
 
 ## Criterios de sucesso
 
@@ -128,14 +128,14 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 O Microsoft Entra Application Proxy consiste em:
 - **Serviço em nuvem**: Hospedado pela Microsoft, lida com URLs externas e pré-autenticação
 - **Conector(es)**: Agentes leves instalados em Windows Servers dentro da sua rede (sem regras de firewall de entrada necessárias)
-- **Aplicação publicada**: A aplicação on-premises tornada acessível via URL externa
+- **Aplicação públicada**: A aplicação on-premises tornada acessível via URL externa
 
 Decisoes-chave de arquitetura:
 - Instale 2+ conectores por grupo de conectores para alta disponibilidade
 - Posicione conectores proximos aos servidores de aplicação (mesmo segmento de rede)
 - Conectores fazem conexões HTTPS somente de saida (sem portas de entrada necessárias)
 - Use grupos de conectores para segregar aplicações (conectores HR vs. conectores de fornecedores)
-- Para KCD: conectores devem ser ingressados no dominio é capazes de obter tickets Kerberos em nome dos usuários
+- Para KCD: conectores devem ser ingressados no domínio é capazes de obter tickets Kerberos em nome dos usuários
 
 Opcoes de pré-autenticação:
 - **Microsoft Entra ID**: Usuário se autentica com Entra ID antes de alcancar a aplicação (habilita Conditional Access, MFA)
@@ -236,7 +236,7 @@ az role assignment create \
 
 Modelo de acesso (duas camadas):
 1. **Nível de compartilhamento**: Funções Azure RBAC (Storage File Data SMB Share Reader/Contributor/Elevated Contributor)
-2. **Nível de arquivo/diretório**: Windows NTFS ACLs (definidas via compartilhamento montado a partir de maquina ingressada no dominio)
+2. **Nível de arquivo/diretório**: Windows NTFS ACLs (definidas via compartilhamento montado a partir de maquina ingressada no domínio)
 
 </details>
 
@@ -289,7 +289,7 @@ az storagesync sync-group create \
 <details>
 <summary>1. A Adventure Works tem uma aplicação web IIS on-premises usando Windows Integrated Authentication. Usuários remotos precisam de SSO sem VPN. Qual solução fornece isso com a menor mudança de infraestrutura?</summary>
 
-**Microsoft Entra Application Proxy com Kerberos Constrained Delegation (KCD).** O Application Proxy fornece acesso externo sem modificar a aplicação ou abrir portas de firewall de entrada. O conector (instalado em um servidor ingressado no dominio dentro da rede) usa KCD para obter tickets Kerberos em nome de usuários pré-autenticados. O usuário se autentica com o Entra ID (incluindo MFA via Conditional Access), e o conector traduz isso em um ticket Kerberos para a aplicação IIS. Sem VPN, sem mudanças no código da aplicação, sem portas de entrada.
+**Microsoft Entra Application Proxy com Kerberos Constrained Delegation (KCD).** O Application Proxy fornece acesso externo sem modificar a aplicação ou abrir portas de firewall de entrada. O conector (instalado em um servidor ingressado no domínio dentro da rede) usa KCD para obter tickets Kerberos em nome de usuários pré-autenticados. O usuário se autentica com o Entra ID (incluindo MFA via Conditional Access), e o conector traduz isso em um ticket Kerberos para a aplicação IIS. Sem VPN, sem mudanças no código da aplicação, sem portas de entrada.
 
 </details>
 
@@ -310,7 +310,7 @@ az storagesync sync-group create \
 <details>
 <summary>4. Quando você deve implantar o Microsoft Entra Domain Services em vez de promover uma VM a domain controller no Azure IaaS?</summary>
 
-**Escolha Entra Domain Services quando:** (1) Você precisa de serviços de dominio básicos (LDAP, Kerberos, NTLM, Group Policy) sem gerenciar VMs de domain controller, (2) Suas aplicações não requerem extensões de schema, GPOs customizados além de templates integrados, ou forest trusts, (3) Você quer uma experiência PaaS com patching automático, replicação e HA, (4) Seus usuários já sincronizam do AD on-prem via Entra Connect (Entra DS sincroniza do Entra ID). **Escolha AD DS em VMs IaaS quando:** Você precisa de forest trusts, extensões de schema, controle granular de GPO, ou acesso direto de escrita LDAP. Entra DS e LDAP somente leitura e não suporta schema customizado -- aplicações que dependem desses recursos devem usar AD DS completo.
+**Escolha Entra Domain Services quando:** (1) Você precisa de serviços de domínio básicos (LDAP, Kerberos, NTLM, Group Policy) sem gerenciar VMs de domain controller, (2) Suas aplicações não requerem extensões de schema, GPOs customizados além de templates integrados, ou forest trusts, (3) Você quer uma experiência PaaS com patching automático, replicação e HA, (4) Seus usuários já sincronizam do AD on-prem via Entra Connect (Entra DS sincroniza do Entra ID). **Escolha AD DS em VMs IaaS quando:** Você precisa de forest trusts, extensões de schema, controle granular de GPO, ou acesso direto de escrita LDAP. Entra DS e LDAP somente leitura e não suporta schema customizado -- aplicações que dependem desses recursos devem usar AD DS completo.
 
 </details>
 

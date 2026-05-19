@@ -780,7 +780,7 @@ az vmss deallocate --resource-group rg-vm-lab --name vmss-web
 1. **Esquecer de desalocar** | alunos deixam VMs rodando e gastam créditos
 2. **Mover VM sem recursos dependentes** | deve mover NIC, disco, IP público, NSG juntos; movimentações parciais falham
 3. **Confusão entre Availability Set vs Zone** | Sets = dentro de um datacenter (SLA 99,95%); Zones = entre datacenters (SLA 99,99%)
-4. **Não pode adicionar VM existente a availability set** | deve ser especificado no momento da criação
+4. **Não pode adicionar VM existente a availability set** | deve ser específicado no momento da criação
 5. **Disco não visível após anexar** | alunos esquecem de particionar, formatar e montar dentro da VM; o disco é anexado mas não é utilizável até ser inicializado no SO
 
 ---
@@ -1136,7 +1136,7 @@ az network lb create -g $RG --name lb-internal --sku Standard \
   --vnet-name vnet-lb --subnet subnet-backend
 ```
 
-**Por quê**: O LB Standard requer um NSG na subnet (diferente do Basic). Health probes determinam a integridade do backend | se uma VM falhar no probe, o LB para de enviar tráfego para ela. LBs internos não têm IP público | eles usam um IP privado de uma subnet VNet para comunicação backend-para-backend.
+**Por quê**: O LB Standard requer um NSG na subnet (diferente do Basic). Health probes determinam a integridade do backend | se uma VM falhar no probe, o LB para de enviar tráfego para ela. LBs internos não têm IP público | eles usam um IP privado de uma subnet VNet para comúnicação backend-para-backend.
 
 ### Erros comuns
 

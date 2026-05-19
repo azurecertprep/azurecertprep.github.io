@@ -19,7 +19,7 @@ A MediaVault Productions é uma empresa de midia com 2PB (petabytes) de conteúd
 
 O desafio: sua conexão de internet e de 100Mbps dedicada. Um calculo simples revela que transferir 2PB a 100Mbps levaria aproximadamente 6,2 anos de transferencia continua na velocidade máxima. Isso claramente não é viavel para uma migração com prazo de conclusão de 12 meses.
 
-Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Los Angeles durante todo o período de migração (sem congelamento da produção). Novo conteúdo e gerado a uma taxa de 5TB por semana. Algum conteúdo tem requisitos específicos de retencao (obrigacoes contratuais de reter filmagens brutas por 7 anos). O arquivo (1,2PB) e raramente acessado (menos de uma vez por trimestre) enquanto as producoes ativas (800TB) sao acessadas diariamente.
+Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Los Angeles durante todo o período de migração (sem congelamento da produção). Novo conteúdo e gerado a uma taxa de 5TB por semana. Algum conteúdo tem requisitos específicos de retenção (obrigacoes contratuais de reter filmagens brutas por 7 anos). O arquivo (1,2PB) e raramente acessado (menos de uma vez por trimestre) enquanto as producoes ativas (800TB) são acessadas diariamente.
 
 ## Habilidades do exame cobertas
 
@@ -27,14 +27,14 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
 
 ## Tarefas de design
 
-### Parte 1: análise de largura de banda de rede e selecao de ferramentas
+### Parte 1: análise de largura de banda de rede e seleção de ferramentas
 
 1. Calcule o tempo de transferencia para 2PB de dados usando cada método disponível:
    - Transferencia online a 100Mbps (teorico vs. realista com overhead de protocolo)
    - Azure Data Box (80TB utilizaveis por dispositivo, tempo de pedido e envio)
    - Azure Data Box Heavy (770TB utilizaveis, logistica de envio)
    - Conexão de internet atualizada (1Gbps ou 10Gbps ExpressRoute)
-2. Projete uma estratégia de migração hibrida que combine métodos de transferencia offline (em massa) e online (incremental):
+2. Projete uma estratégia de migração híbrida que combine métodos de transferencia offline (em massa) e online (incremental):
    - Transferencia em massa para o arquivo existente de 2PB e conteúdo ativo
    - Sincronizacao online para novo conteúdo gerado durante o período de migração
    - Documente o período de sobreposicao onde ambos os métodos executam simultaneamente
@@ -90,7 +90,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
   storageKey="az305-challenge-47"
   items={[
     "Tempo de transferencia calculado para cada método (online, Data Box, Data Box Heavy) com estimativas realistas de throughput",
-    "Estratégia de migração hibrida combina transferencia offline em massa com sincronizacao incremental online durante a janela de migração",
+    "Estratégia de migração híbrida combina transferencia offline em massa com sincronizacao incremental online durante a janela de migração",
     "Plano logistico do Data Box específica contagem de dispositivos, cronograma de pedidos, operações paralelas e duracao total da migração",
     "Arquitetura de sincronizacao continua mantem acesso dos editores localmente enquanto replica novo conteúdo para o Azure",
     "Estratégia de camadas de armazenamento otimiza custos entre Hot, Cool e Archive para diferentes padrões de acesso de conteúdo",
@@ -110,14 +110,14 @@ Cronograma de ponta a ponta do Data Box: processamento do pedido (1-2 dias), env
 <details>
 <summary>Dica 2: Otimização de Performance do AzCopy</summary>
 
-O AzCopy v10 suporta transferencia paralela com concorrencia configuravel (variavel de ambiente AZCOPY_CONCURRENCY_VALUE). Para migracoes em larga escala: use `--cap-mbps` para limitar largura de banda durante o horario comercial, `--log-level` para troubleshooting, e `--include-after` para sincronizacao incremental de arquivos modificados apos uma data específica. O AzCopy usa o endpoint da conta de armazenamento, entao a performance é limitada pela velocidade do link de rede e limites de ingress da conta de armazenamento (padrão 25Gbps para contas standard).
+O AzCopy v10 suporta transferencia paralela com concorrencia configuravel (variavel de ambiente AZCOPY_CONCURRENCY_VALUE). Para migrações em larga escala: use `--cap-mbps` para limitar largura de banda durante o horario comercial, `--log-level` para troubleshooting, e `--include-after` para sincronizacao incremental de arquivos modificados apos uma data específica. O AzCopy usa o endpoint da conta de armazenamento, entao a performance é limitada pela velocidade do link de rede e limites de ingress da conta de armazenamento (padrão 25Gbps para contas standard).
 
 </details>
 
 <details>
 <summary>Dica 3: Azure Storage Mover vs. AzCopy</summary>
 
-O Azure Storage Mover é um serviço de migração gerenciado projetado para migracoes em larga escala. Diferente do AzCopy (uma ferramenta de linha de comando), o Storage Mover fornece: uma interface de gerenciamento centralizada, arquitetura baseada em agentes (implante agentes perto dos dados de origem), agendamento e sequenciamento de trabalhos, rastreamento de progresso e relatórios integrados, e retry automático em falhas. Use o Storage Mover quando você tem múltiplos compartilhamentos de origem, precisa de trabalhos de migração agendados ou quer uma experiência gerenciada. Use o AzCopy para copias ad-hoc mais simples ou automacao por script.
+O Azure Storage Mover é um serviço de migração gerenciado projetado para migrações em larga escala. Diferente do AzCopy (uma ferramenta de linha de comando), o Storage Mover fornece: uma interface de gerenciamento centralizada, arquitetura baseada em agentes (implante agentes perto dos dados de origem), agendamento e sequenciamento de trabalhos, rastreamento de progresso e relatórios integrados, e retry automático em falhas. Use o Storage Mover quando você tem múltiplos compartilhamentos de origem, precisa de trabalhos de migração agendados ou quer uma experiência gerenciada. Use o AzCopy para copias ad-hoc mais simples ou automacao por script.
 
 </details>
 
@@ -147,16 +147,16 @@ Arquivos no Azure Blob Storage Archive tier estao offline e não podem ser lidos
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Uma empresa tem 2PB de dados é uma conexão de internet de 100Mbps. Eles pedem 3 dispositivos Data Box Heavy. Durante o ciclo de 15 dias de envio/ingestao, 5TB de novos dados sao gerados. Como você lida com o delta?</summary>
+<summary>1. Uma empresa tem 2PB de dados é uma conexão de internet de 100Mbps. Eles pedem 3 dispositivos Data Box Heavy. Durante o ciclo de 15 dias de envio/ingestao, 5TB de novos dados são gerados. Como você lida com o delta?</summary>
 
 **Use AzCopy ou Azure File Sync para transferencia incremental do delta enquanto o Data Box esta em transito.** Os 5TB gerados durante o ciclo de 15 dias podem ser transferidos online: a 100Mbps com 80% de eficiência, 5TB leva aproximadamente 5,8 dias. Estratégia: (1) Copie os dados existentes para os dispositivos Data Box Heavy, (2) Registre o timestamp de corte quando a copia for concluida, (3) Enquanto o Data Box esta em transito, inicie a sincronizacao online de todos os arquivos criados/modificados apos o corte, (4) Apos a ingestao do Data Box ser concluida, execute uma sincronizacao final do AzCopy com a flag `--include-after` para capturar qualquer delta restante. Isso garante zero perda de dados sem esperar por outro ciclo de Data Box.
 
 </details>
 
 <details>
-<summary>2. A documentação do Azure Data Box indica 80TB de capacidade utilizavel, mas o NAS da empresa mostra 85TB de dados em um compartilhamento. Quais sao as opcoes?</summary>
+<summary>2. A documentação do Azure Data Box indica 80TB de capacidade utilizavel, mas o NAS da empresa mostra 85TB de dados em um compartilhamento. Quais são as opcoes?</summary>
 
-**Divida os dados entre dois dispositivos Data Box, use Data Box Heavy (770TB), ou reduza o tamanho dos dados antes da copia.** Opcoes: (1) Peca duas unidades Data Box e divida o compartilhamento (arquivos A-M no dispositivo 1, N-Z no dispositivo 2), (2) Use Data Box Heavy que tem 770TB utilizaveis e pode lidar com o compartilhamento completo em um dispositivo, (3) Faca limpeza no compartilhamento de origem antes da migração (remova duplicatas, comprima, exclua arquivos desnecessarios). Nota: Data Box Disk (8TB por disco, até 5 discos por pedido = 40TB) e muito pequeno. Também considere que o Data Box reporta 80TB utilizaveis apos overhead do sistema de arquivos; a capacidade bruta real e ligeiramente maior.
+**Divida os dados entre dois dispositivos Data Box, use Data Box Heavy (770TB), ou reduza o tamanho dos dados antes da copia.** Opcoes: (1) Peca duas unidades Data Box e divida o compartilhamento (arquivos A-M no dispositivo 1, N-Z no dispositivo 2), (2) Use Data Box Heavy que tem 770TB utilizaveis e pode lidar com o compartilhamento completo em um dispositivo, (3) Faca limpeza no compartilhamento de origem antes da migração (remova duplicatas, comprima, exclua arquivos desnecessários). Nota: Data Box Disk (8TB por disco, até 5 discos por pedido = 40TB) e muito pequeno. Também considere que o Data Box reporta 80TB utilizaveis apos overhead do sistema de arquivos; a capacidade bruta real e ligeiramente maior.
 
 </details>
 

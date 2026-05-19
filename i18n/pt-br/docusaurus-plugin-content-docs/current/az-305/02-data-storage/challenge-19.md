@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-MediaVault Studios é uma produtora de cinema e televisão que gerencia 500TB de conteúdo de vídeo em várias fases de produção. A biblioteca de conteúdo se divide da seguinte forma: 25TB (5%) de filmagens de produção ativa carregadas diariamente e acessadas frequentemente por editores e equipes de pós-produção; 125TB (25%) de projetos recentemente concluidos acessados semanalmente para clips de marketing, ativos de redes sociais e re-edicoes promocionais; e 350TB (70%) de copias master arquivadas que sao acessadas aproximadamente uma vez por ano para acordos de licenciamento, relancamentos de aniversario ou procedimentos legais.
+MediaVault Studios é uma produtora de cinema e televisão que gerencia 500TB de conteúdo de vídeo em várias fases de produção. A biblioteca de conteúdo se divide da seguinte forma: 25TB (5%) de filmagens de produção ativa carregadas diariamente e acessadas frequentemente por editores e equipes de pós-produção; 125TB (25%) de projetos recentemente concluidos acessados semanalmente para clips de marketing, ativos de redes sociais e re-edicoes promocionais; e 350TB (70%) de copias master arquivadas que são acessadas aproximadamente uma vez por ano para acordos de licenciamento, relancamentos de aniversario ou procedimentos legais.
 
 A equipe de pós-produção de 40 editores trabalha de um escritório central em Los Angeles e requer acesso de file share SMB para software de edicao de vídeo (Adobe Premiere Pro, DaVinci Resolve) que não pode trabalhar com APIs de armazenamento de objetos. Eles precisam de acesso de baixa latência a arquivos de projeto ativos com suporte a file locking para prevenir conflitos de edicao concorrente. As workstations de edicao se conectam ao Azure via uma conexão ExpressRoute de 10 Gbps.
 
@@ -27,20 +27,20 @@ O orcamento mensal de armazenamento da MediaVault é $8.000. Eles precisam minim
 
 ## Tarefas de design
 
-### Parte 1: selecao de serviço de armazenamento
+### Parte 1: seleção de serviço de armazenamento
 
-1. Avalie os seguintes serviços de armazenamento Azure para cada porcao do conteúdo da MediaVault e recomende o serviço apropriado para cada carga de trabalho:
+1. Avalie os seguintes serviços de armazenamento Azure para cada porcao do conteúdo da MediaVault e recomende o serviço aprópriado para cada carga de trabalho:
    - Azure Blob Storage (block blobs, append blobs, page blobs)
    - Azure Data Lake Storage Gen2
    - Azure Files (shares SMB/NFS)
    - Azure NetApp Files
 2. Para a carga de trabalho dos editores que requer file shares SMB com file locking, compare Azure Files Premium vs Azure NetApp Files. Considere requisitos de throughput (ExpressRoute de 10 Gbps), sensibilidade a latência e custo.
-3. Determine se Azure Data Lake Storage Gen2 (hierarchical namespace habilitado no Blob Storage) e apropriado para os arquivos de metadados que requerem processamento Spark. Explique as vantagens sobre o Blob Storage padrão para cargas de trabalho de analytics.
+3. Determine se Azure Data Lake Storage Gen2 (hierarchical namespace habilitado no Blob Storage) e aprópriado para os arquivos de metadados que requerem processamento Spark. Explique as vantagens sobre o Blob Storage padrão para cargas de trabalho de analytics.
 4. Para o arquivo de vídeo de 500TB, calcule se o Blob Storage padrão (sem hierarchical namespace) e mais economico do que Data Lake Storage Gen2.
 
 ### Parte 2: camada de acesso e gerenciamento de ciclo de vida
 
-5. Projete uma estratégia de camada de acesso para a biblioteca de conteúdo de vídeo. Mapeie cada categoria de conteúdo para a camada apropriada:
+5. Projete uma estratégia de camada de acesso para a biblioteca de conteúdo de vídeo. Mapeie cada categoria de conteúdo para a camada aprópriada:
    - Hot tier: Para filmagens de produção ativa (acesso diario)
    - Cool tier: Para projetos recentemente concluidos (acesso semanal)
    - Cold tier: Para conteúdo acessado menos que trimestralmente
@@ -51,9 +51,9 @@ O orcamento mensal de armazenamento da MediaVault é $8.000. Eles precisam minim
 
 ### Parte 3: proteção de dados e compliance
 
-9. Projete políticas de imutabilidade para copias master finalizadas. Avalie políticas de retencao baseadas em tempo (WORM - Write Once Read Many) versus legal holds. Determine qual abordagem atende ao requisito de 5 anos sem modificacao.
+9. Projete políticas de imutabilidade para copias master finalizadas. Avalie políticas de retenção baseadas em tempo (WORM - Write Once Read Many) versus legal holds. Determine qual abordagem atende ao requisito de 5 anos sem modificacao.
 10. Projete uma estratégia de redundância de dados para cada categoria de conteúdo. Considere LRS, ZRS, GRS e GZRS baseado na criticidade e recuperabilidade de cada tipo de conteúdo.
-11. Implemente políticas de soft delete e versionamento para proteger contra exclusão acidental de arquivos de produção ativos. Especifique períodos de retencao para arquivos excluidos e versoes anteriores.
+11. Implemente políticas de soft delete e versionamento para proteger contra exclusão acidental de arquivos de produção ativos. Especifique períodos de retenção para arquivos excluidos e versoes anteriores.
 12. Projete uma estratégia de controle de acesso usando Azure RBAC e regras de firewall da storage account. A equipe de edicao precisa de acesso de leitura/escrita a shares ativos, a equipe de analytics precisa de acesso somente-leitura a metadados, e conteúdo arquivado deve ser acessível apenas através de um workflow de aprovacao.
 
 ## Criterios de sucesso
@@ -61,12 +61,12 @@ O orcamento mensal de armazenamento da MediaVault é $8.000. Eles precisam minim
 <SuccessChecklist
   storageKey="az305-challenge-19"
   items={[
-    "Selected appropriate storage services for each workload (SMB shares, blob storage, ADLS Gen2)",
+    "Selected apprópriate storage services for each workload (SMB shares, blob storage, ADLS Gen2)",
     "Designed lifecycle management policy with clear tier transition rules and timing",
     "Monthly cost estimate fits within $8,000 budget with tiered storage strategy",
     "Configured immutability policies meeting 5-year WORM compliance requirement",
     "Addressed Archive tier rehydration time within 24-hour retrieval SLA",
-    "Implemented data redundancy appropriate to content criticality"
+    "Implemented data redundancy apprópriate to content criticality"
   ]}
 />
 
@@ -89,7 +89,7 @@ Custos mensais de armazenamento por GB (US East, LRS): Hot = $0,018/GB, Cool = $
 <details>
 <summary>Dica 3: Políticas de Gerenciamento de Ciclo de Vida</summary>
 
-Regras de gerenciamento de ciclo de vida do Azure Blob Storage podem automaticamente: (1) Transicionar blobs para camadas mais frias baseado em dias desde a criação ou tempo de último acesso; (2) Deletar blobs apos um período especificado; (3) Aplicar regras baseadas em prefixo de nome de blob ou container. As regras sao avaliadas diariamente. Exemplo: mover para Cool apos 30 dias sem acesso, para Archive apos 180 dias. Importante: o rastreamento de tempo de último acesso deve ser habilitado explicitamente na storage account (não é habilitado por padrão e tem um pequeno custo adicional).
+Regras de gerenciamento de ciclo de vida do Azure Blob Storage podem automaticamente: (1) Transicionar blobs para camadas mais frias baseado em dias desde a criação ou tempo de último acesso; (2) Deletar blobs apos um período específicado; (3) Aplicar regras baseadas em prefixo de nome de blob ou container. As regras são avaliadas diariamente. Exemplo: mover para Cool apos 30 dias sem acesso, para Archive apos 180 dias. Importante: o rastreamento de tempo de último acesso deve ser habilitado explicitamente na storage account (não é habilitado por padrão e tem um pequeno custo adicional).
 
 </details>
 
@@ -103,7 +103,7 @@ ADLS Gen2 e Blob Storage com hierarchical namespace (HNS) habilitado, fornecendo
 <details>
 <summary>Dica 5: Armazenamento Imutável</summary>
 
-Armazenamento imutável do Azure Blob Storage suporta dois tipos de política: (1) Retencao baseada em tempo: previne modificacao e exclusão por um período especificado (1 dia a 146.000 anos). Uma vez bloqueada, a política não pode ser encurtada. (2) Legal hold: previne modificacao/exclusão até ser explicitamente removida (sem limite de tempo). Para o requisito de 5 anos da MediaVault em copias master, uma política de retencao baseada em tempo definida para 5 anos (1.825 dias) garante compliance WORM. Políticas podem ser aplicadas em nível de container ou versao de blob.
+Armazenamento imutável do Azure Blob Storage suporta dois tipos de política: (1) Retencao baseada em tempo: previne modificacao e exclusão por um período específicado (1 dia a 146.000 anos). Uma vez bloqueada, a política não pode ser encurtada. (2) Legal hold: previne modificacao/exclusão até ser explicitamente removida (sem limite de tempo). Para o requisito de 5 anos da MediaVault em copias master, uma política de retenção baseada em tempo definida para 5 anos (1.825 dias) garante compliance WORM. Políticas podem ser aplicadas em nível de container ou versao de blob.
 
 </details>
 
@@ -130,21 +130,21 @@ Armazenamento imutável do Azure Blob Storage suporta dois tipos de política: (
 <details>
 <summary>2. Uma organização armazena 350TB de arquivos de vídeo acessados uma vez por ano. Eles precisam recuperar arquivos específicos dentro de 24 horas de uma solicitacao. Qual camada de acesso e prioridade de reidratacao devem usar?</summary>
 
-**Camada Archive com reidratacao de prioridade Standard.** O armazenamento na camada Archive custa aproximadamente $0,00099/GB/mes (economizando mais de $6.000/mes comparado a camada Hot para 350TB). A reidratacao de prioridade Standard completa dentro de 15 horas, o que esta bem dentro da janela de recuperação de 24 horas. Reidratacao High Priority (menos de 1 hora) esta disponível mas custa significativamente mais e é desnecessaria dado o SLA de 24 horas. Alternativamente, considere a camada Cold se o tempo de recuperação de minutos (em vez de horas) for ocasionalmente necessário.
+**Camada Archive com reidratacao de prioridade Standard.** O armazenamento na camada Archive custa aproximadamente $0,00099/GB/mes (economizando mais de $6.000/mes comparado a camada Hot para 350TB). A reidratacao de prioridade Standard completa dentro de 15 horas, o que esta bem dentro da janela de recuperação de 24 horas. Reidratacao High Priority (menos de 1 hora) esta disponível mas custa significativamente mais e é desnecessária dado o SLA de 24 horas. Alternativamente, considere a camada Cold se o tempo de recuperação de minutos (em vez de horas) for ocasionalmente necessário.
 
 </details>
 
 <details>
 <summary>3. Quando você deve habilitar hierarchical namespace (Data Lake Storage Gen2) versus usar Blob Storage padrão?</summary>
 
-**Habilite hierarchical namespace quando:** sua carga de trabalho requer operações em nível de diretório (renomear, mover, deletar diretorios atomicamente), POSIX ACLs para controle de acesso granular, ou quando usa frameworks de analytics como Apache Spark, Azure Synapse ou Databricks que se beneficiam de enumeracao eficiente de diretorios. **Use Blob Storage padrão quando:** você precisa apenas de armazenamento de objetos plano, custo e a preocupação primária (HNS adiciona um pequeno premium), ou sua carga de trabalho e puramente upload/download sem operações de diretório. Para os arquivos de metadados de analytics da MediaVault, ADLS Gen2 e apropriado; para arquivo de vídeo puro, Blob Storage padrão e mais economico.
+**Habilite hierarchical namespace quando:** sua carga de trabalho requer operações em nível de diretório (renomear, mover, deletar diretorios atomicamente), POSIX ACLs para controle de acesso granular, ou quando usa frameworks de analytics como Apache Spark, Azure Synapse ou Databricks que se beneficiam de enumeracao eficiente de diretorios. **Use Blob Storage padrão quando:** você precisa apenas de armazenamento de objetos plano, custo e a preocupação primária (HNS adiciona um pequeno premium), ou sua carga de trabalho e puramente upload/download sem operações de diretório. Para os arquivos de metadados de analytics da MediaVault, ADLS Gen2 e aprópriado; para arquivo de vídeo puro, Blob Storage padrão e mais economico.
 
 </details>
 
 <details>
 <summary>4. Uma empresa de midia deve garantir que arquivos de vídeo master finalizados não podem ser modificados ou excluidos por 5 anos apos o lancamento. Qual recurso do Azure Storage deve ser configurado?</summary>
 
-**Armazenamento imutável com política de retencao baseada em tempo.** Configure uma política de retencao baseada em tempo em nível de container definida para 1.825 dias (5 anos). Uma vez que a política e bloqueada, ela não pode ser encurtada ou deletada, e blobs dentro do container não podem ser modificados ou excluidos até o período de retencao expirar. Isso fornece compliance WORM (Write Once Read Many) adequado para requisitos regulatorios. Legal holds sao uma alternativa, mas sao mais adequados para retencao indefinida ligada a procedimentos legais em vez de períodos de tempo fixos.
+**Armazenamento imutável com política de retenção baseada em tempo.** Configure uma política de retenção baseada em tempo em nível de container definida para 1.825 dias (5 anos). Uma vez que a política e bloqueada, ela não pode ser encurtada ou deletada, e blobs dentro do container não podem ser modificados ou excluidos até o período de retenção expirar. Isso fornece compliance WORM (Write Once Read Many) adequado para requisitos regulatorios. Legal holds são uma alternativa, mas são mais adequados para retenção indefinida ligada a procedimentos legais em vez de períodos de tempo fixos.
 
 </details>
 

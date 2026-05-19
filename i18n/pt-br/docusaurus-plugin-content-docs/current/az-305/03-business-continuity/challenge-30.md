@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-O Federal Benefits Portal (FedBenefits) é uma aplicação web operada pelo governo que permite a 10 milhões de cidadaos gerenciar seus beneficios de aposentadoria, inscricao em saúde e informações fiscais. O portal esta sujeito a requisitos rigorosos de uptime determinados pelo Government Accountability Office: 99,99% de disponibilidade (máximo de 52,6 minutos de inatividade por ano). Qualquer interrupcao superior a 5 minutos aciona um requisito de relatório ao congresso e potencial auditoria.
+O Federal Benefits Portal (FedBenefits) é uma aplicação web operada pelo governo que permite a 10 milhões de cidadaos gerenciar seus benefícios de aposentadoria, inscricao em saúde e informações fiscais. O portal esta sujeito a requisitos rigorosos de uptime determinados pelo Government Accountability Office: 99,99% de disponibilidade (máximo de 52,6 minutos de inatividade por ano). Qualquer interrupcao superior a 5 minutos aciona um requisito de relatório ao congresso e potencial auditoria.
 
-A arquitetura atual executa em 8 VMs atras de um Azure Load Balancer em um único availability set dentro de East US 2. No mes passado, um evento de manutenção não planejada da plataforma Azure derrubou todo o availability set por 12 minutos, violando o SLA. A equipe de infraestrutura foi encarregada de reprojetar a camada de computacao para sobreviver a uma falha completa de availability zone sem qualquer impacto visivel ao usuário.
+A arquitetura atual executa em 8 VMs atras de um Azure Load Balancer em um único availability set dentro de East US 2. No mes passado, um evento de manutenção não planejada da plataforma Azure derrubou todo o availability set por 12 minutos, violando o SLA. A equipe de infraestrutura foi encarregada de reprojetar a camada de computacao para sobreviver a uma falha completa de availability zone sem qualquer impacto visível ao usuário.
 
-Alguns componentes do FedBenefits sao aplicações legadas .NET Framework que não podem ser facilmente containerizadas, enquanto microsservicos mais novos executam em .NET 8 e poderiam aproveitar ofertas PaaS. A arquitetura deve acomodar tanto IaaS (VMs para legado) quanto PaaS (App Service para moderno) enquanto alcanca a meta de SLA composto de 99,99%. O orcamento permite upgrade para infraestrutura zone-redundant mas não para uma implantacao multi-região active-active completa.
+Alguns componentes do FedBenefits são aplicações legadas .NET Framework que não podem ser facilmente containerizadas, enquanto microsserviços mais novos executam em .NET 8 e poderiam aproveitar ofertas PaaS. A arquitetura deve acomodar tanto IaaS (VMs para legado) quanto PaaS (App Service para moderno) enquanto alcanca a meta de SLA composto de 99,99%. O orcamento permite upgrade para infraestrutura zone-redundant mas não para uma implantação multi-região active-active completa.
 
 ## Habilidades do exame cobertas
 
@@ -29,7 +29,7 @@ Alguns componentes do FedBenefits sao aplicações legadas .NET Framework que n�
 
 ### Parte 1: availability sets vs. availability zones
 
-1. Análise por que a implantacao atual com availability set falhou em atingir a meta de 99,99%:
+1. Análise por que a implantação atual com availability set falhou em atingir a meta de 99,99%:
    - Qual SLA um availability set fornece? (99,95%)
    - Quais cenários podem causar que TODAS as VMs em um availability set sejam impactadas simultaneamente?
    - Qual é a diferenca entre fault domains e update domains?
@@ -90,7 +90,7 @@ done
 
 ### Parte 3: Virtual machine scale sets (vmss)
 
-7. Avalie se VMSS seria mais apropriado que VMs individuais para a camada web:
+7. Avalie se VMSS seria mais aprópriado que VMs individuais para a camada web:
 
 | Fator | VMs Individuais | VMSS Uniform | VMSS Flexible |
 |--------|---------------|--------------|---------------|
@@ -114,7 +114,7 @@ done
 
 ### Parte 4: alta disponibilidade PaaS (App service)
 
-10. Projete a implantacao para os microsservicos .NET 8 usando Azure App Service:
+10. Projete a implantação para os microsserviços .NET 8 usando Azure App Service:
     - Qual tier de App Service plan suporta availability zones? (Premium v3 ou acima)
     - Como o App Service zone-redundant funciona? (mínimo 3 instâncias, distribuidas entre zonas)
     - O que acontece se uma zona falhar? (instâncias restantes tratam o trafego)
@@ -195,13 +195,13 @@ az network lb frontend-ip show \
 <summary>Dica 3: VMSS Flexible vs Uniform</summary>
 
 Para aplicações legadas .NET Framework do FedBenefits:
-- **VMSS Uniform**: Todas as VMs sao identicas, gerenciamento individual de VM limitado, sem suporte para anexar VMs existentes. Melhor para cargas de trabalho stateless verdadeiramente identicas.
+- **VMSS Uniform**: Todas as VMs são identicas, gerenciamento individual de VM limitado, sem suporte para anexar VMs existentes. Melhor para cargas de trabalho stateless verdadeiramente identicas.
 - **VMSS Flexible**: Suporta tamanhos mistos de VM, acesso individual a VM via SSH/RDP, pode anexar VMs existentes, suporta availability zones. Melhor para cargas de trabalho legadas migrando de VMs individuais.
 
 VMSS Flexible é recomendado para FedBenefits porque:
 1. Apps legados podem precisar de troubleshooting individual de VM (acesso RDP)
 2. Tamanhos mistos de VM permitem otimização de custo (VMs menores para baseline, maiores para burst)
-3. Suporta os mesmos padrões de implantacao que VMs individuais mas adiciona autoscaling
+3. Suporta os mesmos padrões de implantação que VMs individuais mas adiciona autoscaling
 4. Distribuição em zonas e automática (equilibra entre zonas configuradas)
 
 </details>
@@ -257,9 +257,9 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 ## Verificação de conhecimento
 
 <details>
-<summary>1. Um portal governamental requer 99,99% de uptime. A implantacao atual usa um availability set com 4 VMs. Por que isso é insuficiente, e qual mudança é necessária?</summary>
+<summary>1. Um portal governamental requer 99,99% de uptime. A implantação atual usa um availability set com 4 VMs. Por que isso é insuficiente, e qual mudança é necessária?</summary>
 
-**Availability sets fornecem apenas SLA de 99,95%, que permite até 4,38 horas de inatividade por ano - muito acima do orcamento de 52,6 minutos para 99,99%.** Availability sets protegem contra falhas em nível de rack (fault domains) e atualizações de plataforma (update domains) mas não podem sobreviver a uma falha completa de datacenter/zona. A correcao e migrar para availability zones, implantando VMs em pelo menos 2 zonas. Isso fornece SLA de 99,99% porque o Azure garante que as zonas sao datacenters fisicamente separados com energia, refrigeracao e rede independentes.
+**Availability sets fornecem apenas SLA de 99,95%, que permite até 4,38 horas de inatividade por ano - muito acima do orcamento de 52,6 minutos para 99,99%.** Availability sets protegem contra falhas em nível de rack (fault domains) e atualizações de plataforma (update domains) mas não podem sobreviver a uma falha completa de datacenter/zona. A correcao e migrar para availability zones, implantando VMs em pelo menos 2 zonas. Isso fornece SLA de 99,99% porque o Azure garante que as zonas são datacenters fisicamente separados com energia, refrigeracao e rede independentes.
 
 </details>
 
@@ -280,7 +280,7 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 <details>
 <summary>4. Qual é o SLA composto para uma aplicação que requer tanto uma camada de VM zone-redundant (99,99%) atras de um Standard Load Balancer (99,99%) QUANTO um App Service zone-redundant (99,99%)?</summary>
 
-**Se ambas as camadas devem funcionar para a aplicação funcionar (dependência serial): 0,9999 x 0,9999 x 0,9999 = 99,97%.** Isso esta abaixo da meta de 99,99%. Para atingir 99,99%, você precisa eliminar uma dependência (usar App Service para tudo) ou adicionar redundância. Se as camadas sao independentes (qualquer uma pode servir usuários), a formula paralela se aplica: 1 - (0,0001 x 0,0001) = 99,9999%. Na prática, a maioria das aplicações tem dependências seriais, entao minimizar o número de serviços encadeados e crítico para alcancar 99,99%.
+**Se ambas as camadas devem funcionar para a aplicação funcionar (dependência serial): 0,9999 x 0,9999 x 0,9999 = 99,97%.** Isso esta abaixo da meta de 99,99%. Para atingir 99,99%, você precisa eliminar uma dependência (usar App Service para tudo) ou adicionar redundância. Se as camadas são independentes (qualquer uma pode servir usuários), a formula paralela se aplica: 1 - (0,0001 x 0,0001) = 99,9999%. Na prática, a maioria das aplicações tem dependências seriais, entao minimizar o número de serviços encadeados e crítico para alcancar 99,99%.
 
 </details>
 
@@ -337,7 +337,7 @@ az vmss list-instances \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
 :::
 
 ## Limpeza

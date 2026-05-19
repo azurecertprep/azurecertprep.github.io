@@ -60,7 +60,7 @@ Este é o maior domínio. Foque em seleção de computação (VM vs container vs
 Conheca padroes de autenticação/autorização, design de Key Vault, hierarquias de management groups e Azure Policy. Monitoramento (Log Analytics, App Insights) conecta-se a todos os outros domínios.
 
 ### Semana 5: armazenamento de dados + continuidade de negócios (35-45% combinado)
-Selecao relacional vs não-relacional, decisões de tier/computação, opções de redundância, estratégias de backup/DR, padroes de HA. Esses dois domínios se sobrepoe significativamente.
+Seleção relacional vs não-relacional, decisões de tier/computação, opções de redundância, estratégias de backup/DR, padroes de HA. Esses dois domínios se sobrepoe significativamente.
 
 ### Semana 6: revisao + prática
 - Faça a [Avaliação Prática Gratuita](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/practice/assessment?assessment-type=practice&assessmentId=15)
@@ -74,19 +74,19 @@ Selecao relacional vs não-relacional, decisões de tier/computação, opções 
 1. **Níveis de consistência do Cosmos DB**: Consistência forte oferece leituras após gravacoes, mas custa 2x RUs e limita gravacoes multi-regiao. Eventual é barato mas com dados desatualizados. Conheca os 5 níveis e trade-offs.
 2. **Tiers do SQL Database**: Business Critical inclui HA integrada (replicas de leitura), General Purpose não. Hyperscale é para bancos maiores que 4TB.
 3. **Composição de SLA**: Dois serviços com 99,9% cada resultam em 99,8% composto (0,999 x 0,999). Adicionar redundância AUMENTA o SLA composto.
-4. **ExpressRoute vs VPN Gateway**: ExpressRoute não passa pela internet pública. Mas requer um provedor de conectividade. Saiba quando cada um é apropriado.
+4. **ExpressRoute vs VPN Gateway**: ExpressRoute não passa pela internet pública. Mas requer um provedor de conectividade. Saiba quando cada um é aprópriado.
 5. **Event Grid vs Event Hubs vs Service Bus**: Event Grid = reativo (eventos aconteceram), Event Hubs = streaming (telemetria de alto throughput), Service Bus = mensageria corporativa (entrega garantida, ordenação).
 6. **Azure Front Door vs Traffic Manager**: Front Door opera na Camada 7 (HTTP), Traffic Manager no nível DNS. Front Door é preferido para workloads web.
 7. **Private Endpoints vs Service Endpoints**: Private Endpoints fornecem um IP privado na sua VNet. Service Endpoints roteiam pelo backbone Microsoft mas o serviço ainda tem IP público.
-8. **Managed Identity vs Service Principal**: Sempre prefira managed identity quando a origem é um recurso Azure. Service principals sao para origens fora do Azure.
+8. **Managed Identity vs Service Principal**: Sempre prefira managed identity quando a origem é um recurso Azure. Service principals são para origens fora do Azure.
 9. **Premium SSD v2 vs Ultra Disk**: Premium SSD v2 permite escalar IOPS/throughput independentemente sem mudar o tamanho do disco. Ultra Disk é para workloads extremos de sub-ms.
-10. **Azure Batch vs Functions com filas**: Batch é para computação paralela massiva (milhares de nos). Functions com queue triggers sao para processamento orientado a mensagens em escala moderada.
+10. **Azure Batch vs Functions com filas**: Batch é para computação paralela massiva (milhares de nos). Functions com queue triggers são para processamento orientado a mensagens em escala moderada.
 
 :::
 
-## Frameworks de decisao para memorizar
+## Frameworks de decisão para memorizar
 
-### Árvore de decisao de computacao
+### Árvore de decisão de computacao
 - Precisa de controle total do SO? VM
 - Workloads containerizados com orquestração? AKS
 - Servicos HTTP containerizados simples? Container Apps
@@ -94,19 +94,19 @@ Selecao relacional vs não-relacional, decisões de tier/computação, opções 
 - Orquestracao de workflows? Logic Apps ou Durable Functions
 - Processamento em lote (milhares de cores)? Azure Batch
 
-### Árvore de decisao de balanceamento de carga
+### Árvore de decisão de balanceamento de carga
 - HTTP/HTTPS global? Azure Front Door
 - Global não-HTTP (baseado em DNS)? Traffic Manager
 - HTTP regional com WAF? Application Gateway
 - Regional não-HTTP (Camada 4)? Azure Load Balancer
 
-### Árvore de decisao de armazenamento
+### Árvore de decisão de armazenamento
 - Relacional + alta compatibilidade? SQL Managed Instance
 - Relacional + PaaS otimizado em custo? Azure SQL Database
 - NoSQL documento + distribuição global? Cosmos DB for NoSQL
 - Key-value consultas simples? Table Storage ou Cosmos DB for Table
 - Blobs não estruturados? Blob Storage
-- Analise de big data? Data Lake Storage Gen2
+- Análise de big data? Data Lake Storage Gen2
 - Compartilhamentos de arquivo SMB? Azure Files
 
 ## Links úteis

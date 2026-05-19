@@ -19,7 +19,7 @@ ShopWave é uma empresa de e-commerce de médio porte que atualmente opera três
 
 O CTO definiu um orcamento firme de $2.000/mes para todas as cargas de trabalho de banco de dados no Azure. O banco de dados transacional deve manter latência de escrita inferior a 20ms durante horarios de pico. O banco de dados de relatórios pode tolerar latência maior, mas precisa lidar com consultas que abrangem bilhoes de linhas. O banco de dados PostgreSQL deve manter suas extensões é minimizar alteracoes de código durante a migração. A equipe tem recursos limitados de DBA (um administrador de banco de dados em tempo parcial) e deseja serviços gerenciados sempre que possível.
 
-ShopWave também requer que todos os bancos de dados suportem backups automatizados com restauracao point-in-time de pelo menos 7 dias, e que o banco de dados transacional tenha um SLA de 99,99%. A empresa opera exclusivamente na região US East hoje, mas planeja expandir para a Europa dentro de 18 meses.
+ShopWave também requer que todos os bancos de dados suportem backups automatizados com restauração point-in-time de pelo menos 7 dias, e que o banco de dados transacional tenha um SLA de 99,99%. A empresa opera exclusivamente na região US East hoje, mas planeja expandir para a Europa dentro de 18 meses.
 
 ## Habilidades do exame cobertas
 
@@ -27,16 +27,16 @@ ShopWave também requer que todos os bancos de dados suportem backups automatiza
 
 ## Tarefas de design
 
-### Parte 1: selecao de serviço
+### Parte 1: seleção de serviço
 
-1. Para cada um dos três bancos de dados da ShopWave, recomende o serviço Azure mais apropriado (Azure SQL Database, Azure SQL Managed Instance, Azure Database for PostgreSQL Flexible Server ou Azure Database for MySQL Flexible Server). Justifique cada selecao com base nos requisitos de compatibilidade, necessidades de recursos e complexidade de migração.
-2. Para o banco de dados transacional SQL Server, determine se um modelo de implantacao de banco de dados único ou elastic pool e mais apropriado dadas as caracteristicas da carga de trabalho.
-3. Avalie se Azure SQL Managed Instance seria uma opcao melhor do que Azure SQL Database para a carga de trabalho transacional. Documente pelo menos três fatores em sua decisao.
+1. Para cada um dos três bancos de dados da ShopWave, recomende o serviço Azure mais aprópriado (Azure SQL Database, Azure SQL Managed Instance, Azure Database for PostgreSQL Flexible Server ou Azure Database for MySQL Flexible Server). Justifique cada seleção com base nos requisitos de compatibilidade, necessidades de recursos e complexidade de migração.
+2. Para o banco de dados transacional SQL Server, determine se um modelo de implantação de banco de dados único ou elastic pool e mais aprópriado dadas as caracteristicas da carga de trabalho.
+3. Avalie se Azure SQL Managed Instance seria uma opcao melhor do que Azure SQL Database para a carga de trabalho transacional. Documente pelo menos três fatores em sua decisão.
 4. Identifique quais recursos do PostgreSQL Flexible Server (versus Single Server, que esta desativado) suportam os requisitos de extensão da empresa adquirida.
 
 ### Parte 2: planejamento de migração
 
-5. Projete uma abordagem de migração para cada banco de dados. Especifique se você usaria migração online ou offline, e qual ferramenta (Azure Database Migration Service, backup/restore nativo ou replicação de dados) e mais apropriada.
+5. Projete uma abordagem de migração para cada banco de dados. Especifique se você usaria migração online ou offline, e qual ferramenta (Azure Database Migration Service, backup/restore nativo ou replicação de dados) e mais aprópriada.
 6. Determine a estratégia de migração com tempo de inatividade mínimo para o banco de dados transacional, considerando que ele processa pedidos 24/7.
 7. Identifique quaisquer alteracoes de esquema ou aplicação necessárias para a migração do PostgreSQL manter a funcionalidade de PostGIS e pg_trgm.
 
@@ -44,14 +44,14 @@ ShopWave também requer que todos os bancos de dados suportem backups automatiza
 
 8. Estime o custo mensal para sua arquitetura proposta e verifique se cabe no orcamento de $2.000/mes. Considere custos de computacao, armazenamento e backup.
 9. Identifique pelo menos duas estratégias de otimização de custos (como capacidade reservada, dimensionamento correto ou consolidacao de cargas de trabalho) que poderiam reduzir o gasto mensal total em 20% ou mais.
-10. Projete uma estratégia para a futura expansao europeia que minimize custos adicionais enquanto atende aos requisitos de residencia de dados.
+10. Projete uma estratégia para a futura expansao europeia que minimize custos adicionais enquanto atende aos requisitos de residência de dados.
 
 ## Criterios de sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-14"
   items={[
-    "Selected appropriate Azure database services for all three workloads with documented justification",
+    "Selected apprópriate Azure database services for all three workloads with documented justification",
     "Demonstrated understanding of Azure SQL Database vs SQL Managed Instance trade-offs",
     "Designed migration strategy with minimal downtime for the transactional database",
     "Validated PostgreSQL extension compatibility with Azure Database for PostgreSQL Flexible Server",
@@ -72,7 +72,7 @@ Azure SQL Database é um mecanismo de banco de dados PaaS totalmente gerenciado.
 <details>
 <summary>Dica 2: Extensoes PostgreSQL no Azure</summary>
 
-Azure Database for PostgreSQL Flexible Server suporta muitas extensões populares incluindo PostGIS, pg_trgm, hstore e citext. Você pode listar as extensões suportadas no portal Azure ou executando `SELECT * FROM pg_available_extensions;` apos a implantacao. Flexible Server (não o Single Server desativado) e a opcao de implantacao recomendada com suporte completo a extensões.
+Azure Database for PostgreSQL Flexible Server suporta muitas extensões populares incluindo PostGIS, pg_trgm, hstore e citext. Você pode listar as extensões suportadas no portal Azure ou executando `SELECT * FROM pg_available_extensions;` apos a implantação. Flexible Server (não o Single Server desativado) e a opcao de implantação recomendada com suporte completo a extensões.
 
 </details>
 
@@ -86,14 +86,14 @@ Azure Database Migration Service (DMS) suporta migração online de SQL Server p
 <details>
 <summary>Dica 4: Estimativa de Custos</summary>
 
-Para estimativa de custos, considere: Azure SQL Database General Purpose (vCore) começa em torno de $370/mes para 2 vCores. PostgreSQL Flexible Server na camada Burstable B2s começa em torno de $25/mes. Capacidade reservada (1 ano ou 3 anos) oferece economia de 30-65% em computacao. Custos de armazenamento sao separados e tipicamente $0,115/GB/mes para a camada General Purpose.
+Para estimativa de custos, considere: Azure SQL Database General Purpose (vCore) começa em torno de $370/mes para 2 vCores. PostgreSQL Flexible Server na camada Burstable B2s começa em torno de $25/mes. Capacidade reservada (1 ano ou 3 anos) oferece economia de 30-65% em computacao. Custos de armazenamento são separados e tipicamente $0,115/GB/mes para a camada General Purpose.
 
 </details>
 
 <details>
 <summary>Dica 5: Elastic Pools vs Bancos de Dados Individuais</summary>
 
-Elastic pools sao economicos quando você tem múltiplos bancos de dados com padrões de uso variaveis e imprevisiveis. Se os bancos de dados tem horarios de pico diferentes, eles podem compartilhar recursos. Para um único banco de dados transacional de alta vazao com carga consistente, um banco de dados único com computacao provisionada e geralmente mais economico e oferece desempenho mais previsivel.
+Elastic pools são economicos quando você tem múltiplos bancos de dados com padrões de uso variaveis e imprevisiveis. Se os bancos de dados tem horarios de pico diferentes, eles podem compartilhar recursos. Para um único banco de dados transacional de alta vazao com carga consistente, um banco de dados único com computacao provisionada e geralmente mais economico e oferece desempenho mais previsível.
 
 </details>
 

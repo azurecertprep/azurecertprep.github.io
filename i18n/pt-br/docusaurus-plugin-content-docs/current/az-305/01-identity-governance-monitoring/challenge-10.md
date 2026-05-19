@@ -17,9 +17,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Cloudvista Technologies é uma empresa SaaS que cresceu de 20 para 350 funcionários em três anos. Seus gastos com Azure cresceram 300% ano a ano, agora ultrapassando $180.000 por mes, mas a equipe financeira não consegue determinar qual equipe, projeto ou cliente é responsável por qual parte da fatura. Durante um incidente recente em produção, o engenheiro de plantao gastou 45 minutos identificando o proprietario de uma Azure Function com falha porque não havia metadados indicando quem a construiu ou qual projeto ela suportava.
 
-O VP de Engenharia determinou uma estratégia abrangente de tagging que atende a três necessidades urgentes: (1) O Financeiro deve ser capaz de atribuir 100% dos custos do Azure a unidades de negocio, projetos e centros de custo específicos até o próximo trimestre; (2) Operações deve ser capaz de identificar o proprietario e o nível de suporte de qualquer recurso em 30 segundos durante um incidente; (3) a equipe de Segurança precisa classificar recursos por nível de sensibilidade de dados para fins de auditoria. Além disso, a equipe de DevOps quer tags que indiquem o mecanismo de implantacao (Terraform, Bicep, manual) e a data da última implantacao para detecção de desvios.
+O VP de Engenharia determinou uma estratégia abrangente de tagging que atende a três necessidades urgentes: (1) O Financeiro deve ser capaz de atribuir 100% dos custos do Azure a unidades de negócio, projetos e centros de custo específicos até o próximo trimestre; (2) Operações deve ser capaz de identificar o proprietario e o nível de suporte de qualquer recurso em 30 segundos durante um incidente; (3) a equipe de Segurança precisa classificar recursos por nível de sensibilidade de dados para fins de auditoria. Além disso, a equipe de DevOps quer tags que indiquem o mecanismo de implantação (Terraform, Bicep, manual) e a data da última implantação para detecção de desvios.
 
-O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada uma usando diferentes ferramentas de implantacao (Terraform, Bicep, Azure CLI, Portal). Algumas equipes sao disciplinadas com tagging; outras ignoram completamente. A solução deve aplicar tags minimas obrigatorias enquanto permite que as equipes adicionem tags personalizadas para suas próprias necessidades operacionais. Recursos que não podem receber tags (alguns recursos filhos) devem ser contabilizados através de tagging do recurso pai ou métodos alternativos de atribuicao.
+O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada uma usando diferentes ferramentas de implantação (Terraform, Bicep, Azure CLI, Portal). Algumas equipes são disciplinadas com tagging; outras ignoram completamente. A solução deve aplicar tags minimas obrigatorias enquanto permite que as equipes adicionem tags personalizadas para suas próprias necessidades operacionais. Recursos que não podem receber tags (alguns recursos filhos) devem ser contabilizados através de tagging do recurso pai ou métodos alternativos de atribuicao.
 
 ## Habilidades do exame cobertas
 
@@ -29,28 +29,28 @@ O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada
 
 ### Parte 1: design da taxonomia de tags
 
-1. Projete a taxonomia completa de tags para a Cloudvista. Categorize as tags em: obrigatorias (devem existir em todos os recursos), condicionais (obrigatorias em contextos específicos) e opcionais (a criterio da equipe). Para cada tag, especifique: nome da tag, valores permitidos (texto livre vs. vocabulario controlado) e propósito.
-2. Defina as tags minimas obrigatorias para atribuicao de custos. Estas devem permitir que o Financeiro gere relatórios mostrando custo por: unidade de negocio, projeto/aplicação, centro de custo e ambiente.
-3. Defina tags operacionais que suportem resposta a incidentes. No mínimo: proprietario do recurso (individuo ou equipe), nível de suporte (P1-P4) e mecanismo de implantacao.
+1. Projete a taxonomia completa de tags para a Cloudvista. Categorize as tags em: obrigatorias (devem existir em todos os recursos), condicionais (obrigatorias em contextos específicos) e opcionais (a critério da equipe). Para cada tag, especifique: nome da tag, valores permitidos (texto livre vs. vocabulario controlado) e propósito.
+2. Defina as tags minimas obrigatorias para atribuicao de custos. Estas devem permitir que o Financeiro gere relatórios mostrando custo por: unidade de negócio, projeto/aplicação, centro de custo e ambiente.
+3. Defina tags operacionais que suportem resposta a incidentes. No mínimo: proprietario do recurso (individuo ou equipe), nível de suporte (P1-P4) e mecanismo de implantação.
 4. Defina tags de segurança e conformidade: nível de classificacao de dados (público, interno, confidencial, restrito), escopo regulatorio (GDPR, SOC2, HIPAA) e se o recurso lida com PII.
 
 ### Parte 2: aplicação de tags com Azure Policy
 
-5. Projete definicoes de Azure Policy para aplicar as tags obrigatorias. Para cada tag obrigatória, determine o efeito de política apropriado: tags ausentes devem ser negadas (impedir criação), auditadas (sinalizar não conformidade) ou auto-remediadas (herdar ou aplicar um valor padrão)?
+5. Projete definicoes de Azure Policy para aplicar as tags obrigatorias. Para cada tag obrigatória, determine o efeito de política aprópriado: tags ausentes devem ser negadas (impedir criação), auditadas (sinalizar não conformidade) ou auto-remediadas (herdar ou aplicar um valor padrão)?
 6. Crie uma estratégia de política para validação de valores de tags. Determine quais tags precisam de vocabularios controlados (apenas valores específicos permitidos) versus texto livre.
 7. Projete uma estratégia de remediacao para os mais de 1.400 recursos existentes que não possuem tags. Determine se deve usar tarefas de remediacao do Azure Policy com efeito `modify`, scripts em massa ou um processo de triagem manual.
-8. Aborde as limitacoes de herança de tags. Tags do Azure não herdam automaticamente de resource groups ou subscriptions para recursos filhos. Projete uma solução para garantir que recursos herdem tags do pai (opcoes: Azure Policy com efeito `modify`, templates de implantacao ou automacao pós-implantacao).
+8. Aborde as limitacoes de herança de tags. Tags do Azure não herdam automaticamente de resource groups ou subscriptions para recursos filhos. Projete uma solução para garantir que recursos herdem tags do pai (opcoes: Azure Policy com efeito `modify`, templates de implantação ou automacao pós-implantação).
 
-### Parte 3: alocacao de custos e relatorios
+### Parte 3: alocacao de custos e relatórios
 
-9. Projete como as tags se integram com o Azure Cost Management. Especifique quais tags serao usadas como dimensoes de alocacao de custos, como recursos sem tags serao atribuidos e como recursos compartilhados (networking hub, monitoramento) serao alocados entre unidades de negocio.
+9. Projete como as tags se integram com o Azure Cost Management. Especifique quais tags serao usadas como dimensões de alocacao de custos, como recursos sem tags serao atribuidos e como recursos compartilhados (networking hub, monitoramento) serao alocados entre unidades de negócio.
 10. Aborde recursos que não podem receber tags (certos recursos filhos, recursos classicos). Defina um método alternativo de atribuicao de custos para estes recursos.
-11. Defina um processo para higiene de tags: como valores de tags obsoletos sao detectados (ex.: um proprietario que saiu da empresa), quem é responsável por atualiza-los e com que frequência a conformidade de tags e revisada.
+11. Defina um processo para higiene de tags: como valores de tags obsoletos são detectados (ex.: um proprietario que saiu da empresa), quem é responsável por atualiza-los e com que frequência a conformidade de tags e revisada.
 
 ### Parte 4: convencoes de nomenclatura e automacao
 
-12. Projete convencoes de nomenclatura de tags: tratamento de sensibilidade a maiusculas/minusculas (tags do Azure sao case-insensitive para chaves mas case-sensitive para valores), comprimentos maximos (nome da tag: 512 caracteres, valor da tag: 256 caracteres) e restrições de caracteres.
-13. Defina como ferramentas de IaC (Terraform, Bicep) devem implementar tags. Especifique um padrão para tags padrão aplicadas pelo pipeline de CI/CD (ex.: timestamp de implantacao, ID de execução do pipeline, SHA do commit git) sem exigir acao do desenvolvedor.
+12. Projete convencoes de nomenclatura de tags: tratamento de sensibilidade a maiusculas/minusculas (tags do Azure são case-insensitive para chaves mas case-sensitive para valores), comprimentos máximos (nome da tag: 512 caracteres, valor da tag: 256 caracteres) e restrições de caracteres.
+13. Defina como ferramentas de IaC (Terraform, Bicep) devem implementar tags. Especifique um padrão para tags padrão aplicadas pelo pipeline de CI/CD (ex.: timestamp de implantação, ID de execução do pipeline, SHA do commit git) sem exigir acao do desenvolvedor.
 14. Projete um dashboard de conformidade de tags que mostre: percentual de recursos com tags por equipe, tags ausentes mais comuns e custo de recursos sem tags.
 
 ## Criterios de sucesso
@@ -59,7 +59,7 @@ O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada
   storageKey="az305-challenge-10"
   items={[
     "Designed a complete tag taxonomy with mandatory, conditional, and optional categories",
-    "Specified Azure Policy enforcement strategy with appropriate effects for each tag type",
+    "Specified Azure Policy enforcement strategy with apprópriate effects for each tag type",
     "Addressed tag inheritance from resource groups to child resources",
     "Defined cost allocation strategy using tags with handling for untaggable resources",
     "Created a remediation plan for existing untagged resources",
@@ -79,7 +79,7 @@ O Cloud Adoption Framework da Microsoft recomenda estas tags minimas: `CostCente
 <details>
 <summary>Dica 2: Efeitos de Política para Aplicação de Tags</summary>
 
-Use diferentes efeitos para diferentes cenários: `deny` para tags verdadeiramente obrigatorias em produção (impede criação de recursos sem a tag), `audit` para monitorar conformidade sem bloquear (bom para períodos de implantacao), `modify` para auto-aplicar valores padrão ou herdar de resource groups (ótimo para tags como `Environment` que podem ser inferidas da subscription). O efeito `modify` requer uma managed identity na atribuicao de política. Para herança de tags, use a política integrada "Inherit a tag from the resource group" com efeito `modify`.
+Use diferentes efeitos para diferentes cenários: `deny` para tags verdadeiramente obrigatorias em produção (impede criação de recursos sem a tag), `audit` para monitorar conformidade sem bloquear (bom para períodos de implantação), `modify` para auto-aplicar valores padrão ou herdar de resource groups (ótimo para tags como `Environment` que podem ser inferidas da subscription). O efeito `modify` requer uma managed identity na atribuicao de política. Para herança de tags, use a política integrada "Inherit a tag from the resource group" com efeito `modify`.
 
 </details>
 
@@ -100,7 +100,7 @@ Para os mais de 1.400 recursos existentes sem tags: (1) Comece implantando polí
 <details>
 <summary>Dica 5: Automacao de Tags com IaC</summary>
 
-No Terraform, use um bloco `default_tags` na configuração do provider para aplicar tags automaticamente a todos os recursos. No Bicep, crie um módulo que mescla tags obrigatorias com tags específicas do recurso. Em pipelines de CI/CD, injete tags dinamicas (SHA do commit, ID do pipeline, timestamp de implantacao) como variaveis de pipeline que passam para a ferramenta de IaC. Isso garante tagging consistente sem intervencao do desenvolvedor. Azure DevOps e GitHub Actions podem injetar esses valores automaticamente.
+No Terraform, use um bloco `default_tags` na configuração do provider para aplicar tags automaticamente a todos os recursos. No Bicep, crie um módulo que mescla tags obrigatorias com tags específicas do recurso. Em pipelines de CI/CD, injete tags dinamicas (SHA do commit, ID do pipeline, timestamp de implantação) como variaveis de pipeline que passam para a ferramenta de IaC. Isso garante tagging consistente sem intervencao do desenvolvedor. Azure DevOps e GitHub Actions podem injetar esses valores automaticamente.
 
 </details>
 
@@ -125,14 +125,14 @@ No Terraform, use um bloco `default_tags` na configuração do provider para apl
 <details>
 <summary>2. Um resource group esta com a tag "Environment: prod" mas os recursos dentro dele não estao. Como a Cloudvista pode aplicar automaticamente a tag Environment do resource group a todos os recursos filhos?</summary>
 
-**Use a política integrada "Inherit a tag from the resource group" com o efeito `modify`.** Esta política copia automaticamente a tag especificada do resource group para qualquer recurso criado dentro dele que esteja sem essa tag. Atribua-a com uma managed identity (necessária para o efeito `modify`). Para recursos existentes que já estao sem a tag, execute uma tarefa de remediacao que aplica retroativamente a tag aos recursos não conformes. Nota: isso só copia na criação ou via remediacao - não sincroniza dinamicamente se o valor da tag do RG mudar depois.
+**Use a política integrada "Inherit a tag from the resource group" com o efeito `modify`.** Esta política copia automaticamente a tag específicada do resource group para qualquer recurso criado dentro dele que esteja sem essa tag. Atribua-a com uma managed identity (necessária para o efeito `modify`). Para recursos existentes que já estao sem a tag, execute uma tarefa de remediacao que aplica retroativamente a tag aos recursos não conformes. Nota: isso só copia na criação ou via remediacao - não sincroniza dinamicamente se o valor da tag do RG mudar depois.
 
 </details>
 
 <details>
 <summary>3. Alguns recursos do Azure (como snapshots de disco gerenciado ou certos recursos filhos) não suportam tags. Como os custos desses recursos devem ser atribuidos?</summary>
 
-**Use múltiplos métodos de atribuicao:** (1) O Azure Cost Management permite regras de alocacao de custos que distribuem custos de recursos sem tags com base em tags do recurso pai ou tags do resource group. (2) Para recursos que suportam relacionamentos pai-filho, adicione tag ao recurso pai e use análise de custos agrupando por resource group. (3) Crie regras de alocacao de custos no Azure Cost Management para dividir custos compartilhados (como networking) proporcionalmente entre unidades de negocio com base em uma formula definida. (4) Aceite que uma pequena porcentagem (tipicamente menos de 5%) dos custos exigira atribuicao manual.
+**Use múltiplos métodos de atribuicao:** (1) O Azure Cost Management permite regras de alocacao de custos que distribuem custos de recursos sem tags com base em tags do recurso pai ou tags do resource group. (2) Para recursos que suportam relacionamentos pai-filho, adicione tag ao recurso pai e use análise de custos agrupando por resource group. (3) Crie regras de alocacao de custos no Azure Cost Management para dividir custos compartilhados (como networking) proporcionalmente entre unidades de negócio com base em uma formula definida. (4) Aceite que uma pequena porcentagem (tipicamente menos de 5%) dos custos exigira atribuicao manual.
 
 </details>
 

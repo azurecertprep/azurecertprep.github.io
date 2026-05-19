@@ -275,14 +275,14 @@ O AzCopy suporta três métodos de autenticação:
 2. **Tokens SAS** | Anexados à URL, com limite de tempo, melhor para automação
 3. **Chave da conta de armazenamento** | Definida via variável de ambiente `ACCOUNT_KEY` (não recomendado)
 
-Para o exame, saiba que a cópia service-to-service (entre contas) requer tokens SAS em ambos os lados OU login com Entra ID com funções RBAC apropriadas em ambas as contas.
+Para o exame, saiba que a cópia service-to-service (entre contas) requer tokens SAS em ambos os lados OU login com Entra ID com funções RBAC aprópriadas em ambas as contas.
 
 </details>
 
 <details>
 <summary>Dica 2: Copy vs Sync</summary>
 
-- **azcopy copy** | Sempre copia todos os arquivos especificados independentemente de existirem no destino
+- **azcopy copy** | Sempre copia todos os arquivos específicados independentemente de existirem no destino
 - **azcopy sync** | Só copia arquivos novos ou modificados (compara timestamps de última modificação). Opcionalmente exclui arquivos no destino que não estão na origem (--delete-destination)
 
 </details>

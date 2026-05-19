@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A BattleForge Games é uma empresa global de jogos mobile com 25 milhões de jogadores ativos diarios na América do Norte, Europa e Asia-Pacifico. Seu jogo principal armazena perfis de jogadores, inventário, dados de progressao e estado de partida em tempo real no Azure Cosmos DB (NoSQL API) com multi-region writes. Ativos do jogo (texturas, audio, modelos 3D totalizando 5 TB) sao servidos a partir do Azure Blob Storage através do Azure CDN para carregamento rápido.
+A BattleForge Games é uma empresa global de jogos mobile com 25 milhões de jogadores ativos diarios na América do Norte, Europa e Asia-Pacifico. Seu jogo principal armazena perfis de jogadores, inventário, dados de progressao e estado de partida em tempo real no Azure Cosmos DB (NoSQL API) com multi-region writes. Ativos do jogo (texturas, audio, modelos 3D totalizando 5 TB) são servidos a partir do Azure Blob Storage através do Azure CDN para carregamento rápido.
 
 A industria de games demanda disponibilidade extrema: se jogadores não conseguem acessar seus perfis ou ativos do jogo, eles mudam para um concorrente em minutos. A BattleForge requer que perfis de jogadores sejam graváveis a partir de qualquer região com menos de 100ms de latência, ativos do jogo devem estar disponíveis mesmo se uma região Azure inteira cair, e atualizações de estado de partida devem ser consistentes entre todos os jogadores em uma partida (independente de sua localização geográfica).
 
@@ -29,15 +29,15 @@ O principal desafio técnico e equilibrar consistência vs. disponibilidade no C
 
 ### Parte 1: configuração de Multi-Region write do Cosmos DB
 
-1. Projete a implantacao do Cosmos DB para perfis de jogadores:
+1. Projete a implantação do Cosmos DB para perfis de jogadores:
    - Conta implantada em 3 regiões: East US, West Europe, Japan East
    - Multi-region writes habilitado (jogadores escrevem na região mais próxima)
    - Documente as opcoes de política de resolução de conflitos:
      - Last Writer Wins (LWW) - automático, usa timestamp
      - Custom conflict resolution - stored procedure
-     - Qual é apropriado para perfis de jogadores?
+     - Qual é aprópriado para perfis de jogadores?
 
-2. Avalie os cinco consistency levels do Cosmos DB e selecione o apropriado para cada carga de trabalho:
+2. Avalie os cinco consistency levels do Cosmos DB e selecione o aprópriado para cada carga de trabalho:
 
 | Consistency Level | Perfis de Jogadores | Estado de Partida | Leaderboards |
 |-------------------|----------------|-------------|--------------|
@@ -85,7 +85,7 @@ az cosmosdb create \
 | Custo | Menor (sem taxa de replicação de escrita) | Maior (cobracas de RU multi-master) |
 
 7. Projete a arquitetura de estado de partida considerando a limitacao de strong consistency:
-   - Opcao A: Single-region write com bounded staleness (baixo conflito, defasagem previsivel)
+   - Opcao A: Single-region write com bounded staleness (baixo conflito, defasagem previsível)
    - Opcao B: Multi-region writes com custom conflict resolution (complexo mas mais rápido)
    - Opcao C: Usar um serviço diferente para estado de partida (ex: Azure SignalR para sync em tempo real)
    - Recomende e justifique sua escolha
@@ -103,7 +103,7 @@ az cosmosdb create \
 | RA-GRS | 6 (3+3) | 2 | Sim (secundário read-only) | ~2x + ops de leitura |
 | RA-GZRS | 6 (3 ZRS + 3 LRS) | 2 | Sim (zona + região) | ~2,5x |
 
-9. Selecione a redundância apropriada para ativos do jogo considerando:
+9. Selecione a redundância aprópriada para ativos do jogo considerando:
    - Ativos devem estar disponíveis mesmo se uma região completa falhar
    - Acesso de leitura é necessário imediatamente (não pode esperar por failover)
    - RA-GZRS fornece a maior disponibilidade mas com custo mais alto
@@ -126,8 +126,8 @@ az storage account create \
 
 11. Projete a arquitetura CDN para entrega de ativos do jogo:
     - Azure CDN (ou Azure Front Door com regras de caching) como mecanismo principal de entrega
-    - Configure regras de cache: ativos do jogo sao imutáveis (URLs versionadas), cache por 30 dias
-    - Failover de origem: se armazenamento primário estiver indisponivel, CDN serve do cache ou origem secundária
+    - Configure regras de cache: ativos do jogo são imutáveis (URLs versionadas), cache por 30 dias
+    - Failover de origem: se armazenamento primário estiver indisponível, CDN serve do cache ou origem secundária
     - Calcule: com TTL de cache de 30 dias e 5 TB de ativos, qual porcentagem esta tipicamente em cache no edge?
 
 12. Projete a estratégia de fallback quando CDN cache miss durante uma interrupcao da região primária:
@@ -191,11 +191,11 @@ Quando duas regiões escrevem no mesmo documento simultaneamente, um conflito oc
 - Bom para: inventário de jogo onde ambas adicoes devem ser mantidas
 
 **Conflict feed (resolução manual)**:
-- Conflitos sao escritos em um conflict feed para resolução em nível de aplicação
+- Conflitos são escritos em um conflict feed para resolução em nível de aplicação
 - Aplicação le e resolve conflitos de forma assincrona
 - Mais flexível mas maior latência para resolução
 
-Para perfis de jogadores da BattleForge: LWW com `_ts` e apropriado. Se o jogador atualizar seu perfil de dois dispositivos simultaneamente, a última atualização vence. Para inventário, custom merge (combinar ambas mudanças de inventário) previne perda de itens.
+Para perfis de jogadores da BattleForge: LWW com `_ts` e aprópriado. Se o jogador atualizar seu perfil de dois dispositivos simultaneamente, a última atualização vence. Para inventário, custom merge (combinar ambas mudanças de inventário) previne perda de itens.
 
 </details>
 
@@ -214,7 +214,7 @@ Ambos fornecem disponibilidade de leitura durante interrupcoes, mas servem propo
 **Azure CDN**:
 - Cache em localizacoes edge globais (150+ PoPs mundialmente)
 - Latência sub-50ms para a maioria dos jogadores globalmente
-- Serve do cache mesmo se a origem estiver completamente indisponivel (até TTL expirar)
+- Serve do cache mesmo se a origem estiver completamente indisponível (até TTL expirar)
 - Com TTL de 30 dias e URLs versionadas: 95%+ de taxa de cache hit para ativos do jogo
 - Ativos faltando (cache miss) precisam de uma origem saudavel - e aqui que o secundário RA-GRS ajuda
 
@@ -274,7 +274,7 @@ Este e o SLA mais alto de qualquer serviço de banco de dados Azure. Compare:
 <details>
 <summary>1. A BattleForge precisa que todos os jogadores em uma partida multiplayer vejam o mesmo estado do jogo. Por que eles não podem usar Strong consistency com multi-region writes, e qual é a alternativa recomendada?</summary>
 
-**Strong consistency não esta disponível quando multi-region writes estao habilitados no Cosmos DB.** Strong consistency requer reconhecimento sincrono de todas as replicas antes de completar uma escrita, o que cria latência inaceitavel entre regiões geograficamente distantes. A alternativa recomendada para estado de partida e usar single-write-region com Strong consistency para o banco de dados de partida especificamente (sessões de partida sao tipicamente regionais), ou usar Bounded Staleness com janela de staleness apertada (ex: 5 segundos, 10 operações). Alternativamente, use Azure SignalR Service para sincronizacao de estado em tempo real, com Cosmos DB apenas para persistência.
+**Strong consistency não esta disponível quando multi-region writes estao habilitados no Cosmos DB.** Strong consistency requer reconhecimento sincrono de todas as replicas antes de completar uma escrita, o que cria latência inaceitavel entre regiões geograficamente distantes. A alternativa recomendada para estado de partida e usar single-write-region com Strong consistency para o banco de dados de partida específicamente (sessões de partida são tipicamente regionais), ou usar Bounded Staleness com janela de staleness apertada (ex: 5 segundos, 10 operações). Alternativamente, use Azure SignalR Service para sincronizacao de estado em tempo real, com Cosmos DB apenas para persistência.
 
 </details>
 
@@ -288,7 +288,7 @@ Este e o SLA mais alto de qualquer serviço de banco de dados Azure. Compare:
 <details>
 <summary>3. A BattleForge usa RA-GRS para seu armazenamento de ativos de jogo de 5 TB. Durante uma interrupcao da região primária, qual é a staleness máxima dos dados que jogadores podem ler do secundário?</summary>
 
-**Até 15 minutos (mas tipicamente muito menos).** RA-GRS replica dados de forma assincrona para a região secundária. A Microsoft visa um RPO de 15 minutos (sem garantia de SLA sobre defasagem exata). Na prática, a replicação geralmente esta segundos atras. Para ativos de jogo que sao escritos uma vez e lidos muitas vezes (arquivos imutáveis, versionados), esta staleness e irrelevante - ativos carregados 15+ minutos atras estao completamente replicados. O único risco e ativos carregados muito recentemente (nova atualização do jogo) que ainda não foram replicados. Mitigacao: carregue novos ativos pelo menos 30 minutos antes de torna-los referenciados por clientes do jogo, ou use cache warming do CDN.
+**Até 15 minutos (mas tipicamente muito menos).** RA-GRS replica dados de forma assincrona para a região secundária. A Microsoft visa um RPO de 15 minutos (sem garantia de SLA sobre defasagem exata). Na prática, a replicação geralmente esta segundos atras. Para ativos de jogo que são escritos uma vez e lidos muitas vezes (arquivos imutáveis, versionados), esta staleness e irrelevante - ativos carregados 15+ minutos atras estao completamente replicados. O único risco e ativos carregados muito recentemente (nova atualização do jogo) que ainda não foram replicados. Mitigacao: carregue novos ativos pelo menos 30 minutos antes de torna-los referenciados por clientes do jogo, ou use cache warming do CDN.
 
 </details>
 
@@ -359,7 +359,7 @@ az cosmosdb show \
 ```
 
 :::tip
-Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
+Esta mini-implantação válida suas decisoes de design com recursos reais do Azure. E opcional, mas recomendada.
 :::
 
 ## Limpeza

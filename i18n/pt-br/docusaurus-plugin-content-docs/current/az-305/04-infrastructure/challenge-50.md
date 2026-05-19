@@ -17,9 +17,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A MediCorp é uma empresa de tecnologia em saúde lancando uma nova plataforma de telemedicina que atendera 500.000 pacientes e 5.000 medicos em 3 paises: Estados Unidos, Reino Unido e India. A plataforma habilitara consultas por vídeo, gerenciara prontuarios de pacientes, processara prescricoes, lidara com agendamento de consultas é fornecera dashboards de analytics em tempo real.
 
-Esta é uma implantacao greenfield com cronogramas agressivos (MVP em 6 meses, lancamento completo em 12 meses) e requisitos rigorosos em toda dimensão arquitetural. A plataforma deve estar em conformidade com HIPAA (EUA), UK GDPR (Reino Unido) e a Lei de Proteção de Dados Pessoais Digitais da India. Todas as informações de saúde do paciente (PHI) devem ser criptografadas em repouso e em transito, o acesso deve ser auditado e os dados devem residir na região onde o paciente esta localizado.
+Esta é uma implantação greenfield com cronogramas agressivos (MVP em 6 meses, lancamento completo em 12 meses) e requisitos rigorosos em toda dimensão arquitetural. A plataforma deve estar em conformidade com HIPAA (EUA), UK GDPR (Reino Unido) e a Lei de Proteção de Dados Pessoais Digitais da India. Todas as informações de saúde do paciente (PHI) devem ser criptografadas em repouso e em transito, o acesso deve ser auditado e os dados devem residir na região onde o paciente esta localizado.
 
-Os requisitos de negocio incluem:
+Os requisitos de negócio incluem:
 - **Consultas por Video**: Video em tempo real com baixa latência entre paciente e medico, gravado para conformidade e potencial resolução de disputas. Deve suportar 5.000 sessões de vídeo simultaneas no pico.
 - **Prontuarios de Pacientes (EHR)**: Prontuarios eletronicos de saúde acessiveis apenas por medicos autorizados, com trilha de auditoria completa de cada acesso. 500.000 prontuarios de pacientes com histórico medico, resultados de laboratório, referências de exames de imagem.
 - **Sistema de Prescricoes**: Garantia de processamento exactly-once (sem prescricoes duplicadas), integrado com sistemas de farmacias via API, trilha de auditoria completa para conformidade regulatoria.
@@ -30,7 +30,7 @@ Os requisitos de negocio incluem:
 - **Orcamento**: $50.000/mes de gasto total no Azure
 - **Segurança**: Sem endpoints públicos para serviços backend, todos os segredos no Key Vault, managed identity para toda autenticação serviço-a-serviço, arquitetura de rede zero-trust
 
-Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governança/Monitoramento, Armazenamento de Dados, Continuidade de Negocios e Infraestrutura. Projete a arquitetura completa.
+Este desafio capstone integra todos os 4 domínios do exame: Identidade/Governança/Monitoramento, Armazenamento de Dados, Continuidade de Negócios e Infraestrutura. Projete a arquitetura completa.
 
 ## Habilidades do exame cobertas
 
@@ -50,7 +50,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
 
 ## Tarefas de design
 
-### Parte 1: identidade, governança e monitoramento (Dominio 1)
+### Parte 1: identidade, governança e monitoramento (Domínio 1)
 
 1. Projete a arquitetura de identidade:
    - Autenticação de pacientes: Azure AD B2C com autenticação multifator, provedores de identidade social, redefinicao de senha self-service
@@ -62,32 +62,32 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
    - Atribuicoes de Azure Policy: aplicar criptografia, restringir endpoints públicos, exigir diagnostic settings, aplicar tagging
    - Convencao de nomenclatura de recursos e estratégia de tagging (alocacao de custos por departamento, ambiente, escopo de conformidade)
 3. Projete a estratégia de monitoramento e observabilidade:
-   - Application Insights para cada microsservico (rastreamento distribuido entre serviços de vídeo, agendamento, prescricao)
-   - Estratégia de workspace Log Analytics (workspace único vs. por região para conformidade de residencia de dados)
+   - Application Insights para cada microsserviço (rastreamento distribuido entre serviços de vídeo, agendamento, prescricao)
+   - Estratégia de workspace Log Analytics (workspace único vs. por região para conformidade de residência de dados)
    - Alertas Azure Monitor para rastreamento de SLA (disponibilidade, latência, taxa de erro por serviço)
    - Dashboards customizados para equipe de operações (tempos de espera de pacientes em tempo real, utilizacao de medicos, saúde da plataforma)
    - Audit logging para conformidade (quem acessou qual prontuario de paciente, quando, de onde)
 
-### Parte 2: design de armazenamento de dados (Dominio 2)
+### Parte 2: design de armazenamento de dados (Domínio 2)
 
 4. Projete a arquitetura de armazenamento de dados para cada tipo de dado:
    - Prontuarios de pacientes (estruturados, relacionais): Azure SQL Database ou Cosmos DB? Considere padrões de consulta, requisitos de consistência e necessidades multi-região
    - Gravacoes de vídeo (blobs grandes, write-once): Azure Blob Storage com políticas de imutabilidade para conformidade
-   - Dados de agendamento (alto throughput de leitura/escrita, multi-região): Cosmos DB com nível de consistência apropriado
-   - Trilha de auditoria de prescricoes (append-only, alta escrita, retencao regulatoria): Cosmos DB ou Azure Table Storage?
+   - Dados de agendamento (alto throughput de leitura/escrita, multi-região): Cosmos DB com nível de consistência aprópriado
+   - Trilha de auditoria de prescricoes (append-only, alta escrita, retenção regulatoria): Cosmos DB ou Azure Table Storage?
    - Dados de analytics (series temporais, agregacoes): Azure Data Explorer ou store de analytics dedicado
-5. Projete a estratégia de residencia de dados:
+5. Projete a estratégia de residência de dados:
    - Dados de pacientes dos EUA na região East US
    - Dados de pacientes do Reino Unido na região UK South
    - Dados de pacientes da India na região Central India
-   - Acesso cross-region de medicos (um medico dos EUA consultando um paciente do Reino Unido - como os dados sao servidos?)
+   - Acesso cross-region de medicos (um medico dos EUA consultando um paciente do Reino Unido - como os dados são servidos?)
 6. Projete a proteção de dados:
    - Criptografia em repouso (chaves gerenciadas pelo cliente no Key Vault para PHI)
    - Criptografia em transito (TLS 1.3 mínimo para todas as conexões)
    - Mascaramento de dados para ambientes de não-produção
-   - Políticas de backup e retencao (retencao de 7 anos para prontuarios medicos conforme regulamentacao)
+   - Políticas de backup e retenção (retenção de 7 anos para prontuarios medicos conforme regulamentacao)
 
-### Parte 3: design de continuidade de negocios (Dominio 3)
+### Parte 3: design de continuidade de negócios (Domínio 3)
 
 7. Projete a arquitetura de alta disponibilidade para SLA de 99,99%:
    - Calcule o SLA composto entre todos os serviços no caminho crítico
@@ -99,15 +99,15 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
    - RTO 2 minutos: qual mecanismo de failover alcanca isso? (Azure Front Door health probes, automated failover groups)
    - Documente a sequência de failover para o caminho crítico: reroteamento DNS, failover de banco de dados, re-estabelecimento de sessão
 9. Projete a estratégia de backup para cada store de dados:
-   - Azure SQL: backups automatizados, point-in-time restore, retencao de longo prazo (7 anos)
+   - Azure SQL: backups automatizados, point-in-time restore, retenção de longo prazo (7 anos)
    - Cosmos DB: modo de backup continuo com point-in-time restore
    - Blob Storage: soft delete, versionamento, políticas de imutabilidade para conformidade
    - Documente RPO/RTO para sistemas não críticos (analytics: RPO 1 hora, RTO 4 horas)
 
-### Parte 4: design de infraestrutura e computação (Dominio 4)
+### Parte 4: design de infraestrutura e computação (Domínio 4)
 
 10. Projete a arquitetura de computacao:
-    - Serviço de consulta por vídeo: qual plataforma de computacao lida com 5.000 sessões WebRTC simultaneas? (Azure Communication Services ou servidor de midia customizado no AKS?)
+    - Serviço de consulta por vídeo: qual plataforma de computacao lida com 5.000 sessões WebRTC simultaneas? (Azure Commúnication Services ou servidor de midia customizado no AKS?)
     - API de agendamento de consultas: alta concorrencia, stateless (Azure Container Apps com autoscaling?)
     - Processamento de prescricoes: semantica exactly-once, ordenacao de mensagens (Azure Functions com Service Bus?)
     - Trabalhos em segundo plano: transcodificacao de vídeo, geracao de relatórios (Azure Container Apps jobs ou Azure Batch?)
@@ -128,7 +128,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
     - Todos os serviços Azure selecionados
     - Limites de rede e zonas de segurança
     - Fluxo de dados para o caminho crítico (agendamento -> consulta -> prescricao)
-    - Topologia de implantacao multi-região
+    - Topologia de implantação multi-região
     - Limites de identidade e controle de acesso
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" fontFamily="Segoe UI, Arial, sans-serif" style={{maxWidth: '900px', width: '100%'}}>
@@ -263,9 +263,9 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
 - Existem pontos únicos de falha remanescentes?
 
 **Pilar de Segurança:**
-- Como os dados de pacientes sao protegidos (criptografia, controle de acesso, isolamento de rede)?
+- Como os dados de pacientes são protegidos (criptografia, controle de acesso, isolamento de rede)?
 - Como zero-trust e implementado (verificar explicitamente, menor privilegio, assumir violacao)?
-- Como os requisitos de conformidade (HIPAA, GDPR) sao abordados arquiteturalmente?
+- Como os requisitos de conformidade (HIPAA, GDPR) são abordados arquiteturalmente?
 
 **Pilar de Otimização de Custos:**
 - O design cabe no orcamento de $50K/mes?
@@ -300,7 +300,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
   storageKey="az305-challenge-50"
   items={[
     "Arquitetura de identidade cobre autenticação B2C de pacientes, autenticação Entra ID de medicos e managed identity para serviço-a-serviço com RBAC",
-    "Design de armazenamento de dados aborda dados relacionais (SQL), documentos (Cosmos DB), blob e analytics com aplicação de residencia de dados",
+    "Design de armazenamento de dados aborda dados relacionais (SQL), documentos (Cosmos DB), blob e analytics com aplicação de residência de dados",
     "Design de alta disponibilidade alcanca SLA composto de 99,99% sem pontos únicos de falha no caminho crítico",
     "Design de DR atende RPO 5 segundos e RTO 2 minutos com sequência de failover documentada para sistemas críticos",
     "Arquitetura de rede aplica zero endpoints públicos para serviços backend com Private Endpoints e VNet integration",
@@ -320,14 +320,14 @@ Para SLA composto de 99,99%, cada serviço no caminho crítico deve exceder 99,9
 <details>
 <summary>Dica 2: Arquitetura de Consulta por Video</summary>
 
-O Azure Communication Services (ACS) fornece capacidades gerenciadas de vídeo, voz e chat em tempo real. Ele lida com a complexidade do WebRTC (servidores TURN/STUN, adaptacao de largura de banda, gravacao). Para 5.000 sessões simultaneas, o ACS escala automaticamente. A gravacao é armazenada no Azure Blob Storage. Alternativamente, se você precisa de processamento de midia customizado, implante um servidor de midia no AKS, mas isso requer esforco operacional significativo. Para a maioria dos cenários de telemedicina, ACS e a abordagem recomendada pois fornece vídeo elegivel para HIPAA com gravacao e recursos de conformidade integrados.
+O Azure Commúnication Services (ACS) fornece capacidades gerenciadas de vídeo, voz e chat em tempo real. Ele lida com a complexidade do WebRTC (servidores TURN/STUN, adaptacao de largura de banda, gravacao). Para 5.000 sessões simultaneas, o ACS escala automaticamente. A gravacao é armazenada no Azure Blob Storage. Alternativamente, se você precisa de processamento de midia customizado, implante um servidor de midia no AKS, mas isso requer esforco operacional significativo. Para a maioria dos cenários de telemedicina, ACS e a abordagem recomendada pois fornece vídeo elegivel para HIPAA com gravacao e recursos de conformidade integrados.
 
 </details>
 
 <details>
 <summary>Dica 3: Processamento de Prescricoes Exactly-Once</summary>
 
-O processamento verdadeiramente exactly-once requer handlers de mensagens idempotentes combinados com PeekLock do Service Bus e deduplicacao. Design: (1) Solicitacao de prescricao publicada na fila do Service Bus com um PrescriptionId único, (2) Function acionada pela fila pega a mensagem, (3) Function verifica se o PrescriptionId já foi processado (verificação de idempotencia contra o banco de dados), (4) Se novo, processa e completa a mensagem; se duplicado, completa sem processar, (5) Se o processamento falhar, a mensagem retorna a fila apos o lock expirar e é retentada. Habilite detecção de duplicatas no Service Bus (janela de deduplicacao por MessageId) para deduplicacao no lado de publicacao.
+O processamento verdadeiramente exactly-once requer handlers de mensagens idempotentes combinados com PeekLock do Service Bus e deduplicacao. Design: (1) Solicitacao de prescricao públicada na fila do Service Bus com um PrescriptionId único, (2) Function acionada pela fila pega a mensagem, (3) Function verifica se o PrescriptionId já foi processado (verificação de idempotencia contra o banco de dados), (4) Se novo, processa e completa a mensagem; se duplicado, completa sem processar, (5) Se o processamento falhar, a mensagem retorna a fila apos o lock expirar e é retentada. Habilite detecção de duplicatas no Service Bus (janela de deduplicacao por MessageId) para deduplicacao no lado de públicacao.
 
 </details>
 
@@ -341,7 +341,7 @@ Armazene dados de pacientes na região do paciente (obrigatório para GDPR/HIPAA
 <details>
 <summary>Dica 5: Otimização de Orcamento para $50K/mes</summary>
 
-Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (use autoscale para minimizar custos de RU), Azure SQL Business Critical (considere General Purpose com zone redundancy para regiões não críticas), Container Apps (scale to zero para horarios fora do pico), armazenamento de gravacoes de vídeo (use Cool/Archive tier apos 30 dias), Azure Communication Services (cobranca por minuto para vídeo). Use a Calculadora de Precos Azure para estimar: espere aproximadamente $15K computacao, $15K dados, $8K rede/segurança, $5K monitoramento, $7K outros serviços. Capacidade reservada para workloads previsiveis (SQL, Cosmos DB) pode economizar 30-40%.
+Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (use autoscale para minimizar custos de RU), Azure SQL Business Critical (considere General Purpose com zone redundancy para regiões não críticas), Container Apps (scale to zero para horarios fora do pico), armazenamento de gravacoes de vídeo (use Cool/Archive tier apos 30 dias), Azure Commúnication Services (cobranca por minuto para vídeo). Use a Calculadora de Precos Azure para estimar: espere aproximadamente $15K computacao, $15K dados, $8K rede/segurança, $5K monitoramento, $7K outros serviços. Capacidade reservada para workloads previsiveis (SQL, Cosmos DB) pode economizar 30-40%.
 
 </details>
 
@@ -349,7 +349,7 @@ Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (u
 
 - [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/)
 - [Azure Architecture Center - Healthcare](https://learn.microsoft.com/en-us/azure/architecture/industries/healthcare)
-- [Azure Communication Services overview](https://learn.microsoft.com/en-us/azure/communication-services/overview)
+- [Azure Commúnication Services overview](https://learn.microsoft.com/en-us/azure/commúnication-services/overview)
 - [Azure AD B2C overview](https://learn.microsoft.com/en-us/azure/active-directory-b2c/overview)
 - [Cosmos DB multi-region writes](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master)
 - [Azure SQL auto-failover groups](https://learn.microsoft.com/en-us/azure/azure-sql/database/auto-failover-group-overview)
@@ -366,9 +366,9 @@ Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (u
 </details>
 
 <details>
-<summary>2. Os prontuarios de um paciente do Reino Unido estao armazenados no UK South. Um medico na India precisa acessar esses prontuarios para uma consulta de emergencia. Sua política de residencia de dados impede a replicação de dados de pacientes do Reino Unido para a India. Como você arquiteta esse acesso?</summary>
+<summary>2. Os prontuarios de um paciente do Reino Unido estao armazenados no UK South. Um medico na India precisa acessar esses prontuarios para uma consulta de emergencia. Sua política de residência de dados impede a replicação de dados de pacientes do Reino Unido para a India. Como você arquiteta esse acesso?</summary>
 
-**A camada de API da India faz uma chamada de API cross-region autenticada para a camada de API do Reino Unido, que le do banco de dados do Reino Unido.** Fluxo: (1) Medico na India autentica e solicita prontuario do paciente, (2) API da India determina que a residencia de dados e do Reino Unido, (3) API da India chama API do Reino Unido (autenticação serviço-a-serviço via managed identity), (4) API do Reino Unido verifica autorização (medico esta atribuido a este paciente, override de emergencia e válido), (5) API do Reino Unido retorna dados para API da India, (6) API da India transmite para o medico. Os dados nunca deixam o armazenamento do Reino Unido; apenas a resposta da API cruza regiões. Isso mantem a conformidade de residencia de dados enquanto habilita acesso global. O log de auditoria captura o evento de acesso cross-region.
+**A camada de API da India faz uma chamada de API cross-region autenticada para a camada de API do Reino Unido, que le do banco de dados do Reino Unido.** Fluxo: (1) Medico na India autentica e solicita prontuario do paciente, (2) API da India determina que a residência de dados e do Reino Unido, (3) API da India chama API do Reino Unido (autenticação serviço-a-serviço via managed identity), (4) API do Reino Unido verifica autorização (medico esta atribuido a este paciente, override de emergencia e válido), (5) API do Reino Unido retorna dados para API da India, (6) API da India transmite para o medico. Os dados nunca deixam o armazenamento do Reino Unido; apenas a resposta da API cruza regiões. Isso mantem a conformidade de residência de dados enquanto habilita acesso global. O log de auditoria captura o evento de acesso cross-region.
 
 </details>
 
@@ -382,7 +382,7 @@ Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (u
 <details>
 <summary>4. O sistema de prescricoes requer entrega exactly-once, mas sua function consumidora do Service Bus ocasionalmente falha no meio do processamento (apos escrever no banco de dados mas antes de completar a mensagem). Como você previne prescricoes duplicadas?</summary>
 
-**Implemente processamento idempotente com uma tabela de deduplicacao.** Design: (1) Mensagem do Service Bus contem um PrescriptionId único, (2) Antes de processar, a function verifica uma tabela de Prescricoes para um registro existente com aquele PrescriptionId (guarda de idempotencia), (3) Se encontrado, a prescricao já foi processada em uma tentativa anterior - complete a mensagem sem re-processar, (4) Se não encontrado, processe a prescricao dentro de uma transação de banco de dados (insira prescricao + marque como processada), entao complete a mensagem. Adicionalmente, habilite detecção de duplicatas no Service Bus (janela de deduplicacao baseada em MessageId) para prevenir que a mesma solicitacao de prescricao seja enfileirada duas vezes. A combinacao de deduplicacao no lado de publicacao e idempotencia no lado de consumo alcanca semantica efetiva de exactly-once.
+**Implemente processamento idempotente com uma tabela de deduplicacao.** Design: (1) Mensagem do Service Bus contem um PrescriptionId único, (2) Antes de processar, a function verifica uma tabela de Prescricoes para um registro existente com aquele PrescriptionId (guarda de idempotencia), (3) Se encontrado, a prescricao já foi processada em uma tentativa anterior - complete a mensagem sem re-processar, (4) Se não encontrado, processe a prescricao dentro de uma transação de banco de dados (insira prescricao + marque como processada), entao complete a mensagem. Adicionalmente, habilite detecção de duplicatas no Service Bus (janela de deduplicacao baseada em MessageId) para prevenir que a mesma solicitacao de prescricao seja enfileirada duas vezes. A combinacao de deduplicacao no lado de públicacao e idempotencia no lado de consumo alcanca semantica efetiva de exactly-once.
 
 </details>
 

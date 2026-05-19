@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Consolidated Manufacturing opera 50 maquinas virtuais de produção distribuidas em três regiões Azure (East US, West Europe, Southeast Asia). Sua frota de VMs inclui 5 domain controllers do Active Directory, 8 VMs SQL Server (com bancos de dados de até 2 TB), 25 servidores web IIS executando uma aplicação .NET customizada, e 12 VMs Linux executando microsservicos. Cada tipo de carga de trabalho tem diferentes requisitos de recuperação e sensibilidades de backup.
+A Consolidated Manufacturing opera 50 máquinas virtuais de produção distribuidas em três regiões Azure (East US, West Europe, Southeast Asia). Sua frota de VMs inclui 5 domain controllers do Active Directory, 8 VMs SQL Server (com bancos de dados de até 2 TB), 25 servidores web IIS executando uma aplicação .NET customizada, e 12 VMs Linux executando microsserviços. Cada tipo de carga de trabalho tem diferentes requisitos de recuperação e sensibilidades de backup.
 
-Os domain controllers requerem backups crash-consistent que capturam o estado de replicação do AD corretamente. As VMs SQL Server precisam de backups application-consistent que congelam o cache de escrita do SQL antes do snapshot. Os servidores web sao stateless e podem ser reimplantados a partir de imagens, mas precisam de backup de configuração. Recentemente, um ataque de ransomware criptografou 3 VMs antes da detecção, e a empresa descobriu que seus backups existentes também foram comprometidos porque não tinham proteção de imutabilidade.
+Os domain controllers requerem backups crash-consistent que capturam o estado de replicação do AD corretamente. As VMs SQL Server precisam de backups application-consistent que congelam o cache de escrita do SQL antes do snapshot. Os servidores web são stateless e podem ser reimplantados a partir de imagens, mas precisam de backup de configuração. Recentemente, um ataque de ransomware criptografou 3 VMs antes da detecção, e a empresa descobriu que seus backups existentes também foram comprometidos porque não tinham proteção de imutabilidade.
 
-O diretor de TI deseja uma estratégia de backup unificada gerenciada através do Azure Backup Center que forneça: diferentes frequencias de backup por tipo de carga de trabalho, capacidade de restauracao entre regiões para disaster recovery, backups imutáveis para proteção contra ransomware, e backup seletivo de disco para reduzir custos em VMs com discos grandes de temp/cache.
+O diretor de TI deseja uma estratégia de backup unificada gerenciada através do Azure Backup Center que forneça: diferentes frequencias de backup por tipo de carga de trabalho, capacidade de restauração entre regiões para disaster recovery, backups imutáveis para proteção contra ransomware, e backup seletivo de disco para reduzir custos em VMs com discos grandes de temp/cache.
 
 ## Habilidades do exame cobertas
 
@@ -38,7 +38,7 @@ O diretor de TI deseja uma estratégia de backup unificada gerenciada através d
 | Web Servers (IIS) | 25 | ? | ? | ? |
 | Linux Microservices | 12 | ? | ? | ? |
 
-2. Para cada carga de trabalho, determine o cronograma apropriado de pontos de recuperação:
+2. Para cada carga de trabalho, determine o cronograma aprópriado de pontos de recuperação:
    - Pontos de recuperação diarios: quantos dias retidos?
    - Pontos de recuperação semanais: quantas semanas retidas?
    - Pontos de recuperação mensais: quantos meses retidos?
@@ -85,11 +85,11 @@ az backup vault backup-properties set \
    - Multi-user authorization (requer múltiplos aprovadores para modificar políticas de backup)
 
 8. Implemente imutabilidade no vault e avalie os trade-offs:
-   - Quais operações sao bloqueadas uma vez que a imutabilidade é habilitada?
-   - Você pode reduzir períodos de retencao apos habilitar a imutabilidade?
+   - Quais operações são bloqueadas uma vez que a imutabilidade é habilitada?
+   - Você pode reduzir períodos de retenção apos habilitar a imutabilidade?
    - Qual é a diferenca entre imutabilidade "locked" e "unlocked"?
 
-9. Configure enhanced soft delete com período de retencao estendido:
+9. Configure enhanced soft delete com período de retenção estendido:
 
 ```bash
 az backup vault backup-properties set \
@@ -115,7 +115,7 @@ az backup vault backup-properties set \
 <SuccessChecklist
   storageKey="az305-challenge-26"
   items={[
-    "Backup policies designed with appropriate frequency and consistency type per workload",
+    "Backup policies designed with apprópriate frequency and consistency type per workload",
     "Recovery Services vault topology designed with correct redundancy (GRS for cross-region)",
     "Cross-region restore enabled and tested for at least one VM",
     "Immutable vault configured with soft delete and multi-user authorization explained",
@@ -143,7 +143,7 @@ Para VMs SQL Server, sempre use application-consistent para evitar corrupcao do 
 
 Cross-region restore usa replicação GRS, que tem um RPO de até 12 horas (o Azure não garante a defasagem exata de replicação). Pontos-chave:
 - Dados CRR estao sempre pelo menos 12 horas atras da produção
-- CRR esta disponível apenas quando o Azure declara um desastre regional OU para exercicios de DR
+- CRR esta disponível apenas quando o Azure declara um desastre regional OU para exercícios de DR
 - Regiões pareadas: East US / West US, West Europe / North Europe, Southeast Asia / East Asia
 - Você pode acionar CRR a qualquer momento para testes (não precisa esperar por um desastre real)
 
@@ -154,10 +154,10 @@ Para habilitar: o vault deve usar redundância GRS (não LRS ou ZRS), e CRR deve
 <details>
 <summary>Dica 3: Configuração de Vault Imutável</summary>
 
-A imutabilidade impede que dados de backup sejam deletados ou que a retencao seja reduzida:
+A imutabilidade impede que dados de backup sejam deletados ou que a retenção seja reduzida:
 - **Estado unlocked**: A imutabilidade ainda pode ser desabilitada (para testes)
 - **Estado locked**: A imutabilidade NAO pode ser desabilitada - isso é irreversível
-- Uma vez locked, você não pode: reduzir retencao, desabilitar backup, deletar dados de backup antes da retencao expirar
+- Uma vez locked, você não pode: reduzir retenção, desabilitar backup, deletar dados de backup antes da retenção expirar
 
 Recomendacao: Comece com imutabilidade unlocked durante a configuração inicial, valide que tudo funciona, entao aplique lock quando estiver pronto para produção. Uma vez locked, nem mesmo um Global Administrator pode deletar dados de backup.
 
@@ -201,7 +201,7 @@ Domain Controllers requerem consideracoes especiais de backup:
 - Frequência de backup: pelo menos diaria (o tombstone lifetime do AD e de 60-180 dias)
 - Reter pelo menos 2 backups diarios (caso um esteja corrompido)
 - NAO restaure um backup de DC mais antigo que o tombstone lifetime
-- Considere que restaurar um DC requer procedimentos de restauracao authoritative/non-authoritative
+- Considere que restaurar um DC requer procedimentos de restauração authoritative/non-authoritative
 
 Para VMs Azure executando como DCs, o Azure Backup com snapshots application-consistent trata o VSS writer do Active Directory automaticamente.
 
@@ -221,7 +221,7 @@ Para VMs Azure executando como DCs, o Azure Backup com snapshots application-con
 <details>
 <summary>1. Uma empresa descobre que ransomware criptografou suas VMs de produção E deletou seus pontos de recuperação de backup. Qual recurso do Azure Backup teria prevenido a delecao do backup?</summary>
 
-**Vaults imutáveis com estado de imutabilidade locked.** Uma vez que a imutabilidade esta locked, dados de backup não podem ser deletados antes do período de retencao expirar, mesmo por administradores ou atacantes com privilegios elevados. Adicionalmente, soft delete fornece uma janela de recuperação de 14 dias (ou configuravel até 180 dias) para itens de backup deletados acidental ou maliciosamente. Multi-user authorization adiciona outra camada ao exigir múltiplas identidades para aprovar operações destrutivas.
+**Vaults imutáveis com estado de imutabilidade locked.** Uma vez que a imutabilidade esta locked, dados de backup não podem ser deletados antes do período de retenção expirar, mesmo por administradores ou atacantes com privilegios elevados. Adicionalmente, soft delete fornece uma janela de recuperação de 14 dias (ou configuravel até 180 dias) para itens de backup deletados acidental ou maliciosamente. Multi-user authorization adiciona outra camada ao exigir múltiplas identidades para aprovar operações destrutivas.
 
 </details>
 
@@ -235,14 +235,14 @@ Para VMs Azure executando como DCs, o Azure Backup com snapshots application-con
 <details>
 <summary>3. Uma VM tem quatro discos: SO (128 GB), Dados (2 TB), Logs (512 GB) e Temp (256 GB). Quais discos devem ser excluidos do Azure Backup se backups de log do SQL estao configurados separadamente?</summary>
 
-**Exclua tanto o disco Temp quanto o disco de Logs.** O disco temp contem apenas dados temporarios/cache que sao recriados no reinicio da VM, entao fazer backup dele desperica custos de armazenamento. Se backups de transaction log do SQL estao configurados separadamente (usando o agente SQL do Azure Backup ou uma ferramenta de terceiros), o disco de log também é redundante no backup em nível de VM porque a recuperação point-in-time e tratada pela cadeia de backup de log. Isso reduz o armazenamento de backup de 2.896 GB para 2.128 GB por VM (economia de 26%).
+**Exclua tanto o disco Temp quanto o disco de Logs.** O disco temp contem apenas dados temporários/cache que são recriados no reinicio da VM, entao fazer backup dele desperica custos de armazenamento. Se backups de transaction log do SQL estao configurados separadamente (usando o agente SQL do Azure Backup ou uma ferramenta de terceiros), o disco de log também é redundante no backup em nível de VM porque a recuperação point-in-time e tratada pela cadeia de backup de log. Isso reduz o armazenamento de backup de 2.896 GB para 2.128 GB por VM (economia de 26%).
 
 </details>
 
 <details>
 <summary>4. Cross-region restore tem um RPO de até 12 horas. Para uma carga de trabalho que requer RPO de 5 segundos, qual abordagem alternativa de DR você deve usar?</summary>
 
-**Use Azure Site Recovery (ASR) para replicação continua com RPO quase sincrono.** O ASR replica escritas de disco de VM continuamente para a região destino com um RPO tipicamente de 5-15 segundos. Diferente do cross-region restore (que depende da replicação de backup GRS com defasagem de 12 horas), o ASR mantem uma replica quase em tempo real. Para bancos de dados especificamente, use SQL Always On availability groups ou Azure SQL failover groups, que oferecem RPO de 0-5 segundos com replicação sincrona ou assincrona.
+**Use Azure Site Recovery (ASR) para replicação continua com RPO quase sincrono.** O ASR replica escritas de disco de VM continuamente para a região destino com um RPO tipicamente de 5-15 segundos. Diferente do cross-region restore (que depende da replicação de backup GRS com defasagem de 12 horas), o ASR mantem uma replica quase em tempo real. Para bancos de dados específicamente, use SQL Always On availability groups ou Azure SQL failover groups, que oferecem RPO de 0-5 segundos com replicação sincrona ou assincrona.
 
 </details>
 
