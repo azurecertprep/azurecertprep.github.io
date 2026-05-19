@@ -651,7 +651,7 @@ Test sharding works but the coverage report shows only 25% (one shard's coverage
       "Download dependencies from a private registry mirror"
     ],
     correctIndex: 1,
-    explanation: "Caching node_modules keyed on package-lock.json provides the best balance. The lock file changes only when dependencies actually change (unlike package.json which changes on version bumps). A restore key like $\{\{ runner.os \}\}-modules- provides partial matches when the lock file changes, giving a warm cache even after dependency updates."
+    explanation: "Caching node_modules keyed on package-lock.json provides the best balance. The lock file changes only when dependencies actually change (unlike package.json which changes on version bumps). A restore key like ${{ runner.os }}-modules- provides partial matches when the lock file changes, giving a warm cache even after dependency updates."
   },
   {
     question: "How does test sharding reduce pipeline duration?",

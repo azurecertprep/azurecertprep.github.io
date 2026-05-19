@@ -461,7 +461,7 @@ permissions:
       "Use repository variables as intermediary storage"
     ],
     correctIndex: 2,
-    explanation: "Job outputs are defined using echo \"key=value\" >> $GITHUB_OUTPUT in a step with an id, declared in the job's outputs section, and consumed in downstream jobs using $\{\{ needs.job_id.outputs.key \}\}. Environment variables and workspace files do not persist between jobs since each job runs on a fresh runner."
+    explanation: "Job outputs are defined using echo \"key=value\" >> $GITHUB_OUTPUT in a step with an id, declared in the job's outputs section, and consumed in downstream jobs using ${{ needs.job_id.outputs.key }}. Environment variables and workspace files do not persist between jobs since each job runs on a fresh runner."
   },
   {
     question: "Which trigger configuration allows manual workflow execution with custom parameters?",

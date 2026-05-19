@@ -585,7 +585,7 @@ EOF
       "The build number is 47 with a Git hash prefix of 2414721"
     ],
     correctIndex: 1,
-    explanation: "The git describe output format is \{tag\}-\{commits-ahead\}-g\{short-sha\}. The g prefix stands for \"git\" and precedes the abbreviated commit hash. This output tells you: the most recent reachable tag is v1.2.0, the current HEAD is 47 commits after that tag, and the current commit's short SHA starts with 2414721. If HEAD is exactly on a tag, the output is just the tag name (e.g., v1.2.0)."
+    explanation: "The git describe output format is {tag}-{commits-ahead}-g{short-sha}. The g prefix stands for \"git\" and precedes the abbreviated commit hash. This output tells you: the most recent reachable tag is v1.2.0, the current HEAD is 47 commits after that tag, and the current commit's short SHA starts with 2414721. If HEAD is exactly on a tag, the output is just the tag name (e.g., v1.2.0)."
   }
 ]} />
 

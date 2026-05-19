@@ -656,7 +656,7 @@ stages:
     options: [
       "'$(keyVault.SecretName)'",
       "'$(SecretName)'",
-      "'$\{\{ variables.SecretName \}\}'",
+      "'${{ variables.SecretName }}'",
       "'$(secrets.SecretName)'"
     ],
     correctIndex: 1,
@@ -674,15 +674,15 @@ stages:
     explanation: "Cross-stage variable sharing requires setting an output variable with isOutput=true and a named step, then referencing it in the downstream stage using the stageDependencies.StageName.JobName.outputs['stepName.variableName'] expression. This is a compile-time expression using $[ ] syntax."
   },
   {
-    question: "What is the key difference between '$\{\{ \}\}' and '$[ ]' expressions in Azure Pipelines?",
+    question: "What is the key difference between '${{ }}' and '$[ ]' expressions in Azure Pipelines?",
     options: [
-      "'$\{\{ \}\}' is for templates and '$[ ]' is for variables",
-      "'$\{\{ \}\}' is evaluated at compile time (template expansion) and '$[ ]' is evaluated at runtime",
-      "'$\{\{ \}\}' is for YAML pipelines and '$[ ]' is for classic pipelines",
+      "'${{ }}' is for templates and '$[ ]' is for variables",
+      "'${{ }}' is evaluated at compile time (template expansion) and '$[ ]' is evaluated at runtime",
+      "'${{ }}' is for YAML pipelines and '$[ ]' is for classic pipelines",
       "There is no difference; they are interchangeable"
     ],
     correctIndex: 1,
-    explanation: "$\{\{ \}\} expressions are evaluated during template expansion before the pipeline runs (compile time). They can include or exclude entire steps, jobs, or stages. $[ ] expressions are evaluated at runtime and can access runtime values like output variables from previous jobs or stages. $( ) is also runtime but used for macro expansion of variables."
+    explanation: "${{ }} expressions are evaluated during template expansion before the pipeline runs (compile time). They can include or exclude entire steps, jobs, or stages. $[ ] expressions are evaluated at runtime and can access runtime values like output variables from previous jobs or stages. $( ) is also runtime but used for macro expansion of variables."
   },
   {
     question: "When using a 'deployment' job with 'strategy: runOnce', what does the 'environment' property enable?",
