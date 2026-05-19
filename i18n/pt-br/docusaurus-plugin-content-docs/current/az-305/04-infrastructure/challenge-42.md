@@ -1,11 +1,11 @@
 ---
 sidebar_position: 9
-title: "Challenge 42: Design Application Configuration Management"
+title: "Desafio 42: Projetar Gerenciamento de Configuracao de Aplicações"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 42: Design Application Configuration Management
+# Desafio 42: Projetar Gerenciamento de Configuracao de Aplicações
 
 :::info Tempo Estimado e Custo
 
@@ -13,65 +13,65 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 :::
 
-## Introducao
+## Introdução
 
-A CloudScale Inc. opera uma plataforma de microsservicos com 30 servicos implantados em 4 ambientes (desenvolvimento, teste, staging, producao). Cada servico mantem seus proprios arquivos de configuracao, levando a desvios de configuracao que causaram 3 incidentes de producao no ultimo trimestre. Um incidente ocorreu quando um desenvolvedor alterou uma connection string em staging que foi acidentalmente promovida para producao. Outro aconteceu quando uma feature flag foi habilitada globalmente em vez de para um rollout direcionado de 5%.
+A CloudScale Inc. opera uma plataforma de microsservicos com 30 serviços implantados em 4 ambientes (desenvolvimento, teste, staging, produção). Cada serviço mantem seus proprios arquivos de configuração, levando a desvios de configuração que causaram 3 incidentes de produção no último trimestre. Um incidente ocorreu quando um desenvolvedor alterou uma connection string em staging que foi acidentalmente promovida para produção. Outro aconteceu quando uma feature flag foi habilitada globalmente em vez de para um rollout direcionado de 5%.
 
-A equipe de plataforma precisa de uma solucao centralizada de gerenciamento de configuracao que forneca: uma unica fonte de verdade para toda a configuracao de servicos, overrides especificos de ambiente sem mudancas de codigo, feature flags com capacidades de rollout gradual (baseado em porcentagem, direcionamento por usuario, janela temporal), kill switches instantaneos para recursos problematicos, e uma trilha de auditoria de todas as mudancas de configuracao.
+A equipe de plataforma precisa de uma solução centralizada de gerenciamento de configuração que forneca: uma única fonte de verdade para toda a configuração de serviços, overrides específicos de ambiente sem mudanças de código, feature flags com capacidades de rollout gradual (baseado em porcentagem, direcionamento por usuário, janela temporal), kill switches instantaneos para recursos problematicos, é uma trilha de auditoria de todas as mudanças de configuração.
 
-Alem disso, valores de configuracao sensiveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso apropriados, enquanto configuracoes nao-sensiveis (feature flags, timeouts, tamanhos de pool de conexao) devem ser facilmente gerenciaveis por product owners sem intervencao de engenharia.
+Além disso, valores de configuração sensiveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso apropriados, enquanto configurações não-sensiveis (feature flags, timeouts, tamanhos de pool de conexão) devem ser facilmente gerenciáveis por product owners sem intervencao de engenharia.
 
 ## Habilidades do Exame Cobertas
 
-- Recomendar uma solucao de gerenciamento de configuracao de aplicacao
+- Recomendar uma solução de gerenciamento de configuração de aplicação
 
 ## Tarefas de Design
 
-### Parte 1: Projetar Arquitetura de Configuracao Centralizada
+### Parte 1: Projetar Arquitetura de Configuração Centralizada
 
-1. Implante um store do Azure App Configuration e projete uma convencao de nomenclatura de chaves que suporte 30 servicos em 4 ambientes. Considere usar labels para diferenciacao de ambientes vs stores separados por ambiente.
-2. Projete uma hierarquia de configuracao que suporte:
-   - Configuracoes globais compartilhadas por todos os servicos (ex.: nivel de logging, endpoint de telemetria)
-   - Configuracoes especificas de servico (ex.: tamanho do pool de conexao, valores de timeout)
-   - Overrides especificos de ambiente (ex.: connection strings de banco de dados por ambiente)
-3. Documente os trade-offs entre usar um unico store do App Configuration com labels vs multiplos stores (um por ambiente). Considere custo, granularidade de controle de acesso e raio de explosao de configuracoes incorretas.
+1. Implante um store do Azure App Configuration e projete uma convencao de nomenclatura de chaves que suporte 30 serviços em 4 ambientes. Considere usar labels para diferenciacao de ambientes vs stores separados por ambiente.
+2. Projete uma hierarquia de configuração que suporte:
+   - Configurações globais compartilhadas por todos os serviços (ex.: nível de logging, endpoint de telemetria)
+   - Configurações específicas de serviço (ex.: tamanho do pool de conexão, valores de timeout)
+   - Overrides específicos de ambiente (ex.: connection strings de banco de dados por ambiente)
+3. Documente os trade-offs entre usar um único store do App Configuration com labels vs múltiplos stores (um por ambiente). Considere custo, granularidade de controle de acesso e raio de explosao de configurações incorretas.
 
 ### Parte 2: Integrar Referencias do Key Vault
 
-4. Projete uma solucao que armazene valores sensiveis no Azure Key Vault enquanto os referencia a partir do App Configuration. Documente como as referencias do Key Vault funcionam e como as aplicacoes as resolvem em tempo de execucao.
-5. Defina limites de controle de acesso: quais equipes podem gerenciar configuracao nao-sensivel (product owners) vs secrets (equipe de seguranca) vs feature flags (lideres de engenharia).
-6. Projete uma estrategia de rotacao de secrets que atualize secrets do Key Vault sem exigir reinicializacao da aplicacao. Documente como os intervalos de atualizacao de configuracao interagem com a resolucao de referencias do Key Vault.
+4. Projete uma solução que armazene valores sensiveis no Azure Key Vault enquanto os referência a partir do App Configuration. Documente como as referências do Key Vault funcionam e como as aplicações as resolvem em tempo de execução.
+5. Defina limites de controle de acesso: quais equipes podem gerenciar configuração não-sensivel (product owners) vs secrets (equipe de segurança) vs feature flags (lideres de engenharia).
+6. Projete uma estratégia de rotacao de secrets que atualize secrets do Key Vault sem exigir reinicializacao da aplicação. Documente como os intervalos de atualização de configuração interagem com a resolução de referências do Key Vault.
 
 ### Parte 3: Gerenciamento de Features e Rollout Gradual
 
 7. Projete um sistema de feature flags usando o gerenciamento de features do App Configuration que suporte:
    - Flags booleanas on/off (kill switches)
    - Rollout baseado em porcentagem (habilitar para 5%, depois 25%, depois 100%)
-   - Filtros de direcionamento por usuario (habilitar para IDs ou grupos de usuarios especificos)
-   - Filtros de janela temporal (habilitar apenas durante horario comercial ou datas especificas)
-8. Projete uma estrategia de rollout para um novo recurso de processamento de pagamentos: comece com usuarios internos, expanda para 5% dos usuarios externos, monitore taxas de erro, depois aumente para 25%, 50% e 100%.
-9. Documente como implementar um kill switch instantaneo que desabilite um recurso em todos os 30 servicos dentro de 60 segundos sem reimplantacao.
+   - Filtros de direcionamento por usuário (habilitar para IDs ou grupos de usuários específicos)
+   - Filtros de janela temporal (habilitar apenas durante horario comercial ou datas específicas)
+8. Projete uma estratégia de rollout para um novo recurso de processamento de pagamentos: comece com usuários internos, expanda para 5% dos usuários externos, monitore taxas de erro, depois aumente para 25%, 50% e 100%.
+9. Documente como implementar um kill switch instantaneo que desabilite um recurso em todos os 30 serviços dentro de 60 segundos sem reimplantacao.
 
-### Parte 4: Atualizacao de Configuracao e Monitoramento
+### Parte 4: Atualização de Configuração e Monitoramento
 
-10. Projete uma estrategia de atualizacao de configuracao que equilibre frescor com desempenho. Compare atualizacao baseada em polling (padrao sentinel key) vs atualizacao baseada em push (notificacoes do Event Grid).
-11. Projete uma solucao de monitoramento e alerta que detecte:
-    - Mudancas de configuracao (log de auditoria)
-    - Falhas de atualizacao de configuracao nas aplicacoes
+10. Projete uma estratégia de atualização de configuração que equilibre frescor com desempenho. Compare atualização baseada em polling (padrão sentinel key) vs atualização baseada em push (notificações do Event Grid).
+11. Projete uma solução de monitoramento e alerta que detecte:
+    - Mudancas de configuração (log de auditoria)
+    - Falhas de atualização de configuração nas aplicações
     - Mudancas de estado de feature flags
-12. Documente como snapshots do App Configuration podem ser usados para criar conjuntos de configuracao point-in-time para consistencia de implantacao e cenarios de rollback.
+12. Documente como snapshots do App Configuration podem ser usados para criar conjuntos de configuração point-in-time para consistência de implantacao e cenários de rollback.
 
 ## Criterios de Sucesso
 
 <SuccessChecklist
   storageKey="az305-challenge-42"
   items={[
-    "Convencao de nomenclatura de chaves documentada com hierarquia suportando 30 servicos em 4 ambientes",
-    "Integracao de referencia do Key Vault projetada com separacao de controle de acesso entre configuracao e secrets",
-    "Sistema de feature flags suporta rollout por porcentagem, direcionamento por usuario, janelas temporais e kill switches",
-    "Estrategia de atualizacao de configuracao documentada com padrao sentinel key ou abordagem push do Event Grid",
-    "Estrategia de snapshots definida para consistencia de implantacao e capacidade de rollback",
-    "Monitoramento cobre mudancas de configuracao, falhas de atualizacao e transicoes de estado de feature flags"
+    "Convencao de nomenclatura de chaves documentada com hierarquia suportando 30 serviços em 4 ambientes",
+    "Integração de referência do Key Vault projetada com separacao de controle de acesso entre configuração e secrets",
+    "Sistema de feature flags suporta rollout por porcentagem, direcionamento por usuário, janelas temporais e kill switches",
+    "Estratégia de atualização de configuração documentada com padrão sentinel key ou abordagem push do Event Grid",
+    "Estratégia de snapshots definida para consistência de implantacao e capacidade de rollback",
+    "Monitoramento cobre mudanças de configuração, falhas de atualização e transicoes de estado de feature flags"
   ]}
 />
 
@@ -80,35 +80,35 @@ Alem disso, valores de configuracao sensiveis (senhas de banco de dados, API key
 <details>
 <summary>Dica 1: Convencao de Nomenclatura de Chaves</summary>
 
-O Azure App Configuration suporta nomes de chaves hierarquicos usando delimitadores (comumente `:` ou `/`). Um padrao comum e `{aplicacao}:{componente}:{configuracao}` com labels para ambientes. Por exemplo: chave = `OrderService:Database:ConnectionTimeout`, label = `Production`. Isso permite consultar todas as configuracoes de um servico ou todas as configuracoes entre servicos para um ambiente usando filtros de chave e filtros de label.
+O Azure App Configuration suporta nomes de chaves hierarquicos usando delimitadores (comumente `:` ou `/`). Um padrão comum e `{aplicação}:{componente}:{configuração}` com labels para ambientes. Por exemplo: chave = `OrderService:Database:ConnectionTimeout`, label = `Production`. Isso permite consultar todas as configurações de um serviço ou todas as configurações entre serviços para um ambiente usando filtros de chave e filtros de label.
 
 </details>
 
 <details>
-<summary>Dica 2: Padrao Sentinel Key</summary>
+<summary>Dica 2: Padrão Sentinel Key</summary>
 
-Em vez de observar todas as chaves de configuracao por mudancas (caro em escala), use um padrao sentinel key: aplicacoes consultam uma unica chave sentinela (ex.: `app:settings:version`). Quando qualquer configuracao muda, atualize o valor sentinela. Aplicacoes so recarregam a configuracao completa quando o sentinela muda, reduzindo o trafego de polling de O(n) chaves para O(1) chave por intervalo de atualizacao.
+Em vez de observar todas as chaves de configuração por mudanças (caro em escala), use um padrão sentinel key: aplicações consultam uma única chave sentinela (ex.: `app:settings:version`). Quando qualquer configuração muda, atualize o valor sentinela. Aplicações só recarregam a configuração completa quando o sentinela muda, reduzindo o trafego de polling de O(n) chaves para O(1) chave por intervalo de atualização.
 
 </details>
 
 <details>
 <summary>Dica 3: Filtros de Feature Flag</summary>
 
-O gerenciamento de features do Azure App Configuration suporta filtros integrados: `Microsoft.Targeting` (direcionamento por porcentagem e usuario/grupo), `Microsoft.TimeWindow` (datas de inicio/fim) e filtros customizados. Filtros de direcionamento usam hashing consistente para que os mesmos usuarios sempre vejam o mesmo estado da flag em uma dada porcentagem. Voce pode combinar multiplos filtros com logica AND/OR para regras de rollout complexas.
+O gerenciamento de features do Azure App Configuration suporta filtros integrados: `Microsoft.Targeting` (direcionamento por porcentagem e usuário/grupo), `Microsoft.TimeWindow` (datas de início/fim) e filtros customizados. Filtros de direcionamento usam hashing consistente para que os mesmos usuários sempre vejam o mesmo estado da flag em uma dada porcentagem. Você pode combinar múltiplos filtros com lógica AND/OR para regras de rollout complexas.
 
 </details>
 
 <details>
 <summary>Dica 4: Camadas do Configuration Store</summary>
 
-O Azure App Configuration oferece camadas Free e Standard. A camada Free e limitada a 10MB de armazenamento, 1.000 requisicoes/dia e sem SLA. A camada Standard fornece 1GB de armazenamento, 30.000 requisicoes/hora por replica, SLA de 99,9%, private endpoints, managed identity e geo-replicacao. Para cargas de trabalho de producao com 30 servicos consultando configuracao, a camada Standard com replicas e essencial.
+O Azure App Configuration oferece camadas Free e Standard. A camada Free é limitada a 10MB de armazenamento, 1.000 requisicoes/dia e sem SLA. A camada Standard fornece 1GB de armazenamento, 30.000 requisicoes/hora por replica, SLA de 99,9%, private endpoints, managed identity e geo-replicação. Para cargas de trabalho de produção com 30 serviços consultando configuração, a camada Standard com replicas é essencial.
 
 </details>
 
 <details>
-<summary>Dica 5: Snapshots para Seguranca de Implantacao</summary>
+<summary>Dica 5: Snapshots para Segurança de Implantação</summary>
 
-Snapshots do App Configuration criam uma copia imutavel e point-in-time de key-values. Voce pode tirar um snapshot antes da implantacao para que, se mudancas de configuracao causarem problemas, voce possa reverter instantaneamente todos os servicos para o estado do snapshot. Snapshots tambem podem ser usados para garantir que todos os servicos em uma implantacao usem a mesma versao de configuracao, prevenindo inconsistencia durante implantacoes rolling.
+Snapshots do App Configuration criam uma copia imutável e point-in-time de key-values. Você pode tirar um snapshot antes da implantacao para que, se mudanças de configuração causarem problemas, você possa reverter instantaneamente todos os serviços para o estado do snapshot. Snapshots também podem ser usados para garantir que todos os serviços em uma implantacao usem a mesma versao de configuração, prevenindo inconsistencia durante implantacoes rolling.
 
 </details>
 
@@ -121,41 +121,41 @@ Snapshots do App Configuration criam uma copia imutavel e point-in-time de key-v
 - [Azure App Configuration snapshots](https://learn.microsoft.com/en-us/azure/azure-app-configuration/concept-snapshots)
 - [Enable dynamic configuration with push refresh](https://learn.microsoft.com/en-us/azure/azure-app-configuration/enable-dynamic-configuration-push-refresh)
 
-## Verificacao de Conhecimento
+## Verificação de Conhecimento
 
 <details>
-<summary>1. Uma empresa usa um unico store do App Configuration com labels para separar ambientes. Um desenvolvedor acidentalmente aplica a label "Production" a um valor de configuracao de teste. Como a arquitetura poderia prevenir isso?</summary>
+<summary>1. Uma empresa usa um único store do App Configuration com labels para separar ambientes. Um desenvolvedor acidentalmente aplica a label "Production" a um valor de configuração de teste. Como a arquitetura poderia prevenir isso?</summary>
 
-**Use Azure RBAC com roles customizados ou stores separados.** As opcoes incluem: (1) Usar stores separados do App Configuration por ambiente com diferentes atribuicoes RBAC (desenvolvedores tem acesso de escrita apenas a stores de dev/test), (2) Usar roles RBAC customizados que restringem escritas baseadas em label (ex.: apenas pipelines de CI/CD podem escrever chaves com a label "Production"), (3) Implementar Azure Policy para auditar mudancas de configuracao, (4) Usar chaves de acesso somente-leitura do App Configuration para consumidores de producao enquanto apenas o pipeline de implantacao tem acesso de escrita.
+**Use Azure RBAC com roles customizados ou stores separados.** As opcoes incluem: (1) Usar stores separados do App Configuration por ambiente com diferentes atribuicoes RBAC (desenvolvedores tem acesso de escrita apenas a stores de dev/test), (2) Usar roles RBAC customizados que restringem escritas baseadas em label (ex.: apenas pipelines de CI/CD podem escrever chaves com a label "Production"), (3) Implementar Azure Policy para auditar mudanças de configuração, (4) Usar chaves de acesso somente-leitura do App Configuration para consumidores de produção enquanto apenas o pipeline de implantacao tem acesso de escrita.
 
 </details>
 
 <details>
-<summary>2. Trinta microsservicos consultam o App Configuration a cada 30 segundos. O configuration store comeca a limitar requisicoes. Qual mudanca de design reduz o volume de requisicoes mantendo o frescor?</summary>
+<summary>2. Trinta microsservicos consultam o App Configuration a cada 30 segundos. O configuration store comeca a limitar requisicoes. Qual mudança de design reduz o volume de requisicoes mantendo o frescor?</summary>
 
-**Implemente o padrao sentinel key com notificacoes push do Event Grid.** Em vez de 30 servicos cada um consultando N chaves a cada 30 segundos, cada servico observa apenas uma unica chave sentinela. Isso reduz o polling de 30 x N para 30 x 1 requisicoes por intervalo. Melhor ainda, mude para atualizacao baseada em push usando Event Grid: o App Configuration emite eventos em mudancas de chave, servicos assinam via Event Grid, e so atualizam quando realmente notificados de mudancas. Isso elimina o polling periodico inteiramente e fornece propagacao quase instantanea.
-
-</details>
-
-<details>
-<summary>3. Uma feature flag esta configurada para rollout de 10% usando o filtro Targeting. Um usuario relata que as vezes ve o recurso e as vezes nao entre sessoes. O que esta errado?</summary>
-
-**O contexto de direcionamento nao esta usando um identificador de usuario consistente.** O filtro Targeting usa hashing consistente no identificador do usuario para determinar o estado da flag. Se a aplicacao passa identificadores diferentes (ex.: ID de sessao em vez de ID de usuario), o mesmo usuario obtera resultados diferentes entre sessoes. A correcao e sempre passar o identificador estavel do usuario autenticado como contexto de direcionamento. Se o usuario for anonimo, use um cookie persistente ou ID de dispositivo para consistencia.
+**Implemente o padrão sentinel key com notificações push do Event Grid.** Em vez de 30 serviços cada um consultando N chaves a cada 30 segundos, cada serviço observa apenas uma única chave sentinela. Isso reduz o polling de 30 x N para 30 x 1 requisicoes por intervalo. Melhor ainda, mude para atualização baseada em push usando Event Grid: o App Configuration emite eventos em mudanças de chave, serviços assinam via Event Grid, e só atualizam quando realmente notificados de mudanças. Isso elimina o polling periodico inteiramente e fornece propagacao quase instantanea.
 
 </details>
 
 <details>
-<summary>4. Sua aplicacao referencia um secret do Key Vault a partir do App Configuration. O secret e rotacionado no Key Vault mas a aplicacao ainda usa o valor antigo. Qual e a causa provavel?</summary>
+<summary>3. Uma feature flag esta configurada para rollout de 10% usando o filtro Targeting. Um usuário relata que as vezes ve o recurso e as vezes não entre sessões. O que esta errado?</summary>
 
-**O intervalo de atualizacao do App Configuration nao expirou, ou a referencia do Key Vault usa uma URI de secret versionada.** O App Configuration faz cache das resolucoes de referencias do Key Vault pela duracao do intervalo de atualizacao de configuracao. Se a referencia aponta para uma versao especifica do secret (ex.: `https://vault.vault.azure.net/secrets/db-password/abc123`), ela sempre resolvera para aquela versao. Use uma URI sem versao (ex.: `https://vault.vault.azure.net/secrets/db-password`) para sempre resolver para a versao mais recente, e garanta que o intervalo de atualizacao seja curto o suficiente para captar secrets rotacionados dentro da sua janela de tolerancia.
+**O contexto de direcionamento não esta usando um identificador de usuário consistente.** O filtro Targeting usa hashing consistente no identificador do usuário para determinar o estado da flag. Se a aplicação passa identificadores diferentes (ex.: ID de sessão em vez de ID de usuário), o mesmo usuário obtera resultados diferentes entre sessões. A correcao e sempre passar o identificador estavel do usuário autenticado como contexto de direcionamento. Se o usuário for anonimo, use um cookie persistente ou ID de dispositivo para consistência.
 
 </details>
 
-## Laboratorio de Validacao
+<details>
+<summary>4. Sua aplicação referência um secret do Key Vault a partir do App Configuration. O secret e rotacionado no Key Vault mas a aplicação ainda usa o valor antigo. Qual é a causa provavel?</summary>
 
-Implante uma prova de conceito minima para validar seu design:
+**O intervalo de atualização do App Configuration não expirou, ou a referência do Key Vault usa uma URI de secret versionada.** O App Configuration faz cache das resolucoes de referências do Key Vault pela duracao do intervalo de atualização de configuração. Se a referência aponta para uma versao específica do secret (ex.: `https://vault.vault.azure.net/secrets/db-password/abc123`), ela sempre resolvera para aquela versao. Use uma URI sem versao (ex.: `https://vault.vault.azure.net/secrets/db-password`) para sempre resolver para a versao mais recente, e garanta que o intervalo de atualização seja curto o suficiente para captar secrets rotacionados dentro da sua janela de tolerância.
 
-1. Crie um resource group para este laboratorio:
+</details>
+
+## Laboratório de Validação
+
+Implante uma prova de conceito mínima para validar seu design:
+
+1. Crie um resource group para este laboratório:
 
 ```bash
 az group create --name rg-az305-challenge42 --location eastus
@@ -168,7 +168,7 @@ az appconfig create --resource-group rg-az305-challenge42 \
   --name appconfig-challenge42-$RANDOM --location eastus --sku Free
 ```
 
-3. Adicione um par chave-valor e uma feature flag:
+3. Adicione um par chave-valor é uma feature flag:
 
 ```bash
 APPCONFIG_NAME=$(az appconfig list --resource-group rg-az305-challenge42 --query "[0].name" -o tsv)
@@ -176,7 +176,7 @@ az appconfig kv set --name $APPCONFIG_NAME --key "App:Settings/FontSize" --value
 az appconfig feature set --name $APPCONFIG_NAME --feature "Beta" --yes
 ```
 
-4. Habilite a feature flag e verifique a configuracao:
+4. Habilite a feature flag e verifique a configuração:
 
 ```bash
 az appconfig feature enable --name $APPCONFIG_NAME --feature "Beta" --yes
@@ -190,7 +190,7 @@ az appconfig feature list --name $APPCONFIG_NAME --output table
 ```
 
 :::tip
-Esta mini-implantacao valida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza
@@ -201,4 +201,4 @@ az group delete --name rg-az305-challenge42 --yes --no-wait
 
 ---
 
-**Proximo**: [Challenge 43: Design Automated Deployment](/docs/az-305/infrastructure/challenge-43)
+**Próximo**: [Challenge 43: Design Automated Deployment](/docs/az-305/infrastructure/challenge-43)

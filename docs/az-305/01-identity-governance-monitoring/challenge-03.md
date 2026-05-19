@@ -318,7 +318,6 @@ az monitor app-insights web-test create \
   --name "availability-test-lab" \
   --defined-web-test-name "Homepage Ping" \
   --location eastus \
-  --kind ping \
   --frequency 300 \
   --timeout 30 \
   --web-test-kind standard \

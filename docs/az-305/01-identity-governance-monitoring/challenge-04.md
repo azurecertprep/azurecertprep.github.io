@@ -48,7 +48,7 @@ Your task is to design the complete authentication architecture for both applica
     {criteria: "Social identity support", values: ["Not needed - corporate accounts only (block social sign-in)", "Required - Google, Facebook, Apple sign-in to reduce registration friction"]},
     {criteria: "MFA requirements", values: ["Conditional Access policy: MFA required outside corporate network or for privileged operations", "Risk-based MFA: triggered only for suspicious sign-ins or high-value transactions (checkout)"]},
     {criteria: "Branding customization", values: ["Minimal - standard Microsoft sign-in page with company logo", "Fully customized - branded pages matching the e-commerce site design, custom CSS/HTML"]},
-    {criteria: "Licensing model", values: ["Included with Microsoft 365 E3/E5 licenses already assigned to employees", "Azure AD B2C pricing: first 50K authentications/month free, then per-authentication billing"]}
+    {criteria: "Licensing model", values: ["Included with Microsoft 365 E3/E5 licenses already assigned to employees", "Azure AD B2C pricing: first 50K MAUs/month free, then per-MAU (Monthly Active User) billing"]}
   ]}
   storageKey="az305-challenge-04"
 />

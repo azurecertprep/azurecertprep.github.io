@@ -36,7 +36,7 @@ The challenge is designing an event-driven architecture that routes events to th
 | Throughput | Millions/second | 10M events/second | Hundreds of thousands/second |
 | Protocol | AMQP, Kafka, HTTPS | HTTP, MQTT (for IoT) | MQTT, AMQP, HTTPS |
 | Consumer model | Pull (consumer groups) | Push (subscriptions) | Pull (consumer groups) + routing |
-| Message retention | 1-90 days | 24 hours (retry) | 1-7 days |
+| Message retention | 1-7 days (Standard), up to 90 days (Premium/Dedicated) | 24 hours (retry) | 1-7 days |
 | Ordering | Per-partition | No guarantee | Per-device |
 | Device management | No | No | Yes (device twin, C2D) |
 | Cost model | Per throughput unit | Per event | Per message + per device |

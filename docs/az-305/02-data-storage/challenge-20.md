@@ -170,7 +170,11 @@ az storage account create \
   --name staz305ch20$RANDOM \
   --resource-group rg-az305-challenge20 \
   --sku Standard_LRS \
-  --kind StorageV2 \
+  --kind StorageV2
+
+az storage account blob-service-properties update \
+  --account-name <your-account-name> \
+  --resource-group rg-az305-challenge20 \
   --enable-last-access-tracking true
 ```
 

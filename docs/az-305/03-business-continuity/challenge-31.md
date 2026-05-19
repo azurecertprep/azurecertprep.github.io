@@ -38,7 +38,7 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
 | Failover time | 30+ seconds | < 30 seconds | Varies |
 | RPO (zone failure) | 0 (sync replication) | 0 (sync replication) | 0 |
 | Named replicas | No | No | Yes |
-| SLA (zone-redundant) | 99.995% | 99.995% | 99.99% |
+| SLA (zone-redundant) | 99.99% | 99.995% | 99.99% |
 
 2. Justify why Business Critical tier is required for GlobalPay's payroll workload:
    - Zero data loss requirement (synchronous replication to secondary replicas)
@@ -61,7 +61,7 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
 | Approach | Regions | Auto-failover | Read Access | Limitation |
 |----------|---------|---------------|-------------|------------|
 | Failover group (single secondary) | 2 | Yes | Secondary readable | Only 1 secondary |
-| Active geo-replication | Up to 5 | Manual only | All secondaries readable | No auto-failover |
+| Active geo-replication | Up to 4 | Manual only | All secondaries readable | No auto-failover |
 | Failover group + geo-replication | 3+ | Partial | Mixed | Complex topology |
 
 6. Design the recommended topology:

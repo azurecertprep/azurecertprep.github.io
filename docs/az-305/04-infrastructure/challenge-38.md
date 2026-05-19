@@ -265,6 +265,7 @@ az servicebus queue create --resource-group rg-az305-challenge38 \
   --namespace-name $SB_NS \
   --name orders-queue \
   --enable-dead-lettering-on-message-expiration true \
+  --enable-duplicate-detection true \
   --duplicate-detection-history-time-window PT10M \
   --lock-duration PT1M \
   --max-delivery-count 10

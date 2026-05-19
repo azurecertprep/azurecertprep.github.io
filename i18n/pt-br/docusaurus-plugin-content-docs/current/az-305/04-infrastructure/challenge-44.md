@@ -1,11 +1,11 @@
 ---
 sidebar_position: 11
-title: "Challenge 44: Design a Migration Strategy Using CAF"
+title: "Desafio 44: Projetar uma Estratégia de Migração Usando CAF"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 44: Design a Migration Strategy Using CAF
+# Desafio 44: Projetar uma Estratégia de Migração Usando CAF
 
 :::info Tempo Estimado e Custo
 
@@ -13,65 +13,65 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 :::
 
-## Introducao
+## Introdução
 
-A Precision Manufacturing e uma empresa de manufatura de medio porte operando 200 servidores em 2 data centers on-premises (primario em Chicago, DR em Dallas). O contrato de locacao do data center em Chicago expira em 18 meses, e o contrato da instalacao de Dallas expira 6 meses depois. O CEO se comprometeu a migrar inteiramente para Azure em vez de renovar os contratos, projetando uma reducao de custos de 30% em 3 anos.
+A Precision Manufacturing é uma empresa de manufatura de medio porte operando 200 servidores em 2 data centers on-premises (primário em Chicago, DR em Dallas). O contrato de locacao do data center em Chicago expira em 18 meses, e o contrato da instalacao de Dallas expira 6 meses depois. O CEO se comprometeu a migrar inteiramente para Azure em vez de renovar os contratos, projetando uma redução de custos de 30% em 3 anos.
 
-O ambiente atual inclui: 80 VMs Windows Server (executando aplicacoes web IIS em .NET Framework 4.x, servidores de arquivo, controladores de dominio Active Directory), 50 VMs Linux (servidores web Apache/Nginx, aplicacoes Python customizadas, servidores de build Jenkins), 30 instancias SQL Server (versoes variando de 2012 a 2022, algumas com consultas cross-database) e 40 aplicacoes legadas com dependencias nao documentadas. Algumas aplicacoes tem requisitos de conformidade (SOX para sistemas financeiros, FDA 21 CFR Part 11 para gerenciamento de qualidade).
+O ambiente atual inclui: 80 VMs Windows Server (executando aplicações web IIS em .NET Framework 4.x, servidores de arquivo, controladores de dominio Active Directory), 50 VMs Linux (servidores web Apache/Nginx, aplicações Python customizadas, servidores de build Jenkins), 30 instâncias SQL Server (versoes variando de 2012 a 2022, algumas com consultas cross-database) e 40 aplicações legadas com dependências não documentadas. Algumas aplicações tem requisitos de conformidade (SOX para sistemas financeiros, FDA 21 CFR Part 11 para gerenciamento de qualidade).
 
-A equipe de TI tem experiencia limitada em cloud (2 engenheiros com certificacao AZ-104) e a organizacao nao tem landing zone Azure existente. Eles precisam de um plano de migracao estruturado usando o Microsoft Cloud Adoption Framework que enderece prontidao organizacional, planejamento tecnico e execucao em fases.
+A equipe de TI tem experiência limitada em cloud (2 engenheiros com certificacao AZ-104) e a organização não tem landing zone Azure existente. Eles precisam de um plano de migração estruturado usando o Microsoft Cloud Adoption Framework que enderece prontidao organizacional, planejamento técnico e execução em fases.
 
 ## Habilidades do Exame Cobertas
 
-- Avaliar uma solucao de migracao que utiliza o Microsoft Cloud Adoption Framework for Azure
+- Avaliar uma solução de migração que utiliza o Microsoft Cloud Adoption Framework for Azure
 
 ## Tarefas de Design
 
-### Parte 1: Fase de Estrategia e Planejamento CAF
+### Parte 1: Fase de Estratégia e Planejamento CAF
 
-1. Aplique a metodologia de Estrategia do CAF: defina motivacoes de negocio (saida do data center, reducao de custos, modernizacao), resultados de negocio (KPIs mensuraveis) e justificativa financeira para a migracao.
+1. Aplique a metodologia de Estratégia do CAF: defina motivacoes de negocio (saida do data center, redução de custos, modernizacao), resultados de negocio (KPIs mensuraveis) e justificativa financeira para a migração.
 2. Crie um plano de racionalizacao usando os 5 Rs para uma amostra representativa de workloads:
    - Controladores de dominio Active Directory (Rehost? Rearchitect para Entra ID?)
-   - Aplicacoes .NET Framework 4.x IIS (Rehost para VMs? Refactor para App Service?)
-   - Instancias SQL Server 2012 (Rehost para SQL em VM? Refactor para Azure SQL MI?)
+   - Aplicações .NET Framework 4.x IIS (Rehost para VMs? Refactor para App Service?)
+   - Instâncias SQL Server 2012 (Rehost para SQL em VM? Refactor para Azure SQL MI?)
    - Servidores de build Jenkins (Rehost? Replace com Azure DevOps/GitHub Actions?)
    - Servidores de arquivo (Rehost? Replace com Azure Files/SharePoint?)
-3. Projete um plano de ondas de migracao que agrupe workloads em 4-6 ondas baseado em: mapeamento de dependencias, criticidade de negocio, complexidade tecnica e requisitos de conformidade. Documente quais workloads vao em cada onda e por que.
+3. Projete um plano de ondas de migração que agrupe workloads em 4-6 ondas baseado em: mapeamento de dependências, criticidade de negocio, complexidade técnica e requisitos de conformidade. Documente quais workloads vao em cada onda e por que.
 
 ### Parte 2: Fase Ready do CAF - Design da Landing Zone
 
 4. Projete uma landing zone Azure usando a arquitetura enterprise-scale do CAF. Documente:
    - Hierarquia de management groups (root, platform, workloads, sandbox)
-   - Estrategia de subscriptions (unica vs. multiplas subscriptions por ambiente)
-   - Topologia de rede (hub-spoke com hub em cada regiao)
-   - Integracao de identidade (identidade hibrida com Entra Connect)
-5. Defina guardrails de governanca para a landing zone usando Azure Policy:
-   - Regioes permitidas (requisito de conformidade)
+   - Estratégia de subscriptions (única vs. múltiplas subscriptions por ambiente)
+   - Topologia de rede (hub-spoke com hub em cada região)
+   - Integração de identidade (identidade hibrida com Entra Connect)
+5. Defina guardrails de governança para a landing zone usando Azure Policy:
+   - Regiões permitidas (requisito de conformidade)
    - Tags obrigatorias (centro de custo, ambiente, proprietario)
-   - Tipos de recurso negados (prevenir recursos nao gerenciados)
-   - Baselines de seguranca (criptografia, restricoes de rede)
-6. Projete a infraestrutura de servicos compartilhados que deve ser implantada antes de qualquer migracao de workload: conectividade VPN/ExpressRoute, resolucao DNS, monitoramento (Log Analytics), seguranca (Microsoft Defender for Cloud).
+   - Tipos de recurso negados (prevenir recursos não gerenciados)
+   - Baselines de segurança (criptografia, restrições de rede)
+6. Projete a infraestrutura de serviços compartilhados que deve ser implantada antes de qualquer migração de workload: conectividade VPN/ExpressRoute, resolução DNS, monitoramento (Log Analytics), segurança (Microsoft Defender for Cloud).
 
-### Parte 3: Fase Adopt do CAF - Execucao da Migracao
+### Parte 3: Fase Adopt do CAF - Execução da Migração
 
-7. Projete o processo de avaliacao usando Azure Migrate:
-   - Descoberta e inventario (agentless vs. agent-based)
-   - Mapeamento de dependencias (coleta de dados de 30 dias)
+7. Projete o processo de avaliação usando Azure Migrate:
+   - Descoberta e inventário (agentless vs. agent-based)
+   - Mapeamento de dependências (coleta de dados de 30 dias)
    - Recomendacoes de dimensionamento baseadas em performance
    - Estimativa de custo para alvos Azure
-8. Crie uma timeline de migracao que se encaixe no prazo de 18 meses do contrato, considerando:
+8. Crie uma timeline de migração que se encaixe no prazo de 18 meses do contrato, considerando:
    - Setup da landing zone (meses 1-3)
-   - Migracao piloto da Onda 1 (meses 3-5)
-   - Ondas 2-4 migracao em massa (meses 5-14)
-   - Onda 5 aplicacoes complexas/legadas (meses 14-17)
+   - Migração piloto da Onda 1 (meses 3-5)
+   - Ondas 2-4 migração em massa (meses 5-14)
+   - Onda 5 aplicações complexas/legadas (meses 14-17)
    - Descomissionamento e saida do contrato (mes 18)
-9. Projete uma estrategia de teste e validacao para cada onda de migracao: teste pre-migracao, execucao da migracao, validacao pos-migracao, benchmarking de performance e teste de aceitacao do usuario.
+9. Projete uma estratégia de teste e validação para cada onda de migração: teste pré-migração, execução da migração, validação pós-migração, benchmarking de performance e teste de aceitacao do usuário.
 
 ### Parte 4: Fase Govern e Manage do CAF
 
-10. Projete o modelo de governanca continua: quem aprova novas implantacoes de recursos Azure, como o custo e alocado de volta para unidades de negocio, como a conformidade e monitorada continuamente.
-11. Crie um registro de riscos para a migracao identificando os 5 principais riscos (ex: dependencias nao descobertas, degradacao de performance, tempo de inatividade prolongado) com estrategias de mitigacao para cada.
-12. Defina metricas de sucesso para cada fase do CAF: Strategy (business case aprovado), Plan (avaliacao completa), Ready (landing zone implantada), Adopt (workloads migrados com SLA atendido), Govern (politicas aplicadas), Manage (operacoes funcionando).
+10. Projete o modelo de governança continua: quem aprova novas implantacoes de recursos Azure, como o custo e alocado de volta para unidades de negocio, como a conformidade e monitorada continuamente.
+11. Crie um registro de riscos para a migração identificando os 5 principais riscos (ex: dependências não descobertas, degradacao de performance, tempo de inatividade prolongado) com estratégias de mitigacao para cada.
+12. Defina metricas de sucesso para cada fase do CAF: Strategy (business case aprovado), Plan (avaliação completa), Ready (landing zone implantada), Adopt (workloads migrados com SLA atendido), Govern (políticas aplicadas), Manage (operações funcionando).
 
 ## Criterios de Sucesso
 
@@ -92,35 +92,35 @@ A equipe de TI tem experiencia limitada em cloud (2 engenheiros com certificacao
 <details>
 <summary>Dica 1: Os 5 Rs da Racionalizacao</summary>
 
-O framework dos 5 Rs ajuda a determinar a abordagem de migracao para cada workload: **Rehost** (lift-and-shift para IaaS com mudancas minimas), **Refactor** (modificacoes menores para usar recursos PaaS), **Rearchitect** (mudancas significativas de codigo para adotar padroes cloud-native), **Rebuild** (reescrever do zero quando a arquitetura atual e muito restritiva), **Replace** (trocar para uma solucao SaaS como Microsoft 365 ou Dynamics 365). Comece com "rehost assumido" para planejamento inicial, entao refine conforme voce avalia cada workload.
+O framework dos 5 Rs ajuda a determinar a abordagem de migração para cada workload: **Rehost** (lift-and-shift para IaaS com mudanças minimas), **Refactor** (modificacoes menores para usar recursos PaaS), **Rearchitect** (mudanças significativas de código para adotar padrões cloud-native), **Rebuild** (reescrever do zero quando a arquitetura atual e muito restritiva), **Replace** (trocar para uma solução SaaS como Microsoft 365 ou Dynamics 365). Comece com "rehost assumido" para planejamento inicial, entao refine conforme você avalia cada workload.
 
 </details>
 
 <details>
 <summary>Dica 2: Aceleradores de Landing Zone</summary>
 
-A Microsoft fornece aceleradores de landing zone (anteriormente implementacoes de referencia enterprise-scale) como templates IaC. A arquitetura enterprise-scale do CAF inclui: hierarquia de management groups, rede hub-spoke, logging centralizado, governanca orientada a politicas e integracao de identidade. Comece com o acelerador e customize em vez de construir do zero. Isso reduz significativamente a timeline da fase "Ready".
+A Microsoft fornece aceleradores de landing zone (anteriormente implementações de referência enterprise-scale) como templates IaC. A arquitetura enterprise-scale do CAF inclui: hierarquia de management groups, rede hub-spoke, logging centralizado, governança orientada a políticas e integração de identidade. Comece com o acelerador e customize em vez de construir do zero. Isso reduz significativamente a timeline da fase "Ready".
 
 </details>
 
 <details>
-<summary>Dica 3: Sequenciamento de Ondas de Migracao</summary>
+<summary>Dica 3: Sequenciamento de Ondas de Migração</summary>
 
-Sequencie ondas por dependencia e risco: Onda 1 deve ser workloads de baixo risco e bem compreendidos para construir confianca da equipe e validar a landing zone. Ondas intermediarias lidam com a massa de workloads padrao. Ondas finais abordam workloads complexos com dependencias dificeis. Nunca coloque controladores de dominio ou DNS na primeira onda. Considere "gravidade de dependencia" - se 20 servidores dependem de um banco de dados compartilhado, o banco de dados deve migrar na mesma onda ou antes.
-
-</details>
-
-<details>
-<summary>Dica 4: Tipos de Avaliacao do Azure Migrate</summary>
-
-Azure Migrate oferece diferentes tipos de avaliacao: **Azure VM assessment** (dimensionamento correto para IaaS), **Azure SQL assessment** (compatibilidade com Azure SQL DB, MI ou SQL em VM), **Azure App Service assessment** (compatibilidade para migracao de web apps) e **Azure VMware Solution assessment** (para workloads VMware). Execute multiplos tipos de avaliacao para workloads que podem ter como alvo IaaS ou PaaS para comparar trade-offs de custo e recursos.
+Sequencie ondas por dependência e risco: Onda 1 deve ser workloads de baixo risco e bem compreendidos para construir confiança da equipe é validar a landing zone. Ondas intermediarias lidam com a massa de workloads padrão. Ondas finais abordam workloads complexos com dependências dificeis. Nunca coloque controladores de dominio ou DNS na primeira onda. Considere "gravidade de dependência" - se 20 servidores dependem de um banco de dados compartilhado, o banco de dados deve migrar na mesma onda ou antes.
 
 </details>
 
 <details>
-<summary>Dica 5: Consideracoes de Conformidade na Migracao</summary>
+<summary>Dica 4: Tipos de Avaliação do Azure Migrate</summary>
 
-Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Activity Log, diagnostic logs), controles de acesso (RBAC, Conditional Access), gerenciamento de mudancas (procedimentos de migracao documentados), validacao de integridade de dados (comparacao de hash pre/pos migracao) e monitoramento continuo de conformidade (dashboard de conformidade regulatoria do Microsoft Defender for Cloud). Esses workloads podem precisar de subscriptions ou resource groups dedicados com politicas mais restritas.
+Azure Migrate oferece diferentes tipos de avaliação: **Azure VM assessment** (dimensionamento correto para IaaS), **Azure SQL assessment** (compatibilidade com Azure SQL DB, MI ou SQL em VM), **Azure App Service assessment** (compatibilidade para migração de web apps) e **Azure VMware Solution assessment** (para workloads VMware). Execute múltiplos tipos de avaliação para workloads que podem ter como alvo IaaS ou PaaS para comparar trade-offs de custo e recursos.
+
+</details>
+
+<details>
+<summary>Dica 5: Consideracoes de Conformidade na Migração</summary>
+
+Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Activity Log, diagnostic logs), controles de acesso (RBAC, Conditional Access), gerenciamento de mudanças (procedimentos de migração documentados), validação de integridade de dados (comparacao de hash pré/pós migração) e monitoramento continuo de conformidade (dashboard de conformidade regulatoria do Microsoft Defender for Cloud). Esses workloads podem precisar de subscriptions ou resource groups dedicados com políticas mais restritas.
 
 </details>
 
@@ -133,33 +133,33 @@ Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Acti
 - [Azure Migrate overview](https://learn.microsoft.com/en-us/azure/migrate/migrate-services-overview)
 - [CAF enterprise-scale landing zone](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/architecture)
 
-## Verificacao de Conhecimento
+## Verificação de Conhecimento
 
 <details>
-<summary>1. Uma empresa tem 200 servidores para migrar com prazo de 18 meses. A equipe de migracao quer avaliar todos os servidores antes de migrar qualquer um. Qual principio do CAF isso viola e qual e a abordagem recomendada?</summary>
+<summary>1. Uma empresa tem 200 servidores para migrar com prazo de 18 meses. A equipe de migração quer avaliar todos os servidores antes de migrar qualquer um. Qual principio do CAF isso viola e qual é a abordagem recomendada?</summary>
 
-**Isso viola o principio "iterar e aprender" e arrisca paralisia por analise.** O CAF recomenda uma abordagem incremental: avalie uma onda piloto (10-20 servidores), migre-os para validar a landing zone e processos, entao aplique licoes aprendidas nas ondas subsequentes. Tentar avaliar completamente todos os 200 servidores antes de migrar qualquer um consome meses da timeline sem entregar valor de negocio. Use "racionalizacao assumida" (assuma rehost) para planejamento inicial e refine avaliacoes onda a onda.
+**Isso viola o principio "iterar e aprender" e arrisca paralisia por análise.** O CAF recomenda uma abordagem incremental: avalie uma onda piloto (10-20 servidores), migre-os para validar a landing zone e processos, entao aplique licoes aprendidas nas ondas subsequentes. Tentar avaliar completamente todos os 200 servidores antes de migrar qualquer um consome meses da timeline sem entregar valor de negocio. Use "racionalizacao assumida" (assuma rehost) para planejamento inicial e refine avaliacoes onda a onda.
 
 </details>
 
 <details>
-<summary>2. Durante o mapeamento de dependencias, voce descobre que 15 aplicacoes todas se conectam a uma unica instancia SQL Server 2012 usando consultas cross-database. Qual restricao de migracao isso cria?</summary>
+<summary>2. Durante o mapeamento de dependências, você descobre que 15 aplicações todas se conectam a uma única instância SQL Server 2012 usando consultas cross-database. Qual restrição de migração isso cria?</summary>
 
-**Consultas cross-database impedem migracao para Azure SQL Database (banco de dados unico).** Azure SQL Database nao suporta consultas cross-database dentro do mesmo servidor (cada banco de dados e isolado). Opcoes: (1) Migrar para Azure SQL Managed Instance que suporta consultas cross-database dentro da mesma instancia, (2) Rehost em SQL Server em uma Azure VM, (3) Refatorar aplicacoes para eliminar dependencias cross-database (timeline mais longa). Todas as 15 aplicacoes e o SQL Server devem estar na mesma onda de migracao pois nao podem funcionar independentemente.
-
-</details>
-
-<details>
-<summary>3. A equipe de migracao implanta a landing zone e migra a Onda 1 com sucesso. Durante a Onda 2, descobrem que o espaco de endereco da VNet hub e muito pequeno para acomodar todas as subnets planejadas. Qual fase do CAF deveria ter prevenido isso?</summary>
-
-**A fase Ready (design da landing zone).** A landing zone deveria ter sido dimensionada com base na avaliacao completa do estate digital da fase Plan. O planejamento de enderecos IP deve considerar todos os workloads em todas as ondas, nao apenas as necessidades imediatas. Isso destaca a importancia da transicao Plan-para-Ready: a avaliacao do estate digital informa dimensionamento de rede, estrategia de subscriptions e planejamento de capacidade de recursos. O CAF recomenda projetar a landing zone para o estado alvo, nao apenas para a primeira onda.
+**Consultas cross-database impedem migração para Azure SQL Database (banco de dados único).** Azure SQL Database não suporta consultas cross-database dentro do mesmo servidor (cada banco de dados e isolado). Opcoes: (1) Migrar para Azure SQL Managed Instance que suporta consultas cross-database dentro da mesma instância, (2) Rehost em SQL Server em uma Azure VM, (3) Refatorar aplicações para eliminar dependências cross-database (timeline mais longa). Todas as 15 aplicações e o SQL Server devem estar na mesma onda de migração pois não podem funcionar independentemente.
 
 </details>
 
 <details>
-<summary>4. Uma aplicacao financeira sujeita a conformidade SOX precisa migrar. A equipe de conformidade insiste em um periodo de execucao paralela onde ambas as instancias on-premises e Azure funcionam simultaneamente com comparacao de dados. Qual abordagem de migracao suporta isso?</summary>
+<summary>3. A equipe de migração implanta a landing zone e migra a Onda 1 com sucesso. Durante a Onda 2, descobrem que o espaço de endereço da VNet hub e muito pequeno para acomodar todas as subnets planejadas. Qual fase do CAF deveria ter prevenido isso?</summary>
 
-**Migracao online com periodo de validacao.** Use Azure Migrate com replicacao continua (para VMs) ou Azure Database Migration Service em modo online (para bancos de dados) para replicar mudancas em tempo quase real. Ambos os ambientes funcionam simultaneamente, permitindo que a equipe de conformidade compare outputs e valide integridade de dados. Somente apos validacao bem-sucedida (tipicamente 2-4 semanas para workloads regulados) voce faz o cutover. Essa abordagem satisfaz requisitos de gerenciamento de mudancas SOX ao fornecer um periodo de validacao documentado com capacidade de rollback.
+**A fase Ready (design da landing zone).** A landing zone deveria ter sido dimensionada com base na avaliação completa do estate digital da fase Plan. O planejamento de endereços IP deve considerar todos os workloads em todas as ondas, não apenas as necessidades imediatas. Isso destaca a importância da transicao Plan-para-Ready: a avaliação do estate digital informa dimensionamento de rede, estratégia de subscriptions e planejamento de capacidade de recursos. O CAF recomenda projetar a landing zone para o estado alvo, não apenas para a primeira onda.
+
+</details>
+
+<details>
+<summary>4. Uma aplicação financeira sujeita a conformidade SOX precisa migrar. A equipe de conformidade insiste em um período de execução paralela onde ambas as instâncias on-premises e Azure funcionam simultaneamente com comparacao de dados. Qual abordagem de migração suporta isso?</summary>
+
+**Migração online com período de validação.** Use Azure Migrate com replicação continua (para VMs) ou Azure Database Migration Service em modo online (para bancos de dados) para replicar mudanças em tempo quase real. Ambos os ambientes funcionam simultaneamente, permitindo que a equipe de conformidade compare outputs e valide integridade de dados. Somente apos validação bem-sucedida (tipicamente 2-4 semanas para workloads regulados) você faz o cutover. Essa abordagem satisfaz requisitos de gerenciamento de mudanças SOX ao fornecer um período de validação documentado com capacidade de rollback.
 
 </details>
 
@@ -167,10 +167,10 @@ Conformidade SOX e FDA 21 CFR Part 11 requerem: trilhas de auditoria (Azure Acti
 
 ```bash
 # Este challenge e primariamente focado em design
-# Se voce implantou algum recurso Azure para exploracao:
+# Se você implantou algum recurso Azure para exploracao:
 az group delete --name rg-az305-challenge44 --yes --no-wait
 ```
 
 ---
 
-**Proximo**: [Challenge 45: Design Server and Application Migration](/docs/az-305/infrastructure/challenge-45)
+**Próximo**: [Challenge 45: Design Server and Application Migration](/docs/az-305/infrastructure/challenge-45)

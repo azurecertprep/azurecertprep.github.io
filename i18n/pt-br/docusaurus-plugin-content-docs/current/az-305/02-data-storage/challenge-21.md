@@ -1,11 +1,11 @@
 ---
 sidebar_position: 8
-title: "Challenge 21: Design Data Durability & Protection"
+title: "Desafio 21: Projetar Durabilidade e Proteção de Dados"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 21: Design Data Durability and Protection
+# Desafio 21: Projetar Durabilidade e Proteção de Dados
 
 :::info Tempo Estimado e Custo
 
@@ -13,63 +13,63 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 :::
 
-## Introducao
+## Introdução
 
-Meridian Legal Partners e um escritorio de advocacia de medio porte que gerencia documentos sensiveis de casos, contratos e peticoes judiciais no Azure Storage. Eles tem tres categorias de dados com diferentes requisitos de protecao: arquivos de casos ativos que advogados modificam diariamente e precisam de recuperacao instantanea de exclusao acidental, documentos legais finalizados que devem ser imutaveis uma vez assinados (compliance WORM mandatado pelo tribunal), e registros de casos arquivados que devem sobreviver a uma falha completa de regiao Azure para recuperacao de desastres.
+Meridian Legal Partners é um escritorio de advocacia de medio porte que gerência documentos sensiveis de casos, contratos e peticoes judiciais no Azure Storage. Eles tem três categorias de dados com diferentes requisitos de proteção: arquivos de casos ativos que advogados modificam diariamente e precisam de recuperação instantanea de exclusão acidental, documentos legais finalizados que devem ser imutáveis uma vez assinados (compliance WORM mandatado pelo tribunal), e registros de casos arquivados que devem sobreviver a uma falha completa de região Azure para recuperação de desastres.
 
-O oficial de compliance do escritorio mandatou o seguinte: todos os documentos finalizados devem ter legal holds que previnem exclusao durante litigio ativo, casos arquivados devem ser geo-redundantes com acesso de leitura da regiao secundaria, e o escritorio deve atender um SLA de disponibilidade de 99,99% para arquivos de casos ativos. Um incidente recente onde um paralegal excluiu acidentalmente uma pasta critica de caso elevou este projeto a prioridade maxima.
+O oficial de compliance do escritorio mandatou o seguinte: todos os documentos finalizados devem ter legal holds que previnem exclusão durante litigio ativo, casos arquivados devem ser geo-redundantes com acesso de leitura da região secundária, e o escritorio deve atender um SLA de disponibilidade de 99,99% para arquivos de casos ativos. Um incidente recente onde um paralegal excluiu acidentalmente uma pasta crítica de caso elevou este projeto a prioridade máxima.
 
-Seu desafio e projetar uma estrategia abrangente de protecao de dados que combine a opcao de redundancia correta para cada categoria de dados, implemente politicas de imutabilidade para compliance regulatorio, e forneca mecanismos de recuperacao rapida para erros operacionais.
+Seu desafio é projetar uma estratégia abrangente de proteção de dados que combine a opcao de redundância correta para cada categoria de dados, implemente políticas de imutabilidade para compliance regulatorio, e forneca mecanismos de recuperação rápida para erros operacionais.
 
 ## Habilidades do Exame Cobertas
 
-- Recomendar uma solucao de dados para protecao e durabilidade
+- Recomendar uma solução de dados para proteção e durabilidade
 
 ## Tarefas de Design
 
-### Parte 1: Projetar Estrategia de Redundancia
+### Parte 1: Projetar Estratégia de Redundância
 
-1. Crie um resource group e implante tres storage accounts, cada uma representando uma categoria de dados diferente:
+1. Crie um resource group e implante três storage accounts, cada uma representando uma categoria de dados diferente:
    - `active-cases` - para acesso diario de advogados (requer maior disponibilidade)
-   - `finalized-docs` - para documentos legais imutaveis (requer garantias de compliance)
-   - `archived-cases` - para recuperacao de desastres (requer geo-redundancia)
-2. Para cada storage account, selecione e configure a opcao de redundancia apropriada entre: LRS, ZRS, GRS, GZRS, RA-GRS ou RA-GZRS. Documente sua justificativa incluindo:
-   - Numero de copias e sua distribuicao geografica
+   - `finalized-docs` - para documentos legais imutáveis (requer garantias de compliance)
+   - `archived-cases` - para recuperação de desastres (requer geo-redundância)
+2. Para cada storage account, selecione e configure a opcao de redundância apropriada entre: LRS, ZRS, GRS, GZRS, RA-GRS ou RA-GZRS. Documente sua justificativa incluindo:
+   - Número de copias e sua distribuição geográfica
    - SLA de disponibilidade alcancado (99,9%, 99,99% ou 99,9999999999% de durabilidade)
-   - Capacidades de failover (automatico vs manual, RTO/RPO)
+   - Capacidades de failover (automático vs manual, RTO/RPO)
    - Implicacoes de custo relativas a baseline LRS
-3. Crie uma matriz de decisao comparando todas as seis opcoes de redundancia com colunas para: durabilidade (nines), SLA de disponibilidade, acesso de leitura durante indisponibilidade, protecao contra falha regional e custo relativo.
+3. Crie uma matriz de decisao comparando todas as seis opcoes de redundância com colunas para: durabilidade (nines), SLA de disponibilidade, acesso de leitura durante indisponibilidade, proteção contra falha regional e custo relativo.
 
-### Parte 2: Implementar Recursos de Protecao de Dados
+### Parte 2: Implementar Recursos de Proteção de Dados
 
-4. Habilite blob soft delete na storage account active-cases com periodo de retencao de 30 dias. Teste deletando e recuperando um blob.
-5. Habilite container soft delete com retencao de 14 dias para proteger contra exclusao acidental de container.
+4. Habilite blob soft delete na storage account active-cases com período de retencao de 30 dias. Teste deletando e recuperando um blob.
+5. Habilite container soft delete com retencao de 14 dias para proteger contra exclusão acidental de container.
 6. Habilite blob versioning na conta active-cases para manter versoes anteriores de documentos modificados. Faca upload de um arquivo, modifique-o e demonstre o historico de versoes.
-7. Habilite point-in-time restore para a conta active-cases. Documente os requisitos (versioning, change feed e soft delete devem estar todos habilitados) e a janela maxima de restauracao.
+7. Habilite point-in-time restore para a conta active-cases. Documente os requisitos (versioning, change feed e soft delete devem estar todos habilitados) e a janela máxima de restauracao.
 
-### Parte 3: Implementar Politicas de Imutabilidade
+### Parte 3: Implementar Políticas de Imutabilidade
 
-8. Na storage account finalized-docs, crie um container com uma politica de imutabilidade baseada em tempo:
-   - Defina o periodo de retencao para 2.555 dias (7 anos)
-   - Faca upload de um documento de teste e verifique que nao pode ser excluido ou modificado
-   - Documente a diferenca entre politicas bloqueadas e desbloqueadas
-9. Aplique um legal hold a um container especifico simulando litigio ativo:
+8. Na storage account finalized-docs, crie um container com uma política de imutabilidade baseada em tempo:
+   - Defina o período de retencao para 2.555 dias (7 anos)
+   - Faca upload de um documento de teste e verifique que não pode ser excluido ou modificado
+   - Documente a diferenca entre políticas bloqueadas e desbloqueadas
+9. Aplique um legal hold a um container específico simulando litigio ativo:
    - Adicione uma tag de legal hold (ex.: "case-2024-meridian-v-smith")
-   - Verifique que blobs sob legal hold nao podem ser excluidos mesmo apos a retencao expirar
-   - Documente como legal holds interagem com politicas de retencao baseadas em tempo
-10. Projete uma politica para transicionar documentos de mutavel (caso ativo) para imutavel (finalizado), incluindo os gatilhos de workflow e etapas de validacao.
+   - Verifique que blobs sob legal hold não podem ser excluidos mesmo apos a retencao expirar
+   - Documente como legal holds interagem com políticas de retencao baseadas em tempo
+10. Projete uma política para transicionar documentos de mutavel (caso ativo) para imutável (finalizado), incluindo os gatilhos de workflow e etapas de validação.
 
-### Parte 4: Projetar Backup e Recuperacao
+### Parte 4: Projetar Backup e Recuperação
 
 11. Configure Azure Backup para blob storage na conta active-cases:
-    - Crie um backup vault e politica de backup
-    - Defina frequencia de backup e regras de retencao
+    - Crie um backup vault e política de backup
+    - Defina frequência de backup e regras de retencao
     - Documente RPO e RTO para backup operacional vs vaulted
-12. Projete um runbook de recuperacao que documenta procedimentos para:
-    - Recuperacao de blob individual (undelete de soft delete)
+12. Projete um runbook de recuperação que documenta procedimentos para:
+    - Recuperação de blob individual (undelete de soft delete)
     - Restauracao point-in-time para corrupcao em massa/ransomware
-    - Failover regional usando GRS para cenarios de desastre
-    - Recuperacao de exclusao acidental de container
+    - Failover regional usando GRS para cenários de desastre
+    - Recuperação de exclusão acidental de container
 
 ## Criterios de Sucesso
 
@@ -88,37 +88,37 @@ Seu desafio e projetar uma estrategia abrangente de protecao de dados que combin
 ## Dicas
 
 <details>
-<summary>Dica 1: Opcoes de Redundancia e SLAs de Disponibilidade</summary>
+<summary>Dica 1: Opcoes de Redundância e SLAs de Disponibilidade</summary>
 
-O SLA de disponibilidade depende tanto da opcao de redundancia quanto de se o acesso de leitura esta configurado. LRS e GRS fornecem 99,9% de disponibilidade de leitura. ZRS e GZRS fornecem 99,9% para escritas. RA-GRS e RA-GZRS fornecem 99,99% de disponibilidade de leitura porque leituras podem ser servidas da regiao secundaria. Para o maior SLA de disponibilidade (99,99%), voce precisa de RA-GRS ou RA-GZRS. GZRS combina a protecao em nivel de zona do ZRS no primario com geo-replicacao para uma regiao secundaria.
+O SLA de disponibilidade depende tanto da opcao de redundância quanto de se o acesso de leitura esta configurado. LRS e GRS fornecem 99,9% de disponibilidade de leitura. ZRS e GZRS fornecem 99,9% para escritas. RA-GRS e RA-GZRS fornecem 99,99% de disponibilidade de leitura porque leituras podem ser servidas da região secundária. Para o maior SLA de disponibilidade (99,99%), você precisa de RA-GRS ou RA-GZRS. GZRS combina a proteção em nível de zona do ZRS no primário com geo-replicação para uma região secundária.
 
 </details>
 
 <details>
-<summary>Dica 2: Bloqueio de Politica de Imutabilidade</summary>
+<summary>Dica 2: Bloqueio de Política de Imutabilidade</summary>
 
-Uma politica de retencao baseada em tempo pode estar em estado bloqueado ou desbloqueado. Enquanto desbloqueada, voce pode aumentar ou diminuir o periodo de retencao ou deletar a politica. Uma vez bloqueada, a politica nao pode ser deletada ou o periodo de retencao diminuido (apenas aumentado). O bloqueio e irreversivel e necessario para compliance SEC 17a-4(f) e CFTC 1.31(d). Sempre teste com politicas desbloqueadas primeiro.
+Uma política de retencao baseada em tempo pode estar em estado bloqueado ou desbloqueado. Enquanto desbloqueada, você pode aumentar ou diminuir o período de retencao ou deletar a política. Uma vez bloqueada, a política não pode ser deletada ou o período de retencao diminuido (apenas aumentado). O bloqueio e irreversivel é necessário para compliance SEC 17a-4(f) e CFTC 1.31(d). Sempre teste com políticas desbloqueadas primeiro.
 
 </details>
 
 <details>
 <summary>Dica 3: Pre-requisitos de Point-in-Time Restore</summary>
 
-Point-in-time restore para block blobs requer tres recursos habilitados: blob versioning, blob soft delete e blob change feed. A janela maxima de restauracao e limitada ao periodo de retencao do soft delete ou 365 dias, o que for menor. Funciona apenas com contas Standard general-purpose v2 e nao pode restaurar blobs na camada Archive.
+Point-in-time restore para block blobs requer três recursos habilitados: blob versioning, blob soft delete e blob change feed. A janela máxima de restauracao é limitada ao período de retencao do soft delete ou 365 dias, o que for menor. Funciona apenas com contas Standard general-purpose v2 e não pode restaurar blobs na camada Archive.
 
 </details>
 
 <details>
 <summary>Dica 4: Legal Holds vs Retencao Baseada em Tempo</summary>
 
-Legal holds e politicas de retencao baseadas em tempo servem propositos diferentes e podem coexistir no mesmo container. Um legal hold previne exclusao indefinidamente ate que todas as tags de hold sejam removidas (sem limite de tempo). Retencao baseada em tempo previne exclusao ate o periodo de retencao expirar. Se ambos sao aplicados, o blob nao pode ser excluido ate que ambas as condicoes sejam satisfeitas (hold removido E retencao expirada). Legal holds nao requerem uma politica bloqueada.
+Legal holds e políticas de retencao baseadas em tempo servem propositos diferentes e podem coexistir no mesmo container. Um legal hold previne exclusão indefinidamente até que todas as tags de hold sejam removidas (sem limite de tempo). Retencao baseada em tempo previne exclusão até o período de retencao expirar. Se ambos sao aplicados, o blob não pode ser excluido até que ambas as condições sejam satisfeitas (hold removido E retencao expirada). Legal holds não requerem uma política bloqueada.
 
 </details>
 
 <details>
-<summary>Dica 5: Consideracoes de Failover com Geo-Redundancia</summary>
+<summary>Dica 5: Consideracoes de Failover com Geo-Redundância</summary>
 
-Com GRS/GZRS, o failover para a regiao secundaria e iniciado pelo cliente (nao automatico) e tipicamente tem um RPO de ate 15 minutos (o atraso de geo-replicacao). Apos o failover, a storage account se torna LRS na nova regiao primaria - voce deve reconfigurar a redundancia depois. RA-GRS/RA-GZRS permite acesso de leitura ao secundario sem failover, usando o sufixo de endpoint `-secondary`, mas os dados secundarios podem estar desatualizados em ate 15 minutos.
+Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (não automático) e tipicamente tem um RPO de até 15 minutos (o atraso de geo-replicação). Apos o failover, a storage account se torna LRS na nova região primária - você deve reconfigurar a redundância depois. RA-GRS/RA-GZRS permite acesso de leitura ao secundário sem failover, usando o sufixo de endpoint `-secondary`, mas os dados secundários podem estar desatualizados em até 15 minutos.
 
 </details>
 
@@ -132,41 +132,41 @@ Com GRS/GZRS, o failover para a regiao secundaria e iniciado pelo cliente (nao a
 - [Azure Backup for Azure Blobs](https://learn.microsoft.com/en-us/azure/backup/blob-backup-overview)
 - [Best practices for data protection](https://learn.microsoft.com/en-us/azure/storage/blobs/data-protection-overview)
 
-## Verificacao de Conhecimento
+## Verificação de Conhecimento
 
 <details>
-<summary>1. Uma storage account usa GRS. Durante uma indisponibilidade regional na regiao primaria, aplicacoes podem ler dados da regiao secundaria?</summary>
+<summary>1. Uma storage account usa GRS. Durante uma indisponibilidade regional na região primária, aplicações podem ler dados da região secundária?</summary>
 
-**Nao, nao sem RA-GRS.** GRS padrao replica dados para a regiao secundaria mas nao expoe um endpoint de leitura la. Durante uma indisponibilidade, voce deve iniciar um failover (que leva tempo e torna o secundario o novo primario) ou esperar o primario se recuperar. RA-GRS (Read-Access Geo-Redundant Storage) fornece um endpoint somente-leitura em `accountname-secondary.blob.core.windows.net` que esta sempre disponivel, habilitando leituras mesmo durante uma indisponibilidade da regiao primaria.
+**Não, não sem RA-GRS.** GRS padrão replica dados para a região secundária mas não expoe um endpoint de leitura la. Durante uma indisponibilidade, você deve iniciar um failover (que leva tempo e torna o secundário o novo primário) ou esperar o primário se recuperar. RA-GRS (Read-Access Geo-Redundant Storage) fornece um endpoint somente-leitura em `accountname-secondary.blob.core.windows.net` que esta sempre disponível, habilitando leituras mesmo durante uma indisponibilidade da região primária.
 
 </details>
 
 <details>
-<summary>2. Uma organizacao precisa armazenar registros financeiros que nao podem ser modificados ou excluidos por 7 anos (compliance SEC). Apos configurar uma politica de retencao baseada em tempo, qual etapa adicional e necessaria para compliance regulatorio?</summary>
+<summary>2. Uma organização precisa armazenar registros financeiros que não podem ser modificados ou excluidos por 7 anos (compliance SEC). Apos configurar uma política de retencao baseada em tempo, qual etapa adicional é necessária para compliance regulatorio?</summary>
 
-**Bloquear a politica de imutabilidade.** Uma politica de retencao baseada em tempo desbloqueada pode ser deletada ou ter seu periodo de retencao reduzido, o que nao atende aos requisitos SEC 17a-4(f). Bloquear a politica e irreversivel e garante que ninguem (incluindo proprietarios da storage account ou suporte Microsoft) pode deletar os dados antes do periodo de retencao expirar. Esta e a etapa que torna a politica verdadeiramente compativel com WORM.
-
-</details>
-
-<details>
-<summary>3. Uma empresa habilitou blob versioning, soft delete (retencao de 14 dias) e point-in-time restore em uma storage account. Um ataque de ransomware criptografa todos os blobs as 14h. O ataque e descoberto as 17h. Qual e a abordagem de recuperacao mais rapida?</summary>
-
-**Usar point-in-time restore para restaurar todos os blobs para seu estado as 13h59.** Point-in-time restore pode restaurar todos os blobs em um container (ou a conta inteira) para um ponto anterior no tempo com uma unica operacao. Isso e mais rapido que restaurar manualmente versoes individuais de blobs ou recuperar blobs individuais. A operacao de restauracao cria um novo snapshot consistente da conta no timestamp especificado, revertendo todas as alteracoes feitas apos aquele ponto.
+**Bloquear a política de imutabilidade.** Uma política de retencao baseada em tempo desbloqueada pode ser deletada ou ter seu período de retencao reduzido, o que não atende aos requisitos SEC 17a-4(f). Bloquear a política e irreversivel e garante que ninguém (incluindo proprietarios da storage account ou suporte Microsoft) pode deletar os dados antes do período de retencao expirar. Esta e a etapa que torna a política verdadeiramente compatível com WORM.
 
 </details>
 
 <details>
-<summary>4. Qual e a diferenca de durabilidade entre ZRS e GZRS, e quando voce escolheria um sobre o outro?</summary>
+<summary>3. Uma empresa habilitou blob versioning, soft delete (retencao de 14 dias) e point-in-time restore em uma storage account. Um ataque de ransomware criptografa todos os blobs as 14h. O ataque e descoberto as 17h. Qual é a abordagem de recuperação mais rápida?</summary>
 
-**ZRS fornece 99,9999999999% (12 nines) de durabilidade dentro de uma unica regiao replicando atraves de 3 zonas de disponibilidade. GZRS fornece a mesma protecao em nivel de zona mais replicacao assincrona para uma regiao secundaria, protegendo contra falha regional completa.** Escolha ZRS quando protecao em nivel de zona e suficiente e voce quer minimizar custo e complexidade. Escolha GZRS quando requisitos regulatorios ou de negocios demandam protecao contra desastres regionais (terremotos, enchentes, indisponibilidades generalizadas afetando uma regiao Azure inteira).
+**Usar point-in-time restore para restaurar todos os blobs para seu estado as 13h59.** Point-in-time restore pode restaurar todos os blobs em um container (ou a conta inteira) para um ponto anterior no tempo com uma única operação. Isso e mais rápido que restaurar manualmente versoes individuais de blobs ou recuperar blobs individuais. A operação de restauracao cria um novo snapshot consistente da conta no timestamp especificado, revertendo todas as alteracoes feitas apos aquele ponto.
 
 </details>
 
-## Laboratorio de Validacao
+<details>
+<summary>4. Qual é a diferenca de durabilidade entre ZRS e GZRS, e quando você escolheria um sobre o outro?</summary>
 
-Implante uma prova de conceito minima para validar seu design:
+**ZRS fornece 99,9999999999% (12 nines) de durabilidade dentro de uma única região replicando atraves de 3 zonas de disponibilidade. GZRS fornece a mesma proteção em nível de zona mais replicação assincrona para uma região secundária, protegendo contra falha regional completa.** Escolha ZRS quando proteção em nível de zona é suficiente e você quer minimizar custo e complexidade. Escolha GZRS quando requisitos regulatorios ou de negocios demandam proteção contra desastres regionais (terremotos, enchentes, indisponibilidades generalizadas afetando uma região Azure inteira).
 
-1. Crie um resource group para este laboratorio:
+</details>
+
+## Laboratório de Validação
+
+Implante uma prova de conceito mínima para validar seu design:
+
+1. Crie um resource group para este laboratório:
 
 ```bash
 az group create --name rg-az305-challenge21 --location eastus
@@ -225,7 +225,7 @@ az storage blob show \
 ```
 
 :::tip
-Esta mini-implantacao valida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza
@@ -236,4 +236,4 @@ az group delete --name rg-az305-challenge21 --yes --no-wait
 
 ---
 
-**Proximo**: [Challenge 22: Design a Data Integration Pipeline](/docs/az-305/data-storage/challenge-22)
+**Próximo**: [Challenge 22: Design a Data Integration Pipeline](/docs/az-305/data-storage/challenge-22)

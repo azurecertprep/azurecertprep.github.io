@@ -1,11 +1,11 @@
 ---
 sidebar_position: 4
-title: "Challenge 37: Design a Serverless Solution"
+title: "Desafio 37: Projetar uma Solução Serverless"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 37: Design a Serverless Solution
+# Desafio 37: Projetar uma Solução Serverless
 
 :::info Tempo Estimado e Custo
 
@@ -13,18 +13,18 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 :::
 
-## Introducao
+## Introdução
 
-TicketBlitz e uma plataforma de venda de ingressos para eventos que experimenta variabilidade extrema de trafego. Quando um show popular ou evento esportivo entra em venda, a plataforma recebe de 0 a 100,000 requisicoes por segundo em questao de segundos. Entre esses eventos de venda (que acontecem 2-3 vezes por semana), o trafego cai para quase zero. A abordagem atual de infraestrutura fixa desperdica orcamento significativo: servidores ficam ociosos 95% do tempo mas devem ser superprovisionados para lidar com os 5% de carga de pico.
+TicketBlitz é uma plataforma de venda de ingressos para eventos que experimenta variabilidade extrema de trafego. Quando um show popular ou evento esportivo entra em venda, a plataforma recebe de 0 a 100,000 requisicoes por segundo em questao de segundos. Entre esses eventos de venda (que acontecem 2-3 vezes por semana), o trafego cai para quase zero. A abordagem atual de infraestrutura fixa desperdica orcamento significativo: servidores ficam ociosos 95% do tempo mas devem ser superprovisionados para lidar com os 5% de carga de pico.
 
-Alem da API de venda de ingressos em tempo real, TicketBlitz tem varios requisitos de processamento em background: (1) Gerar ingressos PDF personalizados com QR codes apos cada compra (tolerante a latencia, 10-30 segundos aceitavel). (2) Enviar emails de confirmacao e notificacoes SMS apos geracao do ingresso. (3) Processar um batch noturno de 50,000 registros de reembolso de um processador de pagamentos parceiro, aplicando regras de negocio e atualizando o banco de dados. (4) Orquestrar um workflow multi-etapa para pacotes de ingressos VIP que inclui selecao de assentos, servicos adicionais, processamento de pagamento e confirmacao, todos devendo completar atomicamente.
+Além da API de venda de ingressos em tempo real, TicketBlitz tem vários requisitos de processamento em background: (1) Gerar ingressos PDF personalizados com QR codes apos cada compra (tolerante a latência, 10-30 segundos aceitavel). (2) Enviar emails de confirmacao e notificações SMS apos geracao do ingresso. (3) Processar um batch noturno de 50,000 registros de reembolso de um processador de pagamentos parceiro, aplicando regras de negocio e atualizando o banco de dados. (4) Orquestrar um workflow multi-etapa para pacotes de ingressos VIP que inclui selecao de assentos, serviços adicionais, processamento de pagamento e confirmacao, todos devendo completar atomicamente.
 
-A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar apenas pelo tempo real de execucao. Eles precisam de um design que lide tanto com o trafego extremo em rajadas quanto com o processamento batch em background com otimizacao de custo apropriada para cada padrao.
+A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar apenas pelo tempo real de execução. Eles precisam de um design que lide tanto com o trafego extremo em rajadas quanto com o processamento batch em background com otimização de custo apropriada para cada padrão.
 
 ## Habilidades do Exame Cobertas
 
-- Recomendar uma solucao baseada em serverless
-- Recomendar uma solucao de computacao para processamento batch
+- Recomendar uma solução baseada em serverless
+- Recomendar uma solução de computacao para processamento batch
 
 ## Tarefas de Design
 
@@ -32,29 +32,29 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
 
 1. Avalie os planos de hospedagem Azure Functions para a API de venda de ingressos (0 a 100K requisicoes/segundo em rajada):
 
-| Plano | Limite de Escala | Cold Start | Integracao VNet | Modelo de Custo |
+| Plano | Limite de Escala | Cold Start | Integração VNet | Modelo de Custo |
 |------|-------------|------------|------------------|------------|
-| Consumption | 200 instancias | Sim (segundos) | Nao | Por execucao |
-| Flex Consumption | 1000 instancias | Reduzido | Sim | Por execucao + always-ready |
-| Premium (EP1-EP3) | 100 instancias | Nenhum (pre-aquecido) | Sim | Por segundo + instancias min |
-| Dedicated (ASP) | 10-30 instancias | Nenhum | Sim | Mensal fixo |
+| Consumption | 200 instâncias | Sim (segundos) | Não | Por execução |
+| Flex Consumption | 1000 instâncias | Reduzido | Sim | Por execução + always-ready |
+| Premium (EP1-EP3) | 100 instâncias | Nenhum (pré-aquecido) | Sim | Por segundo + instâncias min |
+| Dedicated (ASP) | 10-30 instâncias | Nenhum | Sim | Mensal fixo |
 
 2. Determine qual plano e apropriado para a API de venda de ingressos. Considere:
-   - 100,000 requisicoes/segundo requer quantas instancias a ~100 requisicoes/segundo por instancia?
-   - Cold start durante um evento de venda causaria compras falhadas. Quao critica e a eliminacao de cold starts?
-   - O limite de 200 instancias do plano Consumption e suficiente?
+   - 100,000 requisicoes/segundo requer quantas instâncias a ~100 requisicoes/segundo por instância?
+   - Cold start durante um evento de venda causaria compras falhadas. Quao crítica e a eliminacao de cold starts?
+   - O limite de 200 instâncias do plano Consumption é suficiente?
 
-3. Avalie se o plano Flex Consumption com instancias always-ready fornece o melhor equilibrio de capacidade de burst e mitigacao de cold-start para esta carga de trabalho.
+3. Avalie se o plano Flex Consumption com instâncias always-ready fornece o melhor equilibrio de capacidade de burst e mitigacao de cold-start para esta carga de trabalho.
 
 ### Parte 2: Design de Processamento em Background
 
 4. Projete o pipeline de geracao de ingressos PDF:
    - Trigger: Mensagem na fila apos compra bem-sucedida
    - Processamento: Gerar PDF com QR code (intensivo em CPU, 2-5 segundos por ingresso)
-   - Saida: Armazenar PDF no blob storage, disparar etapa de notificacao
+   - Saida: Armazenar PDF no blob storage, disparar etapa de notificação
    - Qual plano de Functions e apropriado (pode tolerar cold start, sensivel a custo)?
 
-5. Projete o servico de notificacao email/SMS:
+5. Projete o serviço de notificação email/SMS:
    - Deve ser Azure Functions ou Logic Apps?
    - Compare: Functions (code-first, controle total) vs Logic Apps (baseado em conectores, designer visual)
    - Para enviar emails via SendGrid e SMS via Twilio, qual abordagem minimiza esforco de desenvolvimento?
@@ -63,33 +63,33 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - 50,000 registros processados a noite as 2h
    - Cada registro requer: validar, calcular valor do reembolso, chamar API de pagamento, atualizar banco de dados
    - Avalie: Azure Functions com fan-out baseado em fila vs. Azure Batch para este volume
-   - Qual e o tempo de execucao esperado e custo para 50K registros?
+   - Qual é o tempo de execução esperado e custo para 50K registros?
 
 ### Parte 3: Orquestracao com Durable Functions
 
 7. Projete o workflow de pacote de ingressos VIP usando Durable Functions:
    - Etapa 1: Reservar assentos selecionados (chamar Seats API)
-   - Etapa 2: Processar servicos adicionais (comida, estacionamento, merch) - podem rodar em paralelo
+   - Etapa 2: Processar serviços adicionais (comida, estacionamento, merch) - podem rodar em paralelo
    - Etapa 3: Cobrar pagamento (chamar Payment API)
    - Etapa 4: Gerar confirmacao (somente se pagamento for bem-sucedido)
    - Etapa 5: Liberar reserva de assento (somente se pagamento falhar - compensacao)
 
-8. Identifique os padroes de Durable Functions necessarios:
+8. Identifique os padrões de Durable Functions necessários:
    - **Function chaining**: Etapas sequenciais (reservar -> pagar -> confirmar)
    - **Fan-out/fan-in**: Processamento paralelo de adicionais
-   - **Human interaction**: Timeout se usuario nao completar em 15 minutos
-   - **Monitor**: Verificar status do pagamento ate confirmado ou falhado
+   - **Human interaction**: Timeout se usuário não completar em 15 minutos
+   - **Monitor**: Verificar status do pagamento até confirmado ou falhado
 
 9. Projete o tratamento de erros para a orquestracao:
    - O que acontece se a etapa de pagamento falhar apos os assentos serem reservados?
-   - Como voce implementa o padrao Saga (transacoes compensatorias)?
-   - Qual e a politica de retry para falhas transientes vs falhas permanentes?
+   - Como você implementa o padrão Saga (transações compensatorias)?
+   - Qual é a política de retry para falhas transientes vs falhas permanentes?
 
-### Parte 4: Mitigacao de Cold Start e Otimizacao de Custo
+### Parte 4: Mitigacao de Cold Start e Otimização de Custo
 
-10. Compare estrategias de mitigacao de cold start:
-    - Instancias pre-aquecidas (plano Premium): Sempre rodando, sem cold start, custo base maior
-    - Instancias always-ready (Flex Consumption): Minimo configuravel, cobranca por segundo para instancias prontas
+10. Compare estratégias de mitigacao de cold start:
+    - Instâncias pré-aquecidas (plano Premium): Sempre rodando, sem cold start, custo base maior
+    - Instâncias always-ready (Flex Consumption): Mínimo configuravel, cobranca por segundo para instâncias prontas
     - Pre-aquecimento baseado em agenda: Escalar 5 minutos antes de eventos de venda conhecidos
 
 11. Calcule a comparacao de custo mensal:
@@ -99,9 +99,9 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
     - Compare custo total entre planos Consumption, Flex Consumption e Premium
 
 12. Projete o diagrama de arquitetura mostrando como todos os componentes se conectam:
-    - HTTP trigger (venda de ingressos) -> Queue -> Geracao PDF -> Blob -> Notificacao
+    - HTTP trigger (venda de ingressos) -> Queue -> Geracao PDF -> Blob -> Notificação
     - Timer trigger (batch) -> Processamento de reembolsos -> Payment API
-    - HTTP trigger (VIP) -> Orquestracao Durable -> multiplas APIs backend
+    - HTTP trigger (VIP) -> Orquestracao Durable -> múltiplas APIs backend
 
 ## Criterios de Sucesso
 
@@ -110,10 +110,10 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
   items={[
     "Plano de Functions correto selecionado para API de venda de ingressos com justificativa de cold-start",
     "Processamento em background projetado com triggers apropriados (queue, timer, blob)",
-    "Orquestracao Durable Functions projetada para workflow VIP com tratamento de erros e padrao Saga",
+    "Orquestracao Durable Functions projetada para workflow VIP com tratamento de erros e padrão Saga",
     "Comparacao Azure Batch vs Functions documentada para carga batch noturna de 50K",
-    "Comparacao de custo completada entre tipos de plano para todos os padroes de carga de trabalho",
-    "Estrategia de mitigacao de cold start endereca o cenario critico de burst de venda de ingressos"
+    "Comparacao de custo completada entre tipos de plano para todos os padrões de carga de trabalho",
+    "Estratégia de mitigacao de cold start endereca o cenário crítico de burst de venda de ingressos"
   ]}
 />
 
@@ -123,12 +123,12 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
 <summary>Dica 1: Plano de Functions para Burst Extremo</summary>
 
 Para 100,000 requisicoes/segundo:
-- A ~100 requisicoes/segundo por instancia, voce precisa de ~1,000 instancias concorrentes
-- **Plano Consumption** tem limite maximo de 200 instancias -> insuficiente
-- **Plano Flex Consumption** suporta ate 1,000 instancias com scaling mais rapido e instancias always-ready
-- **Plano Premium** tem limite maximo de 100 instancias por padrao (pode solicitar aumento) -> provavelmente insuficiente
+- A ~100 requisicoes/segundo por instância, você precisa de ~1,000 instâncias concorrentes
+- **Plano Consumption** tem limite máximo de 200 instâncias -> insuficiente
+- **Plano Flex Consumption** suporta até 1,000 instâncias com scaling mais rápido e instâncias always-ready
+- **Plano Premium** tem limite máximo de 100 instâncias por padrão (pode solicitar aumento) -> provavelmente insuficiente
 
-O plano Flex Consumption e a melhor opcao: suporta a escala necessaria, oferece instancias always-ready para eliminar cold starts para as primeiras N instancias, e fornece cobranca por execucao para as instancias de burst alem do minimo always-ready.
+O plano Flex Consumption e a melhor opcao: suporta a escala necessária, oferece instâncias always-ready para eliminar cold starts para as primeiras N instâncias, e fornece cobranca por execução para as instâncias de burst além do mínimo always-ready.
 
 </details>
 
@@ -136,25 +136,25 @@ O plano Flex Consumption e a melhor opcao: suporta a escala necessaria, oferece 
 <summary>Dica 2: Decisao Logic Apps vs Functions</summary>
 
 Escolha **Logic Apps** quando:
-- O workflow conecta principalmente servicos existentes via conectores (400+ conectores pre-construidos)
-- Nao-desenvolvedores precisam construir ou modificar workflows
-- Voce precisa de monitoramento visual de execucoes de workflow
-- Padroes de integracao: B2B, EDI, SAP, Salesforce
+- O workflow conecta principalmente serviços existentes via conectores (400+ conectores pré-construidos)
+- Não-desenvolvedores precisam construir ou modificar workflows
+- Você precisa de monitoramento visual de execucoes de workflow
+- Padrões de integração: B2B, EDI, SAP, Salesforce
 
 Escolha **Azure Functions** quando:
-- Logica de negocio customizada e necessaria (calculos complexos, transformacao de dados)
-- Voce precisa de latencia sub-segundo
+- Lógica de negocio customizada é necessária (calculos complexos, transformacao de dados)
+- Você precisa de latência sub-segundo
 - A equipe prefere desenvolvimento code-first
 - Controle granular sobre retries, concorrencia e batching
 
-Para enviar emails/SMS apos geracao de PDF: Logic Apps se usando conectores padrao e querendo rastreamento visual de workflow. Functions se voce precisa de logica de template customizada ou codebase unificado.
+Para enviar emails/SMS apos geracao de PDF: Logic Apps se usando conectores padrão e querendo rastreamento visual de workflow. Functions se você precisa de lógica de template customizada ou codebase unificado.
 
 </details>
 
 <details>
-<summary>Dica 3: Padrao Saga com Durable Functions</summary>
+<summary>Dica 3: Padrão Saga com Durable Functions</summary>
 
-O padrao Saga em Durable Functions usa transacoes compensatorias:
+O padrão Saga em Durable Functions usa transações compensatorias:
 
 ```
 try:
@@ -170,9 +170,9 @@ except PaymentFailedException:
 
 Decisoes chave de design:
 - Cada etapa deve ser idempotente (segura para retry)
-- Acoes compensatorias desfazem os efeitos de etapas bem-sucedidas
-- A funcao orchestrator mantem estado automaticamente (estado duravel)
-- Defina `maxNumberOfAttempts` e `backoffCoefficient` nas politicas de retry
+- Ações compensatorias desfazem os efeitos de etapas bem-sucedidas
+- A função orchestrator mantem estado automaticamente (estado duravel)
+- Defina `maxNumberOfAttempts` e `backoffCoefficient` nas políticas de retry
 
 </details>
 
@@ -180,10 +180,10 @@ Decisoes chave de design:
 <summary>Dica 4: Processamento Batch em Escala</summary>
 
 Para 50,000 registros de reembolso noturnos:
-- **Azure Functions com fan-out por fila**: Coloque cada registro em uma fila, Functions processa em paralelo. A ~100 mensagens/segundo com 5 segundos de processamento, 50K registros completam em ~8 minutos. Custo: ~$0.10-0.50 por execucao.
-- **Azure Batch**: Melhor para tarefas de computacao de longa duracao (horas), VMs pesadas, e quando voce precisa de tamanhos de VM especificos. Excessivo para 50K registros leves.
+- **Azure Functions com fan-out por fila**: Coloque cada registro em uma fila, Functions processa em paralelo. A ~100 mensagens/segundo com 5 segundos de processamento, 50K registros completam em ~8 minutos. Custo: ~$0.10-0.50 por execução.
+- **Azure Batch**: Melhor para tarefas de computacao de longa duracao (horas), VMs pesadas, e quando você precisa de tamanhos de VM específicos. Excessivo para 50K registros leves.
 
-Functions e preferido porque: precificacao por execucao e mais barata para tarefas curtas, sem gerenciamento de VM, auto-scales baseado na profundidade da fila, e integra naturalmente com o restante da arquitetura serverless.
+Functions e preferido porque: precificacao por execução e mais barata para tarefas curtas, sem gerenciamento de VM, auto-scales baseado na profundidade da fila, e integra naturalmente com o restante da arquitetura serverless.
 
 </details>
 
@@ -195,47 +195,47 @@ Functions e preferido porque: precificacao por execucao e mais barata para taref
 - [Choose between Azure Functions and Logic Apps](https://learn.microsoft.com/en-us/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs)
 - [Azure Batch overview](https://learn.microsoft.com/en-us/azure/batch/batch-technical-overview)
 
-## Verificacao de Conhecimento
+## Verificação de Conhecimento
 
 <details>
-<summary>1. Um function app no plano Consumption experimenta cold starts de 3-5 segundos durante uma venda relampago. O negocio requer tempo de resposta sub-200ms para a primeira requisicao. Qual mudanca de plano resolve isso?</summary>
+<summary>1. Um function app no plano Consumption experimenta cold starts de 3-5 segundos durante uma venda relampago. O negocio requer tempo de resposta sub-200ms para a primeira requisicao. Qual mudança de plano resolve isso?</summary>
 
-**Mude para o plano Flex Consumption com instancias always-ready configuradas.** Instancias always-ready sao pre-provisionadas e mantidas aquecidas, eliminando cold start para requisicoes tratadas por essas instancias. Configure instancias always-ready suficientes para lidar com o burst inicial enquanto a plataforma escala instancias adicionais. Alternativamente, o plano Premium com instancias minimas definidas como 1+ elimina cold starts inteiramente, mas com custo base maior. O plano Flex Consumption oferece um meio-termo: instancias always-ready para baseline com scaling por execucao alem disso.
+**Mude para o plano Flex Consumption com instâncias always-ready configuradas.** Instâncias always-ready sao pré-provisionadas é mantidas aquecidas, eliminando cold start para requisicoes tratadas por essas instâncias. Configure instâncias always-ready suficientes para lidar com o burst inicial enquanto a plataforma escala instâncias adicionais. Alternativamente, o plano Premium com instâncias minimas definidas como 1+ elimina cold starts inteiramente, mas com custo base maior. O plano Flex Consumption oferece um meio-termo: instâncias always-ready para baseline com scaling por execução além disso.
 
 </details>
 
 <details>
-<summary>2. Um workflow precisa enviar um email via SendGrid, aguardar confirmacao do usuario (ate 24 horas), e entao processar o pedido. Por que Durable Functions e melhor que uma Function padrao com timer?</summary>
+<summary>2. Um workflow precisa enviar um email via SendGrid, aguardar confirmacao do usuário (até 24 horas), e entao processar o pedido. Por que Durable Functions e melhor que uma Function padrão com timer?</summary>
 
-**Durable Functions suporta nativamente o padrao "wait for external event" com persistencia de estado por dias.** Uma Function padrao com timer precisaria consultar um banco de dados para status de confirmacao, desperdicando execucoes e adicionando latencia. O `WaitForExternalEvent` do Durable Functions suspende a orquestracao sem consumir recursos ate que o evento chegue ou o timeout expire. O estado do orchestrator e persistido no Azure Storage, entao mesmo se a infraestrutura escalar para zero durante o periodo de espera, o workflow retoma exatamente de onde parou quando o evento chega.
+**Durable Functions suporta nativamente o padrão "wait for external event" com persistência de estado por dias.** Uma Function padrão com timer precisaria consultar um banco de dados para status de confirmacao, desperdicando execucoes e adicionando latência. O `WaitForExternalEvent` do Durable Functions suspende a orquestracao sem consumir recursos até que o evento chegue ou o timeout expire. O estado do orchestrator e persistido no Azure Storage, entao mesmo se a infraestrutura escalar para zero durante o período de espera, o workflow retoma exatamente de onde parou quando o evento chega.
 
 </details>
 
 <details>
-<summary>3. Um batch noturno processa 50,000 registros com 5 segundos de computacao por registro. Voce deve usar Azure Batch ou Azure Functions com fan-out baseado em fila?</summary>
+<summary>3. Um batch noturno processa 50,000 registros com 5 segundos de computacao por registro. Você deve usar Azure Batch ou Azure Functions com fan-out baseado em fila?</summary>
 
-**Azure Functions com fan-out baseado em fila.** Azure Batch e projetado para cargas de trabalho paralelas de computacao intensiva de longa duracao (renderizacao, simulacoes, genomica) onde tarefas individuais levam minutos a horas. Para 50K registros leves a 5 segundos cada, Functions fornece: scaling automatico baseado na profundidade da fila, precificacao por execucao (mais barato para tarefas curtas), sem atraso de provisionamento de VM, e integracao perfeita com o restante da arquitetura serverless. A computacao total e aproximadamente 69 horas de trabalho single-threaded, mas com 100+ instancias de Function concorrentes, completa em menos de 10 minutos.
+**Azure Functions com fan-out baseado em fila.** Azure Batch é projetado para cargas de trabalho paralelas de computacao intensiva de longa duracao (renderizacao, simulacoes, genomica) onde tarefas individuais levam minutos a horas. Para 50K registros leves a 5 segundos cada, Functions fornece: scaling automático baseado na profundidade da fila, precificacao por execução (mais barato para tarefas curtas), sem atraso de provisionamento de VM, e integração perfeita com o restante da arquitetura serverless. A computacao total e aproximadamente 69 horas de trabalho single-threaded, mas com 100+ instâncias de Function concorrentes, completa em menos de 10 minutos.
 
 </details>
 
 <details>
 <summary>4. Por que o plano Consumption e insuficiente para uma carga de trabalho que precisa fazer burst para 100,000 requisicoes por segundo?</summary>
 
-**O plano Consumption tem um limite maximo de escala de 200 instancias.** A aproximadamente 100 requisicoes/segundo por instancia, 200 instancias podem lidar com apenas 20,000 requisicoes/segundo, que e 5x abaixo do requisito de 100,000 requisicoes/segundo. Adicionalmente, o plano Consumption escala reativamente (adicionando instancias baseado na carga observada), o que introduz atraso durante bursts subitos. O plano Flex Consumption suporta ate 1,000 instancias e inclui instancias always-ready que sao pre-provisionadas antes do burst chegar, tornando-o adequado para cenarios de escala extrema.
+**O plano Consumption tem um limite máximo de escala de 200 instâncias.** A aproximadamente 100 requisicoes/segundo por instância, 200 instâncias podem lidar com apenas 20,000 requisicoes/segundo, que é 5x abaixo do requisito de 100,000 requisicoes/segundo. Adicionalmente, o plano Consumption escala reativamente (adicionando instâncias baseado na carga observada), o que introduz atraso durante bursts subitos. O plano Flex Consumption suporta até 1,000 instâncias e inclui instâncias always-ready que sao pré-provisionadas antes do burst chegar, tornando-o adequado para cenários de escala extrema.
 
 </details>
 
-## Laboratorio de Validacao
+## Laboratório de Validação
 
-Implante uma prova de conceito minima para validar seu design:
+Implante uma prova de conceito mínima para validar seu design:
 
-1. Crie um grupo de recursos para este laboratorio:
+1. Crie um grupo de recursos para este laboratório:
 
 ```bash
 az group create --name rg-az305-challenge37 --location eastus
 ```
 
-2. Crie uma conta de armazenamento (necessaria pelo runtime do Functions):
+2. Crie uma conta de armazenamento (necessária pelo runtime do Functions):
 
 ```bash
 az storage account create --resource-group rg-az305-challenge37 \
@@ -260,7 +260,7 @@ az functionapp show --resource-group rg-az305-challenge37 \
 ```
 
 :::tip
-Esta mini-implantacao valida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
+Esta mini-implantacao válida suas decisoes de design com recursos reais do Azure. E opcional mas recomendada.
 :::
 
 ## Limpeza
@@ -271,4 +271,4 @@ az group delete --name rg-az305-challenge37 --yes --no-wait
 
 ---
 
-**Proximo**: [Challenge 38: Design a Messaging Architecture](/docs/az-305/infrastructure/challenge-38)
+**Próximo**: [Challenge 38: Design a Messaging Architecture](/docs/az-305/infrastructure/challenge-38)

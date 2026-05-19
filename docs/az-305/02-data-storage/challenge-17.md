@@ -164,7 +164,7 @@ az sql db create --name db-securebank-core --resource-group rg-az305-challenge17
 
 ```bash
 az keyvault create --name kv-sb-tde-lab --resource-group rg-az305-challenge17 \
-  --location eastus --enable-soft-delete true --enable-purge-protection true
+  --location eastus --enable-purge-protection true
 
 az keyvault key create --vault-name kv-sb-tde-lab --name tde-protector \
   --kty RSA --size 2048

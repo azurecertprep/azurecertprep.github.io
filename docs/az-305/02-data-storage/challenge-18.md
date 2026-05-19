@@ -167,7 +167,7 @@ az cosmosdb sql database create --account-name cosmos-sensorgrid-lab \
 az cosmosdb sql container create --account-name cosmos-sensorgrid-lab \
   --resource-group rg-az305-challenge18 --database-name SensorData \
   --name Telemetry --partition-key-path "/deviceId" \
-  --default-ttl 7776000
+  --ttl 7776000
 ```
 
 4. Verify the deployment and container configuration:

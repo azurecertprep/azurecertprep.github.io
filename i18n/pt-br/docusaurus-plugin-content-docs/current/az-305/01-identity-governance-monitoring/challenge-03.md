@@ -1,12 +1,12 @@
 ---
 sidebar_position: 3
-title: "Challenge 03: Design a Monitoring and Alerting Strategy"
+title: "Desafio 03: Projetar uma Estratégia de Monitoramento e Alertas"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
-# Challenge 03: Design a Monitoring and Alerting Strategy
+# Desafio 03: Projetar uma Estratégia de Monitoramento e Alertas
 
 :::info Tempo Estimado e Custo
 
@@ -14,33 +14,33 @@ import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 :::
 
-## Introducao
+## Introdução
 
-A TailSpin Toys opera uma plataforma global de e-commerce construida no Azure. Sua arquitetura inclui um Azure Front Door para balanceamento de carga global, Azure App Services em duas regioes (East US e West Europe), Azure SQL Database com geo-replicacao, Azure Cache for Redis e Azure Functions para processamento de pedidos. A plataforma suporta 50.000 usuarios simultaneos durante horarios de pico e definiu os seguintes objetivos de nivel de servico (SLOs):
+A TailSpin Toys opera uma plataforma global de e-commerce construida no Azure. Sua arquitetura inclui um Azure Front Door para balanceamento de carga global, Azure App Services em duas regiões (East US e West Europe), Azure SQL Database com geo-replicação, Azure Cache for Redis e Azure Functions para processamento de pedidos. A plataforma suporta 50.000 usuários simultaneos durante horarios de pico e definiu os seguintes objetivos de nível de serviço (SLOs):
 
 - Tempo de carregamento da pagina inicial: abaixo de 2 segundos (p95)
 - Tempo de resposta da API: abaixo de 500ms (p95)
-- Processamento de pedidos: concluido em ate 30 segundos
+- Processamento de pedidos: concluido em até 30 segundos
 - Disponibilidade da plataforma: 99,95% de uptime mensal
 
-Atualmente, a equipe so descobre interrupcoes quando clientes reclamam nas redes sociais. Nao ha alertas proativos, nao ha dashboards para visibilidade executiva e nao ha remediacao automatizada. Na ultima Black Friday, um problema de esgotamento do cache Redis causou uma interrupcao de 45 minutos que custou $2M em receita perdida. A equipe de operacoes quer detectar e responder a problemas semelhantes automaticamente no futuro.
+Atualmente, a equipe só descobre interrupcoes quando clientes reclamam nas redes sociais. Não ha alertas proativos, não ha dashboards para visibilidade executiva e não ha remediacao automatizada. Na última Black Friday, um problema de esgotamento do cache Redis causou uma interrupcao de 45 minutos que custou $2M em receita perdida. A equipe de operações quer detectar e responder a problemas semelhantes automaticamente no futuro.
 
-Sua tarefa e projetar uma estrategia abrangente de monitoramento e alertas que forneca aviso antecipado de degradacao, respostas automatizadas a padroes de falha conhecidos e visibilidade em nivel executivo sobre a saude da plataforma.
+Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que forneca aviso antecipado de degradacao, respostas automatizadas a padrões de falha conhecidos e visibilidade em nível executivo sobre a saúde da plataforma.
 
 ## Habilidades do Exame Cobertas
 
-- Recomendar uma solucao de monitoramento
-- Recomendar uma solucao de logging
-- Recomendar uma solucao para roteamento de logs
+- Recomendar uma solução de monitoramento
+- Recomendar uma solução de logging
+- Recomendar uma solução para roteamento de logs
 
 ## Tarefas de Design
 
 ### Parte 1: Design da Arquitetura de Monitoramento
 
 1. Projete a stack de monitoramento para a TailSpin Toys, especificando:
-   - Quais recursos do Azure Monitor usar para cada camada (infraestrutura, aplicacao, negocios)
+   - Quais recursos do Azure Monitor usar para cada camada (infraestrutura, aplicação, negocios)
    - Onde o Application Insights se encaixa vs. Azure Monitor Metrics vs. Log Analytics
-   - Como alcancar rastreamento de transacoes de ponta a ponta atraves do Front Door, App Service, Functions e SQL
+   - Como alcancar rastreamento de transações de ponta a ponta atraves do Front Door, App Service, Functions e SQL
 
 2. Crie uma matriz de cobertura de monitoramento:
 
@@ -61,26 +61,26 @@ Sua tarefa e projetar uma estrategia abrangente de monitoramento e alertas que f
 
 3. Projete regras de alerta para cada SLO, especificando:
    - Tipo de alerta baseado em metrica ou log
-   - Frequencia de avaliacao e janela de agregacao
-   - Nivel de severidade (0-4)
-   - Thresholds dinamicos vs. estaticos (e por que)
+   - Frequência de avaliação e janela de agregacao
+   - Nível de severidade (0-4)
+   - Thresholds dinamicos vs. estaticos (é por que)
 
-4. Projete uma estrategia de alertas em multiplos estagios:
-   - Aviso (degradacao inicial): Notificar canal de operacoes
-   - Critico (violacao de SLO iminente): Acionar engenheiro de plantao
+4. Projete uma estratégia de alertas em múltiplos estagios:
+   - Aviso (degradacao inicial): Notificar canal de operações
+   - Crítico (violacao de SLO iminente): Acionar engenheiro de plantao
    - Emergencia (interrupcao ativa): Disparar remediacao automatizada + acionar lideranca
 
 5. Projete action groups para cada severidade de alerta:
-   - Canais de notificacao (email, SMS, Teams, PagerDuty)
-   - Acoes automatizadas (Azure Functions, Logic Apps, runbooks)
-   - Caminhos de escalacao
+   - Canais de notificação (email, SMS, Teams, PagerDuty)
+   - Ações automatizadas (Azure Functions, Logic Apps, runbooks)
+   - Caminhos de escalação
 
 ### Parte 3: Remediacao Automatizada
 
-6. Projete uma resposta automatizada para o cenario de esgotamento do cache Redis:
-   - Deteccao: Qual metrica/padrao indica pressao no cache antes da falha?
+6. Projete uma resposta automatizada para o cenário de esgotamento do cache Redis:
+   - Detecção: Qual metrica/padrão indica pressao no cache antes da falha?
    - Resposta: Qual acao automatizada previne a interrupcao?
-   - Validacao: Como voce verifica que a remediacao funcionou?
+   - Validação: Como você verifica que a remediacao funcionou?
 
 7. Projete regras de autoscale para o App Service que respondam a:
    - Utilizacao de CPU excedendo 70% por 5 minutos
@@ -92,12 +92,12 @@ Sua tarefa e projetar uma estrategia abrangente de monitoramento e alertas que f
 8. Projete um dashboard executivo mostrando:
    - Conformidade atual com SLO (percentual de uptime neste mes)
    - Receita em risco (baseado em taxas de erro)
-   - Comparacao de saude regional
-   - Analise de tendencias (performance semana a semana)
+   - Comparacao de saúde regional
+   - Análise de tendencias (performance semana a semana)
 
 9. Projete um workbook operacional para o engenheiro de plantao que forneca:
-   - Saude do servico em tempo real em todos os componentes
-   - Drill-down da saude de alto nivel ate requisicoes especificas com falha
+   - Saúde do serviço em tempo real em todos os componentes
+   - Drill-down da saúde de alto nível até requisicoes específicas com falha
    - Correlacao de alertas com eventos de deployment
 
 ### Parte 5: Implantar Prova de Conceito
@@ -124,18 +124,18 @@ Sua tarefa e projetar uma estrategia abrangente de monitoramento e alertas que f
 <summary>Dica 1: Application Insights vs. Azure Monitor Metrics</summary>
 
 Use **Application Insights** para:
-- Metricas em nivel de aplicacao (duracao de requisicao, taxa de falha, chamadas de dependencia)
-- Rastreamento distribuido de ponta a ponta (correlacao entre servicos)
+- Metricas em nível de aplicação (duracao de requisicao, taxa de falha, chamadas de dependência)
+- Rastreamento distribuido de ponta a ponta (correlacao entre serviços)
 - Testes de disponibilidade (monitoramento sintetico)
 - Metricas de negocios customizadas (pedidos/segundo, abandono de carrinho)
 
 Use **Azure Monitor platform metrics** para:
 - Metricas de infraestrutura (CPU, memoria, disco, rede)
-- Metricas especificas de servico (SQL DTU, Redis cache hits, execucoes de Functions)
+- Metricas específicas de serviço (SQL DTU, Redis cache hits, execucoes de Functions)
 - Sinais de trigger de autoscale
 - Alertas em tempo quase real (granularidade de 1 minuto)
 
-Os dados do Application Insights fluem para um workspace do Log Analytics, entao voce pode correlacionar telemetria de aplicacao com logs de infraestrutura usando KQL.
+Os dados do Application Insights fluem para um workspace do Log Analytics, entao você pode correlacionar telemetria de aplicação com logs de infraestrutura usando KQL.
 
 </details>
 
@@ -179,11 +179,11 @@ az monitor metrics alert create \
 <details>
 <summary>Dica 3: Thresholds Dinamicos vs. Thresholds Estaticos</summary>
 
-**Thresholds estaticos** funcionam bem quando voce tem metas de SLO claras e fixas (por exemplo, tempo de resposta deve ser inferior a 500ms). Eles sao previsiveis e faceis de entender.
+**Thresholds estaticos** funcionam bem quando você tem metas de SLO claras e fixas (por exemplo, tempo de resposta deve ser inferior a 500ms). Eles sao previsiveis e faceis de entender.
 
-**Thresholds dinamicos** usam machine learning para estabelecer padroes de baseline e detectar anomalias. Eles sao ideais para:
-- Metricas com sazonalidade diaria/semanal (padroes de trafego)
-- Cenarios onde valores absolutos variam mas o desvio do normal importa
+**Thresholds dinamicos** usam machine learning para estabelecer padrões de baseline e detectar anomalias. Eles sao ideais para:
+- Metricas com sazonalidade diaria/semanal (padrões de trafego)
+- Cenários onde valores absolutos variam mas o desvio do normal importa
 - Reduzir ruido de alertas de picos esperados (jobs batch, deployments)
 
 Para a TailSpin Toys:
@@ -193,7 +193,7 @@ Para a TailSpin Toys:
 </details>
 
 <details>
-<summary>Dica 4: Configuracao de Autoscale</summary>
+<summary>Dica 4: Configuração de Autoscale</summary>
 
 ```bash
 # Create autoscale settings for App Service Plan
@@ -222,9 +222,9 @@ az monitor autoscale rule create \
 ```
 
 Consideracoes importantes de design:
-- Sempre defina um periodo de cooldown (5-10 min) para evitar oscilacao
+- Sempre defina um período de cooldown (5-10 min) para evitar oscilacao
 - Escale para fora agressivamente (por 2), escale para dentro conservadoramente (por 1)
-- Use multiplas metricas (CPU E comprimento da fila) para decisoes de scale-out
+- Use múltiplas metricas (CPU E comprimento da fila) para decisoes de scale-out
 
 </details>
 
@@ -232,14 +232,14 @@ Consideracoes importantes de design:
 <summary>Dica 5: Remediacao Automatizada com Action Groups</summary>
 
 Action groups podem disparar respostas automatizadas:
-- **Azure Automation Runbook**: Para remediacao complexa em multiplas etapas (por exemplo, escalar Redis, limpar chaves obsoletas, verificar conectividade)
-- **Azure Function**: Para logica customizada leve
+- **Azure Automation Runbook**: Para remediacao complexa em múltiplas etapas (por exemplo, escalar Redis, limpar chaves obsoletas, verificar conectividade)
+- **Azure Function**: Para lógica customizada leve
 - **Logic App**: Para orquestracao de workflow com gates de aprovacao
-- **Webhook**: Para integracao com gerenciamento de incidentes externo (PagerDuty, ServiceNow)
+- **Webhook**: Para integração com gerenciamento de incidentes externo (PagerDuty, ServiceNow)
 
-Para o cenario de esgotamento do Redis, um Automation Runbook poderia:
+Para o cenário de esgotamento do Redis, um Automation Runbook poderia:
 1. Detectar: Alerta dispara quando `usedmemorypercentage` excede 85%
-2. Agir: Escalar Redis para o proximo tier, ou limpar itens de cache de baixa prioridade
+2. Agir: Escalar Redis para o próximo tier, ou limpar itens de cache de baixa prioridade
 3. Validar: Verificar que o percentual de memoria caiu abaixo de 70%
 4. Notificar: Postar no canal do Teams com a acao tomada
 
@@ -255,33 +255,33 @@ Para o cenario de esgotamento do Redis, um Automation Runbook poderia:
 - [Create and manage action groups](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups)
 - [Distributed tracing with Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data)
 
-## Verificacao de Conhecimento
+## Verificação de Conhecimento
 
 <details>
 <summary>1. A TailSpin Toys precisa detectar quando o pipeline de processamento de pedidos excede 30 segundos. Os pedidos sao processados por Azure Functions acionadas por Service Bus. Qual abordagem de monitoramento fornece a medicao mais precisa?</summary>
 
-**Use rastreamento distribuido do Application Insights com correlacao de transacao de ponta a ponta.** Instrumente o Function App com o SDK do Application Insights para rastrear toda a cadeia de dependencias desde o recebimento da mensagem do Service Bus ate as escritas no banco de dados. Crie uma metrica customizada ou use um alerta baseado em log com uma consulta KQL contra a tabela `requests` filtrando por nome de operacao e duracao. Metricas de plataforma sozinhas (tempo de execucao da Function) perderiam o tempo gasto esperando na fila do Service Bus.
+**Use rastreamento distribuido do Application Insights com correlacao de transação de ponta a ponta.** Instrumente o Function App com o SDK do Application Insights para rastrear toda a cadeia de dependências desde o recebimento da mensagem do Service Bus até as escritas no banco de dados. Crie uma metrica customizada ou use um alerta baseado em log com uma consulta KQL contra a tabela `requests` filtrando por nome de operação e duracao. Metricas de plataforma sozinhas (tempo de execução da Function) perderiam o tempo gasto esperando na fila do Service Bus.
 
 </details>
 
 <details>
-<summary>2. A equipe de operacoes recebe mais de 200 emails de alerta diariamente e comecou a ignora-los. Como voce deve reprojetar a estrategia de alertas para reduzir o ruido mantendo a cobertura?</summary>
+<summary>2. A equipe de operações recebe mais de 200 emails de alerta diariamente e comecou a ignora-los. Como você deve reprojetar a estratégia de alertas para reduzir o ruido mantendo a cobertura?</summary>
 
-**Implemente classificacao de severidade de alertas com roteamento e supressao apropriados.** (1) Revise e elimine alertas duplicados/redundantes. (2) Use thresholds dinamicos em vez de estaticos para metricas com variacao natural. (3) Implemente regras de processamento de alertas para suprimir janelas de manutencao conhecidas. (4) Agrupe alertas relacionados usando smart groups. (5) Roteie apenas alertas Sev 0-1 para o pager, Sev 2 para canal do Teams, Sev 3-4 apenas para dashboard. (6) Defina frequencia de avaliacao apropriada (nao a cada minuto para metricas nao criticas).
-
-</details>
-
-<details>
-<summary>3. Durante a Black Friday, o trafego aumenta 10x. As regras de autoscale atualmente escalam com base na utilizacao de CPU. Qual melhoria de design forneceria escalonamento mais rapido?</summary>
-
-**Adicione perfis de autoscale baseados em agenda combinados com metricas preditivas.** (1) Crie um perfil de autoscale recorrente que pre-escala para uma contagem de instancias maior antes de eventos de trafego conhecidos (Black Friday, vendas relampago). (2) Adicione comprimento da fila HTTP como um trigger adicional de scale-out, que responde mais rapido que CPU (a fila cresce antes da CPU saturar). (3) Considere uma metrica customizada do Application Insights (requisicoes/segundo) como um sinal antecipado. (4) Reduza a janela de lookback para regras de scale-out de 10 minutos para 5 minutos durante periodos de pico.
+**Implemente classificacao de severidade de alertas com roteamento e supressao apropriados.** (1) Revise e elimine alertas duplicados/redundantes. (2) Use thresholds dinamicos em vez de estaticos para metricas com variacao natural. (3) Implemente regras de processamento de alertas para suprimir janelas de manutenção conhecidas. (4) Agrupe alertas relacionados usando smart groups. (5) Roteie apenas alertas Sev 0-1 para o pager, Sev 2 para canal do Teams, Sev 3-4 apenas para dashboard. (6) Defina frequência de avaliação apropriada (não a cada minuto para metricas não críticas).
 
 </details>
 
 <details>
-<summary>4. A equipe de seguranca quer ser alertada quando mais de 50 tentativas de login falhas ocorrem em 5 minutos do mesmo endereco IP. Isso deveria ser um alerta de metrica ou um alerta baseado em log?</summary>
+<summary>3. Durante a Black Friday, o trafego aumenta 10x. As regras de autoscale atualmente escalam com base na utilizacao de CPU. Qual melhoria de design forneceria escalonamento mais rápido?</summary>
 
-**Isso deveria ser um alerta baseado em log (regra de alerta de pesquisa de log).** A condicao requer agregacao por endereco IP e contagem de eventos correspondentes a criterios especificos em uma janela de tempo -- essa logica requer uma consulta KQL contra logs de sign-in no Log Analytics. Alertas de metrica nao podem realizar agrupamento por dimensoes arbitrarias como endereco IP com agregacao de contagem. A consulta KQL seria: `SigninLogs | where ResultType != 0 | summarize FailCount=count() by IPAddress, bin(TimeGenerated, 5m) | where FailCount > 50`.
+**Adicione perfis de autoscale baseados em agenda combinados com metricas preditivas.** (1) Crie um perfil de autoscale recorrente que pré-escala para uma contagem de instâncias maior antes de eventos de trafego conhecidos (Black Friday, vendas relampago). (2) Adicione comprimento da fila HTTP como um trigger adicional de scale-out, que responde mais rápido que CPU (a fila cresce antes da CPU saturar). (3) Considere uma metrica customizada do Application Insights (requisicoes/segundo) como um sinal antecipado. (4) Reduza a janela de lookback para regras de scale-out de 10 minutos para 5 minutos durante períodos de pico.
+
+</details>
+
+<details>
+<summary>4. A equipe de segurança quer ser alertada quando mais de 50 tentativas de login falhas ocorrem em 5 minutos do mesmo endereço IP. Isso deveria ser um alerta de metrica ou um alerta baseado em log?</summary>
+
+**Isso deveria ser um alerta baseado em log (regra de alerta de pesquisa de log).** A condição requer agregacao por endereço IP e contagem de eventos correspondentes a criterios específicos em uma janela de tempo -- essa lógica requer uma consulta KQL contra logs de sign-in no Log Analytics. Alertas de metrica não podem realizar agrupamento por dimensoes arbitrarias como endereço IP com agregacao de contagem. A consulta KQL seria: `SigninLogs | where ResultType != 0 | summarize FailCount=count() by IPAddress, bin(TimeGenerated, 5m) | where FailCount > 50`.
 
 </details>
 
@@ -300,4 +300,4 @@ az monitor metrics alert delete --name "alert-response-time-p95" --resource-grou
 
 ---
 
-**Proximo**: [Challenge 04: Design Authentication for Cloud-Native Apps](/docs/az-305/identity-governance-monitoring/challenge-04)
+**Próximo**: [Challenge 04: Design Authentication for Cloud-Native Apps](/docs/az-305/identity-governance-monitoring/challenge-04)

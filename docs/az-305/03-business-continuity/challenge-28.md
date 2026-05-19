@@ -39,7 +39,7 @@ The challenge is balancing multiple protection layers: instant recovery for the 
     {criteria: "Blob soft delete", values: ["Accidental blob deletion and overwrites - deleted blobs retained as soft-deleted for recovery", "Low - only charged for storage of soft-deleted data at standard rates for the blob access tier", "Configurable 1-365 days; after retention expires, data is permanently deleted"]},
     {criteria: "Container soft delete", values: ["Accidental container deletion - entire container and its contents recoverable", "Low - same as blob soft delete, charged for stored data during retention period", "Configurable 1-365 days; independent of blob soft delete setting"]},
     {criteria: "Blob versioning", values: ["Overwrites - every write creates a new version, previous versions preserved automatically", "High for frequently modified files - each version stored at full size, can multiply storage costs significantly", "Indefinite until explicitly deleted or managed by lifecycle policy; no automatic expiration"]},
-    {criteria: "Point-in-time restore", values: ["Bulk corruption or accidental mass deletion - restores entire container to a previous state", "Moderate - requires versioning + change feed + soft delete all enabled; additional storage for change feed", "Maximum 14 days; requires continuous change tracking enabled; cannot be used with hierarchical namespace (ADLS Gen2)"]}
+    {criteria: "Point-in-time restore", values: ["Bulk corruption or accidental mass deletion - restores entire container to a previous state", "Moderate - requires versioning + change feed + soft delete all enabled; additional storage for change feed", "Maximum 365 days; requires continuous change tracking enabled; cannot be used with hierarchical namespace (ADLS Gen2)"]}
   ]}
   storageKey="az305-challenge-28"
 />
@@ -158,7 +158,7 @@ Point-in-time restore for blobs requires ALL of the following to be enabled:
 3. Blob change feed
 
 Important limitations:
-- Maximum retention: 14 days (you can only restore to a point within the last 14 days)
+- Maximum retention: 365 days (you can only restore to a point within the configured retention period)
 - Restores at the container level (not individual blobs - use versioning for that)
 - NOT supported with hierarchical namespace (Data Lake Storage Gen2)
 - NOT supported with premium block blobs

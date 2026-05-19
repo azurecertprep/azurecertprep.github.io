@@ -1,11 +1,11 @@
 ---
 sidebar_position: 6
-title: "Challenge 06: Design Authorization for Azure Resources"
+title: "Desafio 06: Projetar Autorização para Recursos Azure"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
-# Challenge 06: Design Authorization for Azure Resources
+# Desafio 06: Projetar Autorização para Recursos Azure
 
 :::info Tempo Estimado e Custo
 
@@ -13,22 +13,22 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 :::
 
-## Introducao
+## Introdução
 
-A Fabrikam Inc. e uma empresa de software com 200 engenheiros organizados em 5 equipes de produto. Eles operam um ambiente Azure maduro com a seguinte estrutura:
+A Fabrikam Inc. é uma empresa de software com 200 engenheiros organizados em 5 equipes de produto. Eles operam um ambiente Azure maduro com a seguinte estrutura:
 - 3 assinaturas: Development, Staging, Production
 - 15 resource groups por assinatura (3 por equipe de produto: compute, data, networking)
-- Resource group de servicos compartilhados em cada assinatura (gerenciado pela equipe de plataforma)
+- Resource group de serviços compartilhados em cada assinatura (gerenciado pela equipe de plataforma)
 
-O modelo de acesso atual esta quebrado: a maioria dos engenheiros tem Contributor em toda a assinatura Development, tres lideres de equipe tem Owner em Production (acumulado ao longo do tempo sem revisao), e nao ha como conceder acesso elevado temporario para resposta a incidentes. No mes passado, um desenvolvedor junior acidentalmente excluiu um banco de dados de producao porque tinha acesso Contributor desnecessario concedido durante uma escalacao anterior que nunca foi revogada.
+O modelo de acesso atual esta quebrado: a maioria dos engenheiros tem Contributor em toda a assinatura Development, três lideres de equipe tem Owner em Production (acumulado ao longo do tempo sem revisao), e não ha como conceder acesso elevado temporário para resposta a incidentes. No mes passado, um desenvolvedor junior acidentalmente excluiu um banco de dados de produção porque tinha acesso Contributor desnecessario concedido durante uma escalação anterior que nunca foi revogada.
 
-O CTO determinou um modelo de autorizacao zero-trust: privilegio minimo por padrao, elevacao just-in-time quando necessario, e nenhum acesso permanente a producao para qualquer engenheiro. Sua tarefa e projetar e implementar parcialmente este modelo.
+O CTO determinou um modelo de autorização zero-trust: privilegio mínimo por padrão, elevação just-in-time quando necessário, e nenhum acesso permanente a produção para qualquer engenheiro. Sua tarefa é projetar é implementar parcialmente este modelo.
 
 ## Habilidades do Exame Cobertas
 
-- Recomendar uma solucao para autorizar acesso a recursos Azure
-- Recomendar uma solucao de gerenciamento de identidade
-- Recomendar uma solucao para gerenciamento de conformidade
+- Recomendar uma solução para autorizar acesso a recursos Azure
+- Recomendar uma solução de gerenciamento de identidade
+- Recomendar uma solução para gerenciamento de conformidade
 
 ## Tarefas de Design
 
@@ -48,68 +48,68 @@ Management Group (Fabrikam Root)
         |-- RG: shared-services-prod
 ```
 
-2. Determine em qual escopo cada atribuicao de funcao deve ser feita:
+2. Determine em qual escopo cada atribuicao de função deve ser feita:
    - Equipe de plataforma (gerenciamento completo de infraestrutura em todas as assinaturas)
    - Engenheiros de equipe de produto (leitura/escrita dentro dos resource groups de sua equipe apenas)
-   - Engenheiros de plantao (acesso elevado temporario a producao durante incidentes)
-   - Auditores de seguranca (acesso somente leitura em todas as assinaturas)
+   - Engenheiros de plantao (acesso elevado temporário a produção durante incidentes)
+   - Auditores de segurança (acesso somente leitura em todas as assinaturas)
    - Analistas de custos (acesso somente leitura a dados de faturamento e custos apenas)
 
-### Parte 2: Design de Funcao Personalizada
+### Parte 2: Design de Função Personalizada
 
-3. Projete uma funcao RBAC personalizada para engenheiros de equipe de produto que permita:
-   - Implantar e gerenciar App Services, Functions e Container Apps
+3. Projete uma função RBAC personalizada para engenheiros de equipe de produto que permita:
+   - Implantar é gerenciar App Services, Functions e Container Apps
    - Ler e escrever nos bancos de dados Azure SQL de sua equipe
-   - Visualizar (mas nao modificar) recursos de rede
-   - Nao pode excluir resource groups
-   - Nao pode modificar atribuicoes RBAC
-   - Nao pode acessar segredos do Key Vault (funcao separada para isso)
+   - Visualizar (mas não modificar) recursos de rede
+   - Não pode excluir resource groups
+   - Não pode modificar atribuicoes RBAC
+   - Não pode acessar segredos do Key Vault (função separada para isso)
 
-4. Projete uma funcao personalizada para "Incident Responder" que forneca:
+4. Projete uma função personalizada para "Incident Responder" que forneca:
    - Reiniciar qualquer recurso de computacao (VMs, App Services, AKS)
-   - Visualizar todas as configuracoes de recursos e logs
+   - Visualizar todas as configurações de recursos e logs
    - Escalar verticalmente/horizontalmente recursos de computacao
-   - Nao pode modificar dados ou excluir recursos
-   - Nao pode alterar configuracoes de rede ou seguranca
+   - Não pode modificar dados ou excluir recursos
+   - Não pode alterar configurações de rede ou segurança
 
 ### Parte 3: Attribute-Based Access Control (ABAC)
 
-5. Projete condicoes ABAC para acesso a storage accounts:
-   - Engenheiros so podem acessar blobs em containers marcados com o nome de sua equipe
-   - Containers de dados de producao so podem ser acessados por usuarios com um atributo especifico (ex.: `department = "platform-engineering"`)
-   - Todo acesso deve ser limitado a correspondencias especificas de blob index tags
+5. Projete condições ABAC para acesso a storage accounts:
+   - Engenheiros só podem acessar blobs em containers marcados com o nome de sua equipe
+   - Containers de dados de produção só podem ser acessados por usuários com um atributo específico (ex.: `department = "platform-engineering"`)
+   - Todo acesso deve ser limitado a correspondencias específicas de blob index tags
 
-6. Implemente uma condicao ABAC usando Azure CLI que restrinja o acesso a blobs com base no nome do container ou blob index tags.
+6. Implemente uma condição ABAC usando Azure CLI que restrinja o acesso a blobs com base no nome do container ou blob index tags.
 
 ### Parte 4: Design de Acesso Just-in-Time
 
-7. Projete o fluxo de trabalho de acesso just-in-time (JIT) para incidentes de producao:
+7. Projete o fluxo de trabalho de acesso just-in-time (JIT) para incidentes de produção:
    - Quem pode solicitar acesso elevado?
-   - Quais funcoes estao disponiveis para elevacao?
+   - Quais funções estao disponiveis para elevação?
    - Quem aprova a solicitacao?
-   - Duracao maxima do acesso elevado?
+   - Duracao máxima do acesso elevado?
    - Qual trilha de auditoria e gerada?
 
 8. Integre PIM for Azure Resources com o design RBAC:
-   - Atribuicoes elegiveis para a funcao Contributor de producao
+   - Atribuicoes elegiveis para a função Contributor de produção
    - Requisitos de ativacao (MFA, justificativa, aprovacao)
-   - Duracao maxima ativa (4 horas para incidentes)
-   - Configuracao de alertas quando qualquer funcao de producao e ativada
+   - Duracao máxima ativa (4 horas para incidentes)
+   - Configuração de alertas quando qualquer função de produção e ativada
 
 ### Parte 5: Deny Assignments e Resource Locks
 
-9. Projete deny assignments e resource locks para recursos criticos:
-   - Impedir qualquer usuario (incluindo Owners) de excluir o SQL Server de producao
-   - Impedir modificacao de network security groups em producao
+9. Projete deny assignments e resource locks para recursos críticos:
+   - Impedir qualquer usuário (incluindo Owners) de excluir o SQL Server de produção
+   - Impedir modificacao de network security groups em produção
    - Permitir apenas a equipe de plataforma modificar resource locks
 
-10. Implemente resource locks e um deny assignment (ou documente por que deny assignments sao limitados a aplicacoes gerenciadas).
+10. Implemente resource locks é um deny assignment (ou documente por que deny assignments sao limitados a aplicações gerenciadas).
 
 ### Parte 6: Implementar Prova de Conceito
 
-11. Crie uma definicao de funcao RBAC personalizada para a funcao "Product Team Engineer".
+11. Crie uma definicao de função RBAC personalizada para a função "Product Team Engineer".
 
-12. Crie uma atribuicao de funcao no escopo de resource group para um usuario de teste.
+12. Crie uma atribuicao de função no escopo de resource group para um usuário de teste.
 
 ## Criterios de Sucesso
 
@@ -128,24 +128,24 @@ Management Group (Fabrikam Root)
 ## Dicas
 
 <details>
-<summary>Dica 1: Melhores Praticas de Escopo RBAC</summary>
+<summary>Dica 1: Melhores Práticas de Escopo RBAC</summary>
 
-Atribua funcoes no escopo mais restrito que atenda ao requisito:
-- **Management Group**: Politicas em toda a organizacao (Security Reader para auditores)
+Atribua funções no escopo mais restrito que atenda ao requisito:
+- **Management Group**: Políticas em toda a organização (Security Reader para auditores)
 - **Subscription**: Acesso em todo o ambiente (Platform team Contributor em Dev)
 - **Resource Group**: Acesso com escopo de equipe (Engenheiros nos RGs de sua equipe)
-- **Resource**: Acesso a recurso unico (raramente necessario, dificil de gerenciar em escala)
+- **Resource**: Acesso a recurso único (raramente necessário, dificil de gerenciar em escala)
 
 Principios-chave:
-- Funcoes atribuidas em escopos pais sao herdadas por todos os filhos
-- Voce nao pode substituir um Allow herdado com um Deny em um escopo inferior (a menos que use deny assignments)
-- Use grupos para atribuicoes de funcao, nunca usuarios individuais
+- Funções atribuidas em escopos pais sao herdadas por todos os filhos
+- Você não pode substituir um Allow herdado com um Deny em um escopo inferior (a menos que use deny assignments)
+- Use grupos para atribuicoes de função, nunca usuários individuais
 - Convencao de nomes para grupos: `rbac-{scope}-{role}` (ex.: `rbac-prod-reader`)
 
 </details>
 
 <details>
-<summary>Dica 2: Criando Funcoes Personalizadas</summary>
+<summary>Dica 2: Criando Funções Personalizadas</summary>
 
 ```bash
 # Create custom role definition JSON
@@ -196,9 +196,9 @@ az role assignment create \
 </details>
 
 <details>
-<summary>Dica 3: Condicoes ABAC para Storage</summary>
+<summary>Dica 3: Condições ABAC para Storage</summary>
 
-O Azure ABAC (Attribute-Based Access Control) adiciona condicoes a atribuicoes de funcao. As condicoes usam atributos `@Resource` e `@Principal`:
+O Azure ABAC (Attribute-Based Access Control) adiciona condições a atribuicoes de função. As condições usam atributos `@Resource` e `@Principal`:
 
 ```bash
 # Assign Storage Blob Data Reader with ABAC condition
@@ -211,19 +211,19 @@ az role assignment create \
   --condition-version "2.0"
 ```
 
-As condicoes ABAC podem referenciar:
+As condições ABAC podem referenciar:
 - Nome do container: `@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:name]`
 - Blob index tags: `@Resource[Microsoft.Storage/storageAccounts/blobServices/containers/blobs/tags:Project<$key_case_sensitive$>]`
 - Atributos de ambiente (preview): `@Environment[isPrivateLink]`
 
-As condicoes suportam: `StringEquals`, `StringNotEquals`, `StringLike`, `StringStartsWith`, e operadores booleanos (`AND`, `OR`, `NOT`).
+As condições suportam: `StringEquals`, `StringNotEquals`, `StringLike`, `StringStartsWith`, e operadores booleanos (`AND`, `OR`, `NOT`).
 
 </details>
 
 <details>
 <summary>Dica 4: Resource Locks</summary>
 
-Resource locks impedem exclusao ou modificacao acidental:
+Resource locks impedem exclusão ou modificacao acidental:
 
 ```bash
 # Create a CanNotDelete lock on production SQL Server
@@ -245,12 +245,12 @@ az lock create \
   --notes "Network security - change requires CAB approval"
 ```
 
-Importante: Permissoes de gerenciamento de locks:
-- Criar/excluir locks requer acoes `Microsoft.Authorization/locks/*`
-- Apenas Owner e User Access Administrator tem isso por padrao
-- Voce pode criar uma funcao personalizada que nega `Microsoft.Authorization/locks/delete` para impedir remocao de locks
+Importante: Permissões de gerenciamento de locks:
+- Criar/excluir locks requer ações `Microsoft.Authorization/locks/*`
+- Apenas Owner e User Access Administrator tem isso por padrão
+- Você pode criar uma função personalizada que nega `Microsoft.Authorization/locks/delete` para impedir remocao de locks
 
-Nota: Deny assignments nao podem ser criados diretamente por usuarios. Eles sao criados apenas por Azure Blueprints e Azure Managed Applications para proteger recursos gerenciados.
+Nota: Deny assignments não podem ser criados diretamente por usuários. Eles sao criados apenas por Azure Blueprints e Azure Managed Applications para proteger recursos gerenciados.
 
 </details>
 
@@ -259,18 +259,18 @@ Nota: Deny assignments nao podem ser criados diretamente por usuarios. Eles sao 
 
 PIM for Azure Resources habilita acesso just-in-time em qualquer escopo RBAC:
 
-1. **Torne funcoes elegiveis (nao ativas):**
-   - Engenheiros de plantao recebem Contributor "elegivel" em resource groups de producao
-   - Eles veem a funcao no portal PIM mas nao podem usa-la ate ativa-la
+1. **Torne funções elegiveis (não ativas):**
+   - Engenheiros de plantao recebem Contributor "elegivel" em resource groups de produção
+   - Eles veem a função no portal PIM mas não podem usa-la até ativa-la
 
 2. **Requisitos de ativacao:**
-   - MFA obrigatorio
+   - MFA obrigatório
    - Texto de justificativa (vinculado ao ticket do incidente)
    - Aprovacao do lider da equipe de plataforma
-   - Duracao maxima: 4 horas
+   - Duracao máxima: 4 horas
 
 3. **Monitoramento:**
-   - Alerta dispara quando qualquer funcao de producao e ativada
+   - Alerta dispara quando qualquer função de produção e ativada
    - Log de auditoria captura quem ativou, quando, justificativa e aprovador
    - O acesso expira automaticamente apos a duracao configurada
 
@@ -288,33 +288,33 @@ Configure no Portal: Entra ID > Privileged Identity Management > Azure Resources
 - [Deny assignments in Azure](https://learn.microsoft.com/en-us/azure/role-based-access-control/deny-assignments)
 - [Best practices for Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/best-practices)
 
-## Verificacao de Conhecimento
+## Verificação de Conhecimento
 
 <details>
-<summary>1. Um desenvolvedor junior precisa implantar App Services no resource group de desenvolvimento de sua equipe, mas nao deve poder excluir o resource group ou modificar recursos de rede. A funcao Contributor integrada e muito ampla. O que voce deve recomendar?</summary>
+<summary>1. Um desenvolvedor junior precisa implantar App Services no resource group de desenvolvimento de sua equipe, mas não deve poder excluir o resource group ou modificar recursos de rede. A função Contributor integrada e muito ampla. O que você deve recomendar?</summary>
 
-**Crie uma funcao RBAC personalizada** com escopo na assinatura de desenvolvimento que inclua `Microsoft.Web/sites/*` e `Microsoft.Web/serverFarms/*` em Actions, enquanto exclui explicitamente `Microsoft.Resources/subscriptions/resourceGroups/delete` e `Microsoft.Network/*/write` em NotActions. Funcoes personalizadas permitem criar acesso de privilegio minimo que corresponde exatamente ao que o engenheiro precisa. Atribua esta funcao no escopo de resource group (nao assinatura) para limitar o raio de impacto.
+**Crie uma função RBAC personalizada** com escopo na assinatura de desenvolvimento que inclua `Microsoft.Web/sites/*` e `Microsoft.Web/serverFarms/*` em Actions, enquanto exclui explicitamente `Microsoft.Resources/subscriptions/resourceGroups/delete` e `Microsoft.Network/*/write` em NotActions. Funções personalizadas permitem criar acesso de privilegio mínimo que corresponde exatamente ao que o engenheiro precisa. Atribua esta função no escopo de resource group (não assinatura) para limitar o raio de impacto.
 
 </details>
 
 <details>
-<summary>2. A Fabrikam quer impedir qualquer usuario, incluindo Owners de assinatura, de excluir o SQL Server de producao. Quais mecanismos conseguem isso?</summary>
+<summary>2. A Fabrikam quer impedir qualquer usuário, incluindo Owners de assinatura, de excluir o SQL Server de produção. Quais mecanismos conseguem isso?</summary>
 
-**Use um resource lock CanNotDelete** no recurso SQL Server. Resource locks se aplicam a todos os usuarios independentemente de sua funcao RBAC (mesmo Owners nao podem excluir um recurso bloqueado sem primeiro remover o lock). Para impedir remocao nao autorizada do lock, restrinja a permissao `Microsoft.Authorization/locks/delete` apenas a equipe de plataforma, garantindo que outras funcoes nao incluam esta acao. Nota: Deny assignments sao criados apenas por Azure Blueprints e Managed Applications; nao podem ser criados manualmente por administradores.
-
-</details>
-
-<details>
-<summary>3. Cinco equipes de produto precisam cada uma de acesso aos seus proprios containers de armazenamento, mas nao devem ver dados de outras equipes. Todos os containers estao na mesma storage account. Como voce deve projetar o controle de acesso?</summary>
-
-**Use condicoes ABAC em atribuicoes de funcao.** Atribua a funcao "Storage Blob Data Contributor" a cada grupo de equipe no escopo da storage account, mas adicione uma condicao restringindo o acesso a containers nomeados com o prefixo de sua equipe (ex.: `@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:name] StringStartsWith 'team-alpha-'`). Isso evita criar cinco storage accounts separadas ou usar gerenciamento complexo de tokens SAS. Cada equipe ve apenas seus containers apesar de compartilhar a mesma conta.
+**Use um resource lock CanNotDelete** no recurso SQL Server. Resource locks se aplicam a todos os usuários independentemente de sua função RBAC (mesmo Owners não podem excluir um recurso bloqueado sem primeiro remover o lock). Para impedir remocao não autorizada do lock, restrinja a permissão `Microsoft.Authorization/locks/delete` apenas a equipe de plataforma, garantindo que outras funções não incluam esta acao. Nota: Deny assignments sao criados apenas por Azure Blueprints e Managed Applications; não podem ser criados manualmente por administradores.
 
 </details>
 
 <details>
-<summary>4. Durante um incidente de producao, um engenheiro de plantao precisa de acesso Contributor a um resource group de producao por ate 4 horas. Como isso deve ser projetado para manter o privilegio minimo?</summary>
+<summary>3. Cinco equipes de produto precisam cada uma de acesso aos seus proprios containers de armazenamento, mas não devem ver dados de outras equipes. Todos os containers estao na mesma storage account. Como você deve projetar o controle de acesso?</summary>
 
-**Use PIM for Azure Resources com atribuicoes de funcao elegiveis.** Configure a funcao Contributor de producao como "elegivel" (nao permanentemente ativa) para engenheiros de plantao. Quando um incidente ocorre, o engenheiro ativa a funcao atraves do PIM, fornecendo justificativa e numero do ticket do incidente. Defina a duracao maxima de ativacao para 4 horas com expiracao automatica. Exija MFA para ativacao e opcionalmente exija aprovacao de um lider da equipe de plataforma. Isso fornece acesso just-in-time, com duracao limitada e auditado, sem privilegios permanentes.
+**Use condições ABAC em atribuicoes de função.** Atribua a função "Storage Blob Data Contributor" a cada grupo de equipe no escopo da storage account, mas adicione uma condição restringindo o acesso a containers nomeados com o prefixo de sua equipe (ex.: `@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:name] StringStartsWith 'team-alpha-'`). Isso evita criar cinco storage accounts separadas ou usar gerenciamento complexo de tokens SAS. Cada equipe ve apenas seus containers apesar de compartilhar a mesma conta.
+
+</details>
+
+<details>
+<summary>4. Durante um incidente de produção, um engenheiro de plantao precisa de acesso Contributor a um resource group de produção por até 4 horas. Como isso deve ser projetado para manter o privilegio mínimo?</summary>
+
+**Use PIM for Azure Resources com atribuicoes de função elegiveis.** Configure a função Contributor de produção como "elegivel" (não permanentemente ativa) para engenheiros de plantao. Quando um incidente ocorre, o engenheiro ativa a função atraves do PIM, fornecendo justificativa e número do ticket do incidente. Defina a duracao máxima de ativacao para 4 horas com expiracao automática. Exija MFA para ativacao é opcionalmente exija aprovacao de um lider da equipe de plataforma. Isso fornece acesso just-in-time, com duracao limitada e auditado, sem privilegios permanentes.
 
 </details>
 
@@ -338,4 +338,4 @@ az group delete --name rg-rbac-poc --yes --no-wait
 
 ---
 
-**Proximo**: [Challenge 07: Design Authorization for On-Premises Resources](/docs/az-305/identity-governance-monitoring/challenge-07)
+**Próximo**: [Challenge 07: Design Authorization for On-Premises Resources](/docs/az-305/identity-governance-monitoring/challenge-07)
