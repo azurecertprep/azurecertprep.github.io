@@ -19,7 +19,7 @@ A HealthBridge Medical Systems é uma empresa de tecnologia em saúde que fornec
 
 No mes passado, um desenvolvedor junior acidentalmente criou uma storage account com acesso anonimo a blobs habilitado em uma subscription de produção. A configuração incorreta foi descoberta 72 horas depois durante uma verificação de rotina, resultando em uma notificação de violacao reportavel. O CISO determinou que a equipe de conformidade implemente guardrails automatizados que impedem a criação de recursos não conformes e auto-remedeiem desvios onde possível. A equipe também deve produzir um relatório mensal de conformidade para o conselho mostrando aderencia aos controles HIPAA e padrões internos.
 
-A equipe de conformidade consiste em apenas duas pessoas e não pode revisar manualmente cada implantacao. Eles precisam de uma abordagem de policy-as-code que escale com o crescimento da organização (planejam dobrar sua presença no Azure em 18 meses). Algumas equipes de desenvolvimento tem exceções legitimas - a equipe de telemedicina precisa de endereços IP publicos para seus servidores de sinalizacao WebRTC, e a equipe de ciencia de dados precisa de SKUs de VM com GPU que não estao na lista padrão aprovada. A solução deve acomodar essas exceções sem comprometer a postura geral de conformidade.
+A equipe de conformidade consiste em apenas duas pessoas e não pode revisar manualmente cada implantacao. Eles precisam de uma abordagem de policy-as-code que escale com o crescimento da organização (planejam dobrar sua presença no Azure em 18 meses). Algumas equipes de desenvolvimento tem exceções legitimas - a equipe de telemedicina precisa de endereços IP públicos para seus servidores de sinalizacao WebRTC, e a equipe de ciencia de dados precisa de SKUs de VM com GPU que não estao na lista padrão aprovada. A solução deve acomodar essas exceções sem comprometer a postura geral de conformidade.
 
 ## Habilidades do Exame Cobertas
 
@@ -34,7 +34,7 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
    - Storage accounts não devem permitir acesso anonimo a blobs (deny vs. audit vs. modify)
    - Todas as VMs devem usar apenas SKUs aprovados (deny com lista permitida)
    - Todo armazenamento deve usar chaves de criptografia gerenciadas pelo cliente (audit vs. deny)
-   - Sem endereços IP publicos em VMs (deny com mecanismo de exceção)
+   - Sem endereços IP públicos em VMs (deny com mecanismo de exceção)
    - Logs de diagnóstico devem ser enviados ao Log Analytics central (deployIfNotExists)
 3. Projete a hierarquia de atribuicao de políticas. Determine quais políticas se aplicam em qual nível de management group ou subscription, considerando que algumas políticas devem ser universais enquanto outras sao específicas de ambiente (ex.: mais rigorosas em produção do que em desenvolvimento).
 4. Defina um processo para criar é gerenciar definicoes de políticas customizadas versus usar políticas integradas. Identifique quais requisitos da HealthBridge sao atendidos por políticas integradas e quais requerem definicoes customizadas.
@@ -55,7 +55,7 @@ A equipe de conformidade consiste em apenas duas pessoas e não pode revisar man
 
 11. Projete a solução de dashboard e relatórios de conformidade. Especifique como o relatório mensal do conselho e gerado, quais metricas inclui (percentual de conformidade por iniciativa, tendencia ao longo do tempo, principais violacoes) e como o dashboard de conformidade regulatoria no Microsoft Defender for Cloud se integra com o Azure Policy.
 12. Defina alertas para violacoes críticas de conformidade. Determine quais violacoes disparam alertas imediatos (ex.: acesso anonimo a blobs habilitado) versus quais sao aceitaveis para incluir em relatórios semanais de conformidade.
-13. Projete a trilha de auditoria para evidencias de conformidade. Especifique como demonstrar aos auditores HIPAA que controles sao continuamente aplicados (retencao de Activity Log, logs de avaliação de políticas, historico de isencoes).
+13. Projete a trilha de auditoria para evidencias de conformidade. Especifique como demonstrar aos auditores HIPAA que controles sao continuamente aplicados (retencao de Activity Log, logs de avaliação de políticas, histórico de isencoes).
 
 ## Criterios de Sucesso
 
@@ -83,7 +83,7 @@ Escolha efeitos com base no impacto e urgencia: Use `deny` para violacoes de alt
 <details>
 <summary>Dica 2: Iniciativas Integradas vs. Customizadas</summary>
 
-O Azure inclui uma iniciativa integrada de conformidade regulatoria "HIPAA HITRUST" com mais de 100 definicoes de políticas. No entanto, esta iniciativa pode ser muito ampla (políticas que você não precisa) ou muito restrita (faltando seus padrões internos). A abordagem recomendada: (1) Atribua a iniciativa HIPAA integrada para visibilidade no dashboard de conformidade regulatoria, (2) Crie uma iniciativa customizada para padrões internos que referência uma mistura de definicoes de políticas integradas (onde existem) e definicoes customizadas (para requisitos únicos). Isso oferece cobertura regulatoria mais aplicação interna em uma única visao.
+O Azure inclui uma iniciativa integrada de conformidade regulatoria "HIPAA HITRUST" com mais de 100 definicoes de políticas. No entanto, esta iniciativa pode ser muito ampla (políticas que você não precisa) ou muito restrita (faltando seus padrões internos). A abordagem recomendada: (1) Atribua a iniciativa HIPAA integrada para visibilidade no dashboard de conformidade regulatoria, (2) Crie uma iniciativa customizada para padrões internos que referência uma mistura de definicoes de políticas integradas (onde existem) e definicoes customizadas (para requisitos únicos). Isso oferece cobertura regulatoria mais aplicação interna em uma única visão.
 
 </details>
 
@@ -104,7 +104,7 @@ Políticas `deployIfNotExists` e `modify` requerem uma managed identity para exe
 <details>
 <summary>Dica 5: Arquitetura de Relatorios de Conformidade</summary>
 
-Combine três fontes de dados para relatórios abrangentes: (1) Estados de conformidade do Azure Policy (disponiveis via consulta Azure Resource Graph: `policyResources | where type == "microsoft.policyinsights/policystates"`), (2) Dashboard de conformidade regulatoria do Microsoft Defender for Cloud (mapeia políticas para IDs de controle regulatorio), (3) Entradas do Activity Log para mudanças de isencao e modificacoes de atribuicao de políticas. Exporte dados de conformidade de Policy para um workspace de Log Analytics para tendencias historicas. Use Azure Workbooks ou Power BI para o relatório mensal do conselho.
+Combine três fontes de dados para relatórios abrangentes: (1) Estados de conformidade do Azure Policy (disponíveis via consulta Azure Resource Graph: `policyResources | where type == "microsoft.policyinsights/policystates"`), (2) Dashboard de conformidade regulatoria do Microsoft Defender for Cloud (mapeia políticas para IDs de controle regulatorio), (3) Entradas do Activity Log para mudanças de isencao e modificacoes de atribuicao de políticas. Exporte dados de conformidade de Policy para um workspace de Log Analytics para tendencias historicas. Use Azure Workbooks ou Power BI para o relatório mensal do conselho.
 
 </details>
 
@@ -135,9 +135,9 @@ Combine três fontes de dados para relatórios abrangentes: (1) Estados de confo
 </details>
 
 <details>
-<summary>3. A equipe de telemedicina tem uma necessidade permanente de IPs publicos em seus servidores WebRTC. A equipe de conformidade quer essa exceção documentada mas não quer que ela impacte negativamente o percentual de conformidade da organização. Qual tipo de isencao devem usar?</summary>
+<summary>3. A equipe de telemedicina tem uma necessidade permanente de IPs públicos em seus servidores WebRTC. A equipe de conformidade quer essa exceção documentada mas não quer que ela impacte negativamente o percentual de conformidade da organização. Qual tipo de isencao devem usar?</summary>
 
-**Isencao Mitigated.** Uma isencao `Mitigated` indica que um controle compensatorio existe (neste caso, os IPs publicos sao protegidos por NSGs, proteção DDoS e WAF). Isencoes mitigated excluem o recurso da avaliação de política inteiramente, entao não aparece como não conforme. Uma isencao `Waiver` ainda mostraria o recurso como não conforme mas não o contaria no percentual de conformidade. Como isso é permanente (não uma exceção temporária), `Mitigated` e apropriado com documentação dos controles compensatorios.
+**Isencao Mitigated.** Uma isencao `Mitigated` indica que um controle compensatorio existe (neste caso, os IPs públicos sao protegidos por NSGs, proteção DDoS e WAF). Isencoes mitigated excluem o recurso da avaliação de política inteiramente, entao não aparece como não conforme. Uma isencao `Waiver` ainda mostraria o recurso como não conforme mas não o contaria no percentual de conformidade. Como isso é permanente (não uma exceção temporária), `Mitigated` e apropriado com documentação dos controles compensatorios.
 
 </details>
 

@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A BattleForge Games é uma empresa global de jogos mobile com 25 milhoes de jogadores ativos diarios na America do Norte, Europa e Asia-Pacifico. Seu jogo principal armazena perfis de jogadores, inventário, dados de progressao e estado de partida em tempo real no Azure Cosmos DB (NoSQL API) com multi-region writes. Ativos do jogo (texturas, audio, modelos 3D totalizando 5 TB) sao servidos a partir do Azure Blob Storage atraves do Azure CDN para carregamento rápido.
+A BattleForge Games é uma empresa global de jogos mobile com 25 milhões de jogadores ativos diarios na América do Norte, Europa e Asia-Pacifico. Seu jogo principal armazena perfis de jogadores, inventário, dados de progressao e estado de partida em tempo real no Azure Cosmos DB (NoSQL API) com multi-region writes. Ativos do jogo (texturas, audio, modelos 3D totalizando 5 TB) sao servidos a partir do Azure Blob Storage através do Azure CDN para carregamento rápido.
 
-A industria de games demanda disponibilidade extrema: se jogadores não conseguem acessar seus perfis ou ativos do jogo, eles mudam para um concorrente em minutos. A BattleForge requer que perfis de jogadores sejam graváveis a partir de qualquer região com menos de 100ms de latência, ativos do jogo devem estar disponiveis mesmo se uma região Azure inteira cair, e atualizações de estado de partida devem ser consistentes entre todos os jogadores em uma partida (independente de sua localização geográfica).
+A industria de games demanda disponibilidade extrema: se jogadores não conseguem acessar seus perfis ou ativos do jogo, eles mudam para um concorrente em minutos. A BattleForge requer que perfis de jogadores sejam graváveis a partir de qualquer região com menos de 100ms de latência, ativos do jogo devem estar disponíveis mesmo se uma região Azure inteira cair, e atualizações de estado de partida devem ser consistentes entre todos os jogadores em uma partida (independente de sua localização geográfica).
 
 O principal desafio técnico e equilibrar consistência vs. disponibilidade no Cosmos DB. Multi-region writes fornecem a menor latência mas introduzem complexidade de resolução de conflitos. A camada de armazenamento deve fornecer acesso continuo a 5 TB de ativos do jogo mesmo durante falhas regionais, sem que jogadores experimentem atrasos de carregamento. A BattleForge tem um orcamento de $8.000/mes para sua camada de dados (excluindo computacao).
 
@@ -48,7 +48,7 @@ O principal desafio técnico e equilibrar consistência vs. disponibilidade no C
 | Eventual | ? | ? | ? |
 
 3. Justifique sua escolha de consistência considerando:
-   - Session consistency para perfis de jogadores: jogador ve suas proprias escritas imediatamente, outros veem eventualmente
+   - Session consistency para perfis de jogadores: jogador ve suas próprias escritas imediatamente, outros veem eventualmente
    - Strong consistency para estado de partida: todos os jogadores devem ver o mesmo estado do jogo
    - Limitacao: Strong consistency NAO esta disponível com multi-region writes
    - Qual alternativa alcanca consistência de partida sem strong consistency?
@@ -104,7 +104,7 @@ az cosmosdb create \
 | RA-GZRS | 6 (3 ZRS + 3 LRS) | 2 | Sim (zona + região) | ~2,5x |
 
 9. Selecione a redundância apropriada para ativos do jogo considerando:
-   - Ativos devem estar disponiveis mesmo se uma região completa falhar
+   - Ativos devem estar disponíveis mesmo se uma região completa falhar
    - Acesso de leitura é necessário imediatamente (não pode esperar por failover)
    - RA-GZRS fornece a maior disponibilidade mas com custo mais alto
    - RA-GRS é suficiente dado que CDN caching cobre a maioria dos cenários de leitura?
@@ -164,11 +164,11 @@ Limitacao crítica: **Strong consistency NAO esta disponível quando multi-regio
 
 Para contas com multi-region write, a maior consistência disponível e Bounded Staleness:
 - Bounded Staleness: garante que leituras não estao mais que K versoes ou T segundos atras das escritas
-- Session: garante que uma única sessão de cliente ve suas proprias escritas (escolha mais popular)
+- Session: garante que uma única sessão de cliente ve suas próprias escritas (escolha mais popular)
 - Consistent Prefix: garante que leituras nunca veem escritas fora de ordem
 - Eventual: sem garantias de ordenacao, menor latência
 
-Para perfis de jogadores: Session consistency é ideal (jogadores veem suas proprias mudanças imediatamente).
+Para perfis de jogadores: Session consistency é ideal (jogadores veem suas próprias mudanças imediatamente).
 Para estado de partida: Considere uma abordagem single-write-region com Strong consistency para o banco de dados de partida, ou use um mecanismo externo de coordenacao.
 
 </details>
@@ -193,7 +193,7 @@ Quando duas regiões escrevem no mesmo documento simultaneamente, um conflito oc
 **Conflict feed (resolução manual)**:
 - Conflitos sao escritos em um conflict feed para resolução em nível de aplicação
 - Aplicação le e resolve conflitos de forma assincrona
-- Mais flexivel mas maior latência para resolução
+- Mais flexível mas maior latência para resolução
 
 Para perfis de jogadores da BattleForge: LWW com `_ts` e apropriado. Se o jogador atualizar seu perfil de dois dispositivos simultaneamente, a última atualização vence. Para inventário, custom merge (combinar ambas mudanças de inventário) previne perda de itens.
 
@@ -208,7 +208,7 @@ Ambos fornecem disponibilidade de leitura durante interrupcoes, mas servem propo
 - Endpoint secundário sempre disponível para leituras: `stbattleforgeassets-secondary.blob.core.windows.net`
 - RPO: até 15 minutos (defasagem de replicação assincrona)
 - Sem caching - toda leitura vai para o armazenamento
-- 5 TB completos disponiveis do secundário o tempo todo
+- 5 TB completos disponíveis do secundário o tempo todo
 - Use como failover de origem do CDN, não como endpoint direto para jogadores
 
 **Azure CDN**:
@@ -232,7 +232,7 @@ Consideracoes de custo de multi-region write do Cosmos DB:
 - Alternativa: Use autoscale para evitar super-provisionamento (RU/s máximo, pague pelo uso real)
 
 Estimativa de custo para BattleForge:
-- Operações de perfil de jogador: ~5.000 RU/s em media (picos de 15.000 durante eventos)
+- Operações de perfil de jogador: ~5.000 RU/s em média (picos de 15.000 durante eventos)
 - 3 regiões de escrita: 15.000 RU/s base provisionados
 - A $0,008 por 100 RU/s/hora: 15.000/100 x $0,008 x 730 horas = ~$876/mes
 - Com autoscale (max 50.000 RU/s): cobrado a 10% do máximo quando ocioso = $292/mes base

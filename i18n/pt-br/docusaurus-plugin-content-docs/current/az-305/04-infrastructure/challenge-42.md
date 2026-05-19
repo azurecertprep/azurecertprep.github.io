@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A CloudScale Inc. opera uma plataforma de microsservicos com 30 serviços implantados em 4 ambientes (desenvolvimento, teste, staging, produção). Cada serviço mantem seus proprios arquivos de configuração, levando a desvios de configuração que causaram 3 incidentes de produção no último trimestre. Um incidente ocorreu quando um desenvolvedor alterou uma connection string em staging que foi acidentalmente promovida para produção. Outro aconteceu quando uma feature flag foi habilitada globalmente em vez de para um rollout direcionado de 5%.
+A CloudScale Inc. opera uma plataforma de microsservicos com 30 serviços implantados em 4 ambientes (desenvolvimento, teste, staging, produção). Cada serviço mantem seus próprios arquivos de configuração, levando a desvios de configuração que causaram 3 incidentes de produção no último trimestre. Um incidente ocorreu quando um desenvolvedor alterou uma connection string em staging que foi acidentalmente promovida para produção. Outro aconteceu quando uma feature flag foi habilitada globalmente em vez de para um rollout direcionado de 5%.
 
-A equipe de plataforma precisa de uma solução centralizada de gerenciamento de configuração que forneca: uma única fonte de verdade para toda a configuração de serviços, overrides específicos de ambiente sem mudanças de código, feature flags com capacidades de rollout gradual (baseado em porcentagem, direcionamento por usuário, janela temporal), kill switches instantaneos para recursos problematicos, é uma trilha de auditoria de todas as mudanças de configuração.
+A equipe de plataforma precisa de uma solução centralizada de gerenciamento de configuração que forneça: uma única fonte de verdade para toda a configuração de serviços, overrides específicos de ambiente sem mudanças de código, feature flags com capacidades de rollout gradual (baseado em porcentagem, direcionamento por usuário, janela temporal), kill switches instantaneos para recursos problematicos, é uma trilha de auditoria de todas as mudanças de configuração.
 
-Além disso, valores de configuração sensiveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso apropriados, enquanto configurações não-sensiveis (feature flags, timeouts, tamanhos de pool de conexão) devem ser facilmente gerenciáveis por product owners sem intervencao de engenharia.
+Além disso, valores de configuração sensíveis (senhas de banco de dados, API keys, certificados) devem permanecer no Azure Key Vault com controles de acesso apropriados, enquanto configurações não-sensíveis (feature flags, timeouts, tamanhos de pool de conexão) devem ser facilmente gerenciáveis por product owners sem intervencao de engenharia.
 
 ## Habilidades do Exame Cobertas
 
@@ -38,8 +38,8 @@ Além disso, valores de configuração sensiveis (senhas de banco de dados, API 
 
 ### Parte 2: Integrar Referencias do Key Vault
 
-4. Projete uma solução que armazene valores sensiveis no Azure Key Vault enquanto os referência a partir do App Configuration. Documente como as referências do Key Vault funcionam e como as aplicações as resolvem em tempo de execução.
-5. Defina limites de controle de acesso: quais equipes podem gerenciar configuração não-sensivel (product owners) vs secrets (equipe de segurança) vs feature flags (lideres de engenharia).
+4. Projete uma solução que armazene valores sensíveis no Azure Key Vault enquanto os referência a partir do App Configuration. Documente como as referências do Key Vault funcionam e como as aplicações as resolvem em tempo de execução.
+5. Defina limites de controle de acesso: quais equipes podem gerenciar configuração não-sensível (product owners) vs secrets (equipe de segurança) vs feature flags (lideres de engenharia).
 6. Projete uma estratégia de rotacao de secrets que atualize secrets do Key Vault sem exigir reinicializacao da aplicação. Documente como os intervalos de atualização de configuração interagem com a resolução de referências do Key Vault.
 
 ### Parte 3: Gerenciamento de Features e Rollout Gradual
@@ -131,9 +131,9 @@ Snapshots do App Configuration criam uma copia imutável e point-in-time de key-
 </details>
 
 <details>
-<summary>2. Trinta microsservicos consultam o App Configuration a cada 30 segundos. O configuration store comeca a limitar requisicoes. Qual mudança de design reduz o volume de requisicoes mantendo o frescor?</summary>
+<summary>2. Trinta microsservicos consultam o App Configuration a cada 30 segundos. O configuration store começa a limitar requisicoes. Qual mudança de design reduz o volume de requisicoes mantendo o frescor?</summary>
 
-**Implemente o padrão sentinel key com notificações push do Event Grid.** Em vez de 30 serviços cada um consultando N chaves a cada 30 segundos, cada serviço observa apenas uma única chave sentinela. Isso reduz o polling de 30 x N para 30 x 1 requisicoes por intervalo. Melhor ainda, mude para atualização baseada em push usando Event Grid: o App Configuration emite eventos em mudanças de chave, serviços assinam via Event Grid, e só atualizam quando realmente notificados de mudanças. Isso elimina o polling periodico inteiramente e fornece propagacao quase instantanea.
+**Implemente o padrão sentinel key com notificações push do Event Grid.** Em vez de 30 serviços cada um consultando N chaves a cada 30 segundos, cada serviço observa apenas uma única chave sentinela. Isso reduz o polling de 30 x N para 30 x 1 requisicoes por intervalo. Melhor ainda, mude para atualização baseada em push usando Event Grid: o App Configuration emite eventos em mudanças de chave, serviços assinam via Event Grid, e só atualizam quando realmente notificados de mudanças. Isso elimina o polling periódico inteiramente e fornece propagacao quase instantanea.
 
 </details>
 

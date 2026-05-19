@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A GlobalRetail Corp opera um estate de dados empresarial de 30 bancos de dados suportando sua plataforma de e-commerce, gerenciamento de cadeia de suprimentos e sistemas de relatórios financeiros. O inventário de bancos de dados inclui: 15 instâncias SQL Server (versoes 2012 a 2022, variando de 50GB a 2TB), 8 bancos de dados PostgreSQL (versoes 11-15, suportando seu catalogo de produtos e serviços de busca), 5 bancos de dados MySQL (suportando CMS legado e plataformas de marketing) e 2 bancos de dados Oracle (suportando seus sistemas ERP e de gerenciamento de armazem).
+A GlobalRetail Corp opera um estate de dados empresarial de 30 bancos de dados suportando sua plataforma de e-commerce, gerenciamento de cadeia de suprimentos e sistemas de relatórios financeiros. O inventário de bancos de dados inclui: 15 instâncias SQL Server (versoes 2012 a 2022, variando de 50GB a 2TB), 8 bancos de dados PostgreSQL (versoes 11-15, suportando seu catálogo de produtos e serviços de busca), 5 bancos de dados MySQL (suportando CMS legado e plataformas de marketing) e 2 bancos de dados Oracle (suportando seus sistemas ERP e de gerenciamento de armazem).
 
 Os requisitos de migração variam significativamente entre bancos de dados: o banco de dados de e-commerce (SQL Server 2022, 2TB) serve 50.000 transações por hora e não pode tolerar mais de 5 minutos de inatividade. O banco de dados de relatórios financeiros requer um período completo de execução paralela para conformidade de auditoria. Os bancos de dados CMS legados em MySQL sao candidatos para modernizacao. O banco de dados Oracle ERP tem stored procedures complexas com sintaxe específica de Oracle que complica a migração.
 
@@ -106,7 +106,7 @@ A equipe de DBAs precisa de uma estratégia de migração abrangente que enderec
 <details>
 <summary>Dica 1: Selecao de Alvo Azure SQL</summary>
 
-Escolha **Azure SQL Database** para: aplicações cloud-born, workloads de banco de dados único, cenários serverless/sensíveis a custo e aplicações que não usam consultas cross-database ou SQL Agent. Escolha **Azure SQL Managed Instance** para: lift-and-shift de workloads SQL Server, aplicações usando consultas cross-database, linked servers, CLR ou SQL Agent. Escolha **SQL Server em Azure VM** para: aplicações que requerem acesso completo em nível de SO, versoes específicas de SQL Server ou recursos não disponiveis em MI (como FILESTREAM, software de terceiros instalado junto com SQL Server).
+Escolha **Azure SQL Database** para: aplicações cloud-born, workloads de banco de dados único, cenários serverless/sensíveis a custo e aplicações que não usam consultas cross-database ou SQL Agent. Escolha **Azure SQL Managed Instance** para: lift-and-shift de workloads SQL Server, aplicações usando consultas cross-database, linked servers, CLR ou SQL Agent. Escolha **SQL Server em Azure VM** para: aplicações que requerem acesso completo em nível de SO, versoes específicas de SQL Server ou recursos não disponíveis em MI (como FILESTREAM, software de terceiros instalado junto com SQL Server).
 
 </details>
 
@@ -127,7 +127,7 @@ Migracoes de Oracle para Azure sao complexas devido a: stored procedures PL/SQL 
 <details>
 <summary>Dica 4: Serviço de Migração PostgreSQL</summary>
 
-Azure Database for PostgreSQL tem um serviço de migração integrado (separado do DMS) que suporta migração online e offline de PostgreSQL on-premises, AWS RDS e outras fontes cloud. Para migração online, ele usa replicação lógica (requer PostgreSQL 10+ com logical decoding habilitado). Consideracoes-chave: todas as tabelas devem ter chaves primarias para migração online, large objects (LOBs) requerem tratamento especial, e algumas extensões podem não estar disponiveis no Azure Database for PostgreSQL Flexible Server.
+Azure Database for PostgreSQL tem um serviço de migração integrado (separado do DMS) que suporta migração online e offline de PostgreSQL on-premises, AWS RDS e outras fontes cloud. Para migração online, ele usa replicação lógica (requer PostgreSQL 10+ com logical decoding habilitado). Consideracoes-chave: todas as tabelas devem ter chaves primarias para migração online, large objects (LOBs) requerem tratamento especial, e algumas extensões podem não estar disponíveis no Azure Database for PostgreSQL Flexible Server.
 
 </details>
 

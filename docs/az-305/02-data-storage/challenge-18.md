@@ -142,56 +142,251 @@ Autoscale throughput automatically scales between 10% and 100% of a configured m
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab demonstrates that Cosmos DB architectural decisions -- partition key choice, consistency levels, and TTL -- produce measurable behavioral differences you can observe directly. You will not just create resources; you will see how design choices manifest as RU cost, query performance, and automatic data lifecycle management.
 
-1. Create a resource group for this lab:
+### Step 1: Create the Cosmos DB account and container
 
 ```bash
-az group create --name rg-az305-challenge18 --location eastus
+az group create \
+  --name rg-az305-challenge18 \
+  --location eastus
 ```
 
-2. Deploy an Azure Cosmos DB account (NoSQL API, serverless):
+```bash
+COSMOS_ACCOUNT="cosmos-ch18-${RANDOM}"
+```
 
 ```bash
-az cosmosdb create --name cosmos-sensorgrid-lab --resource-group rg-az305-challenge18 \
+az cosmosdb create \
+  --name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
   --locations regionName=eastus failoverPriority=0 \
-  --capabilities EnableServerless
+  --capabilities EnableServerless \
+  --default-consistency-level Session
 ```
 
-3. Create a database and container with a partition key:
-
 ```bash
-az cosmosdb sql database create --account-name cosmos-sensorgrid-lab \
-  --resource-group rg-az305-challenge18 --name SensorData
-
-az cosmosdb sql container create --account-name cosmos-sensorgrid-lab \
-  --resource-group rg-az305-challenge18 --database-name SensorData \
-  --name Telemetry --partition-key-path "/deviceId" \
-  --ttl 7776000
+az cosmosdb sql database create \
+  --account-name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --name SensorData
 ```
 
-4. Verify the deployment and container configuration:
-
 ```bash
-az cosmosdb sql container show --account-name cosmos-sensorgrid-lab \
-  --resource-group rg-az305-challenge18 --database-name SensorData \
+az cosmosdb sql container create \
+  --account-name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --database-name SensorData \
   --name Telemetry \
-  --query "{partitionKey:resource.partitionKey,defaultTtl:resource.defaultTtl}" \
-  --output table
+  --partition-key-path "/deviceId" \
+  --ttl -1
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+Setting `--ttl -1` enables TTL at the container level but requires each document to specify its own TTL value. This gives per-document control over expiration.
+
+### Step 2: Insert documents with different partition keys
+
+Retrieve the account endpoint and key:
+
+```bash
+COSMOS_KEY=$(az cosmosdb keys list \
+  --name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --query primaryMasterKey -o tsv)
+```
+
+```bash
+COSMOS_ENDPOINT=$(az cosmosdb show \
+  --name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --query documentEndpoint -o tsv)
+```
+
+Insert telemetry documents across multiple partitions:
+
+```bash
+az cosmosdb sql container create \
+  --account-name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --database-name SensorData \
+  --name TelemetryTest \
+  --partition-key-path "/deviceId" \
+  --ttl -1
+```
+
+Use the REST API or Data Explorer in the portal to insert these documents. Alternatively, use a short script:
+
+```bash
+pip install azure-cosmos --quiet
+```
+
+```bash
+python3 -c "
+from azure.cosmos import CosmosClient, PartitionKey
+import os, time
+
+client = CosmosClient(os.environ.get('COSMOS_ENDPOINT', '${COSMOS_ENDPOINT}'),
+                      os.environ.get('COSMOS_KEY', '${COSMOS_KEY}'))
+db = client.get_database_client('SensorData')
+container = db.get_container_client('Telemetry')
+
+# Insert documents across 3 different partitions
+docs = [
+    {'id': 'reading-001', 'deviceId': 'device-A', 'temp': 72.1, 'facility': 'us-east'},
+    {'id': 'reading-002', 'deviceId': 'device-A', 'temp': 72.4, 'facility': 'us-east'},
+    {'id': 'reading-003', 'deviceId': 'device-A', 'temp': 71.9, 'facility': 'us-east'},
+    {'id': 'reading-004', 'deviceId': 'device-B', 'temp': 68.2, 'facility': 'eu-west'},
+    {'id': 'reading-005', 'deviceId': 'device-B', 'temp': 68.5, 'facility': 'eu-west'},
+    {'id': 'reading-006', 'deviceId': 'device-C', 'temp': 80.0, 'facility': 'ap-south'},
+]
+
+for doc in docs:
+    result = container.create_item(body=doc)
+    print(f'Inserted {doc[\"id\"]} into partition {doc[\"deviceId\"]}')
+    # Show the RU charge for each write
+    print(f'  Write cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+"
+```
+
+### Step 3: Compare single-partition vs cross-partition query cost
+
+```bash
+python3 -c "
+from azure.cosmos import CosmosClient
+import os
+
+client = CosmosClient('${COSMOS_ENDPOINT}', '${COSMOS_KEY}')
+db = client.get_database_client('SensorData')
+container = db.get_container_client('Telemetry')
+
+# Single-partition query (targets device-A only)
+print('=== Single-Partition Query (deviceId = device-A) ===')
+items = list(container.query_items(
+    query='SELECT * FROM c WHERE c.deviceId = \"device-A\"',
+    partition_key='device-A',
+    populate_query_metrics=True
+))
+print(f'Results: {len(items)} documents')
+print(f'RU cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+print()
+
+# Cross-partition query (scans ALL partitions)
+print('=== Cross-Partition Query (all devices, filter by facility) ===')
+items = list(container.query_items(
+    query='SELECT * FROM c WHERE c.facility = \"us-east\"',
+    enable_cross_partition_query=True,
+    populate_query_metrics=True
+))
+print(f'Results: {len(items)} documents')
+print(f'RU cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+"
+```
+
+:::note[Architect Insight]
+Observe that the cross-partition query costs significantly more RUs than the single-partition query, even when returning fewer or equal results. This is because Cosmos DB must fan out the query to every physical partition. On the AZ-305 exam, questions about "minimizing RU consumption" almost always hinge on whether the query is single-partition or cross-partition. Your partition key choice determines this at design time, not at query time.
+:::
+
+### Step 4: Change consistency level and observe RU impact
+
+Lower the account default consistency from Session to Eventual:
+
+```bash
+az cosmosdb update \
+  --name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --default-consistency-level Eventual
+```
+
+Re-run the same single-partition query:
+
+```bash
+python3 -c "
+from azure.cosmos import CosmosClient
+import os
+
+client = CosmosClient('${COSMOS_ENDPOINT}', '${COSMOS_KEY}')
+db = client.get_database_client('SensorData')
+container = db.get_container_client('Telemetry')
+
+print('=== Query with Eventual Consistency ===')
+items = list(container.query_items(
+    query='SELECT * FROM c WHERE c.deviceId = \"device-A\"',
+    partition_key='device-A'
+))
+print(f'Results: {len(items)} documents')
+print(f'RU cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+print()
+print('Compare this RU cost to the Session consistency query above.')
+print('Eventual consistency can reduce read costs because replicas do not')
+print('need to confirm they have the latest write before responding.')
+"
+```
+
+:::note[Architect Insight]
+Consistency levels are a performance lever, not just a correctness knob. Strong consistency costs 2x RUs for reads because it requires quorum confirmation. Session consistency (the default) costs 1x and guarantees read-your-own-writes. Eventual consistency may cost less in multi-region scenarios. On the exam, the correct answer depends on whether the scenario tolerates stale reads -- IoT dashboards often can, financial transactions cannot.
+:::
+
+### Step 5: Test TTL -- automatic document expiration
+
+Insert a document with a short TTL (30 seconds):
+
+```bash
+python3 -c "
+from azure.cosmos import CosmosClient
+import os, time
+
+client = CosmosClient('${COSMOS_ENDPOINT}', '${COSMOS_KEY}')
+db = client.get_database_client('SensorData')
+container = db.get_container_client('Telemetry')
+
+# Insert with 30-second TTL
+doc = {
+    'id': 'ephemeral-reading',
+    'deviceId': 'device-A',
+    'temp': 99.9,
+    'ttl': 30
+}
+container.create_item(body=doc)
+print('Inserted document with TTL=30 seconds')
+
+# Confirm it exists
+result = container.read_item(item='ephemeral-reading', partition_key='device-A')
+print(f'Document exists: {result[\"id\"]} (temp={result[\"temp\"]})')
+
+print('Waiting 40 seconds for TTL expiration...')
+time.sleep(40)
+
+# Try to read it again
+try:
+    result = container.read_item(item='ephemeral-reading', partition_key='device-A')
+    print(f'Document still exists (TTL has not fired yet -- may take up to 60s)')
+except Exception as e:
+    print(f'Document GONE -- TTL expired it automatically')
+    print(f'Error: {e}')
+"
+```
+
+:::note[Architect Insight]
+TTL eliminates the need for manual cleanup jobs, scheduled functions, or batch deletion scripts. For IoT telemetry with a 90-day retention policy, setting TTL to 7776000 seconds means data automatically disappears without any application logic. This reduces operational complexity AND cost (no compute resources running cleanup). The exam tests whether you know that TTL is the correct tool for "automatically expire data after N days" requirements.
+:::
+
+:::tip[Design Validation]
+This lab proved three Cosmos DB architectural principles: (1) Partition key choice directly determines query cost -- single-partition queries are dramatically cheaper than cross-partition queries. (2) Consistency levels are a performance lever -- weaker consistency reduces RU consumption when the application tolerates stale reads. (3) TTL automates data lifecycle without application code -- documents disappear on schedule with zero operational overhead.
 :::
 
 ## Cleanup
 
 ```bash
-# Delete the Cosmos DB account and associated resources
-az group delete --name rg-sensorgrid-cosmos --yes --no-wait
+az cosmosdb delete \
+  --name "$COSMOS_ACCOUNT" \
+  --resource-group rg-az305-challenge18 \
+  --yes
+```
 
-# If you created a separate resource group for Table Storage testing
-az group delete --name rg-sensorgrid-table --yes --no-wait
+```bash
+az group delete \
+  --name rg-az305-challenge18 \
+  --yes --no-wait
 ```
 
 ---

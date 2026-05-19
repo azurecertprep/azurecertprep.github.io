@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A MediaVault Productions é uma empresa de midia com 2PB (petabytes) de conteúdo de video armazenado em arrays NAS (Network Attached Storage) locais em suas instalacoes de produção em Los Angeles. O conteúdo inclui filmagens brutas em 4K/8K, producoes editadas, materiais promocionais é um arquivo digital de conteúdo dos ultimos 20 anos. A empresa decidiu migrar todo o conteúdo para o Azure para reduzir custos de armazenamento, habilitar acesso global para equipes de edicao distribuidas é melhorar a recuperação de desastres.
+A MediaVault Productions é uma empresa de midia com 2PB (petabytes) de conteúdo de vídeo armazenado em arrays NAS (Network Attached Storage) locais em suas instalacoes de produção em Los Angeles. O conteúdo inclui filmagens brutas em 4K/8K, producoes editadas, materiais promocionais é um arquivo digital de conteúdo dos últimos 20 anos. A empresa decidiu migrar todo o conteúdo para o Azure para reduzir custos de armazenamento, habilitar acesso global para equipes de edicao distribuidas é melhorar a recuperação de desastres.
 
 O desafio: sua conexão de internet e de 100Mbps dedicada. Um calculo simples revela que transferir 2PB a 100Mbps levaria aproximadamente 6,2 anos de transferencia continua na velocidade máxima. Isso claramente não é viavel para uma migração com prazo de conclusão de 12 meses.
 
@@ -38,7 +38,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
    - Transferencia em massa para o arquivo existente de 2PB e conteúdo ativo
    - Sincronizacao online para novo conteúdo gerado durante o período de migração
    - Documente o período de sobreposicao onde ambos os métodos executam simultaneamente
-3. Compare as ferramentas disponiveis para transferencia de dados online:
+3. Compare as ferramentas disponíveis para transferencia de dados online:
    - AzCopy: transferencia paralela, capacidade de retomada, limitacao de largura de banda
    - Azure Storage Mover: serviço de migração gerenciado com agendamento de trabalhos
    - Azure File Sync: sincronizacao continua com cloud tiering
@@ -52,7 +52,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
    - Considere o tempo de espera do pedido, tempo de copia de dados, tempo de envio e tempo de ingestao
 5. Projete o plano de pedido e logistica do Data Box:
    - Quantos dispositivos podem ser usados em paralelo?
-   - Qual é o tempo total de ponta a ponta desde o pedido até os dados estarem disponiveis no Azure?
+   - Qual é o tempo total de ponta a ponta desde o pedido até os dados estarem disponíveis no Azure?
    - Como você lida com os 800TB de conteúdo ativo que muda enquanto o Data Box esta em transito?
 6. Projete procedimentos de validação de dados para transferencias do Data Box:
    - Pre-copia: arquivo de manifesto com checksums para todos os arquivos
@@ -82,7 +82,7 @@ Restricoes adicionais: o conteúdo deve permanecer acessível aos editores em Lo
     - Arquivo recente (400GB, acessado mensalmente): Cool tier
     - Arquivo profundo (1,2PB, acessado trimestralmente ou menos): Archive tier com procedimentos de reidratacao
 11. Projete políticas de lifecycle management que automaticamente movem conteúdo entre camadas com base nos padrões de acesso pós-migração.
-12. Calcule o custo total de armazenamento Azure para 2PB entre camadas e compare com o custo total de propriedade do NAS local atual (hardware, energia, refrigeracao, espaço fisico, mao de obra de TI, recuperação de desastres).
+12. Calcule o custo total de armazenamento Azure para 2PB entre camadas e compare com o custo total de propriedade do NAS local atual (hardware, energia, refrigeracao, espaço físico, mao de obra de TI, recuperação de desastres).
 
 ## Criterios de Sucesso
 
@@ -161,9 +161,9 @@ Arquivos no Azure Blob Storage Archive tier estao offline e não podem ser lidos
 </details>
 
 <details>
-<summary>3. Editores em Los Angeles relatam que apos habilitar o Azure File Sync com cloud tiering, abrir arquivos de video arquivados leva 30-60 segundos. Como você mantem a produtividade dos editores durante a migração?</summary>
+<summary>3. Editores em Los Angeles relatam que apos habilitar o Azure File Sync com cloud tiering, abrir arquivos de vídeo arquivados leva 30-60 segundos. Como você mantem a produtividade dos editores durante a migração?</summary>
 
-**Aumente a política de data do cloud tiering ou o limite de espaço livre do volume para manter mais conteúdo local.** Soluções: (1) Defina a política de data para que arquivos acessados nos ultimos 60-90 dias permanecam locais (cobre o conteúdo de produção ativa), (2) Aumente a política de espaço livre do volume para só mover para camada quando absolutamente necessário, (3) Pre-aquecer conteúdo executando um script que toca todos os arquivos em pastas de projetos ativos, (4) Para projetos críticos, exclua pastas específicas do cloud tiering usando DFS Namespaces para separar caminhos ativos dos de arquivo. O objetivo é mover para camada apenas o arquivo de 1,2PB enquanto mantem os 800TB de conteúdo ativo totalmente local até o cutover.
+**Aumente a política de data do cloud tiering ou o limite de espaço livre do volume para manter mais conteúdo local.** Soluções: (1) Defina a política de data para que arquivos acessados nos últimos 60-90 dias permanecam locais (cobre o conteúdo de produção ativa), (2) Aumente a política de espaço livre do volume para só mover para camada quando absolutamente necessário, (3) Pre-aquecer conteúdo executando um script que toca todos os arquivos em pastas de projetos ativos, (4) Para projetos críticos, exclua pastas específicas do cloud tiering usando DFS Namespaces para separar caminhos ativos dos de arquivo. O objetivo é mover para camada apenas o arquivo de 1,2PB enquanto mantem os 800TB de conteúdo ativo totalmente local até o cutover.
 
 </details>
 

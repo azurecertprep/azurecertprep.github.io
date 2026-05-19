@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-GlobalNews Network (GNN) é uma plataforma internacional de noticias com 10 milhoes de leitores ativos diarios e apenas 100 editores de conteúdo. A equipe editorial esta baseada exclusivamente na região US East e escreve artigos, faz upload de metadados de midia e gerência agendamento de conteúdo. Os leitores estao distribuidos globalmente: 40% na America do Norte, 30% na Europa, 20% na Asia-Pacifico e 10% em outras regiões. A plataforma experimenta picos dramaticos de trafego durante eventos de noticias urgentes, onde o trafego de leitura pode saltar para 10x o normal em minutos e sustentar esse nível por horas.
+GlobalNews Network (GNN) é uma plataforma internacional de noticias com 10 milhões de leitores ativos diarios e apenas 100 editores de conteúdo. A equipe editorial esta baseada exclusivamente na região US East e escreve artigos, faz upload de metadados de midia e gerencia agendamento de conteúdo. Os leitores estao distribuidos globalmente: 40% na América do Norte, 30% na Europa, 20% na Asia-Pacifico e 10% em outras regiões. A plataforma experimenta picos dramaticos de trafego durante eventos de noticias urgentes, onde o trafego de leitura pode saltar para 10x o normal em minutos e sustentar esse nível por horas.
 
 A arquitetura atual usa um único Azure SQL Database (Business Critical, 8 vCores) no US East. Durante operações normais, o banco de dados lida com aproximadamente 50.000 consultas de leitura por segundo e 500 operações de escrita por segundo. Durante picos de noticias urgentes, as consultas de leitura saltam para 500.000 por segundo enquanto as escritas permanecem estaveis em 500/segundo. O banco de dados único atual não consegue lidar com esses picos, resultando em erros de timeout e experiência degradada do usuário durante os momentos mais críticos.
 
@@ -35,7 +35,7 @@ Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e d
    - Active geo-replication
    - Named replicas Hyperscale
    - Auto-failover groups com roteamento de read-intent
-3. Determine o número e posicionamento ideais de replicas de leitura para servir leitores na America do Norte, Europa e Asia-Pacifico com latência inferior a 100ms.
+3. Determine o número e posicionamento ideais de replicas de leitura para servir leitores na América do Norte, Europa e Asia-Pacifico com latência inferior a 100ms.
 4. Projete a estratégia de connection string para aplicações rotearem trafego de leitura para replicas (ApplicationIntent=ReadOnly, ou conexão direta para geo-replicas).
 
 ### Parte 2: Tratamento de Picos de Trafego
@@ -48,7 +48,7 @@ Os requisitos da GNN sao: (1) Escritores devem sempre ter acesso consistente e d
 ### Parte 3: Escalabilidade de Escrita e Distribuição de Dados
 
 9. Avalie se a carga de trabalho de escrita (500 operações/segundo) requer escalonamento além de um único primário. Discuta cenários onde sharding ou particionamento de escrita poderiam ser necessários no futuro.
-10. Projete uma topologia de geo-replicação que forneca tanto recuperação de desastres quanto read scale-out. Determine o modo de replicação apropriado (sincrono vs assincrono) e atraso de replicação aceitavel.
+10. Projete uma topologia de geo-replicação que forneça tanto recuperação de desastres quanto read scale-out. Determine o modo de replicação apropriado (sincrono vs assincrono) e atraso de replicação aceitavel.
 11. Proponha uma estratégia de monitoramento e alertas para detectar quando replicas de leitura ficam atrasadas em relação ao primário e quando o trafego se aproxima dos limites de capacidade. Identifique metricas-chave para monitorar (atraso de replicação, utilizacao de DTU/vCore, contagem de conexões).
 
 ## Criterios de Sucesso
@@ -77,7 +77,7 @@ Azure SQL Database oferece múltiplos mecanismos de replica de leitura: (1) A ca
 <details>
 <summary>Dica 2: Hyperscale para Read Scale Elástico</summary>
 
-Named replicas Hyperscale sao ideais para cenários que requerem read scale-out elástico. Diferente das geo-replicas regulares, named replicas podem ser: (1) escaladas independentemente (contagem de vCore diferente do primário), (2) criadas e deletadas dinamicamente (para cenários de burst), (3) direcionadas diretamente via seu proprio endpoint de conexão, (4) colocadas na mesma região do primário. Para tratamento de picos, você pode criar named replicas adicionais sob demanda e rotear trafego excedente para elas.
+Named replicas Hyperscale sao ideais para cenários que requerem read scale-out elástico. Diferente das geo-replicas regulares, named replicas podem ser: (1) escaladas independentemente (contagem de vCore diferente do primário), (2) criadas e deletadas dinamicamente (para cenários de burst), (3) direcionadas diretamente via seu próprio endpoint de conexão, (4) colocadas na mesma região do primário. Para tratamento de picos, você pode criar named replicas adicionais sob demanda e rotear trafego excedente para elas.
 
 </details>
 

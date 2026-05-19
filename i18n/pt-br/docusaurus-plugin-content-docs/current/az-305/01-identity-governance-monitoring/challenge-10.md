@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Cloudvista Technologies é uma empresa SaaS que cresceu de 20 para 350 funcionarios em três anos. Seus gastos com Azure cresceram 300% ano a ano, agora ultrapassando $180.000 por mes, mas a equipe financeira não consegue determinar qual equipe, projeto ou cliente é responsável por qual parte da fatura. Durante um incidente recente em produção, o engenheiro de plantao gastou 45 minutos identificando o proprietario de uma Azure Function com falha porque não havia metadados indicando quem a construiu ou qual projeto ela suportava.
+A Cloudvista Technologies é uma empresa SaaS que cresceu de 20 para 350 funcionários em três anos. Seus gastos com Azure cresceram 300% ano a ano, agora ultrapassando $180.000 por mes, mas a equipe financeira não consegue determinar qual equipe, projeto ou cliente é responsável por qual parte da fatura. Durante um incidente recente em produção, o engenheiro de plantao gastou 45 minutos identificando o proprietario de uma Azure Function com falha porque não havia metadados indicando quem a construiu ou qual projeto ela suportava.
 
 O VP de Engenharia determinou uma estratégia abrangente de tagging que atende a três necessidades urgentes: (1) O Financeiro deve ser capaz de atribuir 100% dos custos do Azure a unidades de negocio, projetos e centros de custo específicos até o próximo trimestre; (2) Operações deve ser capaz de identificar o proprietario e o nível de suporte de qualquer recurso em 30 segundos durante um incidente; (3) a equipe de Segurança precisa classificar recursos por nível de sensibilidade de dados para fins de auditoria. Além disso, a equipe de DevOps quer tags que indiquem o mecanismo de implantacao (Terraform, Bicep, manual) e a data da última implantacao para detecção de desvios.
 
-O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada uma usando diferentes ferramentas de implantacao (Terraform, Bicep, Azure CLI, Portal). Algumas equipes sao disciplinadas com tagging; outras ignoram completamente. A solução deve aplicar tags minimas obrigatorias enquanto permite que as equipes adicionem tags personalizadas para suas proprias necessidades operacionais. Recursos que não podem receber tags (alguns recursos filhos) devem ser contabilizados atraves de tagging do recurso pai ou métodos alternativos de atribuicao.
+O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada uma usando diferentes ferramentas de implantacao (Terraform, Bicep, Azure CLI, Portal). Algumas equipes sao disciplinadas com tagging; outras ignoram completamente. A solução deve aplicar tags minimas obrigatorias enquanto permite que as equipes adicionem tags personalizadas para suas próprias necessidades operacionais. Recursos que não podem receber tags (alguns recursos filhos) devem ser contabilizados através de tagging do recurso pai ou métodos alternativos de atribuicao.
 
 ## Habilidades do Exame Cobertas
 
@@ -29,7 +29,7 @@ O desafio é a aplicação: a Cloudvista tem 15 equipes de desenvolvimento, cada
 
 ### Parte 1: Design da Taxonomia de Tags
 
-1. Projete a taxonomia completa de tags para a Cloudvista. Categorize as tags em: obrigatorias (devem existir em todos os recursos), condicionais (obrigatorias em contextos específicos) e opcionais (a criterio da equipe). Para cada tag, especifique: nome da tag, valores permitidos (texto livre vs. vocabulario controlado) e proposito.
+1. Projete a taxonomia completa de tags para a Cloudvista. Categorize as tags em: obrigatorias (devem existir em todos os recursos), condicionais (obrigatorias em contextos específicos) e opcionais (a criterio da equipe). Para cada tag, especifique: nome da tag, valores permitidos (texto livre vs. vocabulario controlado) e propósito.
 2. Defina as tags minimas obrigatorias para atribuicao de custos. Estas devem permitir que o Financeiro gere relatórios mostrando custo por: unidade de negocio, projeto/aplicação, centro de custo e ambiente.
 3. Defina tags operacionais que suportem resposta a incidentes. No mínimo: proprietario do recurso (individuo ou equipe), nível de suporte (P1-P4) e mecanismo de implantacao.
 4. Defina tags de segurança e conformidade: nível de classificacao de dados (público, interno, confidencial, restrito), escopo regulatorio (GDPR, SOC2, HIPAA) e se o recurso lida com PII.
@@ -86,7 +86,7 @@ Use diferentes efeitos para diferentes cenários: `deny` para tags verdadeiramen
 <details>
 <summary>Dica 3: Validação de Valores de Tags</summary>
 
-O Azure Policy pode aplicar valores específicos permitidos usando as condições `in` ou `notIn`. Por exemplo, aplicar que `Environment` deve ser um de: `dev`, `test`, `staging`, `prod`. Para tags com muitos valores validos (como `CostCenter`), mantenha uma lista permitida em um parametro de política que atualiza trimestralmente. Para tags de texto livre como `Owner`, aplique padrões de formato (ex.: deve ser um endereço de email válido) usando as condições `match` ou `like` nas regras de política.
+O Azure Policy pode aplicar valores específicos permitidos usando as condições `in` ou `notIn`. Por exemplo, aplicar que `Environment` deve ser um de: `dev`, `test`, `staging`, `prod`. Para tags com muitos valores válidos (como `CostCenter`), mantenha uma lista permitida em um parametro de política que atualiza trimestralmente. Para tags de texto livre como `Owner`, aplique padrões de formato (ex.: deve ser um endereço de email válido) usando as condições `match` ou `like` nas regras de política.
 
 </details>
 

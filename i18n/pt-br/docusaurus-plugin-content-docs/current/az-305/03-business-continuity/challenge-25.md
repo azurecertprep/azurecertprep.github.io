@@ -172,7 +172,7 @@ Para converter RTO em porcentagem mínima de uptime:
 
 ## Recursos de Aprendizagem
 
-- [Business continuity and disaster recovery - Cloud Adoption Framework](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/management-business-continuity-disaster-recovery)
+- [Business continuity and disaster recovery - Cloud Adoption Framework](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-área/management-business-continuity-disaster-recovery)
 - [Azure Well-Architected Framework - Reliability pillar](https://learn.microsoft.com/en-us/azure/well-architected/reliability/)
 - [Backup and disaster recovery for Azure applications](https://learn.microsoft.com/en-us/azure/architecture/framework/resiliency/backup-and-recovery)
 - [SLA summary for Azure services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services)
@@ -204,7 +204,7 @@ Para converter RTO em porcentagem mínima de uptime:
 <details>
 <summary>4. Qual é a diferenca principal entre RTO e MTD (Maximum Tolerable Downtime)?</summary>
 
-**RTO e o tempo alvo de recuperação para sistemas de TI; MTD e o tempo máximo absoluto antes que o proprio negocio seja ameacado.** O RTO deve sempre ser menor que o MTD para fornecer uma margem de segurança. Por exemplo, o sistema EHR de um hospital pode ter um RTO de 1 minuto (meta para restaurar o serviço) mas um MTD de 15 minutos (além do qual a segurança do paciente esta em risco e violacoes regulatorias ocorrem). A diferenca entre RTO e MTD e sua margem de segurança para complicacoes inesperadas na recuperação.
+**RTO e o tempo alvo de recuperação para sistemas de TI; MTD e o tempo máximo absoluto antes que o próprio negocio seja ameacado.** O RTO deve sempre ser menor que o MTD para fornecer uma margem de segurança. Por exemplo, o sistema EHR de um hospital pode ter um RTO de 1 minuto (meta para restaurar o serviço) mas um MTD de 15 minutos (além do qual a segurança do paciente esta em risco e violacoes regulatorias ocorrem). A diferenca entre RTO e MTD e sua margem de segurança para complicacoes inesperadas na recuperação.
 
 </details>
 

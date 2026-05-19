@@ -155,72 +155,293 @@ Premium block blob storage accounts use SSDs and are optimized for workloads req
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab demonstrates that Azure Storage access tiers are not just pricing categories -- they produce fundamentally different behavior. Archive tier is genuinely offline (reads fail), last-access-time tracking enables intelligent automation, and lifecycle policies operate without application changes. You will observe these behaviors directly.
 
-1. Create a resource group for this lab:
+### Step 1: Create a storage account with last-access-time tracking
 
 ```bash
-az group create --name rg-az305-challenge20 --location eastus
+az group create \
+  --name rg-az305-challenge20 \
+  --location eastus
 ```
 
-2. Deploy a storage account with access tracking enabled:
+```bash
+STORAGE_ACCOUNT="stch20${RANDOM}"
+```
 
 ```bash
 az storage account create \
-  --name staz305ch20$RANDOM \
+  --name "$STORAGE_ACCOUNT" \
   --resource-group rg-az305-challenge20 \
   --sku Standard_LRS \
-  --kind StorageV2
+  --kind StorageV2 \
+  --access-tier Hot
+```
 
+Enable last-access-time tracking (required for access-time-based lifecycle policies):
+
+```bash
 az storage account blob-service-properties update \
-  --account-name <your-account-name> \
+  --account-name "$STORAGE_ACCOUNT" \
   --resource-group rg-az305-challenge20 \
   --enable-last-access-tracking true
 ```
 
-3. Apply a lifecycle management policy with tier transitions:
+```bash
+STORAGE_KEY=$(az storage account keys list \
+  --account-name "$STORAGE_ACCOUNT" \
+  --resource-group rg-az305-challenge20 \
+  --query "[0].value" -o tsv)
+```
+
+Create a container for the experiment:
+
+```bash
+az storage container create \
+  --name tiering-lab \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY"
+```
+
+### Step 2: Upload the same file to Hot, Cool, and Archive tiers
+
+Create a sample file:
+
+```bash
+echo "This is sample ML training data for tier comparison testing." > sample-data.txt
+```
+
+Upload to Hot tier:
+
+```bash
+az storage blob upload \
+  --container-name tiering-lab \
+  --name "hot/sample-data.txt" \
+  --file sample-data.txt \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --tier Hot
+```
+
+Upload to Cool tier:
+
+```bash
+az storage blob upload \
+  --container-name tiering-lab \
+  --name "cool/sample-data.txt" \
+  --file sample-data.txt \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --tier Cool
+```
+
+Upload to Archive tier:
+
+```bash
+az storage blob upload \
+  --container-name tiering-lab \
+  --name "archive/sample-data.txt" \
+  --file sample-data.txt \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --tier Archive
+```
+
+### Step 3: Compare blob properties across tiers
+
+```bash
+echo "=== Hot Tier Blob ==="
+az storage blob show \
+  --container-name tiering-lab \
+  --name "hot/sample-data.txt" \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --query "{tier:properties.blobTier, lastAccessed:properties.lastAccessedOn, contentLength:properties.contentLength}" \
+  -o table
+```
+
+```bash
+echo "=== Cool Tier Blob ==="
+az storage blob show \
+  --container-name tiering-lab \
+  --name "cool/sample-data.txt" \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --query "{tier:properties.blobTier, lastAccessed:properties.lastAccessedOn, contentLength:properties.contentLength}" \
+  -o table
+```
+
+```bash
+echo "=== Archive Tier Blob ==="
+az storage blob show \
+  --container-name tiering-lab \
+  --name "archive/sample-data.txt" \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --query "{tier:properties.blobTier, lastAccessed:properties.lastAccessedOn, contentLength:properties.contentLength}" \
+  -o table
+```
+
+:::note[Architect Insight]
+All three blobs have the same content and size, but the tier metadata differs. The storage cost per GB varies dramatically: Hot is roughly 20x more expensive per GB than Archive. However, the trade-off is access behavior -- as you will see in the next step, Archive tier is not just "cheaper storage" but fundamentally offline storage.
+:::
+
+### Step 4: Attempt to download from Archive tier -- observe failure
+
+Download from Hot tier (succeeds instantly):
+
+```bash
+az storage blob download \
+  --container-name tiering-lab \
+  --name "hot/sample-data.txt" \
+  --file downloaded-hot.txt \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY"
+```
+
+```bash
+cat downloaded-hot.txt
+```
+
+Now attempt to download from Archive tier (FAILS):
+
+```bash
+az storage blob download \
+  --container-name tiering-lab \
+  --name "archive/sample-data.txt" \
+  --file downloaded-archive.txt \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" 2>&1 || true
+```
+
+The download fails with an error indicating the blob is in an offline tier. Archive blobs cannot be read directly -- they must be rehydrated first.
+
+:::note[Architect Insight]
+This is the single most important behavioral difference in Azure Storage tiering: Archive is OFFLINE storage. It is not "slow storage" -- it is inaccessible storage that requires an explicit rehydration operation taking hours. On the AZ-305 exam, if a scenario requires "immediate access to compliance data during an audit," Archive tier is the WRONG answer regardless of its cost savings. The exam tests whether you understand that Archive introduces hours of latency, not just higher per-operation costs.
+:::
+
+### Step 5: Initiate rehydration and check status
+
+Start rehydration with High priority:
+
+```bash
+az storage blob set-tier \
+  --container-name tiering-lab \
+  --name "archive/sample-data.txt" \
+  --tier Hot \
+  --rehydrate-priority High \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY"
+```
+
+Check the rehydration status:
+
+```bash
+az storage blob show \
+  --container-name tiering-lab \
+  --name "archive/sample-data.txt" \
+  --account-name "$STORAGE_ACCOUNT" \
+  --account-key "$STORAGE_KEY" \
+  --query "{tier:properties.blobTier, rehydrationStatus:properties.rehydrationStatus, archiveStatus:properties.archiveStatus}" \
+  -o table
+```
+
+The blob shows `rehydrate-pending-to-hot` status. High priority rehydration can complete in under 1 hour for blobs under 10GB; standard priority takes up to 15 hours.
+
+:::note[Architect Insight]
+Rehydration is not instant even with High priority. Designing for Archive tier means designing for eventual access -- you need a process to handle the delay. Common patterns include: (1) keeping a metadata index in Hot tier so you know WHAT is archived without reading it, (2) maintaining a "last 30 days" copy in Cool tier for recent compliance queries, and (3) triggering rehydration proactively when an audit is announced rather than when data is requested.
+:::
+
+### Step 6: Apply a lifecycle management policy based on last access time
 
 ```bash
 az storage account management-policy create \
-  --account-name <your-account-name> \
+  --account-name "$STORAGE_ACCOUNT" \
   --resource-group rg-az305-challenge20 \
   --policy '{
     "rules": [
       {
         "enabled": true,
-        "name": "auto-tier-rule",
+        "name": "auto-tier-by-access",
         "type": "Lifecycle",
         "definition": {
           "actions": {
             "baseBlob": {
-              "tierToCool": {"daysAfterLastAccessTimeGreaterThan": 30},
-              "tierToCold": {"daysAfterLastAccessTimeGreaterThan": 90},
-              "tierToArchive": {"daysAfterLastAccessTimeGreaterThan": 180}
+              "tierToCool": {
+                "daysAfterLastAccessTimeGreaterThan": 30
+              },
+              "tierToCold": {
+                "daysAfterLastAccessTimeGreaterThan": 90
+              },
+              "tierToArchive": {
+                "daysAfterLastAccessTimeGreaterThan": 180
+              }
             }
           },
-          "filters": {"blobTypes": ["blockBlob"]}
+          "filters": {
+            "blobTypes": ["blockBlob"],
+            "prefixMatch": ["tiering-lab/"]
+          }
+        }
+      },
+      {
+        "enabled": true,
+        "name": "cleanup-temp-blobs",
+        "type": "Lifecycle",
+        "definition": {
+          "actions": {
+            "baseBlob": {
+              "delete": {
+                "daysAfterLastAccessTimeGreaterThan": 7
+              }
+            }
+          },
+          "filters": {
+            "blobTypes": ["blockBlob"],
+            "prefixMatch": ["tiering-lab/temp/"]
+          }
         }
       }
     ]
   }'
 ```
 
-4. Verify the policy is applied:
+### Step 7: Verify the policy was applied
 
 ```bash
 az storage account management-policy show \
-  --account-name <your-account-name> \
-  --resource-group rg-az305-challenge20
+  --account-name "$STORAGE_ACCOUNT" \
+  --resource-group rg-az305-challenge20 \
+  --query "policy.rules[].{name:name, enabled:enabled, tierToCool:definition.actions.baseBlob.tierToCool, tierToArchive:definition.actions.baseBlob.tierToArchive, delete:definition.actions.baseBlob.delete}" \
+  -o table
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+echo "Policy rules applied:"
+az storage account management-policy show \
+  --account-name "$STORAGE_ACCOUNT" \
+  --resource-group rg-az305-challenge20 \
+  --query "policy.rules[].name" -o tsv
+```
+
+:::note[Architect Insight]
+Lifecycle policies execute automatically without any application changes. The application continues to upload and read blobs normally -- Azure Storage moves them between tiers in the background based on access patterns. This is "infrastructure-level cost optimization" that requires zero code changes. On the exam, lifecycle management is the correct answer whenever the question mentions "automatically reduce storage costs over time" or "data that becomes less frequently accessed."
+:::
+
+:::tip[Design Validation]
+This lab proved three storage architecture principles: (1) Archive tier is genuinely offline storage -- reads fail until rehydration completes, making it unsuitable for data that might need immediate access. (2) Last-access-time tracking enables intelligent, access-pattern-based tiering rather than crude age-based rules. (3) Lifecycle management policies automate cost optimization at the infrastructure level with zero application code changes -- blobs move between tiers automatically based on observed behavior.
 :::
 
 ## Cleanup
 
 ```bash
-az group delete --name rg-az305-challenge20 --yes --no-wait
+rm -f sample-data.txt downloaded-hot.txt downloaded-archive.txt
+```
+
+```bash
+az group delete \
+  --name rg-az305-challenge20 \
+  --yes --no-wait
 ```
 
 ---

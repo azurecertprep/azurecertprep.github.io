@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Northwind Traders é uma empresa multinacional de varejo e logistica com mais de 200 desenvolvedores distribuidos em cinco unidades de negocio: E-Commerce, Supply Chain, In-Store Technology, Data Analytics e Corporate IT. Nos ultimos três anos, eles expandiram sua presença no Azure organicamente sob uma única assinatura Enterprise Agreement. O resultado é uma confusao: 1.400 recursos em uma assinatura sem fronteiras claras de propriedade, desenvolvedores de uma equipe acidentalmente modificando recursos de outra equipe, e aplicação de políticas que ou se aplica muito amplamente ou não se aplica.
+A Northwind Traders é uma empresa multinacional de varejo e logistica com mais de 200 desenvolvedores distribuidos em cinco unidades de negocio: E-Commerce, Supply Chain, In-Store Technology, Data Analytics e Corporate IT. Nos últimos três anos, eles expandiram sua presença no Azure organicamente sob uma única assinatura Enterprise Agreement. O resultado é uma confusao: 1.400 recursos em uma assinatura sem fronteiras claras de propriedade, desenvolvedores de uma equipe acidentalmente modificando recursos de outra equipe, e aplicação de políticas que ou se aplica muito amplamente ou não se aplica.
 
 O CTO aprovou uma migração para um ambiente multi-assinatura estruturado alinhado com o Cloud Adoption Framework. Requisitos-chave incluem: cada unidade de negocio precisa de isolamento de carga de trabalho com rastreamento de custos independente, uma infraestrutura de serviços compartilhados (hub networking, DNS, monitoramento) deve ser gerenciada centralmente pela Corporate IT, ambientes de produção devem ser bloqueados com políticas mais rigorosas que desenvolvimento, e a equipe de governança precisa da capacidade de aplicar baselines de segurança em toda a organização sem impactar a autonomia individual das equipes. A empresa antecipa adquirir duas empresas menores dentro de 18 meses, e a estrutura deve acomodar novas unidades de negocio sem redesign.
 
-Seu design deve equilibrar centralizacao de governança (segurança, conformidade) com autonomia descentralizada de carga de trabalho (cada BU gerência suas proprias assinaturas). O CFO requer atribuicao de custos no nível de unidade de negocio, e a equipe de segurança precisa de um painel único para relatórios de conformidade em todas as assinaturas.
+Seu design deve equilibrar centralizacao de governança (segurança, conformidade) com autonomia descentralizada de carga de trabalho (cada BU gerencia suas próprias assinaturas). O CFO requer atribuicao de custos no nível de unidade de negocio, e a equipe de segurança precisa de um painel único para relatórios de conformidade em todas as assinaturas.
 
 ## Habilidades do Exame Cobertas
 
@@ -31,7 +31,7 @@ Seu design deve equilibrar centralizacao de governança (segurança, conformidad
 
 1. Projete uma hierarquia de management group para a Northwind Traders. Inclua no mínimo: uma estratégia de root management group, separacao entre plataforma/serviços compartilhados e landing zones de carga de trabalho, e acomodacao para ambientes sandbox/dev que precisam de políticas relaxadas.
 2. Defina quantos níveis de profundidade a hierarquia deve ter e justifique a profundidade. Documente os trade-offs de hierarquias profundas (direcionamento granular de políticas) versus hierarquias rasas (gerenciamento mais simples, limite Azure de 6 níveis de profundidade).
-3. Especifique como as duas futuras aquisicoes serao integradas na hierarquia sem reestruturar management groups existentes.
+3. Especifique como as duas futuras aquisições serao integradas na hierarquia sem reestruturar management groups existentes.
 4. Defina o modelo de herança de governança: quais políticas devem ser aplicadas no nível raiz (afetando todas as assinaturas) versus níveis inferiores de management group.
 
 ### Parte 2: Design de Assinatura
@@ -49,7 +49,7 @@ Seu design deve equilibrar centralizacao de governança (segurança, conformidad
 
 ### Parte 4: Convencoes de Nomenclatura
 
-12. Crie um padrão de convencao de nomenclatura para management groups, assinaturas e resource groups que codifique: ambiente, unidade de negocio, região e proposito. Garanta que nomes sejam globalmente únicos onde necessário e dentro dos limites de comprimento.
+12. Crie um padrão de convencao de nomenclatura para management groups, assinaturas e resource groups que codifique: ambiente, unidade de negocio, região e propósito. Garanta que nomes sejam globalmente únicos onde necessário e dentro dos limites de comprimento.
 
 ## Criterios de Sucesso
 
@@ -104,31 +104,31 @@ Assinaturas sandbox precisam de tratamento especial: coloque-as em um management
 
 ## Recursos de Aprendizagem
 
-- [Azure landing zone management group hierarchy](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups)
-- [Subscription organization and governance](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-subscriptions)
+- [Azure landing zone management group hierarchy](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org-management-groups)
+- [Subscription organization and governance](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org-subscriptions)
 - [Resource group design considerations](https://learn.microsoft.com/azure/azure-resource-manager/management/overview#resource-groups)
 - [Azure naming conventions](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming)
-- [Management group design considerations](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups)
-- [Subscription vending](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/subscription-vending)
+- [Management group design considerations](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org-management-groups)
+- [Subscription vending](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/subscription-vending)
 
 ## Verificação de Conhecimento
 
 <details>
-<summary>1. A equipe de segurança da Northwind quer aplicar uma política que impeca qualquer recurso de ser criado sem uma tag "CostCenter". Isso deve se aplicar a TODAS as assinaturas incluindo futuras aquisicoes. Onde esta política deve ser atribuida?</summary>
+<summary>1. A equipe de segurança da Northwind quer aplicar uma política que impeca qualquer recurso de ser criado sem uma tag "CostCenter". Isso deve se aplicar a TODAS as assinaturas incluindo futuras aquisições. Onde esta política deve ser atribuida?</summary>
 
-**No root management group (ou no management group personalizado mais alto abaixo do tenant root).** Atribuir neste nível garante que a política seja herdada por todos os management groups filhos, assinaturas e recursos atuais e futuros. Novas aquisicoes integradas sob a raiz herdarao automaticamente esta política. Atribuir em níveis inferiores perderia assinaturas em outros ramos da hierarquia.
-
-</details>
-
-<details>
-<summary>2. A equipe de E-Commerce quer implantar recursos com endereços IP publicos para seus serviços voltados para internet, mas a equipe de Supply Chain opera exclusivamente em redes privadas. Como a política deve ser estruturada para acomodar ambas as necessidades?</summary>
-
-**Use management groups separados para cada unidade de negocio (ou tipo de ambiente) e aplique a política "deny public IPs" apenas no nível do management group de Supply Chain.** NAO aplique a política de deny-public-IP na raiz, pois bloquearia a necessidade legitima do E-Commerce. Em vez disso, coloque restrições específicas de BU no nível do management group da BU. Alternativamente, use o padrão de separacao de landing zones "Corp" e "Online" do CAF onde "Corp" nega IPs publicos e "Online" os permite.
+**No root management group (ou no management group personalizado mais alto abaixo do tenant root).** Atribuir neste nível garante que a política seja herdada por todos os management groups filhos, assinaturas e recursos atuais e futuros. Novas aquisições integradas sob a raiz herdarao automaticamente esta política. Atribuir em níveis inferiores perderia assinaturas em outros ramos da hierarquia.
 
 </details>
 
 <details>
-<summary>3. A Northwind esta avaliando se a equipe de Data Analytics precisa de sua propria assinatura ou pode compartilhar a assinatura de E-Commerce com separacao por resource group. Quais fatores determinam se uma nova assinatura e justificada?</summary>
+<summary>2. A equipe de E-Commerce quer implantar recursos com endereços IP públicos para seus serviços voltados para internet, mas a equipe de Supply Chain opera exclusivamente em redes privadas. Como a política deve ser estruturada para acomodar ambas as necessidades?</summary>
+
+**Use management groups separados para cada unidade de negocio (ou tipo de ambiente) e aplique a política "deny public IPs" apenas no nível do management group de Supply Chain.** NAO aplique a política de deny-public-IP na raiz, pois bloquearia a necessidade legitima do E-Commerce. Em vez disso, coloque restrições específicas de BU no nível do management group da BU. Alternativamente, use o padrão de separacao de landing zones "Corp" e "Online" do CAF onde "Corp" nega IPs públicos e "Online" os permite.
+
+</details>
+
+<details>
+<summary>3. A Northwind esta avaliando se a equipe de Data Analytics precisa de sua própria assinatura ou pode compartilhar a assinatura de E-Commerce com separacao por resource group. Quais fatores determinam se uma nova assinatura e justificada?</summary>
 
 **Crie uma assinatura separada quando:** (1) as equipes precisam de faturamento/rastreamento de custos independente no nível de assinatura, (2) elas tem requisitos diferentes de conformidade ou política que não podem coexistir, (3) limites de recursos (cotas de vCPU, contagem de resource groups) podem ser excedidos, (4) isolamento de raio de impacto é necessário (uma configuração incorreta em uma equipe não pode afetar a outra), ou (5) fronteiras RBAC diferentes sao necessárias (Contributor no nível de assinatura para uma equipe não deve conceder acesso a outra). Se apenas separacao organizacional é necessária e as equipes compartilham políticas e padrões RBAC, resource groups dentro da mesma assinatura podem ser suficientes.
 
@@ -137,7 +137,7 @@ Assinaturas sandbox precisam de tratamento especial: coloque-as em um management
 <details>
 <summary>4. Management groups Azure tem um limite de 6 níveis de profundidade. A hierarquia proposta da Northwind tem: Root > Industry > Region > BU > Environment > Workload. Eles devem usar todos os 6 níveis?</summary>
 
-**Geralmente não - mantenha a hierarquia em 3-4 níveis.** Hierarquias mais profundas criam complexidade na solução de problemas de políticas (políticas de 6 níveis de herança sao dificeis de depurar), desaceleram a avaliação de políticas e reduzem a agilidade. A recomendacao do CAF e tipicamente 3-4 níveis (Root > Platform/Landing Zones > Environment-type ou BU > Subscriptions). Use resource groups e tags para categorizacao adicional em vez de adicionar níveis de MG. Cada nível deve servir a um proposito claro de diferenciacao de política ou RBAC - se dois níveis teriam políticas identicas, mescle-os.
+**Geralmente não - mantenha a hierarquia em 3-4 níveis.** Hierarquias mais profundas criam complexidade na solução de problemas de políticas (políticas de 6 níveis de herança sao dificeis de depurar), desaceleram a avaliação de políticas e reduzem a agilidade. A recomendacao do CAF e tipicamente 3-4 níveis (Root > Platform/Landing Zones > Environment-type ou BU > Subscriptions). Use resource groups e tags para categorizacao adicional em vez de adicionar níveis de MG. Cada nível deve servir a um propósito claro de diferenciacao de política ou RBAC - se dois níveis teriam políticas identicas, mescle-os.
 
 </details>
 

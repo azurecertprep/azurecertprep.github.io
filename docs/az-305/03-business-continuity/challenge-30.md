@@ -292,15 +292,13 @@ app.MapGet("/health", async (DbContext db, IConnectionMultiplexer redis) =>
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab proves that zone-redundant VMSS with a Standard Load Balancer survives a full availability zone failure without manual intervention. You will observe traffic rerouting in real time.
 
-1. Create a resource group for this lab:
+### Step 1: Deploy zone-redundant VMSS with 6 instances
 
 ```bash
 az group create --name rg-az305-challenge30 --location eastus
 ```
-
-2. Deploy a Virtual Machine Scale Set spread across availability zones:
 
 ```bash
 az vmss create \
@@ -308,42 +306,164 @@ az vmss create \
   --name vmss-ha-lab \
   --image Ubuntu2204 \
   --vm-sku Standard_B1s \
-  --instance-count 3 \
+  --instance-count 6 \
   --zones 1 2 3 \
   --admin-username azureuser \
   --generate-ssh-keys \
-  --load-balancer lb-ha-lab
+  --load-balancer lb-ha-lab \
+  --upgrade-policy-mode automatic
 ```
 
-3. Verify instances are distributed across zones:
+### Step 2: Install nginx on all instances to serve hostname
+
+```bash
+az vmss extension set \
+  --resource-group rg-az305-challenge30 \
+  --vmss-name vmss-ha-lab \
+  --name customScript \
+  --publisher Microsoft.Azure.Extensions \
+  --version 2.1 \
+  --settings '{"commandToExecute":"apt-get update && apt-get install -y nginx && hostname > /var/www/html/index.html"}'
+```
+
+```bash
+az vmss update-instances \
+  --resource-group rg-az305-challenge30 \
+  --name vmss-ha-lab \
+  --instance-ids "*"
+```
+
+### Step 3: Verify zone distribution
 
 ```bash
 az vmss list-instances \
   --resource-group rg-az305-challenge30 \
   --name vmss-ha-lab \
-  --query "[].{Instance:instanceId, Zone:zones[0]}" -o table
+  --query "[].{Instance:instanceId, Zone:zones[0]}" \
+  -o table
 ```
 
-4. Confirm the load balancer is using a zone-redundant frontend:
+You should see 2 instances per zone (6 total across zones 1, 2, and 3).
+
+:::note[Architect Insight]
+Zone-balanced distribution is critical for capacity planning. With 6 instances across 3 zones, losing one zone leaves 4 instances (67% capacity). Your minimum instance count must be calculated as: (instances needed at peak) * 3/2, rounded up, so that N-1 zones still handle full load.
+:::
+
+### Step 4: Observe traffic distribution across zones
 
 ```bash
-az network lb show \
+LB_IP=$(az network public-ip show \
   --resource-group rg-az305-challenge30 \
-  --name lb-ha-lab \
-  --query "frontendIPConfigurations[0].zones" -o table
+  --name lb-ha-labLBPublicIP \
+  --query ipAddress -o tsv)
+
+echo "Load Balancer IP: $LB_IP"
 ```
 
-5. Verify all three zones are in use (validates zone-spreading for 99.99% SLA):
+```bash
+for i in $(seq 1 12); do
+  curl -s --max-time 5 http://$LB_IP
+  echo ""
+done
+```
+
+You should see responses from instances across all 3 zones, demonstrating round-robin distribution.
+
+### Step 5: Simulate a zone failure
+
+Identify and deallocate all instances in Zone 1:
+
+```bash
+ZONE1_INSTANCES=$(az vmss list-instances \
+  --resource-group rg-az305-challenge30 \
+  --name vmss-ha-lab \
+  --query "[?zones[0]=='1'].instanceId" -o tsv)
+
+echo "Deallocating Zone 1 instances: $ZONE1_INSTANCES"
+
+for id in $ZONE1_INSTANCES; do
+  az vmss deallocate \
+    --resource-group rg-az305-challenge30 \
+    --name vmss-ha-lab \
+    --instance-ids $id \
+    --no-wait
+done
+```
+
+### Step 6: Wait for health probes to detect the failure
+
+```bash
+echo "Waiting 20 seconds for health probes to mark Zone 1 instances as unhealthy..."
+sleep 20
+```
+
+### Step 7: Verify traffic routes only to surviving zones
+
+```bash
+echo "Traffic after Zone 1 failure:"
+for i in $(seq 1 10); do
+  curl -s --max-time 5 http://$LB_IP
+  echo ""
+done
+```
+
+Only hostnames from Zone 2 and Zone 3 instances should appear. Zone 1 instances are gone from rotation.
+
+:::note[Architect Insight]
+The Standard Load Balancer with health probes automatically removed failed instances from rotation. No manual intervention, no DNS changes, no application-level failover logic. This is the behavior that justifies the 99.99% SLA -- the system self-heals at the infrastructure layer. For the AZ-305 exam, remember that this automatic rerouting only works with Standard SKU load balancers; Basic SKU does not support zone-redundant frontends.
+:::
+
+### Step 8: Confirm remaining capacity
 
 ```bash
 az vmss list-instances \
   --resource-group rg-az305-challenge30 \
   --name vmss-ha-lab \
-  --query "unique([].zones[0])" -o tsv
+  --query "[?powerState!='VM deallocated'].{Instance:instanceId, Zone:zones[0]}" \
+  -o table
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+echo "Remaining running instances:"
+az vmss list-instances \
+  --resource-group rg-az305-challenge30 \
+  --name vmss-ha-lab \
+  --query "length([?powerState!='VM deallocated'])"
+```
+
+You should see 4 running instances across zones 2 and 3 only.
+
+### Step 9: Restore Zone 1 and verify full recovery
+
+```bash
+for id in $ZONE1_INSTANCES; do
+  az vmss start \
+    --resource-group rg-az305-challenge30 \
+    --name vmss-ha-lab \
+    --instance-ids $id \
+    --no-wait
+done
+
+echo "Waiting 30 seconds for instances to restart and pass health probes..."
+sleep 30
+```
+
+```bash
+echo "Traffic after Zone 1 recovery:"
+for i in $(seq 1 12); do
+  curl -s --max-time 5 http://$LB_IP
+  echo ""
+done
+```
+
+All 3 zones should now appear in the responses again, confirming full recovery.
+
+:::note[Architect Insight]
+Recovery is also automatic. Once Zone 1 instances pass health probes again, the load balancer adds them back to rotation. The minimum instance count for a zone-redundant deployment should always be 3x what a single zone needs, so that losing any one zone still leaves sufficient capacity without waiting for autoscale to react.
+:::
+
+:::tip[Design Validation]
+This lab proved three critical design properties: (1) Zone-redundant VMSS survives a complete availability zone failure with zero manual intervention. (2) The Standard Load Balancer plus health probes handle all traffic rerouting automatically -- no application changes needed. (3) Capacity planning must account for N-1 zones carrying full production load, meaning your minimum instance count should be at least 1.5x your peak requirement.
 :::
 
 ## Cleanup

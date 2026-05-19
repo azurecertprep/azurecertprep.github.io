@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Precision Manufacturing é uma empresa de manufatura de medio porte operando 200 servidores em 2 data centers on-premises (primário em Chicago, DR em Dallas). O contrato de locacao do data center em Chicago expira em 18 meses, e o contrato da instalacao de Dallas expira 6 meses depois. O CEO se comprometeu a migrar inteiramente para Azure em vez de renovar os contratos, projetando uma redução de custos de 30% em 3 anos.
+A Precision Manufacturing é uma empresa de manufatura de médio porte operando 200 servidores em 2 data centers on-premises (primário em Chicago, DR em Dallas). O contrato de locacao do data center em Chicago expira em 18 meses, e o contrato da instalacao de Dallas expira 6 meses depois. O CEO se comprometeu a migrar inteiramente para Azure em vez de renovar os contratos, projetando uma redução de custos de 30% em 3 anos.
 
 O ambiente atual inclui: 80 VMs Windows Server (executando aplicações web IIS em .NET Framework 4.x, servidores de arquivo, controladores de dominio Active Directory), 50 VMs Linux (servidores web Apache/Nginx, aplicações Python customizadas, servidores de build Jenkins), 30 instâncias SQL Server (versoes variando de 2012 a 2022, algumas com consultas cross-database) e 40 aplicações legadas com dependências não documentadas. Algumas aplicações tem requisitos de conformidade (SOX para sistemas financeiros, FDA 21 CFR Part 11 para gerenciamento de qualidade).
 

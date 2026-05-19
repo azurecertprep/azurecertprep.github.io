@@ -191,39 +191,198 @@ If GPU requirements are larger (e.g., NC24s_v3 with 4 GPUs), costs increase sign
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab proves that VMSS autoscale responds to real CPU metrics, scales out under load, and scales back in when load subsides. You will observe the full autoscale lifecycle including the cool-down period behavior.
 
-1. Create a resource group for this lab:
+### Step 1: Create resource group and deploy VMSS with autoscale
 
 ```bash
 az group create --name rg-az305-challenge34 --location eastus
 ```
 
-2. Deploy a B2ms VM (burstable, 2 vCPUs, 8 GB RAM):
-
 ```bash
-az vm create --resource-group rg-az305-challenge34 --name vm-burst-test \
-  --image Ubuntu2204 --size Standard_B2ms \
-  --admin-username azureuser --generate-ssh-keys
+az vmss create \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --image Ubuntu2204 \
+  --vm-sku Standard_B2s \
+  --instance-count 2 \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --upgrade-policy-mode automatic
 ```
 
-3. Check the VM's CPU credit balance:
+### Step 2: Configure autoscale rules
 
 ```bash
-az monitor metrics list --resource-type "Microsoft.Compute/virtualMachines" \
-  --resource vm-burst-test --resource-group rg-az305-challenge34 \
-  --metric "CPU Credits Remaining" --output table
-```
+VMSS_ID=$(az vmss show \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query id -o tsv)
 
-4. Verify the VM is running and accessible:
+az monitor autoscale create \
+  --resource-group rg-az305-challenge34 \
+  --resource $VMSS_ID \
+  --name autoscale-lab-profile \
+  --min-count 2 \
+  --max-count 6 \
+  --count 2
+```
 
 ```bash
-az vm show --resource-group rg-az305-challenge34 --name vm-burst-test \
-  --query "{Status:provisioningState, Size:hardwareProfile.vmSize}" --output table
+az monitor autoscale rule create \
+  --resource-group rg-az305-challenge34 \
+  --autoscale-name autoscale-lab-profile \
+  --condition "Percentage CPU > 70 avg 1m" \
+  --scale out 2
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+az monitor autoscale rule create \
+  --resource-group rg-az305-challenge34 \
+  --autoscale-name autoscale-lab-profile \
+  --condition "Percentage CPU < 30 avg 5m" \
+  --scale in 1 \
+  --cooldown 5
+```
+
+### Step 3: Verify initial state (minimum 2 instances)
+
+```bash
+az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "[].{Instance:instanceId, State:provisioningState}" \
+  -o table
+```
+
+```bash
+INSTANCE_COUNT=$(az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "length([])")
+echo "Current instance count: $INSTANCE_COUNT (should be 2)"
+```
+
+:::note[Architect Insight]
+The minimum instance count (2) represents your baseline capacity -- the floor below which the system will never scale. For production workloads, set this to handle your off-peak traffic without any autoscale intervention. If minimum is too low, users experience latency during the 1-2 minutes it takes for new instances to spin up and become ready.
+:::
+
+### Step 4: Generate CPU load on instances
+
+Install the stress utility and generate sustained CPU load:
+
+```bash
+az vmss extension set \
+  --resource-group rg-az305-challenge34 \
+  --vmss-name vmss-autoscale-lab \
+  --name customScript \
+  --publisher Microsoft.Azure.Extensions \
+  --version 2.1 \
+  --settings '{"commandToExecute":"apt-get update && apt-get install -y stress && stress --cpu 4 --timeout 300"}'
+```
+
+```bash
+az vmss update-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --instance-ids "*"
+```
+
+### Step 5: Monitor autoscale activity (wait for scale-out)
+
+The autoscale engine evaluates metrics every 1 minute. With the rule configured to trigger at avg CPU > 70% over 1 minute, scale-out should begin within 2-3 minutes.
+
+```bash
+echo "Waiting 120 seconds for CPU metrics to trigger autoscale..."
+sleep 120
+```
+
+```bash
+az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "[].{Instance:instanceId, State:provisioningState}" \
+  -o table
+```
+
+```bash
+INSTANCE_COUNT=$(az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "length([])")
+echo "Current instance count: $INSTANCE_COUNT (should be > 2, scaling out)"
+```
+
+If still at 2, wait another 60 seconds and check again:
+
+```bash
+sleep 60
+az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "length([])"
+```
+
+### Step 6: Check autoscale activity log
+
+```bash
+az monitor autoscale show \
+  --resource-group rg-az305-challenge34 \
+  --name autoscale-lab-profile \
+  --query "{MinCount:profiles[0].capacity.minimum, MaxCount:profiles[0].capacity.maximum, DefaultCount:profiles[0].capacity.default}" \
+  -o table
+```
+
+```bash
+az monitor activity-log list \
+  --resource-group rg-az305-challenge34 \
+  --offset 10m \
+  --query "[?contains(operationName.value, 'autoscale')].{Operation:operationName.localizedValue, Status:status.localizedValue, Time:eventTimestamp}" \
+  -o table
+```
+
+:::note[Architect Insight]
+Autoscale scale-out is designed to be aggressive (respond quickly to protect user experience), while scale-in is conservative (10-minute default cool-down to prevent flapping). The cool-down period after a scale-out prevents the system from immediately scaling in when new instances temporarily reduce average CPU. For the AZ-305 exam, remember: scale-out reacts in 1-2 minutes, but new instances need another 1-2 minutes to start serving traffic -- plan for 3-4 minutes total response time.
+:::
+
+### Step 7: Wait for load to finish and observe scale-in
+
+The stress command has a 300-second (5-minute) timeout. After it completes, CPU will drop and scale-in should trigger.
+
+```bash
+echo "Waiting for stress to complete and cool-down to expire (approximately 5 minutes)..."
+sleep 300
+```
+
+```bash
+INSTANCE_COUNT=$(az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "length([])")
+echo "Current instance count after load stopped: $INSTANCE_COUNT"
+```
+
+If instances have not yet scaled in, wait for the cool-down period:
+
+```bash
+echo "Waiting additional 120 seconds for scale-in cool-down..."
+sleep 120
+```
+
+```bash
+INSTANCE_COUNT=$(az vmss list-instances \
+  --resource-group rg-az305-challenge34 \
+  --name vmss-autoscale-lab \
+  --query "length([])")
+echo "Final instance count: $INSTANCE_COUNT (should be trending back to 2)"
+```
+
+:::note[Architect Insight]
+Scale-in is intentionally slow. The autoscale engine evaluates the scale-in rule (CPU < 30% for 5 minutes), then applies the cool-down (5 minutes in our config), and removes only 1 instance at a time. This means scaling from 6 back to 2 takes at minimum 40+ minutes. This conservative approach prevents oscillation but means you pay for extra capacity during the wind-down. Always set minimum instances to handle your baseline load so you are not paying for unnecessary autoscale-in delays.
+:::
+
+:::tip[Design Validation]
+This lab proved three critical autoscale behaviors: (1) Autoscale responds to real CPU metrics and scales out within 2-3 minutes of threshold breach. (2) The cool-down period prevents oscillation by blocking rapid scale-in after scale-out events. (3) New instances take 1-2 minutes to become ready, so your design must tolerate a total response lag of 3-4 minutes from load spike to additional capacity serving traffic.
 :::
 
 ## Cleanup

@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-TransGlobal Logistics opera uma frota de 10.000 caminhoes na America do Norte, gerando eventos de telemetria GPS a cada 5 segundos (2 milhoes de eventos por segundo no pico). A empresa tem três requisitos de analytics distintos que variam dramaticamente em latência, volume e perfil de usuário:
+TransGlobal Logistics opera uma frota de 10.000 caminhoes na América do Norte, gerando eventos de telemetria GPS a cada 5 segundos (2 milhões de eventos por segundo no pico). A empresa tem três requisitos de analytics distintos que variam dramaticamente em latência, volume e perfil de usuário:
 
 Primeiro, o centro de operações precisa de rastreamento de frota em tempo real com latência inferior a um minuto para detectar desvios de rota, prever atrasos e acionar alertas quando caminhoes entram em zonas restritas. Segundo, gerentes regionais precisam de dashboards operacionais diarios mostrando desempenho de entregas, eficiência de combustivel e horas dos motoristas - atualizados toda manha até as 7h com dados do dia anterior. Terceiro, a equipe de data science retreina modelos de ML mensalmente usando 6 meses de dados historicos de rotas para otimizar rotas de entrega e prever necessidades de manutenção.
 
@@ -29,7 +29,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
 
 ### Parte 1: Projetar Analytics em Tempo Real (Rastreamento de Frota)
 
-1. Projete a camada de ingestao para 2 milhoes de eventos/segundo de telemetria GPS:
+1. Projete a camada de ingestao para 2 milhões de eventos/segundo de telemetria GPS:
    - Compare Azure Event Hubs (Standard vs Premium vs Dedicated) para este throughput
    - Calcule o número necessário de throughput units ou processing units
    - Documente a estratégia de particao para garantias de ordenamento por caminhao (particionar por truck ID)
@@ -65,7 +65,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
 
 ### Parte 3: Projetar Analytics Avancado (Treinamento de Modelo ML)
 
-7. Projete o data lake historico para treinamento ML:
+7. Projete o data lake histórico para treinamento ML:
    - Comparacao de formato de armazenamento: Parquet vs Delta Lake vs CSV para 6 meses de dados de rotas (~50TB)
    - Estratégia de particionamento: por data e região para scans de intervalo eficientes
    - Projete a arquitetura medallion (Bronze/Silver/Gold) para refinamento progressivo de dados
@@ -86,7 +86,7 @@ Cada carga de trabalho tem diferente tolerância de custo: o sistema em tempo re
 10. Projete como as três cargas de trabalho de analytics compartilham infraestrutura:
     - Data Lake Storage Gen2 compartilhado como a camada de armazenamento central (zonas Bronze/Silver/Gold)
     - Event Hubs como o ponto único de ingestao, com Stream Analytics consumindo em tempo real e Data Factory capturando para o lake para batch
-    - Defina o fluxo de dados da ingestao em tempo real atraves do processamento batch até o consumo ML
+    - Defina o fluxo de dados da ingestao em tempo real através do processamento batch até o consumo ML
 
 11. Crie um modelo de custo para a arquitetura completa de analytics:
     - Tempo real: Event Hubs + Stream Analytics + Cosmos DB hot store

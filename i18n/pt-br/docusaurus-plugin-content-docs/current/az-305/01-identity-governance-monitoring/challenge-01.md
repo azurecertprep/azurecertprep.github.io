@@ -16,9 +16,9 @@ import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 ## Introdução
 
-A Northwind Traders é uma empresa de varejo de medio porte que cresceu rapidamente por meio de aquisicoes. Atualmente opera cargas de trabalho em três assinaturas Azure: uma para TI corporativa, uma para sua plataforma de e-commerce é uma para a equipe de análise de dados. Cada equipe gerência logs de forma independente, resultando em pontos cegos ao solucionar incidentes entre equipes e nenhuma visao unificada para auditorias de segurança.
+A Northwind Traders é uma empresa de varejo de médio porte que cresceu rapidamente por meio de aquisições. Atualmente opera cargas de trabalho em três assinaturas Azure: uma para TI corporativa, uma para sua plataforma de e-commerce e uma para a equipe de análise de dados. Cada equipe gerencia logs de forma independente, resultando em pontos cegos ao solucionar incidentes entre equipes e nenhuma visão unificada para auditorias de segurança.
 
-O CTO determinou uma estratégia centralizada de logging que forneca um painel único para visibilidade operacional, respeitando requisitos de soberania de dados (dados da UE devem permanecer em regiões da UE). A equipe de segurança precisa de acesso a todos os logs relevantes de segurança, mas a equipe de análise deve ver apenas seus proprios logs de aplicação. O volume mensal de logs e estimado em 50 GB para TI corporativa, 200 GB para e-commerce e 100 GB para análise.
+O CTO determinou uma estratégia centralizada de logging que forneça um painel único para visibilidade operacional, respeitando requisitos de soberania de dados (dados da UE devem permanecer em regiões da UE). A equipe de segurança precisa de acesso a todos os logs relevantes de segurança, mas a equipe de análise deve ver apenas seus próprios logs de aplicação. O volume mensal de logs e estimado em 50 GB para TI corporativa, 200 GB para e-commerce e 100 GB para análise.
 
 Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilibre eficiência de custos, controle de acesso, requisitos de conformidade e simplicidade operacional.
 
@@ -71,7 +71,7 @@ Sua tarefa é projetar uma arquitetura de workspace do Log Analytics que equilib
 7. Projete um modelo de acesso que satisfaca estes requisitos:
    - Equipe de segurança: acesso de leitura a todos os logs de segurança em todos os workspaces
    - Equipe de e-commerce: acesso de leitura/escrita apenas aos seus logs de aplicação
-   - Equipe de análise: acesso de leitura apenas ao seu proprio workspace
+   - Equipe de análise: acesso de leitura apenas ao seu próprio workspace
    - Equipe de plataforma: acesso administrativo completo a todos os workspaces
 
 8. Implemente controle de acesso resource-context vs. workspace-context onde apropriado.
@@ -165,7 +165,7 @@ O Log Analytics suporta dois modos de acesso:
 - **Workspace-context**: O usuário obtem acesso a todos os logs no workspace com base em permissões em nível de workspace
 - **Resource-context**: O usuário acessa logs de um recurso específico por meio do RBAC daquele recurso (requer `Log Analytics Reader` mais acesso ao recurso)
 
-Para a equipe de e-commerce, resource-context é ideal porque eles precisam ver apenas logs de seus proprios recursos, sem necessitar de permissões diretas no workspace.
+Para a equipe de e-commerce, resource-context é ideal porque eles precisam ver apenas logs de seus próprios recursos, sem necessitar de permissões diretas no workspace.
 
 ```bash
 # Grant workspace-level access to security team
@@ -202,9 +202,9 @@ Compare: commitment tier de 300 GB + 50 GB de excedente vs. commitment tier de 4
 ## Verificação de Conhecimento
 
 <details>
-<summary>1. A Northwind Traders tem 350 GB/dia de ingestao de logs divididos entre três equipes. A equipe de segurança precisa consultar todos os logs, mas a equipe de análise deve ver apenas seus proprios dados. Qual é a arquitetura de workspace mais economica?</summary>
+<summary>1. A Northwind Traders tem 350 GB/dia de ingestao de logs divididos entre três equipes. A equipe de segurança precisa consultar todos os logs, mas a equipe de análise deve ver apenas seus próprios dados. Qual é a arquitetura de workspace mais economica?</summary>
 
-**Uma abordagem hibrida com um workspace único usando controle de acesso resource-context** e a mais economica. Um workspace único qualifica-se para o commitment tier de 300 GB/dia (desconto significativo), enquanto o RBAC resource-context garante que a equipe de análise veja apenas logs de seus proprios recursos. A equipe de segurança recebe Log Analytics Reader em nível de workspace para visibilidade completa. Adicione um segundo workspace apenas se a residencia de dados da UE exigir separacao fisica.
+**Uma abordagem hibrida com um workspace único usando controle de acesso resource-context** e a mais economica. Um workspace único qualifica-se para o commitment tier de 300 GB/dia (desconto significativo), enquanto o RBAC resource-context garante que a equipe de análise veja apenas logs de seus próprios recursos. A equipe de segurança recebe Log Analytics Reader em nível de workspace para visibilidade completa. Adicione um segundo workspace apenas se a residencia de dados da UE exigir separacao física.
 
 </details>
 

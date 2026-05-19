@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 SecureBank Financial Services é um banco regional migrando sua aplicação bancaria principal para Azure SQL Database. A aplicação processa transações de clientes, armazena informações pessoalmente identificaveis (PII) incluindo números de Social Security, números de conta e registros financeiros. SecureBank esta sujeito a múltiplos frameworks regulatorios: PCI-DSS para dados de cartao de pagamento, SOX (Sarbanes-Oxley) para integridade de relatórios financeiros e regulamentacoes de privacidade estaduais que exigem notificação de violacao de dados.
 
-A equipe de compliance definiu os seguintes requisitos obrigatorios: (1) Todos os dados devem ser criptografados em repouso e em transito com chaves de criptografia gerenciadas pelo banco; (2) SSNs e números de conta dos clientes nunca devem ser visiveis para a equipe de suporte ou desenvolvedores de aplicação, mesmo quando consultam o banco de dados diretamente; (3) Todo acesso e modificacao de dados deve ser registrado em uma trilha de auditoria a prova de adulteracao retida por 7 anos; (4) O banco deve ser capaz de restaurar qualquer banco de dados para qualquer ponto no tempo nos ultimos 35 dias, com backups mensais retidos por 7 anos para compliance regulatorio; (5) Tabelas críticas de ledger financeiro devem ser verificaveis criptograficamente para provar que os dados não foram adulterados.
+A equipe de compliance definiu os seguintes requisitos obrigatorios: (1) Todos os dados devem ser criptografados em repouso e em transito com chaves de criptografia gerenciadas pelo banco; (2) SSNs e números de conta dos clientes nunca devem ser visiveis para a equipe de suporte ou desenvolvedores de aplicação, mesmo quando consultam o banco de dados diretamente; (3) Todo acesso e modificacao de dados deve ser registrado em uma trilha de auditoria a prova de adulteracao retida por 7 anos; (4) O banco deve ser capaz de restaurar qualquer banco de dados para qualquer ponto no tempo nos últimos 35 dias, com backups mensais retidos por 7 anos para compliance regulatorio; (5) Tabelas críticas de ledger financeiro devem ser verificaveis criptograficamente para provar que os dados não foram adulterados.
 
 O arquiteto de segurança também observou que uma descoberta recente de auditoria requer que as chaves de criptografia sejam armazenadas em um Azure Key Vault gerenciado pelo cliente com separacao de funções, significando que a equipe de DBA não deve ter acesso as chaves de criptografia. O tamanho estimado do banco de dados e 500GB com 2.000 transações por segundo no pico.
 
@@ -37,9 +37,9 @@ O arquiteto de segurança também observou que uma descoberta recente de auditor
 ### Parte 2: Auditoria e Compliance
 
 5. Projete uma solução de auditoria usando Azure SQL Database Auditing. Especifique onde os logs de auditoria devem ser armazenados (Storage Account, Log Analytics ou Event Hub) considerando o requisito de retencao de 7 anos e necessidades a prova de adulteracao.
-6. Configure o escopo de auditoria: determine quais ações auditar (leituras de dados em tabelas sensiveis, alteracoes de esquema, alteracoes de permissão, logins falhados) enquanto evita logging excessivo que poderia impactar o desempenho.
+6. Configure o escopo de auditoria: determine quais ações auditar (leituras de dados em tabelas sensíveis, alteracoes de esquema, alteracoes de permissão, logins falhados) enquanto evita logging excessivo que poderia impactar o desempenho.
 7. Projete uma solução para o requisito de ledger table. Identifique quais tabelas devem usar o recurso ledger do Azure SQL Database e explique como a verificação criptografica funciona (database digests armazenados externamente no Azure Confidential Ledger ou Azure Blob Storage).
-8. Crie uma abordagem de monitoramento de compliance que gere alertas para padrões de acesso suspeitos (ex.: exportacoes de dados em massa, acesso fora do horario comercial, consultas tocando colunas sensiveis).
+8. Crie uma abordagem de monitoramento de compliance que gere alertas para padrões de acesso suspeitos (ex.: exportacoes de dados em massa, acesso fora do horario comercial, consultas tocando colunas sensíveis).
 
 ### Parte 3: Backup e Recuperação
 
@@ -74,14 +74,14 @@ Dynamic data masking (DDM) oculta dados nos resultados de consulta mas NAO os cr
 <details>
 <summary>Dica 2: Chaves Gerenciadas pelo Cliente para TDE</summary>
 
-TDE com chaves gerenciadas pelo cliente (CMK) armazena o TDE protector no Azure Key Vault. A configuração recomendada: (1) Crie um Key Vault com soft delete e purge protection habilitados; (2) Conceda a identidade do SQL Server (managed identity atribuida pelo sistema) permissões GET, WRAP KEY e UNWRAP KEY; (3) A equipe de segurança gerência o acesso ao Key Vault; (4) A equipe de DBA gerência operações de banco de dados mas não pode acessar o Key Vault diretamente. Isso impoe a separacao de funções.
+TDE com chaves gerenciadas pelo cliente (CMK) armazena o TDE protector no Azure Key Vault. A configuração recomendada: (1) Crie um Key Vault com soft delete e purge protection habilitados; (2) Conceda a identidade do SQL Server (managed identity atribuida pelo sistema) permissões GET, WRAP KEY e UNWRAP KEY; (3) A equipe de segurança gerencia o acesso ao Key Vault; (4) A equipe de DBA gerencia operações de banco de dados mas não pode acessar o Key Vault diretamente. Isso impoe a separacao de funções.
 
 </details>
 
 <details>
 <summary>Dica 3: Azure SQL Database Ledger</summary>
 
-Ledger tables criam uma cadeia de hash criptografica sobre todas as modificacoes. Cada transação adiciona um hash que incorpora o hash anterior, criando um historico imutável e verificavel. Database digests (o hash mais recente) podem ser armazenados externamente no Azure Confidential Ledger ou Blob Storage imutável. Para verificar a integridade, você compara os digests armazenados com a cadeia de hash computada. Ledger tables estao disponiveis nas variantes append-only (somente insercao) ou atualizaveis.
+Ledger tables criam uma cadeia de hash criptografica sobre todas as modificacoes. Cada transação adiciona um hash que incorpora o hash anterior, criando um histórico imutável e verificavel. Database digests (o hash mais recente) podem ser armazenados externamente no Azure Confidential Ledger ou Blob Storage imutável. Para verificar a integridade, você compara os digests armazenados com a cadeia de hash computada. Ledger tables estao disponíveis nas variantes append-only (somente insercao) ou atualizaveis.
 
 </details>
 
@@ -135,7 +135,7 @@ Para retencao de auditoria a prova de adulteracao por 7 anos, armazene logs de a
 <details>
 <summary>4. Uma organização usa TDE com chaves gerenciadas pelo cliente e precisa de separacao de funções entre a equipe de DBA e a equipe de segurança. Como o acesso ao Azure Key Vault deve ser configurado?</summary>
 
-**A equipe de segurança gerência o Key Vault (criar/rotacionar/deletar chaves), e a managed identity do SQL Server recebe apenas permissões GET, WRAP KEY e UNWRAP KEY.** A equipe de DBA administra o banco de dados mas não tem política de acesso ao Key Vault. Isso garante que DBAs não podem exportar ou deletar chaves de criptografia, enquanto o serviço SQL Server ainda pode criptografar/descriptografar dados usando o TDE protector. Se a equipe de segurança revogar o acesso ao Key Vault, o banco de dados se torna inacessivel, fornecendo um mecanismo de "kill switch" criptografico.
+**A equipe de segurança gerencia o Key Vault (criar/rotacionar/deletar chaves), e a managed identity do SQL Server recebe apenas permissões GET, WRAP KEY e UNWRAP KEY.** A equipe de DBA administra o banco de dados mas não tem política de acesso ao Key Vault. Isso garante que DBAs não podem exportar ou deletar chaves de criptografia, enquanto o serviço SQL Server ainda pode criptografar/descriptografar dados usando o TDE protector. Se a equipe de segurança revogar o acesso ao Key Vault, o banco de dados se torna inacessivel, fornecendo um mecanismo de "kill switch" criptografico.
 
 </details>
 

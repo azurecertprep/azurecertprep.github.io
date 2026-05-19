@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A SmartSpace Technologies opera uma plataforma de edificios inteligentes que monitora 10.000 sensores IoT implantados em 50 edificios comerciais. Os sensores reportam dados de temperatura, umidade, ocupacao e consumo de energia a cada 5 segundos, gerando aproximadamente 120.000 eventos por minuto (2.000 eventos por segundo sustentados, com picos de 5.000/segundo durante o horario de abertura dos edificios). A plataforma deve lidar com quatro cenários distintos de processamento de eventos com diferentes requisitos de latência e durabilidade.
+A SmartSpace Technologies opera uma plataforma de edificios inteligentes que monitora 10.000 sensores IoT implantados em 50 edificios comerciais. Os sensores reportam dados de temperatura, umidade, ocupação e consumo de energia a cada 5 segundos, gerando aproximadamente 120.000 eventos por minuto (2.000 eventos por segundo sustentados, com picos de 5.000/segundo durante o horario de abertura dos edificios). A plataforma deve lidar com quatro cenários distintos de processamento de eventos com diferentes requisitos de latência e durabilidade.
 
-Cenário 1 (Alertas em tempo real): Quando um sensor de temperatura excede 35C ou a ocupacao excede os limites de segurança contra incendio, um alerta deve chegar a gerência do edificio em até 2 segundos. Cenário 2 (Dashboards quase em tempo real): Os dashboards de operações do edificio devem ser atualizados em 10-15 segundos para mostrar as condições atuais em todos os andares. Cenário 3 (Arquivo de eventos): Todos os eventos dos sensores devem ser arquivados por 7 anos para suportar treinamento de modelos de ML e auditorias de conformidade regulatoria. Cenário 4 (Respostas automatizadas): Quando condições específicas sao atendidas (ex.: ocupacao cai para zero E consumo de energia excede o limite), a plataforma deve acionar ações automatizadas (ajustar setpoints do HVAC, diminuir luzes, enviar notificações de manutenção).
+Cenário 1 (Alertas em tempo real): Quando um sensor de temperatura excede 35C ou a ocupação excede os limites de segurança contra incendio, um alerta deve chegar a gerencia do edifício em até 2 segundos. Cenário 2 (Dashboards quase em tempo real): Os dashboards de operações do edifício devem ser atualizados em 10-15 segundos para mostrar as condições atuais em todos os andares. Cenário 3 (Arquivo de eventos): Todos os eventos dos sensores devem ser arquivados por 7 anos para suportar treinamento de modelos de ML e auditorias de conformidade regulatoria. Cenário 4 (Respostas automatizadas): Quando condições específicas sao atendidas (ex.: ocupação cai para zero E consumo de energia excede o limite), a plataforma deve acionar ações automatizadas (ajustar setpoints do HVAC, diminuir luzes, enviar notificações de manutenção).
 
 O desafio é projetar uma arquitetura orientada a eventos que roteie eventos para o pipeline de processamento apropriado com base nos requisitos de latência e durabilidade de cada cenário.
 
@@ -56,7 +56,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 4. Projete o pipeline de alertas em tempo real (requisito de latência de 2 segundos):
    - Fonte de eventos: Event Hubs (ou rota do IoT Hub)
    - Processamento: Avaliar regras de limite no fluxo
-   - Saida: Notificação push para gerência do edificio
+   - Saida: Notificação push para gerencia do edifício
 
 5. Avalie opcoes de processamento para detecção de limites:
    - **Azure Stream Analytics**: Consultas tipo SQL, agregacoes em janelas, joins com dados de referência
@@ -68,8 +68,8 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 ### Parte 3: Distribuição de Eventos com Event Grid (Cenário 4)
 
 7. Projete o sistema de resposta automatizada usando Event Grid:
-   - Defina eventos customizados para condições do edificio (OccupancyZero, EnergyAnomaly, TemperatureExceedance)
-   - Crie tópicos do Event Grid para cada edificio ou um único tópico com filtragem por subject
+   - Defina eventos customizados para condições do edifício (OccupancyZero, EnergyAnomaly, TemperatureExceedance)
+   - Crie tópicos do Event Grid para cada edifício ou um único tópico com filtragem por subject
    - Projete subscriptions que acionem diferentes Azure Functions com base no tipo de evento
 
 8. Configure a filtragem do Event Grid:
@@ -94,7 +94,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
 
 11. Calcule os requisitos de armazenamento:
     - 120.000 eventos/minuto x 60 x 24 x 365 x 7 anos
-    - Tamanho medio do evento: 500 bytes
+    - Tamanho médio do evento: 500 bytes
     - Armazenamento bruto total: estime e identifique a camada de armazenamento apropriada
     - Quando os dados devem migrar da camada Hot para Cool para Archive?
 
@@ -111,7 +111,7 @@ O desafio é projetar uma arquitetura orientada a eventos que roteie eventos par
     - Consumer Group 3: Event Hubs Capture (arquivamento)
     - Consumer Group 4: Pipeline de features de ML (Databricks)
 
-14. Explique por que cada consumidor precisa de seu proprio consumer group e o que acontece se duas aplicações diferentes compartilharem um consumer group.
+14. Explique por que cada consumidor precisa de seu próprio consumer group e o que acontece se duas aplicações diferentes compartilharem um consumer group.
 
 ## Criterios de Sucesso
 
@@ -157,11 +157,11 @@ Particoes determinam o paralelismo:
 - Recomendado: 8-16 particoes para margem e consumidores paralelos
 
 Estratégia de partition key:
-- **Building ID**: Todos os eventos de um edificio vao para a mesma particao (bom para ordenacao de processamento por edificio)
-- **Sensor ID**: Distribuição uniforme mas sem ordenacao por edificio
+- **Building ID**: Todos os eventos de um edifício vao para a mesma particao (bom para ordenacao de processamento por edifício)
+- **Sensor ID**: Distribuição uniforme mas sem ordenacao por edifício
 - **Aleatorio (null key)**: Melhor distribuição de throughput, sem garantias de ordenacao
 
-Para este cenário, Building ID como partition key garante que todos os eventos de um edificio sejam processados em ordem pelo sistema de alertas, permitindo correlacao multi-sensor dentro de um edificio.
+Para este cenário, Building ID como partition key garante que todos os eventos de um edifício sejam processados em ordem pelo sistema de alertas, permitindo correlacao multi-sensor dentro de um edifício.
 
 </details>
 
@@ -211,28 +211,28 @@ A política de gerenciamento de ciclo de vida automatiza as transicoes entre cam
 <details>
 <summary>1. Duas aplicações leem do mesmo Event Hub usando o mesmo consumer group. Qual problema ocorre?</summary>
 
-**As aplicações competem por particoes e cada uma recebe apenas um subconjunto de eventos.** Dentro de um consumer group, cada particao e atribuida a no máximo uma instância de consumidor. Se a Aplicação A e a Aplicação B compartilham um consumer group com 8 particoes, elas dividem a propriedade (ex.: A recebe particoes 0-3, B recebe particoes 4-7). Nenhuma aplicação ve todos os eventos. Para permitir que ambas as aplicações leiam todos os eventos independentemente, elas devem usar consumer groups separados. Cada consumer group mantem sua propria posicao de leitura (offset) por particao.
+**As aplicações competem por particoes e cada uma recebe apenas um subconjunto de eventos.** Dentro de um consumer group, cada particao e atribuida a no máximo uma instância de consumidor. Se a Aplicação A e a Aplicação B compartilham um consumer group com 8 particoes, elas dividem a propriedade (ex.: A recebe particoes 0-3, B recebe particoes 4-7). Nenhuma aplicação ve todos os eventos. Para permitir que ambas as aplicações leiam todos os eventos independentemente, elas devem usar consumer groups separados. Cada consumer group mantem sua própria posicao de leitura (offset) por particao.
 
 </details>
 
 <details>
 <summary>2. Por que o Event Grid e melhor que o Event Hubs para o cenário de resposta automatizada (fan-out para múltiplos subscribers)?</summary>
 
-**O Event Grid usa entrega baseada em push para múltiplos subscribers simultaneamente, enquanto o Event Hubs requer que cada subscriber faca pull e mantenha seu proprio offset.** Para respostas automatizadas onde um evento deve acionar 3-5 ações diferentes (HVAC, iluminacao, auditoria), o Event Grid suporta nativamente múltiplas subscriptions por tópico, cada uma recebendo o evento independentemente com sua propria política de retry e configuração de dead-letter. Com Event Hubs, você precisaria que cada handler de acao consultasse o hub, mantivesse checkpoints e processasse todos os eventos mesmo quando apenas um subconjunto e relevante. A filtragem server-side do Event Grid reduz o processamento desnecessario.
+**O Event Grid usa entrega baseada em push para múltiplos subscribers simultaneamente, enquanto o Event Hubs requer que cada subscriber faca pull e mantenha seu próprio offset.** Para respostas automatizadas onde um evento deve acionar 3-5 ações diferentes (HVAC, iluminacao, auditoria), o Event Grid suporta nativamente múltiplas subscriptions por tópico, cada uma recebendo o evento independentemente com sua própria política de retry e configuração de dead-letter. Com Event Hubs, você precisaria que cada handler de acao consultasse o hub, mantivesse checkpoints e processasse todos os eventos mesmo quando apenas um subconjunto e relevante. A filtragem server-side do Event Grid reduz o processamento desnecessario.
 
 </details>
 
 <details>
 <summary>3. O Event Hubs Capture escreve eventos no Blob Storage a cada 5 minutos ou a cada 256 MB, o que ocorrer primeiro. Por que não capturar a cada 1 segundo para menor latência de arquivamento?</summary>
 
-**Captura frequente cria arquivos pequenos excessivos que degradam o desempenho de consultas downstream e aumentam os custos de transações de armazenamento.** Cada janela de captura cria um arquivo Avro separado. Capturar a cada segundo produziria 86.400 arquivos por particao por dia. Motores analiticos (Spark, Synapse) tem desempenho ruim ao escanear milhoes de arquivos pequenos versus poucos arquivos maiores. A janela de 5 minutos equilibra a latência de arquivamento (atraso máximo de 5 minutos) contra a otimização do tamanho dos arquivos. Se o arquivamento quase em tempo real for necessário, use um consumer group dedicado escrevendo no Data Lake via um processo customizado com compactacao de arquivos.
+**Captura frequente cria arquivos pequenos excessivos que degradam o desempenho de consultas downstream e aumentam os custos de transações de armazenamento.** Cada janela de captura cria um arquivo Avro separado. Capturar a cada segundo produziria 86.400 arquivos por particao por dia. Motores analiticos (Spark, Synapse) tem desempenho ruim ao escanear milhões de arquivos pequenos versus poucos arquivos maiores. A janela de 5 minutos equilibra a latência de arquivamento (atraso máximo de 5 minutos) contra a otimização do tamanho dos arquivos. Se o arquivamento quase em tempo real for necessário, use um consumer group dedicado escrevendo no Data Lake via um processo customizado com compactacao de arquivos.
 
 </details>
 
 <details>
-<summary>4. Um alerta de temperatura dispara quando uma única leitura do sensor excede 35C. O gerente do edificio relata muitos alarmes falsos de picos breves do sensor. Como você reduz falsos positivos?</summary>
+<summary>4. Um alerta de temperatura dispara quando uma única leitura do sensor excede 35C. O gerente do edifício relata muitos alarmes falsos de picos breves do sensor. Como você reduz falsos positivos?</summary>
 
-**Use uma janela tumbling ou hopping no Stream Analytics para exigir múltiplas leituras consecutivas acima do limite antes de disparar um alerta.** Em vez de alertar em uma única leitura, configure a regra para exigir 3 leituras consecutivas acima de 35C dentro de uma janela de 30 segundos (correspondencia de padrão temporal). O Stream Analytics suporta funções `LAG()` e agregacoes em janelas para esse proposito. Alternativamente, use uma media de janela deslizante: alerte apenas quando a media movel de 60 segundos exceder 34C. Isso filtra ruido transitório do sensor enquanto ainda detecta excursoes genuinas de temperatura dentro do SLA de entrega de 2 segundos.
+**Use uma janela tumbling ou hopping no Stream Analytics para exigir múltiplas leituras consecutivas acima do limite antes de disparar um alerta.** Em vez de alertar em uma única leitura, configure a regra para exigir 3 leituras consecutivas acima de 35C dentro de uma janela de 30 segundos (correspondencia de padrão temporal). O Stream Analytics suporta funções `LAG()` e agregacoes em janelas para esse propósito. Alternativamente, use uma média de janela deslizante: alerte apenas quando a média movel de 60 segundos exceder 34C. Isso filtra ruido transitório do sensor enquanto ainda detecta excursoes genuinas de temperatura dentro do SLA de entrega de 2 segundos.
 
 </details>
 

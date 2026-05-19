@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Adventure Works Cycles é uma empresa de manufatura com 3.000 funcionarios passando por uma transformacao de nuvem hibrida. Enquanto suas novas aplicações sao cloud-native, eles dependem fortemente de várias aplicações legadas on-premises que não podem ser facilmente modernizadas:
+A Adventure Works Cycles é uma empresa de manufatura com 3.000 funcionários passando por uma transformacao de nuvem hibrida. Enquanto suas novas aplicações sao cloud-native, eles dependem fortemente de várias aplicações legadas on-premises que não podem ser facilmente modernizadas:
 
-1. **HR Portal**: Uma aplicação ASP.NET baseada em IIS usando Windows Integrated Authentication (Kerberos). Contem dados sensiveis de funcionarios e atualmente e acessível apenas pela rede corporativa.
+1. **HR Portal**: Uma aplicação ASP.NET baseada em IIS usando Windows Integrated Authentication (Kerberos). Contem dados sensíveis de funcionários e atualmente e acessível apenas pela rede corporativa.
 2. **Engineering File Shares**: Compartilhamentos de arquivo do Windows Server contendo desenhos CAD e especificações de fabricacao. Equipes de engenharia (incluindo 200 trabalhadores remotos) precisam de acesso diario.
 3. **Manufacturing ERP System**: Uma aplicação thick client conectando a um SQL Server on-premises que requer autenticação NTLM com maquinas ingressadas no dominio.
 4. **Supplier Portal**: Uma aplicação web legada usada por 50 fornecedores externos que atualmente requer acesso VPN para ser alcancada.
@@ -51,7 +51,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 
 2. Documente os criterios de decisao para cada escolha:
    - Suporte a protocolo de autenticação (Kerberos, NTLM, header-based)
-   - Requisitos de topologia de rede (linha de visao para DCs, posicionamento de conectores)
+   - Requisitos de topologia de rede (linha de visão para DCs, posicionamento de conectores)
    - Impacto na experiência do usuário
    - Implicacoes de licenciamento e custo
 
@@ -70,7 +70,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
    - Requisitos de Conditional Access para usuários externos
    - Controles de sessão (frequência de login, requisitos de MFA)
 
-5. Implante um conector de Application Proxy (ou documente a arquitetura de implantacao se recursos on-premises não estiverem disponiveis).
+5. Implante um conector de Application Proxy (ou documente a arquitetura de implantacao se recursos on-premises não estiverem disponíveis).
 
 ### Parte 3: Design do Microsoft Entra Domain Services
 
@@ -83,7 +83,7 @@ Sua tarefa é projetar soluções que conectem identidades em nuvem com recursos
 7. Projete a implantacao do Entra DS para o cenário do ERP de manufatura:
    - Requisitos de VNet e subnet
    - Integração com Entra Connect sync existente
-   - Como dispositivos gerenciados em nuvem se autenticarao no ERP (NTLM/Kerberos atraves do Entra DS)
+   - Como dispositivos gerenciados em nuvem se autenticarao no ERP (NTLM/Kerberos através do Entra DS)
    - Configuração de DNS
 
 ### Parte 4: Azure Files para Acesso Hibrido a Arquivos
@@ -294,16 +294,16 @@ az storagesync sync-group create \
 </details>
 
 <details>
-<summary>2. Fornecedores externos precisam de acesso a uma aplicação web on-premises. Eles devem se autenticar com suas proprias contas corporativas e ter MFA aplicado. Como você deve projetar isso?</summary>
+<summary>2. Fornecedores externos precisam de acesso a uma aplicação web on-premises. Eles devem se autenticar com suas próprias contas corporativas e ter MFA aplicado. Como você deve projetar isso?</summary>
 
-**Use Application Proxy combinado com colaboracao Entra ID B2B.** (1) Convide fornecedores como usuários convidados B2B no seu tenant Entra ID. (2) Publique o portal de fornecedores via Application Proxy com pré-autenticação Entra ID. (3) Crie uma política de Conditional Access direcionada a usuários convidados acessando o portal de fornecedores que exija MFA. (4) Fornecedores se autenticam com suas proprias credenciais organizacionais (federadas via B2B), sua política de Conditional Access aplica MFA, e o Application Proxy fornece acesso a aplicação on-premises. Fornecedores nunca precisam de acesso VPN.
+**Use Application Proxy combinado com colaboracao Entra ID B2B.** (1) Convide fornecedores como usuários convidados B2B no seu tenant Entra ID. (2) Publique o portal de fornecedores via Application Proxy com pré-autenticação Entra ID. (3) Crie uma política de Conditional Access direcionada a usuários convidados acessando o portal de fornecedores que exija MFA. (4) Fornecedores se autenticam com suas próprias credenciais organizacionais (federadas via B2B), sua política de Conditional Access aplica MFA, e o Application Proxy fornece acesso a aplicação on-premises. Fornecedores nunca precisam de acesso VPN.
 
 </details>
 
 <details>
-<summary>3. Uma empresa quer fornecer dispositivos Windows gerenciados em nuvem (Entra joined, não domain-joined) com acesso a compartilhamentos de arquivo SMB que requerem autenticação Kerberos. Quais opcoes estao disponiveis?</summary>
+<summary>3. Uma empresa quer fornecer dispositivos Windows gerenciados em nuvem (Entra joined, não domain-joined) com acesso a compartilhamentos de arquivo SMB que requerem autenticação Kerberos. Quais opcoes estao disponíveis?</summary>
 
-**Duas opcoes:** (1) **Microsoft Entra Kerberos para Azure Files** -- habilita dispositivos Entra-joined a acessar compartilhamentos Azure Files usando tickets Kerberos emitidos pelo Entra ID (sem domain controller necessário, sem linha de visao para AD on-prem). Isso funciona apenas para Azure Files, não para file servers on-premises. (2) **Microsoft Entra Domain Services** -- fornece funcionalidade de domain controller como serviço gerenciado; dispositivos Entra-joined podem ser configurados para usar Entra DS para autenticação Kerberos em recursos na mesma VNet. Para file servers puramente on-premises sem migração para Azure Files, você ainda precisaria de VPN/ExpressRoute mais hybrid-join ou Azure AD DS.
+**Duas opcoes:** (1) **Microsoft Entra Kerberos para Azure Files** -- habilita dispositivos Entra-joined a acessar compartilhamentos Azure Files usando tickets Kerberos emitidos pelo Entra ID (sem domain controller necessário, sem linha de visão para AD on-prem). Isso funciona apenas para Azure Files, não para file servers on-premises. (2) **Microsoft Entra Domain Services** -- fornece funcionalidade de domain controller como serviço gerenciado; dispositivos Entra-joined podem ser configurados para usar Entra DS para autenticação Kerberos em recursos na mesma VNet. Para file servers puramente on-premises sem migração para Azure Files, você ainda precisaria de VPN/ExpressRoute mais hybrid-join ou Azure AD DS.
 
 </details>
 

@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A NexaGlobal é uma empresa multinacional de serviços financeiros com escritorios em 5 paises (Estados Unidos, Reino Unido, Alemanha, Singapura, Japao) e 2 data centers locais (Nova York, Londres). Eles estao expandindo sua presença no Azure de uma única região (East US) para 3 regiões (East US, UK South, Southeast Asia) para atender usuários regionais com baixa latência.
+A NexaGlobal é uma empresa multinacional de serviços financeiros com escritórios em 5 paises (Estados Unidos, Reino Unido, Alemanha, Singapura, Japao) e 2 data centers locais (Nova York, Londres). Eles estao expandindo sua presença no Azure de uma única região (East US) para 3 regiões (East US, UK South, Southeast Asia) para atender usuários regionais com baixa latência.
 
-Os requisitos de conectividade incluem: conexões site-to-site seguras de ambos os data centers para todas as regiões Azure, VPN point-to-site para 2.000 trabalhadores remotos, acesso privado a serviços Azure PaaS (Azure SQL, Storage, Key Vault) sem expo-los a internet, roteamento otimizado para aplicações de trading sensiveis a latência (requisitos de milissegundos de um digito), resolução DNS que funcione perfeitamente entre o ambiente local e todas as regiões Azure, e conectividade de filiais para 15 escritorios satelite com necessidades variadas de largura de banda (10-100Mbps cada).
+Os requisitos de conectividade incluem: conexões site-to-site seguras de ambos os data centers para todas as regiões Azure, VPN point-to-site para 2.000 trabalhadores remotos, acesso privado a serviços Azure PaaS (Azure SQL, Storage, Key Vault) sem expo-los a internet, roteamento otimizado para aplicações de trading sensíveis a latência (requisitos de milissegundos de um digito), resolução DNS que funcione perfeitamente entre o ambiente local e todas as regiões Azure, e conectividade de filiais para 15 escritórios satelite com necessidades variadas de largura de banda (10-100Mbps cada).
 
 A equipe de rede deve projetar uma solução que equilibre custo, performance e complexidade operacional enquanto atende requisitos regulatorios rigorosos para residencia de dados e criptografia de rede.
 
@@ -81,12 +81,12 @@ A equipe de rede deve projetar uma solução que equilibre custo, performance e 
     - Regras de encaminhamento condicional para zonas privadas Azure (privatelink.database.windows.net, etc.)
     - Lookup direto: cliente local resolvendo private endpoint Azure
     - Lookup reverso: VM Azure resolvendo servidores locais
-11. Projete a otimização de roteamento para aplicações de trading sensiveis a latência:
+11. Projete a otimização de roteamento para aplicações de trading sensíveis a latência:
     - ExpressRoute Microsoft peering vs. Private peering para diferentes tipos de trafego
     - ExpressRoute FastPath para conectividade de latência ultra-baixa (bypassa o gateway)
     - Proximity placement groups para VMs co-localizadas
     - Accelerated Networking para latência reduzida VM-a-VM
-12. Projete conectividade de filiais para 15 escritorios satelite:
+12. Projete conectividade de filiais para 15 escritórios satelite:
     - Virtual WAN com integração SD-WAN
     - VPN hub com múltiplas conexões S2S
     - Compare custo e overhead de gerenciamento
@@ -124,14 +124,14 @@ O Azure Virtual WAN fornece um hub gerenciado com conectividade automatizada (VP
 <details>
 <summary>Dica 3: Private DNS Zone para Private Endpoints</summary>
 
-Cada tipo de serviço Azure PaaS tem um nome de zona DNS privada específico (ex.: `privatelink.database.windows.net` para Azure SQL, `privatelink.blob.core.windows.net` para Blob Storage). Crie uma zona DNS privada por tipo de serviço, vincule-a a todas as VNets que precisam de resolução, e configure o DNS local para encaminhar essas zonas para o Azure DNS (via VMs de encaminhamento DNS ou endpoint de entrada do Azure DNS Private Resolver em 168.63.129.16 acessível atraves da VNet).
+Cada tipo de serviço Azure PaaS tem um nome de zona DNS privada específico (ex.: `privatelink.database.windows.net` para Azure SQL, `privatelink.blob.core.windows.net` para Blob Storage). Crie uma zona DNS privada por tipo de serviço, vincule-a a todas as VNets que precisam de resolução, e configure o DNS local para encaminhar essas zonas para o Azure DNS (via VMs de encaminhamento DNS ou endpoint de entrada do Azure DNS Private Resolver em 168.63.129.16 acessível através da VNet).
 
 </details>
 
 <details>
 <summary>Dica 4: ExpressRoute FastPath</summary>
 
-O ExpressRoute FastPath melhora a performance do caminho de dados ao bypassar o gateway de rede virtual ExpressRoute para trafego do plano de dados. Ele envia trafego diretamente para VMs na rede virtual, reduzindo a latência. O FastPath esta disponível com ExpressRoute Direct (10Gbps/100Gbps) e SKUs de gateway Ultra Performance ou ErGw3AZ. Ele não suporta trafego de transito de VNet peering ou UDR na subnet do gateway. Use-o para workloads sensiveis a latência onde cada milissegundo importa.
+O ExpressRoute FastPath melhora a performance do caminho de dados ao bypassar o gateway de rede virtual ExpressRoute para trafego do plano de dados. Ele envia trafego diretamente para VMs na rede virtual, reduzindo a latência. O FastPath esta disponível com ExpressRoute Direct (10Gbps/100Gbps) e SKUs de gateway Ultra Performance ou ErGw3AZ. Ele não suporta trafego de transito de VNet peering ou UDR na subnet do gateway. Use-o para workloads sensíveis a latência onde cada milissegundo importa.
 
 </details>
 
@@ -156,7 +156,7 @@ O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de enca
 <details>
 <summary>1. Uma empresa tem circuitos ExpressRoute em Nova York (conectado ao East US) e Londres (conectado ao UK South). Sua workload Azure no Southeast Asia precisa de conectividade privada para ambos os data centers. O que eles precisam?</summary>
 
-**ExpressRoute Premium SKU e Global Reach.** O ExpressRoute Standard só conecta a regiões dentro da mesma fronteira geopolitica. Para alcancar o Southeast Asia a partir de circuitos nos EUA e Europa, ambos os circuitos devem ser atualizados para Premium (ou um novo circuito Premium criado em um local de peering em Singapura). Além disso, o ExpressRoute Global Reach habilita trafego direto entre os data centers de Nova York e Londres pelo backbone da Microsoft sem hairpinning atraves de VNets Azure. Para latência ótima ao Southeast Asia, considere adicionar um terceiro circuito em um local de peering em Singapura.
+**ExpressRoute Premium SKU e Global Reach.** O ExpressRoute Standard só conecta a regiões dentro da mesma fronteira geopolitica. Para alcancar o Southeast Asia a partir de circuitos nos EUA e Europa, ambos os circuitos devem ser atualizados para Premium (ou um novo circuito Premium criado em um local de peering em Singapura). Além disso, o ExpressRoute Global Reach habilita trafego direto entre os data centers de Nova York e Londres pelo backbone da Microsoft sem hairpinning através de VNets Azure. Para latência ótima ao Southeast Asia, considere adicionar um terceiro circuito em um local de peering em Singapura.
 
 </details>
 
@@ -170,7 +170,7 @@ O Azure DNS Private Resolver substitui a necessidade de VMs customizadas de enca
 <details>
 <summary>3. Um hub Virtual WAN conecta 15 filiais via VPN S2S, 2 data centers via ExpressRoute e 3 VNets spoke. Um usuário de filial precisa acessar uma VM em uma VNet spoke. Isso funciona por padrão?</summary>
 
-**Sim, o Virtual WAN fornece roteamento de transito any-to-any por padrão.** Este é um diferencial chave do hub-spoke customizado onde você deve configurar manualmente UDRs e NVAs para roteamento de transito. No Virtual WAN, trafego branch-to-VNet (VPN para conexão VNet), VNet-to-VNet (via hub) e branch-to-branch roteia atraves do hub automaticamente. Você pode restringir isso usando políticas de roteamento ou tabelas de rotas se necessário. No hub-spoke customizado, trafego branch-to-spoke requer um firewall/NVA no hub e UDRs nas subnets spoke.
+**Sim, o Virtual WAN fornece roteamento de transito any-to-any por padrão.** Este é um diferencial chave do hub-spoke customizado onde você deve configurar manualmente UDRs e NVAs para roteamento de transito. No Virtual WAN, trafego branch-to-VNet (VPN para conexão VNet), VNet-to-VNet (via hub) e branch-to-branch roteia através do hub automaticamente. Você pode restringir isso usando políticas de roteamento ou tabelas de rotas se necessário. No hub-spoke customizado, trafego branch-to-spoke requer um firewall/NVA no hub e UDRs nas subnets spoke.
 
 </details>
 

@@ -37,7 +37,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
 
 2. Para cada carga de trabalho, avalie estas familias de VM e justifique sua selecao:
    - **B-series** (burstable): Acumula creditos de CPU durante baixa utilizacao, faz burst quando necessário
-   - **D-series** (proposito geral): Relação CPU-para-memoria equilibrada para cargas de trabalho de produção
+   - **D-series** (propósito geral): Relação CPU-para-memoria equilibrada para cargas de trabalho de produção
    - **E-series** (otimizada para memoria): Alta relação memoria-para-CPU, até 672 GiB RAM por VM
    - **N-series** (GPU): GPUs NVIDIA para treinamento de ML, inferencia e visualizacao
 
@@ -49,7 +49,7 @@ Sua tarefa é selecionar a familia/serie de VM ideal para cada carga de trabalho
    - **Pay-as-you-go**: Flexibilidade total, maior custo por hora
    - **Reserved Instances (1 ano ou 3 anos)**: Até 72% de desconto, requer compromisso
    - **Spot VMs**: Até 90% de desconto, podem ser removidas com aviso de 30 segundos
-   - **Savings Plans**: Compromisso flexivel entre familias de VM/regiões
+   - **Savings Plans**: Compromisso flexível entre familias de VM/regiões
 
 5. Calcule o custo mensal para a carga de trabalho de treinamento ML em cada modelo de precos:
    - Precos Spot para jobs GPU interruptiveis (estime 4 jobs x 8 horas x 4 semanas = 128 GPU-horas/mes)
@@ -185,7 +185,7 @@ Se os requisitos de GPU forem maiores (ex: NC24s_v3 com 4 GPUs), os custos aumen
 <details>
 <summary>4. Qual é o risco primário de selecionar um tamanho de VM que corresponde exatamente aos requisitos atuais sem margem?</summary>
 
-**Degradacao de desempenho durante picos de uso e sem capacidade para crescimento.** O dimensionamento correto deve visar 60-80% de utilizacao media, deixando 20-40% de margem para picos de trafego, overhead do SO e crescimento organico. Se uma carga de trabalho que requer 256 GB de RAM e colocada em uma VM com exatamente 256 GB, o overhead do SO e do runtime pode causar pressao de memoria. Selecione o próximo tamanho acima (ex: 384 GB) ou projete escalabilidade horizontal para cargas de trabalho que podem ser distribuidas. O custo de um leve over-provisioning e menor que o custo de incidentes de desempenho.
+**Degradacao de desempenho durante picos de uso e sem capacidade para crescimento.** O dimensionamento correto deve visar 60-80% de utilizacao média, deixando 20-40% de margem para picos de trafego, overhead do SO e crescimento organico. Se uma carga de trabalho que requer 256 GB de RAM e colocada em uma VM com exatamente 256 GB, o overhead do SO e do runtime pode causar pressao de memoria. Selecione o próximo tamanho acima (ex: 384 GB) ou projete escalabilidade horizontal para cargas de trabalho que podem ser distribuidas. O custo de um leve over-provisioning e menor que o custo de incidentes de desempenho.
 
 </details>
 

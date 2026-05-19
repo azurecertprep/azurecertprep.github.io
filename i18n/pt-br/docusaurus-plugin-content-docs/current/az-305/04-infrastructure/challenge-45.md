@@ -49,7 +49,7 @@ A equipe de migração precisa categorizar cada grupo de workload, selecionar o 
    - Serviços Windows customizados com dependências locais: Azure VM com dimensionamento de VM apropriado
 5. Selecione o método de replicação apropriado do Azure Migrate para cada tipo de workload:
    - Replicação agentless (VMs VMware): beneficios e limitacoes
-   - Replicação agent-based (servidores fisicos, Hyper-V): quando necessário
+   - Replicação agent-based (servidores físicos, Hyper-V): quando necessário
    - Documente os requisitos de largura de banda de replicação para migrar 200 servidores dentro da timeline
 6. Projete a estratégia de dimensionamento de VM: compare dimensionamento "as-on-premises" (corresponder specs atuais) vs. dimensionamento "baseado em performance" (right-size baseado em dados reais de utilizacao da avaliação de 30 dias).
 
@@ -109,7 +109,7 @@ Dimensionamento baseado em performance usa CPU, memoria, IOPS de disco e utiliza
 <details>
 <summary>Dica 3: App Service Migration Assistant</summary>
 
-O Azure App Service Migration Assistant escaneia aplicações web IIS e produz um relatório de prontidao. Ele verifica: compatibilidade de versao do .NET Framework, métodos de autenticação, diretorios virtuais, regras de URL rewrite, bindings HTTPS e módulos IIS instalados. Alguns bloqueadores podem ser resolvidos (ex: trocar de Windows Authentication para Entra ID), enquanto outros requerem permanecer em IaaS (ex: componentes COM, dependências de registro Windows, assemblies GAC não disponiveis no App Service).
+O Azure App Service Migration Assistant escaneia aplicações web IIS e produz um relatório de prontidao. Ele verifica: compatibilidade de versao do .NET Framework, métodos de autenticação, diretorios virtuais, regras de URL rewrite, bindings HTTPS e módulos IIS instalados. Alguns bloqueadores podem ser resolvidos (ex: trocar de Windows Authentication para Entra ID), enquanto outros requerem permanecer em IaaS (ex: componentes COM, dependências de registro Windows, assemblies GAC não disponíveis no App Service).
 
 </details>
 
@@ -146,7 +146,7 @@ Azure File Sync permite que servidores de arquivo Windows on-premises permanecam
 </details>
 
 <details>
-<summary>2. A avaliação baseada em performance do Azure Migrate recomenda uma VM B2s para um servidor atualmente executando em um servidor fisico de 4-vCPU, 16GB RAM. A utilizacao de CPU atual media 8% com picos de 25%. A recomendacao e segura?</summary>
+<summary>2. A avaliação baseada em performance do Azure Migrate recomenda uma VM B2s para um servidor atualmente executando em um servidor físico de 4-vCPU, 16GB RAM. A utilizacao de CPU atual média 8% com picos de 25%. A recomendacao e segura?</summary>
 
 **Provavelmente segura, mas valide o timing e duracao do pico.** A B2s tem 2 vCPUs e 4GB RAM com CPU burstable. Se o servidor só atinge pico de 25% de 4 vCPUs (equivalente a 1 vCPU), a B2s pode lidar usando creditos burst. Porém, verifique: (1) Quanto tempo duram os picos? Bursting da B-series é limitado por creditos, (2) Qual é a utilizacao de memoria? Cair de 16GB para 4GB pode causar problemas se a aplicação e intensiva em memoria, (3) O período de avaliação e representativo? Uma janela de 30 dias em um período calmo pode perder picos trimestrais. Considere o fator de conforto e padrões sazonais antes de aceitar downsizing agressivo.
 
@@ -155,7 +155,7 @@ Azure File Sync permite que servidores de arquivo Windows on-premises permanecam
 <details>
 <summary>3. Cinco aplicações containerizadas executam Docker em VMs Linux. Devem migrar para Azure Container Apps, AKS ou VMs executando Docker?</summary>
 
-**Azure Container Apps e o alvo recomendado para a maioria das aplicações containerizadas de pequeno a medio porte.** Container Apps fornece infraestrutura Kubernetes gerenciada sem overhead de gerenciamento de cluster, autoscaling integrado (incluindo escalar para zero), suporte Dapr integrado e implantacoes baseadas em revisao. Escolha AKS se: as aplicações precisam de configurações Kubernetes customizadas, requisitos de rede específicos, ou a equipe já gerência Kubernetes. Escolha VMs com Docker somente se: as aplicações requerem recursos específicos do kernel Linux, configurações Docker customizadas, ou tem dependências rigidas na orquestracao Docker Compose que não pode ser facilmente mapeada para Container Apps ou AKS.
+**Azure Container Apps e o alvo recomendado para a maioria das aplicações containerizadas de pequeno a médio porte.** Container Apps fornece infraestrutura Kubernetes gerenciada sem overhead de gerenciamento de cluster, autoscaling integrado (incluindo escalar para zero), suporte Dapr integrado e implantacoes baseadas em revisao. Escolha AKS se: as aplicações precisam de configurações Kubernetes customizadas, requisitos de rede específicos, ou a equipe já gerencia Kubernetes. Escolha VMs com Docker somente se: as aplicações requerem recursos específicos do kernel Linux, configurações Docker customizadas, ou tem dependências rigidas na orquestracao Docker Compose que não pode ser facilmente mapeada para Container Apps ou AKS.
 
 </details>
 

@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A CloudTenant SaaS é uma plataforma B2B multi-tenant que atende 500 clientes empresariais. A plataforma expoe APIs REST e dashboards web para a internet, processa dados financeiros sensiveis e deve atender requisitos de conformidade SOC 2 Type II. A arquitetura consiste em uma camada web (frontend), camada de API, camada de processamento em segundo plano e camada de dados compartilhada implantada em 2 regiões Azure (East US e West Europe) para disponibilidade global.
+A CloudTenant SaaS é uma plataforma B2B multi-tenant que atende 500 clientes empresariais. A plataforma expoe APIs REST e dashboards web para a internet, processa dados financeiros sensíveis e deve atender requisitos de conformidade SOC 2 Type II. A arquitetura consiste em uma camada web (frontend), camada de API, camada de processamento em segundo plano e camada de dados compartilhada implantada em 2 regiões Azure (East US e West Europe) para disponibilidade global.
 
 Os requisitos de segurança e confiabilidade sao: (1) Proteção DDoS para todos os endpoints voltados para internet, (2) Web Application Firewall protegendo contra vulnerabilidades OWASP Top 10, (3) Conectividade privada para toda comunicação backend-a-backend (nenhum serviço backend exposto a internet), (4) Balanceamento de carga global com failover automático entre regiões (< 60 segundos de tempo de failover), (5) Micro-segmentacao entre tenants para prevenir movimento lateral se a workload de um tenant for comprometida, (6) Aplicação de TLS 1.3 com gerenciamento centralizado de certificados, e (7) Logging de rede e detecção de ameacas para conformidade de auditoria de segurança.
 
@@ -132,14 +132,14 @@ Sem ASGs, você precisa de regras NSG referenciando faixas de IP (fragil, quebra
 <details>
 <summary>Dica 4: Modelo de Custo do DDoS Protection</summary>
 
-O Azure DDoS Network Protection tem uma taxa mensal fixa (aproximadamente $2.944/mes) mais cobracas de excedente por GB, cobrindo até 100 IPs publicos em todas as VNets na assinatura. O DDoS IP Protection e por preco por IP (aproximadamente $199/mes por IP) sem a taxa fixa. Para workloads com menos de 15 IPs publicos, IP Protection e mais custo-efetivo. Ambos incluem suporte de resposta rápida DDoS, proteção de custos (credito para custos de scale-out durante ataques) e integração WAF. A proteção de infraestrutura padrão fornece apenas proteção básica Layer 3/4 sem metricas ou alertas.
+O Azure DDoS Network Protection tem uma taxa mensal fixa (aproximadamente $2.944/mes) mais cobracas de excedente por GB, cobrindo até 100 IPs públicos em todas as VNets na assinatura. O DDoS IP Protection e por preco por IP (aproximadamente $199/mes por IP) sem a taxa fixa. Para workloads com menos de 15 IPs públicos, IP Protection e mais custo-efetivo. Ambos incluem suporte de resposta rápida DDoS, proteção de custos (credito para custos de scale-out durante ataques) e integração WAF. A proteção de infraestrutura padrão fornece apenas proteção básica Layer 3/4 sem metricas ou alertas.
 
 </details>
 
 <details>
 <summary>Dica 5: Private Link vs. Service Endpoints</summary>
 
-Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP privado (acessível do ambiente local via VPN/ExpressRoute, funciona com NSGs). Service Endpoints estendem a identidade da VNet para o serviço PaaS (trafego permanece no backbone Azure, mas o serviço ainda tem um IP público). Para conformidade SOC 2 onde "sem endpoints publicos para backend" é obrigatório, Private Endpoints sao necessários porque permitem desabilitar completamente o acesso público ao serviço PaaS. Service Endpoints não podem garantir que não haja acesso pela internet.
+Private Endpoints trazem o serviço PaaS para dentro da sua VNet com um IP privado (acessível do ambiente local via VPN/ExpressRoute, funciona com NSGs). Service Endpoints estendem a identidade da VNet para o serviço PaaS (trafego permanece no backbone Azure, mas o serviço ainda tem um IP público). Para conformidade SOC 2 onde "sem endpoints públicos para backend" é obrigatório, Private Endpoints sao necessários porque permitem desabilitar completamente o acesso público ao serviço PaaS. Service Endpoints não podem garantir que não haja acesso pela internet.
 
 </details>
 

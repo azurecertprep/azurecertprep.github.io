@@ -176,62 +176,197 @@ Azure DNS Private Resolver replaces the need for custom DNS forwarder VMs in hub
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab proves VNet isolation and peering behavior through direct observation. You will deploy two VNets, attempt connectivity before peering (it will fail), enable peering, and confirm that private connectivity is established -- all without any public internet exposure.
 
-1. Create a resource group for this lab:
-
-```bash
-az group create --name rg-az305-challenge48 --location eastus
-```
-
-2. Create an Azure Front Door profile (Standard tier):
+### Step 1: Create the resource group and two VNets (simulating hub and spoke)
 
 ```bash
-az afd profile create --resource-group rg-az305-challenge48 \
-  --profile-name afd-lab48 --sku Standard_AzureFrontDoor
+az group create \
+  --name rg-az305-challenge48 \
+  --location eastus
 ```
-
-3. Create an endpoint for the Front Door:
 
 ```bash
-az afd endpoint create --resource-group rg-az305-challenge48 \
-  --profile-name afd-lab48 --endpoint-name endpoint-lab48 \
-  --enabled-state Enabled
+az network vnet create \
+  --resource-group rg-az305-challenge48 \
+  --name vnet-hub \
+  --address-prefix 10.0.0.0/16 \
+  --subnet-name subnet-hub \
+  --subnet-prefix 10.0.1.0/24
 ```
-
-4. Create an origin group and add a simple origin:
 
 ```bash
-az afd origin-group create --resource-group rg-az305-challenge48 \
-  --profile-name afd-lab48 --origin-group-name og-lab48 \
-  --probe-request-type HEAD --probe-protocol Https \
-  --probe-interval-in-seconds 30
-
-az afd origin create --resource-group rg-az305-challenge48 \
-  --profile-name afd-lab48 --origin-group-name og-lab48 \
-  --origin-name origin-web --host-name www.example.com \
-  --origin-host-header www.example.com \
-  --http-port 80 --https-port 443 --priority 1
+az network vnet create \
+  --resource-group rg-az305-challenge48 \
+  --name vnet-spoke \
+  --address-prefix 10.1.0.0/16 \
+  --subnet-name subnet-spoke \
+  --subnet-prefix 10.1.1.0/24
 ```
 
-5. Verify the Front Door endpoint hostname:
+:::note[Architect Insight]
+VNets in Azure are fully isolated by default -- even VNets in the same subscription, same region, and same resource group cannot communicate. This is secure by design: you must explicitly opt in to connectivity. On the AZ-305 exam, remember that VNet isolation is the starting posture, not openness.
+:::
+
+### Step 2: Deploy a VM in each VNet
 
 ```bash
-az afd endpoint show --resource-group rg-az305-challenge48 \
-  --profile-name afd-lab48 --endpoint-name endpoint-lab48 \
-  --query "hostName" -o tsv
+az vm create \
+  --resource-group rg-az305-challenge48 \
+  --name vm-hub \
+  --vnet-name vnet-hub \
+  --subnet subnet-hub \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --public-ip-address "" \
+  --no-wait
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+az vm create \
+  --resource-group rg-az305-challenge48 \
+  --name vm-spoke \
+  --vnet-name vnet-spoke \
+  --subnet subnet-spoke \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --public-ip-address ""
+```
+
+Wait for both VMs to be ready:
+
+```bash
+az vm wait \
+  --resource-group rg-az305-challenge48 \
+  --name vm-hub \
+  --created
+```
+
+Get the private IPs for later use:
+
+```bash
+HUB_IP=$(az vm show \
+  --resource-group rg-az305-challenge48 \
+  --name vm-hub \
+  --show-details \
+  --query privateIps -o tsv)
+
+SPOKE_IP=$(az vm show \
+  --resource-group rg-az305-challenge48 \
+  --name vm-spoke \
+  --show-details \
+  --query privateIps -o tsv)
+
+echo "Hub VM IP: $HUB_IP"
+echo "Spoke VM IP: $SPOKE_IP"
+```
+
+### Step 3: Test connectivity BEFORE peering (expect FAILURE)
+
+```bash
+az vm run-command invoke \
+  --resource-group rg-az305-challenge48 \
+  --name vm-hub \
+  --command-id RunShellScript \
+  --scripts "ping -c 3 -W 2 $SPOKE_IP 2>&1 || echo 'PING FAILED: No route to host'"
+```
+
+The output should show packet loss or "Network is unreachable." This proves the default isolation behavior.
+
+:::note[Architect Insight]
+This failure is the critical observation. Many candidates assume VNets in the same region can communicate -- they cannot. The AZ-305 exam tests whether you understand that connectivity must be explicitly designed. Every peering, gateway, or NVA is a deliberate architectural choice.
+:::
+
+### Step 4: Create bidirectional VNet peering
+
+```bash
+az network vnet peering create \
+  --resource-group rg-az305-challenge48 \
+  --name hub-to-spoke \
+  --vnet-name vnet-hub \
+  --remote-vnet vnet-spoke \
+  --allow-vnet-access
+```
+
+```bash
+az network vnet peering create \
+  --resource-group rg-az305-challenge48 \
+  --name spoke-to-hub \
+  --vnet-name vnet-spoke \
+  --remote-vnet vnet-hub \
+  --allow-vnet-access
+```
+
+### Step 5: Verify peering state shows "Connected"
+
+```bash
+az network vnet peering show \
+  --resource-group rg-az305-challenge48 \
+  --vnet-name vnet-hub \
+  --name hub-to-spoke \
+  --query "peeringState" -o tsv
+```
+
+```bash
+az network vnet peering show \
+  --resource-group rg-az305-challenge48 \
+  --vnet-name vnet-spoke \
+  --name spoke-to-hub \
+  --query "peeringState" -o tsv
+```
+
+Both should return "Connected". A peering in "Initiated" state means only one side was created -- both directions must exist for traffic to flow.
+
+### Step 6: Test connectivity AFTER peering (expect SUCCESS)
+
+```bash
+az vm run-command invoke \
+  --resource-group rg-az305-challenge48 \
+  --name vm-hub \
+  --command-id RunShellScript \
+  --scripts "ping -c 3 $SPOKE_IP"
+```
+
+The output should show successful replies with round-trip times. The traffic traverses the Microsoft backbone network -- it never touches the public internet.
+
+:::note[Architect Insight]
+Peering traffic stays on the Microsoft backbone network and is never exposed to the public internet. This is a key selling point for compliance-sensitive workloads. On the AZ-305 exam, know that peering provides private, low-latency connectivity without requiring VPN gateways or public IPs.
+:::
+
+### Step 7: Examine effective routes to see peering in action
+
+```bash
+HUB_NIC=$(az vm show \
+  --resource-group rg-az305-challenge48 \
+  --name vm-hub \
+  --query "networkProfile.networkInterfaces[0].id" -o tsv)
+
+az network nic show-effective-route-table \
+  --ids $HUB_NIC \
+  --output table
+```
+
+Look for a route with source "VNetPeering" and the address prefix 10.1.0.0/16 (the spoke VNet range). This route was injected automatically when peering was established -- you did not create it manually.
+
+:::note[Architect Insight]
+Peering is non-transitive. If you peer VNet-A with VNet-B and VNet-B with VNet-C, VNet-A and VNet-C still cannot communicate. The effective route table only shows directly peered networks. On the AZ-305 exam, transitive routing requires either a hub NVA/Azure Firewall with UDRs or Azure Virtual WAN. This is one of the most commonly tested networking concepts.
+:::
+
+:::tip[Design Validation]
+This lab proved three critical networking principles: (1) VNet isolation is the default posture -- Azure is secure by design with no implicit connectivity between VNets, (2) VNet peering enables private connectivity without gateways or public IPs, with traffic staying on the Microsoft backbone, and (3) effective routes reveal how Azure networking actually works under the hood -- peering automatically injects routes that you can inspect and reason about when troubleshooting.
 :::
 
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
-# WARNING: ExpressRoute circuits and VPN Gateways can be expensive - verify deletion
-az group delete --name rg-az305-challenge48 --yes --no-wait
+az group delete \
+  --name rg-az305-challenge48 \
+  --yes \
+  --no-wait
 ```
 
 ---

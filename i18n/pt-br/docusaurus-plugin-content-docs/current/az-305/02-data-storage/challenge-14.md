@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-ShopWave é uma empresa de e-commerce de medio porte que atualmente opera três bancos de dados separados on-premises. Seu banco de dados transacional principal lida com 2.000 pedidos por minuto durante horarios de pico e armazena catalogo de produtos, inventário e dados de clientes em SQL Server 2019. Uma segunda instância de SQL Server serve como banco de dados de relatórios, executando consultas analiticas complexas que fazem join em mais de 50 tabelas e as vezes levam 10-15 minutos para completar. Além disso, a ShopWave adquiriu recentemente um concorrente menor cujo sistema de avaliacoes de produtos roda em PostgreSQL 14 com 200GB de dados e extensões customizadas (PostGIS para filtragem de avaliacoes baseada em localização e pg_trgm para busca de texto fuzzy).
+ShopWave é uma empresa de e-commerce de médio porte que atualmente opera três bancos de dados separados on-premises. Seu banco de dados transacional principal lida com 2.000 pedidos por minuto durante horarios de pico e armazena catálogo de produtos, inventário e dados de clientes em SQL Server 2019. Uma segunda instância de SQL Server serve como banco de dados de relatórios, executando consultas analiticas complexas que fazem join em mais de 50 tabelas e as vezes levam 10-15 minutos para completar. Além disso, a ShopWave adquiriu recentemente um concorrente menor cujo sistema de avaliacoes de produtos roda em PostgreSQL 14 com 200GB de dados e extensões customizadas (PostGIS para filtragem de avaliacoes baseada em localização e pg_trgm para busca de texto fuzzy).
 
 O CTO definiu um orcamento firme de $2.000/mes para todas as cargas de trabalho de banco de dados no Azure. O banco de dados transacional deve manter latência de escrita inferior a 20ms durante horarios de pico. O banco de dados de relatórios pode tolerar latência maior, mas precisa lidar com consultas que abrangem bilhoes de linhas. O banco de dados PostgreSQL deve manter suas extensões é minimizar alteracoes de código durante a migração. A equipe tem recursos limitados de DBA (um administrador de banco de dados em tempo parcial) e deseja serviços gerenciados sempre que possível.
 
@@ -86,7 +86,7 @@ Azure Database Migration Service (DMS) suporta migração online de SQL Server p
 <details>
 <summary>Dica 4: Estimativa de Custos</summary>
 
-Para estimativa de custos, considere: Azure SQL Database General Purpose (vCore) comeca em torno de $370/mes para 2 vCores. PostgreSQL Flexible Server na camada Burstable B2s comeca em torno de $25/mes. Capacidade reservada (1 ano ou 3 anos) oferece economia de 30-65% em computacao. Custos de armazenamento sao separados e tipicamente $0,115/GB/mes para a camada General Purpose.
+Para estimativa de custos, considere: Azure SQL Database General Purpose (vCore) começa em torno de $370/mes para 2 vCores. PostgreSQL Flexible Server na camada Burstable B2s começa em torno de $25/mes. Capacidade reservada (1 ano ou 3 anos) oferece economia de 30-65% em computacao. Custos de armazenamento sao separados e tipicamente $0,115/GB/mes para a camada General Purpose.
 
 </details>
 

@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-TechMart é um marketplace de e-commerce conectando 5.000 vendedores com 2 milhoes de compradores ativos. A plataforma processa 50.000 pedidos por dia com picos sazonais atingindo 200.000 pedidos durante vendas de feriados. A equipe de engenharia tem operado com sistemas de dados desconectados - um SQL Server legado para pedidos, MongoDB para o catalogo de produtos, Azure Blob Storage para arquivos de midia, é uma ferramenta de analytics de terceiros - resultando em silos de dados, relatórios inconsistentes e oportunidades perdidas de personalizacao.
+TechMart é um marketplace de e-commerce conectando 5.000 vendedores com 2 milhões de compradores ativos. A plataforma processa 50.000 pedidos por dia com picos sazonais atingindo 200.000 pedidos durante vendas de feriados. A equipe de engenharia tem operado com sistemas de dados desconectados - um SQL Server legado para pedidos, MongoDB para o catálogo de produtos, Azure Blob Storage para arquivos de midia, é uma ferramenta de analytics de terceiros - resultando em silos de dados, relatórios inconsistentes e oportunidades perdidas de personalizacao.
 
-O VP de Engenharia garantiu um orcamento de $25.000/mes para construir uma plataforma de dados unificada que atende as seguintes necessidades: um banco de dados transacional para processamento de pedidos (latência inferior a 10ms, compliance ACID), um armazenamento flexivel para o catalogo de produtos e avaliacoes de clientes (esquema variavel, distribuição global), armazenamento de objetos para imagens e videos de produtos (10TB e crescendo), um motor de recomendacoes em tempo real que sugere produtos baseado em comportamento de navegacao, um pipeline de relatórios noturnos para financas e operações, é um arquivo imutável de 7 anos para registros de transações financeiras (compliance regulatorio).
+O VP de Engenharia garantiu um orcamento de $25.000/mes para construir uma plataforma de dados unificada que atende as seguintes necessidades: um banco de dados transacional para processamento de pedidos (latência inferior a 10ms, compliance ACID), um armazenamento flexível para o catálogo de produtos e avaliacoes de clientes (esquema variavel, distribuição global), armazenamento de objetos para imagens e videos de produtos (10TB e crescendo), um motor de recomendacoes em tempo real que sugere produtos baseado em comportamento de navegacao, um pipeline de relatórios noturnos para financas e operações, é um arquivo imutável de 7 anos para registros de transações financeiras (compliance regulatorio).
 
 Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design dos Challenges 14-23 para arquitetar a plataforma de dados completa da TechMart, justificando cada escolha de tecnologia contra alternativas e demonstrando como os componentes se integram em um todo coeso.
 
@@ -54,9 +54,9 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Retencao de backup de longo prazo para compliance (política LTR de 7 anos)
    - Geo-replicação para recuperação de desastres (active geo-replication vs failover groups)
 
-### Parte 2: Camada de Dados Semi-Estruturados (Catalogo de Produtos e Avaliacoes)
+### Parte 2: Camada de Dados Semi-Estruturados (Catálogo de Produtos e Avaliacoes)
 
-4. Projete o armazenamento do catalogo de produtos usando Azure Cosmos DB:
+4. Projete o armazenamento do catálogo de produtos usando Azure Cosmos DB:
    - Selecione a API apropriada (NoSQL, MongoDB, PostgreSQL) com justificativa
    - Projete a estratégia de partition key para produtos (considere: consultas por categoria, vendedor e product ID)
    - Configure throughput: autoscale RU/s com um máximo que lida com pico de navegacao
@@ -68,8 +68,8 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Implemente um change feed para acionar moderacao de avaliacoes e atualizar classificacoes agregadas
 
 6. Projete distribuição global para expansao internacional:
-   - Configure multi-region writes para o catalogo de produtos (vendedores atualizando de diferentes regiões)
-   - Selecione o nível de consistência apropriado (avalie Strong vs Bounded Staleness vs Session vs Eventual para um catalogo de e-commerce)
+   - Configure multi-region writes para o catálogo de produtos (vendedores atualizando de diferentes regiões)
+   - Selecione o nível de consistência apropriado (avalie Strong vs Bounded Staleness vs Session vs Eventual para um catálogo de e-commerce)
    - Calcule o custo de replicação multi-região vs região única na escala atual
 
 ### Parte 3: Camada de Dados Não Estruturados (Armazenamento de Midia)
@@ -80,7 +80,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Integração CDN para entrega global de conteúdo (Azure CDN ou Azure Front Door)
 
 8. Projete o pipeline de upload e processamento:
-   - Processamento acionado por blob: redimensionamento de imagem, geracao de thumbnails, transcodificacao de video
+   - Processamento acionado por blob: redimensionamento de imagem, geracao de thumbnails, transcodificacao de vídeo
    - Integração Event Grid para acionar Azure Functions na criação de blob
    - Projete convencoes de nomeacao de armazenamento e estrutura de pastas para padrões de acesso eficientes
 
@@ -93,7 +93,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
    - Treinamento de modelo: atualização batch noturna do modelo de recomendacao usando dados historicos
 
 10. Projete o fluxo de dados de eventos de transação para recomendacoes:
-    - Evento de conclusão de pedido atualiza o historico de compras do usuário
+    - Evento de conclusão de pedido atualiza o histórico de compras do usuário
     - Change feed do Cosmos DB aciona recalculo de recomendacoes para produtos relacionados
     - Cache Redis e atualizado com novas recomendacoes (expiracao baseada em TTL para dados obsoletos)
 
@@ -149,7 +149,7 @@ Este e o desafio capstone do Dominio 2. Você ira sintetizar decisoes de design 
 <details>
 <summary>Dica 1: Design de Partition Key do Cosmos DB</summary>
 
-Para um catalogo de produtos de e-commerce, a escolha da partition key impacta significativamente desempenho e custo. Usar `categoryId` agrupa produtos relacionados para consultas de navegacao mas pode criar hot partitions para categorias populares. Usar `productId` fornece distribuição uniforme mas torna consultas de categoria cross-partition. Um padrão comum e usar uma partition key sintetica como `categoryId-subcategoryId` que equilibra distribuição com localidade de consulta. Para avaliacoes, particione por `productId` já que avaliacoes sao sempre lidas no contexto de uma pagina de produto específica.
+Para um catálogo de produtos de e-commerce, a escolha da partition key impacta significativamente desempenho e custo. Usar `categoryId` agrupa produtos relacionados para consultas de navegacao mas pode criar hot partitions para categorias populares. Usar `productId` fornece distribuição uniforme mas torna consultas de categoria cross-partition. Um padrão comum e usar uma partition key sintetica como `categoryId-subcategoryId` que equilibra distribuição com localidade de consulta. Para avaliacoes, particione por `productId` já que avaliacoes sao sempre lidas no contexto de uma pagina de produto específica.
 
 </details>
 
@@ -177,7 +177,7 @@ Para uma plataforma de dados de e-commerce de $25K/mes, uma alocacao tipica pode
 <details>
 <summary>Dica 5: Padrões de Integração Entre Camadas</summary>
 
-Use eventos e change feeds para manter camadas sincronizadas sem acoplamento forte: (1) Triggers do Azure SQL ou Change Data Capture (CDC) publicam eventos de pedidos no Event Hubs, (2) Change feed do Cosmos DB envia atualizações de produtos/avaliacoes para o pipeline de analytics, (3) Event Grid notifica sistemas downstream de novos uploads de blob, (4) Data Factory orquestra o batch noturno que le de todas as fontes. Evite consultas cross-service diretas em caminhos de produção - cada camada deve ter seu proprio armazenamento de dados otimizado para seu padrão de acesso.
+Use eventos e change feeds para manter camadas sincronizadas sem acoplamento forte: (1) Triggers do Azure SQL ou Change Data Capture (CDC) publicam eventos de pedidos no Event Hubs, (2) Change feed do Cosmos DB envia atualizações de produtos/avaliacoes para o pipeline de analytics, (3) Event Grid notifica sistemas downstream de novos uploads de blob, (4) Data Factory orquestra o batch noturno que le de todas as fontes. Evite consultas cross-service diretas em caminhos de produção - cada camada deve ter seu próprio armazenamento de dados otimizado para seu padrão de acesso.
 
 </details>
 
@@ -196,16 +196,16 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 ## Verificação de Conhecimento
 
 <details>
-<summary>1. TechMart precisa que o catalogo de produtos lide com 50.000 leituras/segundo durante flash sales com compradores globais. O catalogo tem 500.000 produtos em 200 categorias. Qual configuração do Cosmos DB e mais apropriada?</summary>
+<summary>1. TechMart precisa que o catálogo de produtos lide com 50.000 leituras/segundo durante flash sales com compradores globais. O catálogo tem 500.000 produtos em 200 categorias. Qual configuração do Cosmos DB e mais apropriada?</summary>
 
-**Cosmos DB for NoSQL com autoscale throughput (max 50.000 RU/s), particionado por categoria com chave sintetica, e replicas de leitura multi-região.** Autoscale lida com o burst de flash sale sem provisionar excessivamente durante trafego normal (escala para baixo até 10% do máximo). Particionamento por chave sintetica (ex.: `categoryId-subcategoryId`) distribui carga enquanto mantem consultas de navegacao por categoria eficientes. Leituras multi-região colocam dados proximos a compradores globais, reduzindo latência. Session consistency garante que cada comprador veja suas proprias escritas (carrinho, avaliacoes) sem pagar o custo de Strong consistency entre regiões.
+**Cosmos DB for NoSQL com autoscale throughput (max 50.000 RU/s), particionado por categoria com chave sintetica, e replicas de leitura multi-região.** Autoscale lida com o burst de flash sale sem provisionar excessivamente durante trafego normal (escala para baixo até 10% do máximo). Particionamento por chave sintetica (ex.: `categoryId-subcategoryId`) distribui carga enquanto mantem consultas de navegacao por categoria eficientes. Leituras multi-região colocam dados proximos a compradores globais, reduzindo latência. Session consistency garante que cada comprador veja suas próprias escritas (carrinho, avaliacoes) sem pagar o custo de Strong consistency entre regiões.
 
 </details>
 
 <details>
 <summary>2. A equipe de compliance requer que registros de transações financeiras armazenados por 7 anos não possam ser modificados ou excluidos por ninguém, incluindo administradores. Qual combinacao de recursos do Azure Storage satisfaz este requisito?</summary>
 
-**Armazenamento imutável de blob com política de retencao baseada em tempo bloqueada (2.555 dias) em uma storage account com redundância RA-GZRS.** A política bloqueada e crítica - uma política desbloqueada pode ser deletada por admins, anulando o proposito de compliance. Uma vez bloqueada, mesmo o proprietario da storage account e o suporte Microsoft não podem deletar os dados antes da expiracao. RA-GZRS garante que os dados sobrevivam a um desastre regional completo com acesso de leitura da região secundária. Protecoes adicionais: habilite resource locks na storage account para prevenir exclusão acidental da conta, e use Azure Policy para impor imutabilidade em novos containers.
+**Armazenamento imutável de blob com política de retencao baseada em tempo bloqueada (2.555 dias) em uma storage account com redundância RA-GZRS.** A política bloqueada e crítica - uma política desbloqueada pode ser deletada por admins, anulando o propósito de compliance. Uma vez bloqueada, mesmo o proprietario da storage account e o suporte Microsoft não podem deletar os dados antes da expiracao. RA-GZRS garante que os dados sobrevivam a um desastre regional completo com acesso de leitura da região secundária. Protecoes adicionais: habilite resource locks na storage account para prevenir exclusão acidental da conta, e use Azure Policy para impor imutabilidade em novos containers.
 
 </details>
 
@@ -219,7 +219,7 @@ Use eventos e change feeds para manter camadas sincronizadas sem acoplamento for
 <details>
 <summary>4. Durante o pipeline de relatórios noturnos, o Data Factory precisa extrair pedidos alterados do Azure SQL Database (apenas pedidos modificados desde a última execução). Qual é o padrão de extracao mais eficiente?</summary>
 
-**Extracao incremental usando uma coluna de watermark (ex.: `lastModifiedDate`).** A atividade Copy do Data Factory suporta um padrão de watermark: armazene o último timestamp de extracao bem-sucedida, depois consulte `WHERE lastModifiedDate > @lastWatermark`. Isso e mais eficiente que extracao completa (que le todos os 50K+ pedidos diarios mais dados historicos) e mais confiavel que CDC para um batch noturno simples. O valor do watermark é armazenado em uma tabela de controle ou variavel do Data Factory. Para rastreamento de mudanças mais complexo (exclusoes, mudanças de esquema), o Change Data Capture (CDC) integrado do Azure SQL Database pode ser usado, mas adiciona overhead ao banco de dados de transações.
+**Extracao incremental usando uma coluna de watermark (ex.: `lastModifiedDate`).** A atividade Copy do Data Factory suporta um padrão de watermark: armazene o último timestamp de extracao bem-sucedida, depois consulte `WHERE lastModifiedDate > @lastWatermark`. Isso e mais eficiente que extracao completa (que le todos os 50K+ pedidos diarios mais dados historicos) e mais confiável que CDC para um batch noturno simples. O valor do watermark é armazenado em uma tabela de controle ou variavel do Data Factory. Para rastreamento de mudanças mais complexo (exclusoes, mudanças de esquema), o Change Data Capture (CDC) integrado do Azure SQL Database pode ser usado, mas adiciona overhead ao banco de dados de transações.
 
 </details>
 

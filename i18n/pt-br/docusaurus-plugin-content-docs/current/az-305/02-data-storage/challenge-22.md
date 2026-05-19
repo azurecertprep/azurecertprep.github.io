@@ -19,7 +19,7 @@ FreshMart é uma rede varejista nacional com 200 lojas, cada uma executando um b
 
 O processo atual depende de exportacoes manuais de CSV e anexos de e-mail, resultando em dados chegando 2-3 dias atrasados, erros frequentes de formatacao e nenhuma visibilidade sobre falhas. O CTO requer um pipeline automatizado e monitorado que entregue todas as três fontes de dados ao warehouse até as 6h diariamente, com retry automático em falhas e alertas por e-mail quando pipelines falham apos todas as tentativas serem esgotadas.
 
-Seu desafio é projetar é implementar uma solução de integração de dados usando Azure Data Factory (ou Synapse Pipelines), incluindo orquestracao atraves de múltiplas fontes, um self-hosted integration runtime para conectividade on-premises, mecanismos de trigger apropriados e monitoramento abrangente.
+Seu desafio é projetar é implementar uma solução de integração de dados usando Azure Data Factory (ou Synapse Pipelines), incluindo orquestracao através de múltiplas fontes, um self-hosted integration runtime para conectividade on-premises, mecanismos de trigger apropriados e monitoramento abrangente.
 
 ## Habilidades do Exame Cobertas
 
@@ -71,7 +71,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
    - Implemente paginacao para conjuntos de resultados grandes
    - Mapeie a resposta da API para o formato de staging
 
-### Parte 3: Orquestracao, Triggers e Tratamento de Erros
+### Parte 3: Orquestração, Triggers e Tratamento de Erros
 
 8. Crie um pipeline de orquestracao master que:
    - Execute os três pipelines de origem (lojas, SAP, Salesforce) em paralelo
@@ -90,7 +90,7 @@ Seu desafio é projetar é implementar uma solução de integração de dados us
 
 11. Documente sua decisao entre ETL (transformar no Data Factory usando Data Flows) versus ELT (carregar dados brutos para staging, transformar no Synapse usando SQL):
     - Para dados de vendas das lojas: transformacoes pequenas (conversao de moeda, formatacao de data)
-    - Para dados de inventário SAP: joins complexos atraves de múltiplas tabelas SAP
+    - Para dados de inventário SAP: joins complexos através de múltiplas tabelas SAP
     - Para dados do Salesforce: achatamento simples de JSON aninhado
     - Considere: habilidades da equipe, volume de dados, custos de computacao e complexidade de depuracao
 
@@ -143,7 +143,7 @@ Escolha ELT quando: o destino tem computacao poderosa (Synapse SQL pool), transf
 <details>
 <summary>Dica 5: Monitoramento e Alertas</summary>
 
-Data Factory fornece monitoramento integrado atraves do Azure Monitor com metricas como `PipelineSucceededRuns`, `PipelineFailedRuns`, `ActivitySucceededRuns` e `TriggerSucceededRuns`. Configure diagnostic settings para enviar logs ao Log Analytics para consultas avancadas. Para alertas por e-mail sobre falhas, use Azure Monitor Action Groups em vez de construir lógica de notificação customizada dentro dos pipelines.
+Data Factory fornece monitoramento integrado através do Azure Monitor com metricas como `PipelineSucceededRuns`, `PipelineFailedRuns`, `ActivitySucceededRuns` e `TriggerSucceededRuns`. Configure diagnostic settings para enviar logs ao Log Analytics para consultas avancadas. Para alertas por e-mail sobre falhas, use Azure Monitor Action Groups em vez de construir lógica de notificação customizada dentro dos pipelines.
 
 </details>
 

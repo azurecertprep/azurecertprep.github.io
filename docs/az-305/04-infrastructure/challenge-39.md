@@ -238,47 +238,178 @@ Lifecycle management policy automates tier transitions. Total estimated cost: ap
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab validates Event Grid's reactive architecture by observing events flow from resource changes to a storage queue in near-real-time. You will prove that events are pushed without polling, that subscription filters reduce noise, and that event-driven decoupling works at the platform level.
 
-1. Create a resource group for this lab:
+### Part A - Deploy Event Grid Infrastructure
 
-```bash
-az group create --name rg-az305-challenge39 --location eastus
-```
-
-2. Create an Event Grid topic:
+1. Create the resource group:
 
 ```bash
-az eventgrid topic create --resource-group rg-az305-challenge39 \
-  --name egt-challenge39 --location eastus
+az group create \
+  --name rg-az305-challenge39 \
+  --location eastus
 ```
 
-3. Create a webhook subscription (using a public test endpoint):
+2. Create a Storage Account with a queue to act as the event handler:
 
 ```bash
-az eventgrid event-subscription create \
-  --source-resource-id $(az eventgrid topic show --resource-group rg-az305-challenge39 --name egt-challenge39 --query "id" -o tsv) \
-  --name sub-test --endpoint-type webhook \
-  --endpoint https://httpbin.org/post
+az storage account create \
+  --resource-group rg-az305-challenge39 \
+  --name stgevents39$RANDOM \
+  --sku Standard_LRS \
+  --location eastus
 ```
-
-4. Publish a test event to the topic:
 
 ```bash
-TOPIC_ENDPOINT=$(az eventgrid topic show --resource-group rg-az305-challenge39 --name egt-challenge39 --query "endpoint" -o tsv)
-TOPIC_KEY=$(az eventgrid topic key list --resource-group rg-az305-challenge39 --name egt-challenge39 --query "key1" -o tsv)
-curl -X POST "$TOPIC_ENDPOINT" -H "aeg-sas-key: $TOPIC_KEY" \
-  -H "Content-Type: application/json" \
-  -d '[{"id":"1","eventType":"test","subject":"challenge39","dataVersion":"1.0","data":{"message":"hello"}}]'
+ST_NAME=$(az storage account list \
+  --resource-group rg-az305-challenge39 \
+  --query "[0].name" -o tsv)
+
+echo "Storage account: $ST_NAME"
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+az storage queue create \
+  --name event-sink \
+  --account-name $ST_NAME
+```
+
+3. Create an Event Grid system topic on the resource group to monitor resource-level events:
+
+```bash
+RG_ID=$(az group show \
+  --name rg-az305-challenge39 \
+  --query "id" -o tsv)
+
+az eventgrid system-topic create \
+  --resource-group rg-az305-challenge39 \
+  --name systopic-rg-events \
+  --topic-type Microsoft.Resources.ResourceGroups \
+  --source "$RG_ID" \
+  --location eastus
+```
+
+### Part B - Subscribe to Resource Creation Events
+
+4. Create an event subscription that routes resource write (creation) events to the storage queue:
+
+```bash
+ST_ID=$(az storage account show \
+  --resource-group rg-az305-challenge39 \
+  --name $ST_NAME \
+  --query "id" -o tsv)
+
+az eventgrid system-topic event-subscription create \
+  --resource-group rg-az305-challenge39 \
+  --system-topic-name systopic-rg-events \
+  --name sub-all-writes \
+  --endpoint-type storagequeue \
+  --endpoint "$ST_ID/queueservices/default/queues/event-sink" \
+  --included-event-types Microsoft.Resources.ResourceWriteSuccess
+```
+
+:::note[Architect Insight]
+Event Grid enables reactive architectures without polling. The storage queue receives events pushed by the platform within seconds of the resource change occurring. No consumer needs to poll Azure Resource Manager asking "did anything change?" -- the platform notifies subscribers proactively. This reduces latency and eliminates wasted API calls.
+:::
+
+### Part C - Trigger an Event and Verify Delivery
+
+5. Trigger an event by creating a simple resource (a second storage account) in the resource group:
+
+```bash
+az storage account create \
+  --resource-group rg-az305-challenge39 \
+  --name sttrigger39$RANDOM \
+  --sku Standard_LRS \
+  --location eastus
+```
+
+6. Wait 15-30 seconds for Event Grid to deliver the event, then check the storage queue:
+
+```bash
+az storage message peek \
+  --queue-name event-sink \
+  --account-name $ST_NAME \
+  --num-messages 5
+```
+
+You should see one or more messages in the queue. Each message contains the Event Grid event payload.
+
+7. Examine the event structure. The payload includes:
+
+- `eventType`: "Microsoft.Resources.ResourceWriteSuccess"
+- `subject`: the resource ID of the created storage account
+- `data`: contains resource group, resource provider, and operation details
+- `eventTime`: timestamp proving near-real-time delivery
+
+:::note[Architect Insight]
+Filtering at the subscription level reduces unnecessary processing. By specifying `--included-event-types`, only resource write events reach the queue. Without filtering, delete events, action events, and other noise would also arrive, forcing the consumer to discard irrelevant messages. This filtering happens at the Event Grid platform level -- the messages never even reach the queue endpoint.
+:::
+
+### Part D - Filtered Subscription (Selective Routing)
+
+8. Create a second queue and a filtered subscription that only captures storage account events:
+
+```bash
+az storage queue create \
+  --name storage-events-only \
+  --account-name $ST_NAME
+```
+
+```bash
+az eventgrid system-topic event-subscription create \
+  --resource-group rg-az305-challenge39 \
+  --system-topic-name systopic-rg-events \
+  --name sub-storage-only \
+  --endpoint-type storagequeue \
+  --endpoint "$ST_ID/queueservices/default/queues/storage-events-only" \
+  --included-event-types Microsoft.Resources.ResourceWriteSuccess \
+  --subject-begins-with "/subscriptions" \
+  --advanced-filter data.resourceProvider StringContains Microsoft.Storage
+```
+
+9. Now trigger a non-storage event by creating a different resource type (a network security group):
+
+```bash
+az network nsg create \
+  --resource-group rg-az305-challenge39 \
+  --name nsg-filter-test
+```
+
+10. Wait 15-30 seconds, then verify the filtered subscription did NOT receive the NSG event:
+
+```bash
+az storage message peek \
+  --queue-name storage-events-only \
+  --account-name $ST_NAME \
+  --num-messages 5
+```
+
+The `storage-events-only` queue should have no new messages from the NSG creation (or only messages from the storage account created earlier). The unfiltered `event-sink` queue will have received the NSG event:
+
+```bash
+az storage message peek \
+  --queue-name event-sink \
+  --account-name $ST_NAME \
+  --num-messages 10
+```
+
+:::note[Architect Insight]
+At-least-once delivery means consumers must be idempotent. Event Grid guarantees delivery but may deliver the same event more than once (during retries or infrastructure recovery). Consumers must handle duplicate events gracefully -- typically by checking whether the action was already performed before executing it again. This is a fundamental design principle for any event-driven architecture on the AZ-305 exam.
+:::
+
+:::tip[Design Validation]
+This lab validated three architectural principles: (1) Event Grid pushes events in near-real-time without any consumer polling -- the storage queue received the event within seconds. (2) Subscription filters reduce noise at the platform level -- the filtered subscription rejected non-storage events before they reached the endpoint. (3) Event-driven architectures decouple producers from consumers -- the resource creation had no knowledge of the event subscriptions, yet the events were delivered automatically.
 :::
 
 ## Cleanup
 
 ```bash
+az eventgrid system-topic delete \
+  --resource-group rg-az305-challenge39 \
+  --name systopic-rg-events \
+  --yes
+
 az group delete --name rg-az305-challenge39 --yes --no-wait
 ```
 

@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A SocialPulse é uma plataforma de midia social com 50 milhoes de usuários ativos. Seu recurso principal é um feed personalizado que agrega conteúdo de 50+ fontes incluindo posts de amigos, tópicos em alta, conteúdo patrocinado e recomendacoes algoritmicas. Atualmente, o feed leva 2 segundos para carregar porque cada requisicao aciona consultas de agregacao em tempo real em múltiplos bancos de dados e microsservicos.
+A SocialPulse é uma plataforma de midia social com 50 milhões de usuários ativos. Seu recurso principal é um feed personalizado que agrega conteúdo de 50+ fontes incluindo posts de amigos, tópicos em alta, conteúdo patrocinado e recomendacoes algoritmicas. Atualmente, o feed leva 2 segundos para carregar porque cada requisicao aciona consultas de agregacao em tempo real em múltiplos bancos de dados e microsservicos.
 
-O padrão de acesso da plataforma e fortemente enviesado para leitura: feeds sao lidos aproximadamente 1.000 vezes para cada escrita (novo post ou interação). A equipe de produto exige tempo de carregamento do feed inferior a 200 milissegundos para permanecer competitiva. Além disso, alguns dados sao específicos de sessão (posicao de rolagem do usuário, respostas em rascunho) enquanto outros dados sao compartilhados entre milhoes de usuários (posts em alta, hashtags populares, perfis publicos).
+O padrão de acesso da plataforma e fortemente enviesado para leitura: feeds sao lidos aproximadamente 1.000 vezes para cada escrita (novo post ou interação). A equipe de produto exige tempo de carregamento do feed inferior a 200 milissegundos para permanecer competitiva. Além disso, alguns dados sao específicos de sessão (posicao de rolagem do usuário, respostas em rascunho) enquanto outros dados sao compartilhados entre milhões de usuários (posts em alta, hashtags populares, perfis públicos).
 
 A equipe de engenharia precisa de uma estratégia de caching abrangente que enderece múltiplas camadas: CDN para ativos estaticos, caching em nível de aplicação para feeds computados, e caching de sessão para estado do usuário. Eles também devem projetar lógica de invalidacao de cache que garanta que usuários vejam novos posts dentro de 30 segundos da publicacao sem sobrecarregar os serviços de origem.
 
@@ -31,9 +31,9 @@ A equipe de engenharia precisa de uma estratégia de caching abrangente que ende
 
 1. Compare as opcoes de camada do Azure Cache for Redis (Basic, Standard, Premium, Enterprise, Enterprise Flash) e documente as diferencas de recursos relevantes para este cenário (clustering, geo-replicação, persistência, tamanho de dados, SLA de disponibilidade).
 2. Determine qual camada e tamanho de instância Redis e apropriado para:
-   - Cache de sessão: 10 milhoes de sessões concorrentes, cada uma com aproximadamente 2KB
-   - Cache de feed: 50 milhoes de usuários com tamanho medio de feed de 50KB, 20% ativos no pico
-   - Cache de conteúdo compartilhado: 100.000 itens em alta, media de 5KB cada
+   - Cache de sessão: 10 milhões de sessões concorrentes, cada uma com aproximadamente 2KB
+   - Cache de feed: 50 milhões de usuários com tamanho médio de feed de 50KB, 20% ativos no pico
+   - Cache de conteúdo compartilhado: 100.000 itens em alta, média de 5KB cada
 3. Projete o schema de chaves e política de despejo para cada tipo de cache. Documente a estratégia de TTL para dados de sessão vs dados de feed vs conteúdo compartilhado.
 
 ### Parte 2: Projetar CDN e Caching de Borda
@@ -41,7 +41,7 @@ A equipe de engenharia precisa de uma estratégia de caching abrangente que ende
 4. Compare as capacidades de caching do Azure Front Door com perfis do Azure CDN para servir ativos estaticos (imagens, videos, bundles CSS/JS). Documente quando usar cada um.
 5. Projete regras de cache para diferentes tipos de conteúdo:
    - Imagens de perfil (mudam raramente, acessiveis publicamente)
-   - Thumbnails de video (imutáveis uma vez gerados)
+   - Thumbnails de vídeo (imutáveis uma vez gerados)
    - Respostas de API para conteúdo em alta (muda a cada 5 minutos)
 6. Projete uma estratégia de purge de cache para quando usuários atualizam sua foto de perfil ou excluem um post.
 
@@ -49,7 +49,7 @@ A equipe de engenharia precisa de uma estratégia de caching abrangente que ende
 
 7. Projete um padrão cache-aside (lazy loading) para geracao de feed do usuário. Documente o caminho de leitura (verificar cache, fallback para origem, popular cache) e o caminho de escrita (invalidar cache em novo post).
 8. Avalie caching write-through vs write-behind para o sistema de notificações onde garantias de entrega importam. Documente os trade-offs de cada abordagem.
-9. Projete uma estratégia de cache warming para feeds populares que nunca devem experimentar um cache miss frio (contas de celebridades, paginas de marcas com milhoes de seguidores).
+9. Projete uma estratégia de cache warming para feeds populares que nunca devem experimentar um cache miss frio (contas de celebridades, paginas de marcas com milhões de seguidores).
 10. Projete um padrão circuit breaker para quando o Redis ficar indisponivel. Qual é o fallback? Como você previne thundering herd quando o cache volta?
 
 ### Parte 4: Invalidacao de Cache e Consistência
@@ -84,7 +84,7 @@ A camada Enterprise do Azure Cache for Redis suporta geo-replicação ativa (esc
 <details>
 <summary>Dica 2: Cache-Aside vs Read-Through</summary>
 
-No cache-aside (lazy loading), a aplicação é responsável por ler e escrever no cache. Em um cache miss, a aplicação consulta o banco de dados e entao popula o cache. No read-through, o proprio cache busca da origem em um miss. O Azure Cache for Redis suporta cache-aside nativamente. Read-through requer implementação customizada ou um framework como Redis Gears.
+No cache-aside (lazy loading), a aplicação é responsável por ler e escrever no cache. Em um cache miss, a aplicação consulta o banco de dados e entao popula o cache. No read-through, o próprio cache busca da origem em um miss. O Azure Cache for Redis suporta cache-aside nativamente. Read-through requer implementação customizada ou um framework como Redis Gears.
 
 </details>
 
@@ -135,9 +135,9 @@ Calcule as necessidades de memoria considerando: overhead de serializacao (JSON 
 </details>
 
 <details>
-<summary>3. Durante pico de trafego, uma celebridade posta e 5 milhoes de caches de feed de seguidores sao imediatamente invalidados. Qual problema isso cria e como você resolve?</summary>
+<summary>3. Durante pico de trafego, uma celebridade posta e 5 milhões de caches de feed de seguidores sao imediatamente invalidados. Qual problema isso cria e como você resolve?</summary>
 
-**Cache stampede (thundering herd).** Todos os 5 milhoes de seguidores requisitando seus feeds simultaneamente terao cache miss e atingirao os serviços de origem, potencialmente causando falha em cascata. Soluções: (1) Escalonar a invalidacao ao longo de 30 segundos usando uma fila, (2) Usar pré-computacao em background para aquecer os caches dos seguidores da celebridade antes de invalidar as entradas antigas, (3) Implementar coalescencia de requisicoes para que apenas uma requisicao a origem seja feita por feed único enquanto outras esperam, (4) Usar um padrão "stale-while-revalidate" onde dados levemente obsoletos sao servidos enquanto a atualização acontece em background.
+**Cache stampede (thundering herd).** Todos os 5 milhões de seguidores requisitando seus feeds simultaneamente terao cache miss e atingirao os serviços de origem, potencialmente causando falha em cascata. Soluções: (1) Escalonar a invalidacao ao longo de 30 segundos usando uma fila, (2) Usar pré-computacao em background para aquecer os caches dos seguidores da celebridade antes de invalidar as entradas antigas, (3) Implementar coalescencia de requisicoes para que apenas uma requisicao a origem seja feita por feed único enquanto outras esperam, (4) Usar um padrão "stale-while-revalidate" onde dados levemente obsoletos sao servidos enquanto a atualização acontece em background.
 
 </details>
 

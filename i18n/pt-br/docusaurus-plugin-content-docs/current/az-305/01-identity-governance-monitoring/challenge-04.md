@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A Relecloud é uma empresa SaaS que fornece software de gerenciamento de eventos. Eles estao construindo duas novas aplicações no Azure:
 
-1. **Portal de Operações Internas**: Usado por 500 funcionarios da Relecloud para gerenciar eventos, visualizar analytics é configurar a plataforma. Os funcionarios usam laptops corporativos com licencas do Microsoft 365 e contas do Entra ID. A equipe de segurança exige MFA para todo acesso e quer bloquear sign-ins de localizacoes não confiaveis.
+1. **Portal de Operações Internas**: Usado por 500 funcionários da Relecloud para gerenciar eventos, visualizar analytics é configurar a plataforma. Os funcionários usam laptops corporativos com licencas do Microsoft 365 e contas do Entra ID. A equipe de segurança exige MFA para todo acesso e quer bloquear sign-ins de localizacoes não confiaveis.
 
 2. **Plataforma de Reservas para Clientes**: Uma aplicação web pública usada por mais de 100.000 consumidores para navegar eventos, comprar ingressos é gerenciar suas contas. Os clientes devem poder se cadastrar com email/senha ou suas contas existentes do Google/Facebook. A equipe de marketing quer uma experiência de login com marca que combine com a identidade visual da Relecloud.
 
@@ -54,7 +54,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 3. Projete o conjunto de políticas de Conditional Access para o Portal de Operações Internas:
    - Política 1: Exigir MFA para todos os usuários
    - Política 2: Bloquear acesso de paises fora das regiões de operação da empresa
-   - Política 3: Exigir dispositivo em conformidade para acesso a funções administrativas sensiveis
+   - Política 3: Exigir dispositivo em conformidade para acesso a funções administrativas sensíveis
    - Política 4: Aplicar frequência de sign-in (reautenticar a cada 8 horas)
 
 4. Projete o fluxo de autenticação para o portal interno:
@@ -117,7 +117,7 @@ Sua tarefa é projetar a arquitetura completa de autenticação para ambas as ap
 | Business partners accessing your apps | **Azure AD B2B** | Partners use their own identity, appears as guest in your directory, governed by your policies |
 | Both employees AND consumers in same app | **Entra External ID** (successor to B2C) | Unified platform for workforce + customer identities |
 
-Diferenca chave: B2C é um diretório (tenant) completamente separado com suas proprias políticas, branding e armazenamento de usuários. Ele NAO compartilha o diretório corporativo do Entra ID.
+Diferenca chave: B2C é um diretório (tenant) completamente separado com suas próprias políticas, branding e armazenamento de usuários. Ele NAO compartilha o diretório corporativo do Entra ID.
 
 </details>
 
@@ -241,7 +241,7 @@ Para a plataforma de clientes da Relecloud, **user flows** sao suficientes porqu
 <details>
 <summary>1. A plataforma de clientes da Relecloud precisa suportar cadastro com email, Google e Facebook para mais de 100.000 consumidores. A equipe de marketing quer uma pagina de login totalmente personalizada. Qual solução de identidade você deve recomendar?</summary>
 
-**Azure AD B2C.** Ele e construido especificamente para aplicações voltadas ao consumidor com: suporte a provedores de identidade social (Google, Facebook, Apple), cadastro self-service com email, UI totalmente customizavel via templates HTML/CSS, diretório de usuários separado que escala para milhoes de usuários é um modelo de precificacao baseado em consumo. Entra ID (workforce) exigiria a criação de contas guest para cada consumidor, o que não é escalável. Entra External ID e a evolucao do B2C e também pode ser apropriado.
+**Azure AD B2C.** Ele e construido especificamente para aplicações voltadas ao consumidor com: suporte a provedores de identidade social (Google, Facebook, Apple), cadastro self-service com email, UI totalmente customizavel via templates HTML/CSS, diretório de usuários separado que escala para milhões de usuários é um modelo de precificacao baseado em consumo. Entra ID (workforce) exigiria a criação de contas guest para cada consumidor, o que não é escalável. Entra External ID e a evolucao do B2C e também pode ser apropriado.
 
 </details>
 
@@ -257,7 +257,7 @@ Para a plataforma de clientes da Relecloud, **user flows** sao suficientes porqu
 <details>
 <summary>3. Uma política de Conditional Access exige MFA para todos os usuários acessando o Portal Interno. Uma emergencia ocorre e a conta de admin e bloqueada devido a problemas com MFA. Como isso deve ser prevenido no design?</summary>
 
-**Crie contas de acesso de emergencia (break glass) excluidas de todas as políticas de Conditional Access.** Essas contas devem: (1) Ser contas somente na nuvem (não sincronizadas do on-prem), (2) Usar senhas longas e complexas armazenadas em um cofre fisico, (3) Ser excluidas de TODAS as políticas de Conditional Access, (4) Ter a role de Global Administrator, (5) Ser monitoradas com alertas em qualquer atividade de sign-in, (6) Ter pelo menos duas contas para redundância. A Microsoft recomenda pelo menos duas contas break-glass por tenant.
+**Crie contas de acesso de emergencia (break glass) excluidas de todas as políticas de Conditional Access.** Essas contas devem: (1) Ser contas somente na nuvem (não sincronizadas do on-prem), (2) Usar senhas longas e complexas armazenadas em um cofre físico, (3) Ser excluidas de TODAS as políticas de Conditional Access, (4) Ter a role de Global Administrator, (5) Ser monitoradas com alertas em qualquer atividade de sign-in, (6) Ter pelo menos duas contas para redundância. A Microsoft recomenda pelo menos duas contas break-glass por tenant.
 
 </details>
 

@@ -19,7 +19,7 @@ A Consolidated Manufacturing opera 50 maquinas virtuais de produção distribuid
 
 Os domain controllers requerem backups crash-consistent que capturam o estado de replicação do AD corretamente. As VMs SQL Server precisam de backups application-consistent que congelam o cache de escrita do SQL antes do snapshot. Os servidores web sao stateless e podem ser reimplantados a partir de imagens, mas precisam de backup de configuração. Recentemente, um ataque de ransomware criptografou 3 VMs antes da detecção, e a empresa descobriu que seus backups existentes também foram comprometidos porque não tinham proteção de imutabilidade.
 
-O diretor de TI deseja uma estratégia de backup unificada gerenciada atraves do Azure Backup Center que forneca: diferentes frequencias de backup por tipo de carga de trabalho, capacidade de restauracao entre regiões para disaster recovery, backups imutáveis para proteção contra ransomware, e backup seletivo de disco para reduzir custos em VMs com discos grandes de temp/cache.
+O diretor de TI deseja uma estratégia de backup unificada gerenciada através do Azure Backup Center que forneça: diferentes frequencias de backup por tipo de carga de trabalho, capacidade de restauracao entre regiões para disaster recovery, backups imutáveis para proteção contra ransomware, e backup seletivo de disco para reduzir custos em VMs com discos grandes de temp/cache.
 
 ## Habilidades do Exame Cobertas
 
@@ -108,7 +108,7 @@ az backup vault backup-properties set \
 
 11. Calcule a economia mensal estimada de custo de backup com backup seletivo de disco versus backup completo de VM para as 8 VMs SQL Server.
 
-12. Configure o Backup Center para fornecer uma visao unificada em todas as três regiões e configure relatórios de backup para auditoria de conformidade.
+12. Configure o Backup Center para fornecer uma visão unificada em todas as três regiões e configure relatórios de backup para auditoria de conformidade.
 
 ## Criterios de Sucesso
 
@@ -156,7 +156,7 @@ Para habilitar: o vault deve usar redundância GRS (não LRS ou ZRS), e CRR deve
 
 A imutabilidade impede que dados de backup sejam deletados ou que a retencao seja reduzida:
 - **Estado unlocked**: A imutabilidade ainda pode ser desabilitada (para testes)
-- **Estado locked**: A imutabilidade NAO pode ser desabilitada - isso é irreversivel
+- **Estado locked**: A imutabilidade NAO pode ser desabilitada - isso é irreversível
 - Uma vez locked, você não pode: reduzir retencao, desabilitar backup, deletar dados de backup antes da retencao expirar
 
 Recomendacao: Comece com imutabilidade unlocked durante a configuração inicial, valide que tudo funciona, entao aplique lock quando estiver pronto para produção. Uma vez locked, nem mesmo um Global Administrator pode deletar dados de backup.

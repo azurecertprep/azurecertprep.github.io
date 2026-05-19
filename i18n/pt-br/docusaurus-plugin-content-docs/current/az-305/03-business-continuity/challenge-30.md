@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-O Federal Benefits Portal (FedBenefits) é uma aplicação web operada pelo governo que permite a 10 milhoes de cidadaos gerenciar seus beneficios de aposentadoria, inscricao em saúde e informações fiscais. O portal esta sujeito a requisitos rigorosos de uptime determinados pelo Government Accountability Office: 99,99% de disponibilidade (máximo de 52,6 minutos de inatividade por ano). Qualquer interrupcao superior a 5 minutos aciona um requisito de relatório ao congresso e potencial auditoria.
+O Federal Benefits Portal (FedBenefits) é uma aplicação web operada pelo governo que permite a 10 milhões de cidadaos gerenciar seus beneficios de aposentadoria, inscricao em saúde e informações fiscais. O portal esta sujeito a requisitos rigorosos de uptime determinados pelo Government Accountability Office: 99,99% de disponibilidade (máximo de 52,6 minutos de inatividade por ano). Qualquer interrupcao superior a 5 minutos aciona um requisito de relatório ao congresso e potencial auditoria.
 
 A arquitetura atual executa em 8 VMs atras de um Azure Load Balancer em um único availability set dentro de East US 2. No mes passado, um evento de manutenção não planejada da plataforma Azure derrubou todo o availability set por 12 minutos, violando o SLA. A equipe de infraestrutura foi encarregada de reprojetar a camada de computacao para sobreviver a uma falha completa de availability zone sem qualquer impacto visivel ao usuário.
 
@@ -108,8 +108,8 @@ done
    - Regras de autoscale baseadas em CPU e contagem de requisicoes
 
 9. Configure o perfil de autoscale:
-   - Scale-out: Adicione 2 instâncias quando CPU media > 70% por 5 minutos
-   - Scale-in: Remova 1 instância quando CPU media < 30% por 10 minutos
+   - Scale-out: Adicione 2 instâncias quando CPU média > 70% por 5 minutos
+   - Scale-in: Remova 1 instância quando CPU média < 30% por 10 minutos
    - Scaling baseado em cronograma: Pre-escale para 12 instâncias durante inscricao aberta (Janeiro)
 
 ### Parte 4: Alta Disponibilidade PaaS (App Service)
@@ -135,7 +135,7 @@ az appservice plan create \
 12. Compare o SLA composto das duas abordagens:
     - Camada legada: VMs zone-redundant (99,99%) + Standard LB (99,99%) = ?
     - Camada moderna: App Service zone-redundant (99,99%) = ?
-    - SLA combinado da aplicação (ambas camadas devem estar disponiveis): ?
+    - SLA combinado da aplicação (ambas camadas devem estar disponíveis): ?
 
 ## Criterios de Sucesso
 

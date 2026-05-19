@@ -241,54 +241,206 @@ Design your DLQ strategy:
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab validates messaging behaviors that matter for the AZ-305 exam: dead-letter queues catching expired messages, duplicate detection preventing double-processing, and topic fan-out delivering one message to multiple subscribers independently.
 
-1. Create a resource group for this lab:
+### Part A - Deploy Service Bus Infrastructure
+
+1. Create the resource group and Service Bus namespace:
 
 ```bash
-az group create --name rg-az305-challenge38 --location eastus
+az group create \
+  --name rg-az305-challenge38 \
+  --location eastus
 ```
 
-2. Create a Service Bus namespace (Standard tier for queues and topics):
-
 ```bash
-az servicebus namespace create --resource-group rg-az305-challenge38 \
-  --name sb-challenge38-$RANDOM --sku Standard --location eastus
+az servicebus namespace create \
+  --resource-group rg-az305-challenge38 \
+  --name sb-challenge38-$RANDOM \
+  --sku Standard \
+  --location eastus
 ```
 
-3. Create a queue with dead-lettering and duplicate detection:
+```bash
+SB_NS=$(az servicebus namespace list \
+  --resource-group rg-az305-challenge38 \
+  --query "[0].name" -o tsv)
+
+echo "Namespace: $SB_NS"
+```
+
+2. Create a queue with short TTL (2 minutes), dead-lettering enabled, duplicate detection (5-minute window), and max delivery count of 3:
 
 ```bash
-SB_NS=$(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv)
-
-az servicebus queue create --resource-group rg-az305-challenge38 \
+az servicebus queue create \
+  --resource-group rg-az305-challenge38 \
   --namespace-name $SB_NS \
   --name orders-queue \
+  --default-message-time-to-live PT2M \
   --enable-dead-lettering-on-message-expiration true \
   --enable-duplicate-detection true \
-  --duplicate-detection-history-time-window PT10M \
-  --lock-duration PT1M \
-  --max-delivery-count 10
+  --duplicate-detection-history-time-window PT5M \
+  --max-delivery-count 3 \
+  --lock-duration PT30S
 ```
 
-4. Verify the queue was created with the correct properties:
+3. Verify the queue configuration:
 
 ```bash
-az servicebus queue show --resource-group rg-az305-challenge38 \
-  --namespace-name $SB_NS --name orders-queue \
-  --query "{name:name, deadLettering:deadLetteringOnMessageExpiration, duplicateDetection:requiresDuplicateDetection, lockDuration:lockDuration, maxDeliveryCount:maxDeliveryCount}"
-```
-
-5. List the authorization rules to confirm access policies:
-
-```bash
-az servicebus namespace authorization-rule list \
+az servicebus queue show \
   --resource-group rg-az305-challenge38 \
-  --namespace-name $SB_NS --query "[].{name:name, rights:rights}"
+  --namespace-name $SB_NS \
+  --name orders-queue \
+  --query "{name:name, ttl:defaultMessageTimeToLive, deadLettering:deadLetteringOnMessageExpiration, duplicateDetection:requiresDuplicateDetection, duplicateWindow:duplicateDetectionHistoryTimeWindow, maxDelivery:maxDeliveryCount}" \
+  -o table
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+### Part B - Dead-Letter Queue Behavior
+
+This test proves that messages which expire without being consumed are not silently lost. They move to the dead-letter sub-queue where they can be investigated and reprocessed.
+
+4. Send a message using the Azure Portal Service Bus Explorer, then let it expire:
+
+**Portal Step**: Go to Azure Portal > Service Bus namespace > Queues > orders-queue > Service Bus Explorer
+1. Click "Send" tab
+2. Set Message body: `{"orderId": "ORD-001", "amount": 99.99}`
+3. Click "Send"
+4. Do NOT click "Receive" - let the message expire
+
+Wait 2 minutes for the message TTL to expire.
+
+5. After 2 minutes, verify the message moved to the dead-letter queue:
+
+```bash
+az servicebus queue show \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --name orders-queue \
+  --query "{activeMessages:countDetails.activeMessageCount, deadLetterMessages:countDetails.deadLetterMessageCount}" \
+  -o table
+```
+
+You should see `activeMessages: 0` and `deadLetterMessages: 1`.
+
+:::note[Architect Insight]
+Dead-letter queues catch failed or expired messages so there is no silent data loss. In production, a message that expires or exceeds max delivery count moves to the DLQ automatically. Without this safety net, messages would simply vanish, and you would never know an order was lost. Monitor DLQ depth with alerts -- any non-zero count indicates a processing failure.
+:::
+
+### Part C - Duplicate Detection
+
+This test proves that Service Bus rejects messages with the same MessageId within the detection window, preventing double-processing at the platform level.
+
+6. Send two messages with the same MessageId using the Portal:
+
+**Portal Step**: Go to Azure Portal > Service Bus namespace > Queues > orders-queue > Service Bus Explorer
+1. Click "Send" tab
+2. Click "Advanced" to expand message properties
+3. Set Message Id: order-dedup-test-001
+4. Set Message body: `{"orderId": "ORD-002", "amount": 150.00}`
+5. Click "Send"
+6. Without changing anything, click "Send" again (same MessageId)
+
+7. Verify only 1 active message exists (the duplicate was silently dropped):
+
+```bash
+az servicebus queue show \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --name orders-queue \
+  --query "{activeMessages:countDetails.activeMessageCount, deadLetterMessages:countDetails.deadLetterMessageCount}" \
+  -o table
+```
+
+You should see `activeMessages: 1` (not 2). The second send was accepted by the broker but the message was discarded because the MessageId matched within the 5-minute detection window.
+
+:::note[Architect Insight]
+Duplicate detection prevents double-processing at the broker level. The sender receives a success response even when the duplicate is dropped -- this is by design so retry logic does not need to distinguish "new message accepted" from "duplicate dropped." The detection window (here 5 minutes) must cover the maximum duration of client retry attempts. If retries can span longer than the window, duplicates slip through.
+:::
+
+### Part D - Topic Fan-Out
+
+This test proves that a single message published to a topic is independently delivered to all subscriptions, enabling event-driven fan-out without sender coupling.
+
+8. Create a topic with three subscriptions representing different downstream services:
+
+```bash
+az servicebus topic create \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --name order-events
+```
+
+```bash
+az servicebus topic subscription create \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --topic-name order-events \
+  --name billing
+```
+
+```bash
+az servicebus topic subscription create \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --topic-name order-events \
+  --name shipping
+```
+
+```bash
+az servicebus topic subscription create \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --topic-name order-events \
+  --name notification
+```
+
+9. Send one message to the topic using the Portal:
+
+**Portal Step**: Go to Azure Portal > Service Bus namespace > Topics > order-events > Service Bus Explorer
+1. Click "Send" tab
+2. Set Message body: `{"orderId": "ORD-003", "customer": "Contoso", "amount": 250.00}`
+3. Click "Send" (just once)
+
+10. Verify all three subscriptions received the message independently:
+
+```bash
+az servicebus topic subscription show \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --topic-name order-events \
+  --name billing \
+  --query "{subscription:'billing', activeMessages:countDetails.activeMessageCount}" \
+  -o table
+```
+
+```bash
+az servicebus topic subscription show \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --topic-name order-events \
+  --name shipping \
+  --query "{subscription:'shipping', activeMessages:countDetails.activeMessageCount}" \
+  -o table
+```
+
+```bash
+az servicebus topic subscription show \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS \
+  --topic-name order-events \
+  --name notification \
+  --query "{subscription:'notification', activeMessages:countDetails.activeMessageCount}" \
+  -o table
+```
+
+Each subscription should show `activeMessages: 1`. One published message resulted in three independent copies, one per subscription.
+
+:::note[Architect Insight]
+Topic subscriptions enable fan-out without sender coupling. The order service publishes once and does not need to know how many downstream systems consume the event. Adding a fourth subscriber (e.g., analytics) requires zero changes to the publisher. Each subscription has its own dead-letter queue, retry behavior, and consumption rate -- one slow consumer does not block others. The max delivery count (3 in this lab) prevents poison messages from blocking any single subscription indefinitely.
+:::
+
+:::tip[Design Validation]
+This lab validated three messaging guarantees: (1) Dead-letter queues act as a safety net for unprocessed messages -- nothing is silently lost. (2) Duplicate detection uses MessageId within the configured time window to reject re-sends at the broker level. (3) One topic message reaches all subscriptions independently, proving fan-out works without modifying the sender.
 :::
 
 ## Cleanup

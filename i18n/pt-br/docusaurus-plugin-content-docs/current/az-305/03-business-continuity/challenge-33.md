@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A StreamFlix é uma plataforma de streaming de video atendendo 50 milhoes de usuários ativos mensais na America do Norte, Europa e Asia-Pacifico. A plataforma transmite conteúdo de video 4K, gerência perfis de usuários e historico de visualizacao, processa recomendacoes em tempo real e trata metadados de licenciamento de conteúdo. A StreamFlix se posicionou como a alternativa "sempre disponível" aos concorrentes, prometendo aos usuários que nunca experimentarao uma tela de buffering ou indisponibilidade de serviço.
+A StreamFlix é uma plataforma de streaming de vídeo atendendo 50 milhões de usuários ativos mensais na América do Norte, Europa e Asia-Pacifico. A plataforma transmite conteúdo de vídeo 4K, gerencia perfis de usuários e histórico de visualizacao, processa recomendacoes em tempo real e trata metadados de licenciamento de conteúdo. A StreamFlix se posicionou como a alternativa "sempre disponível" aos concorrentes, prometendo aos usuários que nunca experimentarao uma tela de buffering ou indisponibilidade de serviço.
 
-A equipe executiva determinou um SLA composto de 99,99% com menos de 50ms de tempo de início de video globalmente e a capacidade de sobreviver a uma falha completa de região Azure com menos de 2 minutos de impacto visivel ao usuário. A plataforma deve estar ativa em 3 regiões simultaneamente (East US 2, North Europe, Japan East), não em uma configuração active-passive. Toda região deve servir trafego de produção o tempo todo, e se qualquer região única falhar, as duas restantes devem absorver seu trafego sem degradacao.
+A equipe executiva determinou um SLA composto de 99,99% com menos de 50ms de tempo de início de vídeo globalmente e a capacidade de sobreviver a uma falha completa de região Azure com menos de 2 minutos de impacto visivel ao usuário. A plataforma deve estar ativa em 3 regiões simultaneamente (East US 2, North Europe, Japan East), não em uma configuração active-passive. Toda região deve servir trafego de produção o tempo todo, e se qualquer região única falhar, as duas restantes devem absorver seu trafego sem degradacao.
 
 Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de alta disponibilidade, backup e disaster recovery dos Challenges 25-32 em uma arquitetura multi-região completa e pronta para produção. Você deve calcular o SLA composto matematicamente, provar que atende a meta de 99,99% é demonstrar que cada componente tem redundância apropriada.
 
@@ -39,7 +39,7 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
    - Calcule o tempo de detecção de failover: intervalo de probe x limite de falha = ?
 
 2. Projete a estratégia de CDN e caching:
-   - Conteúdo de video: servir a partir do Azure CDN (ou regras de caching do Front Door) com TTL de 24 horas
+   - Conteúdo de vídeo: servir a partir do Azure CDN (ou regras de caching do Front Door) com TTL de 24 horas
    - Respostas de API: fazer cache de dados personalizados? (Não - conteúdo dinâmico ignora cache)
    - Ativos estaticos (UI, thumbnails): cache de 7 dias com URLs versionadas para cache-busting
    - Calcule: qual porcentagem de requisicoes acerta o cache CDN vs. origem?
@@ -55,7 +55,7 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
 4. Projete a arquitetura de computacao dentro de cada região:
    - Camada Web/API: Azure Kubernetes Service (AKS) ou App Service (zone-redundant)
    - Motor de recomendacao: Container Apps com autoscale
-   - Transcodificacao de video: VMSS com spot instances (batch, não crítico para HA)
+   - Transcodificacao de vídeo: VMSS com spot instances (batch, não crítico para HA)
 
 5. Para cada região, configure zone redundancy:
    - AKS com 3 availability zones, mínimo 3 nos (1 por zona)
@@ -74,25 +74,25 @@ Este e o desafio capstone do Dominio 3. Você combinara todos os conceitos de al
 
 | Tipo de Dado | Serviço | Regiões | Consistência | Failover |
 |-----------|---------|---------|-------------|----------|
-| Perfis de usuário e historico | Cosmos DB (NoSQL) | 3, multi-write | Session | Automático (99,999%) |
-| Catalogo de conteúdo e licenciamento | Azure SQL Database | 3 (1 primário + 2 leitura) | Strong | Failover group |
-| Arquivos de video (conteúdo 4K) | Blob Storage + CDN | 3 (RA-GRS) | Eventual | CDN cache + leitura secundária |
+| Perfis de usuário e histórico | Cosmos DB (NoSQL) | 3, multi-write | Session | Automático (99,999%) |
+| Catálogo de conteúdo e licenciamento | Azure SQL Database | 3 (1 primário + 2 leitura) | Strong | Failover group |
+| Arquivos de vídeo (conteúdo 4K) | Blob Storage + CDN | 3 (RA-GRS) | Eventual | CDN cache + leitura secundária |
 | Tokens de sessão | Azure Cache for Redis | 3 (Enterprise, active geo) | Eventual | Replicação cross-region |
 | Recomendacoes (cache de modelo ML) | Redis ou Cosmos DB | 3 | Eventual | Reconstrucao por região |
 
-8. Configure Cosmos DB para a carga de trabalho de perfil de usuário e historico de visualizacao:
+8. Configure Cosmos DB para a carga de trabalho de perfil de usuário e histórico de visualizacao:
    - Multi-region writes (todas as 3 regiões escrevem localmente)
-   - Session consistency (usuário ve suas proprias escritas imediatamente)
+   - Session consistency (usuário ve suas próprias escritas imediatamente)
    - Estratégia de partition key: `/userId` (garante que dados do usuário estao co-localizados)
    - Autoscale: 10.000 - 100.000 RU/s por região (dependente de trafego)
 
-9. Projete a topologia do SQL Database para o catalogo de conteúdo:
+9. Projete a topologia do SQL Database para o catálogo de conteúdo:
    - Primário: East US 2 (Business Critical, zone-redundant, 16 vCores)
    - Secundário do failover group: North Europe (failover automático, grace de 1 hora)
    - Active geo-replica: Japan East (read-only, failover manual)
-   - Justifique por que catalogo de conteúdo usa SQL (restrições de licenciamento relacional, consultas complexas) vs. Cosmos DB
+   - Justifique por que catálogo de conteúdo usa SQL (restrições de licenciamento relacional, consultas complexas) vs. Cosmos DB
 
-10. Configure o armazenamento de conteúdo de video para entrega global:
+10. Configure o armazenamento de conteúdo de vídeo para entrega global:
     - Armazenamento primário: East US 2 (RA-GRS, replicado para região pareada)
     - Contas de armazenamento secundarias em North Europe e Japan East para conteúdo region-local
     - Azure CDN com múltiplos origin groups para failover
@@ -179,7 +179,7 @@ Disponibilidade multi-região = 1 - 0,000000000636 = 99,9999999% (efetivamente 9
 
 O insight-chave: mesmo que nenhuma região única atinja 99,99%, três regiões ativas juntas excedem em muito. Este e a proposta de valor fundamental da arquitetura multi-região active-active.
 
-No entanto, isso assume que Front Door roteia perfeitamente ao redor de falhas. O proprio SLA do Front Door de 99,99% se torna o fator limitante:
+No entanto, isso assume que Front Door roteia perfeitamente ao redor de falhas. O próprio SLA do Front Door de 99,99% se torna o fator limitante:
 SLA Efetivo = SLA do Front Door x SLA de Backend Multi-região = 0,9999 x ~1,0 = 99,99%
 
 </details>
@@ -257,14 +257,14 @@ Estratégia de pré-aquecimento: manter min-count em 9 ao inves de 6 (paga 50% m
 <details>
 <summary>Dica 5: Tempo de Início de Video < 50ms Globalmente</summary>
 
-Alcancar < 50ms de tempo de início de video requer que CDN caching trate a grande maioria das requisicoes de video:
+Alcancar < 50ms de tempo de início de vídeo requer que CDN caching trate a grande maioria das requisicoes de vídeo:
 - PoPs do Azure CDN estao dentro de 10-30ms da maioria dos usuários globalmente
 - Latência de primeiro byte do cache CDN: ~10-50ms (atende requisito)
 - Latência de primeiro byte da origem (cache miss): 100-500ms (NAO atende requisito)
-- Estratégia: garantir > 99% de taxa de cache hit para segmentos de video
+- Estratégia: garantir > 99% de taxa de cache hit para segmentos de vídeo
 
 Arquitetura de cache:
-- Conteúdo de video e segmentado (HLS/DASH, chunks de 2-10 segundos)
+- Conteúdo de vídeo e segmentado (HLS/DASH, chunks de 2-10 segundos)
 - Primeiro segmento de conteúdo popular pré-cached globalmente
 - TTL de cache: mínimo 24 horas (conteúdo não muda)
 - Cache warming: enviar novo conteúdo para todos os PoPs CDN antes do lancamento
@@ -288,7 +288,7 @@ Para o requisito de < 50ms ser atendido globalmente, o CDN não é opcional - e 
 <details>
 <summary>1. O SLA composto por região da StreamFlix e 99,914%. Como implantar active-active em 3 regiões alcanca 99,99%+ geral, e qual componente se torna o teto efetivo do SLA?</summary>
 
-**Com 3 regiões ativas, a probabilidade de TODAS as regiões falharem simultaneamente e (1 - 0,99914)^3 = desprezivel, dando disponibilidade efetiva de ~99,9999999%.** No entanto, o proprio SLA do Azure Front Door de 99,99% se torna o teto porque é um único serviço global pelo qual todo o trafego flui - não pode ser tornado redundante dentro do Azure. O SLA composto efetivo e: min(SLA do Front Door, SLA de backend multi-região) = min(99,99%, ~100%) = 99,99%. Front Door e o fator limitante, não a infraestrutura de backend. Para exceder 99,99%, você precisaria de uma estratégia multi-CDN (Front Door + Cloudflare/Akamai), que adiciona complexidade operacional significativa.
+**Com 3 regiões ativas, a probabilidade de TODAS as regiões falharem simultaneamente e (1 - 0,99914)^3 = desprezivel, dando disponibilidade efetiva de ~99,9999999%.** No entanto, o próprio SLA do Azure Front Door de 99,99% se torna o teto porque é um único serviço global pelo qual todo o trafego flui - não pode ser tornado redundante dentro do Azure. O SLA composto efetivo e: min(SLA do Front Door, SLA de backend multi-região) = min(99,99%, ~100%) = 99,99%. Front Door e o fator limitante, não a infraestrutura de backend. Para exceder 99,99%, você precisaria de uma estratégia multi-CDN (Front Door + Cloudflare/Akamai), que adiciona complexidade operacional significativa.
 
 </details>
 
@@ -302,14 +302,14 @@ Para o requisito de < 50ms ser atendido globalmente, o CDN não é opcional - e 
 <details>
 <summary>3. A StreamFlix usa Cosmos DB multi-region writes para perfis de usuários. Se um usuário atualizar seu perfil em East US 2 e imediatamente ler de Japan East, o que ele ve com Session consistency?</summary>
 
-**Com Session consistency e multi-region writes, o usuário ve sua propria atualização APENAS se continuar lendo da mesma região (East US 2).** Garantias de Session consistency sao escopadas a um único session token é uma única região. Se a próxima leitura do usuário for roteada para Japan East (ex: porque ele viajou ou Front Door redirecionou), ele pode ver dados desatualizados até a replicação alcancar (tipicamente milissegundos a poucos segundos). Para garantir read-your-own-writes globalmente, a aplicação deve passar o session token e rotear a leitura para a região de escrita, ou usar Bounded Staleness com janela apertada. Na prática, este caso de borda raramente importa para leituras de perfil.
+**Com Session consistency e multi-region writes, o usuário ve sua própria atualização APENAS se continuar lendo da mesma região (East US 2).** Garantias de Session consistency sao escopadas a um único session token é uma única região. Se a próxima leitura do usuário for roteada para Japan East (ex: porque ele viajou ou Front Door redirecionou), ele pode ver dados desatualizados até a replicação alcancar (tipicamente milissegundos a poucos segundos). Para garantir read-your-own-writes globalmente, a aplicação deve passar o session token e rotear a leitura para a região de escrita, ou usar Bounded Staleness com janela apertada. Na prática, este caso de borda raramente importa para leituras de perfil.
 
 </details>
 
 <details>
-<summary>4. O catalogo de conteúdo usa Azure SQL com failover group (East US 2 -> North Europe) e geo-replica (Japan East). Se East US 2 falhar, o que acontece em cada região?</summary>
+<summary>4. O catálogo de conteúdo usa Azure SQL com failover group (East US 2 -> North Europe) e geo-replica (Japan East). Se East US 2 falhar, o que acontece em cada região?</summary>
 
-**North Europe e automaticamente promovido a primário (via failover group, ~30 segundos), e a geo-replica de Japan East quebra porque sua fonte (East US 2) se foi.** Apos failover: North Europe trata todas as escritas como o novo primário. O endpoint DNS do failover group atualiza automaticamente. A geo-replica de Japan East deve ser recriada com North Europe como a nova fonte. Durante a lacuna (minutos a horas), Japan East tem dados read-only desatualizados de antes da falha. O design da aplicação deve tratar isso: Japan East pode servir leituras de seu último estado bom enquanto a geo-replica e re-estabelecida, ou rotear escritas atraves do endpoint do failover group (maior latência de Japan East para North Europe). Esta é uma limitacao conhecida de combinar failover groups com geo-replicas adicionais.
+**North Europe e automaticamente promovido a primário (via failover group, ~30 segundos), e a geo-replica de Japan East quebra porque sua fonte (East US 2) se foi.** Apos failover: North Europe trata todas as escritas como o novo primário. O endpoint DNS do failover group atualiza automaticamente. A geo-replica de Japan East deve ser recriada com North Europe como a nova fonte. Durante a lacuna (minutos a horas), Japan East tem dados read-only desatualizados de antes da falha. O design da aplicação deve tratar isso: Japan East pode servir leituras de seu último estado bom enquanto a geo-replica e re-estabelecida, ou rotear escritas através do endpoint do failover group (maior latência de Japan East para North Europe). Esta é uma limitacao conhecida de combinar failover groups com geo-replicas adicionais.
 
 </details>
 

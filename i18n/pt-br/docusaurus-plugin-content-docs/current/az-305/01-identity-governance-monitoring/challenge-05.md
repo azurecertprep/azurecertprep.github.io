@@ -15,12 +15,12 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-O Woodgrove Bank é uma instituição financeira com 8.000 funcionarios em 12 escritorios. Eles possuem um ambiente maduro de Active Directory on-premises (domain controllers Windows Server 2019, forest única, três dominios) que gerência todas as identidades de funcionarios, group policies e acesso a aplicações. Eles estao migrando para um modelo de nuvem hibrida com Microsoft 365 e workloads Azure, mas não podem abandonar o AD on-premises devido a aplicações legadas de linha de negocios que requerem autenticação Kerberos.
+O Woodgrove Bank é uma instituição financeira com 8.000 funcionários em 12 escritórios. Eles possuem um ambiente maduro de Active Directory on-premises (domain controllers Windows Server 2019, forest única, três dominios) que gerencia todas as identidades de funcionários, group policies e acesso a aplicações. Eles estao migrando para um modelo de nuvem hibrida com Microsoft 365 e workloads Azure, mas não podem abandonar o AD on-premises devido a aplicações legadas de linha de negocios que requerem autenticação Kerberos.
 
 O CISO identificou várias lacunas críticas de segurança na postura de identidade atual:
 - 15 contas de Global Administrator sem revisoes de acesso ou ativacao com tempo limitado
 - Contas de serviço com roles de alto privilegio permanentemente atribuidas
-- Nenhum mecanismo de detecção para credenciais comprometidas ou sign-ins de viagem impossivel
+- Nenhum mecanismo de detecção para credenciais comprometidas ou sign-ins de viagem impossível
 - Senhas sincronizadas do AD sem proteção de senha nativa na nuvem
 - Ex-contratados ainda possuem contas ativas descobertas durante uma auditoria recente
 
@@ -91,12 +91,12 @@ Sua tarefa é projetar uma solução de gerenciamento de identidade hibrida que 
 ### Parte 4: Identity Protection
 
 9. Projete políticas de Identity Protection para o Woodgrove Bank:
-   - Política de risco de sign-in: quais ações para risco baixo, medio e alto
+   - Política de risco de sign-in: quais ações para risco baixo, médio e alto
    - Política de risco de usuário: quando exigir troca de senha vs. bloquear acesso
    - Integração de Conditional Access baseada em risco
 
 10. Projete detecção e resposta para estes cenários:
-    - Sign-in de funcionario de dois paises em 1 hora (viagem impossivel)
+    - Sign-in de funcionario de dois paises em 1 hora (viagem impossível)
     - Sign-in de um endereço IP de botnet conhecido
     - Credenciais encontradas em um banco de dados de vazamento na dark web
     - Padrão anomalo de uso de token
@@ -212,7 +212,7 @@ Projete resposta a risco por severidade:
 | High | Block access | Block until admin review |
 
 Configuração chave:
-- Risco de sign-in detecta: viagem impossivel, propriedades de sign-in desconhecidas, IPs vinculados a malware, IPs anonimos
+- Risco de sign-in detecta: viagem impossível, propriedades de sign-in desconhecidas, IPs vinculados a malware, IPs anonimos
 - Risco de usuário detecta: credenciais vazadas (requer PHS), atividade anomala de usuário
 - Políticas de Conditional Access baseadas em risco substituem as políticas legadas do Identity Protection
 
@@ -248,7 +248,7 @@ O Microsoft Entra Password Protection avalia senhas contra:
 Para o Woodgrove Bank, adicione termos específicos da empresa:
 - Nome da empresa e variacoes (woodgrove, w00dgr0ve)
 - Nomes de produtos
-- Localizacoes de escritorios
+- Localizacoes de escritórios
 - Abreviacoes internas comuns
 
 A implantacao on-premises requer:

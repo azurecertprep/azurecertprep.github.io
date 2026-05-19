@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-Meridian Legal Partners é um escritorio de advocacia de medio porte que gerência documentos sensiveis de casos, contratos e peticoes judiciais no Azure Storage. Eles tem três categorias de dados com diferentes requisitos de proteção: arquivos de casos ativos que advogados modificam diariamente e precisam de recuperação instantanea de exclusão acidental, documentos legais finalizados que devem ser imutáveis uma vez assinados (compliance WORM mandatado pelo tribunal), e registros de casos arquivados que devem sobreviver a uma falha completa de região Azure para recuperação de desastres.
+Meridian Legal Partners é um escritório de advocacia de médio porte que gerencia documentos sensíveis de casos, contratos e peticoes judiciais no Azure Storage. Eles tem três categorias de dados com diferentes requisitos de proteção: arquivos de casos ativos que advogados modificam diariamente e precisam de recuperação instantanea de exclusão acidental, documentos legais finalizados que devem ser imutáveis uma vez assinados (compliance WORM mandatado pelo tribunal), e registros de casos arquivados que devem sobreviver a uma falha completa de região Azure para recuperação de desastres.
 
-O oficial de compliance do escritorio mandatou o seguinte: todos os documentos finalizados devem ter legal holds que previnem exclusão durante litigio ativo, casos arquivados devem ser geo-redundantes com acesso de leitura da região secundária, e o escritorio deve atender um SLA de disponibilidade de 99,99% para arquivos de casos ativos. Um incidente recente onde um paralegal excluiu acidentalmente uma pasta crítica de caso elevou este projeto a prioridade máxima.
+O oficial de compliance do escritório mandatou o seguinte: todos os documentos finalizados devem ter legal holds que previnem exclusão durante litigio ativo, casos arquivados devem ser geo-redundantes com acesso de leitura da região secundária, e o escritório deve atender um SLA de disponibilidade de 99,99% para arquivos de casos ativos. Um incidente recente onde um paralegal excluiu acidentalmente uma pasta crítica de caso elevou este projeto a prioridade máxima.
 
-Seu desafio é projetar uma estratégia abrangente de proteção de dados que combine a opcao de redundância correta para cada categoria de dados, implemente políticas de imutabilidade para compliance regulatorio, e forneca mecanismos de recuperação rápida para erros operacionais.
+Seu desafio é projetar uma estratégia abrangente de proteção de dados que combine a opcao de redundância correta para cada categoria de dados, implemente políticas de imutabilidade para compliance regulatorio, e forneça mecanismos de recuperação rápida para erros operacionais.
 
 ## Habilidades do Exame Cobertas
 
@@ -44,7 +44,7 @@ Seu desafio é projetar uma estratégia abrangente de proteção de dados que co
 
 4. Habilite blob soft delete na storage account active-cases com período de retencao de 30 dias. Teste deletando e recuperando um blob.
 5. Habilite container soft delete com retencao de 14 dias para proteger contra exclusão acidental de container.
-6. Habilite blob versioning na conta active-cases para manter versoes anteriores de documentos modificados. Faca upload de um arquivo, modifique-o e demonstre o historico de versoes.
+6. Habilite blob versioning na conta active-cases para manter versoes anteriores de documentos modificados. Faca upload de um arquivo, modifique-o e demonstre o histórico de versoes.
 7. Habilite point-in-time restore para a conta active-cases. Documente os requisitos (versioning, change feed e soft delete devem estar todos habilitados) e a janela máxima de restauracao.
 
 ### Parte 3: Implementar Políticas de Imutabilidade
@@ -97,7 +97,7 @@ O SLA de disponibilidade depende tanto da opcao de redundância quanto de se o a
 <details>
 <summary>Dica 2: Bloqueio de Política de Imutabilidade</summary>
 
-Uma política de retencao baseada em tempo pode estar em estado bloqueado ou desbloqueado. Enquanto desbloqueada, você pode aumentar ou diminuir o período de retencao ou deletar a política. Uma vez bloqueada, a política não pode ser deletada ou o período de retencao diminuido (apenas aumentado). O bloqueio e irreversivel é necessário para compliance SEC 17a-4(f) e CFTC 1.31(d). Sempre teste com políticas desbloqueadas primeiro.
+Uma política de retencao baseada em tempo pode estar em estado bloqueado ou desbloqueado. Enquanto desbloqueada, você pode aumentar ou diminuir o período de retencao ou deletar a política. Uma vez bloqueada, a política não pode ser deletada ou o período de retencao diminuido (apenas aumentado). O bloqueio e irreversível é necessário para compliance SEC 17a-4(f) e CFTC 1.31(d). Sempre teste com políticas desbloqueadas primeiro.
 
 </details>
 
@@ -144,7 +144,7 @@ Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (nã
 <details>
 <summary>2. Uma organização precisa armazenar registros financeiros que não podem ser modificados ou excluidos por 7 anos (compliance SEC). Apos configurar uma política de retencao baseada em tempo, qual etapa adicional é necessária para compliance regulatorio?</summary>
 
-**Bloquear a política de imutabilidade.** Uma política de retencao baseada em tempo desbloqueada pode ser deletada ou ter seu período de retencao reduzido, o que não atende aos requisitos SEC 17a-4(f). Bloquear a política e irreversivel e garante que ninguém (incluindo proprietarios da storage account ou suporte Microsoft) pode deletar os dados antes do período de retencao expirar. Esta e a etapa que torna a política verdadeiramente compatível com WORM.
+**Bloquear a política de imutabilidade.** Uma política de retencao baseada em tempo desbloqueada pode ser deletada ou ter seu período de retencao reduzido, o que não atende aos requisitos SEC 17a-4(f). Bloquear a política e irreversível e garante que ninguém (incluindo proprietarios da storage account ou suporte Microsoft) pode deletar os dados antes do período de retencao expirar. Esta e a etapa que torna a política verdadeiramente compatível com WORM.
 
 </details>
 
@@ -158,7 +158,7 @@ Com GRS/GZRS, o failover para a região secundária e iniciado pelo cliente (nã
 <details>
 <summary>4. Qual é a diferenca de durabilidade entre ZRS e GZRS, e quando você escolheria um sobre o outro?</summary>
 
-**ZRS fornece 99,9999999999% (12 nines) de durabilidade dentro de uma única região replicando atraves de 3 zonas de disponibilidade. GZRS fornece a mesma proteção em nível de zona mais replicação assincrona para uma região secundária, protegendo contra falha regional completa.** Escolha ZRS quando proteção em nível de zona é suficiente e você quer minimizar custo e complexidade. Escolha GZRS quando requisitos regulatorios ou de negocios demandam proteção contra desastres regionais (terremotos, enchentes, indisponibilidades generalizadas afetando uma região Azure inteira).
+**ZRS fornece 99,9999999999% (12 nines) de durabilidade dentro de uma única região replicando através de 3 zonas de disponibilidade. GZRS fornece a mesma proteção em nível de zona mais replicação assincrona para uma região secundária, protegendo contra falha regional completa.** Escolha ZRS quando proteção em nível de zona é suficiente e você quer minimizar custo e complexidade. Escolha GZRS quando requisitos regulatorios ou de negocios demandam proteção contra desastres regionais (terremotos, enchentes, indisponibilidades generalizadas afetando uma região Azure inteira).
 
 </details>
 

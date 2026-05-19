@@ -276,57 +276,206 @@ For Relecloud's customer platform, **user flows** are sufficient because the req
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab proves that managed identity eliminates stored credentials entirely and that access revocation is instantaneous -- no credential rotation window, no secret expiry waiting period. You will observe the behavioral difference between credential-based and identity-based authentication.
 
-1. Create a resource group for this lab:
-
-```bash
-az group create --name rg-az305-challenge04 --location eastus
-```
-
-2. Create an Entra ID app registration:
+### Step 1: Create the infrastructure
 
 ```bash
-az ad app create \
-  --display-name "az305-challenge04-lab-app" \
-  --sign-in-audience AzureADMyOrg \
-  --web-redirect-uris "https://localhost:3000/auth/callback"
+az group create \
+  --name rg-az305-challenge04 \
+  --location eastus
 ```
-
-3. Store the App ID and add an API permission (Microsoft Graph User.Read):
 
 ```bash
-APP_ID=$(az ad app list --display-name "az305-challenge04-lab-app" --query "[0].appId" -o tsv)
-az ad app permission add \
-  --id "$APP_ID" \
-  --api 00000003-0000-0000-c000-000000000000 \
-  --api-permissions e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope
+SUFFIX=$RANDOM
 ```
-
-4. Create a service principal for the app:
 
 ```bash
-az ad sp create --id "$APP_ID"
+az keyvault create \
+  --name "kv-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --location eastus \
+  --enable-rbac-authorization false
 ```
-
-5. Verify the app registration and its permissions:
 
 ```bash
-az ad app show --id "$APP_ID" \
-  --query "{name:displayName, appId:appId, signInAudience:signInAudience}" -o table
-az ad app permission list --id "$APP_ID" -o table
+az appservice plan create \
+  --name "plan-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --sku B1 \
+  --is-linux
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+az webapp create \
+  --name "app-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --plan "plan-ch04-${SUFFIX}" \
+  --runtime "NODE:18-lts"
+```
+
+### Step 2: Enable system-assigned managed identity
+
+```bash
+az webapp identity assign \
+  --name "app-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04
+```
+
+```bash
+PRINCIPAL_ID=$(az webapp identity show \
+  --name "app-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --query principalId -o tsv)
+```
+
+```bash
+echo "Managed identity principal: $PRINCIPAL_ID"
+```
+
+:::note[Architect Insight]
+The system-assigned identity was created automatically and is tied to this App Service's lifecycle. If the App Service is deleted, the identity and all its permissions are automatically revoked. This is the "least privilege lifecycle" principle -- permissions exist only as long as the resource exists.
+:::
+
+### Step 3: Store a secret and grant the managed identity access
+
+```bash
+az keyvault secret set \
+  --vault-name "kv-ch04-${SUFFIX}" \
+  --name "DatabaseConnectionString" \
+  --value "Server=prod-sql.database.windows.net;Database=appdb;Trusted_Connection=True"
+```
+
+```bash
+az keyvault set-policy \
+  --name "kv-ch04-${SUFFIX}" \
+  --object-id "$PRINCIPAL_ID" \
+  --secret-permissions get list
+```
+
+### Step 4: Prove passwordless authentication works
+
+```bash
+az keyvault secret show \
+  --vault-name "kv-ch04-${SUFFIX}" \
+  --name "DatabaseConnectionString" \
+  --query "value" -o tsv
+```
+
+Verify the identity has access by listing secrets visible to it:
+
+```bash
+az keyvault secret list \
+  --vault-name "kv-ch04-${SUFFIX}" \
+  --query "[].name" -o tsv
+```
+
+:::note[Architect Insight]
+No password, certificate, or connection string was stored anywhere in the application. The identity itself IS the credential. This eliminates an entire class of security vulnerabilities: leaked secrets in source control, expired credentials causing outages, and secrets sprawl across environments.
+:::
+
+### Step 5: Revoke access -- observe instant denial
+
+Remove the access policy to simulate a security response:
+
+```bash
+az keyvault delete-policy \
+  --name "kv-ch04-${SUFFIX}" \
+  --object-id "$PRINCIPAL_ID"
+```
+
+Now attempt to read the secret again:
+
+```bash
+az keyvault secret show \
+  --vault-name "kv-ch04-${SUFFIX}" \
+  --name "DatabaseConnectionString" \
+  --query "value" -o tsv 2>&1 || true
+```
+
+The command fails immediately with an authorization error. There is no grace period, no cached credential that still works, no rotation delay.
+
+:::note[Architect Insight]
+Compare this to traditional credential-based auth: if you rotate a password, the old password may remain valid until expiry. With managed identity, removing the access policy produces INSTANT revocation. This is a critical exam topic -- AZ-305 asks about "minimizing the window of exposure" and managed identity reduces that window to zero.
+:::
+
+### Step 6: Restore access and confirm recovery
+
+```bash
+az keyvault set-policy \
+  --name "kv-ch04-${SUFFIX}" \
+  --object-id "$PRINCIPAL_ID" \
+  --secret-permissions get list
+```
+
+```bash
+az keyvault secret show \
+  --vault-name "kv-ch04-${SUFFIX}" \
+  --name "DatabaseConnectionString" \
+  --query "value" -o tsv
+```
+
+Access is restored immediately. No application redeployment required, no new credential to distribute.
+
+### Step 7: Add a user-assigned identity alongside system-assigned
+
+Create a user-assigned identity:
+
+```bash
+az identity create \
+  --name "id-shared-services-${SUFFIX}" \
+  --resource-group rg-az305-challenge04
+```
+
+```bash
+UA_ID=$(az identity show \
+  --name "id-shared-services-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --query id -o tsv)
+```
+
+Assign it to the same App Service (both identity types coexist):
+
+```bash
+az webapp identity assign \
+  --name "app-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --identities "$UA_ID"
+```
+
+Verify both identities are present:
+
+```bash
+az webapp identity show \
+  --name "app-ch04-${SUFFIX}" \
+  --resource-group rg-az305-challenge04 \
+  --query "{systemAssigned:principalId, userAssigned:userAssignedIdentities}" -o json
+```
+
+:::note[Architect Insight]
+System-assigned and user-assigned identities serve different architectural purposes. System-assigned is simpler and auto-cleans on resource deletion. User-assigned enables sharing permissions across multiple resources (e.g., multiple App Services accessing the same Key Vault) and survives resource recreation -- critical for blue-green deployments where you delete and recreate App Services but need permissions to persist.
+:::
+
+:::tip[Design Validation]
+This lab proved three architectural principles: (1) Managed identity eliminates stored credentials entirely -- there is no secret to leak or rotate. (2) Access revocation is instantaneous -- removing the policy immediately denies access with zero grace period. (3) User-assigned and system-assigned identities coexist, enabling both per-resource isolation and cross-resource permission sharing in the same application.
 :::
 
 ## Cleanup
 
 ```bash
-APP_ID=$(az ad app list --display-name "az305-challenge04-lab-app" --query "[0].appId" -o tsv)
-az ad app delete --id "$APP_ID"
-az group delete --name rg-az305-challenge04 --yes --no-wait
+APP_ID=$(az ad app list \
+  --display-name "az305-challenge04-lab-app" \
+  --query "[0].appId" -o tsv)
+```
+
+```bash
+if [ -n "$APP_ID" ]; then az ad app delete --id "$APP_ID"; fi
+```
+
+```bash
+az group delete \
+  --name rg-az305-challenge04 \
+  --yes --no-wait
 ```
 
 ---

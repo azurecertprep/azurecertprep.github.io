@@ -16,7 +16,7 @@ import DecisionMatrix from '@site/src/components/DecisionMatrix';
 
 ## Introdução
 
-A Vivid Creative Agency é uma empresa de design de 200 pessoas que produz campanhas publicitarias para clientes da Fortune 500. Seus ativos criativos totalizando 200 TB incluem fotografia em alta resolução (arquivos RAW, 50-100 MB cada), projetos de video 4K/8K (arquivos individuais de até 500 GB), arquivos de projeto Adobe (Photoshop, Premiere, After Effects) e entregaveis de clientes em vários formatos. Todos os ativos sao armazenados no Azure Blob Storage e Azure Files (para workspaces de projeto compartilhados).
+A Vivid Creative Agency é uma empresa de design de 200 pessoas que produz campanhas publicitarias para clientes da Fortune 500. Seus ativos criativos totalizando 200 TB incluem fotografia em alta resolução (arquivos RAW, 50-100 MB cada), projetos de vídeo 4K/8K (arquivos individuais de até 500 GB), arquivos de projeto Adobe (Photoshop, Premiere, After Effects) e entregaveis de clientes em vários formatos. Todos os ativos sao armazenados no Azure Blob Storage e Azure Files (para workspaces de projeto compartilhados).
 
 O maior risco operacional e a delecao acidental. Somente no último trimestre, designers acidentalmente deletaram a pasta errada três vezes, uma vez perdendo 2 semanas de trabalho em uma campanha de $500K. O processo de recuperação existente requeria restauracao a partir de backups noturnos, significando que até 24 horas de trabalho poderiam ser perdidas. O diretor criativo exige recuperação em menos de uma hora para delecoes recentes, enquanto o CFO insiste em proteção de arquivo de longo prazo (alguns contratos de clientes requerem retencao de ativos por 7 anos pós-campanha).
 
@@ -71,7 +71,7 @@ az storage account blob-service-properties update \
 
 4. Habilite blob versioning e análise seu impacto no patrimonio de armazenamento de 200 TB:
    - Como o versionamento afeta os custos de armazenamento quando arquivos sao frequentemente sobrescritos?
-   - Para arquivos de video que sao raramente modificados, o versionamento e custo-efetivo?
+   - Para arquivos de vídeo que sao raramente modificados, o versionamento e custo-efetivo?
    - Para arquivos de projeto Adobe que sao salvos centenas de vezes diariamente, qual é o risco de custo?
 
 5. Projete regras de lifecycle management para gerenciar custos de versoes:
@@ -158,7 +158,7 @@ Point-in-time restore para blobs requer que TODOS os seguintes estejam habilitad
 3. Blob change feed
 
 Limitacoes importantes:
-- Retencao máxima: 14 dias (você só pode restaurar para um ponto nos ultimos 14 dias)
+- Retencao máxima: 14 dias (você só pode restaurar para um ponto nos últimos 14 dias)
 - Restaura em nível de container (não blobs individuais - use versionamento para isso)
 - NAO suportado com hierarchical namespace (Data Lake Storage Gen2)
 - NAO suportado com premium block blobs
@@ -270,7 +270,7 @@ Opcoes de restauracao:
 <details>
 <summary>3. Uma empresa precisa garantir a recuperação de dados blob mesmo se um administrador malicioso deletar a conta de armazenamento inteira. Qual mecanismo de proteção aborda isso?</summary>
 
-**Vaulted backup (Azure Backup para Blobs armazenado em um Backup vault) fornece proteção independente da conta de armazenamento de origem.** Operational backup depende de recursos nativos dentro da mesma conta de armazenamento e é perdido se a conta for deletada. Vaulted backup copia dados para um Backup vault separado com seu proprio RBAC, imutabilidade e lifecycle. Adicionalmente, Azure Resource Manager locks (CanNotDelete) e Azure Policy podem prevenir delecao de conta, mas apenas vaulted backup fornece recuperação apos o fato. Combine com vault imutável para proteção máxima.
+**Vaulted backup (Azure Backup para Blobs armazenado em um Backup vault) fornece proteção independente da conta de armazenamento de origem.** Operational backup depende de recursos nativos dentro da mesma conta de armazenamento e é perdido se a conta for deletada. Vaulted backup copia dados para um Backup vault separado com seu próprio RBAC, imutabilidade e lifecycle. Adicionalmente, Azure Resource Manager locks (CanNotDelete) e Azure Policy podem prevenir delecao de conta, mas apenas vaulted backup fornece recuperação apos o fato. Combine com vault imutável para proteção máxima.
 
 </details>
 

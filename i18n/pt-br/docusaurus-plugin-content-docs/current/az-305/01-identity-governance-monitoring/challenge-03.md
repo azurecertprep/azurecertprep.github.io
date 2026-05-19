@@ -25,7 +25,7 @@ A TailSpin Toys opera uma plataforma global de e-commerce construida no Azure. S
 
 Atualmente, a equipe só descobre interrupcoes quando clientes reclamam nas redes sociais. Não ha alertas proativos, não ha dashboards para visibilidade executiva e não ha remediacao automatizada. Na última Black Friday, um problema de esgotamento do cache Redis causou uma interrupcao de 45 minutos que custou $2M em receita perdida. A equipe de operações quer detectar e responder a problemas semelhantes automaticamente no futuro.
 
-Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que forneca aviso antecipado de degradacao, respostas automatizadas a padrões de falha conhecidos e visibilidade em nível executivo sobre a saúde da plataforma.
+Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que forneça aviso antecipado de degradacao, respostas automatizadas a padrões de falha conhecidos e visibilidade em nível executivo sobre a saúde da plataforma.
 
 ## Habilidades do Exame Cobertas
 
@@ -40,7 +40,7 @@ Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que
 1. Projete a stack de monitoramento para a TailSpin Toys, especificando:
    - Quais recursos do Azure Monitor usar para cada camada (infraestrutura, aplicação, negocios)
    - Onde o Application Insights se encaixa vs. Azure Monitor Metrics vs. Log Analytics
-   - Como alcancar rastreamento de transações de ponta a ponta atraves do Front Door, App Service, Functions e SQL
+   - Como alcancar rastreamento de transações de ponta a ponta através do Front Door, App Service, Functions e SQL
 
 2. Crie uma matriz de cobertura de monitoramento:
 
@@ -95,7 +95,7 @@ Sua tarefa é projetar uma estratégia abrangente de monitoramento e alertas que
    - Comparacao de saúde regional
    - Análise de tendencias (performance semana a semana)
 
-9. Projete um workbook operacional para o engenheiro de plantao que forneca:
+9. Projete um workbook operacional para o engenheiro de plantao que forneça:
    - Saúde do serviço em tempo real em todos os componentes
    - Drill-down da saúde de alto nível até requisicoes específicas com falha
    - Correlacao de alertas com eventos de deployment

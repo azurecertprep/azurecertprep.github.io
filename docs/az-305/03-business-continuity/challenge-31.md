@@ -258,52 +258,63 @@ For GlobalPay: APAC region uses geo-replica for reporting reads, with manual fai
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab proves that Azure SQL failover groups provide automatic DNS redirection during region failover, and that geo-replicated data survives a region switch without application connection string changes.
 
-1. Create resource groups for primary and secondary regions:
+### Step 1: Create resource groups and SQL servers in two regions
 
 ```bash
 az group create --name rg-az305-challenge31 --location eastus
-az group create --name rg-az305-challenge31-dr --location westus
 ```
 
-2. Deploy SQL Servers in both regions:
+```bash
+az group create --name rg-az305-challenge31-dr --location westeurope
+```
 
 ```bash
 SUFFIX=$RANDOM
+PRIMARY_SERVER="sql-ch31-pri-$SUFFIX"
+SECONDARY_SERVER="sql-ch31-sec-$SUFFIX"
+FG_NAME="fg-ch31-$SUFFIX"
+ADMIN_PASS="P@ss${SUFFIX}w0rd!"
 
-az sql server create \
-  --resource-group rg-az305-challenge31 \
-  --name sql-challenge31-pri-$SUFFIX \
-  --location eastus \
-  --admin-user sqladmin \
-  --admin-password "P@ss${SUFFIX}w0rd!"
-
-az sql server create \
-  --resource-group rg-az305-challenge31-dr \
-  --name sql-challenge31-sec-$SUFFIX \
-  --location westus \
-  --admin-user sqladmin \
-  --admin-password "P@ss${SUFFIX}w0rd!"
+echo "Primary server: $PRIMARY_SERVER"
+echo "Secondary server: $SECONDARY_SERVER"
+echo "Failover group: $FG_NAME"
 ```
 
-3. Create a database on the primary server:
+```bash
+az sql server create \
+  --resource-group rg-az305-challenge31 \
+  --name $PRIMARY_SERVER \
+  --location eastus \
+  --admin-user sqladmin \
+  --admin-password "$ADMIN_PASS"
+```
 
 ```bash
-PRIMARY_SERVER="sql-challenge31-pri-$SUFFIX"
-SECONDARY_SERVER="sql-challenge31-sec-$SUFFIX"
+az sql server create \
+  --resource-group rg-az305-challenge31-dr \
+  --name $SECONDARY_SERVER \
+  --location westeurope \
+  --admin-user sqladmin \
+  --admin-password "$ADMIN_PASS"
+```
 
+### Step 2: Create a database on the primary server
+
+Using General Purpose with 2 vCores to keep lab costs low. The failover behavior is identical regardless of tier.
+
+```bash
 az sql db create \
   --resource-group rg-az305-challenge31 \
   --server $PRIMARY_SERVER \
   --name payrolldb \
   --edition GeneralPurpose \
-  --compute-model Serverless \
   --family Gen5 \
-  --capacity 1
+  --capacity 2
 ```
 
-4. Create a failover group linking both servers:
+### Step 3: Configure the failover group
 
 ```bash
 az sql failover-group create \
@@ -311,40 +322,159 @@ az sql failover-group create \
   --server $PRIMARY_SERVER \
   --partner-server $SECONDARY_SERVER \
   --partner-resource-group rg-az305-challenge31-dr \
-  --name fg-challenge31-$SUFFIX \
+  --name $FG_NAME \
   --failover-policy Automatic \
   --grace-period 1 \
   --add-db payrolldb
 ```
 
-5. Verify the failover group status and replication:
+### Step 4: Verify both servers and their roles
 
 ```bash
 az sql failover-group show \
   --resource-group rg-az305-challenge31 \
   --server $PRIMARY_SERVER \
-  --name fg-challenge31-$SUFFIX \
-  --query "{Name:name, Role:replicationRole, Partner:partnerServers[0].replicationRole}" -o table
+  --name $FG_NAME \
+  --query "{Name:name, PrimaryRole:replicationRole, PartnerRole:partnerServers[0].replicationRole, PartnerServer:partnerServers[0].id}" \
+  -o table
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+The primary should show "Primary" role and the partner should show "Secondary" role.
+
+:::note[Architect Insight]
+The failover group provides two stable DNS endpoints: `<fg-name>.database.windows.net` (read-write, always points to current primary) and `<fg-name>.secondary.database.windows.net` (read-only, always points to secondary). Applications connect to these endpoints instead of individual server names. During failover, DNS updates automatically -- no connection string changes in your application code.
+:::
+
+### Step 5: Allow Azure services and insert test data
+
+```bash
+az sql server firewall-rule create \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --name AllowAzureServices \
+  --start-ip-address 0.0.0.0 \
+  --end-ip-address 0.0.0.0
+```
+
+```bash
+az sql server firewall-rule create \
+  --resource-group rg-az305-challenge31-dr \
+  --server $SECONDARY_SERVER \
+  --name AllowAzureServices \
+  --start-ip-address 0.0.0.0 \
+  --end-ip-address 0.0.0.0
+```
+
+```bash
+az sql db execute \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --name payrolldb \
+  --query "CREATE TABLE EmployeePayroll (Id INT PRIMARY KEY, Name NVARCHAR(100), Salary DECIMAL(10,2)); INSERT INTO EmployeePayroll VALUES (1, 'Alice', 85000.00), (2, 'Bob', 92000.00), (3, 'Carol', 78000.00);"
+```
+
+### Step 6: Verify data replicated to secondary
+
+Wait a few seconds for async geo-replication, then query the secondary:
+
+```bash
+echo "Waiting 10 seconds for geo-replication..."
+sleep 10
+```
+
+```bash
+az sql db execute \
+  --resource-group rg-az305-challenge31-dr \
+  --server $SECONDARY_SERVER \
+  --name payrolldb \
+  --query "SELECT * FROM EmployeePayroll;" \
+  -o table
+```
+
+You should see all 3 rows replicated to the secondary region.
+
+:::note[Architect Insight]
+Cross-region geo-replication is asynchronous, meaning RPO is greater than zero (typically less than 5 seconds). This is a fundamental constraint -- synchronous replication across regions would add unacceptable latency. For the AZ-305 exam, understand that zone-redundant replication within a region is synchronous (RPO = 0), while cross-region replication is always asynchronous (RPO > 0). This distinction drives tier selection for zero-data-loss requirements.
+:::
+
+### Step 7: Initiate manual failover to secondary region
+
+```bash
+echo "Initiating failover to West Europe..."
+az sql failover-group set-primary \
+  --resource-group rg-az305-challenge31-dr \
+  --server $SECONDARY_SERVER \
+  --name $FG_NAME
+```
+
+### Step 8: Verify roles have swapped
+
+```bash
+az sql failover-group show \
+  --resource-group rg-az305-challenge31-dr \
+  --server $SECONDARY_SERVER \
+  --name $FG_NAME \
+  --query "{Name:name, Role:replicationRole, PartnerRole:partnerServers[0].replicationRole}" \
+  -o table
+```
+
+The old secondary (West Europe) should now show "Primary" and the old primary (East US) should show "Secondary".
+
+### Step 9: Confirm the failover group listener DNS now points to new primary
+
+```bash
+echo "Failover group read-write endpoint:"
+echo "${FG_NAME}.database.windows.net"
+echo ""
+echo "This DNS name now resolves to the West Europe server."
+echo "Applications using this endpoint required ZERO connection string changes."
+```
+
+```bash
+az sql db execute \
+  --resource-group rg-az305-challenge31-dr \
+  --server $SECONDARY_SERVER \
+  --name payrolldb \
+  --query "SELECT * FROM EmployeePayroll;" \
+  -o table
+```
+
+All data is intact on the new primary.
+
+### Step 10: Fail back to original region
+
+```bash
+echo "Failing back to East US..."
+az sql failover-group set-primary \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --name $FG_NAME
+```
+
+```bash
+az sql failover-group show \
+  --resource-group rg-az305-challenge31 \
+  --server $PRIMARY_SERVER \
+  --name $FG_NAME \
+  --query "{Name:name, Role:replicationRole, PartnerRole:partnerServers[0].replicationRole}" \
+  -o table
+```
+
+Roles should be back to original: East US as Primary, West Europe as Secondary.
+
+:::note[Architect Insight]
+Failover groups support only one secondary server. If you need readable replicas in more than two regions, combine a failover group (for automatic failover to your DR region) with active geo-replication (for additional read-only replicas in other regions). Manual failover testing like this should be part of every DR drill -- it validates that your application handles the DNS redirection and that replication lag does not cause data inconsistency.
+:::
+
+:::tip[Design Validation]
+This lab proved three critical properties of Azure SQL failover groups: (1) The failover group DNS endpoint abstracts region failover completely -- applications never change connection strings. (2) Manual failover verifies your DR readiness and completes in under a minute. (3) Geo-replication is asynchronous across regions, so RPO is always greater than zero for cross-region scenarios; plan for up to 5 seconds of potential data loss during unplanned failover.
 :::
 
 ## Cleanup
 
 ```bash
-# Delete resources in reverse dependency order
 az group delete --name rg-az305-challenge31 --yes --no-wait
 az group delete --name rg-az305-challenge31-dr --yes --no-wait
-az sql failover-group delete \
-  --resource-group rg-globalpay \
-  --server sql-globalpay-eastus \
-  --name fg-globalpay
-
-az group delete --name rg-globalpay --yes --no-wait
-az group delete --name rg-globalpay-europe --yes --no-wait
-az group delete --name rg-globalpay-apac --yes --no-wait
 ```
 
 ---

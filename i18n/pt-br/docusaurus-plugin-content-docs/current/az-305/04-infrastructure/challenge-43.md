@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A VelocityShip é uma empresa fintech que implanta 10 microsservicos em produção 3 vezes por dia. O processo de implantacao atual depende de scripts manuais executados por engenheiros seniors, resultando em uma taxa de falha de 15% nas implantacoes é um tempo medio de recuperação de 45 minutos por implantacao falha. No mes passado, uma implantacao mal-sucedida causou 2 horas de inatividade, custando a empresa $500K em transações perdidas.
+A VelocityShip é uma empresa fintech que implanta 10 microsservicos em produção 3 vezes por dia. O processo de implantacao atual depende de scripts manuais executados por engenheiros seniors, resultando em uma taxa de falha de 15% nas implantacoes é um tempo médio de recuperação de 45 minutos por implantacao falha. No mes passado, uma implantacao mal-sucedida causou 2 horas de inatividade, custando a empresa $500K em transações perdidas.
 
 O CTO determinou implantacoes com zero tempo de inatividade com rollback automático quando health checks falham. A equipe de engenharia precisa implementar infrastructure-as-code para todos os ambientes (dev, staging, produção em 2 regiões), pipelines de promocao de imagens de container que impedem imagens não testadas de chegar a produção, e estratégias de implantacao apropriadas para cada tipo de serviço (APIs stateless, workers stateful, alteracoes de schema de banco de dados).
 
@@ -36,7 +36,7 @@ A equipe esta dividida entre usar GitHub Actions (já usado para CI) e Azure Dev
 
 ### Parte 2: Design do Pipeline CI/CD
 
-5. Compare GitHub Actions e Azure DevOps Pipelines para este cenário. Considere: integração com ferramentas existentes, gates de aprovacao, regras de proteção de ambiente, historico de implantacao e RBAC para implantacoes em produção.
+5. Compare GitHub Actions e Azure DevOps Pipelines para este cenário. Considere: integração com ferramentas existentes, gates de aprovacao, regras de proteção de ambiente, histórico de implantacao e RBAC para implantacoes em produção.
 6. Projete um pipeline de promocao de imagem de container:
    - Build e teste no CI (executar testes unitarios, scanning SAST)
    - Push para tag de registro dev, implantar no ambiente dev

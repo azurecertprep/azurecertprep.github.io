@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Velocity Dynamics é uma firma global de engenharia com 4.000 funcionarios, 800 contratados é uma taxa anual de rotatividade de 25%. Uma auditoria de segurança recente revelou descobertas alarmantes: 40% dos usuários tinham acesso a recursos e aplicações do Azure que não precisavam mais para sua função atual, 15% das contas de contratados externos permaneciam ativas meses apos o termino de seus contratos, e três ex-funcionarios ainda tinham acesso de Contributor a subscriptions de produção semanas apos a saida. A auditoria também descobriu que 12 contas de serviço tinham privilegios permanentes de Global Administrator sem justificativa ou processo de revisao.
+A Velocity Dynamics é uma firma global de engenharia com 4.000 funcionários, 800 contratados é uma taxa anual de rotatividade de 25%. Uma auditoria de segurança recente revelou descobertas alarmantes: 40% dos usuários tinham acesso a recursos e aplicações do Azure que não precisavam mais para sua função atual, 15% das contas de contratados externos permaneciam ativas meses apos o termino de seus contratos, e três ex-funcionários ainda tinham acesso de Contributor a subscriptions de produção semanas apos a saida. A auditoria também descobriu que 12 contas de serviço tinham privilegios permanentes de Global Administrator sem justificativa ou processo de revisao.
 
-O CISO recebeu um mandato do conselho para implementar principios de zero-standing-access e gerenciamento automatizado de ciclo de vida de identidades em 6 meses. Os requisitos incluem: todo acesso privilegiado deve ser just-in-time (ativado apenas quando necessário com limites de tempo), acesso a recursos sensiveis deve ser revisado trimestralmente com revogacao automática para revisores não responsivos, novos funcionarios devem receber automaticamente acesso básico com base em seu departamento e função, e contratados devem ter acesso que expira automaticamente quando seu engajamento termina. A empresa usa licencas Microsoft Entra ID P2.
+O CISO recebeu um mandato do conselho para implementar principios de zero-standing-access e gerenciamento automatizado de ciclo de vida de identidades em 6 meses. Os requisitos incluem: todo acesso privilegiado deve ser just-in-time (ativado apenas quando necessário com limites de tempo), acesso a recursos sensíveis deve ser revisado trimestralmente com revogacao automática para revisores não responsivos, novos funcionários devem receber automaticamente acesso básico com base em seu departamento e função, e contratados devem ter acesso que expira automaticamente quando seu engajamento termina. A empresa usa licencas Microsoft Entra ID P2.
 
-O desafio é equilibrar rigor de segurança com eficiência operacional. Engenheiros frequentemente precisam de acesso elevado para troubleshooting (mas não permanentemente). Equipes de projeto se formam e dissolvem a cada 3-6 meses, exigindo concessoes dinamicas de acesso. O sistema de RH (Workday) e a fonte autoritativa para eventos de ciclo de vida de funcionarios (contratacao, transferencia, desligamento), mas o onboarding de contratados é gerenciado por gerentes de projeto individuais sem sistema centralizado.
+O desafio é equilibrar rigor de segurança com eficiência operacional. Engenheiros frequentemente precisam de acesso elevado para troubleshooting (mas não permanentemente). Equipes de projeto se formam e dissolvem a cada 3-6 meses, exigindo concessoes dinamicas de acesso. O sistema de RH (Workday) e a fonte autoritativa para eventos de ciclo de vida de funcionários (contratacao, transferencia, desligamento), mas o onboarding de contratados é gerenciado por gerentes de projeto individuais sem sistema centralizado.
 
 ## Habilidades do Exame Cobertas
 
@@ -36,7 +36,7 @@ O desafio é equilibrar rigor de segurança com eficiência operacional. Engenhe
 
 ### Parte 2: Access Reviews
 
-5. Projete o programa de access reviews para a Velocity Dynamics. Defina escopos de revisao: quais grupos, funções, atribuicoes de aplicação e atribuicoes de função de recursos do Azure precisam de revisao periodica. Especifique a frequência de revisao (trimestral, semestral) com base no nível de risco.
+5. Projete o programa de access reviews para a Velocity Dynamics. Defina escopos de revisao: quais grupos, funções, atribuicoes de aplicação e atribuicoes de função de recursos do Azure precisam de revisao periódica. Especifique a frequência de revisao (trimestral, semestral) com base no nível de risco.
 6. Defina a estratégia de atribuicao de revisores. Para cada tipo de revisao, determine quem revisa: gerente revisa acesso de subordinados diretos, proprietarios de grupo revisam membros, proprietarios de recurso revisam acesso a seus recursos, ou auto-atestacao. Aborde cenários onde o revisor designado não responde.
 7. Configure as opcoes de auto-aplicação para access reviews. Determine quando o acesso deve ser automaticamente revogado (revisor não responde em 14 dias, revisor explicitamente nega, recomendacoes indicam acesso não utilizado) versus quando intervencao humana é necessária.
 8. Projete access reviews especificamente para usuários externos/convidados. Defina a cadencia de revisao, criterios para remocao automática (sem login por 90 dias), e o fluxo de notificação antes da revogacao de acesso.
@@ -44,8 +44,8 @@ O desafio é equilibrar rigor de segurança com eficiência operacional. Engenhe
 ### Parte 3: Entitlement Management
 
 9. Projete access packages para padrões comuns de acesso baseado em função. Crie access packages para: "Engineering Team Member" (recursos básicos do Azure + ferramentas de desenvolvimento), "Production Support" (acesso de leitura a produção + escrita limitada para resposta a incidentes) e "Data Analyst" (acesso ao data lake + ferramentas de BI). Defina quais recursos cada pacote concede e o fluxo de aprovacao.
-10. Projete a estrutura de catalogo de access packages. Determine se deve usar um único catalogo ou múltiplos catalogos (por departamento, por projeto, por nível de sensibilidade). Defina proprietarios de catalogo e suas responsabilidades.
-11. Configure políticas de access packages para diferentes tipos de solicitantes: funcionarios internos (auto-aprovado para pacotes básicos), contratados (aprovacao do gerente necessária) e solicitacoes entre departamentos (aprovacao do proprietario do recurso). Defina políticas de expiracao para cada tipo.
+10. Projete a estrutura de catálogo de access packages. Determine se deve usar um único catálogo ou múltiplos catálogos (por departamento, por projeto, por nível de sensibilidade). Defina proprietarios de catálogo e suas responsabilidades.
+11. Configure políticas de access packages para diferentes tipos de solicitantes: funcionários internos (auto-aprovado para pacotes básicos), contratados (aprovacao do gerente necessária) e solicitacoes entre departamentos (aprovacao do proprietario do recurso). Defina políticas de expiracao para cada tipo.
 12. Projete organizações conectadas para acesso de contratados. Determine como organizações parceiras externas sao integradas, como seus usuários solicitam access packages e como o acesso e automaticamente removido quando o acordo de parceria termina.
 
 ### Parte 4: Lifecycle Workflows
@@ -73,21 +73,21 @@ O desafio é equilibrar rigor de segurança com eficiência operacional. Engenhe
 <details>
 <summary>Dica 1: Configurações de Ativacao do PIM</summary>
 
-Configurações chave do PIM por função: Duracao máxima de ativacao (padrão 8 horas, reduza para 1-4 horas para Global Admin), exigir MFA na ativacao, exigir texto de justificativa, exigir número de ticket (para trilha de auditoria), exigir aprovacao (para as funções mais sensiveis como Global Admin e Privileged Role Administrator). Para Subscription Owner em produção, exigir aprovacao da equipe de segurança. Para Subscription Contributor em desenvolvimento, permitir auto-ativacao com MFA e justificativa (sem aprovacao necessária, reduz atrito). Atribuicoes elegiveis devem expirar apos 6-12 meses e exigir re-atribuicao.
+Configurações chave do PIM por função: Duracao máxima de ativacao (padrão 8 horas, reduza para 1-4 horas para Global Admin), exigir MFA na ativacao, exigir texto de justificativa, exigir número de ticket (para trilha de auditoria), exigir aprovacao (para as funções mais sensíveis como Global Admin e Privileged Role Administrator). Para Subscription Owner em produção, exigir aprovacao da equipe de segurança. Para Subscription Contributor em desenvolvimento, permitir auto-ativacao com MFA e justificativa (sem aprovacao necessária, reduz atrito). Atribuicoes elegiveis devem expirar apos 6-12 meses e exigir re-atribuicao.
 
 </details>
 
 <details>
 <summary>Dica 2: Melhores Práticas de Access Review</summary>
 
-Configure revisoes com: auto-aplicação de resultados habilitada (remove acesso quando negado ou não respondido), "Se revisores não responderem" configurado para "Remover acesso" (previne aprovacao por inacao), enviar lembretes comecando 3 dias antes da data limite, e usar recurso de "Recomendacoes" (mostra se o usuário fez login no recurso nos ultimos 30 dias). Para revisoes de alto risco (atribuicoes elegiveis de Global Admin), defina frequência trimestral. Para membros de grupo padrão, semestral e tipicamente suficiente. Revisoes multi-estagio permitem revisao do gerente seguida de revisao do proprietario do recurso para recursos sensiveis.
+Configure revisoes com: auto-aplicação de resultados habilitada (remove acesso quando negado ou não respondido), "Se revisores não responderem" configurado para "Remover acesso" (previne aprovacao por inacao), enviar lembretes comecando 3 dias antes da data limite, e usar recurso de "Recomendacoes" (mostra se o usuário fez login no recurso nos últimos 30 dias). Para revisoes de alto risco (atribuicoes elegiveis de Global Admin), defina frequência trimestral. Para membros de grupo padrão, semestral e tipicamente suficiente. Revisoes multi-estagio permitem revisao do gerente seguida de revisao do proprietario do recurso para recursos sensíveis.
 
 </details>
 
 <details>
 <summary>Dica 3: Estrutura de Entitlement Management</summary>
 
-Access packages agrupam acesso a recursos relacionados: grupos (para RBAC), atribuicoes de função de aplicação e sites SharePoint em uma única unidade solicitavel. Use catalogos para organizar pacotes por dominio (ex.: "Engineering Catalog" de propriedade do VP de Engenharia). Cada access package pode ter múltiplas políticas (diferentes fluxos de aprovacao para diferentes tipos de solicitantes). Defina expiracao para corresponder a duracao esperada de necessidade: 365 dias para pacotes baseados em função de funcionarios (com access review antes da expiracao), 90-180 dias para pacotes de contratados, 30 dias para acesso temporário de projeto.
+Access packages agrupam acesso a recursos relacionados: grupos (para RBAC), atribuicoes de função de aplicação e sites SharePoint em uma única unidade solicitavel. Use catálogos para organizar pacotes por dominio (ex.: "Engineering Catalog" de propriedade do VP de Engenharia). Cada access package pode ter múltiplas políticas (diferentes fluxos de aprovacao para diferentes tipos de solicitantes). Defina expiracao para corresponder a duracao esperada de necessidade: 365 dias para pacotes baseados em função de funcionários (com access review antes da expiracao), 90-180 dias para pacotes de contratados, 30 dias para acesso temporário de projeto.
 
 </details>
 
@@ -126,7 +126,7 @@ Para contratados sem sinal de sistema de RH: (1) Exija um "sponsor" (funcionario
 <details>
 <summary>2. Uma access review para o grupo "Production Contributors" mostra que um revisor não respondeu apos 14 dias. A revisao esta configurada com auto-aplicação e "Se revisores não responderem: Remover acesso." O que acontece em seguida?</summary>
 
-**O acesso e automaticamente revogado.** Quando o período de revisao termina é um revisor não respondeu, a acao de "sem resposta" entra em efeito. Com "Remover acesso" configurado, o usuário e automaticamente removido do grupo. Esta e a configuração recomendada para prevenir "aprovacao automática" (onde revisores ignoram revisoes e todos mantem acesso). O usuário afetado recebe uma notificação de que seu acesso foi removido. Ele pode re-solicitar acesso atraves do entitlement management se ainda necessário. Para prevenir remocoes surpresa, configure emails de lembrete 3 e 7 dias antes do prazo da revisao.
+**O acesso e automaticamente revogado.** Quando o período de revisao termina é um revisor não respondeu, a acao de "sem resposta" entra em efeito. Com "Remover acesso" configurado, o usuário e automaticamente removido do grupo. Esta e a configuração recomendada para prevenir "aprovacao automática" (onde revisores ignoram revisoes e todos mantem acesso). O usuário afetado recebe uma notificação de que seu acesso foi removido. Ele pode re-solicitar acesso através do entitlement management se ainda necessário. Para prevenir remocoes surpresa, configure emails de lembrete 3 e 7 dias antes do prazo da revisao.
 
 </details>
 

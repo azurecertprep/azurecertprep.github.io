@@ -15,11 +15,11 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Meridian Financial Services é uma empresa de tecnologia financeira de medio porte que processa transações de pagamento para mais de 200 parceiros comerciais. Sua plataforma consiste em mais de 50 microsservicos rodando no Azure Kubernetes Service, cada um exigindo certificados TLS para autenticação mutua. A empresa também gerência chaves de API para 30 integracoes externas de gateway de pagamento e usa chaves de criptografia gerenciadas pelo cliente para proteção de dados em repouso em múltiplas storage accounts e bancos de dados.
+A Meridian Financial Services é uma empresa de tecnologia financeira de médio porte que processa transações de pagamento para mais de 200 parceiros comerciais. Sua plataforma consiste em mais de 50 microsservicos rodando no Azure Kubernetes Service, cada um exigindo certificados TLS para autenticação mutua. A empresa também gerencia chaves de API para 30 integracoes externas de gateway de pagamento e usa chaves de criptografia gerenciadas pelo cliente para proteção de dados em repouso em múltiplas storage accounts e bancos de dados.
 
 Uma auditoria de conformidade recente sinalizou vários problemas críticos: chaves de API estavam hardcoded em arquivos de configuração de aplicação, três certificados TLS expiraram sem aviso causando uma interrupcao de 4 horas, e chaves de criptografia para diferentes clientes estavam armazenadas no mesmo vault sem separacao. O CISO da empresa determinou um redesign completo da arquitetura de gerenciamento de segredos para atender aos requisitos PCI-DSS, que exigem separacao estrita de chaves entre ambientes de produção e não-produção, trilhas de auditoria para todo acesso a chaves, e armazenamento de chaves com suporte de hardware para operações criptograficas.
 
-Sua tarefa é projetar uma solução abrangente de gerenciamento de segredos e certificados que enderece essas lacunas de conformidade enquanto suporta as necessidades operacionais de suas equipes de desenvolvimento. A solução deve lidar com renovacao automática de certificados, aplicar políticas de rotacao de chaves é fornecer isolamento de rede para vaults que manipulam as chaves de processamento de pagamento mais sensiveis. Restricoes orcamentarias limitam o uso de Managed HSM apenas para as cargas de trabalho mais críticas.
+Sua tarefa é projetar uma solução abrangente de gerenciamento de segredos e certificados que enderece essas lacunas de conformidade enquanto suporta as necessidades operacionais de suas equipes de desenvolvimento. A solução deve lidar com renovacao automática de certificados, aplicar políticas de rotacao de chaves é fornecer isolamento de rede para vaults que manipulam as chaves de processamento de pagamento mais sensíveis. Restricoes orcamentarias limitam o uso de Managed HSM apenas para as cargas de trabalho mais críticas.
 
 ## Habilidades do Exame Cobertas
 
@@ -32,7 +32,7 @@ Sua tarefa é projetar uma solução abrangente de gerenciamento de segredos e c
 1. Projete uma topologia de Key Vault para o ambiente da Meridian. Determine quantos vaults sao necessários e justifique a estratégia de separacao (considere: por ambiente, por aplicação, por nível de sensibilidade, ou por fronteira de conformidade).
 2. Identifique quais cargas de trabalho requerem Azure Key Vault Managed HSM versus Key Vault padrão. Documente os criterios de decisao (requisitos FIPS 140-3 Level 3, necessidades de desempenho, justificativa de custo).
 3. Defina o modelo de controle de acesso para cada vault. Compare vault access policies versus Azure RBAC para Key Vault e recomende qual modelo usar para cada nível de vault. Justifique sua escolha considerando a mudança de API de marco de 2026 tornando RBAC o padrão.
-4. Projete uma convencao de nomes e estratégia de resource group para a hierarquia de vaults que suporte fácil identificacao do proposito do vault, ambiente e equipe proprietaria.
+4. Projete uma convencao de nomes e estratégia de resource group para a hierarquia de vaults que suporte fácil identificacao do propósito do vault, ambiente e equipe proprietaria.
 
 ### Parte 2: Gerenciamento de Ciclo de Vida de Certificados
 
@@ -110,7 +110,7 @@ Private endpoints fornecem o isolamento de rede mais forte (trafego permanece no
 - [Azure RBAC for Key Vault data plane](https://learn.microsoft.com/azure/key-vault/general/rbac-guide)
 - [Key Vault certificate renewal](https://learn.microsoft.com/azure/key-vault/certificates/overview-renew-certificate)
 - [Key Vault private endpoints](https://learn.microsoft.com/azure/key-vault/general/private-link-service)
-- [Encryption and key management in Azure (CAF)](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/encryption-and-keys)
+- [Encryption and key management in Azure (CAF)](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/encryption-and-keys)
 
 ## Verificação de Conhecimento
 

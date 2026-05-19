@@ -138,7 +138,7 @@ Para a maioria das novas implantacoes AKS, Azure CNI Overlay fornece o melhor eq
 <details>
 <summary>Dica 3: GPU Workload Profiles do Container Apps</summary>
 
-Azure Container Apps suporta cargas de trabalho GPU atraves de workload profiles dedicados. Consideracoes chave:
+Azure Container Apps suporta cargas de trabalho GPU através de workload profiles dedicados. Consideracoes chave:
 - Use um ambiente Dedicated (não somente Consumption) para acessar GPU profiles
 - GPU profiles fornecem GPUs NVIDIA para cargas de trabalho de inferencia ML
 - Scale-to-zero é suportado, significando que você não paga nada quando nenhuma requisicao de inferencia chega
@@ -176,7 +176,7 @@ Para este cenário, **Premium** é recomendado porque:
 <details>
 <summary>1. Uma equipe precisa rodar um service mesh Istio com recursos EnvoyFilter customizados. Eles podem usar Azure Container Apps?</summary>
 
-**Não.** Azure Container Apps usa seu proprio ingress gerenciado baseado em Envoy e arquitetura de sidecar Dapr. Você não pode instalar Istio, aplicar EnvoyFilters customizados ou usar CRDs Kubernetes. Container Apps abstrai a camada Kubernetes subjacente, o que significa que você não pode acessar o plano de controle ou implantar operators customizados. Para cargas de trabalho que requerem um service mesh específico, CRDs customizados ou acesso direto a API Kubernetes, AKS é necessário. O trade-off e maior overhead operacional em troca de flexibilidade total do Kubernetes.
+**Não.** Azure Container Apps usa seu próprio ingress gerenciado baseado em Envoy e arquitetura de sidecar Dapr. Você não pode instalar Istio, aplicar EnvoyFilters customizados ou usar CRDs Kubernetes. Container Apps abstrai a camada Kubernetes subjacente, o que significa que você não pode acessar o plano de controle ou implantar operators customizados. Para cargas de trabalho que requerem um service mesh específico, CRDs customizados ou acesso direto a API Kubernetes, AKS é necessário. O trade-off e maior overhead operacional em troca de flexibilidade total do Kubernetes.
 
 </details>
 

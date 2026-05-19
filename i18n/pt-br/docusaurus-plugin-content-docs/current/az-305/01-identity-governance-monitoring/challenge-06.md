@@ -65,7 +65,7 @@ Management Group (Fabrikam Root)
    - Não pode modificar atribuicoes RBAC
    - Não pode acessar segredos do Key Vault (função separada para isso)
 
-4. Projete uma função personalizada para "Incident Responder" que forneca:
+4. Projete uma função personalizada para "Incident Responder" que forneça:
    - Reiniciar qualquer recurso de computacao (VMs, App Services, AKS)
    - Visualizar todas as configurações de recursos e logs
    - Escalar verticalmente/horizontalmente recursos de computacao
@@ -85,7 +85,7 @@ Management Group (Fabrikam Root)
 
 7. Projete o fluxo de trabalho de acesso just-in-time (JIT) para incidentes de produção:
    - Quem pode solicitar acesso elevado?
-   - Quais funções estao disponiveis para elevação?
+   - Quais funções estao disponíveis para elevação?
    - Quem aprova a solicitacao?
    - Duracao máxima do acesso elevado?
    - Qual trilha de auditoria e gerada?
@@ -305,7 +305,7 @@ Configure no Portal: Entra ID > Privileged Identity Management > Azure Resources
 </details>
 
 <details>
-<summary>3. Cinco equipes de produto precisam cada uma de acesso aos seus proprios containers de armazenamento, mas não devem ver dados de outras equipes. Todos os containers estao na mesma storage account. Como você deve projetar o controle de acesso?</summary>
+<summary>3. Cinco equipes de produto precisam cada uma de acesso aos seus próprios containers de armazenamento, mas não devem ver dados de outras equipes. Todos os containers estao na mesma storage account. Como você deve projetar o controle de acesso?</summary>
 
 **Use condições ABAC em atribuicoes de função.** Atribua a função "Storage Blob Data Contributor" a cada grupo de equipe no escopo da storage account, mas adicione uma condição restringindo o acesso a containers nomeados com o prefixo de sua equipe (ex.: `@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:name] StringStartsWith 'team-alpha-'`). Isso evita criar cinco storage accounts separadas ou usar gerenciamento complexo de tokens SAS. Cada equipe ve apenas seus containers apesar de compartilhar a mesma conta.
 
@@ -314,7 +314,7 @@ Configure no Portal: Entra ID > Privileged Identity Management > Azure Resources
 <details>
 <summary>4. Durante um incidente de produção, um engenheiro de plantao precisa de acesso Contributor a um resource group de produção por até 4 horas. Como isso deve ser projetado para manter o privilegio mínimo?</summary>
 
-**Use PIM for Azure Resources com atribuicoes de função elegiveis.** Configure a função Contributor de produção como "elegivel" (não permanentemente ativa) para engenheiros de plantao. Quando um incidente ocorre, o engenheiro ativa a função atraves do PIM, fornecendo justificativa e número do ticket do incidente. Defina a duracao máxima de ativacao para 4 horas com expiracao automática. Exija MFA para ativacao é opcionalmente exija aprovacao de um lider da equipe de plataforma. Isso fornece acesso just-in-time, com duracao limitada e auditado, sem privilegios permanentes.
+**Use PIM for Azure Resources com atribuicoes de função elegiveis.** Configure a função Contributor de produção como "elegivel" (não permanentemente ativa) para engenheiros de plantao. Quando um incidente ocorre, o engenheiro ativa a função através do PIM, fornecendo justificativa e número do ticket do incidente. Defina a duracao máxima de ativacao para 4 horas com expiracao automática. Exija MFA para ativacao é opcionalmente exija aprovacao de um lider da equipe de plataforma. Isso fornece acesso just-in-time, com duracao limitada e auditado, sem privilegios permanentes.
 
 </details>
 

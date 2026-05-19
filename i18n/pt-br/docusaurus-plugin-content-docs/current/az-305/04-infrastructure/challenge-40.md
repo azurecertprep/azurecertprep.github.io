@@ -17,7 +17,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 A MedConnect é um sistema de saúde que fornece prontuarios eletronicos (EHR), agendamento de consultas e gerenciamento de prescricoes. A plataforma deve expor APIs para três categorias distintas de consumidores com níveis de confiança, requisitos de desempenho e padrões de acesso vastamente diferentes. O sistema processa Informações de Saúde Protegidas (PHI) e deve cumprir as regulamentacoes HIPAA para todo o trafego de API, independentemente do tipo de consumidor.
 
-Tipo de Consumidor 1 (Aplicativo movel interno): Usado por 5.000 profissionais de saúde diariamente. Requer latência inferior a 100ms para busca de pacientes. Totalmente confiavel pois e desenvolvido internamente e autenticado via managed identity. Precisa de acesso a todos os endpoints da API, incluindo dados sensiveis de pacientes. Tipo de Consumidor 2 (Hospitais parceiros): 12 organizações parceiras trocam prontuarios de pacientes para encaminhamentos e cuidados compartilhados. Cada parceiro tem um SLA único (99,9% de disponibilidade, tempo de resposta máximo de 500ms), deve ser autenticado via OAuth2 client credentials, e só pode acessar prontuarios de pacientes com tokens de consentimento explicito. Tipo de Consumidor 3 (Desenvolvedores terceiros): Um ecossistema de 200+ startups de health-tech construindo apps de bem-estar, widgets de agendamento e ferramentas de pesquisa. Requerem API keys self-service, rate limiting (100 requisicoes/minuto para camada gratuita, 1.000 para camada paga), analitica de uso para cobranca, e acesso apenas a endpoints de dados anonimizados/agregados.
+Tipo de Consumidor 1 (Aplicativo movel interno): Usado por 5.000 profissionais de saúde diariamente. Requer latência inferior a 100ms para busca de pacientes. Totalmente confiável pois e desenvolvido internamente e autenticado via managed identity. Precisa de acesso a todos os endpoints da API, incluindo dados sensíveis de pacientes. Tipo de Consumidor 2 (Hospitais parceiros): 12 organizações parceiras trocam prontuarios de pacientes para encaminhamentos e cuidados compartilhados. Cada parceiro tem um SLA único (99,9% de disponibilidade, tempo de resposta máximo de 500ms), deve ser autenticado via OAuth2 client credentials, e só pode acessar prontuarios de pacientes com tokens de consentimento explicito. Tipo de Consumidor 3 (Desenvolvedores terceiros): Um ecossistema de 200+ startups de health-tech construindo apps de bem-estar, widgets de agendamento e ferramentas de pesquisa. Requerem API keys self-service, rate limiting (100 requisicoes/minuto para camada gratuita, 1.000 para camada paga), analitica de uso para cobranca, e acesso apenas a endpoints de dados anonimizados/agregados.
 
 A arquitetura deve proteger os serviços backend de exposicao direta, aplicar políticas de segurança consistentes, permitir versionamento de API conforme a plataforma evolui, é fornecer capacidades de monetizacao para o programa de desenvolvedores.
 
@@ -54,7 +54,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
 
 **Aplicativo movel interno (Tipo 1)**:
 - Autenticação: Validar tokens de managed identity (política validate-jwt)
-- Rate limiting: Nenhum (confiavel, alto volume)
+- Rate limiting: Nenhum (confiável, alto volume)
 - Caching: Cache de respostas de busca de pacientes por 30 segundos (cache-lookup/cache-store)
 - Backend: Pass-through direto com overhead mínimo
 
@@ -101,7 +101,7 @@ A arquitetura deve proteger os serviços backend de exposicao direta, aplicar po
 9. Projete a arquitetura de segurança de API compatível com HIPAA:
    - Todo trafego deve usar TLS 1.2+ (configurar na política do APIM)
    - Logging de auditoria: Todas as chamadas de API registradas no Azure Monitor com identidade do chamador
-   - Mascaramento de dados: Campos sensiveis mascarados nos logs de diagnóstico
+   - Mascaramento de dados: Campos sensíveis mascarados nos logs de diagnóstico
    - Proteção de backend: Serviços backend acessiveis apenas a partir do APIM (regras VNet/NSG)
    - Autenticação por certificado para comunicação com serviços backend (mutual TLS)
 
@@ -255,7 +255,7 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 <details>
 <summary>1. Uma API de saúde deve garantir que Informações de Saúde Protegidas nunca trafeguem pela internet pública entre o API gateway e os serviços backend. Qual modo de implantacao do APIM alcanca isso?</summary>
 
-**Modo VNet interno (camada Premium).** No modo interno, o gateway do API Management e implantado dentro de uma VNet com apenas um endereço IP privado. Serviços backend na mesma VNet (ou VNets pareadas) sao acessados via IPs privados. Consumidores externos alcancam o APIM atraves do Azure Application Gateway ou private endpoints. Isso garante que PHI permaneca na rede privada entre APIM e backends. O modo externo coloca o APIM na VNet mas com um IP público, o que não isola completamente o trafego de backend do caminho da internet.
+**Modo VNet interno (camada Premium).** No modo interno, o gateway do API Management e implantado dentro de uma VNet com apenas um endereço IP privado. Serviços backend na mesma VNet (ou VNets pareadas) sao acessados via IPs privados. Consumidores externos alcancam o APIM através do Azure Application Gateway ou private endpoints. Isso garante que PHI permaneca na rede privada entre APIM e backends. O modo externo coloca o APIM na VNet mas com um IP público, o que não isola completamente o trafego de backend do caminho da internet.
 
 </details>
 
@@ -276,7 +276,7 @@ Para integração de cobranca, exporte dados de uso do APIM Built-in Analytics o
 <details>
 <summary>4. Uma API evolui de v1 para v2 com uma breaking change (formato do ID do paciente muda de inteiro para GUID). Como você deve gerenciar essa transicao para hospitais parceiros?</summary>
 
-**Publique v2 ao lado de v1, comunique a mudança com 6+ meses de antecedencia, e mantenha v1 até que todos os parceiros tenham migrado.** Use versionamento de API do APIM com esquema de caminho de URL (`/v1/patients/123` vs `/v2/patients/abc-def-123`). Ambas as versoes roteiam para versoes de backend apropriadas simultaneamente. Forneca guias de migração no portal do desenvolvedor, rastreie o uso de v1 por parceiro na analitica, e entre em contato proativamente com parceiros que ainda usam v1. Só faca sunset de v1 apos confirmar zero trafego por 30+ dias. Para saúde, permita 12-18 meses de sobreposicao devido aos requisitos de gerenciamento de mudanças regulatorias.
+**Publique v2 ao lado de v1, comunique a mudança com 6+ meses de antecedência, e mantenha v1 até que todos os parceiros tenham migrado.** Use versionamento de API do APIM com esquema de caminho de URL (`/v1/patients/123` vs `/v2/patients/abc-def-123`). Ambas as versoes roteiam para versoes de backend apropriadas simultaneamente. Forneça guias de migração no portal do desenvolvedor, rastreie o uso de v1 por parceiro na analitica, e entre em contato proativamente com parceiros que ainda usam v1. Só faca sunset de v1 apos confirmar zero trafego por 30+ dias. Para saúde, permita 12-18 meses de sobreposicao devido aos requisitos de gerenciamento de mudanças regulatorias.
 
 </details>
 

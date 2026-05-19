@@ -15,20 +15,20 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A MediCorp é uma empresa de tecnologia em saúde lancando uma nova plataforma de telemedicina que atendera 500.000 pacientes e 5.000 medicos em 3 paises: Estados Unidos, Reino Unido e India. A plataforma habilitara consultas por video, gerenciara prontuarios de pacientes, processara prescricoes, lidara com agendamento de consultas é fornecera dashboards de analytics em tempo real.
+A MediCorp é uma empresa de tecnologia em saúde lancando uma nova plataforma de telemedicina que atendera 500.000 pacientes e 5.000 medicos em 3 paises: Estados Unidos, Reino Unido e India. A plataforma habilitara consultas por vídeo, gerenciara prontuarios de pacientes, processara prescricoes, lidara com agendamento de consultas é fornecera dashboards de analytics em tempo real.
 
 Esta é uma implantacao greenfield com cronogramas agressivos (MVP em 6 meses, lancamento completo em 12 meses) e requisitos rigorosos em toda dimensão arquitetural. A plataforma deve estar em conformidade com HIPAA (EUA), UK GDPR (Reino Unido) e a Lei de Proteção de Dados Pessoais Digitais da India. Todas as informações de saúde do paciente (PHI) devem ser criptografadas em repouso e em transito, o acesso deve ser auditado e os dados devem residir na região onde o paciente esta localizado.
 
 Os requisitos de negocio incluem:
-- **Consultas por Video**: Video em tempo real com baixa latência entre paciente e medico, gravado para conformidade e potencial resolução de disputas. Deve suportar 5.000 sessões de video simultaneas no pico.
-- **Prontuarios de Pacientes (EHR)**: Prontuarios eletronicos de saúde acessiveis apenas por medicos autorizados, com trilha de auditoria completa de cada acesso. 500.000 prontuarios de pacientes com historico medico, resultados de laboratório, referências de exames de imagem.
+- **Consultas por Video**: Video em tempo real com baixa latência entre paciente e medico, gravado para conformidade e potencial resolução de disputas. Deve suportar 5.000 sessões de vídeo simultaneas no pico.
+- **Prontuarios de Pacientes (EHR)**: Prontuarios eletronicos de saúde acessiveis apenas por medicos autorizados, com trilha de auditoria completa de cada acesso. 500.000 prontuarios de pacientes com histórico medico, resultados de laboratório, referências de exames de imagem.
 - **Sistema de Prescricoes**: Garantia de processamento exactly-once (sem prescricoes duplicadas), integrado com sistemas de farmacias via API, trilha de auditoria completa para conformidade regulatoria.
 - **Agendamento de Consultas**: Alta disponibilidade (sem ponto único de falha), lida com 10.000 usuários simultaneos durante horarios de pico matinais de agendamento, suporta múltiplos fusos horarios.
 - **Dashboard de Analytics**: Metricas em tempo real mostrando tempos de espera de pacientes, taxas de utilizacao de medicos, duracao de consultas e saúde da plataforma. Usado pela equipe de operações para planejamento de capacidade.
 - **SLA**: 99,99% de disponibilidade para o caminho crítico (agendamento de consulta até a consulta até a prescricao)
 - **Recuperação de Desastres**: RPO 5 segundos, RTO 2 minutos para sistemas críticos (agendamento, consulta, prescricao)
 - **Orcamento**: $50.000/mes de gasto total no Azure
-- **Segurança**: Sem endpoints publicos para serviços backend, todos os segredos no Key Vault, managed identity para toda autenticação serviço-a-serviço, arquitetura de rede zero-trust
+- **Segurança**: Sem endpoints públicos para serviços backend, todos os segredos no Key Vault, managed identity para toda autenticação serviço-a-serviço, arquitetura de rede zero-trust
 
 Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governança/Monitoramento, Armazenamento de Dados, Continuidade de Negocios e Infraestrutura. Projete a arquitetura completa.
 
@@ -56,13 +56,13 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
    - Autenticação de pacientes: Azure AD B2C com autenticação multifator, provedores de identidade social, redefinicao de senha self-service
    - Autenticação de medicos: Entra ID com Conditional Access (exigir dispositivo compatível, MFA, restringir a locais aprovados)
    - Serviço-a-serviço: Managed Identity para todos os serviços Azure (sem credenciais no código)
-   - Autorização: Controle de acesso baseado em função (pacientes veem seus proprios prontuarios, medicos veem pacientes atribuidos, admin ve analytics)
+   - Autorização: Controle de acesso baseado em função (pacientes veem seus próprios prontuarios, medicos veem pacientes atribuidos, admin ve analytics)
 2. Projete a estrutura de governança:
    - Layout de management group e assinatura (assinaturas separadas para produção/não-produção, ou por região?)
-   - Atribuicoes de Azure Policy: aplicar criptografia, restringir endpoints publicos, exigir diagnostic settings, aplicar tagging
+   - Atribuicoes de Azure Policy: aplicar criptografia, restringir endpoints públicos, exigir diagnostic settings, aplicar tagging
    - Convencao de nomenclatura de recursos e estratégia de tagging (alocacao de custos por departamento, ambiente, escopo de conformidade)
 3. Projete a estratégia de monitoramento e observabilidade:
-   - Application Insights para cada microsservico (rastreamento distribuido entre serviços de video, agendamento, prescricao)
+   - Application Insights para cada microsservico (rastreamento distribuido entre serviços de vídeo, agendamento, prescricao)
    - Estratégia de workspace Log Analytics (workspace único vs. por região para conformidade de residencia de dados)
    - Alertas Azure Monitor para rastreamento de SLA (disponibilidade, latência, taxa de erro por serviço)
    - Dashboards customizados para equipe de operações (tempos de espera de pacientes em tempo real, utilizacao de medicos, saúde da plataforma)
@@ -72,7 +72,7 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
 
 4. Projete a arquitetura de armazenamento de dados para cada tipo de dado:
    - Prontuarios de pacientes (estruturados, relacionais): Azure SQL Database ou Cosmos DB? Considere padrões de consulta, requisitos de consistência e necessidades multi-região
-   - Gravacoes de video (blobs grandes, write-once): Azure Blob Storage com políticas de imutabilidade para conformidade
+   - Gravacoes de vídeo (blobs grandes, write-once): Azure Blob Storage com políticas de imutabilidade para conformidade
    - Dados de agendamento (alto throughput de leitura/escrita, multi-região): Cosmos DB com nível de consistência apropriado
    - Trilha de auditoria de prescricoes (append-only, alta escrita, retencao regulatoria): Cosmos DB ou Azure Table Storage?
    - Dados de analytics (series temporais, agregacoes): Azure Data Explorer ou store de analytics dedicado
@@ -107,14 +107,14 @@ Este desafio capstone integra todos os 4 dominios do exame: Identidade/Governan�
 ### Parte 4: Design de Infraestrutura e Computação (Dominio 4)
 
 10. Projete a arquitetura de computacao:
-    - Serviço de consulta por video: qual plataforma de computacao lida com 5.000 sessões WebRTC simultaneas? (Azure Communication Services ou servidor de midia customizado no AKS?)
+    - Serviço de consulta por vídeo: qual plataforma de computacao lida com 5.000 sessões WebRTC simultaneas? (Azure Communication Services ou servidor de midia customizado no AKS?)
     - API de agendamento de consultas: alta concorrencia, stateless (Azure Container Apps com autoscaling?)
     - Processamento de prescricoes: semantica exactly-once, ordenacao de mensagens (Azure Functions com Service Bus?)
-    - Trabalhos em segundo plano: transcodificacao de video, geracao de relatórios (Azure Container Apps jobs ou Azure Batch?)
+    - Trabalhos em segundo plano: transcodificacao de vídeo, geracao de relatórios (Azure Container Apps jobs ou Azure Batch?)
 11. Projete a arquitetura de mensageria e eventos:
     - Eventos de agendamento: paciente agenda, medico confirma, lembrete enviado (Event Grid ou Service Bus?)
     - Workflow de prescricao: solicitacao -> validar -> aprovar -> enviar para farmacia (Service Bus com sessions para ordenacao)
-    - Eventos de gravacao de video: consulta termina -> gravacao salva -> transcricao acionada -> armazenada (Event Grid + Storage Events)
+    - Eventos de gravacao de vídeo: consulta termina -> gravacao salva -> transcricao acionada -> armazenada (Event Grid + Storage Events)
 12. Projete a arquitetura de rede:
     - Azure Front Door para balanceamento de carga global com WAF
     - Private Endpoints para todos os serviços PaaS
@@ -208,7 +208,7 @@ graph TB
 - Quais runbooks existem para cenários de falha comuns?
 
 **Pilar de Eficiência de Performance:**
-- Como a latência da consulta por video e minimizada para chamadas entre paises?
+- Como a latência da consulta por vídeo e minimizada para chamadas entre paises?
 - Como o agendamento de consultas lida com 10.000 usuários simultaneos?
 - Qual estratégia de caching reduz a carga no banco de dados?
 
@@ -233,7 +233,7 @@ graph TB
     "Design de armazenamento de dados aborda dados relacionais (SQL), documentos (Cosmos DB), blob e analytics com aplicação de residencia de dados",
     "Design de alta disponibilidade alcanca SLA composto de 99,99% sem pontos únicos de falha no caminho crítico",
     "Design de DR atende RPO 5 segundos e RTO 2 minutos com sequência de failover documentada para sistemas críticos",
-    "Arquitetura de rede aplica zero endpoints publicos para serviços backend com Private Endpoints e VNet integration",
+    "Arquitetura de rede aplica zero endpoints públicos para serviços backend com Private Endpoints e VNet integration",
     "Diagrama de arquitetura mostra todos os serviços, limites de rede, fluxo de dados e topologia multi-região"
   ]}
 />
@@ -250,7 +250,7 @@ Para SLA composto de 99,99%, cada serviço no caminho crítico deve exceder 99,9
 <details>
 <summary>Dica 2: Arquitetura de Consulta por Video</summary>
 
-O Azure Communication Services (ACS) fornece capacidades gerenciadas de video, voz e chat em tempo real. Ele lida com a complexidade do WebRTC (servidores TURN/STUN, adaptacao de largura de banda, gravacao). Para 5.000 sessões simultaneas, o ACS escala automaticamente. A gravacao é armazenada no Azure Blob Storage. Alternativamente, se você precisa de processamento de midia customizado, implante um servidor de midia no AKS, mas isso requer esforco operacional significativo. Para a maioria dos cenários de telemedicina, ACS e a abordagem recomendada pois fornece video elegivel para HIPAA com gravacao e recursos de conformidade integrados.
+O Azure Communication Services (ACS) fornece capacidades gerenciadas de vídeo, voz e chat em tempo real. Ele lida com a complexidade do WebRTC (servidores TURN/STUN, adaptacao de largura de banda, gravacao). Para 5.000 sessões simultaneas, o ACS escala automaticamente. A gravacao é armazenada no Azure Blob Storage. Alternativamente, se você precisa de processamento de midia customizado, implante um servidor de midia no AKS, mas isso requer esforco operacional significativo. Para a maioria dos cenários de telemedicina, ACS e a abordagem recomendada pois fornece vídeo elegivel para HIPAA com gravacao e recursos de conformidade integrados.
 
 </details>
 
@@ -271,7 +271,7 @@ Armazene dados de pacientes na região do paciente (obrigatório para GDPR/HIPAA
 <details>
 <summary>Dica 5: Otimização de Orcamento para $50K/mes</summary>
 
-Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (use autoscale para minimizar custos de RU), Azure SQL Business Critical (considere General Purpose com zone redundancy para regiões não críticas), Container Apps (scale to zero para horarios fora do pico), armazenamento de gravacoes de video (use Cool/Archive tier apos 30 dias), Azure Communication Services (cobranca por minuto para video). Use a Calculadora de Precos Azure para estimar: espere aproximadamente $15K computacao, $15K dados, $8K rede/segurança, $5K monitoramento, $7K outros serviços. Capacidade reservada para workloads previsiveis (SQL, Cosmos DB) pode economizar 30-40%.
+Principais direcionadores de custo nesta arquitetura: Cosmos DB multi-região (use autoscale para minimizar custos de RU), Azure SQL Business Critical (considere General Purpose com zone redundancy para regiões não críticas), Container Apps (scale to zero para horarios fora do pico), armazenamento de gravacoes de vídeo (use Cool/Archive tier apos 30 dias), Azure Communication Services (cobranca por minuto para vídeo). Use a Calculadora de Precos Azure para estimar: espere aproximadamente $15K computacao, $15K dados, $8K rede/segurança, $5K monitoramento, $7K outros serviços. Capacidade reservada para workloads previsiveis (SQL, Cosmos DB) pode economizar 30-40%.
 
 </details>
 

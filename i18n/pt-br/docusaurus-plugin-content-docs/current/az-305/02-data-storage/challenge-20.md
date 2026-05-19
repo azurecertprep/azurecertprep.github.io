@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-DataForge Analytics é uma startup de IA em rápido crescimento que superou sua arquitetura de armazenamento inicial. Hoje eles gerenciam 100TB de dados no Azure, com projeções atingindo 500TB dentro de 12 meses. Seus dados se dividem em três padrões de uso distintos: datasets de treinamento de ML acessados por hora por clusters GPU (dados quentes), arquivos carregados por usuários acessados diariamente atraves de sua plataforma SaaS (dados mornos) e arquivos de compliance que devem ser retidos por 7 anos mas raramente sao acessados (dados frios).
+DataForge Analytics é uma startup de IA em rápido crescimento que superou sua arquitetura de armazenamento inicial. Hoje eles gerenciam 100TB de dados no Azure, com projeções atingindo 500TB dentro de 12 meses. Seus dados se dividem em três padrões de uso distintos: datasets de treinamento de ML acessados por hora por clusters GPU (dados quentes), arquivos carregados por usuários acessados diariamente através de sua plataforma SaaS (dados mornos) e arquivos de compliance que devem ser retidos por 7 anos mas raramente sao acessados (dados frios).
 
 O CFO levantou uma preocupação urgente: a conta mensal atual de armazenamento é $15.000 e cresce linearmente com o volume de dados. A meta é reduzir os custos abaixo de $10.000/mes sem sacrificar o desempenho de leitura em dados quentes que alimentam o pipeline de ML. A equipe de ML relata que qualquer aumento de latência em leituras de dados de treinamento impacta diretamente o tempo de treinamento do modelo e a eficiência de utilizacao da GPU.
 

@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Contoso Consulting é uma firma de consultoria em tecnologia com 500 pessoas atendendo clientes em três industrias altamente regulamentadas: saúde, serviços financeiros e varejo. Cada engajamento de cliente (tipicamente 6-18 meses) recebe seu proprio ambiente Azure dedicado para garantir isolamento de dados. A qualquer momento, a Contoso executa 30-40 engajamentos ativos em 12 equipes de projeto. Consultores rotacionam entre engajamentos a cada 3-6 meses, e alguns arquitetos senior trabalham em múltiplos engajamentos simultaneamente.
+A Contoso Consulting é uma firma de consultoria em tecnologia com 500 pessoas atendendo clientes em três industrias altamente regulamentadas: saúde, serviços financeiros e varejo. Cada engajamento de cliente (tipicamente 6-18 meses) recebe seu próprio ambiente Azure dedicado para garantir isolamento de dados. A qualquer momento, a Contoso executa 30-40 engajamentos ativos em 12 equipes de projeto. Consultores rotacionam entre engajamentos a cada 3-6 meses, e alguns arquitetos senior trabalham em múltiplos engajamentos simultaneamente.
 
-O estado atual e insustentavel. A Contoso tem 45 subscriptions do Azure sem estrutura consistente: alguns engajamentos compartilham subscriptions, outros tem múltiplas subscriptions para um único cliente. O tagging e inconsistente (alguns usam a tag "Client", outros usam "Customer" ou "Project"), tornando a atribuicao de custos para faturamento de clientes quase impossivel. Cada equipe de engajamento implanta sua propria governança, resultando em posturas de conformidade muito diferentes - um problema crítico quando clientes de saúde requerem conformidade HIPAA, clientes financeiros requerem PCI-DSS, e clientes de varejo tem seus proprios requisitos de privacidade de dados. Quando consultores saem de um engajamento, seu acesso frequentemente permanece por meses porque não ha desprovisionamento automatizado vinculado ao ciclo de vida do engajamento.
+O estado atual e insustentavel. A Contoso tem 45 subscriptions do Azure sem estrutura consistente: alguns engajamentos compartilham subscriptions, outros tem múltiplas subscriptions para um único cliente. O tagging e inconsistente (alguns usam a tag "Client", outros usam "Customer" ou "Project"), tornando a atribuicao de custos para faturamento de clientes quase impossível. Cada equipe de engajamento implanta sua própria governança, resultando em posturas de conformidade muito diferentes - um problema crítico quando clientes de saúde requerem conformidade HIPAA, clientes financeiros requerem PCI-DSS, e clientes de varejo tem seus próprios requisitos de privacidade de dados. Quando consultores saem de um engajamento, seu acesso frequentemente permanece por meses porque não ha desprovisionamento automatizado vinculado ao ciclo de vida do engajamento.
 
 O CTO alocou orcamento para um redesign abrangente de governança. A solução deve: (1) fornecer isolamento completo de dados do cliente com limites de conformidade comprovanveis, (2) habilitar rastreamento de custos por engajamento para faturamento preciso de clientes, (3) aplicar políticas de conformidade específicas da industria sem configuração manual por engajamento, (4) automatizar o ciclo de vida de acesso de consultores vinculado a atribuicoes de engajamento, e (5) escalar para suportar um crescimento planejado de mais de 60 engajamentos simultaneos em dois anos. Esta e a culminacao do seu trabalho de design de governança - integrando estrutura de management groups, tagging, política e governança de identidade em uma solução coesa.
 
@@ -34,7 +34,7 @@ O CTO alocou orcamento para um redesign abrangente de governança. A solução d
 
 1. Projete a hierarquia completa de management groups para a Contoso Consulting. Considere grupos para: plataforma/serviços compartilhados, landing zones específicas por industria (saúde, financeiro, varejo), ambientes sandbox/treinamento e engajamentos descomissionados. Referencie os padrões de design do Challenge 09.
 2. Defina a estratégia de subscription para engajamentos de clientes. Decida: uma subscription por engajamento, uma subscription por cliente (com resource groups por engajamento), ou uma subscription por industria. Justifique a escolha considerando isolamento de dados, rastreamento de custos, herança de políticas e limites de escala.
-3. Projete o modelo de serviços compartilhados. Determine como networking hub (Azure Firewall, DNS, VPN), monitoramento centralizado e serviços de identidade sao estruturados. Todos os ambientes de engajamento devem rotear atraves de um firewall central para filtragem e logging de saida.
+3. Projete o modelo de serviços compartilhados. Determine como networking hub (Azure Firewall, DNS, VPN), monitoramento centralizado e serviços de identidade sao estruturados. Todos os ambientes de engajamento devem rotear através de um firewall central para filtragem e logging de saida.
 4. Defina o ciclo de vida do engajamento para subscriptions: como uma nova subscription de engajamento e provisionada (subscription vending), como é configurada com as políticas corretas baseadas na industria do cliente, e como e descomissionada (dados retidos conforme contrato, recursos deletados, subscription movida para management group "Decommissioned").
 
 ### Parte 2: Estratégia de Tagging para Faturamento de Clientes
@@ -47,7 +47,7 @@ O CTO alocou orcamento para um redesign abrangente de governança. A solução d
 ### Parte 3: Políticas de Conformidade Especificas por Industria
 
 9. Projete iniciativas de política para cada vertical de industria:
-   - **Saúde (HIPAA):** criptografia em repouso com CMK, sem endpoints publicos, logging de auditoria obrigatório, tags de classificacao de dados PHI obrigatorias
+   - **Saúde (HIPAA):** criptografia em repouso com CMK, sem endpoints públicos, logging de auditoria obrigatório, tags de classificacao de dados PHI obrigatorias
    - **Financeiro (PCI-DSS):** segmentacao de rede obrigatória, separacao de chaves (Key Vaults separados por ambiente), apenas SKUs de VM aprovados, verificação de vulnerabilidades habilitada
    - **Varejo:** aplicação de residencia de dados (recursos apenas em regiões aprovadas), tags de tratamento de PII, suporte a direito de exclusão GDPR
 10. Projete o modelo de atribuicao de políticas que aplica automaticamente a iniciativa correta da industria quando uma subscription de engajamento e colocada no management group correspondente. Nenhuma atribuicao manual de política deve ser necessária.
@@ -86,7 +86,7 @@ O CTO alocou orcamento para um redesign abrangente de governança. A solução d
 <details>
 <summary>Dica 1: Design de Management Groups para Multi-Industria</summary>
 
-Considere esta hierarquia: Root > Contoso (root customizado) > Platform (Connectivity, Identity, Management) + Landing Zones (Healthcare, Financial, Retail) + Sandbox + Decommissioned. Cada MG de industria tem a iniciativa regulatoria correspondente atribuida. Quando um novo engajamento comeca, posicione a subscription sob o MG de industria correto e ela automaticamente herda as políticas de conformidade. Para engajamentos que abrangem múltiplas industrias, posicione a subscription sob o MG mais rigoroso e adicione a iniciativa adicional como uma atribuicao direta.
+Considere esta hierarquia: Root > Contoso (root customizado) > Platform (Connectivity, Identity, Management) + Landing Zones (Healthcare, Financial, Retail) + Sandbox + Decommissioned. Cada MG de industria tem a iniciativa regulatoria correspondente atribuida. Quando um novo engajamento começa, posicione a subscription sob o MG de industria correto e ela automaticamente herda as políticas de conformidade. Para engajamentos que abrangem múltiplas industrias, posicione a subscription sob o MG mais rigoroso e adicione a iniciativa adicional como uma atribuicao direta.
 
 </details>
 
@@ -100,7 +100,7 @@ Para uma firma de consultoria com requisitos rigorosos de isolamento de clientes
 <details>
 <summary>Dica 3: Access Packages Dinamicos por Engajamento</summary>
 
-Crie um "catalogo" por vertical de industria no Entitlement Management. Quando um novo engajamento e integrado, a automacao cria: (1) Um security group para o engajamento (ex.: "sg-engagement-ACME-2025"), (2) Atribuicoes de Azure RBAC para esse grupo na subscription do engajamento, (3) Um access package no catalogo apropriado que concede associacao ao grupo do engajamento. Consultores solicitam (ou sao auto-atribuidos via API) o access package. Defina expiracao para a data de termino do engajamento. Quando o engajamento termina, expire o access package e todos os membros perdem acesso simultaneamente.
+Crie um "catálogo" por vertical de industria no Entitlement Management. Quando um novo engajamento e integrado, a automacao cria: (1) Um security group para o engajamento (ex.: "sg-engagement-ACME-2025"), (2) Atribuicoes de Azure RBAC para esse grupo na subscription do engajamento, (3) Um access package no catálogo apropriado que concede associacao ao grupo do engajamento. Consultores solicitam (ou sao auto-atribuidos via API) o access package. Defina expiracao para a data de termino do engajamento. Quando o engajamento termina, expire o access package e todos os membros perdem acesso simultaneamente.
 
 </details>
 
@@ -121,10 +121,10 @@ A sequência de offboarding deve ser ordenada: (1) Notifique todos os membros da
 ## Recursos de Aprendizagem
 
 - [Cloud Adoption Framework landing zone architecture](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/)
-- [Management group and subscription organization](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org)
+- [Management group and subscription organization](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/resource-org)
 - [Azure Policy governance design](https://learn.microsoft.com/azure/governance/policy/overview)
 - [Microsoft Entra entitlement management](https://learn.microsoft.com/entra/id-governance/entitlement-management-overview)
-- [Subscription vending automation](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-area/subscription-vending)
+- [Subscription vending automation](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/design-área/subscription-vending)
 - [Tagging strategy for Azure](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-tagging)
 - [Azure landing zone FAQ](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/faq)
 
@@ -133,26 +133,26 @@ A sequência de offboarding deve ser ordenada: (1) Notifique todos os membros da
 <details>
 <summary>1. A Contoso integra um novo engajamento de cliente de saúde. A automacao de onboarding cria uma subscription e a posiciona sob o management group "Healthcare". Quais políticas de conformidade sao automaticamente aplicadas sem nenhuma configuração adicional?</summary>
 
-**Todas as políticas atribuidas no management group Healthcare e todos os management groups pais acima dele.** Herança de política significa que a subscription recebe: (1) Políticas de nível Root (tags obrigatorias, logging de diagnóstico), (2) Políticas de nível Landing Zone (se algum MG intermediario tiver políticas), e (3) Políticas do MG Healthcare (iniciativa HIPAA - criptografia, sem endpoints publicos, logging de auditoria). Este modelo de "conformidade por posicionamento" elimina atribuicao manual de política por subscription e garante que cada engajamento de saúde tenha postura de conformidade identica desde o primeiro dia.
+**Todas as políticas atribuidas no management group Healthcare e todos os management groups pais acima dele.** Herança de política significa que a subscription recebe: (1) Políticas de nível Root (tags obrigatorias, logging de diagnóstico), (2) Políticas de nível Landing Zone (se algum MG intermediario tiver políticas), e (3) Políticas do MG Healthcare (iniciativa HIPAA - criptografia, sem endpoints públicos, logging de auditoria). Este modelo de "conformidade por posicionamento" elimina atribuicao manual de política por subscription e garante que cada engajamento de saúde tenha postura de conformidade identica desde o primeiro dia.
 
 </details>
 
 <details>
 <summary>2. Um consultor esta trabalhando em dois engajamentos simultaneamente (um cliente de saúde é um financeiro). Ele precisa de acesso de Contributor a ambas as subscriptions de engajamento. Como isso deve ser gerenciado com entitlement management?</summary>
 
-**O consultor solicita (ou recebe atribuicao de) dois access packages separados - um para cada engajamento.** Cada access package concede acesso de Contributor a subscription específica do engajamento atraves de associacao a grupo. Cada pacote tem sua propria data de expiracao (correspondendo as datas de termino dos respectivos engajamentos), fluxo de aprovacao e cronograma de access review. Isso garante que quando um engajamento termina, apenas aquele acesso específico e revogado enquanto o outro permanece ativo. Os pacotes podem ser de catalogos diferentes (catalogo de saúde e catalogo financeiro) com políticas diferentes apropriadas para cada industria.
+**O consultor solicita (ou recebe atribuicao de) dois access packages separados - um para cada engajamento.** Cada access package concede acesso de Contributor a subscription específica do engajamento através de associacao a grupo. Cada pacote tem sua própria data de expiracao (correspondendo as datas de termino dos respectivos engajamentos), fluxo de aprovacao e cronograma de access review. Isso garante que quando um engajamento termina, apenas aquele acesso específico e revogado enquanto o outro permanece ativo. Os pacotes podem ser de catálogos diferentes (catálogo de saúde e catálogo financeiro) com políticas diferentes apropriadas para cada industria.
 
 </details>
 
 <details>
 <summary>3. A Contoso precisa faturar o Cliente A pelo consumo Azure do mes passado. A subscription do engajamento também contem recursos de monitoramento compartilhados que servem múltiplos engajamentos. Como os custos sao atribuidos com precisao?</summary>
 
-**Use uma combinacao de faturamento no nível de subscription e alocacao de custos baseada em tags para recursos compartilhados.** Custos primários de engajamento sao facilmente atribuidos porque cada engajamento tem sua propria subscription (custo da subscription = custo do engajamento). Para recursos compartilhados na subscription de plataforma (monitoramento, networking), use regras de alocacao de custos do Azure Cost Management para distribuir custos proporcionalmente com base em: metricas de consumo por engajamento (dados ingeridos por workspace), percentuais de alocacao fixos definidos no contrato do engajamento, ou alocacao baseada em tags (marque recursos compartilhados com todos os IDs de engajamento que eles servem e divida igualmente). A tag "EngagementID" em todos os recursos garante que quaisquer custos de recursos entre subscriptions sejam atribuiveis.
+**Use uma combinacao de faturamento no nível de subscription e alocacao de custos baseada em tags para recursos compartilhados.** Custos primários de engajamento sao facilmente atribuidos porque cada engajamento tem sua própria subscription (custo da subscription = custo do engajamento). Para recursos compartilhados na subscription de plataforma (monitoramento, networking), use regras de alocacao de custos do Azure Cost Management para distribuir custos proporcionalmente com base em: metricas de consumo por engajamento (dados ingeridos por workspace), percentuais de alocacao fixos definidos no contrato do engajamento, ou alocacao baseada em tags (marque recursos compartilhados com todos os IDs de engajamento que eles servem e divida igualmente). A tag "EngagementID" em todos os recursos garante que quaisquer custos de recursos entre subscriptions sejam atribuiveis.
 
 </details>
 
 <details>
-<summary>4. Um engajamento termina e o processo de offboarding comeca. O contrato do cliente requer retencao de dados por 7 anos, mas os recursos da subscription devem ser deletados imediatamente para parar de incorrer em custos. Como você reconcilia esses requisitos?</summary>
+<summary>4. Um engajamento termina e o processo de offboarding começa. O contrato do cliente requer retencao de dados por 7 anos, mas os recursos da subscription devem ser deletados imediatamente para parar de incorrer em custos. Como você reconcilia esses requisitos?</summary>
 
 **Exporte os dados necessários para armazenamento de arquivamento de longo prazo antes de deletar os recursos do engajamento.** O workflow de offboarding deve: (1) Identificar dados sujeitos a retencao (bancos de dados, storage accounts, logs), (2) Exportar dados para uma storage account de arquivamento dedicada na subscription de Plataforma (usando tier Archive para eficiência de custo), (3) Marcar os dados arquivados com o ID do engajamento e data de expiracao de retencao (para exclusão automatizada apos 7 anos), (4) Deletar todos os recursos na subscription do engajamento para parar custos, (5) Mover a subscription vazia para o management group "Decommissioned", (6) Criar uma automacao que verifica datas de retencao do arquivo e purga dados apos 7 anos. Isso separa a obrigacao de retencao da obrigacao de custo operacional.
 

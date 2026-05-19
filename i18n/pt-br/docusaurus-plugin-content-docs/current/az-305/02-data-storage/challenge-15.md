@@ -15,9 +15,9 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-CloudTenant é uma plataforma SaaS B2B que fornece ferramentas de gerenciamento de projetos para 300 clientes corporativos. Sua aplicação usa Azure SQL Database como backend, e a equipe de engenharia esta enfrentando problemas tanto de custo quanto de desempenho. Durante dias uteis entre 9h e 18h, o sistema lida com uma media de 5.000 conexões simultaneas com throughput de consultas consistente. No entanto, entre 19h e 7h (é nos finais de semana), o uso cai para menos de 50 conexões, com apenas verificacoes de saúde automatizadas é um punhado de usuários internacionais ativos.
+CloudTenant é uma plataforma SaaS B2B que fornece ferramentas de gerenciamento de projetos para 300 clientes corporativos. Sua aplicação usa Azure SQL Database como backend, e a equipe de engenharia esta enfrentando problemas tanto de custo quanto de desempenho. Durante dias úteis entre 9h e 18h, o sistema lida com uma média de 5.000 conexões simultaneas com throughput de consultas consistente. No entanto, entre 19h e 7h (é nos finais de semana), o uso cai para menos de 50 conexões, com apenas verificacoes de saúde automatizadas é um punhado de usuários internacionais ativos.
 
-CloudTenant tem três camadas de carga de trabalho distintas. A camada "Standard" (250 clientes) requer desempenho de proposito geral com SLA de 99,99% e pode tolerar breves atrasos de failover. A camada "Premium" (45 clientes) requer latência de leitura/escrita inferior a 5ms para recursos de colaboracao em tempo real e usa In-Memory OLTP para cache de estado de sessão. A camada "Enterprise" (5 clientes) tem bancos de dados que excedem 4TB e crescem rapidamente, com padrões de consulta imprevisiveis que ocasionalmente escaneiam terabytes de dados.
+CloudTenant tem três camadas de carga de trabalho distintas. A camada "Standard" (250 clientes) requer desempenho de propósito geral com SLA de 99,99% e pode tolerar breves atrasos de failover. A camada "Premium" (45 clientes) requer latência de leitura/escrita inferior a 5ms para recursos de colaboracao em tempo real e usa In-Memory OLTP para cache de estado de sessão. A camada "Enterprise" (5 clientes) tem bancos de dados que excedem 4TB e crescem rapidamente, com padrões de consulta imprevisiveis que ocasionalmente escaneiam terabytes de dados.
 
 A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e deseja reduzi-lo em pelo menos 30% sem degradar a experiência do cliente. O VP de Engenharia quer entender os trade-offs entre os modelos de compra DTU e vCore e se a computacao serverless poderia ajudar com o problema de custos fora do horario comercial.
 
@@ -42,7 +42,7 @@ A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e
 
 ### Parte 3: Otimização da Camada de Computação
 
-8. Avalie a computacao serverless para os bancos de dados da camada Standard. Calcule a economia potencial dado o padrão de uso (ativo 9 horas em dias uteis, uso mínimo caso contrario). Considere o atraso de auto-pause e as implicacoes de latência de cold-start.
+8. Avalie a computacao serverless para os bancos de dados da camada Standard. Calcule a economia potencial dado o padrão de uso (ativo 9 horas em dias úteis, uso mínimo caso contrario). Considere o atraso de auto-pause e as implicacoes de latência de cold-start.
 9. Determine se computacao provisionada com capacidade reservada (termos de 1 ano ou 3 anos) seria mais economica do que serverless para qualquer uma das camadas de carga de trabalho.
 10. Projete uma estratégia de auto-scaling para a camada Enterprise usando named replicas Hyperscale para lidar com cargas de trabalho de leitura imprevisiveis sem provisionar excessivamente o primário.
 11. Calcule o custo mensal projetado apos a otimização e verifique se atinge a meta de redução de 30%.
@@ -65,7 +65,7 @@ A equipe financeira relata que o gasto atual com banco de dados é $18.000/mes e
 <details>
 <summary>Dica 1: Modelo DTU vs vCore</summary>
 
-O modelo DTU (Database Transaction Unit) agrupa computacao, armazenamento e I/O em uma única unidade. E mais simples de entender, mas menos flexivel. O modelo vCore permite que você escolha independentemente computacao (vCores, memoria) e armazenamento, e suporta computacao serverless. O modelo vCore também permite Azure Hybrid Benefit (usando licencas existentes de SQL Server) para economia de até 55%. Se a equipe já possui licencas de SQL Server, vCore e quase sempre mais economico.
+O modelo DTU (Database Transaction Unit) agrupa computacao, armazenamento e I/O em uma única unidade. E mais simples de entender, mas menos flexível. O modelo vCore permite que você escolha independentemente computacao (vCores, memoria) e armazenamento, e suporta computacao serverless. O modelo vCore também permite Azure Hybrid Benefit (usando licencas existentes de SQL Server) para economia de até 55%. Se a equipe já possui licencas de SQL Server, vCore e quase sempre mais economico.
 
 </details>
 
@@ -86,7 +86,7 @@ Serverless esta disponível apenas no modelo vCore na camada General Purpose (é
 <details>
 <summary>Dica 4: Named Replicas Hyperscale</summary>
 
-Named replicas Hyperscale sao nos de computacao de escala de leitura independentes com seu proprio objetivo de nível de serviço. Diferente das replicas de leitura regulares, elas podem ser escaladas independentemente do primário e podem servir como endpoints de conexão para cargas de trabalho específicas (como relatórios ou analytics). Você pode ter até 30 named replicas por banco de dados primário. Named replicas também estao disponiveis na camada de computacao serverless.
+Named replicas Hyperscale sao nos de computacao de escala de leitura independentes com seu próprio objetivo de nível de serviço. Diferente das replicas de leitura regulares, elas podem ser escaladas independentemente do primário e podem servir como endpoints de conexão para cargas de trabalho específicas (como relatórios ou analytics). Você pode ter até 30 named replicas por banco de dados primário. Named replicas também estao disponíveis na camada de computacao serverless.
 
 </details>
 

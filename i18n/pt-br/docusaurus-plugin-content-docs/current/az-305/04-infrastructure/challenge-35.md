@@ -19,7 +19,7 @@ Meridian Capital Partners é uma empresa de serviços financeiros que executa si
 
 A empresa opera sob requisitos regulatorios rigorosos. Certas cargas de trabalho processam Informações Pessoalmente Identificaveis (PII) e devem rodar em hardware que não é compartilhado com outros locatarios do Azure. Além disso, a camada de cache de simulacao requer latência de disco sub-milissegundo para evitar se tornar um gargalo durante escritas paralelas de centenas de threads de simulacao. A empresa já experimentou problemas de latência de comunicação inter-VM no passado que causaram falhas de sincronizacao das simulacoes.
 
-Sua tarefa é projetar uma solução baseada em VM que enderece economia de scale-to-zero, soberania de dados atraves de hardware dedicado, armazenamento de ultra-baixa-latência e proximidade de rede para comunicação inter-VM, mantendo os custos gerenciáveis pagando apenas por recursos durante a janela ativa de 14 horas.
+Sua tarefa é projetar uma solução baseada em VM que enderece economia de scale-to-zero, soberania de dados através de hardware dedicado, armazenamento de ultra-baixa-latência e proximidade de rede para comunicação inter-VM, mantendo os custos gerenciáveis pagando apenas por recursos durante a janela ativa de 14 horas.
 
 ## Habilidades do Exame Cobertas
 
@@ -27,11 +27,11 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
 
 ## Tarefas de Design
 
-### Parte 1: Design de Orquestracao de Scale Set
+### Parte 1: Design de Orquestração de Scale Set
 
 1. Avalie os modos de orquestracao do VMSS para a carga de trabalho Monte Carlo:
-   - **Orquestracao Flexible**: Suporta tamanhos mistos de VM, zonas de disponibilidade, pode adicionar VMs existentes
-   - **Orquestracao Uniform**: Todas as VMs sao identicas, suporta Service Fabric e AKS, atualizações gerenciadas pela plataforma
+   - **Orquestração Flexible**: Suporta tamanhos mistos de VM, zonas de disponibilidade, pode adicionar VMs existentes
+   - **Orquestração Uniform**: Todas as VMs sao identicas, suporta Service Fabric e AKS, atualizações gerenciadas pela plataforma
 
 2. Determine qual modo de orquestracao e apropriado para cargas de trabalho embaracosamente paralelas onde todas as VMs executam código de simulacao identico. Documente os trade-offs entre Flexible e Uniform para este caso de uso.
 
@@ -45,11 +45,11 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
 ### Parte 2: Hardware Dedicado e Computação Confidencial
 
 4. Para cargas de trabalho que processam PII e não podem compartilhar hardware com outros locatarios, avalie:
-   - **Azure Dedicated Hosts**: Servidor fisico dedicado a sua organização
+   - **Azure Dedicated Hosts**: Servidor físico dedicado a sua organização
    - **Confidential Computing (VMs DCsv2/DCsv3)**: TEE baseado em hardware (Trusted Execution Environments) com enclaves Intel SGX
 
 5. Determine qual abordagem de isolamento atende aos requisitos regulatorios:
-   - Se o requisito é "nenhum outro locatario no mesmo servidor fisico" -> qual solução?
+   - Se o requisito é "nenhum outro locatario no mesmo servidor físico" -> qual solução?
    - Se o requisito é "dados devem ser criptografados mesmo durante o processamento" -> qual solução?
    - Ambas podem ser combinadas? Quais sao as implicacoes de custo?
 
@@ -72,7 +72,7 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
 
 8. Justifique por que Ultra Disk é necessário para esta carga de trabalho. Documente os requisitos de IOPS e throughput para mais de 100 VMs realizando escritas paralelas de simulacao.
 
-9. Projete a configuração de disco: Cada VM deve ter seu proprio Ultra Disk, ou você deve usar uma arquitetura de disco compartilhado? Quais sao as consideracoes de dimensionamento?
+9. Projete a configuração de disco: Cada VM deve ter seu próprio Ultra Disk, ou você deve usar uma arquitetura de disco compartilhado? Quais sao as consideracoes de dimensionamento?
 
 ### Parte 4: Proximidade de Rede e Performance
 
@@ -105,11 +105,11 @@ Sua tarefa é projetar uma solução baseada em VM que enderece economia de scal
 ## Dicas
 
 <details>
-<summary>Dica 1: Selecao de Modo de Orquestracao VMSS</summary>
+<summary>Dica 1: Selecao de Modo de Orquestração VMSS</summary>
 
 Para simulacoes Monte Carlo embaracosamente paralelas onde todas as VMs executam código identico:
-- **Orquestracao Uniform** e a melhor opcao porque todas as instâncias usam o mesmo modelo e configuração de VM, e você se beneficia de scaling otimizado pela plataforma (over-provisioning para scale-out mais rápido).
-- **Orquestracao Flexible** agrega valor quando você precisa de tamanhos mistos de VM ou quer adicionar VMs standalone ao grupo, o que não é necessário para workers de simulacao identicos.
+- **Orquestração Uniform** e a melhor opcao porque todas as instâncias usam o mesmo modelo e configuração de VM, e você se beneficia de scaling otimizado pela plataforma (over-provisioning para scale-out mais rápido).
+- **Orquestração Flexible** agrega valor quando você precisa de tamanhos mistos de VM ou quer adicionar VMs standalone ao grupo, o que não é necessário para workers de simulacao identicos.
 
 Diferenca chave: Uniform trata instâncias como intercambiaveis; Flexible as trata como VMs individualmente gerenciáveis.
 
@@ -118,7 +118,7 @@ Diferenca chave: Uniform trata instâncias como intercambiaveis; Flexible as tra
 <details>
 <summary>Dica 2: Dimensionamento de Dedicated Host</summary>
 
-Azure Dedicated Hosts sao servidores fisicos. Um único host do tipo DSv4 pode acomodar:
+Azure Dedicated Hosts sao servidores físicos. Um único host do tipo DSv4 pode acomodar:
 - 16x Standard_D4s_v4 (4 vCPU cada), ou
 - 8x Standard_D8s_v4 (8 vCPU cada), ou
 - 4x Standard_D16s_v4, etc.
@@ -149,7 +149,7 @@ Para cache de simulacao, considere:
 
 Calcule a economia de custos para 100x VMs Standard_D16s_v4:
 - Pay-as-you-go: ~$0.77/hora por VM
-- 100 VMs x 14 horas/dia x 22 dias uteis = 30,800 VM-horas/mes
+- 100 VMs x 14 horas/dia x 22 dias úteis = 30,800 VM-horas/mes
 - Custo: 30,800 x $0.77 = ~$23,716/mes
 
 Versus 24/7: 100 VMs x 730 horas = 73,000 VM-horas x $0.77 = ~$56,210/mes
@@ -184,14 +184,14 @@ Para 100+ VMs em um PPG, use posicionamento baseado em intent: especifique os ta
 <details>
 <summary>1. Um VMSS com 100 VMs identicas precisa escalar de 0 para 100 o mais rápido possível em um horario agendado. Qual modo de orquestracao e qual configuração otimiza a velocidade de implantacao?</summary>
 
-**Orquestracao Uniform com overprovisioning habilitado.** O modo Uniform e otimizado para implantacoes identicas em larga escala e suporta overprovisioning, que cria VMs extras durante o scale-out (ex.: 120 VMs) e depois deleta as extras assim que 100 estao confirmadas como saudaveis. Isso compensa falhas de provisionamento de VMs individuais e reduz o tempo para atingir o alvo. Orquestracao Flexible não suporta overprovisioning. Adicionalmente, defina a política de scale-out para usar "newest VMs" para scale-in para reter as instâncias de maior execução.
+**Orquestração Uniform com overprovisioning habilitado.** O modo Uniform e otimizado para implantacoes identicas em larga escala e suporta overprovisioning, que cria VMs extras durante o scale-out (ex.: 120 VMs) e depois deleta as extras assim que 100 estao confirmadas como saudaveis. Isso compensa falhas de provisionamento de VMs individuais e reduz o tempo para atingir o alvo. Orquestração Flexible não suporta overprovisioning. Adicionalmente, defina a política de scale-out para usar "newest VMs" para scale-in para reter as instâncias de maior execução.
 
 </details>
 
 <details>
 <summary>2. Quando você deve escolher Azure Dedicated Hosts ao inves de VMs de Confidential Computing?</summary>
 
-**Quando o requisito regulatorio e isolamento de hardware fisico (sem co-locacao) ao inves de criptografia de dados em uso.** Dedicated Hosts fornecem um servidor fisico inteiro onde nenhuma VM de outro locatario pode rodar. Confidential Computing (DCsv2/DCsv3) fornece enclaves criptografados por hardware que protegem dados enquanto estao sendo processados, mesmo do hypervisor. Se sua regulamentacao diz "não deve compartilhar infraestrutura fisica com outros locatarios," Dedicated Hosts sao a resposta. Se diz "dados devem permanecer criptografados durante a computacao," Confidential Computing é necessário. Para isolamento máximo, você pode rodar VMs Confidenciais em Dedicated Hosts.
+**Quando o requisito regulatorio e isolamento de hardware físico (sem co-locacao) ao inves de criptografia de dados em uso.** Dedicated Hosts fornecem um servidor físico inteiro onde nenhuma VM de outro locatario pode rodar. Confidential Computing (DCsv2/DCsv3) fornece enclaves criptografados por hardware que protegem dados enquanto estao sendo processados, mesmo do hypervisor. Se sua regulamentacao diz "não deve compartilhar infraestrutura física com outros locatarios," Dedicated Hosts sao a resposta. Se diz "dados devem permanecer criptografados durante a computacao," Confidential Computing é necessário. Para isolamento máximo, você pode rodar VMs Confidenciais em Dedicated Hosts.
 
 </details>
 

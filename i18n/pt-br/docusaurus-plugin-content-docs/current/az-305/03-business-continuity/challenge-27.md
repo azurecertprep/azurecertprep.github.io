@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A Apex Trading International opera uma plataforma de trading de alta frequência no Azure que processa 50.000 transações por segundo durante o horario de mercado. Seu banco de dados principal é um Azure SQL Database (tier Business Critical, 80 vCores) que registra cada operação com timestamps de microssegundos. Conformidade regulatoria (SEC Rule 17a-4 e MiFID II) exige que cada transação individual seja recuperavel até o segundo exato em que ocorreu, com um período obrigatório de retencao de 10 anos para todos os dados de trading. O banco de dados de trading tem um RPO de efetivamente zero - mesmo 5 segundos de operações perdidas durante o horario de mercado pode significar milhoes em posicoes não reconciliadas.
+A Apex Trading International opera uma plataforma de trading de alta frequência no Azure que processa 50.000 transações por segundo durante o horario de mercado. Seu banco de dados principal é um Azure SQL Database (tier Business Critical, 80 vCores) que registra cada operação com timestamps de microssegundos. Conformidade regulatoria (SEC Rule 17a-4 e MiFID II) exige que cada transação individual seja recuperavel até o segundo exato em que ocorreu, com um período obrigatório de retencao de 10 anos para todos os dados de trading. O banco de dados de trading tem um RPO de efetivamente zero - mesmo 5 segundos de operações perdidas durante o horario de mercado pode significar milhões em posicoes não reconciliadas.
 
 Além do banco de dados de trading, a Apex opera um data warehouse de analytics (Azure SQL Database, tier General Purpose, 32 vCores) que agrega dados de trading para análise de risco e relatórios regulatorios. Este banco de dados pode tolerar até 1 hora de perda de dados já que é reconstruido a partir do banco de dados de trading toda noite. No entanto, deve ser restauravel em 4 horas para prazos de relatórios de conformidade.
 
@@ -83,7 +83,7 @@ az sql failover-group create \
 ### Parte 3: Cosmos DB Continuous Backup
 
 7. Projete a estratégia de backup para a instância Cosmos DB de dados de mercado:
-   - Compare modo de backup periodico vs. modo de backup continuo
+   - Compare modo de backup periódico vs. modo de backup continuo
    - Para backup continuo, quais sao os dois tiers de retencao (7 dias vs. 30 dias)?
    - Você pode restaurar para um timestamp específico? Qual é a granularidade?
 
@@ -97,7 +97,7 @@ az sql failover-group create \
    - Você pode restaurar um único container ou deve restaurar a conta inteira?
    - Qual é o tempo aproximado de restauracao para um banco de dados de 100 GB?
 
-### Parte 4: PostgreSQL e Orquestracao de Recuperação Cross-Database
+### Parte 4: PostgreSQL e Orquestração de Recuperação Cross-Database
 
 10. Projete a abordagem de backup para o PostgreSQL Flexible Server:
     - Configure backups automatizados com armazenamento geo-redundante
@@ -175,14 +175,14 @@ Para o banco de dados de trading com RPO quase zero:
 <summary>Dica 4: Detalhes do Cosmos DB Continuous Backup</summary>
 
 Modo de backup continuo do Cosmos DB:
-- **Tier 1 (retencao de 7 dias)**: Incluido sem custo extra. Restaure para qualquer ponto nos ultimos 7 dias.
-- **Tier 2 (retencao de 30 dias)**: Custo adicional por GB/mes. Restaure para qualquer ponto nos ultimos 30 dias.
+- **Tier 1 (retencao de 7 dias)**: Incluido sem custo extra. Restaure para qualquer ponto nos últimos 7 dias.
+- **Tier 2 (retencao de 30 dias)**: Custo adicional por GB/mes. Restaure para qualquer ponto nos últimos 30 dias.
 - **Granularidade de restauracao**: 1 segundo (você pode especificar timestamp exato)
 - **Destino da restauracao**: Sempre uma NOVA conta (não pode restaurar in-place)
 - **Escopo de restauracao**: Conta inteira, banco de dados único ou container único
 - **Tempo aproximado de restauracao**: 1-2 horas para 100 GB (varia pela distribuição de dados)
 
-Importante: O modo de backup continuo não pode ser alterado de volta para periodico uma vez habilitado. Ele suporta todos os consistency levels, e a conta restaurada herda a configuração de consistência original.
+Importante: O modo de backup continuo não pode ser alterado de volta para periódico uma vez habilitado. Ele suporta todos os consistency levels, e a conta restaurada herda a configuração de consistência original.
 
 </details>
 
@@ -207,7 +207,7 @@ Importante: O modo de backup continuo não pode ser alterado de volta para perio
 <details>
 <summary>2. Por que você não pode usar PITR (point-in-time restore) sozinho para alcalcar RPO quase zero para um banco de dados crítico de trading?</summary>
 
-**PITR é baseado em backups de transaction log que ocorrem a cada 5-10 minutos.** Se o banco de dados primário falhar entre backups de log, quaisquer transações confirmadas apos o último backup de log sao perdidas. Para uma plataforma de trading processando 50.000 transações por segundo, uma lacuna de 5 minutos pode significar até 15 milhoes de transações perdidas. PITR é projetado para recuperação operacional (delecoes acidentais, corrupcao) não para disaster recovery com RPO zero. Para RPO quase zero, você precisa de replicação continua via failover groups ou active geo-replication.
+**PITR é baseado em backups de transaction log que ocorrem a cada 5-10 minutos.** Se o banco de dados primário falhar entre backups de log, quaisquer transações confirmadas apos o último backup de log sao perdidas. Para uma plataforma de trading processando 50.000 transações por segundo, uma lacuna de 5 minutos pode significar até 15 milhões de transações perdidas. PITR é projetado para recuperação operacional (delecoes acidentais, corrupcao) não para disaster recovery com RPO zero. Para RPO quase zero, você precisa de replicação continua via failover groups ou active geo-replication.
 
 </details>
 

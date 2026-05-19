@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-SensorGrid é uma plataforma de IoT industrial que monitora 50.000 dispositivos implantados em instalacoes de manufatura na America do Norte, Europa e Asia-Pacifico. Cada dispositivo transmite eventos de telemetria (temperatura, vibracao, pressao, umidade) a cada 5 segundos, resultando em aproximadamente 1 milhao de eventos por segundo no pico. Os eventos sao documentos JSON com esquema variavel: diferentes tipos de dispositivos incluem diferentes leituras de sensores, versoes de firmware adicionam novos campos ao longo do tempo, e alguns eventos incluem arrays aninhados de sub-leituras.
+SensorGrid é uma plataforma de IoT industrial que monitora 50.000 dispositivos implantados em instalacoes de manufatura na América do Norte, Europa e Asia-Pacifico. Cada dispositivo transmite eventos de telemetria (temperatura, vibracao, pressao, umidade) a cada 5 segundos, resultando em aproximadamente 1 milhao de eventos por segundo no pico. Os eventos sao documentos JSON com esquema variavel: diferentes tipos de dispositivos incluem diferentes leituras de sensores, versoes de firmware adicionam novos campos ao longo do tempo, e alguns eventos incluem arrays aninhados de sub-leituras.
 
 A plataforma tem dois padrões de acesso primários. Primeiro, operadores precisam de dashboards em tempo real mostrando o estado mais recente de qualquer dispositivo com latência de leitura inferior a 10ms (leituras pontuais por device ID). Segundo, engenheiros executam consultas analiticas historicas abrangendo dias ou semanas de dados para uma instalacao ou tipo de dispositivo específico, onde tempos de resposta de 2-5 segundos sao aceitaveis. O volume de dados atual e 2TB e cresce 500GB por mes.
 
@@ -37,7 +37,7 @@ O orcamento da SensorGrid para a camada de dados é $3.000/mes. O CTO quer minim
 ### Parte 2: Modelagem de Dados e Particionamento
 
 5. Projete a estratégia de partition key para o container de eventos de telemetria. Avalie candidatos: device ID, facility ID, tipo de dispositivo, timestamp ou uma chave sintetica combinando múltiplos campos. Considere os padrões de acesso (leituras pontuais por dispositivo, consultas de intervalo por tempo, consultas por instalacao).
-6. Calcule o consumo esperado de RU (Request Unit) para os dois padrões de acesso primários: (a) leitura pontual do estado mais recente do dispositivo, (b) consulta retornando 1 hora de historico para um único dispositivo. Estime o throughput provisionado necessário.
+6. Calcule o consumo esperado de RU (Request Unit) para os dois padrões de acesso primários: (a) leitura pontual do estado mais recente do dispositivo, (b) consulta retornando 1 hora de histórico para um único dispositivo. Estime o throughput provisionado necessário.
 7. Projete a estrutura do documento para eventos de telemetria. Decida se deve armazenar cada leitura como um documento individual ou agrupar múltiplas leituras em um único documento (padrão de bucketing). Análise os trade-offs em custo de RU, flexibilidade de consulta e throughput de escrita.
 8. Projete uma estratégia de TTL (time-to-live) para expirar automaticamente os dados apos 90 dias, reduzindo custos de armazenamento sem jobs de limpeza manuais.
 
@@ -81,7 +81,7 @@ Para telemetria IoT, estratégias comuns de partition key: (1) Device ID: excele
 <details>
 <summary>Dica 3: Estimativa de Request Units</summary>
 
-Fundamentos de custo do Cosmos DB: uma leitura pontual de um documento de 1KB custa 1 RU. Escritas custam aproximadamente 5-10 RUs por documento de 1KB. O custo de consultas varia baseado na complexidade (consultas cross-partition custam mais). Para 1M escritas/segundo a 1KB cada, você precisaria de aproximadamente 5-10 milhoes de RU/s, o que seria extremamente caro. E por isso que document bucketing (agrupar 10-60 leituras por documento) reduz dramaticamente os RUs de escrita ao reduzir o número de operações de escrita individuais.
+Fundamentos de custo do Cosmos DB: uma leitura pontual de um documento de 1KB custa 1 RU. Escritas custam aproximadamente 5-10 RUs por documento de 1KB. O custo de consultas varia baseado na complexidade (consultas cross-partition custam mais). Para 1M escritas/segundo a 1KB cada, você precisaria de aproximadamente 5-10 milhões de RU/s, o que seria extremamente caro. E por isso que document bucketing (agrupar 10-60 leituras por documento) reduz dramaticamente os RUs de escrita ao reduzir o número de operações de escrita individuais.
 
 </details>
 

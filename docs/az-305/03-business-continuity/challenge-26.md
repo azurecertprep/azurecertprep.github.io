@@ -253,15 +253,24 @@ For Azure VMs running as DCs, Azure Backup with application-consistent snapshots
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab validates the full backup-and-restore lifecycle. You will protect a VM, trigger a backup, simulate disaster by deleting the VM, and restore it from the recovery point. This proves your actual RPO and RTO rather than just confirming resource provisioning.
 
-1. Create a resource group for this lab:
+### Part A - Deploy Infrastructure
+
+1. Create the resource group, Recovery Services vault, and a Linux VM:
 
 ```bash
-az group create --name rg-az305-challenge26 --location eastus
+az group create \
+  --name rg-az305-challenge26 \
+  --location eastus
 ```
 
-2. Deploy a virtual machine to protect with backup:
+```bash
+az backup vault create \
+  --resource-group rg-az305-challenge26 \
+  --name vault-az305-challenge26 \
+  --location eastus
+```
 
 ```bash
 az vm create \
@@ -273,49 +282,190 @@ az vm create \
   --generate-ssh-keys
 ```
 
-3. Create a Recovery Services vault:
+2. Create a backup policy with daily backup and 7-day retention:
 
 ```bash
-az backup vault create \
+az backup policy create \
   --resource-group rg-az305-challenge26 \
-  --name vault-az305-challenge26 \
-  --location eastus
+  --vault-name vault-az305-challenge26 \
+  --name daily-7day-policy \
+  --policy '{
+    "eTag": null,
+    "properties": {
+      "backupManagementType": "AzureIaasVM",
+      "schedulePolicy": {
+        "schedulePolicyType": "SimpleSchedulePolicy",
+        "scheduleRunFrequency": "Daily",
+        "scheduleRunTimes": ["2024-01-01T02:00:00Z"]
+      },
+      "retentionPolicy": {
+        "retentionPolicyType": "LongTermRetentionPolicy",
+        "dailySchedule": {
+          "retentionTimes": ["2024-01-01T02:00:00Z"],
+          "retentionDuration": {
+            "count": 7,
+            "durationType": "Days"
+          }
+        }
+      },
+      "instantRpRetentionRangeInDays": 2,
+      "timeZone": "UTC"
+    }
+  }'
 ```
 
-4. Enable backup on the VM using the default policy:
+3. Enable backup on the VM using the custom policy:
 
 ```bash
 az backup protection enable-for-vm \
   --resource-group rg-az305-challenge26 \
   --vault-name vault-az305-challenge26 \
   --vm vm-backup-lab \
-  --policy-name DefaultPolicy
+  --policy-name daily-7day-policy
 ```
 
-5. Verify the VM is registered and protection is active:
+:::note[Architect Insight]
+RPO depends on backup frequency. A daily schedule means up to 24 hours of data loss in the worst case (disaster strikes just before the next scheduled backup). For workloads that cannot tolerate 24-hour data loss, you need more frequent backups or continuous replication via Azure Site Recovery.
+:::
+
+### Part B - Trigger On-Demand Backup and Verify
+
+4. Trigger an immediate on-demand backup (do not wait for the scheduled time):
 
 ```bash
-az backup item list \
+az backup protection backup-now \
   --resource-group rg-az305-challenge26 \
   --vault-name vault-az305-challenge26 \
-  --query "[].{Name:name, Status:properties.protectionStatus}" -o table
+  --container-type AzureIaasVM \
+  --item-name vm-backup-lab \
+  --retain-until $(date -u -d "+7 days" +%d-%m-%Y) \
+  --backup-management-type AzureIaasVM
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+5. The on-demand backup takes 10-20 minutes depending on VM size and disk. Check the backup job status:
+
+```bash
+az backup job list \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --query "[?properties.operation=='Backup'].{Name:name, Status:properties.status, StartTime:properties.startTime}" \
+  -o table
+```
+
+Wait until the status shows "Completed". Re-run the command above every few minutes to check progress.
+
+6. Once complete, list recovery points to confirm the backup exists:
+
+```bash
+az backup recoverypoint list \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --container-type AzureIaasVM \
+  --item-name vm-backup-lab \
+  --backup-management-type AzureIaasVM \
+  --query "[].{Name:name, Time:properties.recoveryPointTime, Type:properties.recoveryPointType}" \
+  -o table
+```
+
+:::note[Architect Insight]
+On-demand backup tests the mechanism before a disaster strikes. Many organizations discover their backup configuration is broken only during an actual outage. Testing the full cycle validates that policies, permissions, and network paths are all functional.
+:::
+
+### Part C - Simulate Disaster and Restore
+
+7. Record the recovery point name, then simulate disaster by deleting the VM:
+
+```bash
+RP_NAME=$(az backup recoverypoint list \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --container-type AzureIaasVM \
+  --item-name vm-backup-lab \
+  --backup-management-type AzureIaasVM \
+  --query "[0].name" -o tsv)
+
+echo "Recovery point: $RP_NAME"
+```
+
+```bash
+az vm delete \
+  --resource-group rg-az305-challenge26 \
+  --name vm-backup-lab \
+  --yes
+```
+
+8. Initiate restore from the recovery point (restore as a new VM to avoid conflicts):
+
+```bash
+az backup restore restore-disks \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --container-type AzureIaasVM \
+  --item-name vm-backup-lab \
+  --backup-management-type AzureIaasVM \
+  --rp-name $RP_NAME \
+  --storage-account $(az storage account list \
+    --resource-group rg-az305-challenge26 \
+    --query "[0].name" -o tsv) \
+  --target-resource-group rg-az305-challenge26
+```
+
+If no storage account exists in the resource group, create one first:
+
+```bash
+az storage account create \
+  --resource-group rg-az305-challenge26 \
+  --name strecovery26$RANDOM \
+  --sku Standard_LRS \
+  --location eastus
+```
+
+9. Monitor the restore job until completion:
+
+```bash
+az backup job list \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --query "[?properties.operation=='Restore'].{Name:name, Status:properties.status, StartTime:properties.startTime}" \
+  -o table
+```
+
+10. After disks are restored, create a new VM from the restored disks (check the storage account for the restored disk URI and ARM template that Azure Backup generates).
+
+:::note[Architect Insight]
+RTO depends on VM size and disk volume. Larger VMs with multi-terabyte disks take significantly longer to restore. The "instant restore" feature uses the snapshot tier (retained for 1-5 days) which restores in minutes rather than hours, because it avoids copying data from the vault. After the instant restore retention expires, restore must pull data from the vault, increasing RTO considerably.
+:::
+
+### Part D - Verify Restored VM
+
+11. Once the restored VM is created, verify it is running:
+
+```bash
+az vm list \
+  --resource-group rg-az305-challenge26 \
+  --query "[].{Name:name, State:powerState}" \
+  -o table
+```
+
+:::tip[Design Validation]
+This lab validated three architectural decisions: (1) The backup-and-restore cycle proves actual RPO and RTO values rather than theoretical ones. (2) On-demand backup confirms the protection mechanism works before a real disaster forces you to find out. (3) Restoring as a new VM avoids conflicts with existing resources (NICs, disks, IP addresses) and is the recommended restore pattern for production.
 :::
 
 ## Cleanup
 
 ```bash
-# Delete resource groups containing backup infrastructure
-az group delete --name rg-az305-challenge26 --yes --no-wait
-az group delete --name rg-backup-eastus --yes --no-wait
-az group delete --name rg-backup-westeurope --yes --no-wait
-az group delete --name rg-backup-southeastasia --yes --no-wait
+# Disable backup protection and delete backup data
+az backup protection disable \
+  --resource-group rg-az305-challenge26 \
+  --vault-name vault-az305-challenge26 \
+  --container-type AzureIaasVM \
+  --item-name vm-backup-lab \
+  --backup-management-type AzureIaasVM \
+  --delete-backup-data true \
+  --yes
 
-# Note: Soft delete may prevent immediate deletion of backup items
-# You may need to disable soft delete first or wait for retention to expire
+# Delete the resource group (includes vault, VMs, storage)
+az group delete --name rg-az305-challenge26 --yes --no-wait
 ```
 
 ---

@@ -52,7 +52,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - Trigger: Mensagem na fila apos compra bem-sucedida
    - Processamento: Gerar PDF com QR code (intensivo em CPU, 2-5 segundos por ingresso)
    - Saida: Armazenar PDF no blob storage, disparar etapa de notificação
-   - Qual plano de Functions e apropriado (pode tolerar cold start, sensivel a custo)?
+   - Qual plano de Functions e apropriado (pode tolerar cold start, sensível a custo)?
 
 5. Projete o serviço de notificação email/SMS:
    - Deve ser Azure Functions ou Logic Apps?
@@ -65,7 +65,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
    - Avalie: Azure Functions com fan-out baseado em fila vs. Azure Batch para este volume
    - Qual é o tempo de execução esperado e custo para 50K registros?
 
-### Parte 3: Orquestracao com Durable Functions
+### Parte 3: Orquestração com Durable Functions
 
 7. Projete o workflow de pacote de ingressos VIP usando Durable Functions:
    - Etapa 1: Reservar assentos selecionados (chamar Seats API)
@@ -101,7 +101,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
 12. Projete o diagrama de arquitetura mostrando como todos os componentes se conectam:
     - HTTP trigger (venda de ingressos) -> Queue -> Geracao PDF -> Blob -> Notificação
     - Timer trigger (batch) -> Processamento de reembolsos -> Payment API
-    - HTTP trigger (VIP) -> Orquestracao Durable -> múltiplas APIs backend
+    - HTTP trigger (VIP) -> Orquestração Durable -> múltiplas APIs backend
 
 ## Criterios de Sucesso
 
@@ -110,7 +110,7 @@ A equipe de engenharia quer minimizar gerenciamento de infraestrutura e pagar ap
   items={[
     "Plano de Functions correto selecionado para API de venda de ingressos com justificativa de cold-start",
     "Processamento em background projetado com triggers apropriados (queue, timer, blob)",
-    "Orquestracao Durable Functions projetada para workflow VIP com tratamento de erros e padrão Saga",
+    "Orquestração Durable Functions projetada para workflow VIP com tratamento de erros e padrão Saga",
     "Comparacao Azure Batch vs Functions documentada para carga batch noturna de 50K",
     "Comparacao de custo completada entre tipos de plano para todos os padrões de carga de trabalho",
     "Estratégia de mitigacao de cold start endereca o cenário crítico de burst de venda de ingressos"
@@ -171,7 +171,7 @@ except PaymentFailedException:
 Decisoes chave de design:
 - Cada etapa deve ser idempotente (segura para retry)
 - Ações compensatorias desfazem os efeitos de etapas bem-sucedidas
-- A função orchestrator mantem estado automaticamente (estado duravel)
+- A função orchestrator mantem estado automaticamente (estado durável)
 - Defina `maxNumberOfAttempts` e `backoffCoefficient` nas políticas de retry
 
 </details>

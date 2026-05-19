@@ -240,7 +240,7 @@ az storage account management-policy create \
 <details>
 <summary>3. Qual é o número máximo de diagnostic settings por recurso Azure, e que restrição isso impoe na arquitetura de roteamento?</summary>
 
-**Cada recurso suporta no máximo 5 diagnostic settings.** Cada setting pode ter um destino de cada tipo (um Log Analytics workspace, uma Storage Account, um Event Hub, uma solução de parceiro). Isso significa que um único recurso pode enviar logs para no máximo 5 Log Analytics workspaces, 5 Storage Accounts e 5 Event Hubs em todas as suas diagnostic settings. Você não pode criar duas settings apontando para o mesmo destino. Esse limite raramente impacta designs, mas deve ser considerado quando múltiplas equipes querem cada uma seu proprio destino.
+**Cada recurso suporta no máximo 5 diagnostic settings.** Cada setting pode ter um destino de cada tipo (um Log Analytics workspace, uma Storage Account, um Event Hub, uma solução de parceiro). Isso significa que um único recurso pode enviar logs para no máximo 5 Log Analytics workspaces, 5 Storage Accounts e 5 Event Hubs em todas as suas diagnostic settings. Você não pode criar duas settings apontando para o mesmo destino. Esse limite raramente impacta designs, mas deve ser considerado quando múltiplas equipes querem cada uma seu próprio destino.
 
 </details>
 

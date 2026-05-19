@@ -177,56 +177,239 @@ Private Endpoints bring the PaaS service into your VNet with a private IP (acces
 
 ## Validation Lab
 
-Deploy a minimal proof-of-concept to validate your design:
+This lab proves NSG microsegmentation behavior through direct observation. You will deploy two VMs in separate subnets, apply deny rules, watch traffic get blocked, add allow rules, and confirm fine-grained access control -- all in real time with immediate effect.
 
-1. Create a resource group for this lab:
-
-```bash
-az group create --name rg-az305-challenge49 --location eastus
-```
-
-2. Create an Azure Migrate project:
+### Step 1: Create the resource group and VNet with two subnets
 
 ```bash
-az extension add --name resource-mover --only-show-errors 2>/dev/null
-az resource create --resource-group rg-az305-challenge49 \
-  --resource-type Microsoft.Migrate/migrateProjects \
-  --name migrate-lab49 --location eastus \
-  --properties "{}"
+az group create \
+  --name rg-az305-challenge49 \
+  --location eastus
 ```
-
-3. Verify the Azure Migrate project was created:
 
 ```bash
-az resource show --resource-group rg-az305-challenge49 \
-  --resource-type Microsoft.Migrate/migrateProjects \
-  --name migrate-lab49 --query "name" -o tsv
+az network vnet create \
+  --resource-group rg-az305-challenge49 \
+  --name vnet-segmented \
+  --address-prefix 10.0.0.0/16 \
+  --subnet-name web-subnet \
+  --subnet-prefix 10.0.1.0/24
 ```
-
-4. List the resource to confirm it appears in the resource group:
 
 ```bash
-az resource list --resource-group rg-az305-challenge49 -o table
+az network vnet subnet create \
+  --resource-group rg-az305-challenge49 \
+  --vnet-name vnet-segmented \
+  --name db-subnet \
+  --address-prefix 10.0.2.0/24
 ```
 
-5. Check the project properties:
+### Step 2: Deploy a VM in each subnet
 
 ```bash
-az resource show --resource-group rg-az305-challenge49 \
-  --resource-type Microsoft.Migrate/migrateProjects \
-  --name migrate-lab49 --query "properties" -o json
+az vm create \
+  --resource-group rg-az305-challenge49 \
+  --name web-vm \
+  --vnet-name vnet-segmented \
+  --subnet web-subnet \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --public-ip-address "" \
+  --no-wait
 ```
 
-:::tip
-This mini-deployment validates your design decisions with real Azure resources. It is optional but recommended.
+```bash
+az vm create \
+  --resource-group rg-az305-challenge49 \
+  --name db-vm \
+  --vnet-name vnet-segmented \
+  --subnet db-subnet \
+  --image Ubuntu2204 \
+  --size Standard_B1s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --public-ip-address ""
+```
+
+Wait for both VMs:
+
+```bash
+az vm wait \
+  --resource-group rg-az305-challenge49 \
+  --name web-vm \
+  --created
+```
+
+Get private IPs:
+
+```bash
+WEB_IP=$(az vm show \
+  --resource-group rg-az305-challenge49 \
+  --name web-vm \
+  --show-details \
+  --query privateIps -o tsv)
+
+DB_IP=$(az vm show \
+  --resource-group rg-az305-challenge49 \
+  --name db-vm \
+  --show-details \
+  --query privateIps -o tsv)
+
+echo "Web VM IP: $WEB_IP"
+echo "DB VM IP: $DB_IP"
+```
+
+:::note[Architect Insight]
+By default, VMs within the same VNet can communicate freely across subnets. This is because Azure injects a default "AllowVNetInBound" rule at priority 65000. On the AZ-305 exam, understand that subnets alone do NOT provide isolation -- you need NSGs to enforce segmentation within a VNet.
+:::
+
+### Step 3: Create an NSG with a DENY rule for SSH from web-subnet to db-subnet
+
+```bash
+az network nsg create \
+  --resource-group rg-az305-challenge49 \
+  --name nsg-db-subnet
+```
+
+```bash
+az network nsg rule create \
+  --resource-group rg-az305-challenge49 \
+  --nsg-name nsg-db-subnet \
+  --name DenySSHFromWeb \
+  --priority 100 \
+  --direction Inbound \
+  --access Deny \
+  --protocol Tcp \
+  --source-address-prefixes 10.0.1.0/24 \
+  --destination-port-ranges 22 \
+  --description "Block SSH from web subnet to db subnet"
+```
+
+Associate the NSG with the db-subnet:
+
+```bash
+az network vnet subnet update \
+  --resource-group rg-az305-challenge49 \
+  --vnet-name vnet-segmented \
+  --name db-subnet \
+  --network-security-group nsg-db-subnet
+```
+
+### Step 4: Test SSH from web-vm to db-vm (expect FAILURE)
+
+```bash
+az vm run-command invoke \
+  --resource-group rg-az305-challenge49 \
+  --name web-vm \
+  --command-id RunShellScript \
+  --scripts "nc -z -w 3 $DB_IP 22 && echo 'PORT 22 OPEN' || echo 'PORT 22 BLOCKED'"
+```
+
+The output should show "PORT 22 BLOCKED" -- the NSG deny rule is in effect.
+
+:::note[Architect Insight]
+NSGs are stateful: if you allow inbound traffic, the return traffic is automatically permitted without needing an explicit outbound rule. This means a single inbound deny rule is sufficient to block a connection -- you do not need matching outbound rules. On the AZ-305 exam, stateful behavior reduces rule complexity significantly compared to stateless firewalls.
+:::
+
+### Step 5: Add an ALLOW rule for port 3306 (simulating database access)
+
+```bash
+az network nsg rule create \
+  --resource-group rg-az305-challenge49 \
+  --nsg-name nsg-db-subnet \
+  --name AllowMySQLFromWeb \
+  --priority 110 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --source-address-prefixes 10.0.1.0/24 \
+  --destination-port-ranges 3306 \
+  --description "Allow MySQL from web subnet to db subnet"
+```
+
+Start a listener on the db-vm to simulate a database service:
+
+```bash
+az vm run-command invoke \
+  --resource-group rg-az305-challenge49 \
+  --name db-vm \
+  --command-id RunShellScript \
+  --scripts "nohup nc -l -p 3306 &>/dev/null & echo 'Listener started on port 3306'"
+```
+
+### Step 6: Test connectivity on port 3306 (expect SUCCESS)
+
+```bash
+az vm run-command invoke \
+  --resource-group rg-az305-challenge49 \
+  --name web-vm \
+  --command-id RunShellScript \
+  --scripts "nc -z -w 3 $DB_IP 3306 && echo 'PORT 3306 OPEN' || echo 'PORT 3306 BLOCKED'"
+```
+
+The output should show "PORT 3306 OPEN" -- the allow rule permits database traffic while SSH remains blocked. This is microsegmentation in action: allowing only the specific protocol needed.
+
+:::note[Architect Insight]
+NSG rules are evaluated by priority -- the lowest number wins. In this lab, priority 100 (DenySSH) blocks port 22 while priority 110 (AllowMySQL) permits port 3306. On the AZ-305 exam, always design deny rules with lower priority numbers than allow rules for the same source, and use explicit deny rules (rather than relying on the default deny) for compliance auditing -- auditors want to see intentional security decisions documented in rules.
+:::
+
+### Step 7: View effective security rules on the db-vm NIC
+
+```bash
+DB_NIC=$(az vm show \
+  --resource-group rg-az305-challenge49 \
+  --name db-vm \
+  --query "networkProfile.networkInterfaces[0].id" -o tsv)
+
+az network nic list-effective-nsg \
+  --ids $DB_NIC \
+  --output table
+```
+
+The effective rules show the merged result of your custom rules plus the platform default rules (AllowVNetInBound at 65000, DenyAllInBound at 65500). Your DenySSHFromWeb rule at priority 100 takes precedence over the default AllowVNetInBound.
+
+:::note[Architect Insight]
+Effective security rules combine subnet-level and NIC-level NSGs. If you have an NSG on both the subnet AND the NIC, traffic must pass BOTH -- they are evaluated independently and both must permit the traffic. On the AZ-305 exam, this dual-evaluation model is frequently tested. The effective rules view is how you troubleshoot "why is my traffic being blocked?" in production.
+:::
+
+### Step 8: Remove the allow rule and verify immediate revocation
+
+```bash
+az network nsg rule delete \
+  --resource-group rg-az305-challenge49 \
+  --nsg-name nsg-db-subnet \
+  --name AllowMySQLFromWeb
+```
+
+Test port 3306 again:
+
+```bash
+az vm run-command invoke \
+  --resource-group rg-az305-challenge49 \
+  --name web-vm \
+  --command-id RunShellScript \
+  --scripts "nc -z -w 3 $DB_IP 3306 && echo 'PORT 3306 OPEN' || echo 'PORT 3306 BLOCKED'"
+```
+
+The output should show "PORT 3306 BLOCKED" -- rule changes take effect within seconds. No VM restart, no service reload, no propagation delay.
+
+:::note[Architect Insight]
+NSG rule changes are nearly instantaneous. This is critical for incident response -- if you detect a compromised workload, you can isolate it immediately by adding a deny rule. On the AZ-305 exam, this property makes NSGs suitable for automated security remediation workflows (e.g., Azure Logic App detects threat, applies NSG rule to quarantine the VM).
+:::
+
+:::tip[Design Validation]
+This lab proved three critical network security principles: (1) NSGs provide microsegmentation within VNets -- subnets alone do not isolate workloads, you must apply explicit rules, (2) rule changes take effect in seconds with no restart or downtime required -- enabling rapid incident response and automated remediation, and (3) effective security rules show the merged result of all applied NSGs (subnet + NIC level), which is the definitive tool for troubleshooting connectivity issues in production.
 :::
 
 ## Cleanup
 
 ```bash
-# Delete all resources created in this challenge
-# WARNING: DDoS Protection plan has monthly cost - verify deletion
-az group delete --name rg-az305-challenge49 --yes --no-wait
+az group delete \
+  --name rg-az305-challenge49 \
+  --yes \
+  --no-wait
 ```
 
 ---

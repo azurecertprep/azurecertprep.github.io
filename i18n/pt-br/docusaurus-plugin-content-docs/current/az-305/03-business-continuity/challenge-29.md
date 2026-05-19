@@ -15,7 +15,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 ## Introdução
 
-A ShopStream é uma plataforma de e-commerce de medio porte atendendo 2 milhoes de clientes ativos com $50M em receita anual. Sua plataforma funciona como uma arquitetura classica de 3 camadas no Azure: uma camada web (frontend e CDN), uma camada de API (processamento de pedidos, gerenciamento de inventário, integração com gateway de pagamento), é uma camada de banco de dados (Azure SQL para transações, Redis para estado de sessão, Azure Storage para imagens de produtos). A implantacao primária esta em East US 2.
+A ShopStream é uma plataforma de e-commerce de médio porte atendendo 2 milhões de clientes ativos com $50M em receita anual. Sua plataforma funciona como uma arquitetura classica de 3 camadas no Azure: uma camada web (frontend e CDN), uma camada de API (processamento de pedidos, gerenciamento de inventário, integração com gateway de pagamento), é uma camada de banco de dados (Azure SQL para transações, Redis para estado de sessão, Azure Storage para imagens de produtos). A implantacao primária esta em East US 2.
 
 Apos uma interrupcao de 4 horas na última Black Friday causada por uma falha do subsistema de armazenamento em sua região primária, a ShopStream perdeu aproximadamente $800K em receita e confiança significativa dos clientes. O conselho determinou um plano abrangente de disaster recovery com os seguintes requisitos rigidos: a camada web deve recuperar em 5 minutos (RTO), a camada de API em 10 minutos (RTO), e a camada de banco de dados deve ter no máximo 5 segundos de perda de dados (RPO). O orcamento de DR é $3.000/mes para infraestrutura secundária em West US 2.
 
@@ -54,7 +54,7 @@ az group create --name rg-shopstream-dr --location westus2
 3. Documente a configuração de rede para o site de DR:
    - Virtual network em West US 2 (espelho da produção)
    - Regras NSG replicadas ou pré-configuradas
-   - Enderecos IP publicos para load balancers na região de DR
+   - Enderecos IP públicos para load balancers na região de DR
    - Estratégia de DNS para cutover (Azure DNS com TTL baixo ou Traffic Manager)
 
 ### Parte 2: Estratégia de DR da Camada de Banco de Dados
@@ -82,7 +82,7 @@ az group create --name rg-shopstream-dr --location westus2
    - Qual é o RPO para geo-replicação de armazenamento?
    - Como você redireciona leituras para o endpoint secundário durante uma interrupcao?
 
-### Parte 3: Orquestracao do Plano de Recuperação
+### Parte 3: Orquestração do Plano de Recuperação
 
 8. Crie um plano de recuperação sequenciado que define a ordem de failover:
    - **Grupo 1**: Camada de banco de dados (SQL failover group ativa primeiro)
@@ -150,7 +150,7 @@ Azure Site Recovery fornece:
 
 Para as camadas web/API stateless da ShopStream, snapshots crash-consistent sao suficientes porque:
 - Sessoes estao no Redis (não na VM)
-- Transacoes em andamento serao reexecutadas pelo cliente
+- Transações em andamento serao reexecutadas pelo cliente
 - Sem estado de banco de dados local para proteger
 
 Custo do ASR: aproximadamente $25/mes por VM protegida + armazenamento para discos de replica.
@@ -203,7 +203,7 @@ Cada grupo completa antes do próximo iniciar. Dentro de um grupo, todas as VMs 
 
 Detalhamento de custo mensal para DR da ShopStream (orcamento de $3.000):
 - **Replicação ASR** (10 VMs): 10 x $25 = $250/mes
-- **Discos gerenciados de replica** (10 VMs, media 256 GB cada): 10 x 256 GB x $0,05 = $128/mes
+- **Discos gerenciados de replica** (10 VMs, média 256 GB cada): 10 x 256 GB x $0,05 = $128/mes
 - **Secundário do SQL Database** (General Purpose, 8 vCores): ~$800/mes (mas fornece valor de read offload)
 - **Geo-replicação Redis** (Premium P1): ~$450/mes (considere se sessões sao descartaveis)
 - **Delta de GRS do armazenamento**: ~$200/mes (GRS custa ~2x LRS para 5 TB de imagens)
@@ -250,7 +250,7 @@ Para o RTO de 5 minutos da camada web da ShopStream: Front Door e preferido (det
 <details>
 <summary>1. Uma aplicação de 3 camadas tem requisitos de RTO de 5 min (web), 10 min (API) e 30 seg (banco de dados). Por que a camada de banco de dados deve fazer failover PRIMEIRO no plano de recuperação?</summary>
 
-**A camada API depende do banco de dados - se as VMs da API iniciarem antes do banco de dados estar disponível, elas iraao crashar ou retornar erros.** Da mesma forma, a camada web depende da camada API. Os planos de recuperação devem respeitar a ordem de dependência: a camada mais baixa na pilha (banco de dados) deve estar disponível antes que as camadas superiores iniciem. Mesmo que o banco de dados tenha o RTO mais rigoroso (30 seg), inicia-lo primeiro garante que as camadas superiores possam inicializar suas conexões de banco de dados com sucesso. ASR recovery plans aplicam isso atraves de grupos numerados que executam sequencialmente.
+**A camada API depende do banco de dados - se as VMs da API iniciarem antes do banco de dados estar disponível, elas iraao crashar ou retornar erros.** Da mesma forma, a camada web depende da camada API. Os planos de recuperação devem respeitar a ordem de dependência: a camada mais baixa na pilha (banco de dados) deve estar disponível antes que as camadas superiores iniciem. Mesmo que o banco de dados tenha o RTO mais rigoroso (30 seg), inicia-lo primeiro garante que as camadas superiores possam inicializar suas conexões de banco de dados com sucesso. ASR recovery plans aplicam isso através de grupos numerados que executam sequencialmente.
 
 </details>
 
