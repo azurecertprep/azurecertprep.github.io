@@ -363,17 +363,27 @@ A developer creates a new pipeline and references the `Azure-Prod` service conne
 
 **Diagnosis:** Check the pipeline run log for the authorization error. The UI will show a "Permit" button if you have sufficient permissions.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 1. Navigate to Project Settings > Service connections > Azure-Prod > Security
 2. Under "Pipeline permissions," click the "+" button and add the specific pipeline
 3. Alternatively, when the pipeline run shows the authorization prompt, click "Permit"
 
+</details>
+
 ### Break scenario 2: User cannot view work items after group restructuring
 
 After moving users from Project Administrators to team-specific groups, users report they cannot view work items.
 
 **Cause:** The custom groups do not inherit from the "Contributors" built-in group, which has default read access to work items.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:**
 
@@ -384,6 +394,7 @@ az devops security group membership add \
   --member-id <custom-group-descriptor>
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

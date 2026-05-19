@@ -909,6 +909,10 @@ Lock Info:
 
 **Diagnosis:** A previous pipeline run crashed without releasing the state lock.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```bash
@@ -927,6 +931,7 @@ terraform force-unlock a1b2c3d4-e5f6-7890-abcd-ef1234567890
 #   timeoutInMinutes: 30
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

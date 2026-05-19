@@ -670,6 +670,10 @@ stages:
                   artifact: api-build
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```yaml
@@ -696,6 +700,8 @@ stages:
                 - script: ls $(Pipeline.Workspace)/ci-build/api-build
 ```
 
+</details>
+
 ### Exercise 2: Fix the missing pre-deployment approval
 
 After migration, deployments to production happen without any approval:
@@ -710,6 +716,10 @@ After migration, deployments to production happen without any approval:
         steps:
           - script: echo "Deploying to production..."
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Environment checks must be configured in the Azure DevOps UI (they cannot be set via YAML):
 
@@ -732,6 +742,7 @@ After migration, deployments to production happen without any approval:
 
 The key insight: In classic pipelines, approvals and gates are configured per-stage in the release definition. In YAML pipelines, they are configured on the environment itself and apply to any pipeline that deploys to that environment.
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

@@ -458,6 +458,10 @@ gh api repos/contoso/platform-monorepo/branches/main/protection/required_pull_re
   | jq '.require_code_owner_reviews'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: Add the deploy path to CODEOWNERS and ensure code owner review is required:
 
 ```bash
@@ -471,6 +475,8 @@ git push origin main
 git revert <merge-commit-sha> --mainline 1
 git push origin main
 ```
+
+</details>
 
 ### Scenario 2: Tags are inconsistent and CI cannot determine latest version
 
@@ -491,6 +497,10 @@ git tag --list | head -20
 git describe --tags
 # Output: release-20231115-47-gabc1234 (wrong! not a semver tag)
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix**: Clean up tags and configure `git describe` to filter properly:
 
@@ -529,6 +539,7 @@ gh api repos/contoso/platform-monorepo/rulesets --method POST --input - << 'EOF'
 EOF
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

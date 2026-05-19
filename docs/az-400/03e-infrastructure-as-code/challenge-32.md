@@ -511,6 +511,10 @@ az vm extension list --resource-group rg-contoso-vms --vm-name vm-contoso-web-01
 # Returns: empty  <-- ERROR: Extension not installed
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```bash
@@ -533,6 +537,8 @@ az policy state trigger-scan \
   --no-wait
 ```
 
+</details>
+
 ### Exercise 2: Fix the broken DSC configuration package
 
 The pipeline builds successfully but the policy shows all VMs as compliant when they clearly are not. The issue is in the configuration:
@@ -549,6 +555,10 @@ New-GuestConfigurationPackage `
 # The PSDscResources module is referenced but not bundled
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```powershell
@@ -563,6 +573,7 @@ New-GuestConfigurationPackage `
     )
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

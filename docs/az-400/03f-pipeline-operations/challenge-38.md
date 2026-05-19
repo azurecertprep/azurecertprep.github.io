@@ -832,6 +832,10 @@ The pipeline fails at the coverage gate with "80% required, got 78.5%". One deve
 # The push.service.ts has error handling paths that are never tested
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Add missing test coverage rather than lowering the threshold:
 
 ```typescript
@@ -864,6 +868,8 @@ describe('PushService', () => {
 });
 ```
 
+</details>
+
 ### Exercise 2: Fix the broken blue-green swap
 
 Production deployment reports success but users see the old version. The slot swap appears to swap back immediately:
@@ -882,6 +888,10 @@ Production deployment reports success but users see the old version. The slot sw
       exit 1
     fi
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:**
 
@@ -920,6 +930,7 @@ Production deployment reports success but users see the old version. The slot sw
     fi
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

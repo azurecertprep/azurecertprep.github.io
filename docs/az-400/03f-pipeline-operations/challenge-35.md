@@ -580,6 +580,10 @@ The pipeline always reports cache miss despite having a cache configuration:
     # Should use package-lock.json which only changes when deps change
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```yaml
@@ -591,6 +595,8 @@ The pipeline always reports cache miss despite having a cache configuration:
     restore-keys: |
       ${{ runner.os }}-npm-
 ```
+
+</details>
 
 ### Exercise 2: Fix parallel jobs producing incomplete coverage
 
@@ -604,6 +610,10 @@ Test sharding works but the coverage report shows only 25% (one shard's coverage
     name: coverage  # ERROR: Same name across all shards - last one wins
     path: coverage/
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:**
 
@@ -628,6 +638,7 @@ Test sharding works but the coverage report shows only 25% (one shard's coverage
     npx nyc report --reporter=text-summary --reporter=lcov
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

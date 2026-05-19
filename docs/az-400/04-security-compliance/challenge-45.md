@@ -334,6 +334,10 @@ az security security-connector show \
   --query "properties.environmentData"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 1. Navigate to Defender for Cloud > Environment settings > GitHub connector
@@ -341,11 +345,17 @@ az security security-connector show \
 3. Reinstall the Microsoft Defender for Cloud GitHub App if it was removed
 4. Verify in GitHub: Organization Settings > Installed GitHub Apps > Microsoft Defender for Cloud
 
+</details>
+
 ### Break scenario 2: PR annotations not appearing in Azure DevOps
 
 The MicrosoftSecurityDevOps@1 task runs successfully but no annotations appear on pull requests.
 
 **Cause:** The pipeline is running on push to main (not on PR trigger), or the SARIF results are not published correctly.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Ensure the pipeline triggers on pull requests and publishes results:
 
@@ -368,6 +378,7 @@ steps:
       artifactName: 'SecurityResults'
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

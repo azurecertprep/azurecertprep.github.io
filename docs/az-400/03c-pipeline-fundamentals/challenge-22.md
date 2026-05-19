@@ -784,6 +784,10 @@ on:
       - "backend/docs/**"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Use only `paths` with the ignore pattern removed, or handle exclusions differently. `paths` and `paths-ignore` are mutually exclusive:
 
 ```yaml
@@ -808,6 +812,8 @@ on:
       - "backend/Dockerfile"
 ```
 
+</details>
+
 ### Exercise 2: Job dependency cycle
 
 ```yaml
@@ -824,6 +830,10 @@ jobs:
     steps:
       - run: npm run build
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Remove the cycle. Build must come before test:
 
@@ -845,6 +855,8 @@ jobs:
       - run: npm test
 ```
 
+</details>
+
 ### Exercise 3: Schedule never runs
 
 An Azure Pipeline with a schedule trigger never executes:
@@ -864,6 +876,10 @@ schedules:
     always: false    # Only runs if changes exist since last run
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the schedule branch is included in the pipeline trigger, or set `always: true`:
 
 ```yaml
@@ -882,6 +898,7 @@ schedules:
     always: true
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

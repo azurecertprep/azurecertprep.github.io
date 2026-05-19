@@ -263,6 +263,10 @@ A developer reports that the GitHub Actions workflow fails with "AADSTS70021: No
 az ad app federated-credential list --id $OBJECT_ID --query "[].{name:name, subject:subject}"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Verify the workflow trigger matches the federated credential subject. If the workflow runs on `refs/heads/develop` but the credential specifies `refs/heads/main`, add a new credential:
 
 ```bash
@@ -276,6 +280,8 @@ az ad app federated-credential create \
   }'
 ```
 
+</details>
+
 ### Break scenario 2: Managed identity has no role assignment
 
 An application using a managed identity returns "AuthorizationFailed" when trying to access a storage account.
@@ -287,6 +293,10 @@ An application using a managed identity returns "AuthorizationFailed" when tryin
 az role assignment list --assignee $IDENTITY_PRINCIPAL_ID --all
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```bash
@@ -297,6 +307,7 @@ az role assignment create \
   --scope "/subscriptions/<subscription-id>/resourceGroups/rg-contoso-challenge39"
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

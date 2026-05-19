@@ -374,6 +374,10 @@ A new microservice is deployed to a new Kubernetes namespace, but Container Insi
 kubectl get configmap container-azm-ms-agentconfig -n kube-system -o yaml
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Update the ConfigMap to include the new namespace:
 
 ```bash
@@ -383,11 +387,17 @@ kubectl edit configmap container-azm-ms-agentconfig -n kube-system
 kubectl rollout restart daemonset omsagent -n kube-system
 ```
 
+</details>
+
 ### Break scenario 2: Distributed tracing shows gaps between services
 
 The Application Map shows all services but trace correlation breaks between the frontend and the payment service.
 
 **Cause:** The payment service uses a custom HTTP client that does not propagate W3C trace context headers.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Ensure the HTTP client library propagates `traceparent` and `tracestate` headers. In Node.js with Application Insights:
 
@@ -408,6 +418,7 @@ function makeDownstreamCall(url, payload) {
 }
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

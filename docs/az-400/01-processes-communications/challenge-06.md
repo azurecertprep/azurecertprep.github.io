@@ -829,6 +829,10 @@ gh api repos/{owner}/contoso-webapp/hooks/$HOOK_ID/deliveries/{delivery_id} \
   --jq '.response.body'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** The webhook secret configured in GitHub must match the `GITHUB_WEBHOOK_SECRET` environment variable in the Function App. Regenerate and sync:
 
 ```bash
@@ -846,6 +850,8 @@ az functionapp config appsettings set \
   --resource-group $RESOURCE_GROUP \
   --settings GITHUB_WEBHOOK_SECRET="$NEW_SECRET"
 ```
+
+</details>
 
 ### Scenario 2: Teams notifications are not appearing
 
@@ -865,7 +871,13 @@ curl -X POST "$TEAMS_WEBHOOK_URL" \
   -d '{"type":"message","attachments":[{"contentType":"application/vnd.microsoft.card.adaptive","content":{"type":"AdaptiveCard","version":"1.4","body":[{"type":"TextBlock","text":"Test"}]}}]}'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Teams incoming webhook URLs expire when the connector is removed or the channel is deleted. Recreate the connector in Teams and update the `TEAMS_WEBHOOK_URL` app setting.
+
+</details>
 
 ### Scenario 3: Azure Boards integration stops linking commits
 
@@ -887,10 +899,14 @@ gh api repos/{owner}/contoso-webapp/installations \
   --jq '.[] | select(.app_slug == "azure-boards")'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** The Azure Boards GitHub App may have lost access due to organization permission changes. Re-authorize the app in GitHub organization settings, and verify the repository is still linked in Azure DevOps Project Settings > GitHub connections.
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

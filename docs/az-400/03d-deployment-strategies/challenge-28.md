@@ -617,6 +617,10 @@ az role assignment list \
 
 **Root cause:** The service principal in the AZURE_CREDENTIALS secret only has `AcrPull` role, not `AcrPush`.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 # Assign AcrPush role to the service principal
@@ -627,6 +631,8 @@ az role assignment create \
   --role AcrPush \
   --scope "/subscriptions/<sub-id>/resourceGroups/rg-contoso-containers/providers/Microsoft.ContainerRegistry/registries/acrcontosoprod"
 ```
+
+</details>
 
 ### Exercise 2: Container app failing health checks after deployment
 
@@ -649,6 +655,10 @@ az containerapp logs show \
 
 **Root cause:** The Dockerfile exposes port 8080 but the Container App ingress is configured for port 80.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 az containerapp update \
@@ -662,11 +672,17 @@ az containerapp ingress update \
   --target-port 8080
 ```
 
+</details>
+
 ### Exercise 3: Trivy scan blocking deployment with false positive
 
 **Symptom:** The pipeline fails because Trivy reports a CRITICAL vulnerability in a base image package that has no fix available yet.
 
 **Root cause:** The vulnerability is in a system package in the base image with no upstream fix.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Create a `.trivyignore` file in the project root:
 ```
@@ -687,8 +703,8 @@ Update the workflow to reference the ignore file:
           trivyignores: '.trivyignore'
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

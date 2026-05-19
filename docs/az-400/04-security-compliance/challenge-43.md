@@ -458,6 +458,10 @@ A developer adds `echo $CONNECTION_STRING` for debugging and the full database p
 
 **Cause:** The variable was not marked as secret, so Azure DevOps does not mask it in output.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix (immediate):** Delete the pipeline run logs:
 
 ```bash
@@ -482,9 +486,15 @@ steps:
       CONNECTION_STRING: $(connectionString)
 ```
 
+</details>
+
 ### Break scenario 2: Pre-commit hook blocks legitimate test data
 
 Developers complain that gitleaks blocks commits containing test API keys in test fixtures.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Update `.gitleaks.toml` to allowlist test patterns:
 
@@ -502,6 +512,7 @@ description = "Test data commits"
 regexes = ['''test_api_key_[a-z0-9]+''']
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

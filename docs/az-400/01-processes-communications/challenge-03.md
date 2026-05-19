@@ -531,11 +531,21 @@ az devops invoke \
 gh api repos/{owner}/{repo}/commits/{sha} --jq '.commit.message'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** The Azure Boards GitHub App must be installed on the repository, and the repository must be linked in the Azure DevOps project settings under Boards > GitHub connections. The `AB#` syntax only works for repositories that are explicitly connected.
+
+</details>
 
 ### Scenario 2: Commitlint blocks a valid merge commit
 
 A developer rebased and got a merge commit with message "Merge branch 'main' into feature/xyz" which fails commitlint.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Update commitlint.config.js to ignore merge commits:
 
@@ -549,9 +559,15 @@ module.exports = {
 };
 ```
 
+</details>
+
 ### Scenario 3: Traceability check fails on dependabot PRs
 
 Automated PRs from Dependabot do not contain issue references.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Add a condition to skip the check for bot accounts:
 
@@ -560,8 +576,8 @@ Automated PRs from Dependabot do not contain issue references.
         if: github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

@@ -631,7 +631,13 @@ gh run view <run-id> --log
 # The token needs: project (read/write), issues (read)
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the Personal Access Token or GitHub App token stored in `PROJECT_TOKEN` has the `project` scope. Organization projects require `org:read` scope as well.
+
+</details>
 
 ### Scenario 2: Azure Boards work items not transitioning on PR merge
 
@@ -648,7 +654,13 @@ gh api repos/{owner}/{repo}/installations --jq '.[].app_slug'
 az boards work-item show --id 1234 --fields "System.State"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the Azure Boards GitHub App is installed on the repository and that the keyword `Fixes` (not just `AB#`) is used. The connection must be configured in Azure DevOps under Project Settings > GitHub connections.
+
+</details>
 
 ### Scenario 3: CODEOWNERS not triggering review requests
 
@@ -669,10 +681,14 @@ gh api repos/{owner}/{repo}/contents/.github/CODEOWNERS --jq '.name'
 gh api orgs/{org}/teams/backend-team/repos --jq '.[].name'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Branch protection must have "Require review from Code Owners" enabled. The team referenced in CODEOWNERS must have at least read access to the repository.
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

@@ -674,6 +674,10 @@ Statements:  0%
 
 ---
 
+
+<details>
+<summary>Solution</summary>
+
 ### Root cause analysis
 
 **Issue 1: Wrong coverage reporter format**
@@ -692,7 +696,6 @@ The `dotnet test` command uses `--collect:"XPlat Code Coverage"` but the Coverle
 
 For Node.js, if `babel` or `ts-jest` transforms the code, coverage maps to transpiled files unless source maps are configured. The coverage runs against transformed code in `node_modules/.cache` and reports 0% for original source files.
 
----
 
 ### Fix
 
@@ -765,8 +768,8 @@ module.exports = {
 };
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

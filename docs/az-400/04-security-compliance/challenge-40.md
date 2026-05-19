@@ -301,6 +301,10 @@ A workflow that auto-formats code and pushes the result fails with "refusing to 
 
 **Cause:** By default, `GITHUB_TOKEN` cannot push to branches with branch protection rules that require PR reviews, and it can never modify workflow files under `.github/workflows/`.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Use a GitHub App token instead of GITHUB_TOKEN:
 
 ```yaml
@@ -324,6 +328,8 @@ A workflow that auto-formats code and pushes the result fails with "refusing to 
 
 Additionally, add the GitHub App to the branch protection bypass list in repository settings.
 
+</details>
+
 ### Break scenario 2: GitHub App installation token returns 403
 
 **Cause:** The GitHub App is installed on the organization but its repository access is set to "Selected repositories" and the target repo is not included.
@@ -335,8 +341,13 @@ Additionally, add the GitHub App to the branch protection bypass list in reposit
 gh api /app/installations/{installation_id}/repositories --jq '.repositories[].full_name'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Update the app installation to include the missing repository via Organization Settings > Installed GitHub Apps > contoso-deploy-bot > Configure > add the repository.
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

@@ -422,6 +422,10 @@ The CodeQL workflow completes but reports zero results with a warning about no s
 
 **Cause:** For compiled languages like C# or Java, CodeQL requires observing the build process. If the build step is missing or fails silently, CodeQL has no code to analyze.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the build step runs between `init` and `analyze`:
 
 ```yaml
@@ -438,9 +442,15 @@ The CodeQL workflow completes but reports zero results with a warning about no s
   uses: github/codeql-action/analyze@v3
 ```
 
+</details>
+
 ### Break scenario 2: Dependabot PRs fail CI checks due to lockfile conflicts
 
 Dependabot opens a PR but the CI pipeline fails because `package-lock.json` is out of sync.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Add a `postUpdateOptions` section to the Dependabot config or add a workflow to regenerate lockfiles:
 
@@ -474,6 +484,7 @@ jobs:
           git push
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

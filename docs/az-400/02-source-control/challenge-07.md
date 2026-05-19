@@ -314,6 +314,10 @@ git merge main
 # CONFLICT in billing/processor.py
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: Resolve the conflict by keeping the hotfix logic in the refactored structure:
 
 ```bash
@@ -327,6 +331,8 @@ EOF
 git add billing/processor.py
 git commit -m "merge: resolve conflict keeping hotfix tax rate in refactored class"
 ```
+
+</details>
 
 ### Scenario 2: Accidentally pushed to main (bypassing branch strategy)
 

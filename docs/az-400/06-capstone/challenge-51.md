@@ -795,6 +795,10 @@ jobs:
 
 **Root cause:** The CD pipeline deploys the application code but does not run database migrations. The staging environment had the migration applied out-of-band, so integration tests passed.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 Add a migration step to the deployment pipeline that runs before the application update:
@@ -811,7 +815,8 @@ Add a migration step to the deployment pipeline that runs before the application
 
 **Prevention:** Add a CI check that compares pending migrations against the target database schema and fails if migrations are not included in the deployment.
 
----
+
+</details>
 
 ### Scenario 2: False positive security scan blocking deployment
 
@@ -843,6 +848,10 @@ public static bool IsValidCardNumber(string cardNumber)
 2. Confirm the method performs validation only -- no logging, no persistence, no network calls
 3. The variable name `cardNumber` triggers the pattern match, but the data is never stored
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 Create a CodeQL configuration to suppress this specific false positive:
@@ -873,7 +882,8 @@ public static bool IsValidCardNumber(string cardNumber)
 
 **Process:** Document all security scan exceptions in a `SECURITY_EXCEPTIONS.md` file that is reviewed quarterly by the security team. Each exception must include the rationale, reviewer, and expiration date.
 
----
+
+</details>
 
 ### Scenario 3: Emergency hotfix for production payment failures
 

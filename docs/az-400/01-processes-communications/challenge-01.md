@@ -433,6 +433,9 @@ git push origin main
 
 **If protection is not working, verify:**
 
+<details>
+<summary>Solution</summary>
+
 ```bash
 gh api repos/{owner}/{repo}/branches/main/protection \
   --jq '.enforce_admins.enabled'
@@ -443,9 +446,14 @@ gh api repos/{owner}/{repo}/branches/main/protection \
 # Should be >= 1
 ```
 
+</details>
+
 ### Scenario 2: A PR merges with failing checks
 
-The status check context names must match exactly what your CI reports:
+The status check context names must match exactly what your CI reports.
+
+<details>
+<summary>Solution</summary>
 
 ```bash
 # List recent check runs to see their exact names
@@ -459,9 +467,14 @@ gh api repos/{owner}/{repo}/branches/main/protection/required_status_checks \
   --field contexts='["build","test","validate-branch-name"]'
 ```
 
+</details>
+
 ### Scenario 3: Stale PR approvals persist after new commits
 
-After a reviewer approves, the developer pushes new commits. The old approval should be dismissed:
+After a reviewer approves, the developer pushes new commits. The old approval should be dismissed.
+
+<details>
+<summary>Solution</summary>
 
 ```bash
 # Verify dismiss_stale_reviews is enabled
@@ -469,6 +482,8 @@ gh api repos/{owner}/{repo}/branches/main/protection/required_pull_request_revie
   --jq '.dismiss_stale_reviews'
 # Must be true
 ```
+
+</details>
 
 ---
 

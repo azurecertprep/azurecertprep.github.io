@@ -831,6 +831,10 @@ jobs:
     # ERROR: secrets not passed
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Explicitly pass required secrets or use `secrets: inherit`:
 
 ```yaml
@@ -845,6 +849,8 @@ jobs:
     #   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
     #   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 ```
+
+</details>
 
 ### Exercise 2: Template parameter type mismatch
 
@@ -863,6 +869,10 @@ parameters:
     environments: "staging,production"  # ERROR: string instead of object
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Pass an object (list) not a string:
 
 ```yaml
@@ -872,6 +882,8 @@ parameters:
       - staging
       - production
 ```
+
+</details>
 
 ### Exercise 3: Template reference resolution failure
 
@@ -887,6 +899,10 @@ steps:
   - template: steps/build.yml@templates
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Use the full ref path:
 
 ```yaml
@@ -898,6 +914,7 @@ resources:
       ref: refs/heads/main
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

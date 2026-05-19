@@ -460,6 +460,10 @@ gh run list --workflow ci.yml --limit 10 --json conclusion,status \
   --jq '.[] | {conclusion, status}'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure that conditional jobs handle skip conditions correctly:
 
 ```yaml
@@ -472,6 +476,8 @@ jobs:
       - run: echo "Tests running"
         if: needs.build.result == 'success'
 ```
+
+</details>
 
 ### Break scenario 2: Slack notifications not being delivered
 
@@ -489,12 +495,17 @@ curl -X POST "$SLACK_WEBHOOK_URL" \
 # If response is "invalid_token" or "channel_not_found", the webhook is broken
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Generate a new webhook URL in Slack (Apps > Incoming Webhooks > Add new) and update the repository secret:
 
 ```bash
 gh secret set SLACK_WEBHOOK_URL --body "https://hooks.slack.com/services/NEW/WEBHOOK/URL"
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

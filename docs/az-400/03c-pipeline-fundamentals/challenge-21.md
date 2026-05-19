@@ -440,6 +440,10 @@ pool:
 
 **Diagnosis:** The agent does not advertise the `dotnet8` capability.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Add the capability to the agent or set it as an environment variable:
 
 ```bash
@@ -456,6 +460,7 @@ sudo ./svc.sh stop
 sudo ./svc.sh start
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

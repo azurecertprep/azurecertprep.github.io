@@ -572,6 +572,10 @@ Production release artifacts are being deleted after 30 days despite a 365-day p
       # Also ERROR: Body must be an array, not a single object
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```yaml
@@ -598,6 +602,8 @@ Production release artifacts are being deleted after 30 days despite a 365-day p
       Invoke-RestMethod -Uri $uri -Method POST -Headers $headers -Body $body
 ```
 
+</details>
+
 ### Exercise 2: Fix the ACR purge deleting production images
 
 The automated ACR purge task is deleting images currently running in production:
@@ -609,6 +615,10 @@ az acr run --registry contosoregistry --cmd "acr purge \
   --ago 7d" /dev/null
 # This deletes the 'latest' and 'v1.4.2' tags that production is using!
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:**
 
@@ -628,6 +638,7 @@ az acr run --registry contosoregistry --cmd "acr purge \
 # Never purge 'latest' or 'production' tags - they match no regex above
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

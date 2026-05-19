@@ -542,6 +542,10 @@ az webapp config appsettings list \
 
 **Root cause:** Connection strings were not marked as slot settings, so they swapped with the code.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 # Mark connection string as slot-specific (stays with the slot)
@@ -558,6 +562,8 @@ az webapp config appsettings set \
   --slot staging \
   --slot-settings "ConnectionStrings__DefaultConnection=Server=staging-sql.database.windows.net;Database=Payments;Authentication=Active Directory Managed Identity;"
 ```
+
+</details>
 
 ### Exercise 2: Canary receiving more traffic than expected
 
@@ -582,6 +588,10 @@ az network traffic-manager profile show \
 
 **Root cause:** The DNS TTL was set to 300 seconds (5 minutes). Clients cache the DNS response, so weight changes take time to propagate. Additionally, Traffic Manager weighted routing is probabilistic at the DNS level, not per-request.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 # Reduce TTL for faster convergence
@@ -591,11 +601,17 @@ az network traffic-manager profile update \
   --ttl 30
 ```
 
+</details>
+
 ### Exercise 3: Staging slot warm-up timeout
 
 **Symptom:** After swap, the first requests to production take 30+ seconds, causing timeouts.
 
 **Root cause:** The application initialization (loading caches, warming JIT) was not completed before swap.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Configure application initialization settings:
 ```bash
@@ -608,8 +624,8 @@ az webapp config appsettings set \
              WEBSITE_SWAP_WARMUP_PING_STATUSES="200"
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

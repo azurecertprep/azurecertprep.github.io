@@ -802,16 +802,20 @@ Azure DevOps Wiki supports Mermaid, but the syntax may differ slightly from GitH
 
 **Diagnosis:** Check that the code block uses the `mermaid` language identifier and that no unsupported features are used.
 
-**Fix:** Azure DevOps Mermaid support may lag behind GitHub. Avoid newer Mermaid features and test in the Azure DevOps Wiki editor. Ensure the wiki page uses triple backticks with `mermaid`:
 
-```markdown
-::: mermaid
-flowchart TD
-    A --> B
-:::
-```
+<details>
+<summary>Solution</summary>
 
-Note: Azure DevOps uses `::: mermaid` syntax, not triple backticks.
+**Fix:** Azure DevOps Mermaid support may lag behind GitHub. Avoid newer Mermaid features and test in the Azure DevOps Wiki editor. Azure DevOps uses `::: mermaid` syntax (not triple backticks) to render diagrams in wiki pages.
+
+Example wiki syntax:
+
+    ::: mermaid
+    flowchart TD
+        A --> B
+    :::
+
+</details>
 
 ### Scenario 2: Release-drafter produces empty release notes
 
@@ -825,7 +829,13 @@ gh pr list --state merged --limit 10 --json number,labels \
   --jq '.[] | {pr: .number, labels: [.labels[].name]}'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Release-drafter groups PRs by label. If PRs have no labels, they fall into "Other changes" (if configured) or are omitted. Enable autolabeler in `.github/release-drafter.yml` or manually label PRs.
+
+</details>
 
 ### Scenario 3: GitHub Pages returns 404
 
@@ -837,9 +847,13 @@ gh api repos/{owner}/{repo}/pages --jq '.status'
 gh api repos/{owner}/{repo}/pages/builds --jq '.[0] | {status, error}'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the source branch and path are correct. If using the `workflow` build type, verify the workflow has `pages: write` and `id-token: write` permissions.
 
----
+</details>
 
 ## Knowledge check
 

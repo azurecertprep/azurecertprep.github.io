@@ -511,6 +511,10 @@ gh api repos/contoso/platform-api/branches/main/protection/required_status_check
 # the job name or workflow name in the YAML
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: The required status check name `ci/build` must match the `name:` field of the job, not the workflow name. Update the workflow job name:
 
 ```yaml
@@ -532,6 +536,8 @@ gh api repos/contoso/platform-api/branches/main/protection/required_status_check
 EOF
 ```
 
+</details>
+
 ### Scenario 2: CODEOWNERS file not triggering reviewer assignment
 
 PRs modifying `/src/api/billing/` are not automatically requesting review from `@contoso/billing-team` despite being listed in CODEOWNERS.
@@ -551,6 +557,10 @@ gh api repos/contoso/platform-api/branches/main/protection/required_pull_request
   | jq '.require_code_owner_reviews'
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: The team must have at least write access to the repository, and code owner reviews must be enabled:
 
 ```bash
@@ -568,6 +578,7 @@ gh api repos/contoso/platform-api/branches/main/protection/required_pull_request
 EOF
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

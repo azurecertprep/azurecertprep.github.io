@@ -637,6 +637,10 @@ The pipeline shows 100% test pass rate, but developers report bugs in production
     failTaskOnFailedTests: false  # ERROR: Never fails even with test failures
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```yaml
@@ -654,6 +658,8 @@ The pipeline shows 100% test pass rate, but developers report bugs in production
     failTaskOnMissingResultsFile: true
 ```
 
+</details>
+
 ### Exercise 2: Fix the invisible flaky test problem
 
 Tests are being retried, but there is no visibility into which tests are flaky. The team does not know which tests to prioritize fixing:
@@ -669,6 +675,10 @@ Tests are being retried, but there is no visibility into which tests are flaky. 
   # ERROR: No annotation or reporting of flaky tests
   # ERROR: Exit code may be wrong (last command in loop)
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:**
 
@@ -713,6 +723,7 @@ Tests are being retried, but there is no visibility into which tests are flaky. 
       // ... tracking logic
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

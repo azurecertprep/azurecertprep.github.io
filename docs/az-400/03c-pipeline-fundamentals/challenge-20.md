@@ -621,6 +621,10 @@ stages:
           - script: echo $(buildOutput)  # ERROR: buildOutput not available here
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Variables defined at stage level are only available within that stage. To share values across stages, use pipeline artifacts or output variables:
 
 ```yaml
@@ -643,6 +647,7 @@ stages:
           - script: echo $(buildVersion)
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

@@ -501,6 +501,10 @@ dependencies
 | count  // Number of unmatched traces
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the payment service SDK is configured for W3C trace context propagation. For Node.js:
 
 ```javascript
@@ -510,6 +514,8 @@ appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
   .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
   .start();
 ```
+
+</details>
 
 ### Break scenario 2: CPU spike identified but cannot determine which process
 
@@ -528,8 +534,13 @@ VMProcess
 | render timechart
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Once the process is identified, correlate with the deployment to determine if the new code version introduced a CPU regression. Check for missing database indexes, inefficient loops, or configuration changes.
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

@@ -425,6 +425,10 @@ git lfs status
 # Shows files that need to be downloaded
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: Pull the actual LFS content:
 
 ```bash
@@ -444,6 +448,8 @@ file assets/textures/hero_diffuse.psd
 # Output: Adobe Photoshop Image, ...
 ```
 
+</details>
+
 ### Scenario 2: Push fails with LFS bandwidth quota exceeded
 
 ```bash
@@ -452,6 +458,10 @@ file assets/textures/hero_diffuse.psd
 # Account responsible for LFS bandwidth has exceeded limit.
 # error: failed to push some refs to 'origin'
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix**: Address the bandwidth issue:
 
@@ -478,6 +488,7 @@ git config lfs.url "https://lfs.contoso.internal/game-studio"
 #     restore-keys: lfs-
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

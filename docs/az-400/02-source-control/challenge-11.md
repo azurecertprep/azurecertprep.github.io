@@ -362,6 +362,10 @@ git rebase -i HEAD~5
 # commits modified the same lines
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: Resolve each conflict as it appears, or abort and use a different strategy:
 
 ```bash
@@ -382,6 +386,8 @@ git commit -m "feat: complete payment gateway implementation"
 git rebase --skip  # Caution: this drops the conflicting commit's changes
 ```
 
+</details>
+
 ### Scenario 2: git filter-repo refuses to run on a non-fresh clone
 
 ```bash
@@ -391,6 +397,10 @@ git filter-repo --invert-paths --path secrets.json
 # this does not look like a fresh clone.
 # (expected freshly packed repo)
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix**: Either use the `--force` flag or work on a fresh clone:
 
@@ -410,6 +420,7 @@ git push origin --force --all
 git push origin --force --tags
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

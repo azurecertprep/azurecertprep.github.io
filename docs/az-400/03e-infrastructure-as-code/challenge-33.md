@@ -636,6 +636,10 @@ az devcenter admin catalog get-sync-error-details \
 # Returns: "Path '/environments' not found in repository"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** The catalog path was configured incorrectly. The environment definitions are at the repo root, not in a subfolder:
 
 ```bash
@@ -662,6 +666,8 @@ az devcenter admin catalog sync \
   --resource-group rg-contoso-devcenter
 ```
 
+</details>
+
 ### Exercise 2: Fix the permission denied error
 
 A developer with "Deployment Environments User" role gets:
@@ -670,6 +676,10 @@ A developer with "Deployment Environments User" role gets:
 ERROR: AuthorizationFailed - The client does not have authorization to perform action
 'Microsoft.Resources/deployments/write' over scope '/subscriptions/{dev-sub-id}/...'
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** The project environment type's managed identity needs permissions on the target subscription:
 
@@ -689,6 +699,7 @@ az role assignment create \
   --scope "/subscriptions/{dev-sub-id}"
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

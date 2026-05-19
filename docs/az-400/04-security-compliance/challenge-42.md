@@ -345,6 +345,10 @@ az role assignment list \
   --query "[].{principal:principalName, role:roleDefinitionName}" -o table
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```bash
@@ -353,6 +357,8 @@ az role assignment create \
   --role "Key Vault Secrets User" \
   --scope "/subscriptions/<sub-id>/resourceGroups/rg-contoso-secrets/providers/Microsoft.KeyVault/vaults/kv-contoso-secrets-001"
 ```
+
+</details>
 
 ### Break scenario 2: Key Vault reference shows error in App Service
 
@@ -371,6 +377,10 @@ az role assignment list --assignee $WEBAPP_IDENTITY --all \
   --query "[?contains(scope, 'kv-contoso')]"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```bash
@@ -381,6 +391,7 @@ az role assignment create \
   --scope "/subscriptions/<sub-id>/resourceGroups/rg-contoso-secrets/providers/Microsoft.KeyVault/vaults/kv-contoso-secrets-001"
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

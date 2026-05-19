@@ -513,6 +513,10 @@ az devops extension install \
   --org https://dev.azure.com/contoso-org
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** The Azure DevOps Analytics extension must be installed on the organization. The PAT must have Analytics (read) scope. Verify with:
 
 ```bash
@@ -521,6 +525,8 @@ curl -s -o /dev/null -w "%{http_code}" \
   "https://analytics.dev.azure.com/contoso-org/_odata/v4.0-preview/\$metadata"
 # Should return 200
 ```
+
+</details>
 
 ### Scenario 2: Deployment frequency shows zero despite active deployments
 
@@ -533,11 +539,21 @@ gh api repos/{owner}/{repo}/deployments --jq '.[].environment' | sort -u
 # Common issue: environment is "Production" (capitalized) but query uses "production"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** GitHub deployment environments are case-sensitive. Ensure your workflow creates deployments with a consistent environment name, and queries match exactly.
+
+</details>
 
 ### Scenario 3: Lead time calculation is inflated by stale PRs
 
 Old PRs that sat open for weeks skew the average lead time.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Filter to PRs created within the measurement window, or use the p50 (median) instead of mean:
 
@@ -547,8 +563,8 @@ gh pr list --state merged --base main --limit 100 \
   --jq '[.[] | ((.mergedAt | fromdateiso8601) - (.createdAt | fromdateiso8601)) / 3600] | sort | .[length/2 | floor]'
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

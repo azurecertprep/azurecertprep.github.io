@@ -532,6 +532,10 @@ The team observes:
 
 ---
 
+
+<details>
+<summary>Solution</summary>
+
 ### Root cause analysis
 
 **Issue 1: Circular dependency in required status checks**
@@ -546,7 +550,6 @@ The Azure Pipelines gate queries the health endpoint, but the success criteria u
 
 The GitHub environment protection rule references a team ID that no longer exists (the team was renamed). GitHub silently skips the review requirement but the job remains in a pending state waiting for the configured wait timer that was set to an excessively high value.
 
----
 
 ### Fix
 
@@ -586,8 +589,8 @@ Verify the team exists and has members:
 gh api orgs/contoso-ltd/teams/release-approvers/members --jq '.[].login'
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

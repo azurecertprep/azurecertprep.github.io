@@ -676,6 +676,10 @@ az appconfig feature show \
 
 **Root cause:** The `CacheExpirationInterval` is set too high (default may have been overridden), or the Azure App Configuration middleware (`app.UseAzureAppConfiguration()`) is missing from the pipeline.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```csharp
 // Ensure cache expiration is set to 30 seconds
@@ -690,11 +694,17 @@ app.UseAzureAppConfiguration(); // Must be before app.MapControllers()
 app.MapControllers();
 ```
 
+</details>
+
 ### Exercise 2: Targeting filter not applying correctly
 
 **Symptom:** Internal team members (with @contoso.com email) are not seeing the new feature even though the targeting filter includes them at 100%.
 
 **Root cause:** The `IHttpContextAccessor` is not registered in the DI container, so the `HttpContext` is null and the targeting context resolver returns "anonymous" with no groups.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:**
 ```csharp
@@ -702,6 +712,8 @@ app.MapControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ITargetingContextAccessor, HttpContextTargetingContextAccessor>();
 ```
+
+</details>
 
 ### Exercise 3: Feature flag label mismatch
 
@@ -718,6 +730,10 @@ az appconfig feature list \
 
 **Root cause:** The flag was enabled with label `staging` but the production app is configured to read label `production`.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 # Enable the flag with the correct label
@@ -728,8 +744,8 @@ az appconfig feature enable \
   --yes
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

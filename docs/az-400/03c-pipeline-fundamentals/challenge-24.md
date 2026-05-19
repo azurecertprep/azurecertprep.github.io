@@ -577,6 +577,10 @@ jobs:
         run: az webapp deploy --name contoso-api-prod ...
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** The job does not reference the `production` environment, so no protection rules are evaluated. Add the `environment` key:
 
 ```yaml
@@ -590,6 +594,8 @@ jobs:
       - name: Deploy to production
         run: az webapp deploy --name contoso-api-prod ...
 ```
+
+</details>
 
 ### Exercise 2: Concurrency group cancels wanted deployments
 
@@ -606,6 +612,10 @@ concurrency:
   group: production  # Same group - will cancel service-a deployment
   cancel-in-progress: true
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Scope concurrency groups to the specific service:
 
@@ -629,6 +639,8 @@ concurrency:
   cancel-in-progress: true
 ```
 
+</details>
+
 ### Exercise 3: Wait timer not working as expected
 
 The production environment has a 15-minute wait timer configured, but deployments proceed immediately:
@@ -642,6 +654,10 @@ jobs:
       - run: echo "deploying"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Environment names in GitHub are case-sensitive. If the environment was created as `production` (lowercase), the workflow must reference it exactly:
 
 ```yaml
@@ -653,6 +669,7 @@ jobs:
       - run: echo "deploying"
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

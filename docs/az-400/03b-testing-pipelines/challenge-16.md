@@ -486,6 +486,10 @@ After implementing the workflow, tests pass locally on developer machines but fa
 
 ---
 
+
+<details>
+<summary>Solution</summary>
+
 ### Root cause analysis
 
 **Issue 1: Service container not ready**
@@ -502,7 +506,6 @@ The application uses a polyfill for `fetch` that conflicts with Node.js 22's bui
 
 The load test job starts k6 before the Express server finishes binding to port 3000. The `sleep 5` is insufficient on CI runners under load.
 
----
 
 ### Fix
 
@@ -551,8 +554,8 @@ if (typeof globalThis.fetch === 'undefined') {
           API_PORT: 3000
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

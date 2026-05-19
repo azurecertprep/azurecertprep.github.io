@@ -396,7 +396,13 @@ az rest --method get \
   --url "https://management.azure.com/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/components/ai-contoso-webapp/Annotations?api-version=2015-05-01"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Ensure the timestamp is in UTC ISO 8601 format and the service principal has Contributor access to the Application Insights resource.
+
+</details>
 
 ### Break scenario 2: Azure Monitor alert fires but rollback pipeline does not trigger
 
@@ -412,6 +418,10 @@ az monitor action-group show \
   --query "webhookReceivers[].{name:name, uri:serviceUri}"
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** For Azure DevOps pipelines, use a service hook or Azure Function intermediary that authenticates with a PAT. For GitHub Actions, use the `repository_dispatch` event with a webhook-to-dispatch proxy:
 
 ```bash
@@ -422,6 +432,7 @@ curl -X POST https://api.github.com/repos/contoso/webapp/dispatches \
   -d '{"event_type":"deployment-health-alert","client_payload":{"alert":"high-error-rate"}}'
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

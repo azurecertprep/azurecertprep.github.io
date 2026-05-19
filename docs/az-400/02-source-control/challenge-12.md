@@ -563,6 +563,10 @@ git sparse-checkout list
 # Output: services/order-service (missing libs!)
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix**: Add the missing dependency paths to sparse-checkout:
 
 ```bash
@@ -587,6 +591,8 @@ infrastructure/kubernetes/order-service
 EOF
 ```
 
+</details>
+
 ### Scenario 2: Submodule is stuck at old commit after pull
 
 After running `git pull`, the submodule directory still shows the old version even though `.gitmodules` was updated.
@@ -605,6 +611,10 @@ cd libs/shared
 git log --oneline -1
 # abc1234 (HEAD) old commit from 2 weeks ago
 ```
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix**: Update the submodule to match what the parent repo expects:
 
@@ -625,6 +635,7 @@ git add libs/shared
 git commit -m "chore: update shared-libs submodule to latest"
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

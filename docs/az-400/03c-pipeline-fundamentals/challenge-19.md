@@ -436,6 +436,10 @@ permissions:
   contents: read
 ```
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:** Add `packages: write` permission to allow pushing to GHCR:
 
 ```yaml
@@ -444,6 +448,7 @@ permissions:
   packages: write
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

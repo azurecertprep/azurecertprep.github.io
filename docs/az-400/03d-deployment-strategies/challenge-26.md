@@ -647,6 +647,10 @@ az monitor activity-log list \
 
 **Root cause:** The App Service plan is on the Free or Basic tier, which does not support auto-swap.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 # Upgrade to Standard tier or higher
@@ -655,6 +659,8 @@ az appservice plan update \
   --resource-group $RESOURCE_GROUP \
   --sku S1
 ```
+
+</details>
 
 ### Exercise 2: Rolling update stuck at 25%
 
@@ -677,6 +683,10 @@ az vmss list-instances \
 
 **Root cause:** The first batch of updated instances is failing health checks. The `maxUnhealthyUpgradedInstancePercent` threshold is met, blocking further updates.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 # Fix the application issue, then restart the rolling upgrade
@@ -684,6 +694,8 @@ az vmss rolling-upgrade start \
   --name $VMSS_NAME \
   --resource-group $RESOURCE_GROUP
 ```
+
+</details>
 
 ### Exercise 3: Slot swap causes cold start
 
@@ -701,6 +713,10 @@ az webapp config appsettings list \
 
 **Root cause:** No warm-up path is configured. Azure performs the swap without ensuring the application is fully initialized.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 ```bash
 az webapp config appsettings set \
@@ -712,8 +728,8 @@ az webapp config appsettings set \
     "WEBSITE_SWAP_WARMUP_PING_STATUSES=200"
 ```
 
----
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[

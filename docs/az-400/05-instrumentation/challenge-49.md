@@ -374,6 +374,10 @@ A query filtering on `customDimensions.Environment == "production"` returns empt
 
 **Cause:** Custom dimensions are stored as dynamic (JSON) objects. String comparisons require explicit type casting.
 
+
+<details>
+<summary>Solution</summary>
+
 **Fix:**
 
 ```kql
@@ -390,11 +394,17 @@ requests
 | where customDimensions["Environment"] == "production"
 ```
 
+</details>
+
 ### Break scenario 2: Alert fires constantly (false positives)
 
 A log-based alert for "error rate spike" fires every 5 minutes even during normal operation.
 
 **Cause:** The baseline calculation includes the current spike period, or the threshold is too sensitive.
+
+
+<details>
+<summary>Solution</summary>
 
 **Fix:** Adjust the baseline window to exclude recent data and add a minimum request count:
 
@@ -413,6 +423,7 @@ requests
 | where currentErrorRate > 1.0  // Minimum absolute error rate
 ```
 
+</details>
 ## Knowledge check
 
 <KnowledgeCheck questions={[
