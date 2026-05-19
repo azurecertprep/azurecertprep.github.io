@@ -2,6 +2,8 @@
 sidebar_position: 5
 title: "Challenge 23: Reusable pipeline elements"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 23: Reusable pipeline elements
 
@@ -898,41 +900,52 @@ resources:
 
 ## Knowledge check
 
-1. **What is the key difference between a GitHub reusable workflow and a composite action?**
-
-   A) Reusable workflows can only be in the same repository; composite actions can be shared
-   B) Reusable workflows run as separate jobs with their own runner; composite actions run as steps in the caller's job
-   C) Composite actions support secrets; reusable workflows do not
-   D) Reusable workflows are limited to 5 jobs; composite actions have no limits
-
-   **Answer: B** - A reusable workflow (triggered via `workflow_call`) executes as one or more complete jobs on their own runners with independent workspaces. A composite action runs as a set of steps within the calling job, sharing the runner, workspace, and environment variables. This distinction affects how state is shared, performance (no new runner spin-up for composite), and what each can access.
-
-2. **In Azure Pipelines, how do you reference a template from a different repository?**
-
-   A) Use `extends` with the repository URL directly in the template path
-   B) Declare the repository in `resources.repositories` and use `@alias` suffix in the template path
-   C) Use `import` statements at the top of the YAML file
-   D) Template files must be in the same repository
-
-   **Answer: B** - External templates require a repository resource declaration with an alias. The template is then referenced using the `template: path/to/file.yml@alias` syntax. The alias matches the `repository` field in the resources section. This allows pinning to specific refs (branches or tags) for version control.
-
-3. **What happens when you use `secrets: inherit` in a GitHub reusable workflow call?**
-
-   A) Only organization-level secrets are passed
-   B) All secrets available to the calling workflow are automatically passed to the reusable workflow
-   C) A new set of secrets is generated for the reusable workflow
-   D) Only secrets explicitly listed in the reusable workflow's `secrets` definition are passed
-
-   **Answer: B** - `secrets: inherit` passes all secrets that the calling workflow has access to (repository secrets, environment secrets, and organization secrets) to the reusable workflow. Without `secrets: inherit`, you must explicitly pass each secret. Note that `secrets: inherit` also passes `GITHUB_TOKEN` with the calling workflow's permissions.
-
-4. **Which Azure Pipelines template type allows you to define reusable stages that include deployment jobs with environments?**
-
-   A) Step template
-   B) Job template
-   C) Stage template
-   D) Variable template
-
-   **Answer: C** - Stage templates can encapsulate entire stages including deployment jobs, environment references, and approval gates. They are the highest-level template type and can contain jobs and steps within them. This allows standardizing the full deployment pattern (environment, strategy, approval checks) across multiple pipelines.
+<KnowledgeCheck questions={[
+  {
+    question: "What is the key difference between a GitHub reusable workflow and a composite action?",
+    options: [
+      "Reusable workflows can only be in the same repository; composite actions can be shared",
+      "Reusable workflows run as separate jobs with their own runner; composite actions run as steps in the caller's job",
+      "Composite actions support secrets; reusable workflows do not",
+      "Reusable workflows are limited to 5 jobs; composite actions have no limits"
+    ],
+    correctIndex: 1,
+    explanation: "A reusable workflow (triggered via workflow_call) executes as one or more complete jobs on their own runners with independent workspaces. A composite action runs as a set of steps within the calling job, sharing the runner, workspace, and environment variables. This distinction affects how state is shared, performance (no new runner spin-up for composite), and what each can access."
+  },
+  {
+    question: "In Azure Pipelines, how do you reference a template from a different repository?",
+    options: [
+      "Use 'extends' with the repository URL directly in the template path",
+      "Declare the repository in 'resources.repositories' and use '@alias' suffix in the template path",
+      "Use 'import' statements at the top of the YAML file",
+      "Template files must be in the same repository"
+    ],
+    correctIndex: 1,
+    explanation: "External templates require a repository resource declaration with an alias. The template is then referenced using the template: path/to/file.yml@alias syntax. The alias matches the repository field in the resources section. This allows pinning to specific refs (branches or tags) for version control."
+  },
+  {
+    question: "What happens when you use 'secrets: inherit' in a GitHub reusable workflow call?",
+    options: [
+      "Only organization-level secrets are passed",
+      "All secrets available to the calling workflow are automatically passed to the reusable workflow",
+      "A new set of secrets is generated for the reusable workflow",
+      "Only secrets explicitly listed in the reusable workflow's 'secrets' definition are passed"
+    ],
+    correctIndex: 1,
+    explanation: "secrets: inherit passes all secrets that the calling workflow has access to (repository secrets, environment secrets, and organization secrets) to the reusable workflow. Without secrets: inherit, you must explicitly pass each secret. Note that secrets: inherit also passes GITHUB_TOKEN with the calling workflow's permissions."
+  },
+  {
+    question: "Which Azure Pipelines template type allows you to define reusable stages that include deployment jobs with environments?",
+    options: [
+      "Step template",
+      "Job template",
+      "Stage template",
+      "Variable template"
+    ],
+    correctIndex: 2,
+    explanation: "Stage templates can encapsulate entire stages including deployment jobs, environment references, and approval gates. They are the highest-level template type and can contain jobs and steps within them. This allows standardizing the full deployment pattern (environment, strategy, approval checks) across multiple pipelines."
+  }
+]} />
 
 ## Cleanup
 

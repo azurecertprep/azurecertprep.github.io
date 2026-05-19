@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 01: Design flow of work"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 01: Design flow of work
 
@@ -472,49 +474,52 @@ gh api repos/{owner}/{repo}/branches/main/protection/required_pull_request_revie
 
 ## Knowledge check
 
-**Question 1:** In GitHub Flow, what is the role of the `main` branch?
-
-A) It serves as the integration branch where features are combined before release  
-B) It is always in a deployable state and represents production  
-C) It is locked and only updated during release windows  
-D) It mirrors the develop branch after each sprint
-
-**Answer:** B - In GitHub Flow, main is always deployable. Deployments happen directly from main, so it must never be in a broken state.
-
----
-
-**Question 2:** Which branch protection setting ensures a PR cannot merge if new commits were pushed to main after the PR branch was created?
-
-A) Require code owner reviews  
-B) Require status checks to pass before merging  
-C) Require branches to be up to date before merging (strict mode)  
-D) Dismiss stale pull request approvals
-
-**Answer:** C - The "strict" option in required status checks forces the PR branch to be rebased on the latest main before merging, preventing merge skew.
-
----
-
-**Question 3:** When should you choose GitFlow over GitHub Flow?
-
-A) When you need continuous deployment to production  
-B) When you have a single team with trunk-based development expertise  
-C) When you release packaged software with formal version numbers and support windows  
-D) When you want the simplest possible workflow
-
-**Answer:** C - GitFlow is designed for software with formal releases (mobile apps, boxed software) where you maintain multiple versions simultaneously.
-
----
-
-**Question 4:** What does enabling auto-merge with squash on a repository accomplish?
-
-A) PRs merge immediately without any checks  
-B) PRs merge automatically once all required conditions are satisfied, combining all commits into one  
-C) PRs are force-merged even if reviews are pending  
-D) PRs are automatically rebased and merged on a nightly schedule
-
-**Answer:** B - Auto-merge with squash waits for all branch protection requirements (checks, reviews) and then merges with a single squash commit for a clean history.
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "In GitHub Flow, what is the role of the 'main' branch?",
+    options: [
+      "It serves as the integration branch where features are combined before release",
+      "It is always in a deployable state and represents production",
+      "It is locked and only updated during release windows",
+      "It mirrors the develop branch after each sprint"
+    ],
+    correctIndex: 1,
+    explanation: "In GitHub Flow, main is always deployable. Deployments happen directly from main, so it must never be in a broken state."
+  },
+  {
+    question: "Which branch protection setting ensures a PR cannot merge if new commits were pushed to main after the PR branch was created?",
+    options: [
+      "Require code owner reviews",
+      "Require status checks to pass before merging",
+      "Require branches to be up to date before merging (strict mode)",
+      "Dismiss stale pull request approvals"
+    ],
+    correctIndex: 2,
+    explanation: "The \"strict\" option in required status checks forces the PR branch to be rebased on the latest main before merging, preventing merge skew."
+  },
+  {
+    question: "When should you choose GitFlow over GitHub Flow?",
+    options: [
+      "When you need continuous deployment to production",
+      "When you have a single team with trunk-based development expertise",
+      "When you release packaged software with formal version numbers and support windows",
+      "When you want the simplest possible workflow"
+    ],
+    correctIndex: 2,
+    explanation: "GitFlow is designed for software with formal releases (mobile apps, boxed software) where you maintain multiple versions simultaneously."
+  },
+  {
+    question: "What does enabling auto-merge with squash on a repository accomplish?",
+    options: [
+      "PRs merge immediately without any checks",
+      "PRs merge automatically once all required conditions are satisfied, combining all commits into one",
+      "PRs are force-merged even if reviews are pending",
+      "PRs are automatically rebased and merged on a nightly schedule"
+    ],
+    correctIndex: 1,
+    explanation: "Auto-merge with squash waits for all branch protection requirements (checks, reviews) and then merges with a single squash commit for a clean history."
+  }
+]} />
 
 ## Cleanup
 

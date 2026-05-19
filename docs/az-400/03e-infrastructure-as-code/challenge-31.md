@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 31: Infrastructure as Code strategy"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 31: Infrastructure as Code strategy
 
@@ -927,41 +929,52 @@ terraform force-unlock a1b2c3d4-e5f6-7890-abcd-ef1234567890
 
 ## Knowledge check
 
-1. **What is the primary advantage of using `az deployment sub what-if` in a PR pipeline?**
-
-   A) It deploys resources to a temporary subscription for testing
-   B) It shows what changes would be made without actually modifying any resources
-   C) It validates the Bicep syntax and checks for compilation errors
-   D) It runs the deployment in a sandbox mode that auto-reverts after 1 hour
-
-   **Answer: B** - The what-if operation is a read-only comparison that shows what resources would be created, modified, or deleted if the deployment were executed. This gives reviewers full visibility into the impact of infrastructure changes during code review without making any actual changes to Azure resources.
-
-2. **Which Terraform command exit code indicates that drift has been detected?**
-
-   A) Exit code 0 (plan has no changes)
-   B) Exit code 1 (plan encountered an error)
-   C) Exit code 2 (plan succeeded with changes detected)
-   D) Exit code 3 (plan detected destructive changes)
-
-   **Answer: C** - When `terraform plan` is run with the `-detailed-exitcode` flag, it returns exit code 0 for no changes, exit code 1 for errors, and exit code 2 when changes are detected. This makes it ideal for drift detection scripts that need to programmatically determine whether the actual state differs from the desired state.
-
-3. **Why should Terraform state files use a remote backend with locking in a CI/CD pipeline?**
-
-   A) Local state files are too large for pipeline runners
-   B) Remote backends provide automatic backup and encryption
-   C) Multiple pipeline runs could corrupt state without locking, and the state must persist between runs
-   D) Terraform requires network access to read state files
-
-   **Answer: C** - State files track the mapping between IaC definitions and real resources. Without a remote backend, state would be lost between pipeline runs (each run gets a fresh workspace). Without locking, concurrent runs could read/write state simultaneously, leading to corruption or duplicate resource creation.
-
-4. **In a Bicep module architecture, what is the recommended approach for environment-specific values?**
-
-   A) Use conditional logic with `if` statements inside the module
-   B) Create separate Bicep files for each environment
-   C) Use parameter files (`.bicepparam`) per environment with a shared template
-   D) Hard-code environment values in the module and use deployment names to differentiate
-
-   **Answer: C** - The recommended pattern is a single set of Bicep templates with environment-specific `.bicepparam` files that provide different values (SKUs, instance counts, feature flags) per environment. This ensures the infrastructure structure is consistent while allowing configuration to vary, reducing duplication and drift between environment definitions.
+<KnowledgeCheck questions={[
+  {
+    question: "What is the primary advantage of using 'az deployment sub what-if' in a PR pipeline?",
+    options: [
+      "It deploys resources to a temporary subscription for testing",
+      "It shows what changes would be made without actually modifying any resources",
+      "It validates the Bicep syntax and checks for compilation errors",
+      "It runs the deployment in a sandbox mode that auto-reverts after 1 hour"
+    ],
+    correctIndex: 1,
+    explanation: "The what-if operation is a read-only comparison that shows what resources would be created, modified, or deleted if the deployment were executed. This gives reviewers full visibility into the impact of infrastructure changes during code review without making any actual changes to Azure resources."
+  },
+  {
+    question: "Which Terraform command exit code indicates that drift has been detected?",
+    options: [
+      "Exit code 0 (plan has no changes)",
+      "Exit code 1 (plan encountered an error)",
+      "Exit code 2 (plan succeeded with changes detected)",
+      "Exit code 3 (plan detected destructive changes)"
+    ],
+    correctIndex: 2,
+    explanation: "When terraform plan is run with the -detailed-exitcode flag, it returns exit code 0 for no changes, exit code 1 for errors, and exit code 2 when changes are detected. This makes it ideal for drift detection scripts that need to programmatically determine whether the actual state differs from the desired state."
+  },
+  {
+    question: "Why should Terraform state files use a remote backend with locking in a CI/CD pipeline?",
+    options: [
+      "Local state files are too large for pipeline runners",
+      "Remote backends provide automatic backup and encryption",
+      "Multiple pipeline runs could corrupt state without locking, and the state must persist between runs",
+      "Terraform requires network access to read state files"
+    ],
+    correctIndex: 2,
+    explanation: "State files track the mapping between IaC definitions and real resources. Without a remote backend, state would be lost between pipeline runs (each run gets a fresh workspace). Without locking, concurrent runs could read/write state simultaneously, leading to corruption or duplicate resource creation."
+  },
+  {
+    question: "In a Bicep module architecture, what is the recommended approach for environment-specific values?",
+    options: [
+      "Use conditional logic with 'if' statements inside the module",
+      "Create separate Bicep files for each environment",
+      "Use parameter files ('.bicepparam') per environment with a shared template",
+      "Hard-code environment values in the module and use deployment names to differentiate"
+    ],
+    correctIndex: 2,
+    explanation: "The recommended pattern is a single set of Bicep templates with environment-specific .bicepparam files that provide different values (SKUs, instance counts, feature flags) per environment. This ensures the infrastructure structure is consistent while allowing configuration to vary, reducing duplication and drift between environment definitions."
+  }
+]} />
 
 ## Cleanup
 

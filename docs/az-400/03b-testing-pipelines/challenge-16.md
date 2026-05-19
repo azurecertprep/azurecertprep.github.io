@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 16: Testing strategy in pipelines"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 16: Testing strategy in pipelines
 
@@ -553,59 +555,52 @@ if (typeof globalThis.fetch === 'undefined') {
 
 ## Knowledge check
 
-1. **In a GitHub Actions workflow using a matrix strategy, what does `fail-fast: false` accomplish?**
-   - A. It prevents the workflow from running if any matrix combination is invalid
-   - B. It allows all matrix combinations to complete even if one fails
-   - C. It runs matrix combinations sequentially instead of in parallel
-   - D. It skips test reporting for failed matrix combinations
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** By default, GitHub Actions cancels all in-progress matrix jobs when any one fails. Setting `fail-fast: false` allows all combinations to run to completion, which is important when testing compatibility across multiple versions -- you want to know which versions pass and which fail.
-
-   </details>
-
-2. **Which health check configuration ensures a PostgreSQL service container is ready before workflow steps execute?**
-   - A. Setting `ports: ['5432:5432']` in the service definition
-   - B. Adding `options: --health-cmd="pg_isready" --health-interval=10s --health-retries=5`
-   - C. Using `needs: postgres` in the job definition
-   - D. Configuring `services.postgres.ready: true`
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** The `options` field passes Docker health check arguments to the container. GitHub Actions waits for the health check to pass before proceeding with job steps. `pg_isready` is the standard PostgreSQL readiness probe.
-
-   </details>
-
-3. **In Azure Pipelines, which task publishes JUnit test results so they appear in the Tests tab?**
-   - A. `PublishPipelineArtifact@1`
-   - B. `PublishTestResults@2`
-   - C. `PublishCodeCoverageResults@2`
-   - D. `DownloadBuildArtifacts@1`
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** The `PublishTestResults@2` task parses JUnit, NUnit, VSTest, xUnit, or CTest format files and publishes them to the Azure Pipelines Tests tab. `PublishCodeCoverageResults@2` is specifically for coverage data, not test pass/fail results.
-
-   </details>
-
-4. **What is the primary purpose of k6 thresholds in a CI pipeline?**
-   - A. To set the number of virtual users for the test
-   - B. To define pass/fail criteria that determine the exit code of the k6 process
-   - C. To configure the duration of each load test stage
-   - D. To specify which endpoints to test
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** Thresholds define SLO-based pass/fail criteria. If any threshold is breached, k6 exits with a non-zero code, which causes the CI step to fail. This enables automated performance regression detection in the pipeline.
-
-   </details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "In a GitHub Actions workflow using a matrix strategy, what does 'fail-fast: false' accomplish?",
+    options: [
+      "It prevents the workflow from running if any matrix combination is invalid",
+      "It allows all matrix combinations to complete even if one fails",
+      "It runs matrix combinations sequentially instead of in parallel",
+      "It skips test reporting for failed matrix combinations"
+    ],
+    correctIndex: 1,
+    explanation: "By default, GitHub Actions cancels all in-progress matrix jobs when any one fails. Setting fail-fast: false allows all combinations to run to completion, which is important when testing compatibility across multiple versions -- you want to know which versions pass and which fail."
+  },
+  {
+    question: "Which health check configuration ensures a PostgreSQL service container is ready before workflow steps execute?",
+    options: [
+      "Setting 'ports: ['5432:5432']' in the service definition",
+      "Adding 'options: --health-cmd=\"pg_isready\" --health-interval=10s --health-retries=5'",
+      "Using 'needs: postgres' in the job definition",
+      "Configuring 'services.postgres.ready: true'"
+    ],
+    correctIndex: 1,
+    explanation: "The options field passes Docker health check arguments to the container. GitHub Actions waits for the health check to pass before proceeding with job steps. pg_isready is the standard PostgreSQL readiness probe."
+  },
+  {
+    question: "In Azure Pipelines, which task publishes JUnit test results so they appear in the Tests tab?",
+    options: [
+      "'PublishPipelineArtifact@1'",
+      "'PublishTestResults@2'",
+      "'PublishCodeCoverageResults@2'",
+      "'DownloadBuildArtifacts@1'"
+    ],
+    correctIndex: 1,
+    explanation: "The PublishTestResults@2 task parses JUnit, NUnit, VSTest, xUnit, or CTest format files and publishes them to the Azure Pipelines Tests tab. PublishCodeCoverageResults@2 is specifically for coverage data, not test pass/fail results."
+  },
+  {
+    question: "What is the primary purpose of k6 thresholds in a CI pipeline?",
+    options: [
+      "To set the number of virtual users for the test",
+      "To define pass/fail criteria that determine the exit code of the k6 process",
+      "To configure the duration of each load test stage",
+      "To specify which endpoints to test"
+    ],
+    correctIndex: 1,
+    explanation: "Thresholds define SLO-based pass/fail criteria. If any threshold is breached, k6 exits with a non-zero code, which causes the CI step to fail. This enables automated performance regression detection in the pipeline."
+  }
+]} />
 
 ## Cleanup
 

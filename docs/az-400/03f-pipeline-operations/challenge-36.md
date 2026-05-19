@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 36: Retention strategies"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 36: Retention strategies
 
@@ -628,41 +630,52 @@ az acr run --registry contosoregistry --cmd "acr purge \
 
 ## Knowledge check
 
-1. **What is a retention lease in Azure Pipelines?**
-
-   A) A license that determines how many pipelines can run concurrently
-   B) A programmatic lock that prevents a pipeline run and its artifacts from being deleted by retention policies
-   C) A storage quota assigned to each pipeline definition
-   D) A time-limited permission to access pipeline artifacts
-
-   **Answer: B** - A retention lease is an API-managed lock that overrides project-level retention settings for specific pipeline runs. When a lease is active, the run and its artifacts are protected from automatic deletion regardless of the configured retention period. Leases have a `daysValid` property that defines how long the protection lasts.
-
-2. **How should artifact retention differ between CI builds and production releases?**
-
-   A) All artifacts should have the same retention regardless of environment
-   B) CI/PR artifacts should have short retention (1-7 days); production release artifacts should have long retention (90-365 days)
-   C) CI artifacts should be kept longer because they are needed for debugging
-   D) Production artifacts should be deleted immediately after deployment to save space
-
-   **Answer: B** - CI and PR artifacts are transient and only needed during the review/merge cycle (a few days at most). Production release artifacts may be needed for rollback, auditing, or compliance and should be retained for months or years depending on regulatory requirements. This tiered approach optimizes storage costs while meeting compliance needs.
-
-3. **What is the recommended approach for managing container image retention in Azure Container Registry?**
-
-   A) Manually delete images when storage is full
-   B) Use ACR purge tasks with filters to automatically remove untagged manifests and old tags while keeping a minimum number
-   C) Delete the entire repository and re-push only needed images
-   D) Use smaller base images to reduce storage
-
-   **Answer: B** - ACR purge tasks (scheduled via `az acr task`) provide automated lifecycle management. They support regex filters for tag patterns, `--ago` for age-based cleanup, `--keep` for minimum retention count, and `--untagged` for dangling manifests. This ensures production-critical images are preserved while old build artifacts are cleaned up automatically.
-
-4. **Why is it important to delete untagged container images from a registry?**
-
-   A) Untagged images cause security vulnerabilities
-   B) Untagged images consume storage without serving any purpose since they cannot be pulled by tag
-   C) Untagged images slow down the registry API
-   D) Untagged images prevent new pushes to the same repository
-
-   **Answer: B** - When a new image is pushed with an existing tag, the previous image becomes "untagged" (its manifest remains but has no tag reference). These dangling manifests accumulate storage but cannot be pulled by name, making them waste. Regular purging of untagged images is a best practice for container registry hygiene and cost control.
+<KnowledgeCheck questions={[
+  {
+    question: "What is a retention lease in Azure Pipelines?",
+    options: [
+      "A license that determines how many pipelines can run concurrently",
+      "A programmatic lock that prevents a pipeline run and its artifacts from being deleted by retention policies",
+      "A storage quota assigned to each pipeline definition",
+      "A time-limited permission to access pipeline artifacts"
+    ],
+    correctIndex: 1,
+    explanation: "A retention lease is an API-managed lock that overrides project-level retention settings for specific pipeline runs. When a lease is active, the run and its artifacts are protected from automatic deletion regardless of the configured retention period. Leases have a daysValid property that defines how long the protection lasts."
+  },
+  {
+    question: "How should artifact retention differ between CI builds and production releases?",
+    options: [
+      "All artifacts should have the same retention regardless of environment",
+      "CI/PR artifacts should have short retention (1-7 days); production release artifacts should have long retention (90-365 days)",
+      "CI artifacts should be kept longer because they are needed for debugging",
+      "Production artifacts should be deleted immediately after deployment to save space"
+    ],
+    correctIndex: 1,
+    explanation: "CI and PR artifacts are transient and only needed during the review/merge cycle (a few days at most). Production release artifacts may be needed for rollback, auditing, or compliance and should be retained for months or years depending on regulatory requirements. This tiered approach optimizes storage costs while meeting compliance needs."
+  },
+  {
+    question: "What is the recommended approach for managing container image retention in Azure Container Registry?",
+    options: [
+      "Manually delete images when storage is full",
+      "Use ACR purge tasks with filters to automatically remove untagged manifests and old tags while keeping a minimum number",
+      "Delete the entire repository and re-push only needed images",
+      "Use smaller base images to reduce storage"
+    ],
+    correctIndex: 1,
+    explanation: "ACR purge tasks (scheduled via az acr task) provide automated lifecycle management. They support regex filters for tag patterns, --ago for age-based cleanup, --keep for minimum retention count, and --untagged for dangling manifests. This ensures production-critical images are preserved while old build artifacts are cleaned up automatically."
+  },
+  {
+    question: "Why is it important to delete untagged container images from a registry?",
+    options: [
+      "Untagged images cause security vulnerabilities",
+      "Untagged images consume storage without serving any purpose since they cannot be pulled by tag",
+      "Untagged images slow down the registry API",
+      "Untagged images prevent new pushes to the same repository"
+    ],
+    correctIndex: 1,
+    explanation: "When a new image is pushed with an existing tag, the previous image becomes \"untagged\" (its manifest remains but has no tag reference). These dangling manifests accumulate storage but cannot be pulled by name, making them waste. Regular purging of untagged images is a best practice for container registry hygiene and cost control."
+  }
+]} />
 
 ## Cleanup
 

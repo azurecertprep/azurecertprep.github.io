@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 25: Blue-green and canary deployments"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 25: Blue-green and canary deployments
 
@@ -610,71 +612,52 @@ az webapp config appsettings set \
 
 ## Knowledge check
 
-**Question 1:** Contoso wants to deploy a new version of their payment API with zero downtime. The deployment must allow instant rollback if issues are detected. Which approach requires the LEAST operational complexity while meeting these requirements?
-
-- A. Canary deployment with Azure Traffic Manager
-- B. Blue-green deployment with Azure App Service deployment slots
-- C. Rolling deployment across multiple VM instances
-- D. Ring-based deployment with progressive exposure
-
-<details>
-<summary>Show answer</summary>
-
-**B. Blue-green deployment with Azure App Service deployment slots**
-
-Blue-green with deployment slots provides zero downtime and instant rollback (just swap back) with the least operational complexity. The swap operation is atomic and built into App Service. Canary and ring-based add traffic splitting complexity, and rolling updates require managing partially-deployed states.
-
-</details>
-
-**Question 2:** A Traffic Manager profile uses weighted routing with production at weight 90 and canary at weight 10. The DNS TTL is set to 300 seconds. A developer notices the canary is receiving approximately 50% of traffic. What is the MOST LIKELY cause?
-
-- A. Traffic Manager does not support weighted routing with Azure App Service
-- B. The canary endpoint has a higher priority than production
-- C. DNS caching by clients causes uneven distribution, especially with low request volumes
-- D. The production endpoint health probe is failing
-
-<details>
-<summary>Show answer</summary>
-
-**C. DNS caching by clients causes uneven distribution, especially with low request volumes**
-
-Traffic Manager weighted routing operates at the DNS level. When clients cache DNS responses for the full TTL duration (300 seconds), a single client sends all requests to whichever endpoint was returned. With low request volumes, this creates uneven distribution. Reducing TTL and increasing request volume improves the statistical distribution.
-
-</details>
-
-**Question 3:** During a blue-green deployment, the staging slot's connection string should NOT swap to production. Which configuration ensures this behavior?
-
-- A. Set the connection string value to be identical in both slots
-- B. Mark the connection string as a slot setting (deployment slot setting)
-- C. Store the connection string in Azure Key Vault
-- D. Use a managed identity for database authentication
-
-<details>
-<summary>Show answer</summary>
-
-**B. Mark the connection string as a slot setting (deployment slot setting)**
-
-When a setting is marked as a "slot setting" (also called "sticky"), it remains with the slot rather than following the code during a swap. This ensures the staging connection string stays in staging and the production connection string stays in production, regardless of which code version is deployed to each slot.
-
-</details>
-
-**Question 4:** Contoso implements ring-based deployment with Ring 0 (internal), Ring 1 (5% beta), Ring 2 (25% early adopters), and Ring 3 (GA). After deploying to Ring 1, the error rate increases to 2%. What should happen?
-
-- A. Immediately promote to Ring 2 to get more data points
-- B. Roll back Ring 1 and investigate, blocking promotion to higher rings
-- C. Increase Ring 1 to 15% to determine if the error is transient
-- D. Skip to Ring 3 since 2% error rate is acceptable for beta users
-
-<details>
-<summary>Show answer</summary>
-
-**B. Roll back Ring 1 and investigate, blocking promotion to higher rings**
-
-The purpose of ring-based deployment is to catch issues at lower exposure levels before they impact more users. A 2% error rate at Ring 1 exceeds the advancement criteria (error rate below 0.1%) and indicates a problem that would affect more users at higher rings. The deployment should be rolled back, the issue investigated and fixed, then the ring process restarted.
-
-</details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso wants to deploy a new version of their payment API with zero downtime. The deployment must allow instant rollback if issues are detected. Which approach requires the LEAST operational complexity while meeting these requirements?",
+    options: [
+      "Canary deployment with Azure Traffic Manager",
+      "Blue-green deployment with Azure App Service deployment slots",
+      "Rolling deployment across multiple VM instances",
+      "Ring-based deployment with progressive exposure"
+    ],
+    correctIndex: 1,
+    explanation: "Blue-green with deployment slots provides zero downtime and instant rollback (just swap back) with the least operational complexity. The swap operation is atomic and built into App Service. Canary and ring-based add traffic splitting complexity, and rolling updates require managing partially-deployed states."
+  },
+  {
+    question: "A Traffic Manager profile uses weighted routing with production at weight 90 and canary at weight 10. The DNS TTL is set to 300 seconds. A developer notices the canary is receiving approximately 50% of traffic. What is the MOST LIKELY cause?",
+    options: [
+      "Traffic Manager does not support weighted routing with Azure App Service",
+      "The canary endpoint has a higher priority than production",
+      "DNS caching by clients causes uneven distribution, especially with low request volumes",
+      "The production endpoint health probe is failing"
+    ],
+    correctIndex: 2,
+    explanation: "Traffic Manager weighted routing operates at the DNS level. When clients cache DNS responses for the full TTL duration (300 seconds), a single client sends all requests to whichever endpoint was returned. With low request volumes, this creates uneven distribution. Reducing TTL and increasing request volume improves the statistical distribution."
+  },
+  {
+    question: "During a blue-green deployment, the staging slot's connection string should NOT swap to production. Which configuration ensures this behavior?",
+    options: [
+      "Set the connection string value to be identical in both slots",
+      "Mark the connection string as a slot setting (deployment slot setting)",
+      "Store the connection string in Azure Key Vault",
+      "Use a managed identity for database authentication"
+    ],
+    correctIndex: 1,
+    explanation: "When a setting is marked as a \"slot setting\" (also called \"sticky\"), it remains with the slot rather than following the code during a swap. This ensures the staging connection string stays in staging and the production connection string stays in production, regardless of which code version is deployed to each slot."
+  },
+  {
+    question: "Contoso implements ring-based deployment with Ring 0 (internal), Ring 1 (5% beta), Ring 2 (25% early adopters), and Ring 3 (GA). After deploying to Ring 1, the error rate increases to 2%. What should happen?",
+    options: [
+      "Immediately promote to Ring 2 to get more data points",
+      "Roll back Ring 1 and investigate, blocking promotion to higher rings",
+      "Increase Ring 1 to 15% to determine if the error is transient",
+      "Skip to Ring 3 since 2% error rate is acceptable for beta users"
+    ],
+    correctIndex: 1,
+    explanation: "The purpose of ring-based deployment is to catch issues at lower exposure levels before they impact more users. A 2% error rate at Ring 1 exceeds the advancement criteria (error rate below 0.1%) and indicates a problem that would affect more users at higher rings. The deployment should be rolled back, the issue investigated and fixed, then the ring process restarted."
+  }
+]} />
 
 ## Cleanup
 

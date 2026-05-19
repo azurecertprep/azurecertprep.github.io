@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 40: GitHub authentication"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 40: GitHub authentication
 
@@ -337,41 +339,52 @@ gh api /app/installations/{installation_id}/repositories --jq '.repositories[].f
 
 ## Knowledge check
 
-1. A workflow needs to create a deployment in the current repository and also trigger a workflow in a different repository within the same organization. Which authentication approach should you use?
-
-   A) GITHUB_TOKEN with `permissions: contents: write`
-   B) A classic PAT with `repo` scope stored as a secret
-   C) A GitHub App installation token
-   D) A fine-grained PAT with access to both repositories
-
-   **Answer: C.** GITHUB_TOKEN cannot access other repositories, so it cannot trigger workflows cross-repo. A GitHub App with installation access to both repositories provides scoped, auditable authentication without being tied to a user account. While a fine-grained PAT could technically work, GitHub Apps are preferred for automation because they provide better audit trails and are not affected by user account changes.
-
-2. Contoso wants to enforce that all automation tokens expire within 90 days. Which token types support enforced expiration at the organization level?
-
-   A) Classic PATs only
-   B) Fine-grained PATs only
-   C) Both classic and fine-grained PATs
-   D) GITHUB_TOKEN and fine-grained PATs
-
-   **Answer: B.** Organization administrators can enforce maximum lifetime policies for fine-grained PATs through organization settings. Classic PATs can be set to expire by the user but the organization cannot enforce a maximum lifetime policy on them (only restrict or block them entirely). GITHUB_TOKEN already expires after each job automatically.
-
-3. A security manager at Contoso needs to view and dismiss Dependabot alerts across all repositories but should not be able to modify code. What is the most appropriate role?
-
-   A) Organization Owner
-   B) Organization Member with Write access to all repos
-   C) Security Manager organization role
-   D) Triage repository role on each repo
-
-   **Answer: C.** The Security Manager role grants read access to all repositories and the ability to manage security alerts (including Dependabot, secret scanning, and code scanning) across the organization without write access to code. This follows the principle of least privilege.
-
-4. Which statement about GITHUB_TOKEN is correct?
-
-   A) It can be used to trigger other workflows in the same repository
-   B) Its permissions are fixed and cannot be customized per workflow
-   C) It persists across multiple workflow runs for caching purposes
-   D) It cannot be used to push commits to the repository if branch protection requires PR reviews
-
-   **Answer: D.** GITHUB_TOKEN respects branch protection rules and cannot bypass required reviews. It also cannot trigger other workflows (to prevent infinite loops). Its permissions are customizable via the `permissions` key, and it expires after each job (does not persist across runs).
+<KnowledgeCheck questions={[
+  {
+    question: "A workflow needs to create a deployment in the current repository and also trigger a workflow in a different repository within the same organization. Which authentication approach should you use?",
+    options: [
+      "GITHUB_TOKEN with 'permissions: contents: write'",
+      "A classic PAT with 'repo' scope stored as a secret",
+      "A GitHub App installation token",
+      "A fine-grained PAT with access to both repositories"
+    ],
+    correctIndex: 2,
+    explanation: "GITHUB_TOKEN cannot access other repositories, so it cannot trigger workflows cross-repo. A GitHub App with installation access to both repositories provides scoped, auditable authentication without being tied to a user account. While a fine-grained PAT could technically work, GitHub Apps are preferred for automation because they provide better audit trails and are not affected by user account changes."
+  },
+  {
+    question: "Contoso wants to enforce that all automation tokens expire within 90 days. Which token types support enforced expiration at the organization level?",
+    options: [
+      "Classic PATs only",
+      "Fine-grained PATs only",
+      "Both classic and fine-grained PATs",
+      "GITHUB_TOKEN and fine-grained PATs"
+    ],
+    correctIndex: 1,
+    explanation: "Organization administrators can enforce maximum lifetime policies for fine-grained PATs through organization settings. Classic PATs can be set to expire by the user but the organization cannot enforce a maximum lifetime policy on them (only restrict or block them entirely). GITHUB_TOKEN already expires after each job automatically."
+  },
+  {
+    question: "A security manager at Contoso needs to view and dismiss Dependabot alerts across all repositories but should not be able to modify code. What is the most appropriate role?",
+    options: [
+      "Organization Owner",
+      "Organization Member with Write access to all repos",
+      "Security Manager organization role",
+      "Triage repository role on each repo"
+    ],
+    correctIndex: 2,
+    explanation: "The Security Manager role grants read access to all repositories and the ability to manage security alerts (including Dependabot, secret scanning, and code scanning) across the organization without write access to code. This follows the principle of least privilege."
+  },
+  {
+    question: "Which statement about GITHUB_TOKEN is correct?",
+    options: [
+      "It can be used to trigger other workflows in the same repository",
+      "Its permissions are fixed and cannot be customized per workflow",
+      "It persists across multiple workflow runs for caching purposes",
+      "It cannot be used to push commits to the repository if branch protection requires PR reviews"
+    ],
+    correctIndex: 3,
+    explanation: "GITHUB_TOKEN respects branch protection rules and cannot bypass required reviews. It also cannot trigger other workflows (to prevent infinite loops). Its permissions are customizable via the permissions key, and it expires after each job (does not persist across runs)."
+  }
+]} />
 
 ## Cleanup
 

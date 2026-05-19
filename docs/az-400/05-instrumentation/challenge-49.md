@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: "Challenge 49: KQL queries for DevOps"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 49: KQL queries for DevOps
 
@@ -413,41 +415,52 @@ requests
 
 ## Knowledge check
 
-1. An SRE needs to find the top 5 slowest API endpoints in the last hour by their 95th percentile response time, excluding endpoints with fewer than 10 requests. Which KQL query achieves this?
-
-   A) `requests | where timestamp > ago(1h) | top 5 by duration`
-   B) `requests | where timestamp > ago(1h) | summarize p95 = percentile(duration, 95), count = count() by name | where count > 10 | top 5 by p95`
-   C) `requests | where timestamp > ago(1h) | where duration > 1000 | summarize count() by name`
-   D) `requests | where timestamp > ago(1h) | order by duration | take 5`
-
-   **Answer: B.** This query correctly calculates the 95th percentile per endpoint, filters out low-traffic endpoints (count > 10), and returns the top 5 by p95 duration. Option A returns the 5 slowest individual requests (not endpoints). Option D also returns individual requests without aggregation.
-
-2. Contoso wants an alert that fires when the error rate in the last 5 minutes exceeds 3 times the 7-day average error rate. Which KQL construct is essential for comparing current metrics against a historical baseline?
-
-   A) `join` operator
-   B) `toscalar()` function with a sub-query
-   C) `mv-expand` operator
-   D) `parse` operator
-
-   **Answer: B.** The `toscalar()` function converts a tabular sub-query result into a scalar value that can be used in comparisons. This is essential for comparing a current metric value against a pre-computed baseline (for example, `where currentRate > toscalar(baselineQuery) * 3`).
-
-3. After a deployment, a new exception type `Contoso.PaymentTimeoutException` appears. Which KQL query identifies exception types that did NOT exist before the deployment?
-
-   A) `exceptions | where timestamp > deployTime | where type contains "Timeout"`
-   B) `exceptions | where timestamp > deployTime | distinct type | join kind=leftanti (exceptions | where timestamp < deployTime | distinct type) on type`
-   C) `exceptions | summarize count() by type | where count_ == 1`
-   D) `exceptions | where timestamp > deployTime | summarize count() by type | order by count_ asc`
-
-   **Answer: B.** The `leftanti` join returns rows from the left table (post-deployment exception types) that have no matching rows in the right table (pre-deployment exception types). This precisely identifies new exceptions that appeared after the deployment.
-
-4. An Azure DevOps team wants to query pipeline run durations and pass rates over the last quarter for capacity planning. Which data source should they use?
-
-   A) Azure DevOps REST API for pipeline runs
-   B) Azure DevOps Analytics OData endpoint
-   C) Application Insights custom events
-   D) Azure Monitor activity logs
-
-   **Answer: B.** Azure DevOps Analytics provides an OData endpoint specifically designed for historical analytics queries on pipelines, work items, and tests. It supports aggregation, filtering, and time-series analysis that would be cumbersome to implement with the standard REST API (which is designed for individual record retrieval rather than analytical queries).
+<KnowledgeCheck questions={[
+  {
+    question: "An SRE needs to find the top 5 slowest API endpoints in the last hour by their 95th percentile response time, excluding endpoints with fewer than 10 requests. Which KQL query achieves this?",
+    options: [
+      "'requests | where timestamp > ago(1h) | top 5 by duration'",
+      "'requests | where timestamp > ago(1h) | summarize p95 = percentile(duration, 95), count = count() by name | where count > 10 | top 5 by p95'",
+      "'requests | where timestamp > ago(1h) | where duration > 1000 | summarize count() by name'",
+      "'requests | where timestamp > ago(1h) | order by duration | take 5'"
+    ],
+    correctIndex: 1,
+    explanation: "This query correctly calculates the 95th percentile per endpoint, filters out low-traffic endpoints (count > 10), and returns the top 5 by p95 duration. Option A returns the 5 slowest individual requests (not endpoints). Option D also returns individual requests without aggregation."
+  },
+  {
+    question: "Contoso wants an alert that fires when the error rate in the last 5 minutes exceeds 3 times the 7-day average error rate. Which KQL construct is essential for comparing current metrics against a historical baseline?",
+    options: [
+      "'join' operator",
+      "'toscalar()' function with a sub-query",
+      "'mv-expand' operator",
+      "'parse' operator"
+    ],
+    correctIndex: 1,
+    explanation: "The toscalar() function converts a tabular sub-query result into a scalar value that can be used in comparisons. This is essential for comparing a current metric value against a pre-computed baseline (for example, where currentRate > toscalar(baselineQuery) * 3)."
+  },
+  {
+    question: "After a deployment, a new exception type 'Contoso.PaymentTimeoutException' appears. Which KQL query identifies exception types that did NOT exist before the deployment?",
+    options: [
+      "'exceptions | where timestamp > deployTime | where type contains \"Timeout\"'",
+      "'exceptions | where timestamp > deployTime | distinct type | join kind=leftanti (exceptions | where timestamp < deployTime | distinct type) on type'",
+      "'exceptions | summarize count() by type | where count_ == 1'",
+      "'exceptions | where timestamp > deployTime | summarize count() by type | order by count_ asc'"
+    ],
+    correctIndex: 1,
+    explanation: "The leftanti join returns rows from the left table (post-deployment exception types) that have no matching rows in the right table (pre-deployment exception types). This precisely identifies new exceptions that appeared after the deployment."
+  },
+  {
+    question: "An Azure DevOps team wants to query pipeline run durations and pass rates over the last quarter for capacity planning. Which data source should they use?",
+    options: [
+      "Azure DevOps REST API for pipeline runs",
+      "Azure DevOps Analytics OData endpoint",
+      "Application Insights custom events",
+      "Azure Monitor activity logs"
+    ],
+    correctIndex: 1,
+    explanation: "Azure DevOps Analytics provides an OData endpoint specifically designed for historical analytics queries on pipelines, work items, and tests. It supports aggregation, filtering, and time-series analysis that would be cumbersome to implement with the standard REST API (which is designed for individual record retrieval rather than analytical queries)."
+  }
+]} />
 
 ## Cleanup
 

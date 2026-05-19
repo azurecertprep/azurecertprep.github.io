@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 41: Azure DevOps permissions and service connections"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 41: Azure DevOps permissions and service connections
 
@@ -384,41 +386,52 @@ az devops security group membership add \
 
 ## Knowledge check
 
-1. Contoso wants to ensure that only the Production-Deploy pipeline can use the `Azure-Prod` service connection. What should you configure?
-
-   A) Set the service connection to "Grant access permission to all pipelines" and add a YAML condition
-   B) Disable "Grant access permission to all pipelines" and explicitly add only the Production-Deploy pipeline to the service connection's pipeline permissions
-   C) Create a separate Azure DevOps project for production pipelines
-   D) Use pipeline variables to restrict which stages can access the connection
-
-   **Answer: B.** Disabling "Grant access permission to all pipelines" and explicitly adding only the specific pipeline to the service connection's permissions ensures that no other pipeline can reference this connection. This is the built-in authorization model for service connections in Azure DevOps.
-
-2. Contoso has 200 users: 150 developers, 30 product managers who only need work item access, and 20 executives who view dashboards. What is the most cost-effective access level assignment?
-
-   A) 200 Basic licenses
-   B) 150 Basic + 50 Stakeholder
-   C) 200 Stakeholder
-   D) 150 Basic + 30 Basic + 20 Stakeholder
-
-   **Answer: B.** Stakeholder access is free and provides the ability to view and create work items, view dashboards, and participate in discussions. Product managers and executives who do not need code access, pipeline management, or test plans should use Stakeholder access. Only developers who need full Repos, Pipelines, and Boards features require Basic access.
-
-3. An organization policy requires all PATs to be project-scoped with a maximum lifetime of 90 days. Where should you configure these restrictions?
-
-   A) Project Settings > Policies
-   B) Organization Settings > Policies
-   C) Each user's Personal settings
-   D) Microsoft Entra Conditional Access
-
-   **Answer: B.** PAT lifecycle policies (maximum lifetime, scope restrictions, and admin scope restrictions) are configured at the Organization Settings level under Policies. These apply to all users in the organization and cannot be overridden at the project level.
-
-4. A team needs to deploy to both development and production environments from one pipeline. Production requires release manager approval. What is the correct configuration?
-
-   A) Create two separate pipelines with different triggers
-   B) Use a single pipeline with stages and configure an Approvals check on the production environment resource
-   C) Add a manual intervention task in the pipeline YAML
-   D) Configure branch policies that require approval on the main branch
-
-   **Answer: B.** Azure DevOps environments support Approvals and checks that gate deployments. Configuring an approval check on the production environment means any pipeline stage targeting that environment will pause for approval. This provides a centralized, reusable control point regardless of which pipeline is used.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso wants to ensure that only the Production-Deploy pipeline can use the 'Azure-Prod' service connection. What should you configure?",
+    options: [
+      "Set the service connection to \"Grant access permission to all pipelines\" and add a YAML condition",
+      "Disable \"Grant access permission to all pipelines\" and explicitly add only the Production-Deploy pipeline to the service connection's pipeline permissions",
+      "Create a separate Azure DevOps project for production pipelines",
+      "Use pipeline variables to restrict which stages can access the connection"
+    ],
+    correctIndex: 1,
+    explanation: "Disabling \"Grant access permission to all pipelines\" and explicitly adding only the specific pipeline to the service connection's permissions ensures that no other pipeline can reference this connection. This is the built-in authorization model for service connections in Azure DevOps."
+  },
+  {
+    question: "Contoso has 200 users: 150 developers, 30 product managers who only need work item access, and 20 executives who view dashboards. What is the most cost-effective access level assignment?",
+    options: [
+      "200 Basic licenses",
+      "150 Basic + 50 Stakeholder",
+      "200 Stakeholder",
+      "150 Basic + 30 Basic + 20 Stakeholder"
+    ],
+    correctIndex: 1,
+    explanation: "Stakeholder access is free and provides the ability to view and create work items, view dashboards, and participate in discussions. Product managers and executives who do not need code access, pipeline management, or test plans should use Stakeholder access. Only developers who need full Repos, Pipelines, and Boards features require Basic access."
+  },
+  {
+    question: "An organization policy requires all PATs to be project-scoped with a maximum lifetime of 90 days. Where should you configure these restrictions?",
+    options: [
+      "Project Settings > Policies",
+      "Organization Settings > Policies",
+      "Each user's Personal settings",
+      "Microsoft Entra Conditional Access"
+    ],
+    correctIndex: 1,
+    explanation: "PAT lifecycle policies (maximum lifetime, scope restrictions, and admin scope restrictions) are configured at the Organization Settings level under Policies. These apply to all users in the organization and cannot be overridden at the project level."
+  },
+  {
+    question: "A team needs to deploy to both development and production environments from one pipeline. Production requires release manager approval. What is the correct configuration?",
+    options: [
+      "Create two separate pipelines with different triggers",
+      "Use a single pipeline with stages and configure an Approvals check on the production environment resource",
+      "Add a manual intervention task in the pipeline YAML",
+      "Configure branch policies that require approval on the main branch"
+    ],
+    correctIndex: 1,
+    explanation: "Azure DevOps environments support Approvals and checks that gate deployments. Configuring an approval check on the production environment means any pipeline stage targeting that environment will pause for approval. This provides a centralized, reusable control point regardless of which pipeline is used."
+  }
+]} />
 
 ## Cleanup
 

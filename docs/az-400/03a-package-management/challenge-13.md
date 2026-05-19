@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 13: GitHub Packages and Azure Artifacts"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 13: GitHub Packages and Azure Artifacts
 
@@ -410,42 +412,52 @@ npm publish
 
 ## Knowledge check
 
-1. Which package types does GitHub Packages support?
-   - A) npm, Maven, NuGet, Docker, RubyGems
-   - B) npm only
-   - C) npm and Docker only
-   - D) npm, Maven, and pip
-
-2. What is the maximum number of upstream sources in a single Azure Artifacts feed?
-   - A) 1
-   - B) 5
-   - C) Unlimited
-   - D) 10
-
-3. A company needs package vulnerability scanning integrated with their pipeline. Which solution provides this natively?
-   - A) Azure Artifacts with Defender for Cloud
-   - B) GitHub Packages with Dependabot
-   - C) Both A and B
-   - D) Neither - requires third-party tools
-
-4. What happens when a package in an Azure Artifacts upstream source is consumed for the first time?
-   - A) It is always fetched from upstream on each request
-   - B) A copy is saved to the local feed
-   - C) It is only available in the prerelease view
-   - D) It requires manual approval
-
-<details>
-<summary>Answers</summary>
-
-1. **A** - GitHub Packages supports npm, Maven, NuGet, Docker (container images), and RubyGems. Python (pip) packages are not natively supported by GitHub Packages.
-
-2. **C** - Azure Artifacts does not impose a hard limit on the number of upstream sources per feed. You can configure as many as needed, though performance considerations apply with very large numbers.
-
-3. **C** - Both platforms provide native vulnerability scanning. GitHub uses Dependabot for security alerts and automated PRs. Azure integrates with Microsoft Defender for DevOps to scan for vulnerable dependencies.
-
-4. **B** - When a package from an upstream source is requested for the first time, Azure Artifacts downloads it and saves a copy to the local feed. Subsequent requests are served from the cached copy, providing resilience against upstream outages.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: "Which package types does GitHub Packages support?",
+    options: [
+      "npm, Maven, NuGet, Docker, RubyGems",
+      "npm only",
+      "npm and Docker only",
+      "npm, Maven, and pip"
+    ],
+    correctIndex: 0,
+    explanation: "GitHub Packages supports npm, Maven, NuGet, Docker (container images), and RubyGems. Python (pip) packages are not natively supported by GitHub Packages."
+  },
+  {
+    question: "What is the maximum number of upstream sources in a single Azure Artifacts feed?",
+    options: [
+      "1",
+      "5",
+      "Unlimited",
+      "10"
+    ],
+    correctIndex: 2,
+    explanation: "Azure Artifacts does not impose a hard limit on the number of upstream sources per feed. You can configure as many as needed, though performance considerations apply with very large numbers."
+  },
+  {
+    question: "A company needs package vulnerability scanning integrated with their pipeline. Which solution provides this natively?",
+    options: [
+      "Azure Artifacts with Defender for Cloud",
+      "GitHub Packages with Dependabot",
+      "Both A and B",
+      "Neither - requires third-party tools"
+    ],
+    correctIndex: 2,
+    explanation: "Both platforms provide native vulnerability scanning. GitHub uses Dependabot for security alerts and automated PRs. Azure integrates with Microsoft Defender for DevOps to scan for vulnerable dependencies."
+  },
+  {
+    question: "What happens when a package in an Azure Artifacts upstream source is consumed for the first time?",
+    options: [
+      "It is always fetched from upstream on each request",
+      "A copy is saved to the local feed",
+      "It is only available in the prerelease view",
+      "It requires manual approval"
+    ],
+    correctIndex: 1,
+    explanation: "When a package from an upstream source is requested for the first time, Azure Artifacts downloads it and saves a copy to the local feed. Subsequent requests are served from the cached copy, providing resilience against upstream outages."
+  }
+]} />
 
 ## Cleanup
 

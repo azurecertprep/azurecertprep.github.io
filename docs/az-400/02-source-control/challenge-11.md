@@ -2,6 +2,8 @@
 sidebar_position: 5
 title: 'Challenge 11: Git advanced operations'
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 11: Git advanced operations
 
@@ -410,69 +412,52 @@ git push origin --force --tags
 
 ## Knowledge check
 
-**Question 1**: A developer committed a database password 50 commits ago. The password has been in the repository history across 3 branches. Which tool should you use to remove it from ALL history?
-
-- A) `git rm` followed by a commit to delete the file
-- B) `git filter-repo --replace-text` to replace the password across all history
-- C) `git reset --hard HEAD~50` to rewind history before the commit
-- D) `git revert` on the commit that introduced the password
-
-<details>
-<summary>Show answer</summary>
-
-**B) `git filter-repo --replace-text` to replace the password across all history**
-
-`git filter-repo` rewrites the entire repository history, replacing the sensitive text in every commit across all branches and tags. `git rm` only removes the file from the current commit forward (the password remains in history). `git reset` would lose 50 commits of work and doesn't affect other branches. `git revert` creates a new commit that undoes the change but the password remains visible in the original commit.
-
-</details>
-
-**Question 2**: After rewriting repository history with `git filter-repo`, what must all other team members do with their local clones?
-
-- A) Run `git pull --rebase` to update their history
-- B) Run `git fetch --all` followed by `git reset --hard origin/main`
-- C) Delete their local clone and re-clone the repository from scratch
-- D) Run `git filter-repo` locally with the same parameters
-
-<details>
-<summary>Show answer</summary>
-
-**C) Delete their local clone and re-clone the repository from scratch**
-
-When history is rewritten, every commit SHA changes from the point of rewrite forward. Existing clones have the old SHAs which are incompatible with the new history. Running `git pull` would attempt to merge two completely different histories, creating duplicate commits. The safest approach is to delete the local clone entirely and start fresh. Developers should save any uncommitted work before doing this.
-
-</details>
-
-**Question 3**: A branch `feature/analytics` was deleted from both local and remote 2 days ago. The developer who created it no longer has a local clone. How can the commits be recovered?
-
-- A) The commits are permanently lost and cannot be recovered
-- B) Use `git reflog` on any machine that had the branch checked out (within the reflog expiry window)
-- C) Use `git fsck --lost-found` on the remote server directly
-- D) Contact GitHub support; deleted branch commits are retained for a limited time
-
-<details>
-<summary>Show answer</summary>
-
-**D) Contact GitHub support; deleted branch commits are retained for a limited time**
-
-GitHub retains dangling commits (commits not referenced by any branch or tag) for approximately 90 days before garbage collection removes them permanently. If no developer has the branch in their local reflog, GitHub support can help locate and restore the branch reference. On Azure DevOps, deleted branches can be restored directly through the UI within a retention period. The reflog (option B) only works if someone still has a local clone that had the branch.
-
-</details>
-
-**Question 4**: What is the difference between `git cherry-pick` and `git rebase` when moving commits between branches?
-
-- A) Cherry-pick copies individual commits creating new SHAs; rebase replays a series of commits onto a new base creating new SHAs for all of them
-- B) Cherry-pick preserves original commit SHAs; rebase changes them
-- C) Cherry-pick is for merge commits only; rebase is for regular commits
-- D) Cherry-pick moves the commit; rebase copies it
-
-<details>
-<summary>Show answer</summary>
-
-**A) Cherry-pick copies individual commits creating new SHAs; rebase replays a series of commits onto a new base creating new SHAs for all of them**
-
-Both operations create new commits (new SHAs) because the parent commit changes. The difference is scope and intent: `git cherry-pick` selects specific individual commits to copy onto the current branch (surgical, one-at-a-time). `git rebase` replays an entire series of commits from one base onto another base (used to move or linearize a whole branch). Cherry-pick leaves the original commit in place; rebase typically moves the branch pointer away from the originals.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: ": A developer committed a database password 50 commits ago. The password has been in the repository history across 3 branches. Which tool should you use to remove it from ALL history?",
+    options: [
+      "'git rm' followed by a commit to delete the file",
+      "'git filter-repo --replace-text' to replace the password across all history",
+      "'git reset --hard HEAD~50' to rewind history before the commit",
+      "'git revert' on the commit that introduced the password"
+    ],
+    correctIndex: 1,
+    explanation: "git filter-repo rewrites the entire repository history, replacing the sensitive text in every commit across all branches and tags. git rm only removes the file from the current commit forward (the password remains in history). git reset would lose 50 commits of work and doesn't affect other branches. git revert creates a new commit that undoes the change but the password remains visible in the original commit."
+  },
+  {
+    question: ": After rewriting repository history with 'git filter-repo', what must all other team members do with their local clones?",
+    options: [
+      "Run 'git pull --rebase' to update their history",
+      "Run 'git fetch --all' followed by 'git reset --hard origin/main'",
+      "Delete their local clone and re-clone the repository from scratch",
+      "Run 'git filter-repo' locally with the same parameters"
+    ],
+    correctIndex: 2,
+    explanation: "When history is rewritten, every commit SHA changes from the point of rewrite forward. Existing clones have the old SHAs which are incompatible with the new history. Running git pull would attempt to merge two completely different histories, creating duplicate commits. The safest approach is to delete the local clone entirely and start fresh. Developers should save any uncommitted work before doing this."
+  },
+  {
+    question: ": A branch 'feature/analytics' was deleted from both local and remote 2 days ago. The developer who created it no longer has a local clone. How can the commits be recovered?",
+    options: [
+      "The commits are permanently lost and cannot be recovered",
+      "Use 'git reflog' on any machine that had the branch checked out (within the reflog expiry window)",
+      "Use 'git fsck --lost-found' on the remote server directly",
+      "Contact GitHub support; deleted branch commits are retained for a limited time"
+    ],
+    correctIndex: 3,
+    explanation: "GitHub retains dangling commits (commits not referenced by any branch or tag) for approximately 90 days before garbage collection removes them permanently. If no developer has the branch in their local reflog, GitHub support can help locate and restore the branch reference. On Azure DevOps, deleted branches can be restored directly through the UI within a retention period. The reflog (option B) only works if someone still has a local clone that had the branch."
+  },
+  {
+    question: ": What is the difference between 'git cherry-pick' and 'git rebase' when moving commits between branches?",
+    options: [
+      "Cherry-pick copies individual commits creating new SHAs; rebase replays a series of commits onto a new base creating new SHAs for all of them",
+      "Cherry-pick preserves original commit SHAs; rebase changes them",
+      "Cherry-pick is for merge commits only; rebase is for regular commits",
+      "Cherry-pick moves the commit; rebase copies it"
+    ],
+    correctIndex: 0,
+    explanation: "Both operations create new commits (new SHAs) because the parent commit changes. The difference is scope and intent: git cherry-pick selects specific individual commits to copy onto the current branch (surgical, one-at-a-time). git rebase replays an entire series of commits from one base onto another base (used to move or linearize a whole branch). Cherry-pick leaves the original commit in place; rebase typically moves the branch pointer away from the originals."
+  }
+]} />
 
 ## Cleanup
 

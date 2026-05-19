@@ -2,6 +2,8 @@
 sidebar_position: 5
 title: "Challenge 50: Performance analysis"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 50: Performance analysis
 
@@ -530,41 +532,52 @@ VMProcess
 
 ## Knowledge check
 
-1. After a deployment, the Application Insights performance blade shows average response time increased from 200ms to 1500ms. The dependency list shows the SQL database calls went from 50ms average to 1200ms. What should you investigate first?
-
-   A) The web server CPU utilization
-   B) The network latency between App Service and SQL Database
-   C) The SQL Database query performance (new slow queries or missing indexes)
-   D) The Application Insights sampling configuration
-
-   **Answer: C.** The data clearly shows the SQL dependency is the bottleneck (1200ms of the 1500ms total). This is most likely caused by a new query pattern introduced in the deployment (missing index, N+1 query, or table scan). Investigating the SQL query performance and execution plans should be the first step.
-
-2. A distributed trace in Application Insights shows: Frontend (50ms) -> API Gateway (30ms) -> Order Service (4500ms) -> Payment Service (timeout). Which service should the SRE team investigate?
-
-   A) Frontend
-   B) API Gateway
-   C) Order Service
-   D) Payment Service
-
-   **Answer: D.** The trace shows the Payment Service is timing out, which causes the Order Service to wait 4500ms. The root cause is in the Payment Service (it either has a bug, a downstream dependency issue, or resource exhaustion). The Order Service is slow only because it is waiting for the Payment Service to respond.
-
-3. Contoso's SLO is 99.9% availability over a 30-day window. After 15 days, they have consumed 80% of their error budget. What action should the SRE team take?
-
-   A) No action needed since the SLO has not been breached yet
-   B) Freeze all deployments and focus on reliability improvements
-   C) Reduce deployment frequency and increase testing rigor for remaining deployments
-   D) Lower the SLO target to 99.5%
-
-   **Answer: C.** At 80% error budget consumed in 15 days (half the window), the burn rate is 1.6x normal. This warrants caution but not a complete freeze. The team should reduce risk by increasing testing rigor, deploying to canary environments first, and prioritizing reliability fixes alongside feature work. A complete deployment freeze (option B) is typically reserved for >100% budget consumption.
-
-4. Which Application Insights feature automatically detects performance anomalies without requiring manual configuration of alert rules?
-
-   A) Availability tests
-   B) Smart detection
-   C) Log-based alerts
-   D) Metric alerts with dynamic thresholds
-
-   **Answer: B.** Smart detection is an ML-based feature in Application Insights that automatically analyzes telemetry patterns and detects anomalies in failure rates, response times, and dependency durations without any manual configuration. It learns the normal behavior of the application and alerts when significant deviations occur. While dynamic threshold alerts (option D) also learn baselines, they must be manually created.
+<KnowledgeCheck questions={[
+  {
+    question: "After a deployment, the Application Insights performance blade shows average response time increased from 200ms to 1500ms. The dependency list shows the SQL database calls went from 50ms average to 1200ms. What should you investigate first?",
+    options: [
+      "The web server CPU utilization",
+      "The network latency between App Service and SQL Database",
+      "The SQL Database query performance (new slow queries or missing indexes)",
+      "The Application Insights sampling configuration"
+    ],
+    correctIndex: 2,
+    explanation: "The data clearly shows the SQL dependency is the bottleneck (1200ms of the 1500ms total). This is most likely caused by a new query pattern introduced in the deployment (missing index, N+1 query, or table scan). Investigating the SQL query performance and execution plans should be the first step."
+  },
+  {
+    question: "A distributed trace in Application Insights shows: Frontend (50ms) -> API Gateway (30ms) -> Order Service (4500ms) -> Payment Service (timeout). Which service should the SRE team investigate?",
+    options: [
+      "Frontend",
+      "API Gateway",
+      "Order Service",
+      "Payment Service"
+    ],
+    correctIndex: 3,
+    explanation: "The trace shows the Payment Service is timing out, which causes the Order Service to wait 4500ms. The root cause is in the Payment Service (it either has a bug, a downstream dependency issue, or resource exhaustion). The Order Service is slow only because it is waiting for the Payment Service to respond."
+  },
+  {
+    question: "Contoso's SLO is 99.9% availability over a 30-day window. After 15 days, they have consumed 80% of their error budget. What action should the SRE team take?",
+    options: [
+      "No action needed since the SLO has not been breached yet",
+      "Freeze all deployments and focus on reliability improvements",
+      "Reduce deployment frequency and increase testing rigor for remaining deployments",
+      "Lower the SLO target to 99.5%"
+    ],
+    correctIndex: 2,
+    explanation: "At 80% error budget consumed in 15 days (half the window), the burn rate is 1.6x normal. This warrants caution but not a complete freeze. The team should reduce risk by increasing testing rigor, deploying to canary environments first, and prioritizing reliability fixes alongside feature work. A complete deployment freeze (option B) is typically reserved for >100% budget consumption."
+  },
+  {
+    question: "Which Application Insights feature automatically detects performance anomalies without requiring manual configuration of alert rules?",
+    options: [
+      "Availability tests",
+      "Smart detection",
+      "Log-based alerts",
+      "Metric alerts with dynamic thresholds"
+    ],
+    correctIndex: 1,
+    explanation: "Smart detection is an ML-based feature in Application Insights that automatically analyzes telemetry patterns and detects anomalies in failure rates, response times, and dependency durations without any manual configuration. It learns the normal behavior of the application and alerts when significant deviations occur. While dynamic threshold alerts (option D) also learn baselines, they must be manually created."
+  }
+]} />
 
 ## Cleanup
 

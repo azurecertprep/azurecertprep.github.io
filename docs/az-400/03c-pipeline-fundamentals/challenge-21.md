@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 21: Runner and agent infrastructure"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 21: Runner and agent infrastructure
 
@@ -456,41 +458,52 @@ sudo ./svc.sh start
 
 ## Knowledge check
 
-1. **When should an organization use self-hosted runners instead of GitHub-hosted runners?**
-
-   A) When they want to avoid maintaining runner infrastructure
-   B) When builds need access to resources on a private network
-   C) When they want automatic security patching of the runner OS
-   D) When they need the simplest possible setup
-
-   **Answer: B** - Self-hosted runners are required when workflows need to access resources that are not reachable from the public internet, such as on-premises databases, internal APIs, or private network resources. This is the primary technical driver for self-hosted runners beyond cost optimization at scale.
-
-2. **What is the purpose of the `--ephemeral` flag when configuring a GitHub Actions self-hosted runner?**
-
-   A) The runner deletes its registration after a configurable timeout
-   B) The runner accepts only one job and then de-registers itself
-   C) The runner uses temporary storage that is cleared between jobs
-   D) The runner does not persist logs to disk
-
-   **Answer: B** - An ephemeral runner is designed to execute exactly one job and then automatically de-register. This provides the same clean-environment guarantee as GitHub-hosted runners while allowing self-hosted infrastructure. It prevents credential leakage or workspace contamination between jobs from different workflows.
-
-3. **In Azure DevOps, what determines whether a self-hosted agent can run a specific pipeline?**
-
-   A) The agent's name must match the pipeline configuration
-   B) The agent must be in the correct pool and satisfy all `demands` specified in the pipeline
-   C) The agent must have the same Azure subscription as the pipeline
-   D) The agent's OS must match the `vmImage` specified in the pipeline
-
-   **Answer: B** - Azure DevOps uses a capabilities/demands system. Agents advertise their capabilities (installed tools, OS, custom capabilities), and pipelines declare demands. The orchestrator only assigns a job to an agent when all demands are met by the agent's capabilities within the specified pool.
-
-4. **What is the primary advantage of using Azure Virtual Machine Scale Sets (VMSS) for Azure DevOps agent pools?**
-
-   A) VMSS agents are cheaper than Microsoft-hosted agents
-   B) VMSS automatically scales agent count based on queue demand and can scale to zero when idle
-   C) VMSS agents have faster network connectivity than hosted agents
-   D) VMSS provides built-in secret management for agents
-
-   **Answer: B** - VMSS-backed agent pools enable elastic scaling. Azure DevOps automatically requests more VM instances when jobs are queued and scales down during idle periods. This avoids paying for always-on infrastructure while providing faster builds than waiting for hosted agents to provision. The scale-to-zero capability means no cost when no builds are running.
+<KnowledgeCheck questions={[
+  {
+    question: "When should an organization use self-hosted runners instead of GitHub-hosted runners?",
+    options: [
+      "When they want to avoid maintaining runner infrastructure",
+      "When builds need access to resources on a private network",
+      "When they want automatic security patching of the runner OS",
+      "When they need the simplest possible setup"
+    ],
+    correctIndex: 1,
+    explanation: "Self-hosted runners are required when workflows need to access resources that are not reachable from the public internet, such as on-premises databases, internal APIs, or private network resources. This is the primary technical driver for self-hosted runners beyond cost optimization at scale."
+  },
+  {
+    question: "What is the purpose of the '--ephemeral' flag when configuring a GitHub Actions self-hosted runner?",
+    options: [
+      "The runner deletes its registration after a configurable timeout",
+      "The runner accepts only one job and then de-registers itself",
+      "The runner uses temporary storage that is cleared between jobs",
+      "The runner does not persist logs to disk"
+    ],
+    correctIndex: 1,
+    explanation: "An ephemeral runner is designed to execute exactly one job and then automatically de-register. This provides the same clean-environment guarantee as GitHub-hosted runners while allowing self-hosted infrastructure. It prevents credential leakage or workspace contamination between jobs from different workflows."
+  },
+  {
+    question: "In Azure DevOps, what determines whether a self-hosted agent can run a specific pipeline?",
+    options: [
+      "The agent's name must match the pipeline configuration",
+      "The agent must be in the correct pool and satisfy all 'demands' specified in the pipeline",
+      "The agent must have the same Azure subscription as the pipeline",
+      "The agent's OS must match the 'vmImage' specified in the pipeline"
+    ],
+    correctIndex: 1,
+    explanation: "Azure DevOps uses a capabilities/demands system. Agents advertise their capabilities (installed tools, OS, custom capabilities), and pipelines declare demands. The orchestrator only assigns a job to an agent when all demands are met by the agent's capabilities within the specified pool."
+  },
+  {
+    question: "What is the primary advantage of using Azure Virtual Machine Scale Sets (VMSS) for Azure DevOps agent pools?",
+    options: [
+      "VMSS agents are cheaper than Microsoft-hosted agents",
+      "VMSS automatically scales agent count based on queue demand and can scale to zero when idle",
+      "VMSS agents have faster network connectivity than hosted agents",
+      "VMSS provides built-in secret management for agents"
+    ],
+    correctIndex: 1,
+    explanation: "VMSS-backed agent pools enable elastic scaling. Azure DevOps automatically requests more VM instances when jobs are queued and scales down during idle periods. This avoids paying for always-on infrastructure while providing faster builds than waiting for hosted agents to provision. The scale-to-zero capability means no cost when no builds are running."
+  }
+]} />
 
 ## Cleanup
 

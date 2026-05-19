@@ -685,6 +685,9 @@ az sql db show \
   --query "status"
 ```
 
+<details>
+<summary>Show solution</summary>
+
 **Root cause:** The service principal used by the pipeline does not have the `db_ddladmin` role in the target database.
 
 **Fix:**
@@ -696,9 +699,14 @@ ALTER ROLE db_datareader ADD MEMBER [contoso-pipeline-sp];
 ALTER ROLE db_datawriter ADD MEMBER [contoso-pipeline-sp];
 ```
 
+</details>
+
 ### Exercise 2: Application deployed before migration completes
 
 **Symptom:** The application throws `SqlException: Invalid object name 'CustomerPreferences'` because the migration stage was still running when the app deployment started.
+
+<details>
+<summary>Show solution</summary>
 
 **Root cause:** The pipeline stages did not have proper `dependsOn` configuration, allowing them to run in parallel.
 
@@ -715,9 +723,14 @@ stages:
     # ...
 ```
 
+</details>
+
 ### Exercise 3: DACPAC deployment blocked by data loss
 
 **Symptom:** DACPAC publish fails with `Rows were detected. The schema update is terminating because data loss might occur.`
+
+<details>
+<summary>Show solution</summary>
 
 **Root cause:** The DACPAC detects that a column is being removed that contains data. The `/p:BlockOnPossibleDataLoss=true` flag prevents the operation.
 
@@ -732,73 +745,60 @@ stages:
 # Post-script: cleanup (in next release)
 ```
 
+</details>
+
 ---
+
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Knowledge check
 
-**Question 1:** Contoso deploys a new API version that requires a new database table. The pipeline deploys the application first, then runs migrations. Users see 500 errors for 2 minutes. What is the correct deployment order?
-
-- A. Deploy application, then run migrations, then restart application
-- B. Run migrations first, then deploy the application
-- C. Deploy application and migrations simultaneously in parallel
-- D. Run migrations during the maintenance window after deployment
-
-<details>
-<summary>Show answer</summary>
-
-**B. Run migrations first, then deploy the application**
-
-Database schema changes should always be applied before deploying application code that depends on them. This ensures the new tables, columns, or indexes exist when the application starts using them. If the migration adds a table the app needs, deploying the app first causes errors until the migration completes.
-
-</details>
-
-**Question 2:** Contoso uses the expand-contract pattern for a schema change that renames a column from `FirstName` + `LastName` to `FullName`. How many releases does this pattern typically require?
-
-- A. 1 release (rename the column in a single migration)
-- B. 2 releases (add new column, then drop old columns)
-- C. 3 releases (expand with new column, migrate reads/writes, contract by removing old)
-- D. 4 releases (add column, copy data, switch reads, remove old)
-
-<details>
-<summary>Show answer</summary>
-
-**C. 3 releases (expand with new column, migrate reads/writes, contract by removing old)**
-
-The expand-contract pattern requires at minimum three releases: (1) Expand - add the new column without removing the old, backfill data; (2) Migrate - application writes to both but reads from new, verify all instances use new schema; (3) Contract - remove old columns once no application version references them. This ensures zero-downtime compatibility throughout.
-
-</details>
-
-**Question 3:** Which Azure Pipelines task should be used to deploy a SQL script to Azure SQL Database?
-
-- A. AzureCLI@2
-- B. SqlAzureDacpacDeployment@1
-- C. AzureRmWebAppDeployment@4
-- D. PowerShell@2
-
-<details>
-<summary>Show answer</summary>
-
-**B. SqlAzureDacpacDeployment@1**
-
-The `SqlAzureDacpacDeployment@1` task supports both DACPAC deployments and SQL script execution against Azure SQL Database. It handles authentication (service principal, SQL auth, or connection string), firewall rule management, and provides proper error handling for database operations.
-
-</details>
-
-**Question 4:** A pipeline generates an idempotent EF Core migration script using `dotnet ef migrations script --idempotent`. What does the `--idempotent` flag ensure?
-
-- A. The script runs faster on subsequent executions
-- B. The script can be safely re-run without causing errors if migrations were already applied
-- C. The script generates rollback statements for each migration
-- D. The script validates data integrity before applying changes
-
-<details>
-<summary>Show answer</summary>
-
-**B. The script can be safely re-run without causing errors if migrations were already applied**
-
-The `--idempotent` flag generates a SQL script that checks the `__EFMigrationsHistory` table before applying each migration. If a migration has already been recorded, it is skipped. This makes the script safe to re-run (idempotent) in CI/CD pipelines where a retry might execute the same script again.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso deploys a new API version that requires a new database table. The pipeline deploys the application first, then runs migrations. Users see 500 errors for 2 minutes. What is the correct deployment order?",
+    options: [
+      "Deploy application, then run migrations, then restart application",
+      "Run migrations first, then deploy the application",
+      "Deploy application and migrations simultaneously in parallel",
+      "Run migrations during the maintenance window after deployment"
+    ],
+    correctIndex: 1,
+    explanation: "Database schema changes should always be applied before deploying application code that depends on them. This ensures the new tables, columns, or indexes exist when the application starts using them."
+  },
+  {
+    question: "Contoso uses the expand-contract pattern for a schema change that renames a column from FirstName + LastName to FullName. How many releases does this pattern typically require?",
+    options: [
+      "1 release (rename the column in a single migration)",
+      "2 releases (add new column, then drop old columns)",
+      "3 releases (expand with new column, migrate reads/writes, contract by removing old)",
+      "4 releases (add column, copy data, switch reads, remove old)"
+    ],
+    correctIndex: 2,
+    explanation: "The expand-contract pattern requires at minimum three releases: (1) Expand - add the new column without removing the old, backfill data; (2) Migrate - application writes to both but reads from new; (3) Contract - remove old columns once no application version references them."
+  },
+  {
+    question: "Which Azure Pipelines task should be used to deploy a SQL script to Azure SQL Database?",
+    options: [
+      "AzureCLI@2",
+      "SqlAzureDacpacDeployment@1",
+      "AzureRmWebAppDeployment@4",
+      "PowerShell@2"
+    ],
+    correctIndex: 1,
+    explanation: "The SqlAzureDacpacDeployment@1 task supports both DACPAC deployments and SQL script execution against Azure SQL Database. It handles authentication, firewall rule management, and provides proper error handling for database operations."
+  },
+  {
+    question: "A pipeline generates an idempotent EF Core migration script using dotnet ef migrations script --idempotent. What does the --idempotent flag ensure?",
+    options: [
+      "The script runs faster on subsequent executions",
+      "The script can be safely re-run without causing errors if migrations were already applied",
+      "The script generates rollback statements for each migration",
+      "The script validates data integrity before applying changes"
+    ],
+    correctIndex: 1,
+    explanation: "The --idempotent flag generates a SQL script that checks the __EFMigrationsHistory table before applying each migration. If a migration has already been recorded, it is skipped. This makes the script safe to re-run in CI/CD pipelines where a retry might execute the same script again."
+  }
+]} />
 
 ---
 

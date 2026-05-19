@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 18: Code coverage analysis"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 18: Code coverage analysis
 
@@ -767,59 +769,52 @@ module.exports = {
 
 ## Knowledge check
 
-1. **What is the difference between overall coverage and diff coverage in a pull request context?**
-   - A. Overall coverage measures only the files changed in the PR; diff coverage measures the entire codebase
-   - B. Overall coverage measures the entire codebase; diff coverage measures only the new or modified lines in the PR
-   - C. Overall coverage includes test files; diff coverage excludes them
-   - D. They are identical metrics calculated by different tools
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** Overall (aggregate) coverage measures the percentage of all source lines covered by tests across the entire codebase. Diff coverage focuses exclusively on lines added or modified in the pull request, ensuring that new code is well-tested regardless of legacy coverage debt.
-
-   </details>
-
-2. **In Azure Pipelines, which task and format should you use to display code coverage results in the pipeline summary?**
-   - A. `PublishTestResults@2` with JUnit format
-   - B. `PublishCodeCoverageResults@2` with Cobertura or JaCoCo format
-   - C. `PublishPipelineArtifact@1` with LCOV format
-   - D. `PublishBuildArtifacts@1` with HTML format
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** The `PublishCodeCoverageResults@2` task accepts Cobertura or JaCoCo XML format files and renders coverage data in the Azure Pipelines Code Coverage tab. LCOV and HTML formats are not supported by this task. `PublishTestResults@2` handles test pass/fail results, not coverage.
-
-   </details>
-
-3. **What does a coverage "ratchet" policy enforce?**
-   - A. Coverage must increase by at least 5% with every PR
-   - B. Coverage can never decrease below the previously recorded baseline
-   - C. Only critical paths require coverage
-   - D. Coverage thresholds apply only to new repositories
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** A ratchet policy (also called a "never decrease" policy) stores the coverage percentage at each merge to the main branch. Subsequent PRs must maintain or improve this level. This prevents gradual coverage erosion while avoiding the burden of immediately achieving high coverage on legacy code.
-
-   </details>
-
-4. **Why might a coverage report show 0% even though all tests pass successfully?**
-   - A. The test framework has a bug that prevents coverage from working
-   - B. The coverage tool is not installed or configured to output the expected format, so no coverage data file is generated
-   - C. Tests that pass always have 100% coverage, never 0%
-   - D. The CI runner does not support code coverage instrumentation
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** Coverage reporting requires both running tests (which produces pass/fail results) and instrumenting code (which produces coverage data). Common causes of 0% coverage include: missing coverage collector packages, wrong reporter format configuration, output path mismatches where the pipeline looks for files in the wrong directory, or source map issues with transpiled code.
-
-   </details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "What is the difference between overall coverage and diff coverage in a pull request context?",
+    options: [
+      "Overall coverage measures only the files changed in the PR; diff coverage measures the entire codebase",
+      "Overall coverage measures the entire codebase; diff coverage measures only the new or modified lines in the PR",
+      "Overall coverage includes test files; diff coverage excludes them",
+      "They are identical metrics calculated by different tools"
+    ],
+    correctIndex: 1,
+    explanation: "Overall (aggregate) coverage measures the percentage of all source lines covered by tests across the entire codebase. Diff coverage focuses exclusively on lines added or modified in the pull request, ensuring that new code is well-tested regardless of legacy coverage debt."
+  },
+  {
+    question: "In Azure Pipelines, which task and format should you use to display code coverage results in the pipeline summary?",
+    options: [
+      "'PublishTestResults@2' with JUnit format",
+      "'PublishCodeCoverageResults@2' with Cobertura or JaCoCo format",
+      "'PublishPipelineArtifact@1' with LCOV format",
+      "'PublishBuildArtifacts@1' with HTML format"
+    ],
+    correctIndex: 1,
+    explanation: "The PublishCodeCoverageResults@2 task accepts Cobertura or JaCoCo XML format files and renders coverage data in the Azure Pipelines Code Coverage tab. LCOV and HTML formats are not supported by this task. PublishTestResults@2 handles test pass/fail results, not coverage."
+  },
+  {
+    question: "What does a coverage \"ratchet\" policy enforce?",
+    options: [
+      "Coverage must increase by at least 5% with every PR",
+      "Coverage can never decrease below the previously recorded baseline",
+      "Only critical paths require coverage",
+      "Coverage thresholds apply only to new repositories"
+    ],
+    correctIndex: 1,
+    explanation: "A ratchet policy (also called a \"never decrease\" policy) stores the coverage percentage at each merge to the main branch. Subsequent PRs must maintain or improve this level. This prevents gradual coverage erosion while avoiding the burden of immediately achieving high coverage on legacy code."
+  },
+  {
+    question: "Why might a coverage report show 0% even though all tests pass successfully?",
+    options: [
+      "The test framework has a bug that prevents coverage from working",
+      "The coverage tool is not installed or configured to output the expected format, so no coverage data file is generated",
+      "Tests that pass always have 100% coverage, never 0%",
+      "The CI runner does not support code coverage instrumentation"
+    ],
+    correctIndex: 1,
+    explanation: "Coverage reporting requires both running tests (which produces pass/fail results) and instrumenting code (which produces coverage data). Common causes of 0% coverage include: missing coverage collector packages, wrong reporter format configuration, output path mismatches where the pipeline looks for files in the wrong directory, or source map issues with transpiled code."
+  }
+]} />
 
 ## Cleanup
 

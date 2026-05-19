@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: 'Challenge 07: Branching strategies'
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 07: Branching strategies
 
@@ -184,8 +186,7 @@ git push origin v2.1.1
 
 Create a decision matrix document:
 
-```markdown
-# Branching strategy decision framework
+#### Branching strategy decision framework
 
 | Factor                  | Trunk-based        | GitHub Flow        | Release branching    |
 |-------------------------|--------------------|--------------------|----------------------|
@@ -197,7 +198,6 @@ Create a decision matrix document:
 | Code review gate        | Optional (pair)    | Required (PR)      | Required (PR)        |
 | Rollback strategy       | Feature flag off   | Revert commit      | Deploy prior release |
 | Integration risk        | Low (always merged)| Medium             | High (long-lived)    |
-```
 
 ### Task 5: Handling long-lived branches without drift
 
@@ -352,69 +352,52 @@ gh pr create --title "Recover: direct push to main" --base main
 
 ## Knowledge check
 
-**Question 1**: A team releases daily and needs main always deployable. They use feature flags to hide incomplete work. Which branching strategy best fits this requirement?
-
-- A) Git Flow with develop and release branches
-- B) Trunk-based development with short-lived branches
-- C) Release branching with long-lived support branches
-- D) GitHub Flow with feature branches lasting 1-2 weeks
-
-<details>
-<summary>Show answer</summary>
-
-**B) Trunk-based development with short-lived branches**
-
-Trunk-based development is designed for continuous delivery. Short-lived branches (ideally less than a day) minimize integration risk, and feature flags allow incomplete features to exist in production without being visible to users. This supports daily releases because main is always in a deployable state.
-
-</details>
-
-**Question 2**: What is the primary risk of maintaining long-lived release branches?
-
-- A) They consume too much disk space
-- B) They drift from main, causing increasingly complex merge conflicts
-- C) They prevent other developers from creating branches
-- D) They slow down git clone operations
-
-<details>
-<summary>Show answer</summary>
-
-**B) They drift from main, causing increasingly complex merge conflicts**
-
-Long-lived branches accumulate changes that differ from main. The longer they live without syncing, the more the codebases diverge, leading to painful merge conflicts. Regular forward-integration (merging main into the release branch) mitigates this risk.
-
-</details>
-
-**Question 3**: When using `git rebase` instead of `git merge` for a feature branch, what happens to the branch history?
-
-- A) The feature branch commits are replayed on top of the target branch, creating new commit hashes
-- B) A merge commit is created that combines both histories
-- C) The feature branch commits are deleted and replaced with a single squash commit
-- D) The target branch history is rewritten to include the feature commits in chronological order
-
-<details>
-<summary>Show answer</summary>
-
-**A) The feature branch commits are replayed on top of the target branch, creating new commit hashes**
-
-Rebase takes each commit from the feature branch and re-applies it on top of the target branch tip. This creates new commits with different SHA hashes (because the parent commit changed) but the same changes. The result is a linear history without merge commits.
-
-</details>
-
-**Question 4**: A team uses GitHub Flow. A critical bug is found in production. What is the correct procedure?
-
-- A) Create a hotfix branch from the release tag, fix, merge to release, then cherry-pick to main
-- B) Create a branch from main, fix the bug, open a PR, merge to main, deploy
-- C) Commit the fix directly to main and deploy immediately
-- D) Revert main to the last known good state, then re-apply features
-
-<details>
-<summary>Show answer</summary>
-
-**B) Create a branch from main, fix the bug, open a PR, merge to main, deploy**
-
-In GitHub Flow, main is the single source of truth. All changes go through the same process: branch from main, make changes, open a PR, get review, merge, deploy. Hotfixes follow the same workflow but with expedited review. There are no separate release branches in GitHub Flow.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: ": A team releases daily and needs main always deployable. They use feature flags to hide incomplete work. Which branching strategy best fits this requirement?",
+    options: [
+      "Git Flow with develop and release branches",
+      "Trunk-based development with short-lived branches",
+      "Release branching with long-lived support branches",
+      "GitHub Flow with feature branches lasting 1-2 weeks"
+    ],
+    correctIndex: 1,
+    explanation: "Trunk-based development is designed for continuous delivery. Short-lived branches (ideally less than a day) minimize integration risk, and feature flags allow incomplete features to exist in production without being visible to users. This supports daily releases because main is always in a deployable state."
+  },
+  {
+    question: ": What is the primary risk of maintaining long-lived release branches?",
+    options: [
+      "They consume too much disk space",
+      "They drift from main, causing increasingly complex merge conflicts",
+      "They prevent other developers from creating branches",
+      "They slow down git clone operations"
+    ],
+    correctIndex: 1,
+    explanation: "Long-lived branches accumulate changes that differ from main. The longer they live without syncing, the more the codebases diverge, leading to painful merge conflicts. Regular forward-integration (merging main into the release branch) mitigates this risk."
+  },
+  {
+    question: ": When using 'git rebase' instead of 'git merge' for a feature branch, what happens to the branch history?",
+    options: [
+      "The feature branch commits are replayed on top of the target branch, creating new commit hashes",
+      "A merge commit is created that combines both histories",
+      "The feature branch commits are deleted and replaced with a single squash commit",
+      "The target branch history is rewritten to include the feature commits in chronological order"
+    ],
+    correctIndex: 0,
+    explanation: "Rebase takes each commit from the feature branch and re-applies it on top of the target branch tip. This creates new commits with different SHA hashes (because the parent commit changed) but the same changes. The result is a linear history without merge commits."
+  },
+  {
+    question: ": A team uses GitHub Flow. A critical bug is found in production. What is the correct procedure?",
+    options: [
+      "Create a hotfix branch from the release tag, fix, merge to release, then cherry-pick to main",
+      "Create a branch from main, fix the bug, open a PR, merge to main, deploy",
+      "Commit the fix directly to main and deploy immediately",
+      "Revert main to the last known good state, then re-apply features"
+    ],
+    correctIndex: 1,
+    explanation: "In GitHub Flow, main is the single source of truth. All changes go through the same process: branch from main, make changes, open a PR, get review, merge, deploy. Hotfixes follow the same workflow but with expedited review. There are no separate release branches in GitHub Flow."
+  }
+]} />
 
 ## Cleanup
 

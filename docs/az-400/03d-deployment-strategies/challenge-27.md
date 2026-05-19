@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 27: Feature flags"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 27: Feature flags
 
@@ -730,71 +732,52 @@ az appconfig feature enable \
 
 ## Knowledge check
 
-**Question 1:** Contoso wants to enable a new feature for 10% of all users, 100% of internal team members, and specific named beta testers. Which Azure App Configuration feature flag filter should they use?
-
-- A. Microsoft.TimeWindow filter
-- B. Microsoft.Targeting filter
-- C. Microsoft.Percentage filter
-- D. Custom filter with Azure AD group membership
-
-<details>
-<summary>Show answer</summary>
-
-**B. Microsoft.Targeting filter**
-
-The Microsoft.Targeting filter supports all three requirements: percentage-based rollout (DefaultRolloutPercentage), group-based targeting with different percentages per group, and specific user targeting by user ID. The TimeWindow filter only supports time-based activation. The Percentage filter only supports a global percentage without group or user granularity.
-
-</details>
-
-**Question 2:** A .NET application uses Azure App Configuration feature flags, but changes made in the portal take over 5 minutes to reflect in the application. What configuration change reduces this delay to under 30 seconds?
-
-- A. Enable real-time push notifications via Azure Event Grid
-- B. Set `CacheExpirationInterval` to `TimeSpan.FromSeconds(30)` in `UseFeatureFlags` options
-- C. Restart the App Service after each feature flag change
-- D. Set the App Configuration SKU to Premium for faster replication
-
-<details>
-<summary>Show answer</summary>
-
-**B. Set `CacheExpirationInterval` to `TimeSpan.FromSeconds(30)` in `UseFeatureFlags` options**
-
-The `CacheExpirationInterval` controls how often the feature management library checks App Configuration for updates. The default is 30 seconds, but if it was overridden to a higher value, reducing it ensures the application picks up changes faster. The Azure App Configuration middleware uses a polling model, so the interval directly determines the maximum delay.
-
-</details>
-
-**Question 3:** Contoso deploys new code that includes a feature behind a feature flag. The flag is disabled at deploy time. After verifying the deployment is healthy, the pipeline enables the flag. If the feature causes errors, what is the fastest remediation?
-
-- A. Redeploy the previous version of the application
-- B. Disable the feature flag in Azure App Configuration
-- C. Perform a slot swap back to the previous version
-- D. Scale out the App Service to handle the additional error load
-
-<details>
-<summary>Show answer</summary>
-
-**B. Disable the feature flag in Azure App Configuration**
-
-Disabling the feature flag is instant (takes effect within the cache expiration interval, typically 30 seconds) and requires no deployment or infrastructure change. A slot swap or redeployment takes minutes. This is the primary advantage of feature flags: they decouple deployment from release and provide an instant kill switch.
-
-</details>
-
-**Question 4:** Which NuGet package provides the `[FeatureGate]` attribute for gating ASP.NET Core controller actions behind feature flags?
-
-- A. Microsoft.Azure.AppConfiguration.AspNetCore
-- B. Microsoft.FeatureManagement.AspNetCore
-- C. Azure.Data.AppConfiguration
-- D. Microsoft.Extensions.Configuration.AzureAppConfiguration
-
-<details>
-<summary>Show answer</summary>
-
-**B. Microsoft.FeatureManagement.AspNetCore**
-
-The `Microsoft.FeatureManagement.AspNetCore` package provides the `[FeatureGate]` attribute, `IFeatureManager` interface, and ASP.NET Core integration including tag helpers and action filters. The `Microsoft.Azure.AppConfiguration.AspNetCore` package provides the connection to Azure App Configuration but does not include the feature management attributes.
-
-</details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso wants to enable a new feature for 10% of all users, 100% of internal team members, and specific named beta testers. Which Azure App Configuration feature flag filter should they use?",
+    options: [
+      "Microsoft.TimeWindow filter",
+      "Microsoft.Targeting filter",
+      "Microsoft.Percentage filter",
+      "Custom filter with Azure AD group membership"
+    ],
+    correctIndex: 1,
+    explanation: "The Microsoft.Targeting filter supports all three requirements: percentage-based rollout (DefaultRolloutPercentage), group-based targeting with different percentages per group, and specific user targeting by user ID. The TimeWindow filter only supports time-based activation. The Percentage filter only supports a global percentage without group or user granularity."
+  },
+  {
+    question: "A .NET application uses Azure App Configuration feature flags, but changes made in the portal take over 5 minutes to reflect in the application. What configuration change reduces this delay to under 30 seconds?",
+    options: [
+      "Enable real-time push notifications via Azure Event Grid",
+      "Set 'CacheExpirationInterval' to 'TimeSpan.FromSeconds(30)' in 'UseFeatureFlags' options",
+      "Restart the App Service after each feature flag change",
+      "Set the App Configuration SKU to Premium for faster replication"
+    ],
+    correctIndex: 1,
+    explanation: "The CacheExpirationInterval controls how often the feature management library checks App Configuration for updates. The default is 30 seconds, but if it was overridden to a higher value, reducing it ensures the application picks up changes faster. The Azure App Configuration middleware uses a polling model, so the interval directly determines the maximum delay."
+  },
+  {
+    question: "Contoso deploys new code that includes a feature behind a feature flag. The flag is disabled at deploy time. After verifying the deployment is healthy, the pipeline enables the flag. If the feature causes errors, what is the fastest remediation?",
+    options: [
+      "Redeploy the previous version of the application",
+      "Disable the feature flag in Azure App Configuration",
+      "Perform a slot swap back to the previous version",
+      "Scale out the App Service to handle the additional error load"
+    ],
+    correctIndex: 1,
+    explanation: "Disabling the feature flag is instant (takes effect within the cache expiration interval, typically 30 seconds) and requires no deployment or infrastructure change. A slot swap or redeployment takes minutes. This is the primary advantage of feature flags: they decouple deployment from release and provide an instant kill switch."
+  },
+  {
+    question: "Which NuGet package provides the '[FeatureGate]' attribute for gating ASP.NET Core controller actions behind feature flags?",
+    options: [
+      "Microsoft.Azure.AppConfiguration.AspNetCore",
+      "Microsoft.FeatureManagement.AspNetCore",
+      "Azure.Data.AppConfiguration",
+      "Microsoft.Extensions.Configuration.AzureAppConfiguration"
+    ],
+    correctIndex: 1,
+    explanation: "The Microsoft.FeatureManagement.AspNetCore package provides the [FeatureGate] attribute, IFeatureManager interface, and ASP.NET Core integration including tag helpers and action filters. The Microsoft.Azure.AppConfiguration.AspNetCore package provides the connection to Azure App Configuration but does not include the feature management attributes."
+  }
+]} />
 
 ## Cleanup
 

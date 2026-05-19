@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 33: Azure Deployment Environments"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 33: Azure Deployment Environments
 
@@ -689,41 +691,52 @@ az role assignment create \
 
 ## Knowledge check
 
-1. **What is the relationship between a Dev Center environment type and a project environment type?**
-
-   A) They are the same thing; "project environment type" is just a newer name
-   B) Dev Center environment types define categories; project environment types map those categories to specific subscriptions and identities
-   C) Dev Center types are for production; project types are for development
-   D) Dev Center types define the IaC templates; project types define the parameters
-
-   **Answer: B** - Dev Center environment types (Dev, Test, Staging) are abstract categories defined centrally. Project environment types inherit from these and add deployment configuration: which subscription to deploy to, what managed identity to use, and what RBAC roles to assign. This separation allows a single Dev Center to serve multiple projects with different subscription mappings.
-
-2. **How does Azure Deployment Environments enforce cost governance for developer self-service?**
-
-   A) By requiring manager approval for every environment creation
-   B) Through maximum environment limits per user, environment type restrictions, and scheduled auto-deletion
-   C) By limiting environments to free-tier SKUs only
-   D) By deducting costs from the developer's personal Azure budget
-
-   **Answer: B** - ADE provides multiple governance controls: maximum environments per user (set on the project), environment type access (which role can create Staging vs Dev), parameter constraints in environment definitions (allowed SKUs), and organizational policies for auto-expiration. These ensure developers get self-service speed while staying within cost boundaries.
-
-3. **What is a catalog in Azure Deployment Environments?**
-
-   A) A marketplace of pre-built Azure resources available for purchase
-   B) A Git repository containing IaC templates (environment definitions) that the Dev Center syncs and offers to developers
-   C) A list of approved Azure services that developers can provision
-   D) An Azure Container Registry containing approved base images
-
-   **Answer: B** - A catalog is a connection to a Git repository (GitHub or Azure Repos) containing environment definitions. Each definition includes a YAML manifest and IaC template (Bicep or Terraform). The Dev Center periodically syncs the catalog, making new or updated environment definitions available to developers through the portal or CLI.
-
-4. **What is the primary benefit of creating ephemeral environments per pull request?**
-
-   A) It eliminates the need for code review since environments are tested automatically
-   B) It provides isolated, production-like environments for testing PR changes without affecting shared environments
-   C) It reduces the number of branches in the repository
-   D) It automatically merges pull requests when tests pass
-
-   **Answer: B** - Ephemeral PR environments give each pull request its own isolated infrastructure to test changes. This prevents conflicts between developers sharing environments, enables parallel development, and ensures the PR environment is always clean and consistent. When the PR is merged or closed, the environment is automatically destroyed, controlling costs.
+<KnowledgeCheck questions={[
+  {
+    question: "What is the relationship between a Dev Center environment type and a project environment type?",
+    options: [
+      "They are the same thing; \"project environment type\" is just a newer name",
+      "Dev Center environment types define categories; project environment types map those categories to specific subscriptions and identities",
+      "Dev Center types are for production; project types are for development",
+      "Dev Center types define the IaC templates; project types define the parameters"
+    ],
+    correctIndex: 1,
+    explanation: "Dev Center environment types (Dev, Test, Staging) are abstract categories defined centrally. Project environment types inherit from these and add deployment configuration: which subscription to deploy to, what managed identity to use, and what RBAC roles to assign. This separation allows a single Dev Center to serve multiple projects with different subscription mappings."
+  },
+  {
+    question: "How does Azure Deployment Environments enforce cost governance for developer self-service?",
+    options: [
+      "By requiring manager approval for every environment creation",
+      "Through maximum environment limits per user, environment type restrictions, and scheduled auto-deletion",
+      "By limiting environments to free-tier SKUs only",
+      "By deducting costs from the developer's personal Azure budget"
+    ],
+    correctIndex: 1,
+    explanation: "ADE provides multiple governance controls: maximum environments per user (set on the project), environment type access (which role can create Staging vs Dev), parameter constraints in environment definitions (allowed SKUs), and organizational policies for auto-expiration. These ensure developers get self-service speed while staying within cost boundaries."
+  },
+  {
+    question: "What is a catalog in Azure Deployment Environments?",
+    options: [
+      "A marketplace of pre-built Azure resources available for purchase",
+      "A Git repository containing IaC templates (environment definitions) that the Dev Center syncs and offers to developers",
+      "A list of approved Azure services that developers can provision",
+      "An Azure Container Registry containing approved base images"
+    ],
+    correctIndex: 1,
+    explanation: "A catalog is a connection to a Git repository (GitHub or Azure Repos) containing environment definitions. Each definition includes a YAML manifest and IaC template (Bicep or Terraform). The Dev Center periodically syncs the catalog, making new or updated environment definitions available to developers through the portal or CLI."
+  },
+  {
+    question: "What is the primary benefit of creating ephemeral environments per pull request?",
+    options: [
+      "It eliminates the need for code review since environments are tested automatically",
+      "It provides isolated, production-like environments for testing PR changes without affecting shared environments",
+      "It reduces the number of branches in the repository",
+      "It automatically merges pull requests when tests pass"
+    ],
+    correctIndex: 1,
+    explanation: "Ephemeral PR environments give each pull request its own isolated infrastructure to test changes. This prevents conflicts between developers sharing environments, enables parallel development, and ensures the PR environment is always clean and consistent. When the PR is merged or closed, the environment is automatically destroyed, controlling costs."
+  }
+]} />
 
 ## Cleanup
 

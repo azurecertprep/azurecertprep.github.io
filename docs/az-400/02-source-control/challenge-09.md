@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: 'Challenge 09: Repository management'
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 09: Repository management
 
@@ -167,8 +169,7 @@ az devops security permission update \
 
 Create a permissions matrix document for the team:
 
-```markdown
-## Azure Repos permission levels for Contoso monorepo
+#### Azure Repos permission levels for Contoso monorepo
 
 | Permission          | Admins | Tech leads | Seniors | Juniors | Interns |
 |---------------------|--------|------------|---------|---------|---------|
@@ -182,7 +183,6 @@ Create a permissions matrix document for the team:
 | Push to deploy/prod | Yes    | No         | No      | No      | No      |
 
 *main is protected - requires PR with approvals
-```
 
 ### Task 4: Implement Git tags for releases
 
@@ -263,23 +263,21 @@ git tag deploy-prod-2024.01.15.1
 
 Document the convention:
 
-```markdown
-## Tag naming convention
+#### Tag naming convention
 
 | Pattern                | Use case              | Example           | Type      |
 |------------------------|-----------------------|-------------------|-----------|
-| v{MAJOR}.{MINOR}.{PATCH} | Versioned releases | v2.1.0            | Annotated |
-| v{X}.{Y}.{Z}-{pre}.{N}  | Pre-releases       | v2.2.0-beta.1     | Annotated |
-| release-{YYYY.MM.DD}     | Date-based releases| release-2024.01.15| Annotated |
-| ci-build-{N}             | CI build artifacts | ci-build-1847     | Lightweight|
-| deploy-{env}-{date}.{N}  | Deployment markers | deploy-prod-2024.01.15.1| Lightweight|
+| `v{MAJOR}.{MINOR}.{PATCH}` | Versioned releases | v2.1.0            | Annotated |
+| `v{X}.{Y}.{Z}-{pre}.{N}`  | Pre-releases       | v2.2.0-beta.1     | Annotated |
+| `release-{YYYY.MM.DD}`     | Date-based releases| release-2024.01.15| Annotated |
+| `ci-build-{N}`             | CI build artifacts | ci-build-1847     | Lightweight|
+| `deploy-{env}-{date}.{N}`  | Deployment markers | deploy-prod-2024.01.15.1| Lightweight|
 
 Rules:
 - All production releases MUST use annotated tags with descriptive messages
 - Pre-releases follow SemVer pre-release syntax
 - CI/build tags may be lightweight (auto-generated, high volume)
 - Never delete or move a published release tag
-```
 
 ### Task 6: Automated tagging via CI pipeline on merge to main
 
@@ -533,69 +531,52 @@ EOF
 
 ## Knowledge check
 
-**Question 1**: In GitHub, what is the difference between the "Maintain" and "Write" permission levels?
-
-- A) Maintain can merge PRs; Write cannot
-- B) Maintain can manage repository settings; Write can only push code and manage issues/PRs
-- C) Maintain can push to protected branches; Write cannot push at all
-- D) There is no difference; they are aliases for the same permission
-
-<details>
-<summary>Show answer</summary>
-
-**B) Maintain can manage repository settings; Write can only push code and manage issues/PRs**
-
-The "Maintain" role is designed for project managers/tech leads who need to manage the repository (edit description, manage topics, manage interaction limits, manage wikis) without having full admin access (cannot change visibility, delete the repo, or manage access). "Write" allows pushing code, managing issues and PRs, but not repository settings management.
-
-</details>
-
-**Question 2**: What is the key difference between an annotated Git tag and a lightweight tag?
-
-- A) Annotated tags can be pushed to remote; lightweight tags cannot
-- B) Annotated tags are stored as full objects with metadata (tagger, date, message); lightweight tags are just pointers to a commit
-- C) Annotated tags are encrypted; lightweight tags are plain text
-- D) Annotated tags require a GPG key; lightweight tags do not
-
-<details>
-<summary>Show answer</summary>
-
-**B) Annotated tags are stored as full objects with metadata (tagger, date, message); lightweight tags are just pointers to a commit**
-
-Annotated tags (`git tag -a`) create a full Git object that stores the tagger name, email, date, and a message. They can be GPG-signed and show up in `git describe`. Lightweight tags (`git tag` without `-a`) are simply a reference pointing to a commit with no additional metadata. Annotated tags are recommended for releases; lightweight tags for temporary or private bookmarks.
-
-</details>
-
-**Question 3**: In Azure DevOps, how do you restrict a specific group from modifying files in a particular path within a repository?
-
-- A) Create a .gitignore entry for the path
-- B) Use path-level security with the Git Repositories security namespace and path-scoped tokens
-- C) Create a separate repository for the protected files
-- D) Use branch policies with file-pattern exclusions
-
-<details>
-<summary>Show answer</summary>
-
-**B) Use path-level security with the Git Repositories security namespace and path-scoped tokens**
-
-Azure DevOps supports path-level permissions through its security namespace system. By using the Git Repositories namespace (`2e9eb7ed-3c0a-47d4-87c1-0ffdd275fd87`) with path-scoped security tokens (format: `repoV2/project-id/repo-id/refs/heads/branch//path`), you can deny specific groups write access to specific paths while allowing them access elsewhere in the repository.
-
-</details>
-
-**Question 4**: A CI pipeline uses `git describe --tags` to determine the application version. The command returns `v1.2.0-47-g2414721`. What does this output mean?
-
-- A) Version 1.2.0 was released 47 days ago at commit 2414721
-- B) The current commit is 47 commits ahead of the `v1.2.0` tag, and the current short SHA is 2414721
-- C) There are 47 files changed since v1.2.0 in commit group 2414721
-- D) The build number is 47 with a Git hash prefix of 2414721
-
-<details>
-<summary>Show answer</summary>
-
-**B) The current commit is 47 commits ahead of the `v1.2.0` tag, and the current short SHA is 2414721**
-
-The `git describe` output format is `{tag}-{commits-ahead}-g{short-sha}`. The `g` prefix stands for "git" and precedes the abbreviated commit hash. This output tells you: the most recent reachable tag is `v1.2.0`, the current HEAD is 47 commits after that tag, and the current commit's short SHA starts with `2414721`. If HEAD is exactly on a tag, the output is just the tag name (e.g., `v1.2.0`).
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: ": In GitHub, what is the difference between the \"Maintain\" and \"Write\" permission levels?",
+    options: [
+      "Maintain can merge PRs; Write cannot",
+      "Maintain can manage repository settings; Write can only push code and manage issues/PRs",
+      "Maintain can push to protected branches; Write cannot push at all",
+      "There is no difference; they are aliases for the same permission"
+    ],
+    correctIndex: 1,
+    explanation: "The \"Maintain\" role is designed for project managers/tech leads who need to manage the repository (edit description, manage topics, manage interaction limits, manage wikis) without having full admin access (cannot change visibility, delete the repo, or manage access). \"Write\" allows pushing code, managing issues and PRs, but not repository settings management."
+  },
+  {
+    question: ": What is the key difference between an annotated Git tag and a lightweight tag?",
+    options: [
+      "Annotated tags can be pushed to remote; lightweight tags cannot",
+      "Annotated tags are stored as full objects with metadata (tagger, date, message); lightweight tags are just pointers to a commit",
+      "Annotated tags are encrypted; lightweight tags are plain text",
+      "Annotated tags require a GPG key; lightweight tags do not"
+    ],
+    correctIndex: 1,
+    explanation: "Annotated tags (git tag -a) create a full Git object that stores the tagger name, email, date, and a message. They can be GPG-signed and show up in git describe. Lightweight tags (git tag without -a) are simply a reference pointing to a commit with no additional metadata. Annotated tags are recommended for releases; lightweight tags for temporary or private bookmarks."
+  },
+  {
+    question: ": In Azure DevOps, how do you restrict a specific group from modifying files in a particular path within a repository?",
+    options: [
+      "Create a .gitignore entry for the path",
+      "Use path-level security with the Git Repositories security namespace and path-scoped tokens",
+      "Create a separate repository for the protected files",
+      "Use branch policies with file-pattern exclusions"
+    ],
+    correctIndex: 1,
+    explanation: "Azure DevOps supports path-level permissions through its security namespace system. By using the Git Repositories namespace (2e9eb7ed-3c0a-47d4-87c1-0ffdd275fd87) with path-scoped security tokens (format: repoV2/project-id/repo-id/refs/heads/branch//path), you can deny specific groups write access to specific paths while allowing them access elsewhere in the repository."
+  },
+  {
+    question: ": A CI pipeline uses 'git describe --tags' to determine the application version. The command returns 'v1.2.0-47-g2414721'. What does this output mean?",
+    options: [
+      "Version 1.2.0 was released 47 days ago at commit 2414721",
+      "The current commit is 47 commits ahead of the 'v1.2.0' tag, and the current short SHA is 2414721",
+      "There are 47 files changed since v1.2.0 in commit group 2414721",
+      "The build number is 47 with a Git hash prefix of 2414721"
+    ],
+    correctIndex: 1,
+    explanation: "The git describe output format is \{tag\}-\{commits-ahead\}-g\{short-sha\}. The g prefix stands for \"git\" and precedes the abbreviated commit hash. This output tells you: the most recent reachable tag is v1.2.0, the current HEAD is 47 commits after that tag, and the current commit's short SHA starts with 2414721. If HEAD is exactly on a tag, the output is just the tag name (e.g., v1.2.0)."
+  }
+]} />
 
 ## Cleanup
 

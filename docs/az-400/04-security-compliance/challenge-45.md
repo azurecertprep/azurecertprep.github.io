@@ -2,6 +2,8 @@
 sidebar_position: 7
 title: "Challenge 45: Defender for Cloud DevOps Security"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 45: Defender for Cloud DevOps Security
 
@@ -368,41 +370,52 @@ steps:
 
 ## Knowledge check
 
-1. Contoso wants to view security findings from both GitHub and Azure DevOps repositories in a single dashboard. What should they configure?
-
-   A) Export alerts from each platform to a shared email inbox
-   B) Connect both platforms to Microsoft Defender for Cloud using DevOps security connectors
-   C) Mirror all code to a single platform and scan there
-   D) Use a third-party SIEM to aggregate alerts
-
-   **Answer: B.** Microsoft Defender for Cloud DevOps Security provides native connectors for both GitHub and Azure DevOps. Once connected, all security findings (code scanning, dependency vulnerabilities, secret scanning, IaC misconfigurations) appear in the unified Defender for Cloud dashboard with consistent severity ratings and remediation guidance.
-
-2. After connecting GitHub to Defender for Cloud, which security posture finding would Defender automatically detect?
-
-   A) A SQL injection vulnerability in application code
-   B) A repository without branch protection on the default branch
-   C) An expired SSL certificate on a web server
-   D) A misconfigured Azure VM network security group
-
-   **Answer: B.** DevOps security posture management checks configuration-level issues such as missing branch protection, disabled code scanning, lack of required reviewers, and disabled secret scanning. It does not scan code for vulnerabilities directly (that is CodeQL's job) or inspect Azure infrastructure (that is Defender for Cloud's cloud security posture management).
-
-3. Contoso wants critical security findings in pull requests to block the merge. Which configuration achieves this for GitHub repositories?
-
-   A) Configure Defender PR annotations with "Block" behavior
-   B) Create a required status check that uses the Microsoft Security DevOps action with a non-zero exit code on critical findings
-   C) Set branch protection to require Defender approval
-   D) Configure Dependabot to block merges
-
-   **Answer: B.** The microsoft/security-devops-action can be configured to fail (non-zero exit code) when critical findings are detected. When this job is set as a required status check in branch protection, the PR cannot merge until the critical findings are resolved. Defender PR annotations alone only add comments but do not block merges.
-
-4. What is the primary benefit of connecting Azure DevOps to Microsoft Defender for Cloud compared to using GHAzDO (GitHub Advanced Security for Azure DevOps) alone?
-
-   A) Defender provides CodeQL scanning that GHAzDO does not
-   B) Defender provides a unified view across multiple platforms and integrates findings with cloud security posture
-   C) Defender is free while GHAzDO requires a license
-   D) Defender scans code faster than GHAzDO
-
-   **Answer: B.** While GHAzDO provides excellent scanning within Azure DevOps, Defender for Cloud adds cross-platform visibility (GitHub + Azure DevOps + cloud resources in one dashboard), governance rules for auto-assignment and SLA tracking, integration with Azure Policy, and correlation between DevOps security findings and cloud infrastructure security posture.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso wants to view security findings from both GitHub and Azure DevOps repositories in a single dashboard. What should they configure?",
+    options: [
+      "Export alerts from each platform to a shared email inbox",
+      "Connect both platforms to Microsoft Defender for Cloud using DevOps security connectors",
+      "Mirror all code to a single platform and scan there",
+      "Use a third-party SIEM to aggregate alerts"
+    ],
+    correctIndex: 1,
+    explanation: "Microsoft Defender for Cloud DevOps Security provides native connectors for both GitHub and Azure DevOps. Once connected, all security findings (code scanning, dependency vulnerabilities, secret scanning, IaC misconfigurations) appear in the unified Defender for Cloud dashboard with consistent severity ratings and remediation guidance."
+  },
+  {
+    question: "After connecting GitHub to Defender for Cloud, which security posture finding would Defender automatically detect?",
+    options: [
+      "A SQL injection vulnerability in application code",
+      "A repository without branch protection on the default branch",
+      "An expired SSL certificate on a web server",
+      "A misconfigured Azure VM network security group"
+    ],
+    correctIndex: 1,
+    explanation: "DevOps security posture management checks configuration-level issues such as missing branch protection, disabled code scanning, lack of required reviewers, and disabled secret scanning. It does not scan code for vulnerabilities directly (that is CodeQL's job) or inspect Azure infrastructure (that is Defender for Cloud's cloud security posture management)."
+  },
+  {
+    question: "Contoso wants critical security findings in pull requests to block the merge. Which configuration achieves this for GitHub repositories?",
+    options: [
+      "Configure Defender PR annotations with \"Block\" behavior",
+      "Create a required status check that uses the Microsoft Security DevOps action with a non-zero exit code on critical findings",
+      "Set branch protection to require Defender approval",
+      "Configure Dependabot to block merges"
+    ],
+    correctIndex: 1,
+    explanation: "The microsoft/security-devops-action can be configured to fail (non-zero exit code) when critical findings are detected. When this job is set as a required status check in branch protection, the PR cannot merge until the critical findings are resolved. Defender PR annotations alone only add comments but do not block merges."
+  },
+  {
+    question: "What is the primary benefit of connecting Azure DevOps to Microsoft Defender for Cloud compared to using GHAzDO (GitHub Advanced Security for Azure DevOps) alone?",
+    options: [
+      "Defender provides CodeQL scanning that GHAzDO does not",
+      "Defender provides a unified view across multiple platforms and integrates findings with cloud security posture",
+      "Defender is free while GHAzDO requires a license",
+      "Defender scans code faster than GHAzDO"
+    ],
+    correctIndex: 1,
+    explanation: "While GHAzDO provides excellent scanning within Azure DevOps, Defender for Cloud adds cross-platform visibility (GitHub + Azure DevOps + cloud resources in one dashboard), governance rules for auto-assignment and SLA tracking, integration with Azure Policy, and correlation between DevOps security findings and cloud infrastructure security posture."
+  }
+]} />
 
 ## Cleanup
 

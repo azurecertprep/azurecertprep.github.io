@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: "Challenge 37: Migrate classic to YAML"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 37: Migrate classic to YAML
 
@@ -732,41 +734,52 @@ The key insight: In classic pipelines, approvals and gates are configured per-st
 
 ## Knowledge check
 
-1. **What is the YAML equivalent of a classic release definition's "pre-deployment gates"?**
-
-   A) `condition:` expressions on the stage
-   B) `dependsOn:` with custom scripts
-   C) Environment approvals and checks configured on the target environment
-   D) `trigger:` with schedule-based delays
-
-   **Answer: C** - Classic pre-deployment gates (Azure Monitor queries, REST API checks, work item queries) are replaced by environment checks in YAML. These are configured in the Azure DevOps UI on the environment resource, not in the YAML file itself. This provides separation of concerns: the pipeline defines what to deploy, the environment defines governance controls.
-
-2. **How should classic task groups be migrated to YAML?**
-
-   A) Convert them to PowerShell scripts and call via `script:` step
-   B) Convert them to YAML templates (`.yml` files) with `parameters:` and reference with `template:`
-   C) Keep using task groups directly (they work in YAML pipelines)
-   D) Replace them with marketplace extensions that provide the same functionality
-
-   **Answer: B** - YAML templates are the direct successor to classic task groups. They support parameters, conditional logic, and can be shared across pipelines via repository references. Templates provide better version control (they are files in a repo) and support more complex patterns like stage templates and job templates, beyond just step reuse.
-
-3. **When migrating a classic release with deployment groups to YAML, what is the target resource type?**
-
-   A) `environment:` with `resourceType: Kubernetes`
-   B) `environment:` with `resourceType: VirtualMachine`
-   C) `pool:` with self-hosted agents
-   D) `resources: repositories:` with SSH connection
-
-   **Answer: B** - Classic deployment groups map to YAML environments with `resourceType: VirtualMachine`. VMs registered with the environment run the pipeline agent locally, just like deployment group targets. YAML adds the rolling deployment strategy (`strategy: rolling:`) which was configured differently in classic releases.
-
-4. **What is the recommended phased approach for migrating from classic to YAML?**
-
-   A) Delete classic immediately and create YAML from scratch
-   B) Run both in parallel, validate YAML matches classic output, then disable and archive classic
-   C) Convert only build pipelines to YAML and keep release pipelines as classic indefinitely
-   D) Wait until Microsoft removes classic support, then migrate everything at once
-
-   **Answer: B** - A phased approach (parallel run, YAML primary with classic fallback, then decommission) minimizes risk. Running both pipelines simultaneously allows validation that the YAML version produces identical artifacts and deployments. Only after a confidence period should the classic pipeline be disabled and eventually deleted (with its definition archived for reference).
+<KnowledgeCheck questions={[
+  {
+    question: "What is the YAML equivalent of a classic release definition's \"pre-deployment gates\"?",
+    options: [
+      "'condition:' expressions on the stage",
+      "'dependsOn:' with custom scripts",
+      "Environment approvals and checks configured on the target environment",
+      "'trigger:' with schedule-based delays"
+    ],
+    correctIndex: 2,
+    explanation: "Classic pre-deployment gates (Azure Monitor queries, REST API checks, work item queries) are replaced by environment checks in YAML. These are configured in the Azure DevOps UI on the environment resource, not in the YAML file itself. This provides separation of concerns: the pipeline defines what to deploy, the environment defines governance controls."
+  },
+  {
+    question: "How should classic task groups be migrated to YAML?",
+    options: [
+      "Convert them to PowerShell scripts and call via 'script:' step",
+      "Convert them to YAML templates ('.yml' files) with 'parameters:' and reference with 'template:'",
+      "Keep using task groups directly (they work in YAML pipelines)",
+      "Replace them with marketplace extensions that provide the same functionality"
+    ],
+    correctIndex: 1,
+    explanation: "YAML templates are the direct successor to classic task groups. They support parameters, conditional logic, and can be shared across pipelines via repository references. Templates provide better version control (they are files in a repo) and support more complex patterns like stage templates and job templates, beyond just step reuse."
+  },
+  {
+    question: "When migrating a classic release with deployment groups to YAML, what is the target resource type?",
+    options: [
+      "'environment:' with 'resourceType: Kubernetes'",
+      "'environment:' with 'resourceType: VirtualMachine'",
+      "'pool:' with self-hosted agents",
+      "'resources: repositories:' with SSH connection"
+    ],
+    correctIndex: 1,
+    explanation: "Classic deployment groups map to YAML environments with resourceType: VirtualMachine. VMs registered with the environment run the pipeline agent locally, just like deployment group targets. YAML adds the rolling deployment strategy (strategy: rolling:) which was configured differently in classic releases."
+  },
+  {
+    question: "What is the recommended phased approach for migrating from classic to YAML?",
+    options: [
+      "Delete classic immediately and create YAML from scratch",
+      "Run both in parallel, validate YAML matches classic output, then disable and archive classic",
+      "Convert only build pipelines to YAML and keep release pipelines as classic indefinitely",
+      "Wait until Microsoft removes classic support, then migrate everything at once"
+    ],
+    correctIndex: 1,
+    explanation: "A phased approach (parallel run, YAML primary with classic fallback, then decommission) minimizes risk. Running both pipelines simultaneously allows validation that the YAML version produces identical artifacts and deployments. Only after a confidence period should the classic pipeline be disabled and eventually deleted (with its definition archived for reference)."
+  }
+]} />
 
 ## Cleanup
 

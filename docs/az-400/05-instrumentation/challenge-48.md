@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 48: GitHub monitoring and alerts"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 48: GitHub monitoring and alerts
 
@@ -495,41 +497,52 @@ gh secret set SLACK_WEBHOOK_URL --body "https://hooks.slack.com/services/NEW/WEB
 
 ## Knowledge check
 
-1. Contoso's engineering manager wants to know the deployment frequency for the last 30 days without leaving the terminal. Which approach provides this data?
-
-   A) Check the GitHub Actions billing page
-   B) Query the deployments API via `gh api repos/contoso/webapp/deployments` and filter by date
-   C) Download workflow run logs and count manually
-   D) Use the GitHub Insights traffic page
-
-   **Answer: B.** The GitHub Deployments API provides a complete record of all deployments with timestamps, environments, and creators. By querying this API and filtering by date range, you can calculate deployment frequency, deployment cadence per environment, and identify deployment patterns.
-
-2. A GitHub Actions workflow needs to send a notification to Microsoft Teams only when the production deployment job fails. What is the correct approach?
-
-   A) Add a notification step at the end of the deployment job
-   B) Create a separate job with `if: failure()` that depends on the deployment job
-   C) Configure GitHub webhook delivery to Teams
-   D) Use the built-in GitHub email notifications
-
-   **Answer: B.** A separate notification job with `needs: [deploy]` and `if: failure()` runs only when the dependency job fails. This is cleaner than adding conditional steps to the deployment job (which would not run if the job fails early) and more flexible than built-in email notifications.
-
-3. Contoso wants to track sprint progress with burn-down charts and cycle time metrics. Where should they configure these visualizations?
-
-   A) GitHub repository Insights tab
-   B) GitHub Projects Insights (charts)
-   C) GitHub Actions workflow insights
-   D) Azure DevOps Analytics
-
-   **Answer: B.** GitHub Projects (v2) provides an Insights tab with customizable charts including burn-down charts, velocity tracking, and cycle time visualizations. These are based on project items and their status transitions. Repository Insights covers traffic and contributions, not work item tracking.
-
-4. An Azure DevOps pipeline should send a notification when a build fails and also when a build succeeds after a previous failure (recovery notification). How should this be configured?
-
-   A) Create two notification subscriptions: one for failure and one for success with the filter "previous state was failed"
-   B) Create a single notification for all build completions
-   C) Use a pipeline step with conditional logic to check previous build status
-   D) Configure a service hook with state transition filters
-
-   **Answer: A.** Azure DevOps notification subscriptions support filtering by event state. Creating one subscription for "build fails" and another for "build succeeds AND last build was failed" provides both failure alerts and recovery notifications. This is a built-in capability of the notification system without requiring custom pipeline logic.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso's engineering manager wants to know the deployment frequency for the last 30 days without leaving the terminal. Which approach provides this data?",
+    options: [
+      "Check the GitHub Actions billing page",
+      "Query the deployments API via 'gh api repos/contoso/webapp/deployments' and filter by date",
+      "Download workflow run logs and count manually",
+      "Use the GitHub Insights traffic page"
+    ],
+    correctIndex: 1,
+    explanation: "The GitHub Deployments API provides a complete record of all deployments with timestamps, environments, and creators. By querying this API and filtering by date range, you can calculate deployment frequency, deployment cadence per environment, and identify deployment patterns."
+  },
+  {
+    question: "A GitHub Actions workflow needs to send a notification to Microsoft Teams only when the production deployment job fails. What is the correct approach?",
+    options: [
+      "Add a notification step at the end of the deployment job",
+      "Create a separate job with 'if: failure()' that depends on the deployment job",
+      "Configure GitHub webhook delivery to Teams",
+      "Use the built-in GitHub email notifications"
+    ],
+    correctIndex: 1,
+    explanation: "A separate notification job with needs: [deploy] and if: failure() runs only when the dependency job fails. This is cleaner than adding conditional steps to the deployment job (which would not run if the job fails early) and more flexible than built-in email notifications."
+  },
+  {
+    question: "Contoso wants to track sprint progress with burn-down charts and cycle time metrics. Where should they configure these visualizations?",
+    options: [
+      "GitHub repository Insights tab",
+      "GitHub Projects Insights (charts)",
+      "GitHub Actions workflow insights",
+      "Azure DevOps Analytics"
+    ],
+    correctIndex: 1,
+    explanation: "GitHub Projects (v2) provides an Insights tab with customizable charts including burn-down charts, velocity tracking, and cycle time visualizations. These are based on project items and their status transitions. Repository Insights covers traffic and contributions, not work item tracking."
+  },
+  {
+    question: "An Azure DevOps pipeline should send a notification when a build fails and also when a build succeeds after a previous failure (recovery notification). How should this be configured?",
+    options: [
+      "Create two notification subscriptions: one for failure and one for success with the filter \"previous state was failed\"",
+      "Create a single notification for all build completions",
+      "Use a pipeline step with conditional logic to check previous build status",
+      "Configure a service hook with state transition filters"
+    ],
+    correctIndex: 0,
+    explanation: "Azure DevOps notification subscriptions support filtering by event state. Creating one subscription for \"build fails\" and another for \"build succeeds AND last build was failed\" provides both failure alerts and recovery notifications. This is a built-in capability of the notification system without requiring custom pipeline logic."
+  }
+]} />
 
 ## Cleanup
 

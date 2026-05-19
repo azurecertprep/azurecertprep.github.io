@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: "Challenge 28: Container-based deployments"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 28: Container-based deployments
 
@@ -689,71 +691,52 @@ Update the workflow to reference the ignore file:
 
 ## Knowledge check
 
-**Question 1:** Contoso wants to build container images in their CI pipeline and push to Azure Container Registry. The pipeline uses a service principal for authentication. What is the MINIMUM RBAC role required on the ACR for the service principal to push images?
-
-- A. Reader
-- B. AcrPull
-- C. AcrPush
-- D. Contributor
-
-<details>
-<summary>Show answer</summary>
-
-**C. AcrPush**
-
-The `AcrPush` role grants permission to push (write) and pull (read) images from ACR. `AcrPull` only allows reading. `Contributor` is overly permissive and includes management plane access. `Reader` provides no data plane access to container images.
-
-</details>
-
-**Question 2:** A container deployed to Azure Container Apps keeps restarting. The application listens on port 8080, but the Container App ingress is configured with `targetPort: 80`. What is the correct fix?
-
-- A. Change the application to listen on port 80
-- B. Update the Container App ingress target port to 8080
-- C. Add a port mapping rule in the Container Apps environment
-- D. Configure a reverse proxy between port 80 and 8080
-
-<details>
-<summary>Show answer</summary>
-
-**B. Update the Container App ingress target port to 8080**
-
-The `targetPort` in Azure Container Apps ingress must match the port the container application listens on. If the application is configured to listen on port 8080 (via `ASPNETCORE_URLS` or Dockerfile `EXPOSE`), the Container App ingress must route to that same port.
-
-</details>
-
-**Question 3:** Contoso builds their container images with both `semver` tags (e.g., `1.2.3`) and `sha` tags (e.g., `abc1234`). In production Kubernetes manifests, which tag type should be referenced for reproducible deployments?
-
-- A. `latest` tag for automatic updates
-- B. Semver major version tag (e.g., `1`)
-- C. Git SHA-based tag (e.g., `abc1234`)
-- D. Semver minor version tag (e.g., `1.2`)
-
-<details>
-<summary>Show answer</summary>
-
-**C. Git SHA-based tag (e.g., `abc1234`)**
-
-SHA-based tags are immutable and directly correlate to a specific commit, ensuring reproducibility. A given SHA tag always points to exactly one image. Semver tags can be overwritten (moving `1.2.3` to a different image), and `latest` is mutable by definition. For production deployments, immutable references ensure you can trace exactly what code is running.
-
-</details>
-
-**Question 4:** Contoso needs their container images to run on both AMD64 (cloud VMs) and ARM64 (edge devices) architectures. What must be configured in the CI pipeline to produce images for both platforms?
-
-- A. Build the image twice with different Dockerfiles for each architecture
-- B. Use Docker Buildx with `platforms: linux/amd64,linux/arm64` and QEMU emulation
-- C. Create separate container registries for each architecture
-- D. Use Windows containers which support both architectures natively
-
-<details>
-<summary>Show answer</summary>
-
-**B. Use Docker Buildx with `platforms: linux/amd64,linux/arm64` and QEMU emulation**
-
-Docker Buildx supports multi-platform builds using QEMU for cross-platform emulation. A single `docker buildx build --platform linux/amd64,linux/arm64` command produces a manifest list containing images for both architectures. The correct image is automatically pulled based on the client's architecture.
-
-</details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso wants to build container images in their CI pipeline and push to Azure Container Registry. The pipeline uses a service principal for authentication. What is the MINIMUM RBAC role required on the ACR for the service principal to push images?",
+    options: [
+      "Reader",
+      "AcrPull",
+      "AcrPush",
+      "Contributor"
+    ],
+    correctIndex: 2,
+    explanation: "The AcrPush role grants permission to push (write) and pull (read) images from ACR. AcrPull only allows reading. Contributor is overly permissive and includes management plane access. Reader provides no data plane access to container images."
+  },
+  {
+    question: "A container deployed to Azure Container Apps keeps restarting. The application listens on port 8080, but the Container App ingress is configured with 'targetPort: 80'. What is the correct fix?",
+    options: [
+      "Change the application to listen on port 80",
+      "Update the Container App ingress target port to 8080",
+      "Add a port mapping rule in the Container Apps environment",
+      "Configure a reverse proxy between port 80 and 8080"
+    ],
+    correctIndex: 1,
+    explanation: "The targetPort in Azure Container Apps ingress must match the port the container application listens on. If the application is configured to listen on port 8080 (via ASPNETCORE_URLS or Dockerfile EXPOSE), the Container App ingress must route to that same port."
+  },
+  {
+    question: "Contoso builds their container images with both 'semver' tags (e.g., '1.2.3') and 'sha' tags (e.g., 'abc1234'). In production Kubernetes manifests, which tag type should be referenced for reproducible deployments?",
+    options: [
+      "'latest' tag for automatic updates",
+      "Semver major version tag (e.g., '1')",
+      "Git SHA-based tag (e.g., 'abc1234')",
+      "Semver minor version tag (e.g., '1.2')"
+    ],
+    correctIndex: 2,
+    explanation: "SHA-based tags are immutable and directly correlate to a specific commit, ensuring reproducibility. A given SHA tag always points to exactly one image. Semver tags can be overwritten (moving 1.2.3 to a different image), and latest is mutable by definition. For production deployments, immutable references ensure you can trace exactly what code is running."
+  },
+  {
+    question: "Contoso needs their container images to run on both AMD64 (cloud VMs) and ARM64 (edge devices) architectures. What must be configured in the CI pipeline to produce images for both platforms?",
+    options: [
+      "Build the image twice with different Dockerfiles for each architecture",
+      "Use Docker Buildx with 'platforms: linux/amd64,linux/arm64' and QEMU emulation",
+      "Create separate container registries for each architecture",
+      "Use Windows containers which support both architectures natively"
+    ],
+    correctIndex: 1,
+    explanation: "Docker Buildx supports multi-platform builds using QEMU for cross-platform emulation. A single docker buildx build --platform linux/amd64,linux/arm64 command produces a manifest list containing images for both architectures. The correct image is automatically pulled based on the client's architecture."
+  }
+]} />
 
 ## Cleanup
 

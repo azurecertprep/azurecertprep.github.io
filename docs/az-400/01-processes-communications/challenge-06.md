@@ -2,6 +2,8 @@
 sidebar_position: 6
 title: "Challenge 06: Integrations and webhooks"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 06: Integrations and webhooks
 
@@ -891,49 +893,52 @@ gh api repos/{owner}/contoso-webapp/installations \
 
 ## Knowledge check
 
-**Question 1:** What is the purpose of the `X-Hub-Signature-256` header in GitHub webhook deliveries?
-
-A) It identifies which GitHub user triggered the event  
-B) It contains a HMAC-SHA256 signature of the payload for the receiver to verify the request authenticity  
-C) It encrypts the webhook payload  
-D) It specifies the API version of the webhook
-
-**Answer:** B - GitHub computes an HMAC-SHA256 hash of the payload body using the webhook secret as the key and sends it in the `X-Hub-Signature-256` header. The receiver computes the same hash and compares them using a timing-safe comparison to verify the request came from GitHub.
-
----
-
-**Question 2:** What is the difference between a GitHub webhook and a `repository_dispatch` event?
-
-A) Webhooks send data to external systems; repository_dispatch triggers workflows from external systems  
-B) They are the same mechanism with different names  
-C) Webhooks are faster; repository_dispatch has a delay  
-D) Webhooks support all events; repository_dispatch only supports push events
-
-**Answer:** A - Webhooks are outbound: GitHub sends event data to a URL you specify. `repository_dispatch` is inbound: an external system sends a POST request to the GitHub API to trigger a workflow run, optionally including a custom payload.
-
----
-
-**Question 3:** When configuring Azure DevOps service hooks, what determines which events trigger the hook?
-
-A) The repository branch configuration  
-B) Publisher inputs that filter the event type, such as pipeline ID, area path, or work item type  
-C) The consumer endpoint capabilities  
-D) The Azure subscription tier
-
-**Answer:** B - Service hooks use publisher inputs as filters. You specify the publisher (e.g., pipelines, tfs), the event type (e.g., run-state-changed, workitem.updated), and additional filters (specific pipeline, area path, work item type) to control which events fire the hook.
-
----
-
-**Question 4:** A Contoso developer commits with `AB#5678` in the message but the Azure Boards work item shows no link. What is the most likely cause?
-
-A) The commit message format is wrong  
-B) The Azure Boards GitHub App is not installed on the repository, or the repository is not linked in the Azure DevOps project settings  
-C) Azure Boards only supports linking from PR descriptions, not commits  
-D) The work item must be in the Active state
-
-**Answer:** B - The `AB#` syntax requires the Azure Boards GitHub App to be installed on the repository AND the repository must be linked in the Azure DevOps project settings under Boards > GitHub connections. Without both, the integration cannot detect the reference.
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "What is the purpose of the 'X-Hub-Signature-256' header in GitHub webhook deliveries?",
+    options: [
+      "It identifies which GitHub user triggered the event",
+      "It contains a HMAC-SHA256 signature of the payload for the receiver to verify the request authenticity",
+      "It encrypts the webhook payload",
+      "It specifies the API version of the webhook"
+    ],
+    correctIndex: 1,
+    explanation: "GitHub computes an HMAC-SHA256 hash of the payload body using the webhook secret as the key and sends it in the X-Hub-Signature-256 header. The receiver computes the same hash and compares them using a timing-safe comparison to verify the request came from GitHub."
+  },
+  {
+    question: "What is the difference between a GitHub webhook and a 'repository_dispatch' event?",
+    options: [
+      "Webhooks send data to external systems; repository_dispatch triggers workflows from external systems",
+      "They are the same mechanism with different names",
+      "Webhooks are faster; repository_dispatch has a delay",
+      "Webhooks support all events; repository_dispatch only supports push events"
+    ],
+    correctIndex: 0,
+    explanation: "Webhooks are outbound: GitHub sends event data to a URL you specify. repository_dispatch is inbound: an external system sends a POST request to the GitHub API to trigger a workflow run, optionally including a custom payload."
+  },
+  {
+    question: "When configuring Azure DevOps service hooks, what determines which events trigger the hook?",
+    options: [
+      "The repository branch configuration",
+      "Publisher inputs that filter the event type, such as pipeline ID, area path, or work item type",
+      "The consumer endpoint capabilities",
+      "The Azure subscription tier"
+    ],
+    correctIndex: 1,
+    explanation: "Service hooks use publisher inputs as filters. You specify the publisher (e.g., pipelines, tfs), the event type (e.g., run-state-changed, workitem.updated), and additional filters (specific pipeline, area path, work item type) to control which events fire the hook."
+  },
+  {
+    question: "A Contoso developer commits with 'AB#5678' in the message but the Azure Boards work item shows no link. What is the most likely cause?",
+    options: [
+      "The commit message format is wrong",
+      "The Azure Boards GitHub App is not installed on the repository, or the repository is not linked in the Azure DevOps project settings",
+      "Azure Boards only supports linking from PR descriptions, not commits",
+      "The work item must be in the Active state"
+    ],
+    correctIndex: 1,
+    explanation: "The AB# syntax requires the Azure Boards GitHub App to be installed on the repository AND the repository must be linked in the Azure DevOps project settings under Boards > GitHub connections. Without both, the integration cannot detect the reference."
+  }
+]} />
 
 ## Cleanup
 

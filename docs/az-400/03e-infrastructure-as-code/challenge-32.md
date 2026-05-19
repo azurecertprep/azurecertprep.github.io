@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 32: Desired state configuration"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 32: Desired state configuration
 
@@ -563,41 +565,52 @@ New-GuestConfigurationPackage `
 
 ## Knowledge check
 
-1. **What is the difference between Azure Machine Configuration modes "Audit" and "ApplyAndAutoCorrect"?**
-
-   A) Audit deploys resources; ApplyAndAutoCorrect deletes non-compliant resources
-   B) Audit only reports compliance status; ApplyAndAutoCorrect reports and remediates drift automatically
-   C) Audit runs once; ApplyAndAutoCorrect runs on a schedule
-   D) Audit works on Windows only; ApplyAndAutoCorrect works cross-platform
-
-   **Answer: B** - In Audit mode, Machine Configuration evaluates the VM and reports whether it is compliant or non-compliant but takes no corrective action. In ApplyAndAutoCorrect mode, it both reports compliance and actively remediates drift by reapplying the desired configuration on each evaluation cycle (every 15 minutes by default).
-
-2. **What prerequisite must a VM have before Azure Machine Configuration can evaluate it?**
-
-   A) The VM must be domain-joined to Azure AD
-   B) The VM must have a system-assigned managed identity and the Guest Configuration extension
-   C) The VM must be running Windows Server 2019 or later
-   D) The VM must have Azure Monitor Agent installed
-
-   **Answer: B** - Azure Machine Configuration requires two things on the target VM: a system-assigned managed identity (for authentication to Azure services) and the Guest Configuration extension (AzurePolicyforWindows or AzurePolicyforLinux) which runs the configuration evaluation agent inside the VM.
-
-3. **How does Azure Policy integrate with Machine Configuration for at-scale enforcement?**
-
-   A) Azure Policy directly modifies VM settings without any agent
-   B) Azure Policy deploys an Azure Function that connects to VMs via SSH/WinRM
-   C) Azure Policy assigns guest configuration definitions that the in-VM agent evaluates and reports on
-   D) Azure Policy triggers Azure Automation runbooks that apply DSC configurations
-
-   **Answer: C** - Azure Policy acts as the orchestration layer. When a Machine Configuration policy is assigned, it ensures the target VMs have the required identity and extension, then creates guest configuration assignments. The in-VM agent picks up these assignments, evaluates the configuration, and reports compliance status back to Azure Policy.
-
-4. **What is the recommended approach for versioning Machine Configuration packages in a CI/CD pipeline?**
-
-   A) Overwrite the same blob in storage with each deployment
-   B) Use build numbers in the blob name and update the policy definition to reference the new URI
-   C) Store all versions locally on the VM and reference them by path
-   D) Use Azure Automation DSC pull server versioning exclusively
-
-   **Answer: B** - Each build should produce a uniquely named package (using build number or version), upload it to a new blob, and update the policy definition's content URI. This enables rollback (point policy back to a previous version), audit trail (which version was deployed when), and safe progressive rollout (assign new version to dev first, then production).
+<KnowledgeCheck questions={[
+  {
+    question: "What is the difference between Azure Machine Configuration modes \"Audit\" and \"ApplyAndAutoCorrect\"?",
+    options: [
+      "Audit deploys resources; ApplyAndAutoCorrect deletes non-compliant resources",
+      "Audit only reports compliance status; ApplyAndAutoCorrect reports and remediates drift automatically",
+      "Audit runs once; ApplyAndAutoCorrect runs on a schedule",
+      "Audit works on Windows only; ApplyAndAutoCorrect works cross-platform"
+    ],
+    correctIndex: 1,
+    explanation: "In Audit mode, Machine Configuration evaluates the VM and reports whether it is compliant or non-compliant but takes no corrective action. In ApplyAndAutoCorrect mode, it both reports compliance and actively remediates drift by reapplying the desired configuration on each evaluation cycle (every 15 minutes by default)."
+  },
+  {
+    question: "What prerequisite must a VM have before Azure Machine Configuration can evaluate it?",
+    options: [
+      "The VM must be domain-joined to Azure AD",
+      "The VM must have a system-assigned managed identity and the Guest Configuration extension",
+      "The VM must be running Windows Server 2019 or later",
+      "The VM must have Azure Monitor Agent installed"
+    ],
+    correctIndex: 1,
+    explanation: "Azure Machine Configuration requires two things on the target VM: a system-assigned managed identity (for authentication to Azure services) and the Guest Configuration extension (AzurePolicyforWindows or AzurePolicyforLinux) which runs the configuration evaluation agent inside the VM."
+  },
+  {
+    question: "How does Azure Policy integrate with Machine Configuration for at-scale enforcement?",
+    options: [
+      "Azure Policy directly modifies VM settings without any agent",
+      "Azure Policy deploys an Azure Function that connects to VMs via SSH/WinRM",
+      "Azure Policy assigns guest configuration definitions that the in-VM agent evaluates and reports on",
+      "Azure Policy triggers Azure Automation runbooks that apply DSC configurations"
+    ],
+    correctIndex: 2,
+    explanation: "Azure Policy acts as the orchestration layer. When a Machine Configuration policy is assigned, it ensures the target VMs have the required identity and extension, then creates guest configuration assignments. The in-VM agent picks up these assignments, evaluates the configuration, and reports compliance status back to Azure Policy."
+  },
+  {
+    question: "What is the recommended approach for versioning Machine Configuration packages in a CI/CD pipeline?",
+    options: [
+      "Overwrite the same blob in storage with each deployment",
+      "Use build numbers in the blob name and update the policy definition to reference the new URI",
+      "Store all versions locally on the VM and reference them by path",
+      "Use Azure Automation DSC pull server versioning exclusively"
+    ],
+    correctIndex: 1,
+    explanation: "Each build should produce a uniquely named package (using build number or version), upload it to a new blob, and update the policy definition's content URI. This enables rollback (point policy back to a previous version), audit trail (which version was deployed when), and safe progressive rollout (assign new version to dev first, then production)."
+  }
+]} />
 
 ## Cleanup
 

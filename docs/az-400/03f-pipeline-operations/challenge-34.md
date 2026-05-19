@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 34: Pipeline health monitoring"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 34: Pipeline health monitoring
 
@@ -713,41 +715,52 @@ Tests are being retried, but there is no visibility into which tests are flaky. 
 
 ## Knowledge check
 
-1. **What is a flaky test, and how does Azure DevOps detect them automatically?**
-
-   A) A test that takes too long; detected by comparing test duration to a threshold
-   B) A test that passes and fails on the same code commit; detected by comparing results across runs without code changes
-   C) A test that only fails on specific operating systems; detected by matrix build comparison
-   D) A test that requires network access; detected by monitoring network calls during test execution
-
-   **Answer: B** - A flaky test is one that produces different results (pass/fail) on the same code. Azure DevOps system-detected flaky tests work by comparing test results across pipeline runs where the same test has both passed and failed on the same commit or without intervening code changes. Once detected, flaky tests can be excluded from the pass/fail calculation.
-
-2. **What is MTTR in the context of pipeline health, and why is it important?**
-
-   A) Maximum Test Timeout Ratio - the longest a test should run before being killed
-   B) Mean Time To Recovery - the average time from a pipeline failure to the next successful run
-   C) Minimum Throughput Threshold Requirement - the minimum number of runs per day
-   D) Manual Test Trigger Rate - how often tests are run manually vs automatically
-
-   **Answer: B** - MTTR (Mean Time To Recovery) measures how quickly the team can fix a broken pipeline. A low MTTR means failures are detected and resolved quickly. High MTTR indicates that broken pipelines sit unattended, blocking the entire team. Tracking MTTR encourages practices like immediate investigation of failures and smaller, more reviewable changes.
-
-3. **Which approach correctly handles test retries without masking genuine failures?**
-
-   A) Run all tests with `|| true` and check the test report separately
-   B) Retry only failed tests, mark those that pass on retry as flaky, and fail only for tests that fail on all attempts
-   C) Run the entire test suite 3 times and use majority-vote (2/3 passes = success)
-   D) Disable failing tests with `skip` annotations until they are fixed
-
-   **Answer: B** - Targeted retry of only failed tests is the correct approach. Tests that pass on retry without code changes are marked as flaky (for tracking and prioritized fixing). Tests that fail on all retry attempts represent genuine regressions and should fail the build. This provides accurate signal while tracking reliability debt.
-
-4. **What is the recommended response when pipeline failure rate exceeds 30%?**
-
-   A) Increase the number of retries to 5 to reduce visible failures
-   B) Skip CI on feature branches and only run on main
-   C) Analyze failure causes, quarantine flaky tests, fix infrastructure issues, and track improvement metrics
-   D) Switch to manual testing until the pipeline is rewritten from scratch
-
-   **Answer: C** - High failure rates require systematic investigation. Categorize failures (flaky tests, infrastructure issues, genuine bugs), quarantine known-flaky tests (still run them but don't block the build), fix underlying infrastructure issues (timeout configurations, resource limits), and establish metrics to track improvement over time. Simply hiding failures erodes trust further.
+<KnowledgeCheck questions={[
+  {
+    question: "What is a flaky test, and how does Azure DevOps detect them automatically?",
+    options: [
+      "A test that takes too long; detected by comparing test duration to a threshold",
+      "A test that passes and fails on the same code commit; detected by comparing results across runs without code changes",
+      "A test that only fails on specific operating systems; detected by matrix build comparison",
+      "A test that requires network access; detected by monitoring network calls during test execution"
+    ],
+    correctIndex: 1,
+    explanation: "A flaky test is one that produces different results (pass/fail) on the same code. Azure DevOps system-detected flaky tests work by comparing test results across pipeline runs where the same test has both passed and failed on the same commit or without intervening code changes. Once detected, flaky tests can be excluded from the pass/fail calculation."
+  },
+  {
+    question: "What is MTTR in the context of pipeline health, and why is it important?",
+    options: [
+      "Maximum Test Timeout Ratio - the longest a test should run before being killed",
+      "Mean Time To Recovery - the average time from a pipeline failure to the next successful run",
+      "Minimum Throughput Threshold Requirement - the minimum number of runs per day",
+      "Manual Test Trigger Rate - how often tests are run manually vs automatically"
+    ],
+    correctIndex: 1,
+    explanation: "MTTR (Mean Time To Recovery) measures how quickly the team can fix a broken pipeline. A low MTTR means failures are detected and resolved quickly. High MTTR indicates that broken pipelines sit unattended, blocking the entire team. Tracking MTTR encourages practices like immediate investigation of failures and smaller, more reviewable changes."
+  },
+  {
+    question: "Which approach correctly handles test retries without masking genuine failures?",
+    options: [
+      "Run all tests with '|| true' and check the test report separately",
+      "Retry only failed tests, mark those that pass on retry as flaky, and fail only for tests that fail on all attempts",
+      "Run the entire test suite 3 times and use majority-vote (2/3 passes = success)",
+      "Disable failing tests with 'skip' annotations until they are fixed"
+    ],
+    correctIndex: 1,
+    explanation: "Targeted retry of only failed tests is the correct approach. Tests that pass on retry without code changes are marked as flaky (for tracking and prioritized fixing). Tests that fail on all retry attempts represent genuine regressions and should fail the build. This provides accurate signal while tracking reliability debt."
+  },
+  {
+    question: "What is the recommended response when pipeline failure rate exceeds 30%?",
+    options: [
+      "Increase the number of retries to 5 to reduce visible failures",
+      "Skip CI on feature branches and only run on main",
+      "Analyze failure causes, quarantine flaky tests, fix infrastructure issues, and track improvement metrics",
+      "Switch to manual testing until the pipeline is rewritten from scratch"
+    ],
+    correctIndex: 2,
+    explanation: "High failure rates require systematic investigation. Categorize failures (flaky tests, infrastructure issues, genuine bugs), quarantine known-flaky tests (still run them but don't block the build), fix underlying infrastructure issues (timeout configurations, resource limits), and establish metrics to track improvement over time. Simply hiding failures erodes trust further."
+  }
+]} />
 
 ## Cleanup
 

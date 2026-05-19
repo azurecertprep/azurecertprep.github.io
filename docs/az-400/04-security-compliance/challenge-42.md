@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: "Challenge 42: Secrets management"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 42: Secrets management
 
@@ -381,41 +383,52 @@ az role assignment create \
 
 ## Knowledge check
 
-1. Contoso wants pipeline secrets to automatically reflect the latest version in Key Vault without pipeline changes. Which approach achieves this for Azure Pipelines?
-
-   A) Store secrets as pipeline variables and manually update them after each rotation
-   B) Use a variable group linked to Azure Key Vault
-   C) Use the AzureKeyVault@2 task with specific secret version IDs
-   D) Copy secrets to pipeline variables using a script task
-
-   **Answer: B.** A variable group linked to Key Vault dynamically fetches the latest secret version at pipeline runtime. When a secret is rotated in Key Vault, the next pipeline run automatically picks up the new value without configuration changes. The AzureKeyVault@2 task also works but variable groups provide a reusable abstraction across multiple pipelines.
-
-2. An App Service application needs to access Azure SQL Database. What is the most secure authentication approach?
-
-   A) Store the SQL connection string with username and password in Key Vault
-   B) Use a system-assigned managed identity with Microsoft Entra authentication to SQL
-   C) Use a service principal with a client certificate stored in Key Vault
-   D) Use SQL contained database users with passwords rotated monthly
-
-   **Answer: B.** Using a managed identity with Microsoft Entra authentication eliminates all stored credentials. The App Service authenticates using its managed identity token, automatically managed by Azure. No secrets, passwords, or certificates need to be stored or rotated.
-
-3. Which Azure Key Vault RBAC role should be assigned to a CI/CD pipeline that needs to read secret values during deployment but must not create or delete secrets?
-
-   A) Key Vault Administrator
-   B) Key Vault Secrets Officer
-   C) Key Vault Secrets User
-   D) Key Vault Reader
-
-   **Answer: C.** Key Vault Secrets User allows reading secret values (get and list), which is what a pipeline needs. Key Vault Reader only reads metadata without values. Secrets Officer and Administrator provide unnecessary write access.
-
-4. Contoso uses Key Vault references (`@Microsoft.KeyVault(...)`) in App Service settings. What happens when a secret is rotated in Key Vault?
-
-   A) The App Service immediately picks up the new value
-   B) The App Service picks up the new value within 24 hours via background refresh
-   C) The App Service must be restarted to read the new value
-   D) The reference must be updated to specify the new secret version
-
-   **Answer: B.** Key Vault references in App Service are refreshed periodically (approximately every 24 hours). The app does not need a restart, and the reference resolves to the latest version automatically. For immediate refresh, you can trigger a settings update or restart the app.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso wants pipeline secrets to automatically reflect the latest version in Key Vault without pipeline changes. Which approach achieves this for Azure Pipelines?",
+    options: [
+      "Store secrets as pipeline variables and manually update them after each rotation",
+      "Use a variable group linked to Azure Key Vault",
+      "Use the AzureKeyVault@2 task with specific secret version IDs",
+      "Copy secrets to pipeline variables using a script task"
+    ],
+    correctIndex: 1,
+    explanation: "A variable group linked to Key Vault dynamically fetches the latest secret version at pipeline runtime. When a secret is rotated in Key Vault, the next pipeline run automatically picks up the new value without configuration changes. The AzureKeyVault@2 task also works but variable groups provide a reusable abstraction across multiple pipelines."
+  },
+  {
+    question: "An App Service application needs to access Azure SQL Database. What is the most secure authentication approach?",
+    options: [
+      "Store the SQL connection string with username and password in Key Vault",
+      "Use a system-assigned managed identity with Microsoft Entra authentication to SQL",
+      "Use a service principal with a client certificate stored in Key Vault",
+      "Use SQL contained database users with passwords rotated monthly"
+    ],
+    correctIndex: 1,
+    explanation: "Using a managed identity with Microsoft Entra authentication eliminates all stored credentials. The App Service authenticates using its managed identity token, automatically managed by Azure. No secrets, passwords, or certificates need to be stored or rotated."
+  },
+  {
+    question: "Which Azure Key Vault RBAC role should be assigned to a CI/CD pipeline that needs to read secret values during deployment but must not create or delete secrets?",
+    options: [
+      "Key Vault Administrator",
+      "Key Vault Secrets Officer",
+      "Key Vault Secrets User",
+      "Key Vault Reader"
+    ],
+    correctIndex: 2,
+    explanation: "Key Vault Secrets User allows reading secret values (get and list), which is what a pipeline needs. Key Vault Reader only reads metadata without values. Secrets Officer and Administrator provide unnecessary write access."
+  },
+  {
+    question: "Contoso uses Key Vault references ('@Microsoft.KeyVault(...)') in App Service settings. What happens when a secret is rotated in Key Vault?",
+    options: [
+      "The App Service immediately picks up the new value",
+      "The App Service picks up the new value within 24 hours via background refresh",
+      "The App Service must be restarted to read the new value",
+      "The reference must be updated to specify the new secret version"
+    ],
+    correctIndex: 1,
+    explanation: "Key Vault references in App Service are refreshed periodically (approximately every 24 hours). The app does not need a restart, and the reference resolves to the latest version automatically. For immediate refresh, you can trigger a settings update or restart the app."
+  }
+]} />
 
 ## Cleanup
 

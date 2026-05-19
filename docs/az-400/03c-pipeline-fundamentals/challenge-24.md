@@ -2,6 +2,8 @@
 sidebar_position: 6
 title: "Challenge 24: Checks and approvals"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 24: Checks and approvals
 
@@ -653,41 +655,52 @@ jobs:
 
 ## Knowledge check
 
-1. **In GitHub Actions, what happens when a workflow targets an environment that has required reviewers configured?**
-
-   A) The workflow fails immediately with a permissions error
-   B) The job pauses and waits for an authorized reviewer to approve before proceeding
-   C) The workflow skips the job and moves to the next one
-   D) GitHub automatically approves if the committer is a repository admin
-
-   **Answer: B** - When a job references an environment with required reviewers, the job enters a "Waiting" state and GitHub notifies the designated reviewers. The job does not proceed until at least the minimum number of required reviewers approve. The approval can be granted from the workflow run page in the GitHub UI. If not approved within 30 days, the run is automatically cancelled.
-
-2. **How does the `concurrency` key in GitHub Actions differ from Azure Pipelines' exclusive lock?**
-
-   A) They are identical in behavior
-   B) GitHub's `concurrency` with `cancel-in-progress: true` cancels queued runs, while Azure's exclusive lock with `runLatest` behaviour cancels older runs and only keeps the latest
-   C) GitHub's concurrency only applies to pull requests
-   D) Azure's exclusive lock only works with deployment jobs
-
-   **Answer: B** - Both provide mutual exclusion, but the cancelation behavior differs. In GitHub Actions, `cancel-in-progress: true` cancels the currently running workflow in favor of the new one. In Azure Pipelines, the exclusive lock with `runLatest` behavior cancels all older queued runs and only the latest proceeds. With `sequential` behavior in Azure Pipelines, runs queue and execute one at a time in order.
-
-3. **What is the purpose of a wait timer on a GitHub environment?**
-
-   A) It limits how long a deployment job can run
-   B) It enforces a mandatory delay between when the job is triggered and when it can start executing
-   C) It sets the timeout for reviewer approval
-   D) It controls the interval between retry attempts
-
-   **Answer: B** - The wait timer introduces a mandatory delay (in minutes) between when a job targeting the environment becomes ready and when it actually begins execution. This provides a "cool down" period during which the team can inspect the previous deployment or cancel the upcoming one. The timer runs after approval (if required reviewers are also configured).
-
-4. **In Azure Pipelines, which check type would you use to prevent deployments when the target application is experiencing an active incident?**
-
-   A) Manual approval
-   B) Business hours
-   C) Azure Monitor alerts
-   D) Exclusive lock
-
-   **Answer: C** - The Azure Monitor alerts check evaluates whether there are active alerts (at specified severity levels) on the target Azure resources. If active alerts exist matching the configured criteria (such as Sev0 or Sev1 alerts), the deployment is blocked until the alerts are resolved. This prevents deploying new code to a system that is already experiencing issues.
+<KnowledgeCheck questions={[
+  {
+    question: "In GitHub Actions, what happens when a workflow targets an environment that has required reviewers configured?",
+    options: [
+      "The workflow fails immediately with a permissions error",
+      "The job pauses and waits for an authorized reviewer to approve before proceeding",
+      "The workflow skips the job and moves to the next one",
+      "GitHub automatically approves if the committer is a repository admin"
+    ],
+    correctIndex: 1,
+    explanation: "When a job references an environment with required reviewers, the job enters a \"Waiting\" state and GitHub notifies the designated reviewers. The job does not proceed until at least the minimum number of required reviewers approve. The approval can be granted from the workflow run page in the GitHub UI. If not approved within 30 days, the run is automatically cancelled."
+  },
+  {
+    question: "How does the 'concurrency' key in GitHub Actions differ from Azure Pipelines' exclusive lock?",
+    options: [
+      "They are identical in behavior",
+      "GitHub's 'concurrency' with 'cancel-in-progress: true' cancels queued runs, while Azure's exclusive lock with 'runLatest' behaviour cancels older runs and only keeps the latest",
+      "GitHub's concurrency only applies to pull requests",
+      "Azure's exclusive lock only works with deployment jobs"
+    ],
+    correctIndex: 1,
+    explanation: "Both provide mutual exclusion, but the cancelation behavior differs. In GitHub Actions, cancel-in-progress: true cancels the currently running workflow in favor of the new one. In Azure Pipelines, the exclusive lock with runLatest behavior cancels all older queued runs and only the latest proceeds. With sequential behavior in Azure Pipelines, runs queue and execute one at a time in order."
+  },
+  {
+    question: "What is the purpose of a wait timer on a GitHub environment?",
+    options: [
+      "It limits how long a deployment job can run",
+      "It enforces a mandatory delay between when the job is triggered and when it can start executing",
+      "It sets the timeout for reviewer approval",
+      "It controls the interval between retry attempts"
+    ],
+    correctIndex: 1,
+    explanation: "The wait timer introduces a mandatory delay (in minutes) between when a job targeting the environment becomes ready and when it actually begins execution. This provides a \"cool down\" period during which the team can inspect the previous deployment or cancel the upcoming one. The timer runs after approval (if required reviewers are also configured)."
+  },
+  {
+    question: "In Azure Pipelines, which check type would you use to prevent deployments when the target application is experiencing an active incident?",
+    options: [
+      "Manual approval",
+      "Business hours",
+      "Azure Monitor alerts",
+      "Exclusive lock"
+    ],
+    correctIndex: 2,
+    explanation: "The Azure Monitor alerts check evaluates whether there are active alerts (at specified severity levels) on the target Azure resources. If active alerts exist matching the configured criteria (such as Sev0 or Sev1 alerts), the deployment is blocked until the alerts are resolved. This prevents deploying new code to a system that is already experiencing issues."
+  }
+]} />
 
 ## Cleanup
 

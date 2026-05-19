@@ -2,6 +2,8 @@
 sidebar_position: 6
 title: "Challenge 30: Hotfix paths and resiliency"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 30: Hotfix paths and resiliency
 
@@ -759,71 +761,52 @@ gh pr create \
 
 ## Knowledge check
 
-**Question 1:** Contoso's production payment service is down. The normal release pipeline takes 2 hours. A hotfix branch is created from the release tag. Which gates should be SKIPPED in the hotfix pipeline to reduce deployment time while maintaining safety?
-
-- A. Security scan, unit tests, and manual approval
-- B. Integration tests, progressive rollout rings, and full regression suite
-- C. All gates should be maintained regardless of urgency
-- D. Security scan and unit tests (only manual approval remains)
-
-<details>
-<summary>Show answer</summary>
-
-**B. Integration tests, progressive rollout rings, and full regression suite**
-
-For hotfixes, the pipeline should skip time-consuming but non-critical gates: integration tests, end-to-end tests, progressive rollout (rings), and full regression. However, security scans and critical unit tests should NEVER be skipped, as they catch vulnerabilities and verify the fix works. Manual approval can be reduced to a single on-call approver.
-
-</details>
-
-**Question 2:** A hotfix branch should be created from which source to ensure it only contains the minimal fix without unreleased changes?
-
-- A. The `main` branch (latest development code)
-- B. The release tag that introduced the bug (e.g., `release/2.4.0`)
-- C. The `develop` branch (next release candidate)
-- D. The previous release tag (e.g., `release/2.3.1`)
-
-<details>
-<summary>Show answer</summary>
-
-**B. The release tag that introduced the bug (e.g., `release/2.4.0`)**
-
-The hotfix branch should be created from the current production release tag. This ensures the fix is applied to exactly the code running in production without including unreleased features from `main` or `develop`. Creating from the previous release (v2.3.1) would revert all v2.4.0 changes, not just fix the bug.
-
-</details>
-
-**Question 3:** Contoso has three services with dependencies: Shared Library leads to API leads to Frontend. The pipeline deploys all three. What ensures the Frontend is not deployed before the API is ready?
-
-- A. Configure all deployments to run in parallel for speed
-- B. Use `dependsOn` in the pipeline to create explicit stage ordering
-- C. Deploy all services to the same App Service Plan
-- D. Use Azure Traffic Manager to hold frontend traffic
-
-<details>
-<summary>Show answer</summary>
-
-**B. Use `dependsOn` in the pipeline to create explicit stage ordering**
-
-The `dependsOn` property in Azure Pipelines (or `needs` in GitHub Actions) creates explicit execution ordering between stages or jobs. The Frontend deployment stage should depend on the Backend deployment stage, which depends on the Shared Library stage. This ensures each layer is deployed and healthy before the next layer begins.
-
-</details>
-
-**Question 4:** A deployment circuit breaker monitors the canary deployment and detects the error rate exceeding 5%. What should the circuit breaker do?
-
-- A. Increase the canary traffic percentage to get more data
-- B. Alert the team and wait for manual intervention
-- C. Immediately halt promotion and route all traffic back to the stable version
-- D. Restart the canary instances to clear transient errors
-
-<details>
-<summary>Show answer</summary>
-
-**C. Immediately halt promotion and route all traffic back to the stable version**
-
-A deployment circuit breaker should automatically halt the rollout and revert to the known-good state when failure thresholds are exceeded. This minimizes customer impact by immediately stopping the deployment without waiting for human intervention. The team can then investigate the issue offline and retry the deployment after fixing it.
-
-</details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso's production payment service is down. The normal release pipeline takes 2 hours. A hotfix branch is created from the release tag. Which gates should be SKIPPED in the hotfix pipeline to reduce deployment time while maintaining safety?",
+    options: [
+      "Security scan, unit tests, and manual approval",
+      "Integration tests, progressive rollout rings, and full regression suite",
+      "All gates should be maintained regardless of urgency",
+      "Security scan and unit tests (only manual approval remains)"
+    ],
+    correctIndex: 1,
+    explanation: "For hotfixes, the pipeline should skip time-consuming but non-critical gates: integration tests, end-to-end tests, progressive rollout (rings), and full regression. However, security scans and critical unit tests should NEVER be skipped, as they catch vulnerabilities and verify the fix works. Manual approval can be reduced to a single on-call approver."
+  },
+  {
+    question: "A hotfix branch should be created from which source to ensure it only contains the minimal fix without unreleased changes?",
+    options: [
+      "The 'main' branch (latest development code)",
+      "The release tag that introduced the bug (e.g., 'release/2.4.0')",
+      "The 'develop' branch (next release candidate)",
+      "The previous release tag (e.g., 'release/2.3.1')"
+    ],
+    correctIndex: 1,
+    explanation: "The hotfix branch should be created from the current production release tag. This ensures the fix is applied to exactly the code running in production without including unreleased features from main or develop. Creating from the previous release (v2.3.1) would revert all v2.4.0 changes, not just fix the bug."
+  },
+  {
+    question: "Contoso has three services with dependencies: Shared Library leads to API leads to Frontend. The pipeline deploys all three. What ensures the Frontend is not deployed before the API is ready?",
+    options: [
+      "Configure all deployments to run in parallel for speed",
+      "Use 'dependsOn' in the pipeline to create explicit stage ordering",
+      "Deploy all services to the same App Service Plan",
+      "Use Azure Traffic Manager to hold frontend traffic"
+    ],
+    correctIndex: 1,
+    explanation: "The dependsOn property in Azure Pipelines (or needs in GitHub Actions) creates explicit execution ordering between stages or jobs. The Frontend deployment stage should depend on the Backend deployment stage, which depends on the Shared Library stage. This ensures each layer is deployed and healthy before the next layer begins."
+  },
+  {
+    question: "A deployment circuit breaker monitors the canary deployment and detects the error rate exceeding 5%. What should the circuit breaker do?",
+    options: [
+      "Increase the canary traffic percentage to get more data",
+      "Alert the team and wait for manual intervention",
+      "Immediately halt promotion and route all traffic back to the stable version",
+      "Restart the canary instances to clear transient errors"
+    ],
+    correctIndex: 2,
+    explanation: "A deployment circuit breaker should automatically halt the rollout and revert to the known-good state when failure thresholds are exceeded. This minimizes customer impact by immediately stopping the deployment without waiting for human intervention. The team can then investigate the issue offline and retry the deployment after fixing it."
+  }
+]} />
 
 ## Cleanup
 

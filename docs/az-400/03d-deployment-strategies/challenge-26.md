@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 26: Rolling deployments and slot swaps"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 26: Rolling deployments and slot swaps
 
@@ -714,71 +716,52 @@ az webapp config appsettings set \
 
 ## Knowledge check
 
-**Question 1:** Contoso runs 4 instances of their web app on a VMSS and wants to perform a rolling deployment that updates one instance at a time. Which configuration ensures that no more than 25% of instances are unavailable during the update?
-
-- A. Set `maxBatchInstancePercent` to 25 in the VMSS rolling upgrade policy
-- B. Set the App Service scaling to a minimum of 3 instances
-- C. Configure the load balancer with a drain timeout of 25 seconds
-- D. Set `maxUnhealthyInstancePercent` to 75 in the VMSS rolling upgrade policy
-
-<details>
-<summary>Show answer</summary>
-
-**A. Set `maxBatchInstancePercent` to 25 in the VMSS rolling upgrade policy**
-
-The `maxBatchInstancePercent` parameter controls what percentage of instances can be upgraded simultaneously. Setting it to 25 means only 1 out of 4 instances (25%) will be upgraded at a time, ensuring 75% capacity is maintained throughout the deployment.
-
-</details>
-
-**Question 2:** Which App Service plan tiers support deployment slots? (Select the MINIMUM tier required)
-
-- A. Free (F1)
-- B. Basic (B1)
-- C. Standard (S1)
-- D. Premium (P1V2)
-
-<details>
-<summary>Show answer</summary>
-
-**C. Standard (S1)**
-
-Deployment slots are available starting from the Standard tier. The Free and Basic tiers do not support deployment slots. Standard allows up to 5 slots, Premium allows up to 20 slots.
-
-</details>
-
-**Question 3:** During a slot swap, which of the following settings moves WITH the application code to the target slot by default?
-
-- A. Connection strings marked as slot settings
-- B. App settings marked as slot settings
-- C. App settings NOT marked as slot settings
-- D. Custom domain bindings
-
-<details>
-<summary>Show answer</summary>
-
-**C. App settings NOT marked as slot settings**
-
-Settings that are NOT marked as "slot settings" (non-sticky) move with the application code during a swap. Slot-sticky settings remain in their respective slots. Custom domain bindings and connection strings marked as slot settings stay with their slot.
-
-</details>
-
-**Question 4:** Contoso's staging slot serves requests successfully, but after the swap to production, the first 100 requests fail with HTTP 503. What should be configured to prevent this?
-
-- A. Increase the App Service Plan instance count
-- B. Configure `WEBSITE_SWAP_WARMUP_PING_PATH` to a health endpoint on the staging slot
-- C. Enable Always On for the production slot
-- D. Reduce the DNS TTL for the custom domain
-
-<details>
-<summary>Show answer</summary>
-
-**B. Configure `WEBSITE_SWAP_WARMUP_PING_PATH` to a health endpoint on the staging slot**
-
-The `WEBSITE_SWAP_WARMUP_PING_PATH` setting tells Azure to send requests to the specified path on the staging slot before completing the swap. This ensures the application is fully initialized (caches loaded, connections established) before receiving production traffic. The swap will not complete until the warm-up path returns the expected status code.
-
-</details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso runs 4 instances of their web app on a VMSS and wants to perform a rolling deployment that updates one instance at a time. Which configuration ensures that no more than 25% of instances are unavailable during the update?",
+    options: [
+      "Set 'maxBatchInstancePercent' to 25 in the VMSS rolling upgrade policy",
+      "Set the App Service scaling to a minimum of 3 instances",
+      "Configure the load balancer with a drain timeout of 25 seconds",
+      "Set 'maxUnhealthyInstancePercent' to 75 in the VMSS rolling upgrade policy"
+    ],
+    correctIndex: 0,
+    explanation: "The maxBatchInstancePercent parameter controls what percentage of instances can be upgraded simultaneously. Setting it to 25 means only 1 out of 4 instances (25%) will be upgraded at a time, ensuring 75% capacity is maintained throughout the deployment."
+  },
+  {
+    question: "Which App Service plan tiers support deployment slots? (Select the MINIMUM tier required)",
+    options: [
+      "Free (F1)",
+      "Basic (B1)",
+      "Standard (S1)",
+      "Premium (P1V2)"
+    ],
+    correctIndex: 2,
+    explanation: "Deployment slots are available starting from the Standard tier. The Free and Basic tiers do not support deployment slots. Standard allows up to 5 slots, Premium allows up to 20 slots."
+  },
+  {
+    question: "During a slot swap, which of the following settings moves WITH the application code to the target slot by default?",
+    options: [
+      "Connection strings marked as slot settings",
+      "App settings marked as slot settings",
+      "App settings NOT marked as slot settings",
+      "Custom domain bindings"
+    ],
+    correctIndex: 2,
+    explanation: "Settings that are NOT marked as \"slot settings\" (non-sticky) move with the application code during a swap. Slot-sticky settings remain in their respective slots. Custom domain bindings and connection strings marked as slot settings stay with their slot."
+  },
+  {
+    question: "Contoso's staging slot serves requests successfully, but after the swap to production, the first 100 requests fail with HTTP 503. What should be configured to prevent this?",
+    options: [
+      "Increase the App Service Plan instance count",
+      "Configure 'WEBSITE_SWAP_WARMUP_PING_PATH' to a health endpoint on the staging slot",
+      "Enable Always On for the production slot",
+      "Reduce the DNS TTL for the custom domain"
+    ],
+    correctIndex: 1,
+    explanation: "The WEBSITE_SWAP_WARMUP_PING_PATH setting tells Azure to send requests to the specified path on the staging slot before completing the swap. This ensures the application is fully initialized (caches loaded, connections established) before receiving production traffic. The swap will not complete until the warm-up path returns the expected status code."
+  }
+]} />
 
 ## Cleanup
 

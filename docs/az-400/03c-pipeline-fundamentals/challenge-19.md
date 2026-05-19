@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 19: GitHub Actions fundamentals"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 19: GitHub Actions fundamentals
 
@@ -444,41 +446,52 @@ permissions:
 
 ## Knowledge check
 
-1. **In GitHub Actions, what is the correct way to pass data between jobs?**
-
-   A) Use environment variables set with `export`
-   B) Write to a shared file in the workspace
-   C) Use job outputs with `$GITHUB_OUTPUT` and the `needs` context
-   D) Use repository variables as intermediary storage
-
-   **Answer: C** - Job outputs are defined using `echo "key=value" >> $GITHUB_OUTPUT` in a step with an `id`, declared in the job's `outputs` section, and consumed in downstream jobs using `${{ needs.job_id.outputs.key }}`. Environment variables and workspace files do not persist between jobs since each job runs on a fresh runner.
-
-2. **Which trigger configuration allows manual workflow execution with custom parameters?**
-
-   A) `on: manual`
-   B) `on: workflow_dispatch` with `inputs`
-   C) `on: repository_dispatch` with `inputs`
-   D) `on: push` with `if: github.event.manual`
-
-   **Answer: B** - `workflow_dispatch` allows manual triggering from the GitHub UI or API with typed inputs (string, boolean, choice, environment). `repository_dispatch` is triggered via the API with a `client_payload` but does not provide the same UI-driven input experience.
-
-3. **What is the primary advantage of a composite action over a reusable workflow?**
-
-   A) Composite actions can use secrets directly
-   B) Composite actions run in the same job, sharing the workspace and runner
-   C) Composite actions support matrix strategies
-   D) Composite actions can trigger other workflows
-
-   **Answer: B** - Composite actions run as steps within the calling job, meaning they share the same workspace, environment variables, and runner. Reusable workflows run as a separate job (or set of jobs) with their own runner instance. This makes composite actions better for grouping related steps that need shared state.
-
-4. **Which `permissions` value is required for a workflow to push container images to GitHub Container Registry (ghcr.io)?**
-
-   A) `contents: write`
-   B) `packages: write`
-   C) `deployments: write`
-   D) `registry: write`
-
-   **Answer: B** - GHCR uses the `packages` permission scope. The workflow needs `packages: write` to push images and `packages: read` to pull them. When `permissions` is explicitly set, only the listed permissions are granted (principle of least privilege).
+<KnowledgeCheck questions={[
+  {
+    question: "In GitHub Actions, what is the correct way to pass data between jobs?",
+    options: [
+      "Use environment variables set with 'export'",
+      "Write to a shared file in the workspace",
+      "Use job outputs with '$GITHUB_OUTPUT' and the 'needs' context",
+      "Use repository variables as intermediary storage"
+    ],
+    correctIndex: 2,
+    explanation: "Job outputs are defined using echo \"key=value\" >> $GITHUB_OUTPUT in a step with an id, declared in the job's outputs section, and consumed in downstream jobs using $\{\{ needs.job_id.outputs.key \}\}. Environment variables and workspace files do not persist between jobs since each job runs on a fresh runner."
+  },
+  {
+    question: "Which trigger configuration allows manual workflow execution with custom parameters?",
+    options: [
+      "'on: manual'",
+      "'on: workflow_dispatch' with 'inputs'",
+      "'on: repository_dispatch' with 'inputs'",
+      "'on: push' with 'if: github.event.manual'"
+    ],
+    correctIndex: 1,
+    explanation: "workflow_dispatch allows manual triggering from the GitHub UI or API with typed inputs (string, boolean, choice, environment). repository_dispatch is triggered via the API with a client_payload but does not provide the same UI-driven input experience."
+  },
+  {
+    question: "What is the primary advantage of a composite action over a reusable workflow?",
+    options: [
+      "Composite actions can use secrets directly",
+      "Composite actions run in the same job, sharing the workspace and runner",
+      "Composite actions support matrix strategies",
+      "Composite actions can trigger other workflows"
+    ],
+    correctIndex: 1,
+    explanation: "Composite actions run as steps within the calling job, meaning they share the same workspace, environment variables, and runner. Reusable workflows run as a separate job (or set of jobs) with their own runner instance. This makes composite actions better for grouping related steps that need shared state."
+  },
+  {
+    question: "Which 'permissions' value is required for a workflow to push container images to GitHub Container Registry (ghcr.io)?",
+    options: [
+      "'contents: write'",
+      "'packages: write'",
+      "'deployments: write'",
+      "'registry: write'"
+    ],
+    correctIndex: 1,
+    explanation: "GHCR uses the packages permission scope. The workflow needs packages: write to push images and packages: read to pull them. When permissions is explicitly set, only the listed permissions are granted (principle of least privilege)."
+  }
+]} />
 
 ## Cleanup
 

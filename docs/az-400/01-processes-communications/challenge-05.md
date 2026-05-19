@@ -2,6 +2,8 @@
 sidebar_position: 5
 title: "Challenge 05: Documentation and collaboration"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 05: Documentation and collaboration
 
@@ -841,49 +843,52 @@ gh api repos/{owner}/{repo}/pages/builds --jq '.[0] | {status, error}'
 
 ## Knowledge check
 
-**Question 1:** What is the key difference between a provisioned wiki and a code wiki in Azure DevOps?
-
-A) Provisioned wikis support Markdown; code wikis do not  
-B) A provisioned wiki is managed by Azure DevOps internally; a code wiki is published from a Git repository folder and follows standard Git workflows  
-C) Code wikis are read-only; provisioned wikis allow editing  
-D) Provisioned wikis require a paid license; code wikis are free
-
-**Answer:** B - A provisioned wiki is stored in an internal Git repo managed by Azure DevOps with its own editor. A code wiki publishes content from a folder in your existing repository, meaning changes go through pull requests and code review like any other code change.
-
----
-
-**Question 2:** What is the advantage of using Mermaid diagrams over image-based diagrams (PNG/Visio) in documentation?
-
-A) Mermaid diagrams have better visual quality  
-B) Mermaid diagrams are text-based, so they can be version-controlled, diffed in PRs, and updated without external tools  
-C) Mermaid diagrams support more shapes than Visio  
-D) Mermaid diagrams are faster to render in browsers
-
-**Answer:** B - Mermaid's text-based format means diagrams are diffable in pull requests, can be searched, and require no external tooling. When architecture changes, the diagram diff shows exactly what changed, unlike binary image files.
-
----
-
-**Question 3:** How does release-drafter determine which category to place a pull request in?
-
-A) It analyzes the PR code changes automatically  
-B) It matches PR labels against category label configurations in the release-drafter.yml file  
-C) It reads the PR title prefix  
-D) It uses the milestone the PR is assigned to
-
-**Answer:** B - Release-drafter categorizes PRs by matching their labels against the `categories` configuration. Each category specifies which labels map to it. PRs without matching labels are either placed in a catch-all category or omitted.
-
----
-
-**Question 4:** What is the purpose of the `conventional-changelog` tool?
-
-A) It enforces commit message format at commit time  
-B) It generates a structured CHANGELOG.md file by parsing Conventional Commit messages from Git history  
-C) It validates that all commits reference work items  
-D) It automatically creates GitHub releases
-
-**Answer:** B - `conventional-changelog` reads the Git commit history, parses messages following the Conventional Commits format, and generates a structured CHANGELOG.md grouped by type (features, fixes, breaking changes) with links to commits.
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "What is the key difference between a provisioned wiki and a code wiki in Azure DevOps?",
+    options: [
+      "Provisioned wikis support Markdown; code wikis do not",
+      "A provisioned wiki is managed by Azure DevOps internally; a code wiki is published from a Git repository folder and follows standard Git workflows",
+      "Code wikis are read-only; provisioned wikis allow editing",
+      "Provisioned wikis require a paid license; code wikis are free"
+    ],
+    correctIndex: 1,
+    explanation: "A provisioned wiki is stored in an internal Git repo managed by Azure DevOps with its own editor. A code wiki publishes content from a folder in your existing repository, meaning changes go through pull requests and code review like any other code change."
+  },
+  {
+    question: "What is the advantage of using Mermaid diagrams over image-based diagrams (PNG/Visio) in documentation?",
+    options: [
+      "Mermaid diagrams have better visual quality",
+      "Mermaid diagrams are text-based, so they can be version-controlled, diffed in PRs, and updated without external tools",
+      "Mermaid diagrams support more shapes than Visio",
+      "Mermaid diagrams are faster to render in browsers"
+    ],
+    correctIndex: 1,
+    explanation: "Mermaid's text-based format means diagrams are diffable in pull requests, can be searched, and require no external tooling. When architecture changes, the diagram diff shows exactly what changed, unlike binary image files."
+  },
+  {
+    question: "How does release-drafter determine which category to place a pull request in?",
+    options: [
+      "It analyzes the PR code changes automatically",
+      "It matches PR labels against category label configurations in the release-drafter.yml file",
+      "It reads the PR title prefix",
+      "It uses the milestone the PR is assigned to"
+    ],
+    correctIndex: 1,
+    explanation: "Release-drafter categorizes PRs by matching their labels against the categories configuration. Each category specifies which labels map to it. PRs without matching labels are either placed in a catch-all category or omitted."
+  },
+  {
+    question: "What is the purpose of the 'conventional-changelog' tool?",
+    options: [
+      "It enforces commit message format at commit time",
+      "It generates a structured CHANGELOG.md file by parsing Conventional Commit messages from Git history",
+      "It validates that all commits reference work items",
+      "It automatically creates GitHub releases"
+    ],
+    correctIndex: 1,
+    explanation: "conventional-changelog reads the Git commit history, parses messages following the Conventional Commits format, and generates a structured CHANGELOG.md grouped by type (features, fixes, breaking changes) with links to commits."
+  }
+]} />
 
 ## Cleanup
 

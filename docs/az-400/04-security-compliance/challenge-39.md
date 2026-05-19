@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 39: Authentication and identity for DevOps"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 39: Authentication and identity for DevOps
 
@@ -297,41 +299,52 @@ az role assignment create \
 
 ## Knowledge check
 
-1. Which authentication method should you recommend for a pipeline running on a self-hosted Azure DevOps agent hosted on an Azure VM that needs to deploy to Azure resources?
-
-   A) Service principal with client secret stored in pipeline variables
-   B) User-assigned managed identity assigned to the VM
-   C) Personal access token
-   D) SSH key pair
-
-   **Answer: B.** A user-assigned managed identity eliminates the need to store and rotate secrets. Since the agent runs on an Azure VM, managed identity is available and is the most secure option. Service principals with secrets require rotation and risk exposure. PATs and SSH keys are for different authentication scenarios.
-
-2. A GitHub Actions workflow uses workload identity federation but fails with "AADSTS700024: Client assertion is not within its valid time range." What is the most likely cause?
-
-   A) The federated credential has expired
-   B) The system clock on the GitHub runner is significantly skewed
-   C) The GitHub token has been revoked
-   D) The Azure subscription has been suspended
-
-   **Answer: B.** This error indicates a time validation failure in the token exchange. While GitHub-hosted runners rarely have clock skew, this error points to timing issues in the OIDC token validation. Federated credentials do not have their own expiry separate from the app registration.
-
-3. When configuring workload identity federation for Azure Pipelines, what format should the `subject` claim use?
-
-   A) `repo:org/repo:ref:refs/heads/main`
-   B) `sc://organization/project/service-connection-name`
-   C) `pipeline://organization/project/pipeline-id`
-   D) `ado://organization/project/environment`
-
-   **Answer: B.** Azure DevOps uses the format `sc://organization/project/service-connection-name` for the subject claim in federated credentials. The `repo:` format is used by GitHub Actions. Azure Pipelines identifies itself through the service connection name.
-
-4. Contoso has three environments (dev, staging, production) and wants a single app registration with federated credentials that limit which GitHub branch can deploy to each environment. What is the correct approach?
-
-   A) Create three app registrations, one per environment
-   B) Create three federated credentials on the same app registration with different subject claims targeting different environments
-   C) Use a single federated credential with a wildcard subject
-   D) Create three managed identities
-
-   **Answer: B.** You can add multiple federated credentials to a single app registration, each with a different subject claim (for example, `repo:org/repo:environment:production` and `repo:org/repo:environment:staging`). This maintains a single identity while restricting which workflow context can obtain tokens for each environment. Wildcard subjects are not supported.
+<KnowledgeCheck questions={[
+  {
+    question: "Which authentication method should you recommend for a pipeline running on a self-hosted Azure DevOps agent hosted on an Azure VM that needs to deploy to Azure resources?",
+    options: [
+      "Service principal with client secret stored in pipeline variables",
+      "User-assigned managed identity assigned to the VM",
+      "Personal access token",
+      "SSH key pair"
+    ],
+    correctIndex: 1,
+    explanation: "A user-assigned managed identity eliminates the need to store and rotate secrets. Since the agent runs on an Azure VM, managed identity is available and is the most secure option. Service principals with secrets require rotation and risk exposure. PATs and SSH keys are for different authentication scenarios."
+  },
+  {
+    question: "A GitHub Actions workflow uses workload identity federation but fails with \"AADSTS700024: Client assertion is not within its valid time range.\" What is the most likely cause?",
+    options: [
+      "The federated credential has expired",
+      "The system clock on the GitHub runner is significantly skewed",
+      "The GitHub token has been revoked",
+      "The Azure subscription has been suspended"
+    ],
+    correctIndex: 1,
+    explanation: "This error indicates a time validation failure in the token exchange. While GitHub-hosted runners rarely have clock skew, this error points to timing issues in the OIDC token validation. Federated credentials do not have their own expiry separate from the app registration."
+  },
+  {
+    question: "When configuring workload identity federation for Azure Pipelines, what format should the 'subject' claim use?",
+    options: [
+      "'repo:org/repo:ref:refs/heads/main'",
+      "'sc://organization/project/service-connection-name'",
+      "'pipeline://organization/project/pipeline-id'",
+      "'ado://organization/project/environment'"
+    ],
+    correctIndex: 1,
+    explanation: "Azure DevOps uses the format sc://organization/project/service-connection-name for the subject claim in federated credentials. The repo: format is used by GitHub Actions. Azure Pipelines identifies itself through the service connection name."
+  },
+  {
+    question: "Contoso has three environments (dev, staging, production) and wants a single app registration with federated credentials that limit which GitHub branch can deploy to each environment. What is the correct approach?",
+    options: [
+      "Create three app registrations, one per environment",
+      "Create three federated credentials on the same app registration with different subject claims targeting different environments",
+      "Use a single federated credential with a wildcard subject",
+      "Create three managed identities"
+    ],
+    correctIndex: 1,
+    explanation: "You can add multiple federated credentials to a single app registration, each with a different subject claim (for example, repo:org/repo:environment:production and repo:org/repo:environment:staging). This maintains a single identity while restricting which workflow context can obtain tokens for each environment. Wildcard subjects are not supported."
+  }
+]} />
 
 ## Cleanup
 

@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: 'Challenge 10: Large file management'
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 10: Large file management
 
@@ -317,7 +319,6 @@ git fat status
 
 Comparison of LFS vs git-fat:
 
-```markdown
 | Feature              | Git LFS                          | git-fat                      |
 |----------------------|----------------------------------|------------------------------|
 | Backend storage      | GitHub/Azure DevOps LFS server   | S3, rsync, any remote store  |
@@ -328,7 +329,6 @@ Comparison of LFS vs git-fat:
 | Cost model           | Per-GB data packs                | S3 storage + transfer costs  |
 | CI integration       | Native (actions/checkout lfs)    | Custom scripts needed        |
 | Maintenance          | Provider-managed                 | Self-managed                 |
-```
 
 ### Task 7: Configure LFS file locking for binary files
 
@@ -480,69 +480,52 @@ git config lfs.url "https://lfs.contoso.internal/game-studio"
 
 ## Knowledge check
 
-**Question 1**: A repository uses Git LFS to track `*.psd` files. A new developer clones the repository with `GIT_LFS_SKIP_SMUDGE=1`. What will the `.psd` files contain in their working directory?
-
-- A) Empty files with zero bytes
-- B) Text pointer files containing the LFS object ID and file size
-- C) Corrupted binary data
-- D) The files will not exist in the working directory
-
-<details>
-<summary>Show answer</summary>
-
-**B) Text pointer files containing the LFS object ID and file size**
-
-When `GIT_LFS_SKIP_SMUDGE=1` is set, the LFS smudge filter is skipped during checkout. Instead of downloading the actual binary content from the LFS server, Git writes the LFS pointer file to disk. This pointer contains the LFS spec version, a SHA-256 OID of the actual content, and the file size. The developer can later run `git lfs pull` to download the actual content.
-
-</details>
-
-**Question 2**: After running `git lfs migrate import --include="*.fbx" --everything`, what must all other team members do?
-
-- A) Run `git lfs install` only
-- B) Run `git pull` to get the updated history
-- C) Re-clone the repository because history was rewritten
-- D) Delete their local `.fbx` files and run `git checkout`
-
-<details>
-<summary>Show answer</summary>
-
-**C) Re-clone the repository because history was rewritten**
-
-The `git lfs migrate import --everything` command rewrites the entire repository history, changing commit hashes for every commit that touched the migrated file types. This is similar to a `git filter-branch` or `git filter-repo` operation. Because all commit SHAs change, existing clones have incompatible history. Team members must delete their local clone and re-clone, or carefully use `git fetch` and `git reset --hard origin/main` (losing any local work).
-
-</details>
-
-**Question 3**: What is the primary advantage of git-fat over Git LFS?
-
-- A) Better performance for large files
-- B) Native integration with GitHub and Azure DevOps
-- C) Flexibility to use any storage backend (S3, rsync, custom servers) without depending on a hosting provider's LFS implementation
-- D) Built-in file locking for concurrent editing
-
-<details>
-<summary>Show answer</summary>
-
-**C) Flexibility to use any storage backend (S3, rsync, custom servers) without depending on a hosting provider's LFS implementation**
-
-git-fat allows teams to store large files on any storage backend they control (AWS S3, rsync servers, etc.) rather than relying on the hosting provider's LFS implementation and its associated quotas and costs. This is particularly useful for organizations with existing storage infrastructure or those who want to avoid per-GB bandwidth charges from GitHub or Azure DevOps LFS.
-
-</details>
-
-**Question 4**: A game artist locks `character.fbx` with `git lfs lock` and goes on vacation. Another artist needs to edit the file urgently. What is the correct approach?
-
-- A) Delete the file and recreate it to bypass the lock
-- B) Use `git lfs unlock --path="character.fbx" --force` (requires maintain or admin permission)
-- C) Disable LFS locking in the repository settings
-- D) Edit the file locally without pushing until the lock is released
-
-<details>
-<summary>Show answer</summary>
-
-**B) Use `git lfs unlock --path="character.fbx" --force` (requires maintain or admin permission)**
-
-The `--force` flag on `git lfs unlock` allows someone other than the lock owner to release the lock. This requires elevated permissions (maintain or admin role on the repository). This is the correct emergency procedure. The team should also establish a policy for lock duration and delegation, and consider using lock expiration if supported by their LFS server.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: ": A repository uses Git LFS to track '*.psd' files. A new developer clones the repository with 'GIT_LFS_SKIP_SMUDGE=1'. What will the '.psd' files contain in their working directory?",
+    options: [
+      "Empty files with zero bytes",
+      "Text pointer files containing the LFS object ID and file size",
+      "Corrupted binary data",
+      "The files will not exist in the working directory"
+    ],
+    correctIndex: 1,
+    explanation: "When GIT_LFS_SKIP_SMUDGE=1 is set, the LFS smudge filter is skipped during checkout. Instead of downloading the actual binary content from the LFS server, Git writes the LFS pointer file to disk. This pointer contains the LFS spec version, a SHA-256 OID of the actual content, and the file size. The developer can later run git lfs pull to download the actual content."
+  },
+  {
+    question: ": After running 'git lfs migrate import --include=\"*.fbx\" --everything', what must all other team members do?",
+    options: [
+      "Run 'git lfs install' only",
+      "Run 'git pull' to get the updated history",
+      "Re-clone the repository because history was rewritten",
+      "Delete their local '.fbx' files and run 'git checkout'"
+    ],
+    correctIndex: 2,
+    explanation: "The git lfs migrate import --everything command rewrites the entire repository history, changing commit hashes for every commit that touched the migrated file types. This is similar to a git filter-branch or git filter-repo operation. Because all commit SHAs change, existing clones have incompatible history. Team members must delete their local clone and re-clone, or carefully use git fetch and git reset --hard origin/main (losing any local work)."
+  },
+  {
+    question: ": What is the primary advantage of git-fat over Git LFS?",
+    options: [
+      "Better performance for large files",
+      "Native integration with GitHub and Azure DevOps",
+      "Flexibility to use any storage backend (S3, rsync, custom servers) without depending on a hosting provider's LFS implementation",
+      "Built-in file locking for concurrent editing"
+    ],
+    correctIndex: 2,
+    explanation: "git-fat allows teams to store large files on any storage backend they control (AWS S3, rsync servers, etc.) rather than relying on the hosting provider's LFS implementation and its associated quotas and costs. This is particularly useful for organizations with existing storage infrastructure or those who want to avoid per-GB bandwidth charges from GitHub or Azure DevOps LFS."
+  },
+  {
+    question: ": A game artist locks 'character.fbx' with 'git lfs lock' and goes on vacation. Another artist needs to edit the file urgently. What is the correct approach?",
+    options: [
+      "Delete the file and recreate it to bypass the lock",
+      "Use 'git lfs unlock --path=\"character.fbx\" --force' (requires maintain or admin permission)",
+      "Disable LFS locking in the repository settings",
+      "Edit the file locally without pushing until the lock is released"
+    ],
+    correctIndex: 1,
+    explanation: "The --force flag on git lfs unlock allows someone other than the lock owner to release the lock. This requires elevated permissions (maintain or admin role on the repository). This is the correct emergency procedure. The team should also establish a policy for lock duration and delegation, and consider using lock expiration if supported by their LFS server."
+  }
+]} />
 
 ## Cleanup
 

@@ -2,6 +2,8 @@
 sidebar_position: 1
 title: "Challenge 46: Azure Monitor integration with DevOps"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 46: Azure Monitor integration with DevOps
 
@@ -422,41 +424,52 @@ curl -X POST https://api.github.com/repos/contoso/webapp/dispatches \
 
 ## Knowledge check
 
-1. Contoso deploys 5 times daily and wants to immediately see the impact of each deployment on Application Insights performance charts. What should they configure?
-
-   A) Enable continuous profiling in Application Insights
-   B) Create deployment annotations via the Application Insights REST API after each deployment
-   C) Configure Application Insights to auto-detect deployments
-   D) Enable smart detection in Application Insights
-
-   **Answer: B.** Deployment annotations are vertical markers on Application Insights time-series charts that indicate when a deployment occurred. They must be explicitly created via the REST API or CLI during the pipeline deployment step. This allows visual correlation between deployments and metric changes.
-
-2. A release pipeline should not proceed to the production stage if Azure Monitor shows active critical alerts. Which feature provides this gating capability?
-
-   A) Branch policies
-   B) Environment approvals
-   C) Deployment gates with "Query Azure Monitor alerts" gate type
-   D) Pipeline triggers
-
-   **Answer: C.** Azure DevOps deployment gates can query Azure Monitor for active alerts and block pipeline progression until alerts are resolved. The "Query Azure Monitor alerts" gate type checks specified alert rules and only allows the stage to proceed when no matching alerts are in a "Fired" state.
-
-3. After a deployment, Contoso wants to automatically roll back if the error rate exceeds 5% within 10 minutes. What is the best architecture?
-
-   A) A developer monitors the dashboard and manually triggers rollback
-   B) An Azure Monitor alert triggers an action group webhook that invokes a rollback pipeline
-   C) Application Insights smart detection with email notifications
-   D) A scheduled pipeline that checks metrics every hour
-
-   **Answer: B.** An Azure Monitor alert with a metric condition (error rate > 5%) and a 10-minute evaluation window, connected to an action group that triggers a rollback pipeline via webhook, provides fully automated detection and response. Smart detection is useful but does not trigger automated actions, and scheduled checks are too slow.
-
-4. An Azure Monitor action group includes a webhook to trigger an Azure DevOps pipeline for rollback. The webhook fires but the pipeline does not start. What is the most likely cause?
-
-   A) The pipeline is disabled
-   B) The webhook URL requires authentication that the action group does not provide
-   C) Azure Monitor webhooks are rate-limited
-   D) The pipeline must be triggered manually
-
-   **Answer: B.** Azure DevOps pipeline REST API requires authentication (PAT or OAuth token). Azure Monitor action groups send webhook payloads without custom authentication headers. An intermediary (Azure Function or Logic App) is typically needed to receive the webhook and then authenticate to Azure DevOps to trigger the pipeline.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso deploys 5 times daily and wants to immediately see the impact of each deployment on Application Insights performance charts. What should they configure?",
+    options: [
+      "Enable continuous profiling in Application Insights",
+      "Create deployment annotations via the Application Insights REST API after each deployment",
+      "Configure Application Insights to auto-detect deployments",
+      "Enable smart detection in Application Insights"
+    ],
+    correctIndex: 1,
+    explanation: "Deployment annotations are vertical markers on Application Insights time-series charts that indicate when a deployment occurred. They must be explicitly created via the REST API or CLI during the pipeline deployment step. This allows visual correlation between deployments and metric changes."
+  },
+  {
+    question: "A release pipeline should not proceed to the production stage if Azure Monitor shows active critical alerts. Which feature provides this gating capability?",
+    options: [
+      "Branch policies",
+      "Environment approvals",
+      "Deployment gates with \"Query Azure Monitor alerts\" gate type",
+      "Pipeline triggers"
+    ],
+    correctIndex: 2,
+    explanation: "Azure DevOps deployment gates can query Azure Monitor for active alerts and block pipeline progression until alerts are resolved. The \"Query Azure Monitor alerts\" gate type checks specified alert rules and only allows the stage to proceed when no matching alerts are in a \"Fired\" state."
+  },
+  {
+    question: "After a deployment, Contoso wants to automatically roll back if the error rate exceeds 5% within 10 minutes. What is the best architecture?",
+    options: [
+      "A developer monitors the dashboard and manually triggers rollback",
+      "An Azure Monitor alert triggers an action group webhook that invokes a rollback pipeline",
+      "Application Insights smart detection with email notifications",
+      "A scheduled pipeline that checks metrics every hour"
+    ],
+    correctIndex: 1,
+    explanation: "An Azure Monitor alert with a metric condition (error rate > 5%) and a 10-minute evaluation window, connected to an action group that triggers a rollback pipeline via webhook, provides fully automated detection and response. Smart detection is useful but does not trigger automated actions, and scheduled checks are too slow."
+  },
+  {
+    question: "An Azure Monitor action group includes a webhook to trigger an Azure DevOps pipeline for rollback. The webhook fires but the pipeline does not start. What is the most likely cause?",
+    options: [
+      "The pipeline is disabled",
+      "The webhook URL requires authentication that the action group does not provide",
+      "Azure Monitor webhooks are rate-limited",
+      "The pipeline must be triggered manually"
+    ],
+    correctIndex: 1,
+    explanation: "Azure DevOps pipeline REST API requires authentication (PAT or OAuth token). Azure Monitor action groups send webhook payloads without custom authentication headers. An intermediary (Azure Function or Logic App) is typically needed to receive the webhook and then authenticate to Azure DevOps to trigger the pipeline."
+  }
+]} />
 
 ## Cleanup
 

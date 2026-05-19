@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 03: Source, bug, and quality traceability"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 03: Source, bug, and quality traceability
 
@@ -562,49 +564,52 @@ Automated PRs from Dependabot do not contain issue references.
 
 ## Knowledge check
 
-**Question 1:** What is the primary difference between `AB#1234` and `Fixes AB#1234` in a commit message?
-
-A) `AB#1234` only works in PR descriptions; `Fixes AB#1234` works in commits  
-B) `AB#1234` creates a link to the work item; `Fixes AB#1234` creates a link and transitions the work item state  
-C) They are identical in behavior  
-D) `AB#1234` links to Azure Boards; `Fixes AB#1234` links to GitHub Issues
-
-**Answer:** B - `AB#1234` creates an association link between the commit and the work item without changing its state. `Fixes AB#1234` additionally transitions the work item to the Resolved or Done state when the commit reaches the default branch.
-
----
-
-**Question 2:** Which component of Conventional Commits indicates a breaking change?
-
-A) Using the `breaking` type prefix  
-B) An exclamation mark after the type/scope and/or a `BREAKING CHANGE:` footer  
-C) Capitalizing the entire subject line  
-D) Adding `[BREAKING]` anywhere in the commit body
-
-**Answer:** B - Breaking changes are signaled by appending `!` after the type/scope (e.g., `feat(api)!:`) or by including a `BREAKING CHANGE:` footer in the commit message. Both trigger a major version bump in semantic versioning.
-
----
-
-**Question 3:** In a full traceability chain, what connects a merged PR to its deployed artifact?
-
-A) The PR merge commit SHA matches the build trigger commit, and the build produces a versioned artifact deployed to the environment  
-B) The developer manually tags the deployment with the PR number  
-C) Azure Boards automatically tracks deployments  
-D) The CODEOWNERS file maps PRs to deployments
-
-**Answer:** A - The merge commit SHA is the common identifier. The CI system builds from that SHA, produces an artifact tagged with the commit hash, and the deployment system records which SHA was deployed to each environment.
-
----
-
-**Question 4:** What is the purpose of `fetch-depth: 0` in a GitHub Actions checkout step when running commitlint?
-
-A) It downloads all branches for comparison  
-B) It fetches the complete Git history so commitlint can access all commits in the PR range  
-C) It enables shallow cloning for faster builds  
-D) It configures the checkout to include submodules
-
-**Answer:** B - By default, `actions/checkout` performs a shallow clone (depth 1). Commitlint needs access to all commits in the PR (from base to head) to validate each message, which requires the full history within that range.
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "What is the primary difference between 'AB#1234' and 'Fixes AB#1234' in a commit message?",
+    options: [
+      "'AB#1234' only works in PR descriptions; 'Fixes AB#1234' works in commits",
+      "'AB#1234' creates a link to the work item; 'Fixes AB#1234' creates a link and transitions the work item state",
+      "They are identical in behavior",
+      "'AB#1234' links to Azure Boards; 'Fixes AB#1234' links to GitHub Issues"
+    ],
+    correctIndex: 1,
+    explanation: "AB#1234 creates an association link between the commit and the work item without changing its state. Fixes AB#1234 additionally transitions the work item to the Resolved or Done state when the commit reaches the default branch."
+  },
+  {
+    question: "Which component of Conventional Commits indicates a breaking change?",
+    options: [
+      "Using the 'breaking' type prefix",
+      "An exclamation mark after the type/scope and/or a 'BREAKING CHANGE:' footer",
+      "Capitalizing the entire subject line",
+      "Adding '[BREAKING]' anywhere in the commit body"
+    ],
+    correctIndex: 1,
+    explanation: "Breaking changes are signaled by appending ! after the type/scope (e.g., feat(api)!:) or by including a BREAKING CHANGE: footer in the commit message. Both trigger a major version bump in semantic versioning."
+  },
+  {
+    question: "In a full traceability chain, what connects a merged PR to its deployed artifact?",
+    options: [
+      "The PR merge commit SHA matches the build trigger commit, and the build produces a versioned artifact deployed to the environment",
+      "The developer manually tags the deployment with the PR number",
+      "Azure Boards automatically tracks deployments",
+      "The CODEOWNERS file maps PRs to deployments"
+    ],
+    correctIndex: 0,
+    explanation: "The merge commit SHA is the common identifier. The CI system builds from that SHA, produces an artifact tagged with the commit hash, and the deployment system records which SHA was deployed to each environment."
+  },
+  {
+    question: "What is the purpose of 'fetch-depth: 0' in a GitHub Actions checkout step when running commitlint?",
+    options: [
+      "It downloads all branches for comparison",
+      "It fetches the complete Git history so commitlint can access all commits in the PR range",
+      "It enables shallow cloning for faster builds",
+      "It configures the checkout to include submodules"
+    ],
+    correctIndex: 1,
+    explanation: "By default, actions/checkout performs a shallow clone (depth 1). Commitlint needs access to all commits in the PR (from base to head) to validate each message, which requires the full history within that range."
+  }
+]} />
 
 ## Cleanup
 

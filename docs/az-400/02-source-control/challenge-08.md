@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: 'Challenge 08: Pull request workflows'
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 08: Pull request workflows
 
@@ -568,75 +570,52 @@ EOF
 
 ## Knowledge check
 
-**Question 1**: A repository has branch protection requiring 2 approving reviews and the `ci/test` status check. A developer pushes a new commit to their PR branch after receiving 2 approvals. What happens?
-
-- A) The PR can still be merged because it already has 2 approvals
-- B) The approvals are dismissed and the developer needs 2 new reviews
-- C) Only 1 new approval is needed since the previous reviewers saw most of the code
-- D) The PR is automatically closed and must be reopened
-
-<details>
-<summary>Show answer</summary>
-
-**B) The approvals are dismissed and the developer needs 2 new reviews**
-
-When "Dismiss stale pull request approvals when new commits are pushed" is enabled (configured in Task 1 with `dismiss_stale_reviews_on_push: true`), any new commits pushed to the PR branch automatically dismiss all existing approvals. This ensures reviewers approve the final version of the code, not an earlier version that may have changed.
-
-</details>
-
-**Question 2**: In Azure Repos, what is the effect of setting "Reset code reviewer votes when there are new changes" on a branch policy?
-
-- A) All reviewers are removed from the PR
-- B) Reviewer votes are reset to no vote, requiring re-approval
-- C) Only the votes of reviewers whose files changed are reset
-- D) The PR is moved back to draft status
-
-<details>
-<summary>Show answer</summary>
-
-**B) Reviewer votes are reset to no vote, requiring re-approval**
-
-This Azure Repos setting is equivalent to GitHub's "Dismiss stale reviews on push." When new changes are pushed to the source branch, all existing reviewer votes (Approve, Approve with suggestions, Wait for author, Reject) are reset to "No vote," requiring reviewers to re-evaluate and vote again on the updated code.
-
-</details>
-
-**Question 3**: A CODEOWNERS file contains these entries in order. Who is required to review a change to `/src/api/billing/invoice.ts`?
-
-```
-* @contoso/platform-team
-/src/api/ @contoso/backend-team
-/src/api/billing/ @contoso/billing-team @sarah-lead
-```
-
-- A) `@contoso/platform-team` only (first match wins)
-- B) `@contoso/backend-team` only (parent directory match)
-- C) `@contoso/billing-team` and `@sarah-lead` (last matching pattern wins)
-- D) All three teams and individuals listed
-
-<details>
-<summary>Show answer</summary>
-
-**C) `@contoso/billing-team` and `@sarah-lead` (last matching pattern wins)**
-
-CODEOWNERS uses a last-match-wins rule, similar to `.gitignore`. The file is evaluated from top to bottom, and the last matching pattern determines the code owners. Since `/src/api/billing/` matches the file path and appears after the other patterns, only `@contoso/billing-team` and `@sarah-lead` are assigned as required reviewers.
-
-</details>
-
-**Question 4**: What is the primary purpose of a merge queue in GitHub?
-
-- A) To limit the number of PRs that can be open at one time
-- B) To ensure PRs are merged in the order they were created
-- C) To batch-test multiple approved PRs together against main before merging, preventing broken builds from concurrent merges
-- D) To automatically resolve merge conflicts between competing PRs
-
-<details>
-<summary>Show answer</summary>
-
-**C) To batch-test multiple approved PRs together against main before merging, preventing broken builds from concurrent merges**
-
-A merge queue solves the "semantic conflict" problem where two PRs individually pass CI against main, but when both are merged, they break each other. The merge queue creates temporary merge groups that test PRs together, ensuring they are compatible before merging to main. If a group fails, the queue bisects to find the problematic PR and removes it.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: ": A repository has branch protection requiring 2 approving reviews and the 'ci/test' status check. A developer pushes a new commit to their PR branch after receiving 2 approvals. What happens?",
+    options: [
+      "The PR can still be merged because it already has 2 approvals",
+      "The approvals are dismissed and the developer needs 2 new reviews",
+      "Only 1 new approval is needed since the previous reviewers saw most of the code",
+      "The PR is automatically closed and must be reopened"
+    ],
+    correctIndex: 1,
+    explanation: "When \"Dismiss stale pull request approvals when new commits are pushed\" is enabled (configured in Task 1 with dismiss_stale_reviews_on_push: true), any new commits pushed to the PR branch automatically dismiss all existing approvals. This ensures reviewers approve the final version of the code, not an earlier version that may have changed."
+  },
+  {
+    question: ": In Azure Repos, what is the effect of setting \"Reset code reviewer votes when there are new changes\" on a branch policy?",
+    options: [
+      "All reviewers are removed from the PR",
+      "Reviewer votes are reset to no vote, requiring re-approval",
+      "Only the votes of reviewers whose files changed are reset",
+      "The PR is moved back to draft status"
+    ],
+    correctIndex: 1,
+    explanation: "This Azure Repos setting is equivalent to GitHub's \"Dismiss stale reviews on push.\" When new changes are pushed to the source branch, all existing reviewer votes (Approve, Approve with suggestions, Wait for author, Reject) are reset to \"No vote,\" requiring reviewers to re-evaluate and vote again on the updated code."
+  },
+  {
+    question: ": A CODEOWNERS file contains these entries in order. Who is required to review a change to '/src/api/billing/invoice.ts'?  ''' * @contoso/platform-team /src/api/ @contoso/backend-team /src/api/billing/ @contoso/billing-team @sarah-lead '''",
+    options: [
+      "'@contoso/platform-team' only (first match wins)",
+      "'@contoso/backend-team' only (parent directory match)",
+      "'@contoso/billing-team' and '@sarah-lead' (last matching pattern wins)",
+      "All three teams and individuals listed"
+    ],
+    correctIndex: 2,
+    explanation: "CODEOWNERS uses a last-match-wins rule, similar to .gitignore. The file is evaluated from top to bottom, and the last matching pattern determines the code owners. Since /src/api/billing/ matches the file path and appears after the other patterns, only @contoso/billing-team and @sarah-lead are assigned as required reviewers."
+  },
+  {
+    question: ": What is the primary purpose of a merge queue in GitHub?",
+    options: [
+      "To limit the number of PRs that can be open at one time",
+      "To ensure PRs are merged in the order they were created",
+      "To batch-test multiple approved PRs together against main before merging, preventing broken builds from concurrent merges",
+      "To automatically resolve merge conflicts between competing PRs"
+    ],
+    correctIndex: 2,
+    explanation: "A merge queue solves the \"semantic conflict\" problem where two PRs individually pass CI against main, but when both are merged, they break each other. The merge queue creates temporary merge groups that test PRs together, ensuring they are compatible before merging to main. If a group fails, the queue bisects to find the problematic PR and removes it."
+  }
+]} />
 
 ## Cleanup
 

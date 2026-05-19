@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 17: Quality and release gates"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 17: Quality and release gates
 
@@ -588,59 +590,52 @@ gh api orgs/contoso-ltd/teams/release-approvers/members --jq '.[].login'
 
 ## Knowledge check
 
-1. **In GitHub Actions, what is the relationship between `environment` protection rules and `needs` dependencies?**
-   - A. `needs` replaces environment protection; they cannot be used together
-   - B. The job must satisfy both `needs` (predecessor jobs succeed) and environment rules (approvals, wait timers) before executing
-   - C. Environment protection rules override `needs` dependencies entirely
-   - D. `needs` applies to jobs; environment protection applies only to workflows
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** Both constraints must be satisfied. The `needs` keyword ensures predecessor jobs complete successfully, while environment protection rules add additional gates (manual approvals, wait timers, required reviewers). The job only starts when all conditions are met.
-
-   </details>
-
-2. **In Azure Pipelines, what happens when a pre-deployment gate evaluation fails?**
-   - A. The deployment is cancelled immediately
-   - B. The gate is re-evaluated at the configured interval until it passes or times out
-   - C. The pipeline fails and must be manually restarted
-   - D. The gate result is ignored and deployment proceeds
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** Azure Pipelines gates use a polling model. When a gate evaluation returns a negative result, the system waits for the configured `period` (re-evaluation interval) and tries again. This continues until the gate passes or the `timeout` is reached, at which point the deployment fails.
-
-   </details>
-
-3. **Which GitHub Actions permission is required to upload SARIF files from a security scanner?**
-   - A. `contents: write`
-   - B. `security-events: write`
-   - C. `actions: write`
-   - D. `packages: write`
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** The `security-events: write` permission is required to upload SARIF (Static Analysis Results Interchange Format) files to GitHub's code scanning alerts. This enables results from tools like Trivy, CodeQL, or Microsoft Security DevOps to appear in the Security tab.
-
-   </details>
-
-4. **What is the primary risk of including deployment status checks in branch protection required checks?**
-   - A. Deployments run on every pull request, wasting resources
-   - B. A circular dependency where the PR cannot merge because it waits for a post-merge check
-   - C. Branch protection prevents the deployment from accessing secrets
-   - D. Required checks slow down the CI pipeline for all contributors
-
-   <details>
-   <summary>Show answer</summary>
-
-   **B.** If a deployment check only runs on the `main` branch (post-merge) but is listed as a required status check for merging to `main`, a deadlock occurs. The PR waits for a check that will never run until the PR merges. Only checks that execute on pull request events should be required.
-
-   </details>
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "In GitHub Actions, what is the relationship between 'environment' protection rules and 'needs' dependencies?",
+    options: [
+      "'needs' replaces environment protection; they cannot be used together",
+      "The job must satisfy both 'needs' (predecessor jobs succeed) and environment rules (approvals, wait timers) before executing",
+      "Environment protection rules override 'needs' dependencies entirely",
+      "'needs' applies to jobs; environment protection applies only to workflows"
+    ],
+    correctIndex: 1,
+    explanation: "Both constraints must be satisfied. The needs keyword ensures predecessor jobs complete successfully, while environment protection rules add additional gates (manual approvals, wait timers, required reviewers). The job only starts when all conditions are met."
+  },
+  {
+    question: "In Azure Pipelines, what happens when a pre-deployment gate evaluation fails?",
+    options: [
+      "The deployment is cancelled immediately",
+      "The gate is re-evaluated at the configured interval until it passes or times out",
+      "The pipeline fails and must be manually restarted",
+      "The gate result is ignored and deployment proceeds"
+    ],
+    correctIndex: 1,
+    explanation: "Azure Pipelines gates use a polling model. When a gate evaluation returns a negative result, the system waits for the configured period (re-evaluation interval) and tries again. This continues until the gate passes or the timeout is reached, at which point the deployment fails."
+  },
+  {
+    question: "Which GitHub Actions permission is required to upload SARIF files from a security scanner?",
+    options: [
+      "'contents: write'",
+      "'security-events: write'",
+      "'actions: write'",
+      "'packages: write'"
+    ],
+    correctIndex: 1,
+    explanation: "The security-events: write permission is required to upload SARIF (Static Analysis Results Interchange Format) files to GitHub's code scanning alerts. This enables results from tools like Trivy, CodeQL, or Microsoft Security DevOps to appear in the Security tab."
+  },
+  {
+    question: "What is the primary risk of including deployment status checks in branch protection required checks?",
+    options: [
+      "Deployments run on every pull request, wasting resources",
+      "A circular dependency where the PR cannot merge because it waits for a post-merge check",
+      "Branch protection prevents the deployment from accessing secrets",
+      "Required checks slow down the CI pipeline for all contributors"
+    ],
+    correctIndex: 1,
+    explanation: "If a deployment check only runs on the main branch (post-merge) but is listed as a required status check for merging to main, a deadlock occurs. The PR waits for a check that will never run until the PR merges. Only checks that execute on pull request events should be required."
+  }
+]} />
 
 ## Cleanup
 

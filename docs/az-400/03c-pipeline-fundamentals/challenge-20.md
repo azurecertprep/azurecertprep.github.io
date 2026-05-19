@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 20: Azure Pipelines YAML"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 20: Azure Pipelines YAML
 
@@ -643,41 +645,52 @@ stages:
 
 ## Knowledge check
 
-1. **What is the correct syntax to reference a Key Vault secret fetched by the AzureKeyVault@2 task?**
-
-   A) `$(keyVault.SecretName)`
-   B) `$(SecretName)`
-   C) `${{ variables.SecretName }}`
-   D) `$(secrets.SecretName)`
-
-   **Answer: B** - The AzureKeyVault@2 task maps Key Vault secrets directly to pipeline variables using the secret's name. If the Key Vault contains a secret called `SqlConnectionString`, it becomes available as `$(SqlConnectionString)` in subsequent steps. The task flattens the secret name to a variable name directly.
-
-2. **How do you pass output variables between stages in Azure Pipelines YAML?**
-
-   A) Use `##vso[task.setvariable]` with `isOutput=true` and reference via `stageDependencies`
-   B) Use `echo "key=value" >> $PIPELINE_OUTPUT`
-   C) Write to a shared file in the artifact staging directory
-   D) Use variable groups to store values at runtime
-
-   **Answer: A** - Cross-stage variable sharing requires setting an output variable with `isOutput=true` and a named step, then referencing it in the downstream stage using the `stageDependencies.StageName.JobName.outputs['stepName.variableName']` expression. This is a compile-time expression using `$[ ]` syntax.
-
-3. **What is the key difference between `${{ }}` and `$[ ]` expressions in Azure Pipelines?**
-
-   A) `${{ }}` is for templates and `$[ ]` is for variables
-   B) `${{ }}` is evaluated at compile time (template expansion) and `$[ ]` is evaluated at runtime
-   C) `${{ }}` is for YAML pipelines and `$[ ]` is for classic pipelines
-   D) There is no difference; they are interchangeable
-
-   **Answer: B** - `${{ }}` expressions are evaluated during template expansion before the pipeline runs (compile time). They can include or exclude entire steps, jobs, or stages. `$[ ]` expressions are evaluated at runtime and can access runtime values like output variables from previous jobs or stages. `$( )` is also runtime but used for macro expansion of variables.
-
-4. **When using a `deployment` job with `strategy: runOnce`, what does the `environment` property enable?**
-
-   A) It automatically provisions Azure resources
-   B) It provides deployment history, manual approvals, and checks configured on that environment
-   C) It sets environment variables for the job
-   D) It determines which variable group to use
-
-   **Answer: B** - The `environment` property in a deployment job links the deployment to an Azure DevOps environment resource. This enables deployment history tracking, manual approval gates, exclusive locks, and other checks configured on the environment in Azure DevOps. It does not provision resources or set variables automatically.
+<KnowledgeCheck questions={[
+  {
+    question: "What is the correct syntax to reference a Key Vault secret fetched by the AzureKeyVault@2 task?",
+    options: [
+      "'$(keyVault.SecretName)'",
+      "'$(SecretName)'",
+      "'$\{\{ variables.SecretName \}\}'",
+      "'$(secrets.SecretName)'"
+    ],
+    correctIndex: 1,
+    explanation: "The AzureKeyVault@2 task maps Key Vault secrets directly to pipeline variables using the secret's name. If the Key Vault contains a secret called SqlConnectionString, it becomes available as $(SqlConnectionString) in subsequent steps. The task flattens the secret name to a variable name directly."
+  },
+  {
+    question: "How do you pass output variables between stages in Azure Pipelines YAML?",
+    options: [
+      "Use '##vso[task.setvariable]' with 'isOutput=true' and reference via 'stageDependencies'",
+      "Use 'echo \"key=value\" >> $PIPELINE_OUTPUT'",
+      "Write to a shared file in the artifact staging directory",
+      "Use variable groups to store values at runtime"
+    ],
+    correctIndex: 0,
+    explanation: "Cross-stage variable sharing requires setting an output variable with isOutput=true and a named step, then referencing it in the downstream stage using the stageDependencies.StageName.JobName.outputs['stepName.variableName'] expression. This is a compile-time expression using $[ ] syntax."
+  },
+  {
+    question: "What is the key difference between '$\{\{ \}\}' and '$[ ]' expressions in Azure Pipelines?",
+    options: [
+      "'$\{\{ \}\}' is for templates and '$[ ]' is for variables",
+      "'$\{\{ \}\}' is evaluated at compile time (template expansion) and '$[ ]' is evaluated at runtime",
+      "'$\{\{ \}\}' is for YAML pipelines and '$[ ]' is for classic pipelines",
+      "There is no difference; they are interchangeable"
+    ],
+    correctIndex: 1,
+    explanation: "$\{\{ \}\} expressions are evaluated during template expansion before the pipeline runs (compile time). They can include or exclude entire steps, jobs, or stages. $[ ] expressions are evaluated at runtime and can access runtime values like output variables from previous jobs or stages. $( ) is also runtime but used for macro expansion of variables."
+  },
+  {
+    question: "When using a 'deployment' job with 'strategy: runOnce', what does the 'environment' property enable?",
+    options: [
+      "It automatically provisions Azure resources",
+      "It provides deployment history, manual approvals, and checks configured on that environment",
+      "It sets environment variables for the job",
+      "It determines which variable group to use"
+    ],
+    correctIndex: 1,
+    explanation: "The environment property in a deployment job links the deployment to an Azure DevOps environment resource. This enables deployment history tracking, manual approval gates, exclusive locks, and other checks configured on the environment in Azure DevOps. It does not provision resources or set variables automatically."
+  }
+]} />
 
 ## Cleanup
 

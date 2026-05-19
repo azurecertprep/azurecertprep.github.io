@@ -2,6 +2,8 @@
 sidebar_position: 3
 title: "Challenge 15: Dependency management and vulnerability scanning"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 15: Dependency management and vulnerability scanning
 
@@ -465,42 +467,52 @@ This ensures major version bumps appear as individual PRs that are easy to ident
 
 ## Knowledge check
 
-1. A Dependabot configuration has `schedule.interval: "weekly"` and `open-pull-requests-limit: 5`. What happens when there are 8 outdated dependencies?
-   - A) Dependabot opens 8 PRs simultaneously
-   - B) Dependabot opens 5 PRs and queues the remaining 3 for the next cycle
-   - C) Dependabot opens 5 PRs and ignores the remaining 3 permanently
-   - D) The configuration is invalid and Dependabot will not run
-
-2. Which GitHub Actions action blocks PR merging when a new dependency introduces a known vulnerability?
-   - A) actions/codeql-action
-   - B) actions/dependency-review-action
-   - C) github/dependabot-action
-   - D) actions/security-scan
-
-3. In NuGet package source mapping, what happens if a package matches no configured pattern?
-   - A) It is downloaded from all configured sources
-   - B) The restore fails with an error
-   - C) It falls back to nuget.org automatically
-   - D) It uses the first source in the list
-
-4. A team wants to automatically remediate critical CVEs but manually review all other dependency updates. Which Dependabot configuration achieves this?
-   - A) Set `schedule.interval: "daily"` with `open-pull-requests-limit: 1`
-   - B) Enable Dependabot security updates (automatic) and configure version updates with `ignore` rules for non-critical
-   - C) Set `fail-on-severity: critical` in the dependency review action
-   - D) Configure `groups` to batch all non-critical updates
-
-<details>
-<summary>Answers</summary>
-
-1. **B** - When the number of outdated dependencies exceeds the `open-pull-requests-limit`, Dependabot opens PRs up to the limit and queues the remaining updates. They will be opened as existing PRs are merged or closed, or on the next scheduled run if capacity is available.
-
-2. **B** - The `actions/dependency-review-action` is purpose-built for pull request dependency analysis. It compares the dependency changes in a PR against known vulnerability databases and can block merging based on severity thresholds and license policies.
-
-3. **B** - When NuGet package source mapping is configured and a package matches no pattern, the restore fails. This is a security feature that prevents unintended package sources from being used. You must explicitly map every package pattern to an approved source.
-
-4. **B** - Dependabot has two independent features: security updates (triggered immediately by CVE publications, always automatic) and version updates (scheduled, configurable). Enabling security updates handles critical CVEs automatically, while version update configuration controls routine dependency freshness.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: "A Dependabot configuration has 'schedule.interval: \"weekly\"' and 'open-pull-requests-limit: 5'. What happens when there are 8 outdated dependencies?",
+    options: [
+      "Dependabot opens 8 PRs simultaneously",
+      "Dependabot opens 5 PRs and queues the remaining 3 for the next cycle",
+      "Dependabot opens 5 PRs and ignores the remaining 3 permanently",
+      "The configuration is invalid and Dependabot will not run"
+    ],
+    correctIndex: 1,
+    explanation: "When the number of outdated dependencies exceeds the open-pull-requests-limit, Dependabot opens PRs up to the limit and queues the remaining updates. They will be opened as existing PRs are merged or closed, or on the next scheduled run if capacity is available."
+  },
+  {
+    question: "Which GitHub Actions action blocks PR merging when a new dependency introduces a known vulnerability?",
+    options: [
+      "actions/codeql-action",
+      "actions/dependency-review-action",
+      "github/dependabot-action",
+      "actions/security-scan"
+    ],
+    correctIndex: 1,
+    explanation: "The actions/dependency-review-action is purpose-built for pull request dependency analysis. It compares the dependency changes in a PR against known vulnerability databases and can block merging based on severity thresholds and license policies."
+  },
+  {
+    question: "In NuGet package source mapping, what happens if a package matches no configured pattern?",
+    options: [
+      "It is downloaded from all configured sources",
+      "The restore fails with an error",
+      "It falls back to nuget.org automatically",
+      "It uses the first source in the list"
+    ],
+    correctIndex: 1,
+    explanation: "When NuGet package source mapping is configured and a package matches no pattern, the restore fails. This is a security feature that prevents unintended package sources from being used. You must explicitly map every package pattern to an approved source."
+  },
+  {
+    question: "A team wants to automatically remediate critical CVEs but manually review all other dependency updates. Which Dependabot configuration achieves this?",
+    options: [
+      "Set 'schedule.interval: \"daily\"' with 'open-pull-requests-limit: 1'",
+      "Enable Dependabot security updates (automatic) and configure version updates with 'ignore' rules for non-critical",
+      "Set 'fail-on-severity: critical' in the dependency review action",
+      "Configure 'groups' to batch all non-critical updates"
+    ],
+    correctIndex: 1,
+    explanation: "Dependabot has two independent features: security updates (triggered immediately by CVE publications, always automatic) and version updates (scheduled, configurable). Enabling security updates handles critical CVEs automatically, while version update configuration controls routine dependency freshness."
+  }
+]} />
 
 ## Cleanup
 

@@ -2,6 +2,8 @@
 sidebar_position: 5
 title: "Challenge 38: End-to-end pipeline capstone"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 38: End-to-end pipeline capstone
 
@@ -920,41 +922,52 @@ Production deployment reports success but users see the old version. The slot sw
 
 ## Knowledge check
 
-1. **In a multi-stage pipeline with parallel test shards, how should test coverage be aggregated?**
-
-   A) Use the highest coverage value from any single shard
-   B) Merge coverage JSON from all shards using a tool like nyc merge, then generate a combined report
-   C) Average the coverage percentages from each shard
-   D) Only measure coverage on the final shard that runs last
-
-   **Answer: B** - Each shard only runs a subset of tests and covers different code paths. The individual coverage reports are incomplete. They must be merged (using nyc merge, istanbul merge, or similar) to produce an accurate total coverage picture. Then the combined report is checked against the threshold. Averaging shard percentages would be incorrect because shards may overlap in coverage.
-
-2. **Why does the pipeline deploy the container image to the staging slot before swapping to production?**
-
-   A) The staging slot is cheaper to run than the production slot
-   B) It enables zero-downtime deployment: the new version warms up in the staging slot before receiving production traffic via swap
-   C) Azure requires all deployments to go through a staging slot first
-   D) The staging slot has more lenient health checks
-
-   **Answer: B** - Blue-green deployment via slot swapping ensures zero downtime. The new version is deployed to the staging slot where it starts up, loads caches, and warms JIT compilers without affecting production users. Only after the staging slot is healthy does the swap redirect traffic. If the new version fails, swapping back is instantaneous since the old version is still running in the now-staging slot.
-
-3. **What is the purpose of the Application Insights deployment annotation in the pipeline?**
-
-   A) It triggers automatic rollback if Application Insights detects errors
-   B) It creates a visual marker on metrics charts correlating deployments with changes in application behavior
-   C) It configures Application Insights sampling rate for the new version
-   D) It sends a notification to the development team about the deployment
-
-   **Answer: B** - Deployment annotations create vertical markers on Application Insights telemetry charts (response times, error rates, request volumes). This makes it immediately visible when a deployment correlates with a change in application behavior, helping teams quickly determine if a deployment caused a regression or improvement.
-
-4. **In this capstone pipeline, what prevents a broken commit from reaching production?**
-
-   A) Only the manual approval gate before production
-   B) Multiple layers: lint, type check, unit tests with coverage gate, integration tests, security scan, IaC validation, staging smoke tests, and manual approval
-   C) The Dockerfile health check
-   D) Branch protection rules alone
-
-   **Answer: B** - Defense in depth is applied: code quality (lint + type check), correctness (unit tests with 80% coverage minimum), integration validity (integration tests), security (npm audit + Trivy), infrastructure validity (Bicep lint + validate + what-if), deployment verification (staging smoke tests), and human judgment (manual approval). Each layer catches different categories of problems, and all must pass before production receives the change.
+<KnowledgeCheck questions={[
+  {
+    question: "In a multi-stage pipeline with parallel test shards, how should test coverage be aggregated?",
+    options: [
+      "Use the highest coverage value from any single shard",
+      "Merge coverage JSON from all shards using a tool like nyc merge, then generate a combined report",
+      "Average the coverage percentages from each shard",
+      "Only measure coverage on the final shard that runs last"
+    ],
+    correctIndex: 1,
+    explanation: "Each shard only runs a subset of tests and covers different code paths. The individual coverage reports are incomplete. They must be merged (using nyc merge, istanbul merge, or similar) to produce an accurate total coverage picture. Then the combined report is checked against the threshold. Averaging shard percentages would be incorrect because shards may overlap in coverage."
+  },
+  {
+    question: "Why does the pipeline deploy the container image to the staging slot before swapping to production?",
+    options: [
+      "The staging slot is cheaper to run than the production slot",
+      "It enables zero-downtime deployment: the new version warms up in the staging slot before receiving production traffic via swap",
+      "Azure requires all deployments to go through a staging slot first",
+      "The staging slot has more lenient health checks"
+    ],
+    correctIndex: 1,
+    explanation: "Blue-green deployment via slot swapping ensures zero downtime. The new version is deployed to the staging slot where it starts up, loads caches, and warms JIT compilers without affecting production users. Only after the staging slot is healthy does the swap redirect traffic. If the new version fails, swapping back is instantaneous since the old version is still running in the now-staging slot."
+  },
+  {
+    question: "What is the purpose of the Application Insights deployment annotation in the pipeline?",
+    options: [
+      "It triggers automatic rollback if Application Insights detects errors",
+      "It creates a visual marker on metrics charts correlating deployments with changes in application behavior",
+      "It configures Application Insights sampling rate for the new version",
+      "It sends a notification to the development team about the deployment"
+    ],
+    correctIndex: 1,
+    explanation: "Deployment annotations create vertical markers on Application Insights telemetry charts (response times, error rates, request volumes). This makes it immediately visible when a deployment correlates with a change in application behavior, helping teams quickly determine if a deployment caused a regression or improvement."
+  },
+  {
+    question: "In this capstone pipeline, what prevents a broken commit from reaching production?",
+    options: [
+      "Only the manual approval gate before production",
+      "Multiple layers: lint, type check, unit tests with coverage gate, integration tests, security scan, IaC validation, staging smoke tests, and manual approval",
+      "The Dockerfile health check",
+      "Branch protection rules alone"
+    ],
+    correctIndex: 1,
+    explanation: "Defense in depth is applied: code quality (lint + type check), correctness (unit tests with 80% coverage minimum), integration validity (integration tests), security (npm audit + Trivy), infrastructure validity (Bicep lint + validate + what-if), deployment verification (staging smoke tests), and human judgment (manual approval). Each layer catches different categories of problems, and all must pass before production receives the change."
+  }
+]} />
 
 ## Cleanup
 

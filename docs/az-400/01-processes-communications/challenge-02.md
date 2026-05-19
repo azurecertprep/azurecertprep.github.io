@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 02: Feedback cycles and work tracking"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 02: Feedback cycles and work tracking
 
@@ -673,49 +675,52 @@ gh api orgs/{org}/teams/backend-team/repos --jq '.[].name'
 
 ## Knowledge check
 
-**Question 1:** In GitHub Projects v2, what is the difference between a view and a field?
-
-A) Views are for admins only; fields are visible to everyone  
-B) Fields define the data stored on each item; views define how items are displayed and filtered  
-C) Views are permanent; fields can be changed  
-D) Fields only apply to issues; views apply to pull requests
-
-**Answer:** B - Fields are custom metadata (priority, sprint, story points) attached to each project item. Views are saved configurations that define layout (table, board, roadmap), grouping, filtering, and sorting of those items.
-
----
-
-**Question 2:** Which syntax in a PR description will automatically transition an Azure Boards work item to the resolved/closed state when the PR merges?
-
-A) `AB#1234`  
-B) `Linked AB#1234`  
-C) `Fixes AB#1234`  
-D) `Closes AB#1234`
-
-**Answer:** C - The `Fixes AB#1234` keyword triggers state transition. Using just `AB#1234` creates a link without transitioning. The `Fixes` keyword is the required trigger.
-
----
-
-**Question 3:** What is the purpose of the CODEOWNERS file in a GitHub repository?
-
-A) It restricts who can clone the repository  
-B) It automatically assigns reviewers to PRs based on which files are modified  
-C) It defines who can merge pull requests  
-D) It configures repository access permissions
-
-**Answer:** B - CODEOWNERS maps file paths to teams or individuals who are automatically requested as reviewers when those files change in a PR. Combined with "require CODEOWNER review" in branch protection, it enforces domain expertise sign-off.
-
----
-
-**Question 4:** When configuring Azure Boards iteration paths for sprint planning, what does the `@CurrentIteration` macro do in a query?
-
-A) It returns work items from all past and current iterations  
-B) It dynamically resolves to the iteration that contains today's date based on the team context  
-C) It shows only items in the next upcoming iteration  
-D) It returns the iteration with the most work items
-
-**Answer:** B - `@CurrentIteration` is a dynamic macro that resolves to whichever iteration path contains the current date for the team's configured iteration schedule. This means dashboard queries automatically shift to the active sprint without manual updates.
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "In GitHub Projects v2, what is the difference between a view and a field?",
+    options: [
+      "Views are for admins only; fields are visible to everyone",
+      "Fields define the data stored on each item; views define how items are displayed and filtered",
+      "Views are permanent; fields can be changed",
+      "Fields only apply to issues; views apply to pull requests"
+    ],
+    correctIndex: 1,
+    explanation: "Fields are custom metadata (priority, sprint, story points) attached to each project item. Views are saved configurations that define layout (table, board, roadmap), grouping, filtering, and sorting of those items."
+  },
+  {
+    question: "Which syntax in a PR description will automatically transition an Azure Boards work item to the resolved/closed state when the PR merges?",
+    options: [
+      "'AB#1234'",
+      "'Linked AB#1234'",
+      "'Fixes AB#1234'",
+      "'Closes AB#1234'"
+    ],
+    correctIndex: 2,
+    explanation: "The Fixes AB#1234 keyword triggers state transition. Using just AB#1234 creates a link without transitioning. The Fixes keyword is the required trigger."
+  },
+  {
+    question: "What is the purpose of the CODEOWNERS file in a GitHub repository?",
+    options: [
+      "It restricts who can clone the repository",
+      "It automatically assigns reviewers to PRs based on which files are modified",
+      "It defines who can merge pull requests",
+      "It configures repository access permissions"
+    ],
+    correctIndex: 1,
+    explanation: "CODEOWNERS maps file paths to teams or individuals who are automatically requested as reviewers when those files change in a PR. Combined with \"require CODEOWNER review\" in branch protection, it enforces domain expertise sign-off."
+  },
+  {
+    question: "When configuring Azure Boards iteration paths for sprint planning, what does the '@CurrentIteration' macro do in a query?",
+    options: [
+      "It returns work items from all past and current iterations",
+      "It dynamically resolves to the iteration that contains today's date based on the team context",
+      "It shows only items in the next upcoming iteration",
+      "It returns the iteration with the most work items"
+    ],
+    correctIndex: 1,
+    explanation: "@CurrentIteration is a dynamic macro that resolves to whichever iteration path contains the current date for the team's configured iteration schedule. This means dashboard queries automatically shift to the active sprint without manual updates."
+  }
+]} />
 
 ## Cleanup
 

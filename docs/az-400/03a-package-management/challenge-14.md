@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 14: Versioning strategies"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 14: Versioning strategies
 
@@ -434,42 +436,52 @@ This avoids the race entirely because each commit produces a distinct version.
 
 ## Knowledge check
 
-1. According to SemVer, which version has the highest precedence?
-   - A) 1.0.0-alpha
-   - B) 1.0.0-beta.2
-   - C) 1.0.0-rc.1
-   - D) 1.0.0
-
-2. A team releases their internal API gateway monthly and wants their version to communicate "when" rather than "what changed." Which strategy should they use?
-   - A) SemVer with pre-release tags
-   - B) CalVer with YYYY.MM format
-   - C) Auto-incrementing build numbers
-   - D) Git commit SHA as version
-
-3. In Azure Pipelines, which expression provides an atomic auto-incrementing integer that prevents version collisions between parallel runs?
-   - A) `$(Build.BuildId)`
-   - B) `$[counter(variables['prefix'], 0)]`
-   - C) `$(Rev:r)`
-   - D) `$(System.JobAttempt)`
-
-4. A library tagged `2.1.0` receives two changes: a backward-compatible new method and a bug fix. What should the next version be?
-   - A) 2.1.1
-   - B) 2.2.0
-   - C) 3.0.0
-   - D) 2.1.0-patch.1
-
-<details>
-<summary>Answers</summary>
-
-1. **D** - A release version always has higher precedence than any pre-release version with the same MAJOR.MINOR.PATCH. Pre-release versions indicate instability. The order is: alpha < beta < rc < release.
-
-2. **B** - CalVer with YYYY.MM format communicates the release date directly in the version string. This is ideal for services on a time-based release cadence where deployment timing matters more than backward compatibility signaling.
-
-3. **B** - The `counter()` expression in Azure Pipelines provides an atomic, auto-incrementing integer scoped to a prefix. It is guaranteed to produce unique values even when multiple pipeline runs execute concurrently. `$(Build.BuildId)` is unique but not sequential per package.
-
-4. **B** - When changes include a new backward-compatible feature (new method), the MINOR version increments. The bug fix would normally be a PATCH increment, but since MINOR is being bumped, the patch resets to 0. The result is 2.2.0.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: "According to SemVer, which version has the highest precedence?",
+    options: [
+      "1.0.0-alpha",
+      "1.0.0-beta.2",
+      "1.0.0-rc.1",
+      "1.0.0"
+    ],
+    correctIndex: 3,
+    explanation: "A release version always has higher precedence than any pre-release version with the same MAJOR.MINOR.PATCH. Pre-release versions indicate instability. The order is: alpha < beta < rc < release."
+  },
+  {
+    question: "A team releases their internal API gateway monthly and wants their version to communicate \"when\" rather than \"what changed.\" Which strategy should they use?",
+    options: [
+      "SemVer with pre-release tags",
+      "CalVer with YYYY.MM format",
+      "Auto-incrementing build numbers",
+      "Git commit SHA as version"
+    ],
+    correctIndex: 1,
+    explanation: "CalVer with YYYY.MM format communicates the release date directly in the version string. This is ideal for services on a time-based release cadence where deployment timing matters more than backward compatibility signaling."
+  },
+  {
+    question: "In Azure Pipelines, which expression provides an atomic auto-incrementing integer that prevents version collisions between parallel runs?",
+    options: [
+      "'$(Build.BuildId)'",
+      "'$[counter(variables['prefix'], 0)]'",
+      "'$(Rev:r)'",
+      "'$(System.JobAttempt)'"
+    ],
+    correctIndex: 1,
+    explanation: "The counter() expression in Azure Pipelines provides an atomic, auto-incrementing integer scoped to a prefix. It is guaranteed to produce unique values even when multiple pipeline runs execute concurrently. $(Build.BuildId) is unique but not sequential per package."
+  },
+  {
+    question: "A library tagged '2.1.0' receives two changes: a backward-compatible new method and a bug fix. What should the next version be?",
+    options: [
+      "2.1.1",
+      "2.2.0",
+      "3.0.0",
+      "2.1.0-patch.1"
+    ],
+    correctIndex: 1,
+    explanation: "When changes include a new backward-compatible feature (new method), the MINOR version increments. The bug fix would normally be a PATCH increment, but since MINOR is being bumped, the patch resets to 0. The result is 2.2.0."
+  }
+]} />
 
 ## Cleanup
 

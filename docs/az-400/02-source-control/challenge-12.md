@@ -2,6 +2,8 @@
 sidebar_position: 6
 title: 'Challenge 12: Mono-repo vs multi-repo'
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 12: Mono-repo vs multi-repo
 
@@ -22,10 +24,9 @@ Contoso Ltd operates 15 microservices that make up their e-commerce platform: us
 
 Document the trade-offs for Contoso's specific situation:
 
-```markdown
-## Mono-repo analysis for Contoso e-commerce platform
+#### Mono-repo analysis for Contoso e-commerce platform
 
-### Advantages
+**Advantages:**
 - Atomic cross-service changes (rename a shared type, update all 15 services in one commit)
 - Single source of truth for shared libraries (no version drift between services)
 - Unified CI/CD pipeline configuration
@@ -34,7 +35,7 @@ Document the trade-offs for Contoso's specific situation:
 - Simplified dependency management (all services use same versions)
 - Refactoring across service boundaries is straightforward
 
-### Disadvantages
+**Disadvantages:**
 - Repository size (8GB) makes clone slow (25 min)
 - All 50 developers trigger CI on every push (without path filtering)
 - Permission granularity is limited (harder to restrict access per-service)
@@ -42,7 +43,6 @@ Document the trade-offs for Contoso's specific situation:
 - Merge conflicts on shared files (package.json, CI config)
 - Git operations slow down as history grows
 - All teams must agree on branching strategy
-```
 
 Example mono-repo structure:
 
@@ -78,10 +78,9 @@ contoso-platform/
 
 ### Task 2: Multi-repo advantages and disadvantages
 
-```markdown
-## Multi-repo analysis for Contoso e-commerce platform
+#### Multi-repo analysis for Contoso e-commerce platform
 
-### Advantages
+**Advantages:**
 - Clear ownership boundaries (each team owns their repo)
 - Independent release cycles and versioning
 - Fine-grained access control per repository
@@ -90,7 +89,7 @@ contoso-platform/
 - Failures are isolated (one repo's CI issues don't block others)
 - Scales well with organizational growth
 
-### Disadvantages
+**Disadvantages:**
 - Cross-service changes require coordinated PRs across repos
 - Shared library versioning creates diamond dependency problems
 - Inconsistent tooling and practices across repos
@@ -98,7 +97,6 @@ contoso-platform/
 - Integration testing requires checking out multiple repos
 - Dependency updates must propagate through each repo separately
 - Refactoring across service boundaries is painful
-```
 
 Example multi-repo structure:
 
@@ -629,69 +627,52 @@ git commit -m "chore: update shared-libs submodule to latest"
 
 ## Knowledge check
 
-**Question 1**: Contoso has a mono-repo with 15 microservices. A developer only works on the order-service and needs to clone the repo quickly. Which combination of Git features provides the fastest clone with minimal disk usage?
-
-- A) `git clone --depth=1` (shallow clone)
-- B) `git clone --filter=blob:none --sparse` followed by `git sparse-checkout set services/order-service`
-- C) `git clone` followed by deleting unwanted directories
-- D) `git clone --single-branch --branch=main`
-
-<details>
-<summary>Show answer</summary>
-
-**B) `git clone --filter=blob:none --sparse` followed by `git sparse-checkout set services/order-service`**
-
-This combination uses partial clone (`--filter=blob:none`) to skip downloading blob objects until they are needed, and sparse-checkout to only materialize the files for the specified paths. Together, they minimize both network transfer and disk usage. The developer gets full commit history (for blame, log, etc.) but only downloads file content for the paths they need. Shallow clone (option A) limits history depth but still downloads all files. Option D still downloads all blobs across all paths.
-
-</details>
-
-**Question 2**: What does Scalar's `scalar register` command enable for a Git repository?
-
-- A) Uploads the repository to a centralized Scalar server for caching
-- B) Enables a set of Git performance optimizations including FSMonitor, commit-graph, multi-pack index, and background maintenance
-- C) Converts the repository to a new Scalar-specific format incompatible with standard Git
-- D) Enables server-side partial clone filtering for all clones of this repository
-
-<details>
-<summary>Show answer</summary>
-
-**B) Enables a set of Git performance optimizations including FSMonitor, commit-graph, multi-pack index, and background maintenance**
-
-`scalar register` configures the local repository with performance optimizations that are all part of standard Git but not enabled by default. These include: FSMonitor (filesystem watcher for faster `git status`), commit-graph (pre-computed graph for faster log/traversal), multi-pack index (faster object lookups), and scheduled background maintenance tasks (prefetch, commit-graph updates, loose object cleanup, incremental repack). The repository remains a standard Git repository accessible by any Git client.
-
-</details>
-
-**Question 3**: In a multi-repo setup, team A updates `shared-libs` v2.3.0 to v2.4.0 with a breaking change. What is the primary challenge this creates?
-
-- A) All other repos automatically update and may break
-- B) Each consuming repo must independently update their dependency, test, and release, creating coordination overhead and risk of version drift
-- C) Git submodules prevent any repo from using the new version
-- D) The shared-libs repo must be forked for each consuming team
-
-<details>
-<summary>Show answer</summary>
-
-**B) Each consuming repo must independently update their dependency, test, and release, creating coordination overhead and risk of version drift**
-
-In a multi-repo setup, updating a shared dependency requires each consuming repository to explicitly update their reference (submodule pointer, package version, etc.), run their own tests, and deploy. This creates coordination overhead, especially with breaking changes. Some repos may stay on v2.3.0 while others move to v2.4.0, creating version drift. In a mono-repo, the breaking change and all updates to consumers happen in a single atomic commit.
-
-</details>
-
-**Question 4**: An Azure Pipelines YAML file uses `trigger.paths.include` to only build when specific paths change. A developer modifies `libs/shared-types/index.ts`. Which pipeline behavior is correct?
-
-- A) All pipelines trigger because any file change triggers all pipelines by default
-- B) Only pipelines whose `paths.include` matches `libs/shared-types/**` will trigger
-- C) No pipelines trigger because library changes are excluded by default
-- D) The pipeline triggers but skips the build step and only runs tests
-
-<details>
-<summary>Show answer</summary>
-
-**B) Only pipelines whose `paths.include` matches `libs/shared-types/**` will trigger**
-
-Azure Pipelines path triggers filter which pushes activate a pipeline. When `trigger.paths.include` is configured, the pipeline only runs if at least one changed file matches the include patterns. A change to `libs/shared-types/index.ts` only triggers pipelines that include `libs/shared-types/**` or `libs/**` in their path filter. Other pipelines (e.g., those only watching `services/user-service/**`) will not trigger. This is how mono-repos achieve per-service CI efficiency.
-
-</details>
+<KnowledgeCheck questions={[
+  {
+    question: ": Contoso has a mono-repo with 15 microservices. A developer only works on the order-service and needs to clone the repo quickly. Which combination of Git features provides the fastest clone with minimal disk usage?",
+    options: [
+      "'git clone --depth=1' (shallow clone)",
+      "'git clone --filter=blob:none --sparse' followed by 'git sparse-checkout set services/order-service'",
+      "'git clone' followed by deleting unwanted directories",
+      "'git clone --single-branch --branch=main'"
+    ],
+    correctIndex: 1,
+    explanation: "This combination uses partial clone (--filter=blob:none) to skip downloading blob objects until they are needed, and sparse-checkout to only materialize the files for the specified paths. Together, they minimize both network transfer and disk usage. The developer gets full commit history (for blame, log, etc.) but only downloads file content for the paths they need. Shallow clone (option A) limits history depth but still downloads all files. Option D still downloads all blobs across all paths."
+  },
+  {
+    question: ": What does Scalar's 'scalar register' command enable for a Git repository?",
+    options: [
+      "Uploads the repository to a centralized Scalar server for caching",
+      "Enables a set of Git performance optimizations including FSMonitor, commit-graph, multi-pack index, and background maintenance",
+      "Converts the repository to a new Scalar-specific format incompatible with standard Git",
+      "Enables server-side partial clone filtering for all clones of this repository"
+    ],
+    correctIndex: 1,
+    explanation: "scalar register configures the local repository with performance optimizations that are all part of standard Git but not enabled by default. These include: FSMonitor (filesystem watcher for faster git status), commit-graph (pre-computed graph for faster log/traversal), multi-pack index (faster object lookups), and scheduled background maintenance tasks (prefetch, commit-graph updates, loose object cleanup, incremental repack). The repository remains a standard Git repository accessible by any Git client."
+  },
+  {
+    question: ": In a multi-repo setup, team A updates 'shared-libs' v2.3.0 to v2.4.0 with a breaking change. What is the primary challenge this creates?",
+    options: [
+      "All other repos automatically update and may break",
+      "Each consuming repo must independently update their dependency, test, and release, creating coordination overhead and risk of version drift",
+      "Git submodules prevent any repo from using the new version",
+      "The shared-libs repo must be forked for each consuming team"
+    ],
+    correctIndex: 1,
+    explanation: "In a multi-repo setup, updating a shared dependency requires each consuming repository to explicitly update their reference (submodule pointer, package version, etc.), run their own tests, and deploy. This creates coordination overhead, especially with breaking changes. Some repos may stay on v2.3.0 while others move to v2.4.0, creating version drift. In a mono-repo, the breaking change and all updates to consumers happen in a single atomic commit."
+  },
+  {
+    question: ": An Azure Pipelines YAML file uses 'trigger.paths.include' to only build when specific paths change. A developer modifies 'libs/shared-types/index.ts'. Which pipeline behavior is correct?",
+    options: [
+      "All pipelines trigger because any file change triggers all pipelines by default",
+      "Only pipelines whose 'paths.include' matches 'libs/shared-types/**' will trigger",
+      "No pipelines trigger because library changes are excluded by default",
+      "The pipeline triggers but skips the build step and only runs tests"
+    ],
+    correctIndex: 1,
+    explanation: "Azure Pipelines path triggers filter which pushes activate a pipeline. When trigger.paths.include is configured, the pipeline only runs if at least one changed file matches the include patterns. A change to libs/shared-types/index.ts only triggers pipelines that include libs/shared-types/ or libs/ in their path filter. Other pipelines (e.g., those only watching services/user-service/) will not trigger. This is how mono-repos achieve per-service CI efficiency."
+  }
+]} />
 
 ## Cleanup
 

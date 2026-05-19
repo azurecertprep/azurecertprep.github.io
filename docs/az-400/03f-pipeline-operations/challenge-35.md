@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 35: Pipeline optimization"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 35: Pipeline optimization
 
@@ -628,41 +630,52 @@ Test sharding works but the coverage report shows only 25% (one shard's coverage
 
 ## Knowledge check
 
-1. **What is the most effective caching strategy for npm dependencies in a CI pipeline?**
-
-   A) Cache the `~/.npm` directory keyed on `package.json`
-   B) Cache `node_modules` keyed on `package-lock.json` with a fallback restore key
-   C) Cache the entire workspace directory
-   D) Download dependencies from a private registry mirror
-
-   **Answer: B** - Caching `node_modules` keyed on `package-lock.json` provides the best balance. The lock file changes only when dependencies actually change (unlike `package.json` which changes on version bumps). A restore key like `${{ runner.os }}-modules-` provides partial matches when the lock file changes, giving a warm cache even after dependency updates.
-
-2. **How does test sharding reduce pipeline duration?**
-
-   A) It runs fewer tests by sampling a subset of the test suite
-   B) It splits the test suite across multiple parallel runners, reducing wall-clock time proportionally
-   C) It skips tests that passed in the previous run
-   D) It runs tests faster by reducing test isolation
-
-   **Answer: B** - Test sharding divides the full test suite into N equal parts and runs each part on a separate runner simultaneously. With 4 shards, a 12-minute test suite takes approximately 3 minutes of wall-clock time. All tests still run; only the elapsed time is reduced by parallelization.
-
-3. **When should you choose self-hosted runners over hosted runners?**
-
-   A) Always, because self-hosted runners are faster
-   B) When monthly hosted runner costs exceed the cost of maintaining a VM, or when you need specialized hardware/software
-   C) Only for production deployments
-   D) When you need access to the public internet
-
-   **Answer: B** - Self-hosted runners make economic sense when hosted runner usage exceeds the break-even point (total cost of the VM + maintenance overhead). They also provide benefits like persistent caches, specialized hardware (GPU, ARM), access to private networks, and pre-installed tooling that would otherwise slow down each run.
-
-4. **What is the primary benefit of conditional job execution based on file paths?**
-
-   A) It reduces repository storage by removing unchanged files
-   B) It prevents merge conflicts in the changed files
-   C) It avoids running expensive jobs (tests, builds, deploys) when changes do not affect those components
-   D) It automatically approves pull requests that only change documentation
-
-   **Answer: C** - Path-based filtering skips jobs that are not relevant to the changed files. A documentation-only change should not trigger a 15-minute integration test suite. This reduces both cost (fewer minutes consumed) and developer wait time (faster PR feedback), while ensuring that meaningful changes still get full validation.
+<KnowledgeCheck questions={[
+  {
+    question: "What is the most effective caching strategy for npm dependencies in a CI pipeline?",
+    options: [
+      "Cache the '~/.npm' directory keyed on 'package.json'",
+      "Cache 'node_modules' keyed on 'package-lock.json' with a fallback restore key",
+      "Cache the entire workspace directory",
+      "Download dependencies from a private registry mirror"
+    ],
+    correctIndex: 1,
+    explanation: "Caching node_modules keyed on package-lock.json provides the best balance. The lock file changes only when dependencies actually change (unlike package.json which changes on version bumps). A restore key like $\{\{ runner.os \}\}-modules- provides partial matches when the lock file changes, giving a warm cache even after dependency updates."
+  },
+  {
+    question: "How does test sharding reduce pipeline duration?",
+    options: [
+      "It runs fewer tests by sampling a subset of the test suite",
+      "It splits the test suite across multiple parallel runners, reducing wall-clock time proportionally",
+      "It skips tests that passed in the previous run",
+      "It runs tests faster by reducing test isolation"
+    ],
+    correctIndex: 1,
+    explanation: "Test sharding divides the full test suite into N equal parts and runs each part on a separate runner simultaneously. With 4 shards, a 12-minute test suite takes approximately 3 minutes of wall-clock time. All tests still run; only the elapsed time is reduced by parallelization."
+  },
+  {
+    question: "When should you choose self-hosted runners over hosted runners?",
+    options: [
+      "Always, because self-hosted runners are faster",
+      "When monthly hosted runner costs exceed the cost of maintaining a VM, or when you need specialized hardware/software",
+      "Only for production deployments",
+      "When you need access to the public internet"
+    ],
+    correctIndex: 1,
+    explanation: "Self-hosted runners make economic sense when hosted runner usage exceeds the break-even point (total cost of the VM + maintenance overhead). They also provide benefits like persistent caches, specialized hardware (GPU, ARM), access to private networks, and pre-installed tooling that would otherwise slow down each run."
+  },
+  {
+    question: "What is the primary benefit of conditional job execution based on file paths?",
+    options: [
+      "It reduces repository storage by removing unchanged files",
+      "It prevents merge conflicts in the changed files",
+      "It avoids running expensive jobs (tests, builds, deploys) when changes do not affect those components",
+      "It automatically approves pull requests that only change documentation"
+    ],
+    correctIndex: 2,
+    explanation: "Path-based filtering skips jobs that are not relevant to the changed files. A documentation-only change should not trigger a 15-minute integration test suite. This reduces both cost (fewer minutes consumed) and developer wait time (faster PR feedback), while ensuring that meaningful changes still get full validation."
+  }
+]} />
 
 ## Cleanup
 

@@ -2,6 +2,8 @@
 sidebar_position: 5
 title: "Challenge 43: Sensitive file handling and leak prevention"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 43: Sensitive file handling and leak prevention
 
@@ -502,41 +504,52 @@ regexes = ['''test_api_key_[a-z0-9]+''']
 
 ## Knowledge check
 
-1. A Contoso pipeline needs to deploy using an SSH key that should not be accessible to developers or stored in source control. Where should the SSH key be stored?
-
-   A) As a pipeline variable marked as secret
-   B) In Azure Key Vault as a secret
-   C) As an Azure Pipelines secure file with restricted pipeline permissions
-   D) In a private Git repository with limited access
-
-   **Answer: C.** Azure Pipelines secure files are encrypted at rest and can only be downloaded by authorized pipelines via the DownloadSecureFile task. They are not stored in source control, are not visible to developers in the library (only admins can see the content), and can have pipeline permissions and approval checks configured.
-
-2. A GitHub Actions workflow retrieves a secret dynamically via an API call. How should you prevent this value from appearing in workflow logs?
-
-   A) Use the `secrets` context which automatically masks all values
-   B) Use `echo "::add-mask::$SECRET_VALUE"` before using the value
-   C) Set `ACTIONS_STEP_DEBUG` to false
-   D) Redirect all output to /dev/null
-
-   **Answer: B.** The `::add-mask::` workflow command tells GitHub Actions to mask a specific value in all subsequent log output. This is necessary for dynamically retrieved secrets that are not stored in the repository's secrets settings (which are masked automatically). Once masked, any occurrence of the value in logs is replaced with asterisks.
-
-3. Contoso wants to prevent developers from accidentally pushing secrets to any repository in the organization. Which feature provides the most comprehensive protection?
-
-   A) Branch protection rules requiring PR reviews
-   B) GitHub secret scanning push protection enabled at the organization level
-   C) Pre-commit hooks installed on each developer machine
-   D) A CI workflow that scans for secrets after each push
-
-   **Answer: B.** GitHub push protection blocks the push at the server level before the secret enters the repository, providing guaranteed protection regardless of client-side configuration. Pre-commit hooks can be bypassed, branch protection only requires reviews (reviewers might miss secrets), and CI scanning only detects secrets after they are already committed.
-
-4. An Azure Pipelines variable group is linked to Key Vault. A developer creates a pipeline that references this variable group and prints all variables in the log. Will the Key Vault secret values appear in the log?
-
-   A) Yes, variable group variables are always visible in logs
-   B) No, Key Vault-linked variables are automatically treated as secret and masked
-   C) Only if the pipeline has the "Allow access to all pipelines" setting enabled
-   D) Only if the developer has Key Vault Secrets User role
-
-   **Answer: B.** Variables sourced from a Key Vault-linked variable group are automatically treated as secret variables by Azure Pipelines. Their values are masked (replaced with asterisks) in all pipeline log output, even if a script explicitly tries to echo them.
+<KnowledgeCheck questions={[
+  {
+    question: "A Contoso pipeline needs to deploy using an SSH key that should not be accessible to developers or stored in source control. Where should the SSH key be stored?",
+    options: [
+      "As a pipeline variable marked as secret",
+      "In Azure Key Vault as a secret",
+      "As an Azure Pipelines secure file with restricted pipeline permissions",
+      "In a private Git repository with limited access"
+    ],
+    correctIndex: 2,
+    explanation: "Azure Pipelines secure files are encrypted at rest and can only be downloaded by authorized pipelines via the DownloadSecureFile task. They are not stored in source control, are not visible to developers in the library (only admins can see the content), and can have pipeline permissions and approval checks configured."
+  },
+  {
+    question: "A GitHub Actions workflow retrieves a secret dynamically via an API call. How should you prevent this value from appearing in workflow logs?",
+    options: [
+      "Use the 'secrets' context which automatically masks all values",
+      "Use 'echo \"::add-mask::$SECRET_VALUE\"' before using the value",
+      "Set 'ACTIONS_STEP_DEBUG' to false",
+      "Redirect all output to /dev/null"
+    ],
+    correctIndex: 1,
+    explanation: "The ::add-mask:: workflow command tells GitHub Actions to mask a specific value in all subsequent log output. This is necessary for dynamically retrieved secrets that are not stored in the repository's secrets settings (which are masked automatically). Once masked, any occurrence of the value in logs is replaced with asterisks."
+  },
+  {
+    question: "Contoso wants to prevent developers from accidentally pushing secrets to any repository in the organization. Which feature provides the most comprehensive protection?",
+    options: [
+      "Branch protection rules requiring PR reviews",
+      "GitHub secret scanning push protection enabled at the organization level",
+      "Pre-commit hooks installed on each developer machine",
+      "A CI workflow that scans for secrets after each push"
+    ],
+    correctIndex: 1,
+    explanation: "GitHub push protection blocks the push at the server level before the secret enters the repository, providing guaranteed protection regardless of client-side configuration. Pre-commit hooks can be bypassed, branch protection only requires reviews (reviewers might miss secrets), and CI scanning only detects secrets after they are already committed."
+  },
+  {
+    question: "An Azure Pipelines variable group is linked to Key Vault. A developer creates a pipeline that references this variable group and prints all variables in the log. Will the Key Vault secret values appear in the log?",
+    options: [
+      "Yes, variable group variables are always visible in logs",
+      "No, Key Vault-linked variables are automatically treated as secret and masked",
+      "Only if the pipeline has the \"Allow access to all pipelines\" setting enabled",
+      "Only if the developer has Key Vault Secrets User role"
+    ],
+    correctIndex: 1,
+    explanation: "Variables sourced from a Key Vault-linked variable group are automatically treated as secret variables by Azure Pipelines. Their values are masked (replaced with asterisks) in all pipeline log output, even if a script explicitly tries to echo them."
+  }
+]} />
 
 ## Cleanup
 

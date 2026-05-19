@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: "Challenge 04: DevOps metrics and dashboards"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 04: DevOps metrics and dashboards
 
@@ -549,49 +551,52 @@ gh pr list --state merged --base main --limit 100 \
 
 ## Knowledge check
 
-**Question 1:** Which DORA metric measures the time between a developer committing code and that code running in production?
-
-A) Deployment frequency  
-B) Lead time for changes  
-C) Mean time to recovery  
-D) Change failure rate
-
-**Answer:** B - Lead time for changes measures the elapsed time from when a code change is committed to when it is successfully running in production. This includes code review time, CI/CD pipeline execution, and any manual approval gates.
-
----
-
-**Question 2:** An organization deploys to production three times per week and has an average lead time of four days. According to DORA classifications, what performance level do these metrics indicate?
-
-A) Elite for both  
-B) High for deployment frequency, Medium for lead time  
-C) High for both  
-D) Medium for deployment frequency, High for lead time
-
-**Answer:** C - Three deployments per week falls in the High category (between daily and weekly). Four days lead time also falls in the High category (between one day and one week).
-
----
-
-**Question 3:** What is the primary purpose of the Azure DevOps Analytics OData endpoint?
-
-A) To store build artifacts  
-B) To provide a queryable reporting layer over Azure DevOps operational data with aggregation support  
-C) To replace Azure Boards queries  
-D) To sync data between Azure DevOps and GitHub
-
-**Answer:** B - The Analytics OData endpoint provides a read-optimized, queryable data warehouse over Azure DevOps data. It supports aggregation, filtering, and grouping operations that would be expensive or impossible against the operational APIs directly.
-
----
-
-**Question 4:** A team wants to improve their change failure rate. Which practice would most directly reduce this metric?
-
-A) Deploying more frequently  
-B) Implementing comprehensive automated testing, progressive rollouts, and feature flags  
-C) Reducing the number of developers  
-D) Increasing the number of manual approvals
-
-**Answer:** B - Change failure rate is reduced by catching issues before they reach production (automated testing), limiting blast radius when issues do occur (progressive rollouts, canary deployments), and enabling instant rollback without redeployment (feature flags).
-
----
+<KnowledgeCheck questions={[
+  {
+    question: "Which DORA metric measures the time between a developer committing code and that code running in production?",
+    options: [
+      "Deployment frequency",
+      "Lead time for changes",
+      "Mean time to recovery",
+      "Change failure rate"
+    ],
+    correctIndex: 1,
+    explanation: "Lead time for changes measures the elapsed time from when a code change is committed to when it is successfully running in production. This includes code review time, CI/CD pipeline execution, and any manual approval gates."
+  },
+  {
+    question: "An organization deploys to production three times per week and has an average lead time of four days. According to DORA classifications, what performance level do these metrics indicate?",
+    options: [
+      "Elite for both",
+      "High for deployment frequency, Medium for lead time",
+      "High for both",
+      "Medium for deployment frequency, High for lead time"
+    ],
+    correctIndex: 2,
+    explanation: "Three deployments per week falls in the High category (between daily and weekly). Four days lead time also falls in the High category (between one day and one week)."
+  },
+  {
+    question: "What is the primary purpose of the Azure DevOps Analytics OData endpoint?",
+    options: [
+      "To store build artifacts",
+      "To provide a queryable reporting layer over Azure DevOps operational data with aggregation support",
+      "To replace Azure Boards queries",
+      "To sync data between Azure DevOps and GitHub"
+    ],
+    correctIndex: 1,
+    explanation: "The Analytics OData endpoint provides a read-optimized, queryable data warehouse over Azure DevOps data. It supports aggregation, filtering, and grouping operations that would be expensive or impossible against the operational APIs directly."
+  },
+  {
+    question: "A team wants to improve their change failure rate. Which practice would most directly reduce this metric?",
+    options: [
+      "Deploying more frequently",
+      "Implementing comprehensive automated testing, progressive rollouts, and feature flags",
+      "Reducing the number of developers",
+      "Increasing the number of manual approvals"
+    ],
+    correctIndex: 1,
+    explanation: "Change failure rate is reduced by catching issues before they reach production (automated testing), limiting blast radius when issues do occur (progressive rollouts, canary deployments), and enabling instant rollback without redeployment (feature flags)."
+  }
+]} />
 
 ## Cleanup
 

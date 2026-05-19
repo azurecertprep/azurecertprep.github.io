@@ -2,6 +2,8 @@
 sidebar_position: 4
 title: "Challenge 22: Triggers and execution order"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 22: Triggers and execution order
 
@@ -882,41 +884,52 @@ schedules:
 
 ## Knowledge check
 
-1. **In GitHub Actions, what happens when both `paths` and `paths-ignore` are specified in a trigger?**
-
-   A) `paths-ignore` takes precedence over `paths`
-   B) `paths` is evaluated first, then `paths-ignore` filters the results
-   C) The workflow fails validation because they are mutually exclusive
-   D) Both are evaluated independently and combined with OR logic
-
-   **Answer: C** - GitHub Actions does not allow both `paths` and `paths-ignore` in the same trigger event. Specifying both results in a validation error. You must use one or the other. Use `paths` to include specific directories, or `paths-ignore` to exclude specific directories from triggering.
-
-2. **How does `fail-fast` in a matrix strategy affect job execution?**
-
-   A) It causes all running matrix jobs to be cancelled when any one job fails
-   B) It prevents the matrix from starting if the first configuration fails
-   C) It runs all jobs sequentially and stops at the first failure
-   D) It only affects which results are reported, not execution
-
-   **Answer: A** - When `fail-fast` is set to `true` (the default), GitHub cancels all in-progress and queued matrix jobs as soon as any job in the matrix fails. Setting `fail-fast: false` allows all matrix jobs to complete regardless of individual failures, which is useful when you need results from all configurations.
-
-3. **In Azure Pipelines, what is the difference between `condition: succeeded()` and `condition: always()` on a stage?**
-
-   A) `succeeded()` runs if the previous stage succeeded; `always()` runs regardless of previous stage outcome
-   B) `succeeded()` checks only the immediate predecessor; `always()` checks all predecessors
-   C) They are identical in behavior for stages
-   D) `always()` ignores the `dependsOn` requirement
-
-   **Answer: A** - `succeeded()` (the default condition) means the stage runs only if all of its dependencies (defined by `dependsOn`) completed successfully. `always()` means the stage runs regardless of whether dependencies succeeded, failed, or were cancelled. This is useful for notification or cleanup stages that must execute even after failures.
-
-4. **What is the correct way to trigger a GitHub Actions workflow when another workflow completes?**
-
-   A) Use `on: workflow_completed` with the workflow name
-   B) Use `on: workflow_run` with `types: [completed]` and check the conclusion
-   C) Use `on: repository_dispatch` triggered by the upstream workflow
-   D) Chain workflows using `needs` across workflow files
-
-   **Answer: B** - The `workflow_run` event triggers when a referenced workflow run is requested, in progress, or completed. To act only on successful completions, add a condition checking `github.event.workflow_run.conclusion == 'success'`. The `needs` keyword only works between jobs within a single workflow file, not across workflows.
+<KnowledgeCheck questions={[
+  {
+    question: "In GitHub Actions, what happens when both 'paths' and 'paths-ignore' are specified in a trigger?",
+    options: [
+      "'paths-ignore' takes precedence over 'paths'",
+      "'paths' is evaluated first, then 'paths-ignore' filters the results",
+      "The workflow fails validation because they are mutually exclusive",
+      "Both are evaluated independently and combined with OR logic"
+    ],
+    correctIndex: 2,
+    explanation: "GitHub Actions does not allow both paths and paths-ignore in the same trigger event. Specifying both results in a validation error. You must use one or the other. Use paths to include specific directories, or paths-ignore to exclude specific directories from triggering."
+  },
+  {
+    question: "How does 'fail-fast' in a matrix strategy affect job execution?",
+    options: [
+      "It causes all running matrix jobs to be cancelled when any one job fails",
+      "It prevents the matrix from starting if the first configuration fails",
+      "It runs all jobs sequentially and stops at the first failure",
+      "It only affects which results are reported, not execution"
+    ],
+    correctIndex: 0,
+    explanation: "When fail-fast is set to true (the default), GitHub cancels all in-progress and queued matrix jobs as soon as any job in the matrix fails. Setting fail-fast: false allows all matrix jobs to complete regardless of individual failures, which is useful when you need results from all configurations."
+  },
+  {
+    question: "In Azure Pipelines, what is the difference between 'condition: succeeded()' and 'condition: always()' on a stage?",
+    options: [
+      "'succeeded()' runs if the previous stage succeeded; 'always()' runs regardless of previous stage outcome",
+      "'succeeded()' checks only the immediate predecessor; 'always()' checks all predecessors",
+      "They are identical in behavior for stages",
+      "'always()' ignores the 'dependsOn' requirement"
+    ],
+    correctIndex: 0,
+    explanation: "succeeded() (the default condition) means the stage runs only if all of its dependencies (defined by dependsOn) completed successfully. always() means the stage runs regardless of whether dependencies succeeded, failed, or were cancelled. This is useful for notification or cleanup stages that must execute even after failures."
+  },
+  {
+    question: "What is the correct way to trigger a GitHub Actions workflow when another workflow completes?",
+    options: [
+      "Use 'on: workflow_completed' with the workflow name",
+      "Use 'on: workflow_run' with 'types: [completed]' and check the conclusion",
+      "Use 'on: repository_dispatch' triggered by the upstream workflow",
+      "Chain workflows using 'needs' across workflow files"
+    ],
+    correctIndex: 1,
+    explanation: "The workflow_run event triggers when a referenced workflow run is requested, in progress, or completed. To act only on successful completions, add a condition checking github.event.workflow_run.conclusion == 'success'. The needs keyword only works between jobs within a single workflow file, not across workflows."
+  }
+]} />
 
 ## Cleanup
 

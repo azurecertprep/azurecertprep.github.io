@@ -2,6 +2,8 @@
 sidebar_position: 2
 title: "Challenge 47: Telemetry collection and insights"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 47: Telemetry collection and insights
 
@@ -408,41 +410,52 @@ function makeDownstreamCall(url, payload) {
 
 ## Knowledge check
 
-1. Contoso has a .NET web app on App Service. They want Application Insights telemetry without modifying application code. What should they configure?
-
-   A) Install the Application Insights NuGet package and add SDK initialization code
-   B) Enable auto-instrumentation by setting the `ApplicationInsightsAgent_EXTENSION_VERSION` app setting
-   C) Deploy an Application Insights agent as a sidecar container
-   D) Configure a data collection rule with Azure Monitor Agent
-
-   **Answer: B.** App Service auto-instrumentation (codeless attach) enables Application Insights by setting the `ApplicationInsightsAgent_EXTENSION_VERSION` app setting to `~3` along with the connection string. No code changes or NuGet packages are required. This works for .NET, Java, Node.js, and Python applications on App Service.
-
-2. Contoso runs services on VMs, AKS, and App Service. Which monitoring solution provides process-level dependency mapping showing which processes communicate with which external services on the VM?
-
-   A) Application Insights
-   B) Container Insights
-   C) VM Insights (Map feature)
-   D) Network Watcher
-
-   **Answer: C.** VM Insights Map feature discovers running processes on the VM and their network connections, showing which processes communicate with external services, databases, and other VMs. This provides a dependency map without requiring application code changes.
-
-3. Application Insights is generating 50 GB of telemetry daily, resulting in high costs. Which approach reduces costs while preserving visibility into errors and exceptions?
-
-   A) Disable Application Insights entirely
-   B) Configure adaptive sampling that excludes exceptions from sampling
-   C) Set a daily cap of 1 GB and lose all data above the cap
-   D) Switch from workspace-based to classic Application Insights
-
-   **Answer: B.** Adaptive sampling reduces telemetry volume by dynamically adjusting the sampling rate while maintaining statistical accuracy. By excluding exceptions from sampling, all errors are preserved for debugging while routine successful requests are sampled. This is more effective than a daily cap, which drops all telemetry after the limit.
-
-4. A request to the Contoso web app calls three backend microservices. In Application Insights, the end-to-end transaction view shows only the initial request without the downstream calls. What is the most likely cause?
-
-   A) The backend services are not instrumented with Application Insights
-   B) The services use different Application Insights resources
-   C) The trace context headers are not propagated between services
-   D) Sampling is filtering out dependency calls
-
-   **Answer: C.** Distributed tracing requires W3C trace context headers (`traceparent`) to be propagated between services. If a service does not forward these headers in outgoing HTTP calls, the downstream telemetry cannot be correlated with the parent request. All services should be instrumented AND trace context must flow through HTTP headers.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso has a .NET web app on App Service. They want Application Insights telemetry without modifying application code. What should they configure?",
+    options: [
+      "Install the Application Insights NuGet package and add SDK initialization code",
+      "Enable auto-instrumentation by setting the 'ApplicationInsightsAgent_EXTENSION_VERSION' app setting",
+      "Deploy an Application Insights agent as a sidecar container",
+      "Configure a data collection rule with Azure Monitor Agent"
+    ],
+    correctIndex: 1,
+    explanation: "App Service auto-instrumentation (codeless attach) enables Application Insights by setting the ApplicationInsightsAgent_EXTENSION_VERSION app setting to ~3 along with the connection string. No code changes or NuGet packages are required. This works for .NET, Java, Node.js, and Python applications on App Service."
+  },
+  {
+    question: "Contoso runs services on VMs, AKS, and App Service. Which monitoring solution provides process-level dependency mapping showing which processes communicate with which external services on the VM?",
+    options: [
+      "Application Insights",
+      "Container Insights",
+      "VM Insights (Map feature)",
+      "Network Watcher"
+    ],
+    correctIndex: 2,
+    explanation: "VM Insights Map feature discovers running processes on the VM and their network connections, showing which processes communicate with external services, databases, and other VMs. This provides a dependency map without requiring application code changes."
+  },
+  {
+    question: "Application Insights is generating 50 GB of telemetry daily, resulting in high costs. Which approach reduces costs while preserving visibility into errors and exceptions?",
+    options: [
+      "Disable Application Insights entirely",
+      "Configure adaptive sampling that excludes exceptions from sampling",
+      "Set a daily cap of 1 GB and lose all data above the cap",
+      "Switch from workspace-based to classic Application Insights"
+    ],
+    correctIndex: 1,
+    explanation: "Adaptive sampling reduces telemetry volume by dynamically adjusting the sampling rate while maintaining statistical accuracy. By excluding exceptions from sampling, all errors are preserved for debugging while routine successful requests are sampled. This is more effective than a daily cap, which drops all telemetry after the limit."
+  },
+  {
+    question: "A request to the Contoso web app calls three backend microservices. In Application Insights, the end-to-end transaction view shows only the initial request without the downstream calls. What is the most likely cause?",
+    options: [
+      "The backend services are not instrumented with Application Insights",
+      "The services use different Application Insights resources",
+      "The trace context headers are not propagated between services",
+      "Sampling is filtering out dependency calls"
+    ],
+    correctIndex: 2,
+    explanation: "Distributed tracing requires W3C trace context headers (traceparent) to be propagated between services. If a service does not forward these headers in outgoing HTTP calls, the downstream telemetry cannot be correlated with the parent request. All services should be instrumented AND trace context must flow through HTTP headers."
+  }
+]} />
 
 ## Cleanup
 

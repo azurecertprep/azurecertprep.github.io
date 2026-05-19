@@ -2,6 +2,8 @@
 sidebar_position: 6
 title: "Challenge 44: GitHub Advanced Security"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
+
 
 # Challenge 44: GitHub Advanced Security
 
@@ -474,41 +476,52 @@ jobs:
 
 ## Knowledge check
 
-1. Contoso has repositories in both GitHub and Azure DevOps. They want CodeQL scanning on both platforms. What is the correct approach?
-
-   A) CodeQL only works with GitHub repositories
-   B) Use GitHub CodeQL action for GitHub repos and AdvancedSecurity-Codeql tasks for Azure DevOps repos
-   C) Mirror all Azure DevOps repos to GitHub for scanning
-   D) Use a third-party tool since CodeQL cannot run in Azure DevOps
-
-   **Answer: B.** GitHub Advanced Security for Azure DevOps (GHAzDO) provides native CodeQL analysis through pipeline tasks (AdvancedSecurity-Codeql-Init@1 and AdvancedSecurity-Codeql-Analyze@1). GitHub repos use the github/codeql-action. Both provide the same CodeQL engine and query suites.
-
-2. A Dependabot alert shows a critical vulnerability in a transitive dependency (a dependency of a dependency). The direct dependency has not released a fix yet. What should Contoso do?
-
-   A) Dismiss the alert since the direct dependency team must fix it
-   B) Override the transitive dependency version using npm overrides or resolutions to force the patched version
-   C) Remove the direct dependency entirely
-   D) Wait for the direct dependency to release an update
-
-   **Answer: B.** Using package manager features like npm `overrides` or yarn `resolutions` allows forcing a patched version of the transitive dependency without waiting for the direct dependency to update. This provides immediate mitigation while maintaining functionality.
-
-3. Which GitHub secret scanning feature prevents secrets from entering the repository in the first place?
-
-   A) Secret scanning alerts
-   B) Custom secret patterns
-   C) Push protection
-   D) Security advisories
-
-   **Answer: C.** Push protection blocks the git push at the server level before the secret enters the repository history. Standard secret scanning alerts only notify after the secret is already committed. Push protection is the preventive control, while alerts are a detective control.
-
-4. Contoso wants container vulnerability scan results to appear alongside CodeQL results in the GitHub Security tab. How should they configure container scanning?
-
-   A) Use a container scanning action that outputs SARIF format and upload with codeql-action/upload-sarif
-   B) Enable Dependabot for Docker ecosystem only
-   C) Run docker scan and parse the text output
-   D) Container scanning results cannot appear in the Security tab
-
-   **Answer: A.** The GitHub Security tab displays SARIF (Static Analysis Results Interchange Format) results. Any scanner that produces SARIF output can upload results via the codeql-action/upload-sarif action, making them visible alongside CodeQL findings in a unified security dashboard.
+<KnowledgeCheck questions={[
+  {
+    question: "Contoso has repositories in both GitHub and Azure DevOps. They want CodeQL scanning on both platforms. What is the correct approach?",
+    options: [
+      "CodeQL only works with GitHub repositories",
+      "Use GitHub CodeQL action for GitHub repos and AdvancedSecurity-Codeql tasks for Azure DevOps repos",
+      "Mirror all Azure DevOps repos to GitHub for scanning",
+      "Use a third-party tool since CodeQL cannot run in Azure DevOps"
+    ],
+    correctIndex: 1,
+    explanation: "GitHub Advanced Security for Azure DevOps (GHAzDO) provides native CodeQL analysis through pipeline tasks (AdvancedSecurity-Codeql-Init@1 and AdvancedSecurity-Codeql-Analyze@1). GitHub repos use the github/codeql-action. Both provide the same CodeQL engine and query suites."
+  },
+  {
+    question: "A Dependabot alert shows a critical vulnerability in a transitive dependency (a dependency of a dependency). The direct dependency has not released a fix yet. What should Contoso do?",
+    options: [
+      "Dismiss the alert since the direct dependency team must fix it",
+      "Override the transitive dependency version using npm overrides or resolutions to force the patched version",
+      "Remove the direct dependency entirely",
+      "Wait for the direct dependency to release an update"
+    ],
+    correctIndex: 1,
+    explanation: "Using package manager features like npm overrides or yarn resolutions allows forcing a patched version of the transitive dependency without waiting for the direct dependency to update. This provides immediate mitigation while maintaining functionality."
+  },
+  {
+    question: "Which GitHub secret scanning feature prevents secrets from entering the repository in the first place?",
+    options: [
+      "Secret scanning alerts",
+      "Custom secret patterns",
+      "Push protection",
+      "Security advisories"
+    ],
+    correctIndex: 2,
+    explanation: "Push protection blocks the git push at the server level before the secret enters the repository history. Standard secret scanning alerts only notify after the secret is already committed. Push protection is the preventive control, while alerts are a detective control."
+  },
+  {
+    question: "Contoso wants container vulnerability scan results to appear alongside CodeQL results in the GitHub Security tab. How should they configure container scanning?",
+    options: [
+      "Use a container scanning action that outputs SARIF format and upload with codeql-action/upload-sarif",
+      "Enable Dependabot for Docker ecosystem only",
+      "Run docker scan and parse the text output",
+      "Container scanning results cannot appear in the Security tab"
+    ],
+    correctIndex: 0,
+    explanation: "The GitHub Security tab displays SARIF (Static Analysis Results Interchange Format) results. Any scanner that produces SARIF output can upload results via the codeql-action/upload-sarif action, making them visible alongside CodeQL findings in a unified security dashboard."
+  }
+]} />
 
 ## Cleanup
 
