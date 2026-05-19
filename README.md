@@ -4,6 +4,7 @@
 [![Validate Content](https://github.com/azurecertprep/azurecertprep.github.io/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/azurecertprep/azurecertprep.github.io/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![AZ-104](https://img.shields.io/badge/AZ--104-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-104/coverage-matrix)
+[![AZ-305](https://img.shields.io/badge/AZ--305-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-305/coverage-matrix)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open%20Lab-181717?logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
 ### Don't just study — build it.
@@ -31,7 +32,7 @@ Your Codespace comes pre-configured with:
 | Exam | Title | Challenges | Status |
 |------|-------|-----------|--------|
 | **AZ-104** | Azure Administrator | 28 | Available |
-| AZ-305 | Solutions Architect Expert | — | Planned |
+| **AZ-305** | Solutions Architect Expert | 50 | Available |
 | AZ-400 | DevOps Engineer Expert | — | Planned |
 | AZ-500 | Azure Security Engineer | — | Planned |
 
@@ -48,7 +49,18 @@ Your Codespace comes pre-configured with:
 | Monitor & Maintain | 10-15% | 14-15, 27-28 | Azure Monitor, KQL, Backup, Site Recovery, Alerts |
 | Capstone | All | 16 | Cross-domain troubleshooting scenario |
 
-**Estimated total cost: ~$5** (with cleanup after each challenge)
+## AZ-305: Azure Solutions Architect Expert
+
+50 challenges covering **100% of the exam domains** (as of April 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Identity, Governance & Monitoring | 20-25% | 01-13 | Entra ID, conditional access, governance, monitoring, logging |
+| Business Continuity | 15-20% | 14-22 | High availability, backup, disaster recovery, data redundancy |
+| Data Storage | 15-20% | 23-32 | SQL, Cosmos DB, data integration, storage strategies |
+| Infrastructure | 25-30% | 33-50 | Compute, networking, containers, migrations, app architecture |
+
+**Estimated total cost: ~$5-10** (with cleanup after each challenge)
 
 ### Challenge Format
 
@@ -65,8 +77,10 @@ Each challenge includes:
 ### Features
 
 - Multi-tool tabs (Azure CLI / PowerShell / Portal)
+- Interactive decision matrix tables
 - Interactive self-assessment checklist
 - Progress tracking with localStorage
+- Deep validation labs (real-world troubleshooting scenarios)
 - Bilingual content (English + Brazilian Portuguese)
 - GitHub Codespaces lab environment
 - Coach/instructor guide with full solutions
@@ -97,7 +111,7 @@ npm run serve
 
 Contributions are welcome! Please:
 
-1. Create an issue describing the bug or improvement
+1. Create an issue or start a [Discussion](https://github.com/azurecertprep/azurecertprep.github.io/discussions) describing the bug or improvement
 2. Fork the repository and create a topic branch
 3. Make changes, testing all commands
 4. Submit a PR
