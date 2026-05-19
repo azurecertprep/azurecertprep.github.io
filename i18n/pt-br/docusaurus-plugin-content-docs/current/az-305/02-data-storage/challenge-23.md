@@ -226,12 +226,13 @@ az synapse workspace firewall-rule create \
   --end-ip-address 255.255.255.255
 ```
 
-4. Execute uma consulta de exemplo contra o serverless SQL pool integrado para verificar conectividade:
+4. Verifique que o workspace esta pronto e exiba sua identidade gerenciada e endpoints SQL:
 
 ```bash
-az synapse sql query \
-  --workspace-name synw-az305-ch23 \
-  --query "SELECT TOP 10 * FROM OPENROWSET(BULK 'https://azureopendatastorage.blob.core.windows.net/nyctlc/yellow/puYear=2019/puMonth=1/*.parquet', FORMAT='PARQUET') AS r"
+az synapse workspace show \
+  --name synw-az305-ch23 \
+  --resource-group rg-az305-challenge23 \
+  --query "{name:name, sqlEndpoint:connectivityEndpoints.sql, sqlOnDemand:connectivityEndpoints.sqlOnDemand, identity:identity.principalId}"
 ```
 
 :::tip

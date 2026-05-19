@@ -331,9 +331,9 @@ az network traffic-manager profile create \
   --name tm-multiregion-lab \
   --routing-method Performance \
   --unique-dns-name tm-az305-challenge33-$RANDOM \
-  --monitor-protocol HTTP \
-  --monitor-port 80 \
-  --monitor-path "/"
+  --protocol HTTP \
+  --port 80 \
+  --path "/"
 ```
 
 3. Adicione dois endpoints externos simulando origens multi-regiao:

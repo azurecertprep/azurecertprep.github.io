@@ -69,8 +69,12 @@ The IT director wants a unified backup strategy managed through Azure Backup Cen
 az backup vault create \
   --resource-group rg-backup-eastus \
   --name rsv-prod-eastus \
-  --location eastus \
-  --storage-redundancy GeoRedundant
+  --location eastus
+
+az backup vault backup-properties set \
+  --resource-group rg-backup-eastus \
+  --name rsv-prod-eastus \
+  --backup-storage-redundancy GeoRedundant
 
 az backup vault backup-properties set \
   --resource-group rg-backup-eastus \

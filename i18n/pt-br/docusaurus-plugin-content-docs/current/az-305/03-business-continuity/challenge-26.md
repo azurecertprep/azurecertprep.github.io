@@ -64,8 +64,12 @@ O diretor de TI deseja uma estrategia de backup unificada gerenciada atraves do 
 az backup vault create \
   --resource-group rg-backup-eastus \
   --name rsv-prod-eastus \
-  --location eastus \
-  --storage-redundancy GeoRedundant
+  --location eastus
+
+az backup vault backup-properties set \
+  --resource-group rg-backup-eastus \
+  --name rsv-prod-eastus \
+  --backup-storage-redundancy GeoRedundant
 
 az backup vault backup-properties set \
   --resource-group rg-backup-eastus \

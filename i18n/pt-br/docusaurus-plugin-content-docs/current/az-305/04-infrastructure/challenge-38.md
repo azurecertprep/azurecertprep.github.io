@@ -256,28 +256,34 @@ az servicebus namespace create --resource-group rg-az305-challenge38 \
   --name sb-challenge38-$RANDOM --sku Standard --location eastus
 ```
 
-3. Crie uma queue com sessions habilitadas:
+3. Crie uma queue com dead-lettering e deteccao de duplicatas:
 
 ```bash
+SB_NS=$(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv)
+
 az servicebus queue create --resource-group rg-az305-challenge38 \
-  --namespace-name $(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv) \
-  --name orders-queue --enable-partitioning false
+  --namespace-name $SB_NS \
+  --name orders-queue \
+  --enable-dead-lettering-on-message-expiration true \
+  --duplicate-detection-history-time-window PT10M \
+  --lock-duration PT1M \
+  --max-delivery-count 10
 ```
 
-4. Envie uma mensagem de teste para a queue:
+4. Verifique que a queue foi criada com as propriedades corretas:
 
 ```bash
-az servicebus queue send --resource-group rg-az305-challenge38 \
-  --namespace-name $(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv) \
-  --queue-name orders-queue --body "Test order message"
+az servicebus queue show --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS --name orders-queue \
+  --query "{name:name, deadLettering:deadLetteringOnMessageExpiration, duplicateDetection:requiresDuplicateDetection, lockDuration:lockDuration, maxDeliveryCount:maxDeliveryCount}"
 ```
 
-5. Visualize a mensagem para confirmar a entrega:
+5. Liste as authorization rules para confirmar politicas de acesso:
 
 ```bash
-az servicebus queue peek --resource-group rg-az305-challenge38 \
-  --namespace-name $(az servicebus namespace list --resource-group rg-az305-challenge38 --query "[0].name" -o tsv) \
-  --queue-name orders-queue
+az servicebus namespace authorization-rule list \
+  --resource-group rg-az305-challenge38 \
+  --namespace-name $SB_NS --query "[].{name:name, rights:rights}"
 ```
 
 :::tip
