@@ -7,9 +7,9 @@ import SelfAssessment from '@site/src/components/SelfAssessment';
 
 # Estou Pronto para o AZ-305?
 
-O AZ-305 e um exame de **nivel expert**. Diferente do AZ-104, que testa habilidades de implementacao, o AZ-305 testa sua capacidade de **projetar solucoes** que atendam requisitos de negocio e tecnicos. Voce ja deve ter forte experiencia em administracao do Azure antes de tentar este exame.
+O AZ-305 é um exame de **nível expert**. Diferente do AZ-104, que testa habilidades de implementação, o AZ-305 testa sua capacidade de **projetar soluções** que atendam requisitos de negócio e tecnicos. Você ja deve ter forte experiência em administração do Azure antes de tentar este exame.
 
-## Checklist de Autoavaliacao
+## Checklist de Autoavaliação
 
 Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revisar | ❌ Novo para Mim
 
@@ -68,13 +68,13 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
   ]}
 />
 
-### Continuidade de Negocios
+### Continuidade de Negócios
 
 <SelfAssessment
   storageKey="az305-bcdr"
   skills={[
     "I can design backup strategies for VMs, databases, and blobs",
-    "I understand Azure Site Recovery for DR scenarios",
+    "I understand Azure Site Recovery for DR scenários",
     "I can calculate composite SLAs and design for 99.99% availability",
     "I know the HA options for SQL (failover groups, Business Critical tier)",
     "I understand Cosmos DB multi-region writes and consistency trade-offs",
@@ -97,25 +97,25 @@ Clique em cada linha para alternar entre: ✅ Confortavel | ⚠️ Preciso Revis
 
 ## Como Interpretar Seus Resultados
 
-### Maioria ✅: Voce esta pronto!
+### Maioria ✅: Você esta pronto!
 Va para o [Desafio 01](/docs/az-305/identity-governance-monitoring/challenge-01) e comece a projetar.
 
-### Mistura de ✅ e ⚠️: Voce esta quase pronto
-Foque nos dominios onde voce marcou ⚠️. Use os **Recursos de Aprendizado** em cada desafio para preencher lacunas. Considere revisar o [caminho de aprendizado Microsoft Learn para AZ-305](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305#two-ways-to-prepare).
+### Mistura de ✅ e ⚠️: Você esta quase pronto
+Foque nós domínios onde você marcou ⚠️. Use os **Recursos de Aprendizado** em cada desafio para preencher lacunas. Considere revisar o [caminho de aprendizado Microsoft Learn para AZ-305](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305#two-ways-to-prepare).
 
 ### Maioria ⚠️ ou ❌: Construa sua base primeiro
-O AZ-305 se baseia no conhecimento do AZ-104. Se voce ainda nao completou, faca os [desafios do AZ-104](/docs/az-104/overview) primeiro, ou adquira 6-12 meses de experiencia pratica com Azure antes de tentar este exame.
+O AZ-305 se baseia no conhecimento do AZ-104. Se você ainda não completou, faça os [desafios do AZ-104](/docs/az-104/overview) primeiro, ou adquira 6-12 meses de experiência prática com Azure antes de tentar este exame.
 
-## Diferencas Principais do AZ-104
+## Diferenças Principais do AZ-104
 
 | Aspecto | AZ-104 | AZ-305 |
 |---------|--------|--------|
-| Estilo de questao | "Como voce faz X?" | "Qual solucao atende estes requisitos?" |
-| Profundidade do conhecimento | Saber uma forma correta | Conhecer todas as opcoes e trade-offs |
-| Complexidade do cenario | Servico unico | Arquitetura multi-servico |
-| Criterios de decisao | N/A | Custo, desempenho, seguranca, conformidade |
-| Conhecimento de frameworks | Nao exigido | Well-Architected Framework, CAF |
+| Estilo de questão | "Como você faz X?" | "Qual solução atende estes requisitos?" |
+| Profundidade do conhecimento | Saber uma forma correta | Conhecer todas as opções e trade-offs |
+| Complexidade do cenário | Servico único | Arquitetura multi-serviço |
+| Critérios de decisão | N/A | Custo, desempenho, segurança, conformidade |
+| Conhecimento de frameworks | Não exigido | Well-Architected Framework, CAF |
 
 ---
 
-**Pronto para comecar?** Inicie com o [Desafio 01: Projetar uma Solucao de Logging Centralizado](/docs/az-305/identity-governance-monitoring/challenge-01).
+**Pronto para começar?** Inicie com o [Desafio 01: Projetar uma Solução de Logging Centralizado](/docs/az-305/identity-governance-monitoring/challenge-01).
