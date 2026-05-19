@@ -31,7 +31,7 @@ Você deve ter experiência avançada e conhecimento em operações de TI, inclu
 
 :::tip Estrutura dos Desafios
 
-Os desafios sao organizados por domínio do exame. Dentro de cada domínio, os desafios progridem de habilidades individuais para capstones de domínio que combinam múltiplos conceitos. O ultimo desafio (50) é um exercício completo de arquitetura entre domínios.
+Os desafios são organizados por domínio do exame. Dentro de cada domínio, os desafios progridem de habilidades individuais para capstones de domínio que combinam múltiplos conceitos. O último desafio (50) é um exercício completo de arquitetura entre domínios.
 
 :::
 
@@ -39,9 +39,9 @@ Os desafios sao organizados por domínio do exame. Dentro de cada domínio, os d
 
 | Aspecto | AZ-104 (Administrador) | AZ-305 (Arquiteto) |
 |---------|------------------------|---------------------|
-| Foco | Implementacao e gerenciamento | Design e tomada de decisão |
+| Foco | Implementação e gerenciamento | Design e tomada de decisão |
 | Estilo de questão | "Como você configura X?" | "Qual solução melhor atende estes requisitos?" |
-| Habilidades testadas | Comandos CLI, passos no portal | Selecao de serviços, trade-offs, arquitetura |
+| Habilidades testadas | Comandos CLI, passos no portal | Seleção de serviços, trade-offs, arquitetura |
 | Profundidade do cenário | Tarefas de serviço único | Cenários multi-serviço e multi-requisito |
 | Alinhamento com frameworks | N/A | Well-Architected Framework, CAF |
 
@@ -49,11 +49,11 @@ Os desafios sao organizados por domínio do exame. Dentro de cada domínio, os d
 
 Cada desafio segue um formato focado em design:
 
-1. **Cenário de Negocio** | Perfil da empresa com requisitos, restrições e orçamento
-2. **Habilidades do Exame Cobertas** | Topicos exatos do guia de estudo oficial
+1. **Cenário de Negócio** | Perfil da empresa com requisitos, restrições e orçamento
+2. **Habilidades do Exame Cobertas** | Tópicos exatos do guia de estudo oficial
 3. **Tarefas de Design** | "Projete uma solução que..." com requisitos específicos
-4. **Matriz de Decisao** | Compare opções de serviço com trade-offs
-5. **Validacao** | Implante uma prova de conceito para verificar o design
+4. **Matriz de Decisão** | Compare opções de serviço com trade-offs
+5. **Validação** | Implante uma prova de conceito para verificar o design
 6. **Diagrama de Arquitetura** | Visualize a solução
 7. **Verificação de Conhecimento** | Questoes de cenário no estilo do exame
 8. **Limpeza** | Scripts para excluir recursos e evitar custos
@@ -63,7 +63,7 @@ Cada desafio segue um formato focado em design:
 - **Assinatura do Azure** | [Conta Gratuita](https://azure.microsoft.com/free/) (crédito de $200) ou [Azure para Estudantes](https://azure.microsoft.com/free/students/) ($100)
 - **Conhecimento de AZ-104** | Familiaridade com administração do Azure (este exame se baseia nele)
 - **Azure CLI** instalado ou use o [Azure Cloud Shell](https://shell.azure.com)
-- **Compreensao conceitual** de redes, identidade, armazenamento e computação
+- **Compreensão conceitual** de redes, identidade, armazenamento e computação
 
 ## Recursos oficiais de estudo
 
