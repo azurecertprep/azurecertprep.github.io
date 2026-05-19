@@ -272,8 +272,8 @@ az monitor scheduled-query create \
   --name "alert-error-rate-spike" \
   --resource-group rg-contoso-prod \
   --scopes "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/components/ai-contoso-webapp" \
-  --condition "count > 0" \
-  --condition-query "let baseline = requests | where timestamp between (ago(7d) .. ago(1h)) | summarize baselineErrorRate = countif(success == false) * 100.0 / count(); let current = requests | where timestamp > ago(5m) | summarize currentErrorRate = countif(success == false) * 100.0 / count(); current | extend threshold = toscalar(baseline) * 3 | where currentErrorRate > threshold" \
+  --condition "count 'ErrorRateSpike' > 0" \
+  --condition-query ErrorRateSpike="let baseline = requests | where timestamp between (ago(7d) .. ago(1h)) | summarize baselineErrorRate = countif(success == false) * 100.0 / count(); let current = requests | where timestamp > ago(5m) | summarize currentErrorRate = countif(success == false) * 100.0 / count(); current | extend threshold = toscalar(baseline) * 3 | where currentErrorRate > threshold" \
   --evaluation-frequency 5m \
   --window-size 5m \
   --action-groups "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/actionGroups/ag-sre-team" \

@@ -109,8 +109,8 @@ az monitor scheduled-query create \
   --name "alert-exception-spike" \
   --resource-group rg-contoso-prod \
   --scopes "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/components/ai-contoso-webapp" \
-  --condition "count > 100" \
-  --condition-query "exceptions | where timestamp > ago(5m) | summarize count()" \
+  --condition "count 'ExceptionSpike' > 100" \
+  --condition-query ExceptionSpike="exceptions | where timestamp > ago(5m) | summarize count()" \
   --evaluation-frequency 5m \
   --window-size 5m \
   --action-groups "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/actionGroups/ag-deployment-rollback" \

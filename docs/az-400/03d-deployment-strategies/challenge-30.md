@@ -280,9 +280,10 @@ stages:
         displayName: 'Build Payment Service'
         dependsOn: BuildCore
         steps:
-          - task: DownloadBuildArtifacts@0
+          - task: DownloadPipelineArtifact@2
             inputs:
-              artifactName: 'core-package'
+              artifact: 'core-package'
+              path: '$(Pipeline.Workspace)/core-package'
           - script: |
               dotnet nuget add source $(Pipeline.Workspace)/core-package --name local
               dotnet publish src/PaymentService/PaymentService.csproj \
@@ -297,9 +298,10 @@ stages:
         displayName: 'Build Notification Service'
         dependsOn: BuildCore
         steps:
-          - task: DownloadBuildArtifacts@0
+          - task: DownloadPipelineArtifact@2
             inputs:
-              artifactName: 'core-package'
+              artifact: 'core-package'
+              path: '$(Pipeline.Workspace)/core-package'
           - script: |
               dotnet nuget add source $(Pipeline.Workspace)/core-package --name local
               dotnet publish src/NotificationService/NotificationService.csproj \

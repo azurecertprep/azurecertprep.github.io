@@ -166,11 +166,13 @@ jobs:
 Configure an Azure DevOps agent pool and agent:
 
 ```bash
-# Create an agent pool in Azure DevOps
-az pipelines pool create \
-  --name "contoso-linux-pool" \
-  --organization "https://dev.azure.com/contoso" \
-  --project "ContosoProject"
+# Create an agent pool in Azure DevOps (via REST API, as CLI only supports list/show)
+az devops invoke \
+  --area distributedtask \
+  --resource pools \
+  --org "https://dev.azure.com/contoso" \
+  --http-method POST \
+  --in-file - <<< '{"name": "contoso-linux-pool", "autoProvision": true}'
 
 # On the agent VM, download and configure the agent
 mkdir azagent && cd azagent

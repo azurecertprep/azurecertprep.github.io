@@ -240,10 +240,11 @@ client.trackDependency({
 az monitor app-insights web-test create \
   --name "contoso-web-availability" \
   --resource-group rg-contoso-prod \
+  --location "East US" \
   --defined-web-test-name "Homepage Health Check" \
-  --location "us-east-1" \
-  --location "eu-west-1" \
-  --location "ap-southeast-1" \
+  --locations Id="us-fl-mia-edge" \
+  --locations Id="emea-nl-ams-azr" \
+  --locations Id="apac-sg-sin-azr" \
   --kind "ping" \
   --frequency 300 \
   --timeout 120 \
