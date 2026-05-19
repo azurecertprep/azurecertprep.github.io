@@ -645,11 +645,12 @@ az monitor activity-log list \
   --output table
 ```
 
-**Root cause:** The App Service plan is on the Free or Basic tier, which does not support auto-swap.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The App Service plan is on the Free or Basic tier, which does not support auto-swap.
+
 
 **Fix:**
 ```bash
@@ -681,11 +682,12 @@ az vmss list-instances \
   --output table
 ```
 
-**Root cause:** The first batch of updated instances is failing health checks. The `maxUnhealthyUpgradedInstancePercent` threshold is met, blocking further updates.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The first batch of updated instances is failing health checks. The `maxUnhealthyUpgradedInstancePercent` threshold is met, blocking further updates.
+
 
 **Fix:**
 ```bash
@@ -711,11 +713,12 @@ az webapp config appsettings list \
   --query "[?name=='WEBSITE_SWAP_WARMUP_PING_PATH']"
 ```
 
-**Root cause:** No warm-up path is configured. Azure performs the swap without ensuring the application is fully initialized.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** No warm-up path is configured. Azure performs the swap without ensuring the application is fully initialized.
+
 
 **Fix:**
 ```bash

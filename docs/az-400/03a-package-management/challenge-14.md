@@ -373,7 +373,7 @@ npm ERR! You cannot publish over the previously published versions: 1.3.0
 ```
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Root cause**: Both CI runs calculated the version from the same git state. Race conditions in tag-based versioning occur when parallel pipelines read the same "latest" tag before either has pushed a new one.
 

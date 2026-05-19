@@ -515,7 +515,7 @@ az devops extension install \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The Azure DevOps Analytics extension must be installed on the organization. The PAT must have Analytics (read) scope. Verify with:
 
@@ -541,7 +541,7 @@ gh api repos/{owner}/{repo}/deployments --jq '.[].environment' | sort -u
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** GitHub deployment environments are case-sensitive. Ensure your workflow creates deployments with a consistent environment name, and queries match exactly.
 
@@ -553,7 +553,7 @@ Old PRs that sat open for weeks skew the average lead time.
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Filter to PRs created within the measurement window, or use the p50 (median) instead of mean:
 

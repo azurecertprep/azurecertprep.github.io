@@ -672,7 +672,7 @@ stages:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -719,7 +719,7 @@ After migration, deployments to production happen without any approval:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Environment checks must be configured in the Azure DevOps UI (they cannot be set via YAML):
 

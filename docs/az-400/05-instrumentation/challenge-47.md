@@ -376,7 +376,7 @@ kubectl get configmap container-azm-ms-agentconfig -n kube-system -o yaml
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Update the ConfigMap to include the new namespace:
 
@@ -397,7 +397,7 @@ The Application Map shows all services but trace correlation breaks between the 
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the HTTP client library propagates `traceparent` and `tracestate` headers. In Node.js with Application Insights:
 

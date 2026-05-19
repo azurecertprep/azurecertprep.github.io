@@ -460,7 +460,7 @@ A developer adds `echo $CONNECTION_STRING` for debugging and the full database p
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix (immediate):** Delete the pipeline run logs:
 
@@ -494,7 +494,7 @@ Developers complain that gitleaks blocks commits containing test API keys in tes
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Update `.gitleaks.toml` to allowlist test patterns:
 

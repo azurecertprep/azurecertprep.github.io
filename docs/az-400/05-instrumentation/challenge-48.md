@@ -462,7 +462,7 @@ gh run list --workflow ci.yml --limit 10 --json conclusion,status \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure that conditional jobs handle skip conditions correctly:
 
@@ -497,7 +497,7 @@ curl -X POST "$SLACK_WEBHOOK_URL" \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Generate a new webhook URL in Slack (Apps > Incoming Webhooks > Add new) and update the repository secret:
 

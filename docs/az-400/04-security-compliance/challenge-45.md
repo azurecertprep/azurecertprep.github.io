@@ -336,7 +336,7 @@ az security security-connector show \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -355,7 +355,7 @@ The MicrosoftSecurityDevOps@1 task runs successfully but no annotations appear o
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the pipeline triggers on pull requests and publishes results:
 

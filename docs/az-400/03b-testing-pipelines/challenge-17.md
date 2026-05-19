@@ -534,7 +534,7 @@ The team observes:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 ### Root cause analysis
 

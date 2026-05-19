@@ -460,7 +460,7 @@ gh api repos/contoso/platform-monorepo/branches/main/protection/required_pull_re
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Add the deploy path to CODEOWNERS and ensure code owner review is required:
 
@@ -500,7 +500,7 @@ git describe --tags
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Clean up tags and configure `git describe` to filter properly:
 

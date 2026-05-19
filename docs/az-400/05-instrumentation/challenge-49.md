@@ -376,7 +376,7 @@ A query filtering on `customDimensions.Environment == "production"` returns empt
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -404,7 +404,7 @@ A log-based alert for "error rate spike" fires every 5 minutes even during norma
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Adjust the baseline window to exclude recent data and add a minimum request count:
 

@@ -365,7 +365,7 @@ A developer creates a new pipeline and references the `Azure-Prod` service conne
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -383,7 +383,7 @@ After moving users from Project Administrators to team-specific groups, users re
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

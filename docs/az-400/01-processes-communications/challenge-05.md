@@ -804,7 +804,7 @@ Azure DevOps Wiki supports Mermaid, but the syntax may differ slightly from GitH
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Azure DevOps Mermaid support may lag behind GitHub. Avoid newer Mermaid features and test in the Azure DevOps Wiki editor. Azure DevOps uses `::: mermaid` syntax (not triple backticks) to render diagrams in wiki pages.
 
@@ -831,7 +831,7 @@ gh pr list --state merged --limit 10 --json number,labels \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Release-drafter groups PRs by label. If PRs have no labels, they fall into "Other changes" (if configured) or are omitted. Enable autolabeler in `.github/release-drafter.yml` or manually label PRs.
 
@@ -849,7 +849,7 @@ gh api repos/{owner}/{repo}/pages/builds --jq '.[0] | {status, error}'
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the source branch and path are correct. If using the `workflow` build type, verify the workflow has `pages: write` and `id-token: write` permissions.
 

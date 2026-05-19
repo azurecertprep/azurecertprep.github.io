@@ -831,7 +831,7 @@ gh api repos/{owner}/contoso-webapp/hooks/$HOOK_ID/deliveries/{delivery_id} \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The webhook secret configured in GitHub must match the `GITHUB_WEBHOOK_SECRET` environment variable in the Function App. Regenerate and sync:
 
@@ -873,7 +873,7 @@ curl -X POST "$TEAMS_WEBHOOK_URL" \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Teams incoming webhook URLs expire when the connector is removed or the channel is deleted. Recreate the connector in Teams and update the `TEAMS_WEBHOOK_URL` app setting.
 
@@ -901,7 +901,7 @@ gh api repos/{owner}/contoso-webapp/installations \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The Azure Boards GitHub App may have lost access due to organization permission changes. Re-authorize the app in GitHub organization settings, and verify the repository is still linked in Azure DevOps Project Settings > GitHub connections.
 

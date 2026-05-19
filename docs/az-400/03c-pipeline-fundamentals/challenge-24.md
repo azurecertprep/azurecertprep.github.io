@@ -579,7 +579,7 @@ jobs:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The job does not reference the `production` environment, so no protection rules are evaluated. Add the `environment` key:
 
@@ -615,7 +615,7 @@ concurrency:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Scope concurrency groups to the specific service:
 
@@ -656,7 +656,7 @@ jobs:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Environment names in GitHub are case-sensitive. If the environment was created as `production` (lowercase), the workflow must reference it exactly:
 

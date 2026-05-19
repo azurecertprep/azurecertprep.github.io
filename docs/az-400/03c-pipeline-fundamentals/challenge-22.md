@@ -786,7 +786,7 @@ on:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Use only `paths` with the ignore pattern removed, or handle exclusions differently. `paths` and `paths-ignore` are mutually exclusive:
 
@@ -833,7 +833,7 @@ jobs:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Remove the cycle. Build must come before test:
 
@@ -878,7 +878,7 @@ schedules:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the schedule branch is included in the pipeline trigger, or set `always: true`:
 

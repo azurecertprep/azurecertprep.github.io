@@ -638,7 +638,7 @@ az devcenter admin catalog get-sync-error-details \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The catalog path was configured incorrectly. The environment definitions are at the repo root, not in a subfolder:
 
@@ -679,7 +679,7 @@ ERROR: AuthorizationFailed - The client does not have authorization to perform a
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The project environment type's managed identity needs permissions on the target subscription:
 

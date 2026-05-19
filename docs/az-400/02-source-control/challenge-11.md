@@ -364,7 +364,7 @@ git rebase -i HEAD~5
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Resolve each conflict as it appears, or abort and use a different strategy:
 
@@ -400,7 +400,7 @@ git filter-repo --invert-paths --path secrets.json
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Either use the `--force` flag or work on a fresh clone:
 

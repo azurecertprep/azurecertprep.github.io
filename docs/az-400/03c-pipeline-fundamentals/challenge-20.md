@@ -623,7 +623,7 @@ stages:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Variables defined at stage level are only available within that stage. To share values across stages, use pipeline artifacts or output variables:
 

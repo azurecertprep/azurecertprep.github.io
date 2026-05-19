@@ -343,7 +343,7 @@ Diagnose and fix the issue. Common causes:
 4. Token does not have `write:packages` scope
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Cause 1: Missing permissions in GitHub Actions workflow**
 

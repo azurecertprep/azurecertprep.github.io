@@ -303,7 +303,7 @@ A workflow that auto-formats code and pushes the result fails with "refusing to 
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Use a GitHub App token instead of GITHUB_TOKEN:
 
@@ -343,7 +343,7 @@ gh api /app/installations/{installation_id}/repositories --jq '.repositories[].f
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Update the app installation to include the missing repository via Organization Settings > Installed GitHub Apps > contoso-deploy-bot > Configure > add the repository.
 

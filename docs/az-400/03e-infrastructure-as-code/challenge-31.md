@@ -911,7 +911,7 @@ Lock Info:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

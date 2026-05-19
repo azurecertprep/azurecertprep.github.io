@@ -265,7 +265,7 @@ az ad app federated-credential list --id $OBJECT_ID --query "[].{name:name, subj
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Verify the workflow trigger matches the federated credential subject. If the workflow runs on `refs/heads/develop` but the credential specifies `refs/heads/main`, add a new credential:
 
@@ -295,7 +295,7 @@ az role assignment list --assignee $IDENTITY_PRINCIPAL_ID --all
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

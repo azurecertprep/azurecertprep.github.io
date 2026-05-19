@@ -710,11 +710,10 @@ az webapp traffic-routing show \
   --resource-group rg-contoso-prod
 ```
 
-**Root cause:** Traffic routing was still configured to send 10% to the staging slot from a previous canary test. After the swap, the "staging" slot now contains the OLD (broken) production code, and 10% of traffic goes there.
-
-
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** Traffic routing was still configured to send 10% to the staging slot from a previous canary test. After the swap, the "staging" slot now contains the OLD (broken) production code, and 10% of traffic goes there.
 
 **Fix:**
 ```bash
@@ -730,11 +729,10 @@ az webapp traffic-routing clear \
 
 **Symptom:** The frontend deployment completes before the Payment Service API is ready, causing UI errors for 2 minutes.
 
-**Root cause:** The pipeline stages did not have `dependsOn` configured between frontend and backend deployments.
-
-
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The pipeline stages did not have `dependsOn` configured between frontend and backend deployments.
 
 **Fix:**
 ```yaml
@@ -750,11 +748,10 @@ az webapp traffic-routing clear \
 
 **Symptom:** After deploying the hotfix from `release/2.4.0`, the cherry-pick to `main` fails with merge conflicts because `main` has diverged significantly.
 
-**Root cause:** The file structure on `main` changed (refactoring moved the affected code), so the cherry-pick cannot apply cleanly.
-
-
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The file structure on `main` changed (refactoring moved the affected code), so the cherry-pick cannot apply cleanly.
 
 **Fix:** Instead of an automated cherry-pick, create a PR with the logical fix applied to the new file structure:
 ```bash
@@ -772,7 +769,6 @@ gh pr create \
   --body "Manual port of hotfix v2.4.1 to main branch due to cherry-pick conflicts." \
   --base main
 ```
-
 
 </details>
 ## Knowledge check

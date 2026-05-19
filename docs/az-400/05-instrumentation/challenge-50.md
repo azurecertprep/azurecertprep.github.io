@@ -503,7 +503,7 @@ dependencies
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the payment service SDK is configured for W3C trace context propagation. For Node.js:
 
@@ -536,7 +536,7 @@ VMProcess
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Once the process is identified, correlate with the deployment to determine if the new code version introduced a CPU regression. Check for missing database indexes, inefficient loops, or configuration changes.
 

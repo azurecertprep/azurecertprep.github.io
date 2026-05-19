@@ -633,7 +633,7 @@ gh run view <run-id> --log
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the Personal Access Token or GitHub App token stored in `PROJECT_TOKEN` has the `project` scope. Organization projects require `org:read` scope as well.
 
@@ -656,7 +656,7 @@ az boards work-item show --id 1234 --fields "System.State"
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the Azure Boards GitHub App is installed on the repository and that the keyword `Fixes` (not just `AB#`) is used. The connection must be configured in Azure DevOps under Project Settings > GitHub connections.
 
@@ -683,7 +683,7 @@ gh api orgs/{org}/teams/backend-team/repos --jq '.[].name'
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Branch protection must have "Require review from Code Owners" enabled. The team referenced in CODEOWNERS must have at least read access to the repository.
 

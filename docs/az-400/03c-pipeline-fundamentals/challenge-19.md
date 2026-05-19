@@ -438,7 +438,7 @@ permissions:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Add `packages: write` permission to allow pushing to GHCR:
 

@@ -793,11 +793,12 @@ jobs:
 3. Review the deployment diff -- a new column was added to the `Payments` table in code but the Entity Framework migration was never applied to the production database
 4. The staging environment had the migration applied manually during development, but no automated migration step exists in the CD pipeline
 
-**Root cause:** The CD pipeline deploys the application code but does not run database migrations. The staging environment had the migration applied out-of-band, so integration tests passed.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The CD pipeline deploys the application code but does not run database migrations. The staging environment had the migration applied out-of-band, so integration tests passed.
+
 
 **Fix:**
 
@@ -850,7 +851,7 @@ public static bool IsValidCardNumber(string cardNumber)
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

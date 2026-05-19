@@ -442,7 +442,7 @@ pool:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Add the capability to the agent or set it as an environment variable:
 

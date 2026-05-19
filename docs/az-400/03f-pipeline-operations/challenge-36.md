@@ -574,7 +574,7 @@ Production release artifacts are being deleted after 30 days despite a 365-day p
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -618,7 +618,7 @@ az acr run --registry contosoregistry --cmd "acr purge \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

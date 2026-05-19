@@ -316,7 +316,7 @@ git merge main
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Resolve the conflict by keeping the hotfix logic in the refactored structure:
 

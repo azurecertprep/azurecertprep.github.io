@@ -674,11 +674,12 @@ az appconfig feature show \
   --query "{state:state, lastModified:lastModified}"
 ```
 
-**Root cause:** The `CacheExpirationInterval` is set too high (default may have been overridden), or the Azure App Configuration middleware (`app.UseAzureAppConfiguration()`) is missing from the pipeline.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The `CacheExpirationInterval` is set too high (default may have been overridden), or the Azure App Configuration middleware (`app.UseAzureAppConfiguration()`) is missing from the pipeline.
+
 
 **Fix:**
 ```csharp
@@ -700,11 +701,12 @@ app.MapControllers();
 
 **Symptom:** Internal team members (with @contoso.com email) are not seeing the new feature even though the targeting filter includes them at 100%.
 
-**Root cause:** The `IHttpContextAccessor` is not registered in the DI container, so the `HttpContext` is null and the targeting context resolver returns "anonymous" with no groups.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The `IHttpContextAccessor` is not registered in the DI container, so the `HttpContext` is null and the targeting context resolver returns "anonymous" with no groups.
+
 
 **Fix:**
 ```csharp
@@ -728,11 +730,12 @@ az appconfig feature list \
   --query "[].{label:label, state:state}"
 ```
 
-**Root cause:** The flag was enabled with label `staging` but the production app is configured to read label `production`.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The flag was enabled with label `staging` but the production app is configured to read label `production`.
+
 
 **Fix:**
 ```bash

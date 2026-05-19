@@ -582,7 +582,7 @@ The pipeline always reports cache miss despite having a cache configuration:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -613,7 +613,7 @@ Test sharding works but the coverage report shows only 25% (one shard's coverage
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

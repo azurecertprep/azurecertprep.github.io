@@ -434,7 +434,7 @@ git push origin main
 **If protection is not working, verify:**
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 ```bash
 gh api repos/{owner}/{repo}/branches/main/protection \
@@ -453,7 +453,7 @@ gh api repos/{owner}/{repo}/branches/main/protection \
 The status check context names must match exactly what your CI reports.
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 ```bash
 # List recent check runs to see their exact names
@@ -474,7 +474,7 @@ gh api repos/{owner}/{repo}/branches/main/protection/required_status_checks \
 After a reviewer approves, the developer pushes new commits. The old approval should be dismissed.
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 ```bash
 # Verify dismiss_stale_reviews is enabled

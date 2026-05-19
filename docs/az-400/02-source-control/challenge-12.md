@@ -565,7 +565,7 @@ git sparse-checkout list
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Add the missing dependency paths to sparse-checkout:
 
@@ -614,7 +614,7 @@ git log --oneline -1
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Update the submodule to match what the parent repo expects:
 

@@ -513,7 +513,7 @@ gh api repos/contoso/platform-api/branches/main/protection/required_status_check
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: The required status check name `ci/build` must match the `name:` field of the job, not the workflow name. Update the workflow job name:
 
@@ -559,7 +559,7 @@ gh api repos/contoso/platform-api/branches/main/protection/required_pull_request
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: The team must have at least write access to the repository, and code owner reviews must be enabled:
 

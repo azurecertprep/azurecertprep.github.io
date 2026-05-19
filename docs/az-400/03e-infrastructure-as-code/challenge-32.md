@@ -513,7 +513,7 @@ az vm extension list --resource-group rg-contoso-vms --vm-name vm-contoso-web-01
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -557,7 +557,7 @@ New-GuestConfigurationPackage `
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

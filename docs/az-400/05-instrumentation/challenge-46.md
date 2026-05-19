@@ -398,7 +398,7 @@ az rest --method get \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the timestamp is in UTC ISO 8601 format and the service principal has Contributor access to the Application Insights resource.
 
@@ -420,7 +420,7 @@ az monitor action-group show \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** For Azure DevOps pipelines, use a service hook or Azure Function intermediary that authenticates with a PAT. For GitHub Actions, use the `repository_dispatch` event with a webhook-to-dispatch proxy:
 

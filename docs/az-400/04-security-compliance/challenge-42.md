@@ -347,7 +347,7 @@ az role assignment list \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -379,7 +379,7 @@ az role assignment list --assignee $WEBAPP_IDENTITY --all \
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

@@ -540,11 +540,12 @@ az webapp config appsettings list \
   --query "[?slotSetting==``true``].{name:name, slotSetting:slotSetting}"
 ```
 
-**Root cause:** Connection strings were not marked as slot settings, so they swapped with the code.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** Connection strings were not marked as slot settings, so they swapped with the code.
+
 
 **Fix:**
 ```bash
@@ -586,11 +587,12 @@ az network traffic-manager profile show \
   --query "{ttl:dnsConfig.ttl, routingMethod:trafficRoutingMethod}"
 ```
 
-**Root cause:** The DNS TTL was set to 300 seconds (5 minutes). Clients cache the DNS response, so weight changes take time to propagate. Additionally, Traffic Manager weighted routing is probabilistic at the DNS level, not per-request.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The DNS TTL was set to 300 seconds (5 minutes). Clients cache the DNS response, so weight changes take time to propagate. Additionally, Traffic Manager weighted routing is probabilistic at the DNS level, not per-request.
+
 
 **Fix:**
 ```bash
@@ -607,11 +609,12 @@ az network traffic-manager profile update \
 
 **Symptom:** After swap, the first requests to production take 30+ seconds, causing timeouts.
 
-**Root cause:** The application initialization (loading caches, warming JIT) was not completed before swap.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The application initialization (loading caches, warming JIT) was not completed before swap.
+
 
 **Fix:** Configure application initialization settings:
 ```bash

@@ -376,7 +376,7 @@ TypeError: AuthClient.validateToken is not a function
 The Dependabot PR is one of 12 open dependency updates. The team needs a strategy to handle this.
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Root cause**: Dependabot updated a package across a major version boundary, introducing a breaking API change. The `validateToken` method was renamed to `verifyToken` in version 2.0.0.
 

@@ -424,7 +424,7 @@ The CodeQL workflow completes but reports zero results with a warning about no s
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Ensure the build step runs between `init` and `analyze`:
 
@@ -450,7 +450,7 @@ Dependabot opens a PR but the CI pipeline fails because `package-lock.json` is o
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Add a `postUpdateOptions` section to the Dependabot config or add a workflow to regenerate lockfiles:
 

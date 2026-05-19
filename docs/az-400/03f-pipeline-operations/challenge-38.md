@@ -834,7 +834,7 @@ The pipeline fails at the coverage gate with "80% required, got 78.5%". One deve
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Add missing test coverage rather than lowering the threshold:
 
@@ -891,7 +891,7 @@ Production deployment reports success but users see the old version. The slot sw
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

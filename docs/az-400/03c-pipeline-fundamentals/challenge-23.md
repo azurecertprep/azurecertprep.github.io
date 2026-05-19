@@ -833,7 +833,7 @@ jobs:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Explicitly pass required secrets or use `secrets: inherit`:
 
@@ -871,7 +871,7 @@ parameters:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Pass an object (list) not a string:
 
@@ -901,7 +901,7 @@ steps:
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Use the full ref path:
 

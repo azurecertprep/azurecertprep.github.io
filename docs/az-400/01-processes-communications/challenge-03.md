@@ -533,7 +533,7 @@ gh api repos/{owner}/{repo}/commits/{sha} --jq '.commit.message'
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** The Azure Boards GitHub App must be installed on the repository, and the repository must be linked in the Azure DevOps project settings under Boards > GitHub connections. The `AB#` syntax only works for repositories that are explicitly connected.
 
@@ -545,7 +545,7 @@ A developer rebased and got a merge commit with message "Merge branch 'main' int
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Update commitlint.config.js to ignore merge commits:
 
@@ -567,7 +567,7 @@ Automated PRs from Dependabot do not contain issue references.
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:** Add a condition to skip the check for bot accounts:
 

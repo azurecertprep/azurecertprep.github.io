@@ -427,7 +427,7 @@ git lfs status
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Pull the actual LFS content:
 
@@ -461,7 +461,7 @@ file assets/textures/hero_diffuse.psd
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix**: Address the bandwidth issue:
 

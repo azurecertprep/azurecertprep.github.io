@@ -639,7 +639,7 @@ The pipeline shows 100% test pass rate, but developers report bugs in production
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 
@@ -678,7 +678,7 @@ Tests are being retried, but there is no visibility into which tests are flaky. 
 
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
 
 **Fix:**
 

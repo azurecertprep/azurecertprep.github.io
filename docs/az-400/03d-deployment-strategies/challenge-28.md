@@ -615,11 +615,12 @@ az role assignment list \
   --query "[?roleDefinitionName=='AcrPush'].{principal:principalName, role:roleDefinitionName}"
 ```
 
-**Root cause:** The service principal in the AZURE_CREDENTIALS secret only has `AcrPull` role, not `AcrPush`.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The service principal in the AZURE_CREDENTIALS secret only has `AcrPull` role, not `AcrPush`.
+
 
 **Fix:**
 ```bash
@@ -653,11 +654,12 @@ az containerapp logs show \
   --type console
 ```
 
-**Root cause:** The Dockerfile exposes port 8080 but the Container App ingress is configured for port 80.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The Dockerfile exposes port 8080 but the Container App ingress is configured for port 80.
+
 
 **Fix:**
 ```bash
@@ -678,11 +680,12 @@ az containerapp ingress update \
 
 **Symptom:** The pipeline fails because Trivy reports a CRITICAL vulnerability in a base image package that has no fix available yet.
 
-**Root cause:** The vulnerability is in a system package in the base image with no upstream fix.
-
 
 <details>
-<summary>Solution</summary>
+<summary>Show solution</summary>
+
+**Root cause:** The vulnerability is in a system package in the base image with no upstream fix.
+
 
 **Fix:** Create a `.trivyignore` file in the project root:
 ```
