@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![AZ-104](https://img.shields.io/badge/AZ--104-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-104/coverage-matrix)
 [![AZ-305](https://img.shields.io/badge/AZ--305-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-305/coverage-matrix)
+[![AZ-400](https://img.shields.io/badge/AZ--400-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-400/coverage-matrix)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open%20Lab-181717?logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
 ### Don't just study — build it.
@@ -33,8 +34,8 @@ Your Codespace comes pre-configured with:
 |------|-------|-----------|--------|
 | **AZ-104** | Azure Administrator | 28 | Available |
 | **AZ-305** | Solutions Architect Expert | 50 | Available |
-| AZ-400 | DevOps Engineer Expert | — | Planned |
-| AZ-500 | Azure Security Engineer | — | Planned |
+| **AZ-400** | DevOps Engineer Expert | 51 | Available |
+| SC-500 | Cloud and AI Security Engineer | — | Planned |
 
 ## AZ-104: Azure Administrator
 
@@ -59,6 +60,19 @@ Your Codespace comes pre-configured with:
 | Business Continuity | 15-20% | 14-22 | High availability, backup, disaster recovery, data redundancy |
 | Data Storage | 15-20% | 23-32 | SQL, Cosmos DB, data integration, storage strategies |
 | Infrastructure | 25-30% | 33-50 | Compute, networking, containers, migrations, app architecture |
+
+## AZ-400: DevOps Engineer Expert
+
+51 challenges covering **100% of the exam domains** (as of April 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Processes & Communications | 10-15% | 01-06 | GitHub Flow, work tracking, DevOps metrics, collaboration |
+| Source Control | 10-15% | 07-12 | Branching strategies, PR workflows, Git security, monorepos |
+| Build & Release Pipelines | 50-55% | 13-38 | Packages, testing, YAML pipelines, deployment, IaC, operations |
+| Security & Compliance | 10-15% | 39-45 | Secret scanning, SAST/DAST, container security, governance |
+| Instrumentation | 5-10% | 46-50 | App Insights, monitoring, alerting, SRE practices |
+| Capstone | All | 51 | End-to-end DevOps scenario |
 
 **Estimated total cost: ~$5-10** (with cleanup after each challenge)
 
