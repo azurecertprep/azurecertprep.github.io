@@ -86,12 +86,23 @@ const config = {
             label: 'AZ-400',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'sc500Sidebar',
+            position: 'left',
+            label: 'SC-500',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },
           {
             href: 'https://github.com/azurecertprep/azurecertprep.github.io',
             label: 'GitHub',
+            position: 'right',
+          },
+          {
+            href: 'https://github.com/azurecertprep/azurecertprep.github.io/stargazers',
+            label: '⭐ Star',
             position: 'right',
           },
           {
@@ -118,6 +129,10 @@ const config = {
               {
                 label: 'AZ-400: DevOps Engineer',
                 to: '/docs/az-400/overview',
+              },
+              {
+                label: 'SC-500: Cloud & AI Security',
+                to: '/docs/sc-500/overview',
               },
             ],
           },
