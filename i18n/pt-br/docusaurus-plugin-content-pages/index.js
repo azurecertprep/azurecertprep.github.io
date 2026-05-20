@@ -473,8 +473,8 @@ function ExamRoadmap() {
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (51 desafios)</span></td>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}>AZ-500</td>
-              <td style={{textAlign: 'center'}}>Azure Security Engineer</td>
+              <td style={{textAlign: 'center'}}>SC-500</td>
+              <td style={{textAlign: 'center'}}>Cloud and AI Security Engineer <small style={{opacity: 0.7}}>(substitui AZ-500)</small></td>
               <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planejado</span></td>
             </tr>
           </tbody>
