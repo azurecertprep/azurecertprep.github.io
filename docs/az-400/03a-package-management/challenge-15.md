@@ -238,7 +238,7 @@ jobs:
       - name: Check for unknown licenses
         run: |
           UNKNOWN=$(license-checker --production --unknown | wc -l)
-          if [ "$UNKNOWN" -gt 1 ]; then
+          if [ "$UNKNOWN" -gt 0 ]; then
             echo "ERROR: Found packages with unknown licenses"
             license-checker --production --unknown
             exit 1

@@ -92,7 +92,7 @@ PaaS is NOT ideal when:
 az appservice list-locations --sku F1 --output table
 
 # List available runtimes for App Service
-az webapp list-runtimes --output table
+az webapp list-runtimes --os linux --output table
 ```
 :::
 
@@ -113,22 +113,22 @@ az webapp list-runtimes --output table
     {
       id: 'az900-05-q1',
       question: 'In the PaaS model, who is responsible for managing the operating system?',
-      options: ['The customer', 'The cloud provider', 'A third-party vendor', 'No one — there is no OS'],
-      correctAnswer: 1,
+      options: ['The customer', 'A third-party vendor', 'The cloud provider', 'No one — there is no OS'],
+      correctAnswer: 2,
       explanation: 'In PaaS, the cloud provider manages the operating system, including patches and updates. The customer only manages their applications and data.'
     },
     {
       id: 'az900-05-q2',
       question: 'A developer wants to deploy a Python web application without managing servers or OS patches. Which service model is most appropriate?',
-      options: ['IaaS', 'PaaS', 'SaaS', 'On-premises'],
-      correctAnswer: 1,
+      options: ['PaaS', 'IaaS', 'SaaS', 'On-premises'],
+      correctAnswer: 0,
       explanation: 'PaaS (like Azure App Service) allows developers to deploy applications without managing the underlying infrastructure or OS. They simply deploy their code.'
     },
     {
       id: 'az900-05-q3',
       question: 'Which of the following is an example of PaaS in Azure?',
-      options: ['Azure Virtual Machines', 'Azure App Service', 'Microsoft 365', 'Azure Virtual Desktop'],
-      correctAnswer: 1,
+      options: ['Azure Virtual Machines', 'Microsoft 365', 'Azure Virtual Desktop', 'Azure App Service'],
+      correctAnswer: 3,
       explanation: 'Azure App Service is PaaS — it provides a platform for hosting web applications without managing the underlying infrastructure. VMs are IaaS, M365 is SaaS.'
     },
     {
@@ -136,13 +136,14 @@ az webapp list-runtimes --output table
       question: 'What is a disadvantage of PaaS compared to IaaS?',
       options: ['Higher cost', 'Less control over the operating system', 'Slower deployment', 'No auto-scaling'],
       correctAnswer: 1,
+
       explanation: 'The main trade-off with PaaS is reduced control. You cannot access or configure the underlying OS, install custom drivers, or make OS-level changes. In exchange, you get simpler management.'
     },
     {
       id: 'az900-05-q5',
       question: 'Azure SQL Database is an example of which cloud service model?',
-      options: ['IaaS', 'PaaS', 'SaaS', 'Serverless only'],
-      correctAnswer: 1,
+      options: ['IaaS', 'Serverless only', 'PaaS', 'SaaS'],
+      correctAnswer: 2,
       explanation: 'Azure SQL Database is PaaS — Microsoft manages the SQL Server infrastructure, patching, backups, and high availability. You manage the database schema and data.'
     }
   ]}

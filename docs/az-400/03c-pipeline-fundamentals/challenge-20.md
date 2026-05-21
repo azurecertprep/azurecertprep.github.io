@@ -671,7 +671,7 @@ stages:
       "Use variable groups to store values at runtime"
     ],
     correctIndex: 0,
-    explanation: "Cross-stage variable sharing requires setting an output variable with isOutput=true and a named step, then referencing it in the downstream stage using the stageDependencies.StageName.JobName.outputs['stepName.variableName'] expression. This is a compile-time expression using $[ ] syntax."
+    explanation: "Cross-stage variable sharing requires setting an output variable with isOutput=true and a named step, then referencing it in the downstream stage using the stageDependencies.StageName.JobName.outputs['stepName.variableName'] expression. This uses $[ ] runtime expression syntax, which is evaluated during pipeline execution."
   },
   {
     question: "What is the key difference between '${{ }}' and '$[ ]' expressions in Azure Pipelines?",

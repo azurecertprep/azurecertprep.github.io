@@ -293,7 +293,7 @@ Create a custom analytics widget for the team dashboard:
 # URL: https://analytics.dev.azure.com/contoso/ContosoAPI/_odata/v4.0-preview/PipelineRuns
 #   ?$apply=filter(
 #     Pipeline/PipelineName eq 'contoso-api-ci'
-#     and CompletedDate ge 2024-01-01Z
+#     and CompletedDate ge 2024-01-01T00:00:00Z
 #   )
 #   /groupby(
 #     (CompletedDateSK, RunOutcome),

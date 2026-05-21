@@ -127,10 +127,10 @@ az advisor recommendation list --query "[0:5].{Category:category, Impact:impact,
     },
     {
       id: 'az900-23-q2',
-      question: 'What is the difference between Azure Service Health and the public Azure Status page (status.azure.com)?',
+      question: 'What is the difference between Azure Service Health and the public Azure Status page (azure.status.microsoft)?',
       options: ['They show the same information', 'Service Health is personalized to your resources; Azure Status shows global status', 'Azure Status is more detailed', 'Service Health is only for enterprise customers'],
       correctAnswer: 1,
-      explanation: 'Azure Service Health is personalized — it only shows issues that affect YOUR specific services and regions. The Azure Status page (status.azure.com) shows a broad, global view of all Azure services.'
+      explanation: 'Azure Service Health is personalized — it only shows issues that affect YOUR specific services and regions. The Azure Status page (azure.status.microsoft) shows a broad, global view of all Azure services.'
     },
     {
       id: 'az900-23-q3',
