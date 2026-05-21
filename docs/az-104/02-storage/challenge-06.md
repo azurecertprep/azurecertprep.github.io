@@ -337,7 +337,7 @@ az storage account or-policy create \
   --resource-group $RG \
   --source-account $STORAGE_PRIMARY \
   --destination-account $STORAGE_SECONDARY \
-  --rules @replication-rules.json
+  --policy @replication-rules.json
 ```
 
 </TabItem>
