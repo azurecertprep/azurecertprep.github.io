@@ -255,7 +255,7 @@ For Relecloud's customer platform, **user flows** are sufficient because the req
 <details>
 <summary>2. The backend API on App Service needs to access Azure SQL Database, Key Vault, and a third-party payment API. Which authentication method should you use for each?</summary>
 
-**Azure SQL and Key Vault: Managed Identity.** The App Service's managed identity authenticates directly to these services without any stored credentials. For Azure SQL, create a contained database user mapped to the identity. For Key Vault, assign an access policy or RBAC role granting secret read permissions.
+**Azure SQL and Key Vault: Managed Identity.** The App Service's managed identity authenticates directly to these services without any stored credentials. For Azure SQL, create a contained database user mapped to the identity. For Key Vault, assign an RBAC role (e.g., Key Vault Secrets User) granting secret read permissions.
 
 **Third-party payment API: Client credentials stored in Key Vault.** Since managed identity only works with Azure and Microsoft services that support Entra ID authentication, store the payment API key/secret in Key Vault and retrieve it at runtime using the managed identity. This eliminates credentials from code and configuration files.
 
@@ -297,7 +297,7 @@ az keyvault create \
   --name "kv-ch04-${SUFFIX}" \
   --resource-group rg-az305-challenge04 \
   --location eastus \
-  --enable-rbac-authorization false
+  --enable-rbac-authorization true
 ```
 
 ```bash
@@ -379,12 +379,14 @@ No password, certificate, or connection string was stored anywhere in the applic
 
 ### Step 5: revoke access -- observe instant denial
 
-Remove the access policy to simulate a security response:
+Remove the role assignment to simulate a security response:
 
 ```bash
-az keyvault delete-policy \
-  --name "kv-ch04-${SUFFIX}" \
-  --object-id "$PRINCIPAL_ID"
+KV_ID=$(az keyvault show --name "kv-ch04-${SUFFIX}" --query id -o tsv)
+az role assignment delete \
+  --assignee "$PRINCIPAL_ID" \
+  --role "Key Vault Secrets User" \
+  --scope "$KV_ID"
 ```
 
 Now attempt to read the secret again:
@@ -399,7 +401,7 @@ az keyvault secret show \
 The command fails immediately with an authorization error. There is no grace period, no cached credential that still works, no rotation delay.
 
 :::note[Architect Insight]
-Compare this to traditional credential-based auth: if you rotate a password, the old password may remain valid until expiry. With managed identity, removing the access policy produces INSTANT revocation. This is a critical exam topic -- AZ-305 asks about "minimizing the window of exposure" and managed identity reduces that window to zero.
+Compare this to traditional credential-based auth: if you rotate a password, the old password may remain valid until expiry. With managed identity, removing the role assignment produces INSTANT revocation. This is a critical exam topic -- AZ-305 asks about "minimizing the window of exposure" and managed identity reduces that window to zero.
 :::
 
 ### Step 6: restore access and confirm recovery

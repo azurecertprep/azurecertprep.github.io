@@ -159,7 +159,7 @@ az keyvault create \
   --name kv-az305-ch08-$RANDOM \
   --resource-group rg-az305-challenge08 \
   --location eastus \
-  --enable-rbac-authorization false \
+  --enable-rbac-authorization true \
   --enable-purge-protection true \
   --retention-days 7
 ```
@@ -191,11 +191,10 @@ az role assignment create \
   --scope "$KV_ID"
 ```
 
-5. Verify the managed identity can access secrets (via policy listing):
+5. Verify the managed identity has the role assignment:
 
 ```bash
-az keyvault show --name "$KV_NAME" \
-  --query "properties.accessPolicies[?objectId=='$IDENTITY_OID'].{objectId:objectId, secrets:permissions.secrets}" -o table
+az role assignment list --scope "$KV_ID" --assignee "$IDENTITY_OID" --output table
 ```
 
 :::tip
