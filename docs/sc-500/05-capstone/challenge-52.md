@@ -966,7 +966,7 @@ az apim api policy set \
     <azure-openai-emit-token-metric namespace="AIGateway">
       <dimension name="Subscription" value="@(context.Subscription.Id)" />
       <dimension name="API" value="@(context.Api.Name)" />
-      <dimension name="Model" value="@(context.Request.Headers.GetValueOrDefault(\"model\",\"unknown\"))" />
+      <dimension name="Model" value="@(context.Request.Headers.GetValueOrDefault(&quot;model&quot;,&quot;unknown&quot;))" />
     </azure-openai-emit-token-metric>
   </outbound>
   <on-error>

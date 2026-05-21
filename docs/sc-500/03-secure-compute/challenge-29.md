@@ -174,8 +174,8 @@ Apply token-based rate limiting policy:
         <llm-emit-token-metric
             namespace="AIGateway">
             <dimension name="Subscription" value="@(context.Subscription.Name)" />
-            <dimension name="BusinessUnit" value="@(context.Request.Headers.GetValueOrDefault("X-Business-Unit", "Unknown"))" />
-            <dimension name="Model" value="@(context.Request.MatchedParameters["deployment-id"])" />
+            <dimension name="BusinessUnit" value="@(context.Request.Headers.GetValueOrDefault(&quot;X-Business-Unit&quot;, &quot;Unknown&quot;))" />
+            <dimension name="Model" value="@(context.Request.MatchedParameters[&quot;deployment-id&quot;])" />
         </llm-emit-token-metric>
     </outbound>
 </policies>
@@ -408,7 +408,7 @@ EOF
 # 4. Add cache bypass for specific scenarios
 cat <<'EOF'
 <choose>
-    <when condition="@(context.Request.Headers.GetValueOrDefault("X-Cache-Bypass", "false") == "true")">
+    <when condition="@(context.Request.Headers.GetValueOrDefault(&quot;X-Cache-Bypass&quot;, &quot;false&quot;) == &quot;true&quot;)">
         <!-- Skip cache lookup for explicit bypass -->
     </when>
     <otherwise>
