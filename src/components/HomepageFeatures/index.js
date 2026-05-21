@@ -19,7 +19,7 @@ const FeatureList = [
   },
   {
     title: 'Validated Commands',
-    description: 'Every Azure CLI command, PowerShell snippet, and Bicep template validated for correctness. 400+ issues caught and fixed through 9 review passes.',
+    description: 'Every Azure CLI command, PowerShell snippet, and Bicep template validated for correctness.',
   },
   {
     title: 'Break & Fix',

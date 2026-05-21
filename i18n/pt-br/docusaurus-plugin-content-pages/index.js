@@ -296,7 +296,7 @@ const FeatureList = [
   },
   {
     title: 'Comandos Validados',
-    description: 'Cada comando Azure CLI, trecho PowerShell e template Bicep validado para correção. 400+ problemas encontrados e corrigidos em 9 passes de revisão.',
+    description: 'Cada comando Azure CLI, trecho PowerShell e template Bicep validado para correção.',
   },
   {
     title: 'Quebre & Conserte',
