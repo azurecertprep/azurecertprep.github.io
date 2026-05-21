@@ -43,10 +43,10 @@ LOCATION="eastus"
 az group create --name $RG_NAME --location $LOCATION
 
 # Enable Defender for Servers Plan 2
-az security pricing create \
-  --name VirtualMachines \
-  --tier Standard \
-  --subplan P2
+# Note: --subplan parameter may not be supported in all CLI versions; REST API approach is more reliable
+az rest --method PUT \
+  --url "https://management.azure.com/subscriptions/${SUBSCRIPTION_ID}/providers/Microsoft.Security/pricings/VirtualMachines?api-version=2024-01-01" \
+  --body '{"properties":{"pricingTier":"Standard","subPlan":"P2"}}'
 
 # Verify plan status
 az security pricing show \
@@ -75,10 +75,10 @@ Configure protection for data-tier resources.
 
 ```bash
 # Enable Defender for Storage (per-transaction pricing)
-az security pricing create \
-  --name StorageAccounts \
-  --tier Standard \
-  --subplan DefenderForStorageV2
+# Note: --subplan parameter may not be supported in all CLI versions; REST API approach is more reliable
+az rest --method PUT \
+  --url "https://management.azure.com/subscriptions/${SUBSCRIPTION_ID}/providers/Microsoft.Security/pricings/StorageAccounts?api-version=2024-01-01" \
+  --body '{"properties":{"pricingTier":"Standard","subPlan":"PerStorageAccount"}}'
 
 # Enable Defender for Azure SQL Databases
 az security pricing create \

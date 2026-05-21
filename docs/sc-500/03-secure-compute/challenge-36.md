@@ -289,8 +289,8 @@ az aks update \
     --name "aks-contoso-prod" \
     --attach-acr "contosoacr"
 
-# Enable vulnerability scanning on the ACR
-az security pricing create --name "ContainerRegistry" --tier "Standard"
+# Note: ContainerRegistry and KubernetesService plans merged into unified 'Containers' plan
+az security pricing create --name "Containers" --tier Standard
 
 # Enable continuous scanning of running images
 az aks update \

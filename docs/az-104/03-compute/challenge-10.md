@@ -196,7 +196,7 @@ PLAN_ID=$(az appservice plan show -g rg-appservice-lab -n plan-contoso-web --que
 # Create autoscale settings
 az monitor autoscale create \
   --resource-group rg-appservice-lab \
-  --resource plan-contoso-web \
+  --resource $PLAN_ID \
   --resource-type Microsoft.Web/serverfarms \
   --name autoscale-web \
   --min-count 1 \

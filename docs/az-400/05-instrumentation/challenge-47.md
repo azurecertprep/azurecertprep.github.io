@@ -300,10 +300,9 @@ Ingestion sampling (server-side, applied to all data regardless of SDK settings)
 
 ```bash
 # Set daily cap to control costs
-az monitor app-insights component update \
+az monitor app-insights component billing update \
   --app ai-contoso-webapp \
   --resource-group rg-contoso-prod \
-  --ingestion-access Enabled \
   --cap 5  # 5 GB daily cap
 ```
 

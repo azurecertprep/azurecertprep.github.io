@@ -665,7 +665,4 @@ gh api repos/contoso-ltd/ecommerce-api/branches/main/protection \
   --method DELETE
 ```
 
-# Challenge 17: Quality and release gates
-
-This challenge is under development.
 

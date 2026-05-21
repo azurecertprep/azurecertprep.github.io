@@ -12,8 +12,7 @@ import TabItem from '@theme/TabItem';
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: Free (policy evaluation) | **Exam Weight: 15-20%
-**
+**60-75 min** | **Estimated cost**: Free (policy evaluation) | **Exam Weight: 15-20%**
 
 :::
 
@@ -218,6 +217,14 @@ az policy assignment create \
   --policy "871b6d14-10aa-478d-b466-ef6698f3ef28" \
   --scope "$RG_ID" \
   --params '{"tagName":{"value":"CostCenter"}}'
+
+# Assign "Allowed locations" built-in policy
+az policy assignment create \
+  --name "allowed-locations" \
+  --display-name "Allowed Locations - East US and West US 2" \
+  --policy "e56962a6-4747-49cd-b67b-bf8b01975c4c" \
+  --scope "$RG_ID" \
+  --params '{"listOfAllowedLocations":{"value":["eastus","westus2"]}}'
 ```
 
 :::tip
@@ -261,6 +268,14 @@ az policy set-definition create \
   --display-name "Contoso Governance Initiative" \
   --definitions initiative.json \
   --description "Requires tags and restricts locations"
+
+# Assign the initiative to rg-policy-dev
+DEV_RG_ID=$(az group show --name rg-policy-dev --query id -o tsv)
+az policy assignment create \
+  --name "contoso-governance" \
+  --display-name "Contoso Governance Initiative" \
+  --policy-set-definition "Contoso-Governance" \
+  --scope "$DEV_RG_ID"
 ```
 
 </details>
@@ -393,12 +408,12 @@ To enforce tag inheritance, use the built-in policy **"Inherit a tag from the re
 # Remove the resource lock first (required before deletion)
 az lock delete --name "PreventDeletion" --resource-group rg-policy-prod 2>/dev/null
 
-# Remove policy assignments
+# Remove policy assignments (created in Parts 2 and 3)
 az policy assignment delete --name "require-costcenter-tag" --scope $(az group show --name rg-policy-prod --query id -o tsv) 2>/dev/null
 az policy assignment delete --name "allowed-locations" --scope $(az group show --name rg-policy-prod --query id -o tsv) 2>/dev/null
 
-# Remove initiative assignment and definition
-az policy assignment delete --name "contoso-governance-assignment" --scope $(az group show --name rg-policy-dev --query id -o tsv) 2>/dev/null
+# Remove initiative assignment (created in Part 4) and definition
+az policy assignment delete --name "contoso-governance" --scope $(az group show --name rg-policy-dev --query id -o tsv) 2>/dev/null
 az policy set-definition delete --name "Contoso-Governance" 2>/dev/null
 
 # Delete resource groups

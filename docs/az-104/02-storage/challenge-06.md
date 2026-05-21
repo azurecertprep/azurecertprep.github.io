@@ -12,8 +12,7 @@ import TabItem from '@theme/TabItem';
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam Weight: 15-20%
-**
+**60-75 min** | **Estimated cost**: ~$1.00 (two storage accounts) | **Exam Weight: 15-20%**
 
 :::
 
@@ -342,9 +341,7 @@ az storage account or-policy create \
   --resource-group $RG \
   --source-account $STORAGE_PRIMARY \
   --destination-account $STORAGE_SECONDARY \
-  --source-container replicated-data \
-  --destination-container replicated-data \
-  --min-creation-time "2024-01-01T00:00:00Z"
+  --rules @replication-policy.json
 ```
 
 </TabItem>

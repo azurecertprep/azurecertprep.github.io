@@ -186,11 +186,8 @@ This mini-deployment validates your design decisions with real Azure resources. 
 ## Cleanup
 
 ```bash
-# Delete the resource group containing all GNN database resources
-az group delete --name rg-gnn-databases --yes --no-wait
-
-# Delete the redis cache resource group (if created separately)
-az group delete --name rg-gnn-cache --yes --no-wait
+# Delete the resource group containing all challenge resources
+az group delete --name rg-az305-challenge16 --yes --no-wait
 ```
 
 ---

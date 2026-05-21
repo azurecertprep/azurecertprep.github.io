@@ -854,7 +854,4 @@ rm -rf .coverage-history/
 pip uninstall diff-cover -y
 ```
 
-# Challenge 18: Code coverage analysis
-
-This challenge is under development.
 

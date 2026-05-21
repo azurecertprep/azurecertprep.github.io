@@ -30,16 +30,22 @@ Contoso Ltd's security team has no visibility into code vulnerabilities across t
 
 ```bash
 # Enable GHAS for a specific repository
-gh api repos/contoso/webapp -X PATCH \
-  --field security_and_analysis[advanced_security][status]="enabled" \
-  --field security_and_analysis[secret_scanning][status]="enabled" \
-  --field security_and_analysis[secret_scanning_push_protection][status]="enabled"
+gh api repos/contoso/webapp -X PATCH --input - <<< '{
+  "security_and_analysis": {
+    "advanced_security": { "status": "enabled" },
+    "secret_scanning": { "status": "enabled" },
+    "secret_scanning_push_protection": { "status": "enabled" }
+  }
+}'
 
 # Enable for all repositories in the organization
-gh api orgs/contoso -X PATCH \
-  --field security_and_analysis[advanced_security][status]="enabled" \
-  --field security_and_analysis[secret_scanning][status]="enabled" \
-  --field security_and_analysis[secret_scanning_push_protection][status]="enabled"
+gh api orgs/contoso -X PATCH --input - <<< '{
+  "security_and_analysis": {
+    "advanced_security": { "status": "enabled" },
+    "secret_scanning": { "status": "enabled" },
+    "secret_scanning_push_protection": { "status": "enabled" }
+  }
+}'
 
 # Verify GHAS is enabled
 gh api repos/contoso/webapp --jq '.security_and_analysis'

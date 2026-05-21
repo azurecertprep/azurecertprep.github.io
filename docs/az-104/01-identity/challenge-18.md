@@ -147,7 +147,7 @@ az storage container create \
 # Create a scheduled export (daily)
 az costmanagement export create \
   --name "daily-cost-export" \
-  --scope "subscriptions/$(az account show --query id -o tsv)" \
+  --scope "/subscriptions/$(az account show --query id -o tsv)" \
   --type ActualCost \
   --timeframe MonthToDate \
   --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
@@ -339,7 +339,7 @@ az policy assignment delete \
 # Delete cost export
 az costmanagement export delete \
   --name "daily-cost-export" \
-  --scope "subscriptions/$(az account show --query id -o tsv)"
+  --scope "/subscriptions/$(az account show --query id -o tsv)"
 
 # Delete action group
 az monitor action-group delete \

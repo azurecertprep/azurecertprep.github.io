@@ -187,16 +187,8 @@ This mini-deployment validates your design decisions with real Azure resources. 
 ## Cleanup
 
 ```bash
-# Delete the resource group containing SecureBank resources
-az group delete --name rg-securebank-data --yes --no-wait
-
-# Delete the Key Vault (requires purge if soft-delete is enabled)
-az keyvault delete --name kv-securebank-tde --resource-group rg-securebank-data
-# After soft-delete retention period, purge:
-# az keyvault purge --name kv-securebank-tde
-
-# Delete audit storage account
-az group delete --name rg-securebank-audit --yes --no-wait
+# Delete the resource group containing all challenge resources
+az group delete --name rg-az305-challenge17 --yes --no-wait
 ```
 
 ---

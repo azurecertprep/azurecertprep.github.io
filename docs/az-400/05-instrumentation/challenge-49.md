@@ -306,13 +306,17 @@ curl -u :$PAT \
 Create a reusable Azure Workbook with deployment correlation queries:
 
 ```bash
-# Create a workbook via Azure CLI
-az monitor app-insights workbook create \
-  --resource-group rg-contoso-prod \
-  --name "Deployment Impact Analysis" \
-  --location eastus \
-  --kind shared
+# Create a workbook via Azure REST API (workbooks are managed via ARM templates)
+WORKBOOK_ID=$(uuidgen)
+SUB_ID=$(az account show --query id -o tsv)
+RG="rg-contoso-prod"
+
+az rest --method PUT \
+  --url "https://management.azure.com/subscriptions/$SUB_ID/resourceGroups/$RG/providers/Microsoft.Insights/workbooks/$WORKBOOK_ID?api-version=2022-04-01" \
+  --body @workbook.json
 ```
+
+> **Note:** Azure Workbooks are typically created via the Azure Portal or ARM templates. The `az rest` command above deploys a workbook from a JSON definition file.
 
 Workbook JSON structure with parameterized queries:
 

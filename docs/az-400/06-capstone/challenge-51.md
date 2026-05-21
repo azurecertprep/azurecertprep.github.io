@@ -626,7 +626,7 @@ Add deployment markers to Application Insights after each production deployment:
 ```yaml
       - name: Create deployment annotation
         run: |
-          az monitor app-insights component update-tags \
+          az monitor app-insights component update \
             --app ai-payments-production \
             --resource-group rg-payments-production \
             --tags "deployment=${{ github.sha }}"

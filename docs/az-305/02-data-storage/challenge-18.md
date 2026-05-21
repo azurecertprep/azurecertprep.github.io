@@ -243,8 +243,8 @@ docs = [
 for doc in docs:
     result = container.create_item(body=doc)
     print(f'Inserted {doc[\"id\"]} into partition {doc[\"deviceId\"]}')
-    # Show the RU charge for each write
-    print(f'  Write cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+    # Show the RU charge for each write (returned in response headers)
+    print(f'  Write cost: {result.get(\"_ts\", \"N/A\")} - check Azure Portal Metrics for RU details')
 "
 ```
 
@@ -261,24 +261,31 @@ container = db.get_container_client('Telemetry')
 
 # Single-partition query (targets device-A only)
 print('=== Single-Partition Query (deviceId = device-A) ===')
-items = list(container.query_items(
+items = container.query_items(
     query='SELECT * FROM c WHERE c.deviceId = \"device-A\"',
     partition_key='device-A',
     populate_query_metrics=True
-))
-print(f'Results: {len(items)} documents')
-print(f'RU cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+)
+item_list = []
+for item in items:
+    item_list.append(item)
+# Access request charge from the query iterable's response headers
+print(f'Results: {len(item_list)} documents')
+print(f'RU cost: {items.get_response_headers()[\"x-ms-request-charge\"]} RUs')
 print()
 
 # Cross-partition query (scans ALL partitions)
 print('=== Cross-Partition Query (all devices, filter by facility) ===')
-items = list(container.query_items(
+items2 = container.query_items(
     query='SELECT * FROM c WHERE c.facility = \"us-east\"',
     enable_cross_partition_query=True,
     populate_query_metrics=True
-))
-print(f'Results: {len(items)} documents')
-print(f'RU cost: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]} RUs')
+)
+item_list2 = []
+for item in items2:
+    item_list2.append(item)
+print(f'Results: {len(item_list2)} documents')
+print(f'RU cost: {items2.get_response_headers()[\"x-ms-request-charge\"]} RUs')
 "
 ```
 

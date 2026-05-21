@@ -290,7 +290,7 @@ gh api orgs/contoso/custom-repository-roles -X POST \
 
 # Assign the custom role to a team for a repository
 gh api orgs/contoso/teams/release-team/repos/contoso/webapp -X PUT \
-  --field permission="custom:release-manager"
+  --field permission="maintain"
 ```
 
 ## Break and fix

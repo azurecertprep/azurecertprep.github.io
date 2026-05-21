@@ -185,8 +185,7 @@ az rest --method PATCH \
     \"includeTargets\": [
       {
         \"targetType\": \"group\",
-        \"id\": \"all_users\",
-        \"isOtp\": false
+        \"id\": \"all_users\"
       }
     ],
     \"excludeTargets\": [

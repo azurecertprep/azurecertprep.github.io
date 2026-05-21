@@ -212,11 +212,8 @@ This mini-deployment validates your design decisions with real Azure resources. 
 ## Cleanup
 
 ```bash
-# Delete the resource group containing all MediaVault storage resources
-az group delete --name rg-mediavault-storage --yes --no-wait
-
-# If you created a separate Azure NetApp Files account (requires explicit cleanup)
-az group delete --name rg-mediavault-netapp --yes --no-wait
+# Delete the resource group containing all challenge resources
+az group delete --name rg-az305-challenge19 --yes --no-wait
 
 # Note: immutable storage policies must be unlocked/expired before deletion
 # For testing, use unlocked policies that can be removed:

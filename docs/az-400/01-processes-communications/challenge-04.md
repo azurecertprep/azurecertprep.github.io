@@ -288,7 +288,6 @@ name: Track deployment metrics
 
 on:
   deployment_status:
-    types: [completed]
   workflow_run:
     workflows: ["Deploy to Production"]
     types: [completed]

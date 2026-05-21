@@ -85,7 +85,7 @@ Associe cada cenário ao melhor modelo de serviço:
 :::tip Alternativa Azure CLI
 ```bash
 # SaaS is managed entirely by the provider, so there's no CLI to "manage" it
-# However, you can check your Microsoft 365 licenses via:
+# List users in your Entra ID tenant (SaaS user management example):
 az ad user list --query "[0:5].{Name:displayName, Mail:mail}" --output table
 ```
 :::

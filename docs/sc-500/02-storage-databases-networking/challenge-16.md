@@ -78,19 +78,16 @@ az sql db create \
   --capacity 10
 
 # Enable Advanced Threat Protection on the server
-az sql server threat-policy update \
-  --server $SQL_SERVER \
+az sql server advanced-threat-protection-setting update \
   --resource-group $RG \
-  --state Enabled \
-  --email-addresses "security@contoso.com" \
-  --email-account-admins true \
-  --retention-days 90
+  --server $SQL_SERVER \
+  --state Enabled
 
 # Verify threat protection status
-az sql server threat-policy show \
+az sql server advanced-threat-protection-setting show \
   --server $SQL_SERVER \
   --resource-group $RG \
-  --query "{State:state, EmailAdmins:emailAccountAdmins, RetentionDays:retentionDays}"
+  --query "{State:state}"
 ```
 
 ---
@@ -414,34 +411,26 @@ The security team reports they never receive email notifications for SQL threat 
 <summary>Show solution</summary>
 
 ```bash
-# Check the current threat policy configuration
-az sql server threat-policy show \
+# Check the current advanced threat protection configuration
+az sql server advanced-threat-protection-setting show \
   --server $SQL_SERVER \
   --resource-group $RG \
-  --query "{State:state, Emails:emailAddresses, EmailAdmins:emailAccountAdmins}"
+  --query "{State:state}"
 
-# Fix: Update with correct email addresses and enable admin emails
-az sql server threat-policy update \
-  --server $SQL_SERVER \
+# Fix: Enable advanced threat protection
+az sql server advanced-threat-protection-setting update \
   --resource-group $RG \
-  --state Enabled \
-  --email-addresses "security@contoso.com;soc@contoso.com" \
-  --email-account-admins true
+  --server $SQL_SERVER \
+  --state Enabled
 
 # Also verify that the subscription admin emails are correct
 # Check if email is in the correct format (semicolon-separated, no spaces)
 
-# Verify no disabled alert types (all types should be active)
-az sql server threat-policy show \
+# Verify threat protection is enabled
+az sql server advanced-threat-protection-setting show \
   --server $SQL_SERVER \
   --resource-group $RG \
-  --query "disabledAlerts"
-
-# If specific alert types are disabled, clear the disabled list
-az sql server threat-policy update \
-  --server $SQL_SERVER \
-  --resource-group $RG \
-  --disabled-alerts ""
+  --query "{State:state}"
 ```
 
 </details>

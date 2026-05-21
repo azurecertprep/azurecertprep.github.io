@@ -51,7 +51,7 @@ az keyvault create \
   --location $LOCATION \
   --sku premium \
   --enable-rbac-authorization true \
-  --enable-soft-delete true \
+  # Soft-delete is enabled by default and mandatory since Feb 2025
   --retention-days 90 \
   --enable-purge-protection true \
   --public-network-access Enabled
@@ -308,7 +308,7 @@ az keyvault create \
   --location "centralus" \
   --sku premium \
   --enable-rbac-authorization true \
-  --enable-soft-delete true \
+  # Soft-delete is enabled by default and mandatory since Feb 2025
   --retention-days 90 \
   --enable-purge-protection true
 
@@ -413,7 +413,7 @@ az keyvault create \
   --resource-group $RG_NAME \
   --location $LOCATION \
   --enable-rbac-authorization true \
-  --enable-soft-delete true \
+  # Soft-delete is enabled by default and mandatory since Feb 2025
   --retention-days 7 \
   --no-wait
 

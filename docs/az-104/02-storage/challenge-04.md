@@ -12,8 +12,7 @@ import TabItem from '@theme/TabItem';
 
 :::info Estimated Time and Cost
 
-**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%
-**
+**60-75 min** | **Estimated cost**: ~$0.50 | **Exam Weight: 15-20%**
 
 :::
 

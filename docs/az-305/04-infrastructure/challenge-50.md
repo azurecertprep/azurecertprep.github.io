@@ -405,7 +405,7 @@ az network vnet create --resource-group rg-az305-challenge50 \
 
 az network vnet subnet create --resource-group rg-az305-challenge50 \
   --vnet-name vnet-lab50 --name subnet-pe --address-prefix 10.0.2.0/24 \
-  --disable-private-endpoint-network-policies true
+  --private-endpoint-network-policies Disabled
 ```
 
 3. Create an App Service with VNet integration:
@@ -460,11 +460,5 @@ This mini-deployment validates your design decisions with real Azure resources. 
 
 ```bash
 # Delete all resources created in this capstone challenge
-# IMPORTANT: this challenge may have created resources across multiple regions
-az group delete --name rg-az305-challenge50-eastus --yes --no-wait
-az group delete --name rg-az305-challenge50-uksouth --yes --no-wait
-az group delete --name rg-az305-challenge50-centralindia --yes --no-wait
-
-# Verify no orphaned resources remain
-az group list --query "[?starts_with(name, 'rg-az305-challenge50')]" -o table
+az group delete --name rg-az305-challenge50 --yes --no-wait
 ```

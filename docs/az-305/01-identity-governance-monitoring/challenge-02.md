@@ -119,7 +119,8 @@ az monitor diagnostic-settings create \
   --event-hub-name "security-logs" \
   --event-hub-rule "/subscriptions/{sub}/resourceGroups/rg-logging/providers/Microsoft.EventHub/namespaces/eh-contoso-security/authorizationRules/RootManageSharedAccessKey" \
   --storage-account "/subscriptions/{sub}/resourceGroups/rg-logging/providers/Microsoft.Storage/storageAccounts/stcontosologarchive" \
-  --logs '[{"category":"AuditEvent","enabled":true,"retentionPolicy":{"enabled":true,"days":2555}}]'
+  --logs '[{"category":"AuditEvent","enabled":true}]'
+  # Note: Use Storage lifecycle management policies for retention (retentionPolicy deprecated Sept 2025)
 
 # Create diagnostic setting sending to Log Analytics
 az monitor diagnostic-settings create \

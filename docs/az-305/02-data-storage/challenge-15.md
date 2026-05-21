@@ -185,10 +185,8 @@ This mini-deployment validates your design decisions with real Azure resources. 
 ## Cleanup
 
 ```bash
-# Delete resource groups for each tier
-az group delete --name rg-cloudtenant-standard --yes --no-wait
-az group delete --name rg-cloudtenant-premium --yes --no-wait
-az group delete --name rg-cloudtenant-enterprise --yes --no-wait
+# Delete the resource group containing all challenge resources
+az group delete --name rg-az305-challenge15 --yes --no-wait
 
 # Cancel any reserved capacity purchases (if testing in a lab, use a short-term reservation)
 # Note: reserved capacity cancellations may incur early termination fees

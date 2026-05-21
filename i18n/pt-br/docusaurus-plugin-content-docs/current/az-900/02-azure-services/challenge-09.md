@@ -95,7 +95,7 @@ Azure Virtual Desktop (AVD) é um serviço de VM relacionado:
 :::tip Alternativa Azure CLI
 ```bash
 # List available VM sizes in a region
-az vm list-sizes --location eastus --query "[0:10].{Name:name, Cores:numberOfCores, RAM_GB:memoryInMb}" --output table
+az vm list-sizes --location eastus --query "[0:10].{Name:name, Cores:numberOfCores, RAM_MB:memoryInMb}" --output table
 
 # List available VM images
 az vm image list --output table

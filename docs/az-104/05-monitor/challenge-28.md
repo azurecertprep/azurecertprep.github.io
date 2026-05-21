@@ -201,8 +201,7 @@ az monitor activity-log alert create \
   --name "alert-service-issues" \
   --description "Alert for Azure service issues affecting our resources" \
   --action-group ag-advisor-notifications \
-  --condition category=ServiceHealth \
-  --condition "properties.incidentType=Incident"
+  --condition category=ServiceHealth and properties.incidentType=Incident
 
 # Create alert for planned maintenance
 az monitor activity-log alert create \
@@ -210,8 +209,7 @@ az monitor activity-log alert create \
   --name "alert-planned-maintenance" \
   --description "Alert for planned maintenance events" \
   --action-group ag-advisor-notifications \
-  --condition category=ServiceHealth \
-  --condition "properties.incidentType=Maintenance"
+  --condition category=ServiceHealth and properties.incidentType=Maintenance
 
 # Create alert for health advisories
 az monitor activity-log alert create \
@@ -219,8 +217,7 @@ az monitor activity-log alert create \
   --name "alert-health-advisories" \
   --description "Alert for action-required service health events" \
   --action-group ag-advisor-notifications \
-  --condition category=ServiceHealth \
-  --condition "properties.incidentType=ActionRequired"
+  --condition category=ServiceHealth and properties.incidentType=ActionRequired
 
 # List all activity log alerts
 az monitor activity-log alert list \

@@ -194,7 +194,7 @@ az network vnet create --resource-group rg-az305-challenge47 \
 
 az network vnet subnet update --resource-group rg-az305-challenge47 \
   --vnet-name vnet-lab47 --name subnet-pe \
-  --disable-private-endpoint-network-policies true
+  --private-endpoint-network-policies Disabled
 ```
 
 4. Create a private endpoint and Private DNS Zone for blob storage:

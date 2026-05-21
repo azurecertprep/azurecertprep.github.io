@@ -42,8 +42,7 @@ GitHub Projects v2 uses a flexible table/board layout with custom fields, views,
 # Create an organization-level project
 gh project create \
   --owner "contoso-org" \
-  --title "Contoso Web Platform Q1" \
-  --format "table"
+  --title "Contoso Web Platform Q1"
 
 # Note the project number from output (e.g., 5)
 PROJECT_NUMBER=5

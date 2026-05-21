@@ -536,12 +536,12 @@ SecurityIncident
 | where TimeGenerated > ago(24h)
 | summarize 
     Total = count(),
-    Critical = countif(Severity == "High"),
+    High = countif(Severity == "High"),
     Medium = countif(Severity == "Medium"),
     Low = countif(Severity == "Low"),
     Open = countif(Status == "New" or Status == "Active"),
     Closed = countif(Status == "Closed")
-| project Total, Critical, Medium, Low, Open, Closed
+| project Total, High, Medium, Low, Open, Closed
 ```
 
 **Component 2: Alert trend (7 days)**
@@ -652,9 +652,9 @@ az monitor log-analytics workspace table update \
 
 # Set up daily cap as cost safeguard (10x normal to catch anomalies only)
 az monitor log-analytics workspace update \
-  --workspace-name $WORKSPACE_NAME \
   --resource-group $RG_NAME \
-  --set properties.workspaceCapping.dailyQuotaGb=130
+  --workspace-name $WORKSPACE_NAME \
+  --daily-quota-gb 130
 ```
 
 **Cost optimization summary:**
@@ -762,9 +762,9 @@ Monthly costs jump from $3,000 to $12,000 due to a sudden increase in log ingest
 4. Set a daily cap as immediate protection:
    ```bash
    az monitor log-analytics workspace update \
-     --workspace-name $WORKSPACE_NAME \
      --resource-group $RG_NAME \
-     --set properties.workspaceCapping.dailyQuotaGb=20
+     --workspace-name $WORKSPACE_NAME \
+     --daily-quota-gb 20
    ```
 5. Implement DCR filtering for the noisy resource
 

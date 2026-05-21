@@ -162,7 +162,7 @@ az dataprotection backup-vault create \
   --resource-group $RG \
   --vault-name bv-contoso \
   --location $LOCATION \
-  --storage-setting "[{type:LocallyRedundant,datastore-type:VaultStore}]"
+  --storage-setting '[{"type":"LocallyRedundant","datastoreType":"VaultStore"}]'
 ```
 
 ### Task 7: configure Blob Backup (Operational tier)

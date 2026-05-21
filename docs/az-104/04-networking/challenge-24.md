@@ -311,7 +311,7 @@ az network route-table route list \
 
 :::tip Forced Tunneling
 
-Forced tunneling redirects all internet-bound traffic (0.0.0.0/0) from Azure back to on-premises via a VPN gateway or through an NVA. This ensures all traffic is inspected before reaching the internet.
+Forced tunneling redirects all internet-bound traffic (0.0.0.0/0) from Azure back to on-premises via a VPN gateway using a UDR with next-hop VirtualNetworkGateway. Alternatively, traffic can be routed through an NVA for inspection before reaching the internet.
 
 :::
 ```bash

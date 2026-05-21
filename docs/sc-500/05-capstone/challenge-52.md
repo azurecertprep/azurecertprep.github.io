@@ -634,10 +634,9 @@ az security contact create \
   --alert-notifications "On" \
   --alerts-to-admins "On"
 
-# Enable auto-provisioning for Defender for Endpoint
-az security auto-provisioning-setting update \
-  --name "default" \
-  --auto-provision "On"
+# Legacy auto-provisioning replaced by Defender plans with built-in agent provisioning
+az security pricing create --name "VirtualMachines" --tier Standard
+# Agent provisioning is configured per-plan via Azure Policy or Defender settings
 
 # Set Defender for Cloud governance rules
 az rest --method PUT \

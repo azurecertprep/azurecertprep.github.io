@@ -443,7 +443,7 @@ jobs:
           repository: "${{ parameters.imageName }}"
           dockerfile: "${{ parameters.dockerfilePath }}"
           buildContext: "${{ parameters.buildContext }}"
-          tags: |
+          tags:
             ${{ each tag in parameters.tags }}:
               ${{ tag }}
 
@@ -453,7 +453,7 @@ jobs:
           command: "push"
           repository: "${{ parameters.imageName }}"
           containerRegistry: "${{ parameters.registryServiceConnection }}"
-          tags: |
+          tags:
             ${{ each tag in parameters.tags }}:
               ${{ tag }}
 

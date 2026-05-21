@@ -90,14 +90,13 @@ az network dns zone create \
 VERIFICATION_ID=$(az webapp show \
   --resource-group $RG \
   --name $APP_NAME \
-  --query "id" -o tsv)
+  --query "customDomainVerificationId" -o tsv)
 
 az network dns record-set txt add-record \
   --resource-group $RG \
   --zone-name contoso-lab.com \
   --record-set-name asuid.www \
-  --value $(az webapp show -g $RG -n $APP_NAME \
-    --query "hostNameSslStates[0].thumbprint" -o tsv 2>/dev/null || echo "placeholder")
+  --value $VERIFICATION_ID
 
 # Add CNAME record pointing to the app
 az network dns record-set cname set-record \

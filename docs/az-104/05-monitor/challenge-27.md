@@ -335,6 +335,7 @@ az monitor log-analytics workspace saved-search create \
   --name "HighCPUAlerts" \
   --display-name "High CPU VMs" \
   --category "Performance" \
+  --func-alias "HighCPUVMs" \
   --saved-query "Perf | where ObjectName == 'Processor' and CounterName == '% Processor Time' and InstanceName == '_Total' | where CounterValue > 80 | summarize AvgCPU=avg(CounterValue) by Computer, bin(TimeGenerated, 5m) | where AvgCPU > 80"
 
 # List saved queries
@@ -398,7 +399,7 @@ Perf
 az monitor log-analytics workspace update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
-  --quota 1
+  --daily-quota-gb 1
 
 # Update retention period
 az monitor log-analytics workspace update \
@@ -491,7 +492,7 @@ az monitor log-analytics workspace show \
 az monitor log-analytics workspace update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
-  --quota -1
+  --daily-quota-gb -1
 # (-1 removes the cap)
 ```
 

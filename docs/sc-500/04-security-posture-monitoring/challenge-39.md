@@ -98,9 +98,8 @@ Use the cloud security graph to query attack paths that reach sensitive data.
 
 ```bash
 # List attack paths via REST API
-az rest --method POST \
-  --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION_ID}/providers/Microsoft.Security/attackPaths?api-version=2024-01-01" \
-  --body '{}' \
+az rest --method GET \
+  --url "https://management.azure.com/subscriptions/${SUBSCRIPTION_ID}/providers/Microsoft.Security/attackPaths?api-version=2024-01-01" \
   --query "value[].{DisplayName:properties.displayName, Description:properties.description, RiskLevel:properties.riskLevel}" -o table
 
 # Query attack paths targeting internet-exposed VMs

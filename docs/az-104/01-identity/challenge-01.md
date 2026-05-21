@@ -9,8 +9,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 
 :::info Estimated Time and Cost
 
-**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%
-**
+**45-60 min** | **Estimated cost**: Free | **Exam Weight: 20-25%**
 
 :::
 

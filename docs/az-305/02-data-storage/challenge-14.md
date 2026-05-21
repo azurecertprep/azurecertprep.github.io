@@ -182,11 +182,8 @@ This mini-deployment validates your design decisions with real Azure resources. 
 ## Cleanup
 
 ```bash
-# Delete the resource group containing all database resources
-az group delete --name rg-shopwave-data --yes --no-wait
-
-# If you created a database migration Service instance
-az group delete --name rg-shopwave-dms --yes --no-wait
+# Delete the resource group containing all challenge resources
+az group delete --name rg-az305-challenge14 --yes --no-wait
 ```
 
 ---
