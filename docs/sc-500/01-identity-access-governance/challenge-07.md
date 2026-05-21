@@ -45,13 +45,13 @@ KV_NAME="kv-contoso-prod-$(openssl rand -hex 4)"
 az group create --name $RG_NAME --location $LOCATION
 
 # Create Key Vault with security features enabled
+# Soft-delete is enabled by default and mandatory since Feb 2025
 az keyvault create \
   --name $KV_NAME \
   --resource-group $RG_NAME \
   --location $LOCATION \
   --sku premium \
   --enable-rbac-authorization true \
-  # Soft-delete is enabled by default and mandatory since Feb 2025
   --retention-days 90 \
   --enable-purge-protection true \
   --public-network-access Enabled
@@ -302,13 +302,13 @@ Set up backup procedures and prepare for geo-replication scenarios.
 ```bash
 # Create a secondary Key Vault in a paired region for DR
 KV_DR_NAME="kv-contoso-dr-$(openssl rand -hex 4)"
+# Soft-delete is enabled by default and mandatory since Feb 2025
 az keyvault create \
   --name $KV_DR_NAME \
   --resource-group $RG_NAME \
   --location "centralus" \
   --sku premium \
   --enable-rbac-authorization true \
-  # Soft-delete is enabled by default and mandatory since Feb 2025
   --retention-days 90 \
   --enable-purge-protection true
 
@@ -408,12 +408,12 @@ az keyvault show-deleted --name $KV_NAME \
 az keyvault recover --name $KV_NAME
 
 # PREVENTION: For test/dev environments, create Key Vaults WITHOUT purge protection:
+# Soft-delete is enabled by default and mandatory since Feb 2025
 az keyvault create \
   --name "kv-contoso-test-$(openssl rand -hex 4)" \
   --resource-group $RG_NAME \
   --location $LOCATION \
   --enable-rbac-authorization true \
-  # Soft-delete is enabled by default and mandatory since Feb 2025
   --retention-days 7 \
   --no-wait
 

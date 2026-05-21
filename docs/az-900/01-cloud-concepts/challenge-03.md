@@ -83,10 +83,10 @@ Serverless computing is the ultimate consumption-based model:
 
 :::tip Azure CLI Alternative
 ```bash
-# Get pricing for a specific VM size (informational)
+# List available VM sizes and specs
 az vm list-sizes --location eastus --query "[?name=='Standard_D2s_v3']" --output table
 
-# List free-tier eligible services
+# List VM sizes available in the region
 az vm list-sizes --location eastus --query "[?name=='Standard_B1s']" --output table
 ```
 :::
@@ -147,6 +147,6 @@ az vm list-sizes --location eastus --query "[?name=='Standard_B1s']" --output ta
 ## Learn More
 
 - 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
-- [Microsoft Learn: Describe cloud service types](https://learn.microsoft.com/en-us/training/modules/describe-cloud-service-types/)
+- [Microsoft Learn: Describe cost management in Azure](https://learn.microsoft.com/en-us/training/modules/describe-cost-management-azure/)
 - [Azure Pricing Calculator](https://azure.microsoft.com/pricing/calculator/)
 - [TCO Calculator](https://azure.microsoft.com/pricing/tco/calculator/)

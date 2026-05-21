@@ -51,10 +51,9 @@ az apim create \
     --sku-capacity 1
 
 # Enable managed identity for APIM to authenticate to AI services
-az apim update \
+az apim identity assign \
     --name "contoso-ai-gateway" \
-    --resource-group "rg-contoso-aigateway" \
-    --enable-managed-identity true
+    --resource-group "rg-contoso-aigateway"
 
 # Grant APIM identity access to Azure OpenAI
 APIM_IDENTITY=$(az apim show \

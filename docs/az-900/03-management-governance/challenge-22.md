@@ -145,22 +145,22 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
     {
       id: 'az900-22-q1',
       question: 'What is Azure Resource Manager (ARM)?',
-      options: ['A virtual machine size category', 'The deployment and management layer for all Azure requests', 'A storage redundancy option', 'A monitoring service'],
-      correctAnswer: 1,
+      options: ['A virtual machine size category', 'A storage redundancy option', 'A monitoring service', 'The deployment and management layer for all Azure requests'],
+      correctAnswer: 3,
       explanation: 'ARM is the management layer that processes all requests to Azure. Whether you use the Portal, CLI, PowerShell, or REST API, every request is handled by ARM.'
     },
     {
       id: 'az900-22-q2',
       question: 'What is a key benefit of using ARM templates?',
-      options: ['They reduce the cost of Azure services', 'They allow repeatable, consistent infrastructure deployments', 'They replace the need for Azure subscriptions', 'They speed up VM performance'],
-      correctAnswer: 1,
+      options: ['They allow repeatable, consistent infrastructure deployments', 'They reduce the cost of Azure services', 'They replace the need for Azure subscriptions', 'They speed up VM performance'],
+      correctAnswer: 0,
       explanation: 'ARM templates define infrastructure as code, enabling repeatable, consistent deployments. The same template deploys the same environment every time, reducing human error.'
     },
     {
       id: 'az900-22-q3',
       question: 'What is the purpose of Azure Arc?',
-      options: ['To create backup copies of Azure resources', 'To extend Azure management to on-premises and multi-cloud resources', 'To speed up network connections', 'To reduce Azure costs'],
-      correctAnswer: 1,
+      options: ['To create backup copies of Azure resources', 'To speed up network connections', 'To extend Azure management to on-premises and multi-cloud resources', 'To reduce Azure costs'],
+      correctAnswer: 2,
       explanation: 'Azure Arc extends Azure management, governance, and services to resources running outside of Azure — on-premises servers, other cloud providers, and edge environments.'
     },
     {
@@ -173,8 +173,8 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
     {
       id: 'az900-22-q5',
       question: 'What does "idempotent" mean in the context of ARM template deployments?',
-      options: ['Deployments are always faster', 'Deploying the same template multiple times produces the same result without duplicates', 'Templates can only be deployed once', 'Resources are automatically deleted after deployment'],
-      correctAnswer: 1,
+      options: ['Deployments are always faster', 'Templates can only be deployed once', 'Deploying the same template multiple times produces the same result without duplicates', 'Resources are automatically deleted after deployment'],
+      correctAnswer: 2,
       explanation: 'Idempotent means deploying the same template multiple times results in the same state. If resources already exist and match the template, no changes are made. This makes re-deployment safe.'
     }
   ]}

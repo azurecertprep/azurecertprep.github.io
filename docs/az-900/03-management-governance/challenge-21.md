@@ -133,22 +133,22 @@ Open Cloud Shell and run: `az interactive` for an enhanced CLI experience with a
     {
       id: 'az900-21-q1',
       question: 'What is Azure Cloud Shell?',
-      options: ['A downloadable application for managing Azure', 'A browser-based terminal with pre-installed Azure tools', 'A virtual machine running in your subscription', 'A mobile app for Azure management'],
-      correctAnswer: 1,
+      options: ['A downloadable application for managing Azure', 'A virtual machine running in your subscription', 'A browser-based terminal with pre-installed Azure tools', 'A mobile app for Azure management'],
+      correctAnswer: 2,
       explanation: 'Azure Cloud Shell is a browser-based terminal accessible from the Azure Portal. It comes with Azure CLI, Azure PowerShell, and other tools pre-installed, and is already authenticated to your account.'
     },
     {
       id: 'az900-21-q2',
       question: 'Which Azure management tool is best for tasks that need to be repeated automatically through scripts?',
-      options: ['Azure Portal', 'Azure CLI or Azure PowerShell', 'Azure Mobile App', 'Azure Advisor'],
-      correctAnswer: 1,
+      options: ['Azure CLI or Azure PowerShell', 'Azure Portal', 'Azure Mobile App', 'Azure Advisor'],
+      correctAnswer: 0,
       explanation: 'Azure CLI and Azure PowerShell are scriptable command-line tools, making them ideal for automation and repeatable tasks. The Portal is better for one-off tasks and exploration.'
     },
     {
       id: 'az900-21-q3',
       question: 'What is a key advantage of the Azure Portal over CLI tools?',
-      options: ['It is faster', 'It provides a visual interface for exploration and discovery', 'It supports automation', 'It can be used offline'],
-      correctAnswer: 1,
+      options: ['It is faster', 'It supports automation', 'It can be used offline', 'It provides a visual interface for exploration and discovery'],
+      correctAnswer: 3,
       explanation: 'The Azure Portal provides a graphical interface that makes it easy to explore services, discover options, and understand relationships between resources — ideal for learning and one-off management tasks.'
     },
     {
@@ -161,8 +161,8 @@ Open Cloud Shell and run: `az interactive` for an enhanced CLI experience with a
     {
       id: 'az900-21-q5',
       question: 'The Azure CLI command pattern follows which format?',
-      options: ['Verb-AzNoun', 'az <service> <action> --parameters', 'New-AzResource', 'azure.service.action()'],
-      correctAnswer: 1,
+      options: ['Verb-AzNoun', 'New-AzResource', 'az <service> <action> --parameters', 'azure.service.action()'],
+      correctAnswer: 2,
       explanation: 'Azure CLI uses the pattern: az <service> <action> --parameters. For example: az vm create --name myVM --resource-group myRG. Azure PowerShell uses the Verb-AzNoun pattern.'
     }
   ]}

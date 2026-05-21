@@ -124,8 +124,8 @@ az vm image list --offer Ubuntu --all --query "[0:5]" --output table
     {
       id: 'az900-09-q1',
       question: 'Which Azure feature distributes VMs across physically separate datacenters within a region?',
-      options: ['Availability Sets', 'Availability Zones', 'VM Scale Sets', 'Resource groups'],
-      correctAnswer: 1,
+      options: ['Availability Sets', 'VM Scale Sets', 'Resource groups', 'Availability Zones'],
+      correctAnswer: 3,
       explanation: 'Availability Zones place VMs in physically separate datacenters within a region. Each zone has independent power, cooling, and networking, protecting against datacenter-level failures.'
     },
     {
@@ -138,22 +138,22 @@ az vm image list --offer Ubuntu --all --query "[0:5]" --output table
     {
       id: 'az900-09-q3',
       question: 'A company needs to provide 100 employees with Windows 10 desktops that can be accessed from any device, anywhere. Which service should they use?',
-      options: ['Azure Virtual Machines', 'Azure Virtual Desktop', 'Azure App Service', 'Azure Container Instances'],
-      correctAnswer: 1,
+      options: ['Azure Virtual Machines', 'Azure App Service', 'Azure Virtual Desktop', 'Azure Container Instances'],
+      correctAnswer: 2,
       explanation: 'Azure Virtual Desktop provides cloud-hosted desktops that users can access from any device. It supports multi-session Windows 10/11 and centralizes desktop management.'
     },
     {
       id: 'az900-09-q4',
       question: 'What is the purpose of VM Scale Sets?',
-      options: ['To increase the size of a single VM', 'To automatically add or remove identical VM instances based on demand', 'To replicate VMs across regions', 'To convert VMs from IaaS to PaaS'],
-      correctAnswer: 1,
+      options: ['To automatically add or remove identical VM instances based on demand', 'To increase the size of a single VM', 'To replicate VMs across regions', 'To convert VMs from IaaS to PaaS'],
+      correctAnswer: 0,
       explanation: 'VM Scale Sets automatically increase or decrease the number of identical VM instances based on demand or a schedule. This provides horizontal scaling (scale out/in).'
     },
     {
       id: 'az900-09-q5',
       question: 'In an Availability Set, what does a "fault domain" represent?',
-      options: ['A logical group that can be rebooted during updates', 'A physical rack with shared power and network switch', 'A separate Azure region', 'A virtual network segment'],
-      correctAnswer: 1,
+      options: ['A logical group that can be rebooted during updates', 'A separate Azure region', 'A physical rack with shared power and network switch', 'A virtual network segment'],
+      correctAnswer: 2,
       explanation: 'A fault domain represents a physical rack in the datacenter with its own power source and network switch. If the rack fails, only VMs in that fault domain are affected.'
     }
   ]}

@@ -303,20 +303,16 @@ az network manager security-admin-config rule-collection rule create \
 Deploy the security admin configurations to the target regions.
 
 ```bash
-# Deploy the high-risk port blocking configuration
-az network manager post-commit \
-  --network-manager-name "avnm-contoso-security" \
-  --resource-group $RG \
-  --commit-type "SecurityAdmin" \
-  --configuration-ids "$(az network manager security-admin-config show --name sac-block-high-risk --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)" \
-  --target-locations $LOCATION
+# Deploy both security admin configurations in a single commit
+# Note: Multiple configurations must be committed together; a subsequent commit replaces the previous one
+BLOCK_HIGH_RISK_ID=$(az network manager security-admin-config show --name sac-block-high-risk --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)
+ENV_ISOLATION_ID=$(az network manager security-admin-config show --name sac-env-isolation --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)
 
-# Deploy the environment isolation configuration
 az network manager post-commit \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --commit-type "SecurityAdmin" \
-  --configuration-ids "$(az network manager security-admin-config show --name sac-env-isolation --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)" \
+  --configuration-ids "$BLOCK_HIGH_RISK_ID" "$ENV_ISOLATION_ID" \
   --target-locations $LOCATION
 
 # Check deployment status

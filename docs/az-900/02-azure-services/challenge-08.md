@@ -134,22 +134,22 @@ az group show --name rg-az900-learning --output table
     {
       id: 'az900-08-q1',
       question: 'What happens when you delete a resource group?',
-      options: ['Only the group is deleted; resources are moved', 'All resources within the group are also deleted', 'The subscription is cancelled', 'Resources are archived for 30 days'],
-      correctAnswer: 1,
+      options: ['Only the group is deleted; resources are moved', 'The subscription is cancelled', 'All resources within the group are also deleted', 'Resources are archived for 30 days'],
+      correctAnswer: 2,
       explanation: 'Deleting a resource group deletes ALL resources contained within it. This is a permanent action and is useful for cleaning up entire environments at once.'
     },
     {
       id: 'az900-08-q2',
       question: 'Which level of the Azure hierarchy is the primary billing boundary?',
-      options: ['Management group', 'Subscription', 'Resource group', 'Resource'],
-      correctAnswer: 1,
+      options: ['Subscription', 'Management group', 'Resource group', 'Resource'],
+      correctAnswer: 0,
       explanation: 'The subscription is the primary billing boundary. All costs for resources within a subscription are billed together. Management groups help organize subscriptions but are not directly billed.'
     },
     {
       id: 'az900-08-q3',
       question: 'Can a resource group contain resources from different Azure regions?',
-      options: ['No, all resources must be in the same region as the resource group', 'Yes, a resource group can contain resources from any region', 'Only if they are in paired regions', 'Only within the same geography'],
-      correctAnswer: 1,
+      options: ['No, all resources must be in the same region as the resource group', 'Only if they are in paired regions', 'Only within the same geography', 'Yes, a resource group can contain resources from any region'],
+      correctAnswer: 3,
       explanation: 'A resource group can contain resources from any Azure region. The resource group\'s region only specifies where the group\'s metadata is stored, not where its resources must be deployed.'
     },
     {
@@ -162,8 +162,8 @@ az group show --name rg-az900-learning --output table
     {
       id: 'az900-08-q5',
       question: 'A policy is applied at the management group level. Which resources does it affect?',
-      options: ['Only resources directly in the management group', 'All resources in all subscriptions under that management group', 'Only the first subscription in the group', 'None — policies only work at the subscription level'],
-      correctAnswer: 1,
+      options: ['Only resources directly in the management group', 'Only the first subscription in the group', 'All resources in all subscriptions under that management group', 'None — policies only work at the subscription level'],
+      correctAnswer: 2,
       explanation: 'Policies applied at the management group level are inherited by all subscriptions, resource groups, and resources beneath that management group in the hierarchy.'
     }
   ]}

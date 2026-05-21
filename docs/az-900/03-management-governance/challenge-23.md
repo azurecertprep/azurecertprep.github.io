@@ -84,14 +84,14 @@ Advisor analyzes your resource configuration and usage and then provides:
 
 ### Task 5: Azure Status page
 
-1. Visit [status.azure.com](https://status.azure.com)
+1. Visit [azure.status.microsoft](https://azure.status.microsoft/en-us/status)
 2. This public page shows:
    - Global status of all Azure services
    - Status by region
    - Current incidents (if any)
    - Historical uptime data
 3. Compare this with Service Health in the portal:
-   - status.azure.com = broad, public view
+   - azure.status.microsoft = broad, public view
    - Service Health = personalized to YOUR resources
 
 :::tip Azure CLI Alternative

@@ -31,7 +31,7 @@ Azure Policy enforces organizational standards. Policies evaluate resources and 
 |------------|-------------|---------|
 | **Deny** | Prevent non-compliant resource creation | "VMs must be in allowed regions only" |
 | **Audit** | Flag existing non-compliant resources | "Storage accounts without encryption" |
-| **Append** | Add required fields automatically | "Auto-add required tags" |
+| **Modify** | Add or update resource properties automatically | "Auto-add required tags" |
 | **Modify** | Change resource properties | "Enable diagnostic logging" |
 
 ### Task 2: Explore Azure Policy in the Portal
@@ -129,22 +129,22 @@ az lock list --resource-group rg-az900-learning --output table 2>/dev/null || ec
     {
       id: 'az900-20-q1',
       question: 'A company wants to ensure that all Azure resources are created only in specific regions. Which service should they use?',
-      options: ['Azure RBAC', 'Azure Policy', 'Resource locks', 'Microsoft Purview'],
-      correctAnswer: 1,
+      options: ['Azure RBAC', 'Resource locks', 'Azure Policy', 'Microsoft Purview'],
+      correctAnswer: 2,
       explanation: 'Azure Policy can enforce an "Allowed locations" policy that prevents resource creation in non-approved regions. This applies to all users regardless of their RBAC role.'
     },
     {
       id: 'az900-20-q2',
       question: 'A production database must be protected from accidental deletion. What should be applied?',
-      options: ['Azure Policy deny rule', 'CanNotDelete resource lock', 'ReadOnly resource lock', 'Remove Owner permissions'],
-      correctAnswer: 1,
+      options: ['CanNotDelete resource lock', 'Azure Policy deny rule', 'ReadOnly resource lock', 'Remove Owner permissions'],
+      correctAnswer: 0,
       explanation: 'A CanNotDelete lock prevents the resource from being deleted while still allowing modifications. This protects production resources from accidental deletion.'
     },
     {
       id: 'az900-20-q3',
       question: 'What is the purpose of Microsoft Purview?',
-      options: ['To manage VM deployments', 'To provide unified data governance and classification', 'To monitor network traffic', 'To create storage accounts'],
-      correctAnswer: 1,
+      options: ['To manage VM deployments', 'To monitor network traffic', 'To create storage accounts', 'To provide unified data governance and classification'],
+      correctAnswer: 3,
       explanation: 'Microsoft Purview provides unified data governance across your data estate. It discovers, classifies, and maps sensitive data across Azure, on-premises, and multi-cloud environments.'
     },
     {
@@ -157,8 +157,8 @@ az lock list --resource-group rg-az900-learning --output table 2>/dev/null || ec
     {
       id: 'az900-20-q5',
       question: 'What is the difference between Azure Policy and Azure RBAC?',
-      options: ['Policy controls WHO can access; RBAC controls WHAT can be created', 'Policy controls WHAT can be created; RBAC controls WHO can do it', 'They are the same thing', 'Policy is for compute; RBAC is for storage'],
-      correctAnswer: 1,
+      options: ['Policy controls WHO can access; RBAC controls WHAT can be created', 'They are the same thing', 'Policy controls WHAT can be created; RBAC controls WHO can do it', 'Policy is for compute; RBAC is for storage'],
+      correctAnswer: 2,
       explanation: 'Azure Policy focuses on resource properties and compliance (what can be created/configured). RBAC focuses on user permissions (who can perform actions). They complement each other.'
     }
   ]}

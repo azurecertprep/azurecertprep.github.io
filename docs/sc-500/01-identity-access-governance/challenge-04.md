@@ -304,7 +304,7 @@ A daemon application configured with application permissions for `User.Read.All`
 
 ```bash
 # Check if admin consent has been granted
-az ad app permission list-grants --id "$APP_ID" --show-resource-name -o table
+az ad app permission list --id "$APP_ID" --output table
 
 # The issue is that admin consent was not granted after adding permissions
 # Grant admin consent

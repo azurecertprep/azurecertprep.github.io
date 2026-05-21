@@ -49,7 +49,7 @@ Review this table:
 | Responsibility | On-premises | IaaS | PaaS | SaaS |
 |---------------|-------------|------|------|------|
 | Data & access | You | You | You | You |
-| Applications | You | You | Shared | Shared |
+| Applications | You | You | Shared | Provider |
 | Network controls | You | You | Shared | Provider |
 | Operating system | You | You | Provider | Provider |
 | Physical infrastructure | You | Provider | Provider | Provider |
