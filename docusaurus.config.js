@@ -167,7 +167,7 @@ const config = {
               },
               {
                 label: 'Microsoft Learn — SC-500',
-                href: 'https://learn.microsoft.com/en-us/credentials/certifications/cloud-ai-security-engineer/',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/',
               },
               {
                 label: 'Free Practice Assessment',

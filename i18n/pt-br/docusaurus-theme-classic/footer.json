@@ -37,7 +37,7 @@
   },
   "link.item.label.Microsoft Learn — SC-500": {
     "message": "Microsoft Learn — SC-500",
-    "description": "The label of footer link with label=Microsoft Learn — SC-500 linking to https://learn.microsoft.com/en-us/credentials/certifications/cloud-ai-security-engineer/"
+    "description": "The label of footer link with label=Microsoft Learn — SC-500 linking to https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/"
   },
   "link.item.label.Free Practice Assessment": {
     "message": "Simulado Gratuito",
