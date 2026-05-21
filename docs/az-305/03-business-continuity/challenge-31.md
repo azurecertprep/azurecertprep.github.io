@@ -366,11 +366,7 @@ az sql server firewall-rule create \
 ```
 
 ```bash
-az sql db execute \
-  --resource-group rg-az305-challenge31 \
-  --server $PRIMARY_SERVER \
-  --name payrolldb \
-  --query "CREATE TABLE EmployeePayroll (Id INT PRIMARY KEY, Name NVARCHAR(100), Salary DECIMAL(10,2)); INSERT INTO EmployeePayroll VALUES (1, 'Alice', 85000.00), (2, 'Bob', 92000.00), (3, 'Carol', 78000.00);"
+sqlcmd -S "$PRIMARY_SERVER.database.windows.net" -U sqladmin -P "$SQL_PASSWORD" -d payrolldb -Q "CREATE TABLE EmployeePayroll (Id INT PRIMARY KEY, Name NVARCHAR(100), Salary DECIMAL(10,2)); INSERT INTO EmployeePayroll VALUES (1, 'Alice', 85000.00), (2, 'Bob', 92000.00), (3, 'Carol', 78000.00);"
 ```
 
 ### Step 6: verify data replicated to secondary
@@ -383,12 +379,7 @@ sleep 10
 ```
 
 ```bash
-az sql db execute \
-  --resource-group rg-az305-challenge31-dr \
-  --server $SECONDARY_SERVER \
-  --name payrolldb \
-  --query "SELECT * FROM EmployeePayroll;" \
-  -o table
+sqlcmd -S "$SECONDARY_SERVER.database.windows.net" -U sqladmin -P "$SQL_PASSWORD" -d payrolldb -Q "SELECT * FROM EmployeePayroll;"
 ```
 
 You should see all 3 rows replicated to the secondary region.

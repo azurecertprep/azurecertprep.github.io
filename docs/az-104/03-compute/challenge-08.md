@@ -63,8 +63,8 @@ az vm create \
   --public-ip-sku Standard \
   --output table
 
-# Verify the VM is running
-az vm show --resource-group rg-vm-lab --name vm-web-01 \
+# Verify the VM is running (requires -d flag to get instance view / powerState)
+az vm show -d --resource-group rg-vm-lab --name vm-web-01 \
   --query "{Name:name, State:powerState, Size:hardwareProfile.vmSize}" -o table
 
 # SSH into the VM (use the public IP from the create output)

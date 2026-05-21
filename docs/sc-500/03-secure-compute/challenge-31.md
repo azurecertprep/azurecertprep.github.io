@@ -153,8 +153,9 @@ Create KQL queries for the workbook:
 AzureDiagnostics
 | where ResourceProvider == "MICROSOFT.COGNITIVESERVICES"
 | where Category == "RequestResponse"
-| extend promptTokens = toint(properties_s.promptTokens)
-| extend completionTokens = toint(properties_s.completionTokens)
+| extend props = parse_json(properties_s)
+| extend promptTokens = toint(props.promptTokens)
+| extend completionTokens = toint(props.completionTokens)
 | extend isFiltered = properties_s contains "content_filter"
 | summarize
     TotalRequests = count(),

@@ -160,12 +160,12 @@ az sql db create --name db-shopwave-orders --resource-group rg-az305-challenge14
 3. Configure geo-replication to a secondary region:
 
 ```bash
+az sql server create --name sql-shopwave-lab-west --resource-group rg-az305-challenge14 \
+  --location westus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
+
 az sql db replica create --name db-shopwave-orders --resource-group rg-az305-challenge14 \
   --server sql-shopwave-lab --partner-server sql-shopwave-lab-west \
   --partner-resource-group rg-az305-challenge14
-
-az sql server create --name sql-shopwave-lab-west --resource-group rg-az305-challenge14 \
-  --location westus --admin-user sqladmin --admin-password "P@ssw0rd2025!"
 ```
 
 4. Verify geo-replication status:

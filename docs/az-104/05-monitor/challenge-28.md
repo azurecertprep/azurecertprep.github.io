@@ -110,10 +110,11 @@ az advisor recommendation list \
 # Check advisor configuration (what resource groups are included)
 az advisor configuration list -o table
 
-# Configure advisor to exclude specific resource groups (if needed)
+# Exclude a specific resource group from recommendation generation
 az advisor configuration update \
-  --exclude \
-  --resource-group "rg-dev-sandbox"
+  --resource-group "rg-dev-sandbox" \
+  --configuration-name default \
+  --exclude
 ```
 
 :::tip Advisor Score
@@ -130,16 +131,16 @@ Advisor Score represents the percentage of Advisor recommendations that have bee
 # List current recommendations
 az advisor recommendation list --category Cost -o table
 
-# Suppress (dismiss) a recommendation permanently
-# Get the recommendation ID first
-RECOMMENDATION_ID=$(az advisor recommendation list \
+# Suppress (dismiss) a recommendation for 30 days
+# Get the recommendation name first
+RECOMMENDATION_NAME=$(az advisor recommendation list \
   --category Cost \
-  --query "[0].id" -o tsv)
+  --query "[0].name" -o tsv)
 
-# Suppress for a specific resource
-if [ -n "$RECOMMENDATION_ID" ]; then
+# Dismiss the recommendation temporarily (omit --days to dismiss permanently)
+if [ -n "$RECOMMENDATION_NAME" ]; then
   az advisor recommendation disable \
-    --ids "$RECOMMENDATION_ID" \
+    --name "$RECOMMENDATION_NAME" \
     --days 30
 fi
 ```
@@ -411,7 +412,10 @@ az monitor alert-processing-rule create \
   --rule-type RemoveAllActionGroups \
   --scopes "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$RG" \
   --schedule-recurrence-type Weekly \
-  --schedule-recurrence "Saturday" "Sunday"
+  --schedule-recurrence Saturday Sunday \
+  --schedule-recurrence-start-time "00:00:00" \
+  --schedule-recurrence-end-time "23:59:59" \
+  --schedule-time-zone "UTC"
 ```
 
 ### Scenario c: Resource health shows unavailable

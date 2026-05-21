@@ -446,24 +446,12 @@ az keyvault certificate show --vault-name $KV_NAME --name "contoso-api-cert" \
 # For imported certificates, the issuer is typically set to "Unknown"
 
 # Fix: Update the certificate policy to use Self-signed for auto-renewal
-az keyvault certificate set-attributes \
+az keyvault certificate policy update \
   --vault-name $KV_NAME \
   --name "contoso-api-cert" \
-  --policy '{
-    "issuerParameters": {
-      "name": "Self"
-    },
-    "lifetimeActions": [
-      {
-        "trigger": {
-          "daysBeforeExpiry": 30
-        },
-        "action": {
-          "actionType": "AutoRenew"
-        }
-      }
-    ]
-  }'
+  --issuer-name "Self" \
+  --validity-in-months 12 \
+  --lifetime-actions '[{"trigger":{"daysBeforeExpiry":30},"action":{"actionType":"AutoRenew"}}]'
 
 # Alternative: If using a CA, configure the issuer first
 # az keyvault certificate issuer create \
@@ -475,9 +463,9 @@ az keyvault certificate set-attributes \
 
 # For production CA-signed certs, change the policy to use EmailContacts
 # which sends notification for manual renewal:
-# az keyvault certificate set-attributes --vault-name $KV_NAME \
+# az keyvault certificate policy update --vault-name $KV_NAME \
 #   --name "contoso-api-cert" \
-#   --policy '{"lifetimeActions":[{"trigger":{"daysBeforeExpiry":30},"action":{"actionType":"EmailContacts"}}]}'
+#   --lifetime-actions '[{"trigger":{"daysBeforeExpiry":30},"action":{"actionType":"EmailContacts"}}]'
 
 # Verify pending certificate operations
 az keyvault certificate pending show \

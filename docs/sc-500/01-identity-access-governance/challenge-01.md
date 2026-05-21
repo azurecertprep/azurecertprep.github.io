@@ -216,19 +216,20 @@ az role assignment list --role "Owner" --scope "/subscriptions/$SUB_ID" --query 
 
 # Create an eligible assignment for Owner role on subscription using PIM
 az rest --method POST \
-  --url "https://graph.microsoft.com/v1.0/roleManagement/azureResources/roleEligibilityScheduleRequests" \
+  --url "https://management.azure.com/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/$(uuidgen)?api-version=2020-10-01" \
   --headers "Content-Type=application/json" \
   --body "{
-    \"action\": \"adminAssign\",
-    \"justification\": \"Eligible Owner for emergency access\",
-    \"roleDefinitionId\": \"/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635\",
-    \"directoryScopeId\": \"/subscriptions/$SUB_ID\",
-    \"principalId\": \"$USER_ID\",
-    \"scheduleInfo\": {
-      \"startDateTime\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
-      \"expiration\": {
-        \"type\": \"afterDuration\",
-        \"duration\": \"P90D\"
+    \"properties\": {
+      \"requestType\": \"AdminAssign\",
+      \"justification\": \"Eligible Owner for emergency access\",
+      \"roleDefinitionId\": \"/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635\",
+      \"principalId\": \"$USER_ID\",
+      \"scheduleInfo\": {
+        \"startDateTime\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+        \"expiration\": {
+          \"type\": \"AfterDuration\",
+          \"duration\": \"P90D\"
+        }
       }
     }
   }"
@@ -372,19 +373,20 @@ az role assignment delete --assignee "newuser@contoso.com" \
 NEW_USER_ID=$(az ad user show --id "newuser@contoso.com" --query id -o tsv)
 
 az rest --method POST \
-  --url "https://graph.microsoft.com/v1.0/roleManagement/azureResources/roleEligibilityScheduleRequests" \
+  --url "https://management.azure.com/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/$(uuidgen)?api-version=2020-10-01" \
   --headers "Content-Type=application/json" \
   --body "{
-    \"action\": \"adminAssign\",
-    \"justification\": \"Convert permanent to eligible assignment per security policy\",
-    \"roleDefinitionId\": \"/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\",
-    \"directoryScopeId\": \"/subscriptions/$SUB_ID\",
-    \"principalId\": \"$NEW_USER_ID\",
-    \"scheduleInfo\": {
-      \"startDateTime\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
-      \"expiration\": {
-        \"type\": \"afterDuration\",
-        \"duration\": \"P180D\"
+    \"properties\": {
+      \"requestType\": \"AdminAssign\",
+      \"justification\": \"Convert permanent to eligible assignment per security policy\",
+      \"roleDefinitionId\": \"/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c\",
+      \"principalId\": \"$NEW_USER_ID\",
+      \"scheduleInfo\": {
+        \"startDateTime\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+        \"expiration\": {
+          \"type\": \"AfterDuration\",
+          \"duration\": \"P180D\"
+        }
       }
     }
   }"

@@ -48,8 +48,7 @@ az monitor log-analytics workspace create \
   --resource-group $RG_NAME \
   --location $LOCATION \
   --retention-time 90 \
-  --sku PerGB2018 \
-  --capacity-reservation-level 100
+  --sku PerGB2018
 
 # Get workspace resource ID
 WORKSPACE_ID=$(az monitor log-analytics workspace show \

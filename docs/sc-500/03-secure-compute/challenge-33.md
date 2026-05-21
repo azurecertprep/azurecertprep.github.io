@@ -78,8 +78,8 @@ az network bastion create \
 az network bastion update \
     --resource-group "rg-contoso-bastion" \
     --name "bastion-contoso-hub" \
-    --shareable-link true \
-    --session-recording true
+    --enable-shareable-link true \
+    --enable-session-recording true
 ```
 
 ---

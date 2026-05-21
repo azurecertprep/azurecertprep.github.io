@@ -473,8 +473,8 @@ az network manager security-admin-config rule-collection rule show \
       "Deny",
       "Permit"
     ],
-    correctIndex: 1,
-    explanation: "The 'AlwaysAllow' access type in security admin rules permits traffic at the admin level but can still be overridden by local NSG deny rules. The 'Allow' access type cannot be overridden by NSGs. Use 'AlwaysAllow' when you want to set a baseline that local admins can restrict further."
+    correctIndex: 0,
+    explanation: "The 'Allow' access type in security admin rules permits traffic but can still be overridden by local NSG deny rules. The 'AlwaysAllow' access type permits traffic and CANNOT be overridden by NSG rules. Use 'Allow' when you want to set a baseline that local admins can restrict further."
   },
   {
     question: "How are VNets added to network groups in Azure Virtual Network Manager?",

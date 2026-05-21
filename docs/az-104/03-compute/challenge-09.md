@@ -146,7 +146,7 @@ az containerapp env create \
 ### Task 5: deploy to Container Apps
 
 ```bash
-# Enable managed identity access to ACR (preferred over admin credentials)
+# Using admin credentials for lab simplicity (for production, use --registry-identity system)
 az containerapp create \
   --resource-group rg-containers-lab \
   --name ca-dashboard \
@@ -168,15 +168,27 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 ### Task 6: configure Container Apps scaling
 
 ```bash
-# Add an HTTP scaling rule (scale when concurrent requests > 10 per replica)
+# Configure basic replica scaling
 az containerapp update \
   --resource-group rg-containers-lab \
   --name ca-dashboard \
   --min-replicas 1 \
-  --max-replicas 10 \
-  --scale-rule-name http-scaling \
-  --scale-rule-type http \
-  --scale-rule-http-concurrency 10
+  --max-replicas 10
+
+# For custom HTTP scale rules, use a YAML configuration:
+# 1. Export current config
+az containerapp show -g rg-containers-lab -n ca-dashboard -o yaml > ca-dashboard.yaml
+# 2. Edit the YAML to add scale rules under properties.template.scale:
+#    scale:
+#      minReplicas: 1
+#      maxReplicas: 10
+#      rules:
+#        - name: http-scaling
+#          http:
+#            metadata:
+#              concurrentRequests: "10"
+# 3. Apply the updated YAML
+az containerapp update -g rg-containers-lab -n ca-dashboard --yaml ca-dashboard.yaml
 
 # Verify scaling configuration
 az containerapp show -g rg-containers-lab -n ca-dashboard \

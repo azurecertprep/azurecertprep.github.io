@@ -187,44 +187,54 @@ Deploy a minimal proof-of-concept to validate your design:
 az group create --name rg-az305-challenge46 --location eastus
 ```
 
-2. Create a VNet and subnet for the backend pool:
+2. Create a source Azure SQL server and database (simulating on-premises):
 
 ```bash
-az network vnet create --resource-group rg-az305-challenge46 \
-  --name vnet-lab46 --address-prefix 10.0.0.0/16 \
-  --subnet-name subnet-backend --subnet-prefix 10.0.1.0/24
+SQL_PASSWORD="Migr@tion2025!"
+
+az sql server create --name sql-source-challenge46 --resource-group rg-az305-challenge46 \
+  --location eastus --admin-user sqladmin --admin-password "$SQL_PASSWORD"
+
+az sql server firewall-rule create --resource-group rg-az305-challenge46 \
+  --server sql-source-challenge46 --name AllowAzureServices \
+  --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+
+az sql db create --resource-group rg-az305-challenge46 \
+  --server sql-source-challenge46 --name db-source-erp \
+  --edition GeneralPurpose --compute-model Serverless --family Gen5 --capacity 2
 ```
 
-3. Create a public IP and a Standard Load Balancer:
+3. Create a target Azure SQL server in a secondary region:
 
 ```bash
-az network public-ip create --resource-group rg-az305-challenge46 \
-  --name pip-lb46 --sku Standard --allocation-method Static
+az sql server create --name sql-target-challenge46 --resource-group rg-az305-challenge46 \
+  --location westus --admin-user sqladmin --admin-password "$SQL_PASSWORD"
 
-az network lb create --resource-group rg-az305-challenge46 \
-  --name lb-lab46 --sku Standard \
-  --frontend-ip-name frontend-lb46 --public-ip-address pip-lb46 \
-  --backend-pool-name backend-pool46
+az sql server firewall-rule create --resource-group rg-az305-challenge46 \
+  --server sql-target-challenge46 --name AllowAzureServices \
+  --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+
+az sql db create --resource-group rg-az305-challenge46 \
+  --server sql-target-challenge46 --name db-target-erp \
+  --edition GeneralPurpose --compute-model Serverless --family Gen5 --capacity 2
 ```
 
-4. Create two NICs and add them to the backend pool:
+4. Configure a failover group to enable online migration with minimal downtime:
 
 ```bash
-az network nic create --resource-group rg-az305-challenge46 \
-  --name nic-vm1 --vnet-name vnet-lab46 --subnet subnet-backend \
-  --lb-name lb-lab46 --lb-address-pools backend-pool46
-
-az network nic create --resource-group rg-az305-challenge46 \
-  --name nic-vm2 --vnet-name vnet-lab46 --subnet subnet-backend \
-  --lb-name lb-lab46 --lb-address-pools backend-pool46
+az sql failover-group create --resource-group rg-az305-challenge46 \
+  --server sql-source-challenge46 --partner-server sql-target-challenge46 \
+  --name fog-challenge46-migration \
+  --add-db db-source-erp \
+  --failover-policy Automatic --grace-period 1
 ```
 
-5. Verify the backend pool members:
+5. Verify the failover group status and replication health:
 
 ```bash
-az network lb address-pool show --resource-group rg-az305-challenge46 \
-  --lb-name lb-lab46 --name backend-pool46 \
-  --query "backendIPConfigurations[].id" -o tsv
+az sql failover-group show --resource-group rg-az305-challenge46 \
+  --server sql-source-challenge46 --name fog-challenge46-migration \
+  --query "{name:name, role:replicationRole, partnerServers:partnerServers[0].replicationRole}" -o table
 ```
 
 :::tip

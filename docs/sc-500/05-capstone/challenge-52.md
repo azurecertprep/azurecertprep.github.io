@@ -65,43 +65,53 @@ az group create --name $RG_SPOKE --location $LOCATION
 
 # Configure PIM settings via Graph API
 # Set Global Admin role to require approval with 4-hour maximum duration
+# First, retrieve the policy ID for the Global Admin role:
+# GET https://graph.microsoft.com/v1.0/policies/roleManagementPolicies?$filter=scopeId eq '/' and scopeType eq 'DirectoryRole' and roleDefinitionId eq '62e90394-69f5-4237-9190-012177145e10'
+
+# Update the approval rule for the policy
 az rest --method PATCH \
-  --url "https://graph.microsoft.com/v1.0/policies/roleManagementPolicies" \
+  --url "https://graph.microsoft.com/v1.0/policies/roleManagementPolicies/{policyId}/rules/Approval_EndUser_Assignment" \
   --headers "Content-Type=application/json" \
   --body '{
-    "rules": [
-      {
-        "@odata.type": "#microsoft.graph.unifiedRoleManagementPolicyApprovalRule",
-        "id": "Approval_EndUser_Assignment",
-        "target": {"caller": "EndUser", "operations": ["all"], "level": "Assignment"},
-        "setting": {
-          "isApprovalRequired": true,
-          "isApprovalRequiredForExtension": true,
-          "approvalStages": [{
-            "approvalStageTimeOutInDays": 1,
-            "isApproverJustificationRequired": true,
-            "primaryApprovers": [{
-              "@odata.type": "#microsoft.graph.groupMembers",
-              "groupId": "security-approvers-group-id",
-              "description": "Security Approvers"
-            }]
-          }]
-        }
-      },
-      {
-        "@odata.type": "#microsoft.graph.unifiedRoleManagementPolicyExpirationRule",
-        "id": "Expiration_EndUser_Assignment",
-        "target": {"caller": "EndUser", "operations": ["all"], "level": "Assignment"},
-        "isExpirationRequired": true,
-        "maximumDuration": "PT4H"
-      },
-      {
-        "@odata.type": "#microsoft.graph.unifiedRoleManagementPolicyAuthenticationContextRule",
-        "id": "AuthenticationContext_EndUser_Assignment",
-        "claimValue": "c1",
-        "isEnabled": true
-      }
-    ]
+    "@odata.type": "#microsoft.graph.unifiedRoleManagementPolicyApprovalRule",
+    "id": "Approval_EndUser_Assignment",
+    "target": {"caller": "EndUser", "operations": ["all"], "level": "Assignment"},
+    "setting": {
+      "isApprovalRequired": true,
+      "isApprovalRequiredForExtension": true,
+      "approvalStages": [{
+        "approvalStageTimeOutInDays": 1,
+        "isApproverJustificationRequired": true,
+        "primaryApprovers": [{
+          "@odata.type": "#microsoft.graph.groupMembers",
+          "groupId": "security-approvers-group-id",
+          "description": "Security Approvers"
+        }]
+      }]
+    }
+  }'
+
+# Update the expiration rule (4-hour max activation duration)
+az rest --method PATCH \
+  --url "https://graph.microsoft.com/v1.0/policies/roleManagementPolicies/{policyId}/rules/Expiration_EndUser_Assignment" \
+  --headers "Content-Type=application/json" \
+  --body '{
+    "@odata.type": "#microsoft.graph.unifiedRoleManagementPolicyExpirationRule",
+    "id": "Expiration_EndUser_Assignment",
+    "target": {"caller": "EndUser", "operations": ["all"], "level": "Assignment"},
+    "isExpirationRequired": true,
+    "maximumDuration": "PT4H"
+  }'
+
+# Update the authentication context rule
+az rest --method PATCH \
+  --url "https://graph.microsoft.com/v1.0/policies/roleManagementPolicies/{policyId}/rules/AuthenticationContext_EndUser_Assignment" \
+  --headers "Content-Type=application/json" \
+  --body '{
+    "@odata.type": "#microsoft.graph.unifiedRoleManagementPolicyAuthenticationContextRule",
+    "id": "AuthenticationContext_EndUser_Assignment",
+    "claimValue": "c1",
+    "isEnabled": true
   }'
 
 # Make admin user eligible (not permanently assigned)

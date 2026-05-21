@@ -50,7 +50,7 @@ az vm create \
     --enable-vtpm true \
     --admin-username "azadmin" \
     --generate-ssh-keys \
-    --os-disk-encryption-type "DiskWithVMGuestState" \
+    --os-disk-security-encryption-type "DiskWithVMGuestState" \
     --public-ip-address "" \
     --vnet-name "vnet-contoso-prod" \
     --subnet "subnet-web"

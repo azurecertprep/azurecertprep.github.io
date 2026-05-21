@@ -87,7 +87,7 @@ az webapp auth update \
     --action "RedirectToLoginPage" \
     --aad-allowed-token-audiences "api://app-contoso-frontend" \
     --aad-client-id "{app-registration-client-id}" \
-    --aad-token-issuer-url "https://sts.windows.net/{tenant-id}/v2.0"
+    --aad-token-issuer-url "https://login.microsoftonline.com/{tenant-id}/v2.0"
 
 # Enable VNet integration for outbound traffic
 az network vnet create \

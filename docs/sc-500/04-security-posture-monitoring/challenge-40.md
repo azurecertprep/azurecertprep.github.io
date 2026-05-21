@@ -89,7 +89,7 @@ az policy set-definition create \
       "policyDefinitionReferenceId": "storageEncryption"
     },
     {
-      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/17k78e20-9358-41c9-923c-fb736d382a4d",
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/17a78e20-9358-41c9-923c-fb736d382a4d",
       "policyDefinitionReferenceId": "sqlAuditing"
     },
     {

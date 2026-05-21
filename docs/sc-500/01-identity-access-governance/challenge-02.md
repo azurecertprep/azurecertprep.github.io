@@ -385,7 +385,7 @@ az rest --method PATCH \
 
 # Use What If to test policy evaluation for a specific user
 az rest --method POST \
-  --url "https://graph.microsoft.com/v1.0/identity/conditionalAccess/evaluate" \
+  --url "https://graph.microsoft.com/beta/identity/conditionalAccess/evaluate" \
   --headers "Content-Type=application/json" \
   --body "{
     \"userId\": \"$USER_ID\",

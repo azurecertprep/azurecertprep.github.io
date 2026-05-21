@@ -177,10 +177,14 @@ az monitor activity-log list \
   --query "[?operationName.value=='Microsoft.Compute/virtualMachines/deallocate/action'].{Time:eventTimestamp, Caller:caller, Status:status.value}" \
   -o table
 
-# Check auto-shutdown schedule
-az vm auto-shutdown show \
+# Check auto-shutdown schedule (az vm auto-shutdown has no 'show' subcommand;
+# query the underlying DevTestLab schedule resource instead)
+az resource show \
   --resource-group rg-az104-capstone-compute \
-  --name vm-prod-01
+  --resource-type "Microsoft.DevTestLab/schedules" \
+  --name "shutdown-computevm-vm-prod-01" \
+  --query "{Status:properties.status, Time:properties.dailyRecurrence.time, TimeZone:properties.timeZoneId}" \
+  -o table
 
 # Check current VM status
 az vm get-instance-view \

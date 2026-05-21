@@ -108,10 +108,13 @@ az rest --method PATCH \
     "accountEnabled": false
   }'
 
-# Invalidate all refresh tokens for the app
+# Note: invalidateAllRefreshTokens is not available for service principals.
+# Disabling the service principal (above) is sufficient to revoke access immediately.
+# Optionally, remove any credentials from the compromised app:
 az rest --method POST \
-  --url "https://graph.microsoft.com/v1.0/servicePrincipals/$MALICIOUS_SP_ID/invalidateAllRefreshTokens" \
-  --headers "Content-Type=application/json"
+  --url "https://graph.microsoft.com/v1.0/servicePrincipals/$MALICIOUS_SP_ID/removePassword" \
+  --headers "Content-Type=application/json" \
+  --body "{\"keyId\": \"$KEY_ID\"}"
 ```
 
 ## Task 3: Configure user consent restrictions
