@@ -262,7 +262,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Auto-merge patch updates
-        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        if: steps.metadata.outputs['update-type'] == 'version-update:semver-patch'
         run: |
           gh pr merge "${{ github.event.pull_request.number }}" \
             --auto --squash \

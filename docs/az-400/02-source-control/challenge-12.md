@@ -436,10 +436,10 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      order-service: ${{ steps.changes.outputs.order-service }}
-      payment-service: ${{ steps.changes.outputs.payment-service }}
-      shared-libs: ${{ steps.changes.outputs.shared-libs }}
-      user-service: ${{ steps.changes.outputs.user-service }}
+      order-service: ${{ steps.changes.outputs['order-service'] }}
+      payment-service: ${{ steps.changes.outputs['payment-service'] }}
+      shared-libs: ${{ steps.changes.outputs['shared-libs'] }}
+      user-service: ${{ steps.changes.outputs['user-service'] }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -461,7 +461,7 @@ jobs:
 
   build-order-service:
     needs: detect-changes
-    if: needs.detect-changes.outputs.order-service == 'true'
+    if: needs['detect-changes'].outputs['order-service'] == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -479,7 +479,7 @@ jobs:
 
   build-payment-service:
     needs: detect-changes
-    if: needs.detect-changes.outputs.payment-service == 'true'
+    if: needs['detect-changes'].outputs['payment-service'] == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -497,7 +497,7 @@ jobs:
   # If shared libs change, rebuild ALL dependent services
   build-all-on-shared-change:
     needs: detect-changes
-    if: needs.detect-changes.outputs.shared-libs == 'true'
+    if: needs['detect-changes'].outputs['shared-libs'] == 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:

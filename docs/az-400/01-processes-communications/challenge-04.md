@@ -452,10 +452,10 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const deployCount = '${{ steps.deploy-freq.outputs.count }}';
-            const deployLevel = '${{ steps.deploy-freq.outputs.frequency }}';
-            const leadTime = '${{ steps.lead-time.outputs.avg_hours }}';
-            const leadLevel = '${{ steps.lead-time.outputs.level }}';
+            const deployCount = '${{ steps['deploy-freq'].outputs.count }}';
+            const deployLevel = '${{ steps['deploy-freq'].outputs.frequency }}';
+            const leadTime = '${{ steps['lead-time'].outputs.avg_hours }}';
+            const leadLevel = '${{ steps['lead-time'].outputs.level }}';
             
             const today = new Date().toISOString().split('T')[0];
             const body = `## Weekly DORA metrics report - ${today}

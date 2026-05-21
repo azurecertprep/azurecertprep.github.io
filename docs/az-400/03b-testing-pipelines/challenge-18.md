@@ -552,7 +552,7 @@ For Node.js, use a coverage comparison script:
           }
           "
         env:
-          CHANGED_FILES: ${{ steps.changed-files.outputs.files }}
+          CHANGED_FILES: ${{ steps['changed-files'].outputs.files }}
         working-directory: ./services/checkout-api
 ```
 

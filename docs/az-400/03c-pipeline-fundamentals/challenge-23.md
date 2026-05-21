@@ -79,7 +79,7 @@ on:
     outputs:
       image-tag:
         description: "The published image tag"
-        value: ${{ jobs.docker.outputs.image-tag }}
+        value: ${{ jobs.docker.outputs['image-tag'] }}
       test-passed:
         description: "Whether tests passed"
         value: ${{ jobs.test.outputs.result }}
@@ -114,7 +114,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     outputs:
-      result: ${{ steps.test-result.outputs.passed }}
+      result: ${{ steps['test-result'].outputs.passed }}
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
@@ -195,7 +195,7 @@ jobs:
           az containerapp update \
             --name ${{ inputs.azure-app-name }}-staging \
             --resource-group contoso-staging-rg \
-            --image ${{ env.REGISTRY }}/contoso/${{ inputs.image-name }}:${{ needs.docker.outputs.image-tag }}
+            --image ${{ env.REGISTRY }}/contoso/${{ inputs.image-name }}:${{ needs.docker.outputs['image-tag'] }}
 
   deploy-production:
     name: Deploy to production
@@ -216,7 +216,7 @@ jobs:
           az containerapp update \
             --name ${{ inputs.azure-app-name }} \
             --resource-group contoso-prod-rg \
-            --image ${{ env.REGISTRY }}/contoso/${{ inputs.image-name }}:${{ needs.docker.outputs.image-tag }}
+            --image ${{ env.REGISTRY }}/contoso/${{ inputs.image-name }}:${{ needs.docker.outputs['image-tag'] }}
 ```
 
 Call the reusable workflow from each service repository:
@@ -340,7 +340,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: published-app
-          path: ${{ steps.build.outputs.artifact-path }}
+          path: ${{ steps.build.outputs['artifact-path'] }}
 ```
 
 ## Task 3: Azure Pipelines YAML templates

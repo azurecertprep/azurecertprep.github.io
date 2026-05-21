@@ -166,7 +166,7 @@ inputs:
 outputs:
   cache-hit:
     description: "Whether the npm cache was hit"
-    value: ${{ steps.cache.outputs.cache-hit }}
+    value: ${{ steps.cache.outputs['cache-hit'] }}
 
 runs:
   using: "composite"
@@ -188,7 +188,7 @@ runs:
           ${{ runner.os }}-modules-
 
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs['cache-hit'] != 'true'
       shell: bash
       run: npm ci
       env:
@@ -444,7 +444,7 @@ jobs:
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
             --parameters infrastructure/environments/staging.bicepparam \
-            --parameters imageTag=${{ needs.build-image.outputs.image_version }}
+            --parameters imageTag=${{ needs['build-image'].outputs.image_version }}
 
       - name: What-if analysis
         run: |
@@ -452,7 +452,7 @@ jobs:
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
             --parameters infrastructure/environments/staging.bicepparam \
-            --parameters imageTag=${{ needs.build-image.outputs.image_version }}
+            --parameters imageTag=${{ needs['build-image'].outputs.image_version }}
 
   # ============================================================
   # STAGE 5: Deploy to staging (automatic)
@@ -481,7 +481,7 @@ jobs:
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
             --parameters infrastructure/environments/staging.bicepparam \
-            --parameters imageTag=${{ needs.build-image.outputs.image_version }} \
+            --parameters imageTag=${{ needs['build-image'].outputs.image_version }} \
             --name "staging-$(date +%Y%m%d-%H%M%S)"
 
       - name: Deploy container to App Service
@@ -489,7 +489,7 @@ jobs:
           az webapp config container set \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --name app-contoso-notif-staging \
-            --container-image-name "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-image.outputs.image_version }}" \
+            --container-image-name "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs['build-image'].outputs.image_version }}" \
             --container-registry-url "https://${{ env.REGISTRY }}"
 
       - name: Wait for deployment
@@ -523,7 +523,7 @@ jobs:
               "Category": "Deployment",
               "EventTime": "'$(date -u +%Y-%m-%dT%H:%M:%S.000Z)'",
               "Id": "'$(uuidgen)'",
-              "Properties": "{\"DeploymentVersion\":\"${{ needs.build-image.outputs.image_version }}\",\"TriggeredBy\":\"${{ github.actor }}\",\"CommitSha\":\"${{ github.sha }}\"}"
+              "Properties": "{\"DeploymentVersion\":\"${{ needs['build-image'].outputs.image_version }}\",\"TriggeredBy\":\"${{ github.actor }}\",\"CommitSha\":\"${{ github.sha }}\"}"
             }'
 
   # ============================================================
@@ -553,7 +553,7 @@ jobs:
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
             --parameters infrastructure/environments/production.bicepparam \
-            --parameters imageTag=${{ needs.build-image.outputs.image_version }} \
+            --parameters imageTag=${{ needs['build-image'].outputs.image_version }} \
             --name "prod-$(date +%Y%m%d-%H%M%S)"
 
       - name: Deploy to staging slot (blue-green)
@@ -562,7 +562,7 @@ jobs:
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --name app-contoso-notif \
             --slot staging \
-            --container-image-name "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-image.outputs.image_version }}" \
+            --container-image-name "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs['build-image'].outputs.image_version }}" \
             --container-registry-url "https://${{ env.REGISTRY }}"
 
       - name: Warm up staging slot
@@ -620,16 +620,16 @@ jobs:
               "Category": "Deployment",
               "EventTime": "'$(date -u +%Y-%m-%dT%H:%M:%S.000Z)'",
               "Id": "'$(uuidgen)'",
-              "Properties": "{\"Version\":\"${{ needs.build-image.outputs.image_version }}\",\"Actor\":\"${{ github.actor }}\",\"Commit\":\"${{ github.sha }}\",\"RunId\":\"${{ github.run_id }}\"}"
+              "Properties": "{\"Version\":\"${{ needs['build-image'].outputs.image_version }}\",\"Actor\":\"${{ github.actor }}\",\"Commit\":\"${{ github.sha }}\",\"RunId\":\"${{ github.run_id }}\"}"
             }'
 
       - name: Create GitHub Release
         run: |
-          gh release create "v${{ needs.build-image.outputs.image_version }}" \
-            --title "v${{ needs.build-image.outputs.image_version }}" \
+          gh release create "v${{ needs['build-image'].outputs.image_version }}" \
+            --title "v${{ needs['build-image'].outputs.image_version }}" \
             --notes "Deployed to production by ${{ github.actor }}
             - Commit: ${{ github.sha }}
-            - Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-image.outputs.image_version }}
+            - Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs['build-image'].outputs.image_version }}
             - Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -812,7 +812,7 @@ Confirm the operational aspects are in place:
           script: |
             const duration = (new Date() - new Date('${{ github.event.head_commit.timestamp }}')) / 1000 / 60;
             console.log(`Total pipeline duration: ${duration.toFixed(1)} minutes`);
-            console.log(`Deployment status: ${{ needs.deploy-production.result }}`);
+            console.log(`Deployment status: ${{ needs['deploy-production'].result }}`);
 ```
 
 ## Break and fix
@@ -909,7 +909,7 @@ Production deployment reports success but users see the old version. The slot sw
       if [ "$STATUS" = "200" ]; then
         # Verify it is actually the new version
         VERSION=$(curl -s https://app-contoso-notif.azurewebsites.net/health | jq -r '.version')
-        if [ "$VERSION" = "${{ needs.build-image.outputs.image_version }}" ]; then
+        if [ "$VERSION" = "${{ needs['build-image'].outputs.image_version }}" ]; then
           echo "Production verified: version $VERSION is live"
           SUCCESS=true
           break

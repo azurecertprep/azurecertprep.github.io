@@ -117,7 +117,7 @@ jobs:
             --resource-group rg-contoso-secrets \
             --settings \
               "ConnectionStrings__Default=${{ steps.keyvault.outputs.SqlConnectionString }}" \
-              "PaymentGateway__ApiKey=${{ steps.keyvault.outputs.ApiKey-PaymentGateway }}"
+              "PaymentGateway__ApiKey=${{ steps.keyvault.outputs['ApiKey-PaymentGateway'] }}"
 ```
 
 Alternative using Azure CLI directly:
@@ -139,7 +139,7 @@ Alternative using Azure CLI directly:
             --name app-contoso-web \
             --resource-group rg-contoso-secrets \
             --connection-string-type SQLAzure \
-            --settings Default='${{ steps.get-secret.outputs.sql-connection }}'
+            --settings Default='${{ steps['get-secret'].outputs['sql-connection'] }}'
 ```
 
 ### Task 3: Integrate Key Vault with Azure Pipelines

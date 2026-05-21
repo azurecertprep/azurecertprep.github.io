@@ -309,8 +309,8 @@ Add the deployment job that uses the production environment:
         with:
           coverage-threshold: '80'
           coverage-file: './coverage/coverage-summary.json'
-          security-scan-passed: ${{ needs.security-scan.result == 'success' }}
-          performance-passed: ${{ needs.performance-baseline.result == 'success' }}
+          security-scan-passed: ${{ needs['security-scan'].result == 'success' }}
+          performance-passed: ${{ needs['performance-baseline'].result == 'success' }}
 
       - name: Deploy to production
         run: |

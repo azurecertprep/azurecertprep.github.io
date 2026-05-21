@@ -110,7 +110,7 @@ jobs:
 
       - name: Clone deployment manifests from another repo
         run: |
-          git clone https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/contoso/deploy-manifests.git
+          git clone https://x-access-token:${{ steps['app-token'].outputs.token }}@github.com/contoso/deploy-manifests.git
           ls deploy-manifests/
 
       - name: Trigger deployment in target repo
@@ -119,7 +119,7 @@ jobs:
             --repo contoso/production-infra \
             --ref main
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ steps['app-token'].outputs.token }}
 ```
 
 ### Task 3: Fine-grained personal access tokens
@@ -323,7 +323,7 @@ A workflow that auto-formats code and pushes the result fails with "refusing to 
     git commit -m "style: auto-format"
     git push
   env:
-    GH_TOKEN: ${{ steps.app-token.outputs.token }}
+    GH_TOKEN: ${{ steps['app-token'].outputs.token }}
 ```
 
 Additionally, add the GitHub App to the branch protection bypass list in repository settings.

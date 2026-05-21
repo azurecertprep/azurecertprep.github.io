@@ -217,8 +217,8 @@ az acr run \
         with:
           context: src/ProductCatalog
           push: true
-          tags: ${{ steps.meta-ghcr.outputs.tags }}
-          labels: ${{ steps.meta-ghcr.outputs.labels }}
+          tags: ${{ steps['meta-ghcr'].outputs.tags }}
+          labels: ${{ steps['meta-ghcr'].outputs.labels }}
 ```
 
 ---
@@ -292,7 +292,7 @@ jobs:
           az containerapp update \
             --name ${{ env.CONTAINER_APP }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.image-tag.outputs.tag }}
+            --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps['image-tag'].outputs.tag }}
 
       - name: Verify deployment
         run: |

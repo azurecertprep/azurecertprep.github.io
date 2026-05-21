@@ -2,6 +2,7 @@
 sidebar_position: 5
 title: "Challenge 29: Database deployment automation"
 ---
+import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 # Challenge 29: Database deployment automation
 
@@ -506,7 +507,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      has_migrations: ${{ steps.check-migrations.outputs.has_migrations }}
+      has_migrations: ${{ steps['check-migrations'].outputs.has_migrations }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -538,7 +539,7 @@ jobs:
             -c Release -o ./publish
 
       - name: Generate migration script
-        if: steps.check-migrations.outputs.has_migrations == 'true'
+        if: steps['check-migrations'].outputs.has_migrations == 'true'
         run: |
           dotnet ef migrations script \
             --project src/ContosoApi \
@@ -588,7 +589,7 @@ jobs:
   deploy-application:
     runs-on: ubuntu-latest
     needs: [build, migrate-database]
-    if: always() && needs.build.result == 'success' && (needs.migrate-database.result == 'success' || needs.migrate-database.result == 'skipped')
+    if: always() && needs.build.result == 'success' && (needs['migrate-database'].result == 'success' || needs['migrate-database'].result == 'skipped')
     environment: production
     steps:
       - name: Download artifacts
@@ -748,8 +749,6 @@ stages:
 </details>
 
 ---
-
-import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Knowledge check
 

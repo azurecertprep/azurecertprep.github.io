@@ -78,7 +78,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        if: steps.cache-modules.outputs.cache-hit != 'true'
+        if: steps['cache-modules'].outputs['cache-hit'] != 'true'
         run: npm ci
 
       # Persist node_modules for downstream jobs
@@ -282,7 +282,7 @@ Skip unnecessary work based on which files changed:
 
   test-api:
     needs: [install, detect-changes]
-    if: needs.detect-changes.outputs.api == 'true'
+    if: needs['detect-changes'].outputs.api == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -295,7 +295,7 @@ Skip unnecessary work based on which files changed:
 
   test-web:
     needs: [install, detect-changes]
-    if: needs.detect-changes.outputs.web == 'true'
+    if: needs['detect-changes'].outputs.web == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -310,9 +310,9 @@ Skip unnecessary work based on which files changed:
     needs: [test-api, test-web, detect-changes]
     if: |
       always() &&
-      needs.detect-changes.outputs.docs_only != 'true' &&
-      (needs.test-api.result == 'success' || needs.test-api.result == 'skipped') &&
-      (needs.test-web.result == 'success' || needs.test-web.result == 'skipped')
+      needs['detect-changes'].outputs.docs_only != 'true' &&
+      (needs['test-api'].result == 'success' || needs['test-api'].result == 'skipped') &&
+      (needs['test-web'].result == 'success' || needs['test-web'].result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - run: echo "Deploying..."

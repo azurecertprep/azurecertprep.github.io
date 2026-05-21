@@ -436,7 +436,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Deployment Pipeline:* ${{ steps.metrics.outputs.deploy-rate }}% success rate\n*CI Pipeline:* ${{ steps.metrics.outputs.ci-rate }}% success rate\n*PRs Merged:* ${{ steps.metrics.outputs.prs-merged }} this week\n*PRs Open:* ${{ steps.metrics.outputs.prs-open }}\n*Issues Closed:* ${{ steps.metrics.outputs.issues-closed }} this week\n*Issues Open:* ${{ steps.metrics.outputs.issues-open }}"
+                    "text": "*Deployment Pipeline:* ${{ steps.metrics.outputs['deploy-rate'] }}% success rate\n*CI Pipeline:* ${{ steps.metrics.outputs['ci-rate'] }}% success rate\n*PRs Merged:* ${{ steps.metrics.outputs['prs-merged'] }} this week\n*PRs Open:* ${{ steps.metrics.outputs['prs-open'] }}\n*Issues Closed:* ${{ steps.metrics.outputs['issues-closed'] }} this week\n*Issues Open:* ${{ steps.metrics.outputs['issues-open'] }}"
                   }
                 }
               ]

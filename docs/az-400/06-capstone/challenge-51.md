@@ -418,7 +418,7 @@ jobs:
           az containerapp update \
             --name ca-payments-api \
             --resource-group rg-payments-staging \
-            --image contosopaymentsacr.azurecr.io/payments-api:${{ needs.build.outputs.image-tag }}
+            --image contosopaymentsacr.azurecr.io/payments-api:${{ needs.build.outputs['image-tag'] }}
 
   integration-tests:
     needs: deploy-staging
@@ -462,7 +462,7 @@ jobs:
           az containerapp revision copy \
             --name ca-payments-api \
             --resource-group rg-payments-production \
-            --image contosopaymentsacr.azurecr.io/payments-api:${{ needs.build.outputs.image-tag }} \
+            --image contosopaymentsacr.azurecr.io/payments-api:${{ needs.build.outputs['image-tag'] }} \
             --revision-suffix green-${{ github.run_number }}
 
           # Route 10% traffic to green for canary validation
@@ -955,7 +955,7 @@ jobs:
 
   expedited-ci:
     needs: determine-pipeline
-    if: needs.determine-pipeline.outputs.is-hotfix == 'true'
+    if: needs['determine-pipeline'].outputs['is-hotfix'] == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

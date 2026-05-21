@@ -294,7 +294,7 @@ inputs:
 outputs:
   cache-hit:
     description: "Whether npm cache was hit"
-    value: ${{ steps.cache.outputs.cache-hit }}
+    value: ${{ steps.cache.outputs['cache-hit'] }}
 
 runs:
   using: "composite"
@@ -313,7 +313,7 @@ runs:
       id: cache
       uses: actions/cache@v4
       with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
+        path: ${{ steps['npm-cache-dir'].outputs.dir }}
         key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-${{ inputs.node-version }}-
@@ -404,7 +404,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      image: ${{ steps.set-output.outputs.result }}
+      image: ${{ steps['set-output'].outputs.result }}
     steps:
       - uses: actions/checkout@v4
 
@@ -413,7 +413,7 @@ jobs:
         run: echo "result=success" >> $GITHUB_OUTPUT
 
       - name: Use output
-        run: echo ${{ steps.set-output.outputs.result }}
+        run: echo ${{ steps['set-output'].outputs.result }}
 
   deploy:
     needs: build
