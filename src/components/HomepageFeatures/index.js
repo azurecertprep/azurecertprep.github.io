@@ -3,7 +3,7 @@ import Heading from '@theme/Heading';
 const FeatureList = [
   {
     title: '100% Exam Coverage',
-    description: 'Every skill from the official AZ-104 study guide mapped to a hands-on challenge. Verified against the April 2026 exam objectives.',
+    description: 'Every skill from the official Microsoft study guides mapped to hands-on challenges. 5 exams, 205 challenges — verified against current exam objectives.',
   },
   {
     title: 'Hands-On Labs',
@@ -11,7 +11,7 @@ const FeatureList = [
   },
   {
     title: 'Cost-Conscious',
-    description: 'All 28 challenges cost ~$5 total with cleanup scripts. Designed for Azure Free Account ($200 credit) or Azure for Students.',
+    description: 'Challenges use minimal resources with cleanup scripts. Designed for Azure Free Account ($200 credit) or Azure for Students.',
   },
   {
     title: 'One-Click Lab',
@@ -19,7 +19,7 @@ const FeatureList = [
   },
   {
     title: 'Validated Commands',
-    description: 'Every Azure CLI command, PowerShell snippet, and Bicep template tested end-to-end. CI validates on every commit.',
+    description: 'Every Azure CLI command, PowerShell snippet, and Bicep template validated for correctness. 400+ issues caught and fixed through 9 review passes.',
   },
   {
     title: 'Break & Fix',

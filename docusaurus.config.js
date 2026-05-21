@@ -150,6 +150,10 @@ const config = {
             title: 'Resources',
             items: [
               {
+                label: 'Microsoft Learn — AZ-900',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/',
+              },
+              {
                 label: 'Microsoft Learn — AZ-104',
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/',
               },
@@ -158,8 +162,16 @@ const config = {
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-solutions-architect/',
               },
               {
+                label: 'Microsoft Learn — AZ-400',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/devops-engineer/',
+              },
+              {
+                label: 'Microsoft Learn — SC-500',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/cloud-ai-security-engineer/',
+              },
+              {
                 label: 'Free Practice Assessment',
-                href: 'https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/practice/assessment?assessment-type=practice&assessmentId=15',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/?practice-assessment-type=certification',
               },
               {
                 label: 'Exam Sandbox',

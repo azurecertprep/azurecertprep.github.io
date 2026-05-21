@@ -280,7 +280,7 @@ const az900Challenges = [
 const FeatureList = [
   {
     title: '100% de Cobertura do Exame',
-    description: 'Cada habilidade do guia de estudo oficial do AZ-104 mapeada para um desafio prático. Verificado com os objetivos do exame de Abril de 2026.',
+    description: 'Cada habilidade dos guias de estudo oficiais da Microsoft mapeada para desafios práticos. 5 exames, 205 desafios — verificados com os objetivos atuais.',
   },
   {
     title: 'Labs Práticos',
@@ -288,7 +288,7 @@ const FeatureList = [
   },
   {
     title: 'Econômico',
-    description: 'Todos os 28 desafios custam ~$5 no total com scripts de limpeza. Projetado para Conta Gratuita do Azure ($200 crédito) ou Azure para Estudantes.',
+    description: 'Desafios usam recursos mínimos com scripts de limpeza. Projetado para Conta Gratuita do Azure ($200 crédito) ou Azure para Estudantes.',
   },
   {
     title: 'Lab com Um Clique',
@@ -296,7 +296,7 @@ const FeatureList = [
   },
   {
     title: 'Comandos Validados',
-    description: 'Cada comando Azure CLI, trecho PowerShell e template Bicep testado de ponta a ponta. CI valida a cada commit.',
+    description: 'Cada comando Azure CLI, trecho PowerShell e template Bicep validado para correção. 400+ problemas encontrados e corrigidos em 9 passes de revisão.',
   },
   {
     title: 'Quebre & Conserte',

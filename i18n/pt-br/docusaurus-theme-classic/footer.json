@@ -23,6 +23,22 @@
     "message": "Microsoft Learn — AZ-104",
     "description": "The label of footer link with label=Microsoft Learn — AZ-104 linking to https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/"
   },
+  "link.item.label.Microsoft Learn — AZ-900": {
+    "message": "Microsoft Learn — AZ-900",
+    "description": "The label of footer link with label=Microsoft Learn — AZ-900 linking to https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/"
+  },
+  "link.item.label.Microsoft Learn — AZ-305": {
+    "message": "Microsoft Learn — AZ-305",
+    "description": "The label of footer link with label=Microsoft Learn — AZ-305 linking to https://learn.microsoft.com/en-us/credentials/certifications/azure-solutions-architect/"
+  },
+  "link.item.label.Microsoft Learn — AZ-400": {
+    "message": "Microsoft Learn — AZ-400",
+    "description": "The label of footer link with label=Microsoft Learn — AZ-400 linking to https://learn.microsoft.com/en-us/credentials/certifications/devops-engineer/"
+  },
+  "link.item.label.Microsoft Learn — SC-500": {
+    "message": "Microsoft Learn — SC-500",
+    "description": "The label of footer link with label=Microsoft Learn — SC-500 linking to https://learn.microsoft.com/en-us/credentials/certifications/cloud-ai-security-engineer/"
+  },
   "link.item.label.Free Practice Assessment": {
     "message": "Simulado Gratuito",
     "description": "The label of footer link with label=Free Practice Assessment linking to https://learn.microsoft.com/en-us/credentials/certifications/exams/az-104/practice/assessment?assessment-type=practice&assessmentId=21"
