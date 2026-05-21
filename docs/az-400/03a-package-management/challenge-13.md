@@ -64,7 +64,7 @@ Create a `.npmrc` file in the project root to point to GitHub Packages:
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-Generate a personal access token with the `read:packages` and `write:packages` scopes:
+Retrieve your current GitHub authentication token (note: `gh auth token` prints the token already stored by the GitHub CLI — it does not generate a new one). For GitHub Packages access, you may need to create a PAT with the `packages:read` scope via **GitHub Settings > Developer settings > Personal access tokens**:
 
 ```bash
 gh auth token

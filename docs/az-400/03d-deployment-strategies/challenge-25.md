@@ -80,7 +80,7 @@ az webapp deployment slot swap \
   --slot staging \
   --target-slot production
 
-# If something goes wrong, swap back immediately
+# Rollback: swap staging back to production (same command reverses the swap since slots exchange content)
 az webapp deployment slot swap \
   --name $APP_NAME \
   --resource-group $RESOURCE_GROUP \
@@ -211,8 +211,8 @@ jobs:
           az webapp deployment slot swap \
             --name ${{ env.AZURE_WEBAPP_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --slot production \
-            --target-slot staging
+            --slot staging \
+            --target-slot production
           echo "Rolled back to previous production version"
 ```
 
@@ -491,8 +491,8 @@ az monitor metrics alert create \
               az webapp deployment slot swap \
                 --name $APP_NAME \
                 --resource-group $RESOURCE_GROUP \
-                --slot production \
-                --target-slot staging
+                --slot staging \
+                --target-slot production
               echo "Rollback complete"
               exit 1
             fi

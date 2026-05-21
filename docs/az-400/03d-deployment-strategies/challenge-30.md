@@ -200,8 +200,8 @@ jobs:
             az webapp deployment slot swap \
               --name ${{ env.AZURE_WEBAPP_NAME }} \
               --resource-group ${{ env.RESOURCE_GROUP }} \
-              --slot production \
-              --target-slot staging
+              --slot staging \
+              --target-slot production
             exit 1
           fi
 
@@ -470,8 +470,8 @@ jobs:
           az webapp deployment slot swap \
             --name app-contoso-payments \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --slot production \
-            --target-slot staging
+            --slot staging \
+            --target-slot production
           echo "Payment service rolled back"
 
       - name: Rollback notification service
@@ -480,8 +480,8 @@ jobs:
           az webapp deployment slot swap \
             --name app-contoso-notifications \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --slot production \
-            --target-slot staging
+            --slot staging \
+            --target-slot production
           echo "Notification service rolled back"
 
       - name: Verify health

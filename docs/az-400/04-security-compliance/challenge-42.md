@@ -239,8 +239,8 @@ WEBAPP_IDENTITY=$(az webapp identity show \
   --resource-group rg-contoso-secrets \
   --query principalId -o tsv)
 
-# Grant the App Service identity direct access to SQL Database
-# (eliminates the stored connection string with password)
+# Makes the App Service managed identity the Azure AD administrator for the SQL Server (server-level admin access)
+# Note: For least-privilege, create a contained database user instead of granting server-level AD admin
 az sql server ad-admin create \
   --server-name sql-contoso \
   --resource-group rg-contoso-secrets \
