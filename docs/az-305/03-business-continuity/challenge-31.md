@@ -366,7 +366,7 @@ az sql server firewall-rule create \
 ```
 
 ```bash
-sqlcmd -S "$PRIMARY_SERVER.database.windows.net" -U sqladmin -P "$SQL_PASSWORD" -d payrolldb -Q "CREATE TABLE EmployeePayroll (Id INT PRIMARY KEY, Name NVARCHAR(100), Salary DECIMAL(10,2)); INSERT INTO EmployeePayroll VALUES (1, 'Alice', 85000.00), (2, 'Bob', 92000.00), (3, 'Carol', 78000.00);"
+sqlcmd -S "$PRIMARY_SERVER.database.windows.net" -U sqladmin -P "$ADMIN_PASS" -d payrolldb -Q "CREATE TABLE EmployeePayroll (Id INT PRIMARY KEY, Name NVARCHAR(100), Salary DECIMAL(10,2)); INSERT INTO EmployeePayroll VALUES (1, 'Alice', 85000.00), (2, 'Bob', 92000.00), (3, 'Carol', 78000.00);"
 ```
 
 ### Step 6: verify data replicated to secondary
@@ -379,7 +379,7 @@ sleep 10
 ```
 
 ```bash
-sqlcmd -S "$SECONDARY_SERVER.database.windows.net" -U sqladmin -P "$SQL_PASSWORD" -d payrolldb -Q "SELECT * FROM EmployeePayroll;"
+sqlcmd -S "$SECONDARY_SERVER.database.windows.net" -U sqladmin -P "$ADMIN_PASS" -d payrolldb -Q "SELECT * FROM EmployeePayroll;"
 ```
 
 You should see all 3 rows replicated to the secondary region.
@@ -424,7 +424,7 @@ echo "Applications using this endpoint required ZERO connection string changes."
 ```bash
 # Verify data on the new primary using sqlcmd
 sqlcmd -S "$SECONDARY_SERVER.database.windows.net" -d payrolldb \
-  -U $ADMIN_USER -P $ADMIN_PASSWORD \
+  -U sqladmin -P $ADMIN_PASS \
   -Q "SELECT * FROM EmployeePayroll;"
 ```
 

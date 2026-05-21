@@ -227,15 +227,12 @@ Create a comprehensive `.gitattributes` file for a game studio:
 Understand and manage LFS quotas on GitHub and Azure DevOps:
 
 ```bash
-# Check GitHub LFS usage for the organization
-gh api orgs/contoso --jq '{
-  plan: .plan.name,
-  lfs_bandwidth_used: .plan.filled_seats,
-  total_repos: .total_private_repos
+# Check GitHub LFS/shared storage billing for the organization
+gh api orgs/contoso/settings/billing/shared-storage --jq '{
+  days_left_in_billing_cycle: .days_left_in_billing_cycle,
+  estimated_storage_for_month_gb: .estimated_storage_for_month,
+  estimated_paid_storage_for_month_gb: .estimated_paid_storage_for_month
 }'
-
-# Check repository-specific LFS storage
-gh api repos/contoso/game-studio/git/lfs --jq '.repository.storage'
 
 # GitHub LFS limits (as of current pricing):
 # - Free: 1 GB storage, 1 GB bandwidth/month

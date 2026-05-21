@@ -90,7 +90,7 @@ This is net-new content from AZ-500. Expect questions on:
 - **Key Vault access models**: RBAC vs access policies. RBAC is the recommended model for new deployments.
 - **SQL Database security layers**: Firewall rules → Private Link → TDE → Always Encrypted → Dynamic Data Masking → Row-Level Security
 - **Storage encryption**: Know when to use CMK (customer-managed keys) vs infrastructure encryption (double encryption)
-- **DDoS Protection**: Standard vs Network (formerly Basic) — know what each covers
+- **DDoS Protection**: Network Protection (formerly Standard) vs IP Protection — know what each covers
 
 ### Domain 3: Secure compute (20–25%)
 

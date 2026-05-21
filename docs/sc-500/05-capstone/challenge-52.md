@@ -1217,8 +1217,8 @@ az sentinel automation-rule show \
       "Defender for Cloud CSPM",
       "Defender for Key Vault"
     ],
-    correctIndex: 1,
-    explanation: "Defender for Servers Plan 2 includes full EDR capabilities via Microsoft Defender for Endpoint integration, plus vulnerability assessment, just-in-time VM access, file integrity monitoring, and adaptive application controls. Plan 1 provides basic endpoint protection without the full EDR, vulnerability scanning, and JIT features."
+    correctIndex: 0,
+    explanation: "Defender for Servers Plan 1 includes full EDR capabilities via Microsoft Defender for Endpoint integration. Plan 2 adds additional features on top of Plan 1 including vulnerability assessment, just-in-time VM access, file integrity monitoring, and adaptive application controls."
   },
   {
     question: "In the API Management AI Gateway policy, what does the azure-openai-token-limit policy do?",

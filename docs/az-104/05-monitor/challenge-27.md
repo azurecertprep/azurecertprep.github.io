@@ -61,7 +61,7 @@ az monitor log-analytics workspace create \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
   --location $LOCATION \
-  --retention-time 30 \
+  --retention-in-days 30 \
   --sku PerGB2018
 
 # Verify workspace

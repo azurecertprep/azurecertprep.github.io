@@ -195,10 +195,10 @@ Add content safety filtering to detect and block harmful or manipulative prompts
         <!-- Extract the prompt for content safety analysis -->
         <set-variable name="userPrompt"
             value="@{
-                var body = context.Request.Body.As<JObject>();
-                var messages = body["messages"] as JArray;
+                var body = context.Request.Body.As&lt;JObject&gt;();
+                var messages = body[&quot;messages&quot;] as JArray;
                 var lastMessage = messages?.Last;
-                return lastMessage?["content"]?.ToString() ?? string.Empty;
+                return lastMessage?[&quot;content&quot;]?.ToString() ?? string.Empty;
             }" />
 
         <!-- Call Azure Content Safety API for jailbreak detection -->
@@ -220,8 +220,8 @@ Add content safety filtering to detect and block harmful or manipulative prompts
         <!-- Block if jailbreak detected -->
         <choose>
             <when condition="@{
-                var response = ((IResponse)context.Variables["contentSafetyResponse"]).Body.As<JObject>();
-                var attack = response["userPromptAnalysis"]?["attackDetected"]?.Value<bool>() ?? false;
+                var response = ((IResponse)context.Variables[&quot;contentSafetyResponse&quot;]).Body.As&lt;JObject&gt;();
+                var attack = response[&quot;userPromptAnalysis&quot;]?[&quot;attackDetected&quot;]?.Value&lt;bool&gt;() ?? false;
                 return attack;
             }">
                 <return-response>
@@ -456,8 +456,8 @@ The content safety policy is producing false positives — blocking legal and co
         <!-- Only block if BOTH attack AND injection detected -->
         <choose>
             <when condition="@{
-                var response = ((IResponse)context.Variables["contentSafetyResponse"]).Body.As<JObject>();
-                var attack = response["userPromptAnalysis"]?["attackDetected"]?.Value<bool>() ?? false;
+                var response = ((IResponse)context.Variables[&quot;contentSafetyResponse&quot;]).Body.As&lt;JObject&gt;();
+                var attack = response[&quot;userPromptAnalysis&quot;]?[&quot;attackDetected&quot;]?.Value&lt;bool&gt;() ?? false;
                 // Additional check: require high severity
                 return attack;
             }">
