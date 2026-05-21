@@ -157,6 +157,8 @@
 .domain-badge--bcdr { background: #fdebd0; color: #ca6f1e; }
 .domain-badge--infra { background: #d6eaf8; color: #2471a3; }
 .domain-badge--capstone { background: #f9e79f; color: #7d6608; }
+.domain-badge--ai-security { background: #fce4ec; color: #ad1457; }
+.domain-badge--monitoring { background: #e0f2f1; color: #00695c; }
 
 [data-theme='dark'] .domain-badge--identity { background: #4a235a; color: #d7bde2; }
 [data-theme='dark'] .domain-badge--storage { background: #1e4d2b; color: #abebc6; }
@@ -168,6 +170,8 @@
 [data-theme='dark'] .domain-badge--bcdr { background: #5b3a1a; color: #f5cba7; }
 [data-theme='dark'] .domain-badge--infra { background: #1b3a5c; color: #aed6f1; }
 [data-theme='dark'] .domain-badge--capstone { background: #4a3f0a; color: #f9e79f; }
+[data-theme='dark'] .domain-badge--ai-security { background: #4a0e23; color: #f8bbd0; }
+[data-theme='dark'] .domain-badge--monitoring { background: #1a3c3a; color: #b2dfdb; }
 
 /* Reference table */
 .reference-table {

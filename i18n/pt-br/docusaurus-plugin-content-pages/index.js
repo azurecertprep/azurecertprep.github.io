@@ -5,8 +5,8 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
 const stats = [
-  { number: '129', label: 'Desafios' },
-  { number: '3', label: 'Exames' },
+  { number: '181', label: 'Desafios' },
+  { number: '4', label: 'Exames' },
   { number: '100%', label: 'Cobertura' },
   { number: 'v2026.04', label: 'Objetivos do Exame' },
 ];
@@ -179,6 +179,70 @@ const az305Challenges = [
   { num: '50', title: 'Solucao Azure Completa (Capstone)', domain: 'capstone', href: '/docs/az-305/infrastructure/challenge-50' },
 ];
 
+const sc500DomainLabels = {
+  'identity': 'Identidade & Governança',
+  'networking': 'Armazenamento & Rede',
+  'compute': 'Computação Segura',
+  'ai-security': 'Segurança de IA',
+  'monitoring': 'Postura de Segurança',
+  'capstone': 'Capstone',
+};
+
+const sc500Challenges = [
+  { num: '01', title: 'Padrões de Segurança Entra ID', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-01' },
+  { num: '02', title: 'Políticas de Acesso Condicional', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-02' },
+  { num: '03', title: 'Gerenciamento de Identidade Privilegiada', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-03' },
+  { num: '04', title: 'Proteção de Identidade & Risco', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-04' },
+  { num: '05', title: 'Revisões de Acesso & Governança', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-05' },
+  { num: '06', title: 'Segurança de Registro de App', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-06' },
+  { num: '07', title: 'Identidades Externas & B2B', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-07' },
+  { num: '08', title: 'Identidade Gerenciada & RBAC', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-08' },
+  { num: '09', title: 'Azure Policy para Segurança', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-09' },
+  { num: '10', title: 'Microsoft Purview DLP', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-10' },
+  { num: '11', title: 'Rótulos de Sensibilidade Purview', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-11' },
+  { num: '12', title: 'Auditoria & eDiscovery Purview', domain: 'identity', href: '/docs/sc-500/identity-access-governance/challenge-12' },
+  { num: '13', title: 'Segurança de Storage Account', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-13' },
+  { num: '14', title: 'Gerenciamento de Key Vault', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-14' },
+  { num: '15', title: 'Segurança de SQL Database', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-15' },
+  { num: '16', title: 'Segurança de Cosmos DB', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-16' },
+  { num: '17', title: 'Configuração de NSG & ASG', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-17' },
+  { num: '18', title: 'Azure Firewall', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-18' },
+  { num: '19', title: 'Private Endpoints', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-19' },
+  { num: '20', title: 'Web Application Firewall', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-20' },
+  { num: '21', title: 'Proteção DDoS', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-21' },
+  { num: '22', title: 'Segurança VPN & ExpressRoute', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-22' },
+  { num: '23', title: 'Segmentação de Rede', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-23' },
+  { num: '24', title: 'Segurança DNS', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-24' },
+  { num: '25', title: 'TLS & Gerenciamento de Certificados', domain: 'networking', href: '/docs/sc-500/storage-databases-networking/challenge-25' },
+  { num: '26', title: 'Segurança de Agentes Copilot Studio', domain: 'ai-security', href: '/docs/sc-500/secure-compute/challenge-26' },
+  { num: '27', title: 'Entra Agent ID & Autenticação', domain: 'ai-security', href: '/docs/sc-500/secure-compute/challenge-27' },
+  { num: '28', title: 'Guardrails AI Foundry', domain: 'ai-security', href: '/docs/sc-500/secure-compute/challenge-28' },
+  { num: '29', title: 'AI Gateway & APIM', domain: 'ai-security', href: '/docs/sc-500/secure-compute/challenge-29' },
+  { num: '30', title: 'Defender para IA', domain: 'ai-security', href: '/docs/sc-500/secure-compute/challenge-30' },
+  { num: '31', title: 'Segurança RAG & Acesso a Dados', domain: 'ai-security', href: '/docs/sc-500/secure-compute/challenge-31' },
+  { num: '32', title: 'Segurança de VM & Defender', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-32' },
+  { num: '33', title: 'Segurança de Container & AKS', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-33' },
+  { num: '34', title: 'Segurança de App Service', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-34' },
+  { num: '35', title: 'Segurança de Azure Functions', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-35' },
+  { num: '36', title: 'Defender para Servidores', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-36' },
+  { num: '37', title: 'Proteção de Endpoint', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-37' },
+  { num: '38', title: 'Gerenciamento de Atualizações', domain: 'compute', href: '/docs/sc-500/secure-compute/challenge-38' },
+  { num: '39', title: 'Setup do Defender for Cloud', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-39' },
+  { num: '40', title: 'Melhoria do Secure Score', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-40' },
+  { num: '41', title: 'Conformidade Regulatória', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-41' },
+  { num: '42', title: 'Setup do Microsoft Sentinel', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-42' },
+  { num: '43', title: 'Regras Analíticas do Sentinel', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-43' },
+  { num: '44', title: 'SOAR & Playbooks', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-44' },
+  { num: '45', title: 'Caça a Ameaças com KQL', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-45' },
+  { num: '46', title: 'Conectores de Dados', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-46' },
+  { num: '47', title: 'Workbooks & Dashboards', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-47' },
+  { num: '48', title: 'Security Copilot Básico', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-48' },
+  { num: '49', title: 'Security Copilot Avançado', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-49' },
+  { num: '50', title: 'Gerenciamento de Incidentes', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-50' },
+  { num: '51', title: 'Segurança Multi-Cloud', domain: 'monitoring', href: '/docs/sc-500/security-posture-monitoring/challenge-51' },
+  { num: '52', title: 'Segurança Ponta a Ponta (Capstone)', domain: 'capstone', href: '/docs/sc-500/capstone/challenge-52' },
+];
+
 
 const FeatureList = [
   {
@@ -269,6 +333,12 @@ function HomepageHeader() {
             style={{marginLeft: '1rem'}}
             to="/docs/az-400/overview">
             AZ-400 (51 desafios)
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            style={{marginLeft: '1rem'}}
+            to="/docs/sc-500/overview">
+            SC-500 (52 desafios)
           </Link>
           <Link
             className="button button--outline button--lg"
@@ -366,6 +436,34 @@ function AZ400ChallengeGrid() {
   );
 }
 
+function SC500ChallengeGrid() {
+  return (
+    <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
+      <div className="container">
+        <div className="section-heading">
+          <Heading as="h2">SC-500: Cloud and AI Security Engineer</Heading>
+          <p>52 desafios práticos — identidade, rede, segurança de IA, Sentinel e defesa ponta a ponta.</p>
+        </div>
+        <div className="row">
+          {sc500Challenges.map((ch) => (
+            <div key={ch.num} className="col col--3" style={{marginBottom: '1rem'}}>
+              <Link to={ch.href} className="challenge-card">
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem'}}>
+                  <span className="challenge-number">{ch.num}</span>
+                  <span className={`domain-badge domain-badge--${ch.domain}`}>
+                    {sc500DomainLabels[ch.domain]}
+                  </span>
+                </div>
+                <strong>{ch.title}</strong>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CertificationCoverage() {
   return (
     <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
@@ -431,6 +529,27 @@ function CertificationCoverage() {
               67 habilidades cobertas | 100% de cobertura do exame
             </p>
           </div>
+          <div>
+            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>SC-500 (52 desafios)</h3>
+            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
+              <thead>
+                <tr>
+                  <th style={{textAlign: 'center'}}>Domínio</th>
+                  <th style={{textAlign: 'center'}}>Peso</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identidade & Governança</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Armazenamento & Rede</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--ai-security">Segurança de IA</span></td><td style={{textAlign: 'center'}}>NOVO</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Computação Segura</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitoring">Postura de Segurança</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
+              </tbody>
+            </table>
+            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
+              89 habilidades cobertas | 100% de cobertura do exame
+            </p>
+          </div>
         </div>
         <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
           Alinhado com os guias de estudo oficiais da Microsoft de Abril de 2026.
@@ -475,7 +594,7 @@ function ExamRoadmap() {
             <tr>
               <td style={{textAlign: 'center'}}>SC-500</td>
               <td style={{textAlign: 'center'}}>Cloud and AI Security Engineer <small style={{opacity: 0.7}}>(substitui AZ-500)</small></td>
-              <td style={{textAlign: 'center'}}><span style={{opacity: 0.6}}>Planejado</span></td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (52 desafios)</span></td>
             </tr>
           </tbody>
         </table>
@@ -495,9 +614,11 @@ export default function Home() {
         <ChallengeGrid />
         <AZ305ChallengeGrid />
         <AZ400ChallengeGrid />
+        <SC500ChallengeGrid />
         <CertificationCoverage />
         <ExamRoadmap />
       </main>
     </Layout>
   );
 }
+
