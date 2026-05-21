@@ -325,14 +325,15 @@ rm -f stop-dev-vms.ps1
 ### Task 9: schedule the runbook
 
 ```bash
-# Create a schedule (weekdays at 7 pm)
+# Create a schedule (weekdays at 7 PM)
 az automation schedule create \
   --resource-group rg-az104-challenge21 \
   --automation-account-name auto-contoso-ops \
   --name "weekday-evening-shutdown" \
-  --frequency Day \
+  --frequency Week \
   --interval 1 \
   --start-time "2025-07-01T19:00:00-05:00" \
+  --weekdays Monday Tuesday Wednesday Thursday Friday \
   --description "Runs every weekday at 7 PM ET to stop dev VMs"
 
 # Link the schedule to the runbook

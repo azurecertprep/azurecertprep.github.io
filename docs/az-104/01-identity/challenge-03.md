@@ -266,7 +266,7 @@ EOF
 az policy set-definition create \
   --name "Contoso-Governance" \
   --display-name "Contoso Governance Initiative" \
-  --definitions initiative.json \
+  --definitions @initiative.json \
   --description "Requires tags and restricts locations"
 
 # Assign the initiative to rg-az104-challenge03-dev

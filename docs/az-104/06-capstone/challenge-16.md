@@ -210,11 +210,11 @@ az vm start \
   --resource-group rg-az104-capstone-compute \
   --name vm-prod-01
 
-# Disable auto-shutdown if misconfigured
-az vm auto-shutdown \
+# Disable auto-shutdown (remove the DevTestLab schedule)
+az resource delete \
   --resource-group rg-az104-capstone-compute \
-  --name vm-prod-01 \
-  --off
+  --resource-type "Microsoft.DevTestLab/schedules" \
+  --name "shutdown-computevm-vm-prod-01"
 ```
 
 </details>
@@ -333,7 +333,7 @@ az monitor action-group show \
 az monitor metrics alert show \
   --resource-group rg-az104-capstone-monitor \
   --name alert-vm-availability \
-  --query isEnabled
+  --query enabled
 ```
 
 </details>
@@ -352,7 +352,7 @@ az monitor metrics alert show \
 az monitor action-group update \
   --resource-group rg-az104-capstone-monitor \
   --name ag-ops-team \
-  --add email ops-email correctemail@contoso.com
+  --add-action email ops-email correctemail@contoso.com
 
 # Enable the alert rule
 az monitor metrics alert update \

@@ -99,7 +99,8 @@ Save this as `storage.json`:
 Add a `environment` tag parameter to the template so every deployed resource gets tagged:
 
 ```bash
-# After modifying storage.json, validate it:
+# After modifying storage.json, validate it
+# Note: the resource group must already exist before running validate
 az deployment group validate \
   --resource-group rg-az104-challenge07 \
   --template-file storage.json \

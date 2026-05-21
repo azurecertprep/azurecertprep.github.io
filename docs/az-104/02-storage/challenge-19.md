@@ -320,9 +320,10 @@ Attempt to copy to a container that does not exist at the destination. Does AzCo
 During a large copy operation, simulate a failure by revoking the SAS token mid-transfer. Use `azcopy jobs resume` to restart the failed job with a new valid token.
 
 ```bash
-# Resume a failed job (the original SAS was revoked, so supply a new SAS or use account key)
-# azcopy uses credentials from the command line, not persisted from previous runs
-azcopy jobs resume <job-id> --source-sas="<new-source-sas>" --destination-sas="<new-dest-sas>"
+# Resume a failed job using its job ID
+# AzCopy resume reuses the original auth context from the job plan files.
+# If the original SAS expired, re-run the original copy command with a new SAS instead.
+azcopy jobs resume <job-id>
 ```
 
 ## Knowledge check
