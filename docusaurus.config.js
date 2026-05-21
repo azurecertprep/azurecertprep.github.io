@@ -69,6 +69,12 @@ const config = {
         items: [
           {
             type: 'docSidebar',
+            sidebarId: 'az900Sidebar',
+            position: 'left',
+            label: 'AZ-900',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'az104Sidebar',
             position: 'left',
             label: 'AZ-104',
@@ -118,6 +124,10 @@ const config = {
           {
             title: 'Exams',
             items: [
+              {
+                label: 'AZ-900: Azure Fundamentals',
+                to: '/docs/az-900/overview',
+              },
               {
                 label: 'AZ-104: Azure Administrator',
                 to: '/docs/az-104/overview',
@@ -215,5 +225,3 @@ const config = {
 };
 
 export default config;
-
-
