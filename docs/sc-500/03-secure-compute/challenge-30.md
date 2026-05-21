@@ -243,8 +243,8 @@ az monitor action-group create \
     --name "AI-Security-Response" \
     --resource-group "rg-contoso-ai-security" \
     --short-name "AISec" \
-    --email "aisecurity@contoso.com" "AI Security Team" \
-    --webhook "https://contoso-soar.azurewebsites.net/api/ai-alert" "SOAR Webhook"
+    --email "AI Security Team" "aisecurity@contoso.com" \
+    --webhook "SOAR Webhook" "https://contoso-soar.azurewebsites.net/api/ai-alert"
 
 # Create workflow automation for AI alerts
 az security automation create \

@@ -262,8 +262,8 @@ Configure an approval process for consent requests and set up audit logging.
 # Enable the admin consent request workflow
 REVIEWER_ID=$(az ad user show --id "securityadmin@contoso.com" --query id -o tsv)
 
-az rest --method PUT \
-  --url "https://graph.microsoft.com/v1.0/policies/adminConsentRequestPolicy" \
+az rest --method PATCH \
+  --url "https://graph.microsoft.com/v1.0/policies/adminConsentRequestPolicy"\
   --headers "Content-Type=application/json" \
   --body "{
     \"isEnabled\": true,

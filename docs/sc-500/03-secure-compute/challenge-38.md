@@ -128,6 +128,15 @@ az webapp config access-restriction add \
 Harden Azure Functions with authentication, network isolation, and secure configuration.
 
 ```bash
+# Create storage account for Functions (with security settings) - must exist before function app
+az storage account create \
+    --resource-group "rg-contoso-app-security" \
+    --name "stcontosofunc" \
+    --sku "Standard_LRS" \
+    --min-tls-version "TLS1_2" \
+    --allow-blob-public-access false \
+    --https-only true
+
 # Create Function App with security settings
 az functionapp create \
     --resource-group "rg-contoso-app-security" \
@@ -139,15 +148,6 @@ az functionapp create \
     --assign-identity "[system]" \
     --https-only true \
     --disable-app-insights false
-
-# Create storage account for Functions (with security settings)
-az storage account create \
-    --resource-group "rg-contoso-app-security" \
-    --name "stcontosofunc" \
-    --sku "Standard_LRS" \
-    --min-tls-version "TLS1_2" \
-    --allow-blob-public-access false \
-    --https-only true
 
 # Configure authentication on Function App
 az functionapp auth update \

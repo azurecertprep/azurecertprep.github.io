@@ -312,7 +312,7 @@ az security automation create \
 
 # Verify all Defender plans are enabled
 az security pricing list \
-  --query "[?pricingTier=='Standard' && contains(name, 'Sql') || contains(name, 'Cosmos') || contains(name, 'OpenSource')].{Plan:name, Tier:pricingTier}" -o table
+  --query "[?pricingTier=='Standard' && (contains(name, 'Sql') || contains(name, 'Cosmos') || contains(name, 'OpenSource'))].{Plan:name, Tier:pricingTier}" -o table
 ```
 
 ---

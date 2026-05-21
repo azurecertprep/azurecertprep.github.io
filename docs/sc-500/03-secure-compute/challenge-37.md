@@ -79,7 +79,7 @@ az network private-dns link vnet create \
     --registration-enabled false
 
 # Enable Defender for ACR vulnerability scanning
-az security pricing create --name "ContainerRegistry" --tier "Standard"
+az security pricing create --name "Containers" --tier "Standard"
 
 # Configure retention policy (delete untagged manifests after 7 days)
 az acr config retention update \
@@ -188,6 +188,7 @@ az container create \
     --secure-environment-variables "DB_CONNECTION=Server=db.contoso.internal;Database=batch;Trusted_Connection=true"
 
 # Deploy ACI with confidential computing (encrypted memory)
+# Note: Confidential containers requires preview features. Register with: az feature register --namespace Microsoft.ContainerInstance --name ConfidentialContainers
 az container create \
     --resource-group "rg-contoso-container-platform" \
     --name "aci-confidential-processing" \
@@ -197,7 +198,7 @@ az container create \
     --cpu 2 \
     --memory 4 \
     --assign-identity "[system]" \
-    --sku "Confidential" \ # Note: Confidential containers requires preview features. Register with: az feature register --namespace Microsoft.ContainerInstance --name ConfidentialContainers
+    --sku "Confidential" \
     --cce-policy "default"
 
 # Grant ACI managed identity access to ACR (instead of admin credentials)

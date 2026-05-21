@@ -215,7 +215,16 @@ New-ApplicationAccessPolicy `
 Use Entra ID custom security attributes to classify and govern agent identities.
 
 ```bash
-# Create custom security attribute set for AI agents
+# First, create the attribute set (required before creating attribute definitions)
+az rest --method POST \
+    --uri "https://graph.microsoft.com/v1.0/directory/attributeSets" \
+    --body '{
+        "id": "AgentGovernance",
+        "description": "Attributes for AI agent governance and classification",
+        "maxAttributesPerSet": 25
+    }'
+
+# Create custom security attribute definition for agent classification
 az rest --method POST \
     --uri "https://graph.microsoft.com/v1.0/directory/customSecurityAttributeDefinitions" \
     --body '{
@@ -335,15 +344,11 @@ az rest --method GET \
     --uri "https://graph.microsoft.com/v1.0/auditLogs/signIns?\$filter=servicePrincipalId eq '$SP_ID' and createdDateTime ge 2024-01-01T00:00:00Z&\$top=50" |
     jq '.value[] | {timestamp: .createdDateTime, status: .status.errorCode, ipAddress: .ipAddress, location: .location.city}'
 
-# Create alert rule for anomalous agent behavior
-az rest --method POST \
-    --uri "https://graph.microsoft.com/v1.0/security/alerts_v2" \
-    --body '{
-        "title": "Anomalous AI Agent Authentication",
-        "description": "Agent identity authenticated from unexpected location",
-        "severity": "high",
-        "status": "new"
-    }'
+# Note: /security/alerts_v2 is read-only. To generate test alerts, use a custom detection rule
+# or monitor workload identity risk events which auto-generate alerts
+az rest --method GET \
+    --uri "https://graph.microsoft.com/v1.0/security/alerts_v2?\$filter=servicePrincipalId eq '$SP_ID'&\$top=10" |
+    jq '.value[] | {title: .title, severity: .severity, status: .status}'
 
 # Monitor workload identity risk detections
 az rest --method GET \
@@ -412,9 +417,11 @@ for KEY_ID in $(az ad sp credential list --id $SP_ID --query "[].keyId" -o tsv);
     az ad sp credential delete --id $SP_ID --key-id "$KEY_ID"
 done
 
-# Revoke active tokens via continuous access evaluation
-az rest --method POST \
-    --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$SP_ID/revokeSignInSessions"
+# Rotate credentials to invalidate existing tokens (revokeSignInSessions only works for users, not service principals)
+# Remove all existing password credentials
+for KEY_ID in $(az ad sp credential list --id $SP_ID --cert --query "[].keyId" -o tsv); do
+    az ad sp credential delete --id $SP_ID --key-id "$KEY_ID" --cert
+done
 
 # 2. Disable the service principal
 az ad sp update --id $SP_ID --set "accountEnabled=false"

@@ -529,7 +529,6 @@ az ad group delete --group "Azure-Readers-Production" 2>/dev/null
 az ad group delete --group "Azure-AppDeployers-Production" 2>/dev/null
 az ad group delete --group "Azure-NetworkViewers" 2>/dev/null
 az ad group delete --group "Azure-Emergency-Owners" 2>/dev/null
-az ad group delete --group "KeyVault-CertificateOfficers" 2>/dev/null
 
 # Delete resource group
 az group delete --name $RG_NAME --yes --no-wait

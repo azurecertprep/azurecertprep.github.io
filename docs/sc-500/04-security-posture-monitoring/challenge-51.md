@@ -388,91 +388,89 @@ az logic workflow create \
   --name "playbook-brute-force-response" \
   --location $LOCATION \
   --definition '{
-    "definition": {
-      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-      "contentVersion": "1.0.0.0",
-      "triggers": {
-        "Microsoft_Sentinel_incident": {
-          "type": "ApiConnectionWebhook",
-          "inputs": {
-            "body": {
-              "callback_url": "@{listCallbackUrl()}"
-            },
-            "host": {
-              "connection": {
-                "name": "@parameters($connections)['azuresentinel']['connectionId']"
-              }
-            },
-            "path": "/incident-creation"
-          }
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "triggers": {
+      "Microsoft_Sentinel_incident": {
+        "type": "ApiConnectionWebhook",
+        "inputs": {
+          "body": {
+            "callback_url": "@{listCallbackUrl()}"
+          },
+          "host": {
+            "connection": {
+              "name": "@parameters($connections)['azuresentinel']['connectionId']"
+            }
+          },
+          "path": "/incident-creation"
         }
+      }
+    },
+    "actions": {
+      "Get_incident_entities": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters($connections)['azuresentinel']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/entities/@{triggerBody()?['object']?['properties']?['relatedAnalyticRuleIds']}"
+        },
+        "runAfter": {}
       },
-      "actions": {
-        "Get_incident_entities": {
-          "type": "ApiConnection",
-          "inputs": {
-            "host": {
-              "connection": {
-                "name": "@parameters($connections)['azuresentinel']['connectionId']"
+      "Block_IP_in_named_location": {
+        "type": "Http",
+        "inputs": {
+          "method": "POST",
+          "uri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/namedLocations",
+          "body": {
+            "@odata.type": "#microsoft.graph.ipNamedLocation",
+            "displayName": "Auto-blocked: Brute force source",
+            "isTrusted": false,
+            "ipRanges": [
+              {
+                "@odata.type": "#microsoft.graph.iPv4CidrRange",
+                "cidrAddress": "@{body('Get_incident_entities')?['IPs']?[0]}/32"
               }
-            },
-            "method": "post",
-            "path": "/entities/@{triggerBody()?['object']?['properties']?['relatedAnalyticRuleIds']}"
-          },
-          "runAfter": {}
+            ]
+          }
         },
-        "Block_IP_in_named_location": {
-          "type": "Http",
-          "inputs": {
-            "method": "POST",
-            "uri": "https://graph.microsoft.com/v1.0/identity/conditionalAccess/namedLocations",
-            "body": {
-              "@odata.type": "#microsoft.graph.ipNamedLocation",
-              "displayName": "Auto-blocked: Brute force source",
-              "isTrusted": false,
-              "ipRanges": [
-                {
-                  "@odata.type": "#microsoft.graph.iPv4CidrRange",
-                  "cidrAddress": "@{body('Get_incident_entities')?['IPs']?[0]}/32"
-                }
-              ]
+        "runAfter": {"Get_incident_entities": ["Succeeded"]}
+      },
+      "Send_Teams_notification": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters($connections)['teams']['connectionId']"
             }
           },
-          "runAfter": {"Get_incident_entities": ["Succeeded"]}
+          "method": "post",
+          "path": "/v1.0/teams/SOC-Alerts/channels/General/messages",
+          "body": {
+            "content": "🚨 Brute Force Alert: @{triggerBody()?['object']?['properties']?['title']} - Severity: @{triggerBody()?['object']?['properties']?['severity']}"
+          }
         },
-        "Send_Teams_notification": {
-          "type": "ApiConnection",
-          "inputs": {
-            "host": {
-              "connection": {
-                "name": "@parameters($connections)['teams']['connectionId']"
-              }
-            },
-            "method": "post",
-            "path": "/v1.0/teams/SOC-Alerts/channels/General/messages",
-            "body": {
-              "content": "🚨 Brute Force Alert: @{triggerBody()?['object']?['properties']?['title']} - Severity: @{triggerBody()?['object']?['properties']?['severity']}"
+        "runAfter": {"Block_IP_in_named_location": ["Succeeded"]}
+      },
+      "Add_comment_to_incident": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters($connections)['azuresentinel']['connectionId']"
             }
           },
-          "runAfter": {"Block_IP_in_named_location": ["Succeeded"]}
+          "method": "post",
+          "path": "/comment",
+          "body": {
+            "incidentArmId": "@triggerBody()?['object']?['id']",
+            "message": "Automated response: Source IP blocked in Conditional Access. Teams notification sent to SOC channel."
+          }
         },
-        "Add_comment_to_incident": {
-          "type": "ApiConnection",
-          "inputs": {
-            "host": {
-              "connection": {
-                "name": "@parameters($connections)['azuresentinel']['connectionId']"
-              }
-            },
-            "method": "post",
-            "path": "/comment",
-            "body": {
-              "incidentArmId": "@triggerBody()?['object']?['id']",
-              "message": "Automated response: Source IP blocked in Conditional Access. Teams notification sent to SOC channel."
-            }
-          },
-          "runAfter": {"Send_Teams_notification": ["Succeeded"]}
-        }
+        "runAfter": {"Send_Teams_notification": ["Succeeded"]}
       }
     }
   }'
@@ -723,11 +721,19 @@ The brute-force response playbook triggers but fails at the "Block IP" step with
      --name "playbook-brute-force-response" \
      --query identity.principalId -o tsv)
    
-   # Grant Graph API permission (requires admin consent)
-   az ad app permission grant \
-     --id $LOGIC_APP_OBJECT_ID \
-     --api 00000003-0000-0000-c000-000000000000 \
-     --scope "Policy.ReadWrite.ConditionalAccess"
+   # Grant Graph API app role to managed identity (requires admin consent)
+   # Get the Microsoft Graph service principal
+   GRAPH_SP_ID=$(az ad sp show --id 00000003-0000-0000-c000-000000000000 --query id -o tsv)
+   # Get the app role ID for Policy.ReadWrite.ConditionalAccess
+   ROLE_ID=$(az ad sp show --id 00000003-0000-0000-c000-000000000000 --query "appRoles[?value=='Policy.ReadWrite.ConditionalAccess'].id | [0]" -o tsv)
+   
+   az rest --method POST \
+     --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$GRAPH_SP_ID/appRoleAssignedTo" \
+     --body "{
+       \"principalId\": \"$LOGIC_APP_OBJECT_ID\",
+       \"resourceId\": \"$GRAPH_SP_ID\",
+       \"appRoleId\": \"$ROLE_ID\"
+     }"
    ```
 3. Alternatively, use an API connection with a service account that has Conditional Access Administrator role
 
@@ -794,8 +800,8 @@ Monthly costs jump from $3,000 to $12,000 due to a sudden increase in log ingest
       "distance(lat1, lon1, lat2, lon2)",
       "calculate_travel_distance()"
     ],
-    correctIndex: 1,
-    explanation: "KQL does not have a built-in geo distance function in standard Log Analytics. The Haversine formula using acos(), sin(), cos(), and radians() functions calculates the great-circle distance between two points on Earth, which is the standard approach for impossible travel detection in Sentinel."
+    correctIndex: 0,
+    explanation: "KQL provides the built-in geo_distance_2points() function that calculates the distance in meters between two geographic coordinates. This is the recommended approach for impossible travel detection in Microsoft Sentinel, as it directly computes great-circle distance without requiring manual Haversine formula implementation."
   },
   {
     question: "To reduce ingestion costs for high-volume but rarely queried tables, which Log Analytics plan should you use?",

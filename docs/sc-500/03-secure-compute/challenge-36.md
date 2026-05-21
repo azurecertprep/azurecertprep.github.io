@@ -50,6 +50,7 @@ az security pricing show --name "Containers" \
     --query "{name: name, tier: pricingTier}"
 
 # Create a hardened AKS cluster
+# Note: --enable-image-integrity requires aks-preview extension (az extension add --name aks-preview)
 az aks create \
     --resource-group "rg-contoso-containers" \
     --name "aks-contoso-prod" \
@@ -62,7 +63,7 @@ az aks create \
     --enable-defender \
     --enable-workload-identity \
     --enable-oidc-issuer \
-    --enable-image-integrity \ # Note: Requires aks-preview extension (az extension add --name aks-preview)
+    --enable-image-integrity \
     --generate-ssh-keys \
     --kubernetes-version "1.29" \
     --tier "standard"

@@ -404,5 +404,5 @@ Remove-RetentionCompliancePolicy -Identity "Copilot Studio Retention - 7 Years" 
 Disconnect-SPOService
 Disconnect-MgGraph
 Disconnect-ExchangeOnline
-Remove-PowerAppsAccount
+Disconnect-AzAccount
 ```

@@ -388,10 +388,19 @@ az rest --method POST \
   --url "https://graph.microsoft.com/beta/identity/conditionalAccess/evaluate" \
   --headers "Content-Type=application/json" \
   --body "{
-    \"userId\": \"$USER_ID\",
-    \"applicationId\": \"00000002-0000-0ff1-ce00-000000000000\",
-    \"ipAddress\": \"185.220.101.1\",
-    \"country\": \"RU\"
+    \"conditionalAccessWhatIfSubject\": {
+      \"@odata.type\": \"#microsoft.graph.userSubject\",
+      \"userId\": \"$USER_ID\"
+    },
+    \"conditionalAccessWhatIfConditions\": {
+      \"ipAddress\": \"185.220.101.1\",
+      \"country\": \"RU\",
+      \"clientAppType\": \"browser\",
+      \"servicePrincipalRiskLevel\": \"none\",
+      \"userRiskLevel\": \"none\",
+      \"signInRiskLevel\": \"none\",
+      \"applicationId\": \"00000002-0000-0ff1-ce00-000000000000\"
+    }
   }"
 ```
 

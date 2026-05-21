@@ -798,7 +798,7 @@ az rest --method PUT \
       "description": "Detects direct privileged role assignment bypassing PIM",
       "severity": "High",
       "enabled": true,
-      "query": "AuditLogs\n| where TimeGenerated > ago(5m)\n| where OperationName == \"Add member to role\"\n| extend RoleName = tostring(TargetResources[0].displayName)\n| where RoleName has_any (\"Global Administrator\", \"Privileged Role Administrator\", \"Security Administrator\")\n| where OperationName != \"Add eligible member to role in PIM\"\n| extend Actor = tostring(InitiatedBy.user.userPrincipalName),\n         Target = tostring(TargetResources[0].userPrincipalName)\n| project TimeGenerated, Actor, Target, RoleName",
+      "query": "AuditLogs\n| where OperationName == \"Add member to role\"\n| extend RoleName = tostring(TargetResources[0].displayName)\n| where RoleName has_any (\"Global Administrator\", \"Privileged Role Administrator\", \"Security Administrator\")\n| where OperationName != \"Add eligible member to role in PIM\"\n| extend Actor = tostring(InitiatedBy.user.userPrincipalName),\n         Target = tostring(TargetResources[0].userPrincipalName)\n| project TimeGenerated, Actor, Target, RoleName",
       "tactics": ["PrivilegeEscalation"],
       "techniques": ["T1078.004"],
       "incidentConfiguration": {
@@ -819,41 +819,39 @@ az logic workflow create \
   --name "playbook-capstone-brute-force" \
   --location $LOCATION \
   --definition '{
-    "definition": {
-      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-      "contentVersion": "1.0.0.0",
-      "triggers": {
-        "Microsoft_Sentinel_incident": {
-          "type": "ApiConnectionWebhook",
-          "inputs": {
-            "body": {"callback_url": "@{listCallbackUrl()}"},
-            "host": {"connection": {"name": "@parameters($connections)[azuresentinel][connectionId]"}},
-            "path": "/incident-creation"
-          }
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "triggers": {
+      "Microsoft_Sentinel_incident": {
+        "type": "ApiConnectionWebhook",
+        "inputs": {
+          "body": {"callback_url": "@{listCallbackUrl()}"},
+          "host": {"connection": {"name": "@parameters($connections)[azuresentinel][connectionId]"}},
+          "path": "/incident-creation"
         }
-      },
-      "actions": {
-        "Revoke_user_sessions": {
-          "type": "Http",
-          "inputs": {
-            "method": "POST",
-            "uri": "https://graph.microsoft.com/v1.0/users/@{triggerBody()?[object]?[properties]?[relatedEntities]?[0]?[properties]?[friendlyName]}/revokeSignInSessions"
-          },
-          "runAfter": {}
+      }
+    },
+    "actions": {
+      "Revoke_user_sessions": {
+        "type": "Http",
+        "inputs": {
+          "method": "POST",
+          "uri": "https://graph.microsoft.com/v1.0/users/@{triggerBody()?[object]?[properties]?[relatedEntities]?[0]?[properties]?[friendlyName]}/revokeSignInSessions"
         },
-        "Add_comment": {
-          "type": "ApiConnection",
-          "inputs": {
-            "host": {"connection": {"name": "@parameters($connections)[azuresentinel][connectionId]"}},
-            "method": "post",
-            "path": "/comment",
-            "body": {
-              "incidentArmId": "@triggerBody()?[object]?[id]",
-              "message": "Automated: User sessions revoked. IP submitted for blocking."
-            }
-          },
-          "runAfter": {"Revoke_user_sessions": ["Succeeded"]}
-        }
+        "runAfter": {}
+      },
+      "Add_comment": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {"connection": {"name": "@parameters($connections)[azuresentinel][connectionId]"}},
+          "method": "post",
+          "path": "/comment",
+          "body": {
+            "incidentArmId": "@triggerBody()?[object]?[id]",
+            "message": "Automated: User sessions revoked. IP submitted for blocking."
+          }
+        },
+        "runAfter": {"Revoke_user_sessions": ["Succeeded"]}
       }
     }
   }'
@@ -1106,7 +1104,7 @@ After enabling the route table forcing traffic through the firewall, the VM can 
      --action Allow \
      --priority 150
    ```
-2. Verify FQDN tag `AzureCloud` includes all needed endpoints
+2. Verify service tag `AzureCloud` includes all needed endpoints
 3. Consider adding specific service tags: `AzureActiveDirectory`, `AzureKeyVault`, `Storage`
 4. Check firewall logs for blocked traffic:
    ```kql
