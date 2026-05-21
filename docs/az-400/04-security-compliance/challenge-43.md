@@ -141,11 +141,11 @@ jobs:
       - name: Deploy (secret is masked even if accidentally echoed)
         run: |
           # This would print *** instead of the actual value
-          echo "Connection: ${{ steps.secrets.outputs.db-connection }}"
+          echo "Connection: ${{ steps.secrets.outputs['db-connection'] }}"
           az webapp config appsettings set \
             --name app-contoso-web \
             --resource-group rg-contoso-secrets \
-            --settings "DB=${{ steps.secrets.outputs.db-connection }}"
+            --settings "DB=${{ steps.secrets.outputs['db-connection'] }}"
 ```
 
 ### Task 3: Prevent secrets in logs (isSecret and add-mask)
