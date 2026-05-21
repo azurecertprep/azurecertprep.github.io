@@ -203,6 +203,7 @@ az storage container create \
   --account-key $STORAGE_KEY
 
 # Create a stored access policy with read-only permissions and expiry
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az storage container policy create \
   --container-name financial-reports \
   --name readonly-policy \
@@ -222,6 +223,7 @@ SAS_TOKEN=$(az storage container generate-sas \
 echo "SAS Token (first 20 chars): ${SAS_TOKEN:0:20}..."
 
 # Create a more restrictive SAS for a specific blob
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az storage blob generate-sas \
   --container-name financial-reports \
   --name "report-2024.pdf" \

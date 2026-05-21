@@ -14,7 +14,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 :::
 ## Scenario
 
-Contoso is building a multi-tier architecture with a hub-spoke network topology. The hub VNet contains shared services (firewalls, DNS), while spoke VNets host application workloads. You need to design the network with proper segmentation, peering, and routing | then prove it all works with connectivity tests.
+Contoso is building a multi-tier architecture with a hub-spoke network topology. The hub VNet contains shared services (firewalls, DNS), while spoke VNets host application workloads. You need to design the network with proper segmentation, peering, and routing, then prove it all works with connectivity tests.
 
 ## Exam skills covered
 
@@ -363,7 +363,7 @@ IP flow verify checks whether a packet is allowed or denied by simulating the NS
 2. It evaluates NSG rules on both the **NIC-level NSG** and the **subnet-level NSG**
 3. Returns: Allow or Deny, plus the specific NSG rule name that matched
 
-It does **not** check UDRs, firewalls, or NVAs | only NSG rules. For routing issues, use "Next Hop" instead.
+It does **not** check UDRs, firewalls, or NVAs — only NSG rules. For routing issues, use "Next Hop" instead.
 </details>
 
 ## Cleanup

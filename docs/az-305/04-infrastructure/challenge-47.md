@@ -181,7 +181,7 @@ az group create --name rg-az305-challenge47 --location eastus
 
 ```bash
 az storage account create --resource-group rg-az305-challenge47 \
-  --name stlab47$(openssl rand -hex 4) --sku Standard_LRS \
+  --name stlab47$RANDOM --sku Standard_LRS \
   --kind StorageV2 --public-network-access Disabled
 ```
 

@@ -200,17 +200,18 @@ az group create --name rg-az305-challenge22 --location eastus
 2. Deploy a Data Factory and a storage account with source and sink containers:
 
 ```bash
+STORAGE_ACCOUNT="staz305ch22$RANDOM"
 az storage account create \
-  --name staz305ch22$RANDOM \
+  --name $STORAGE_ACCOUNT \
   --resource-group rg-az305-challenge22 \
   --sku Standard_LRS \
   --kind StorageV2
 
-az storage container create --name source --account-name <your-account-name>
-az storage container create --name sink --account-name <your-account-name>
+az storage container create --name source --account-name $STORAGE_ACCOUNT
+az storage container create --name sink --account-name $STORAGE_ACCOUNT
 
 az storage blob upload \
-  --account-name <your-account-name> \
+  --account-name $STORAGE_ACCOUNT \
   --container-name source \
   --name sales-data.csv \
   --data "store_id,date,revenue\n1,2024-01-01,5000\n2,2024-01-01,7500" \
@@ -232,7 +233,7 @@ az datafactory linked-service create \
   --properties '{
     "type": "AzureBlobStorage",
     "typeProperties": {
-      "connectionString": "'$(az storage account show-connection-string --name <your-account-name> --resource-group rg-az305-challenge22 --query connectionString -o tsv)'"
+      "connectionString": "'$(az storage account show-connection-string --name $STORAGE_ACCOUNT --resource-group rg-az305-challenge22 --query connectionString -o tsv)'"
     }
   }'
 ```

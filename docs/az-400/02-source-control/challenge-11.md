@@ -458,7 +458,7 @@ git push origin --force --tags
     explanation: "GitHub retains dangling commits (commits not referenced by any branch or tag) for approximately 90 days before garbage collection removes them permanently. If no developer has the branch in their local reflog, GitHub support can help locate and restore the branch reference. On Azure DevOps, deleted branches can be restored directly through the UI within a retention period. The reflog (option B) only works if someone still has a local clone that had the branch."
   },
   {
-    question: ": What is the difference between 'git cherry-pick' and 'git rebase' when moving commits between branches?",
+    question: "What is the difference between 'git cherry-pick' and 'git rebase' when moving commits between branches?",
     options: [
       "Cherry-pick copies individual commits creating new SHAs; rebase replays a series of commits onto a new base creating new SHAs for all of them",
       "Cherry-pick preserves original commit SHAs; rebase changes them",

@@ -233,8 +233,9 @@ az monitor autoscale rule create \
 
 ```bash
 # Get the public IP of the load balancer
+PIP_NAME=$(az network public-ip list -g rg-vm-lab --query "[0].name" -o tsv)
 LB_IP=$(az network public-ip show -g rg-vm-lab \
-  -n vmss-webLBPublicIP --query ipAddress -o tsv)
+  -n $PIP_NAME --query ipAddress -o tsv)
 
 # SSH into one VMSS instance and generate CPU load
 az vmss list-instance-connection-info -g rg-vm-lab -n vmss-web -o table

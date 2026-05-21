@@ -70,6 +70,7 @@ az keyvault secret set \
   --tags purpose=database environment=production app=contoso-api
 
 # Create an API key with 90-day expiration
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az keyvault secret set \
   --vault-name $KV_NAME \
   --name "third-party-api-key" \
@@ -100,6 +101,7 @@ az keyvault secret show \
   --query "{value:value, version:id, expires:attributes.expires}"
 
 # List secrets nearing expiration (within 30 days)
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az keyvault secret list --vault-name $KV_NAME \
   --query "[?attributes.expires<='$(date -u -d '+30 days' +%Y-%m-%dT%H:%M:%SZ)'].{name:name, expires:attributes.expires}" -o table
 ```
@@ -110,6 +112,7 @@ Generate RSA and EC keys with specific properties for different encryption use c
 
 ```bash
 # Create an RSA-HSM key for data encryption (2048-bit)
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az keyvault key create \
   --vault-name $KV_NAME \
   --name "data-encryption-key" \
@@ -362,6 +365,7 @@ az eventgrid event-subscription create \
   2>/dev/null || echo "Event Grid subscription requires a valid webhook endpoint"
 
 # Check which certificates are expiring soon
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az keyvault certificate list --vault-name $KV_NAME \
   --include-pending true \
   --query "[?attributes.expires<='$(date -u -d '+60 days' +%Y-%m-%dT%H:%M:%SZ)'].{name:name, expires:attributes.expires}" -o table

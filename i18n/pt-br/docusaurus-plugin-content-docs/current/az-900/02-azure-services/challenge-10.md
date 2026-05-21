@@ -110,7 +110,7 @@ Containers são pacotes leves e portáteis que incluem:
 az webapp list-runtimes --output table
 
 # List available Function App runtimes
-az functionapp list-runtimes --output table
+az functionapp list-runtimes --os linux --output table
 ```
 :::
 

@@ -555,7 +555,7 @@ EOF
     explanation: "The \"Maintain\" role is designed for project managers/tech leads who need to manage the repository (edit description, manage topics, manage interaction limits, manage wikis) without having full admin access (cannot change visibility, delete the repo, or manage access). \"Write\" allows pushing code, managing issues and PRs, but not repository settings management."
   },
   {
-    question: ": What is the key difference between an annotated Git tag and a lightweight tag?",
+    question: "What is the key difference between an annotated Git tag and a lightweight tag?",
     options: [
       "Annotated tags can be pushed to remote; lightweight tags cannot",
       "Annotated tags are stored as full objects with metadata (tagger, date, message); lightweight tags are just pointers to a commit",

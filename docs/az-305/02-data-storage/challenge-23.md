@@ -194,8 +194,9 @@ Deploy a minimal proof-of-concept to validate your design:
 ```bash
 az group create --name rg-az305-challenge23 --location eastus
 
+STORAGE_ACCOUNT="staz305ch23$RANDOM"
 az storage account create \
-  --name staz305ch23$RANDOM \
+  --name $STORAGE_ACCOUNT \
   --resource-group rg-az305-challenge23 \
   --sku Standard_LRS \
   --kind StorageV2 \
@@ -208,7 +209,7 @@ az storage account create \
 az synapse workspace create \
   --name synw-az305-ch23 \
   --resource-group rg-az305-challenge23 \
-  --storage-account <your-account-name> \
+  --storage-account $STORAGE_ACCOUNT \
   --file-system synapsefs \
   --sql-admin-login sqladmin \
   --sql-admin-login-password "P@ssw0rd2024!" \

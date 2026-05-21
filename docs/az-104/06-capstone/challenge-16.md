@@ -380,7 +380,7 @@ A user reports they cannot sign in to the Azure Portal. Their account exists in 
 - C. Reset the user's MFA registration
 - D. Add the user to the Global Administrator role
 
-<details><summary>Answer</summary>**B.** A disabled account prevents sign-in. Always check the basics first | is the account enabled and does it have a valid password?</details>
+<details><summary>Answer</summary>**B.** A disabled account prevents sign-in. Always check the basics first — is the account enabled and does it have a valid password?</details>
 
 **Question 2** *(Storage)*
 AzCopy uploads to a storage account fail with "AuthorizationFailure." The SAS token was generated 8 days ago with a 7-day expiry. What is the most likely cause?

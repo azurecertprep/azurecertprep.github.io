@@ -371,7 +371,7 @@ gh pr create --title "Recover: direct push to main" --base main
     explanation: "Trunk-based development is designed for continuous delivery. Short-lived branches (ideally less than a day) minimize integration risk, and feature flags allow incomplete features to exist in production without being visible to users. This supports daily releases because main is always in a deployable state."
   },
   {
-    question: ": What is the primary risk of maintaining long-lived release branches?",
+    question: "What is the primary risk of maintaining long-lived release branches?",
     options: [
       "They consume too much disk space",
       "They drift from main, causing increasingly complex merge conflicts",

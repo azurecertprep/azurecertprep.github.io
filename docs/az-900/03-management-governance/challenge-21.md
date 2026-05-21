@@ -46,7 +46,7 @@ Azure provides multiple ways to manage resources: the **Azure Portal** (web GUI)
 - Pre-installed: Azure CLI, Azure PowerShell, Git, Python, Node.js, Terraform
 - Persistent: 5 GB home directory storage
 - Authenticated: Already logged into your Azure account
-- Free: No additional charges
+- Minimal cost: Requires a small storage account for persistence (~$0.01/month)
 
 ### Task 3: Try Azure CLI commands
 

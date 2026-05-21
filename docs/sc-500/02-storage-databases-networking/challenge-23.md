@@ -562,7 +562,7 @@ az network firewall policy update \
   {
     question: "How does Azure Firewall threat intelligence blocking interact with explicit allow rules?",
     options: [
-      "Threat intelligence always takes highest precedence over all rules",
+      "Threat intelligence takes highest precedence over all rules by default",
       "Explicit application/network allow rules take precedence over threat intelligence",
       "They cannot be used together",
       "Threat intelligence only applies to inbound traffic"

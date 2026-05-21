@@ -78,8 +78,8 @@ O Azure fornece Service Level Agreements (SLAs) que garantem disponibilidade. Os
 # List available Azure Policy definitions (first 10)
 az policy definition list --query "[0:10].{Name:displayName, Category:metadata.category}" --output table
 
-# Check service health
-az monitor activity-log list --resource-provider "Microsoft.ResourceHealth" --output table
+# View recent activity log events in your subscription
+az monitor activity-log list --max-events 5 --output table
 ```
 :::
 

@@ -236,8 +236,9 @@ az group create --name rg-az305-challenge24 --location eastus
 2. Deploy a storage account (media layer) and an Azure SQL Database (transactional layer):
 
 ```bash
+STORAGE_ACCOUNT="staz305ch24$RANDOM"
 az storage account create \
-  --name staz305ch24$RANDOM \
+  --name $STORAGE_ACCOUNT \
   --resource-group rg-az305-challenge24 \
   --sku Standard_LRS \
   --kind StorageV2
@@ -271,7 +272,7 @@ az datafactory linked-service create \
   --properties '{
     "type": "AzureBlobStorage",
     "typeProperties": {
-      "connectionString": "'$(az storage account show-connection-string --name <your-account-name> --resource-group rg-az305-challenge24 --query connectionString -o tsv)'"
+      "connectionString": "'$(az storage account show-connection-string --name $STORAGE_ACCOUNT --resource-group rg-az305-challenge24 --query connectionString -o tsv)'"
     }
   }'
 

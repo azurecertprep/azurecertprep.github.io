@@ -616,7 +616,7 @@ EOF
     explanation: "CODEOWNERS uses a last-match-wins rule, similar to .gitignore. The file is evaluated from top to bottom, and the last matching pattern determines the code owners. Since /src/api/billing/ matches the file path and appears after the other patterns, only @contoso/billing-team and @sarah-lead are assigned as required reviewers."
   },
   {
-    question: ": What is the primary purpose of a merge queue in GitHub?",
+    question: "What is the primary purpose of a merge queue in GitHub?",
     options: [
       "To limit the number of PRs that can be open at one time",
       "To ensure PRs are merged in the order they were created",

@@ -175,14 +175,15 @@ az group create --name rg-az305-challenge21 --location eastus
 2. Deploy a storage account with soft delete and versioning enabled:
 
 ```bash
+STORAGE_ACCOUNT="staz305ch21$RANDOM"
 az storage account create \
-  --name staz305ch21$RANDOM \
+  --name $STORAGE_ACCOUNT \
   --resource-group rg-az305-challenge21 \
   --sku Standard_LRS \
   --kind StorageV2
 
 az storage account blob-service-properties update \
-  --account-name <your-account-name> \
+  --account-name $STORAGE_ACCOUNT \
   --resource-group rg-az305-challenge21 \
   --enable-delete-retention true \
   --delete-retention-days 30 \
@@ -194,22 +195,22 @@ az storage account blob-service-properties update \
 3. Upload a test blob, delete it, then recover it:
 
 ```bash
-az storage container create --name testcontainer --account-name <your-account-name>
+az storage container create --name testcontainer --account-name $STORAGE_ACCOUNT
 
 az storage blob upload \
-  --account-name <your-account-name> \
+  --account-name $STORAGE_ACCOUNT \
   --container-name testcontainer \
   --name testfile.txt \
   --data "This is a recovery test" \
   --type block
 
 az storage blob delete \
-  --account-name <your-account-name> \
+  --account-name $STORAGE_ACCOUNT \
   --container-name testcontainer \
   --name testfile.txt
 
 az storage blob undelete \
-  --account-name <your-account-name> \
+  --account-name $STORAGE_ACCOUNT \
   --container-name testcontainer \
   --name testfile.txt
 ```
@@ -218,7 +219,7 @@ az storage blob undelete \
 
 ```bash
 az storage blob show \
-  --account-name <your-account-name> \
+  --account-name $STORAGE_ACCOUNT \
   --container-name testcontainer \
   --name testfile.txt \
   --query "properties.deletedTime"

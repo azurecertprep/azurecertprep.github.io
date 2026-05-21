@@ -515,7 +515,7 @@ git config lfs.url "https://lfs.contoso.internal/game-studio"
     explanation: "The git lfs migrate import --everything command rewrites the entire repository history, changing commit hashes for every commit that touched the migrated file types. This is similar to a git filter-branch or git filter-repo operation. Because all commit SHAs change, existing clones have incompatible history. Team members must delete their local clone and re-clone, or carefully use git fetch and git reset --hard origin/main (losing any local work)."
   },
   {
-    question: ": What is the primary advantage of git-fat over Git LFS?",
+    question: "What is the primary advantage of git-fat over Git LFS?",
     options: [
       "Better performance for large files",
       "Native integration with GitHub and Azure DevOps",

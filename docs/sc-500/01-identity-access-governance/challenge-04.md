@@ -225,6 +225,7 @@ az rest --method GET \
   --headers "Content-Type=application/json"
 
 # Find apps with credentials expiring in the next 30 days
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az ad app list --all --query "[?passwordCredentials[?endDateTime<='$(date -u -d '+30 days' +%Y-%m-%dT%H:%M:%SZ)']].{name:displayName, appId:appId}" -o table
 
 # Find apps that haven't been signed into recently (stale apps)

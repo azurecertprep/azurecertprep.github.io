@@ -72,7 +72,6 @@ KV_ID=$(az keyvault show --name $KV_NAME --query id -o tsv)
 az lock create \
   --name "keyvault-readonly" \
   --resource $KV_ID \
-  --resource-type "Microsoft.KeyVault/vaults" \
   --lock-type ReadOnly \
   --notes "Key Vault is locked to prevent configuration changes. Use change management process."
 

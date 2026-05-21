@@ -345,6 +345,7 @@ A developer cannot create a Key Vault for their development environment because 
 # In the ARM template, add: "enableRbacAuthorization": true
 
 # Option 2: Create a policy exemption for the dev resource group
+# Note: date -u -d syntax requires GNU date (Linux/Cloud Shell)
 az policy exemption create \
   --name "exempt-dev-kv-rbac" \
   --policy-assignment "deny-kv-no-rbac" \

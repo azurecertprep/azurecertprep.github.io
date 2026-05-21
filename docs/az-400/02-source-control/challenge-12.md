@@ -651,7 +651,7 @@ git commit -m "chore: update shared-libs submodule to latest"
     explanation: "This combination uses partial clone (--filter=blob:none) to skip downloading blob objects until they are needed, and sparse-checkout to only materialize the files for the specified paths. Together, they minimize both network transfer and disk usage. The developer gets full commit history (for blame, log, etc.) but only downloads file content for the paths they need. Shallow clone (option A) limits history depth but still downloads all files. Option D still downloads all blobs across all paths."
   },
   {
-    question: ": What does Scalar's 'scalar register' command enable for a Git repository?",
+    question: "What does Scalar's 'scalar register' command enable for a Git repository?",
     options: [
       "Uploads the repository to a centralized Scalar server for caching",
       "Enables a set of Git performance optimizations including FSMonitor, commit-graph, multi-pack index, and background maintenance",

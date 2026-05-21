@@ -581,9 +581,8 @@ rm -f contoso-deploy.key contoso-deploy.crt test-secrets.txt
 # Remove secure files from Azure DevOps (via UI: Pipelines > Library > Secure files)
 
 # Clean up git history if secrets were committed during testing
-git filter-branch --force --index-filter \
-  "git rm --cached --ignore-unmatch .env test-secrets.txt" \
-  --prune-empty -- --all
+# (git filter-repo is recommended; git filter-branch is deprecated)
+git filter-repo --path .env --path test-secrets.txt --invert-paths
 
 # Force push to remove secrets from remote history (use with caution)
 # git push origin --force --all

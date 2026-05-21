@@ -33,7 +33,6 @@ Set up the Azure Deployment Environments infrastructure:
 ```bash
 # Register required resource providers
 az provider register --namespace Microsoft.DevCenter
-az provider register --namespace Microsoft.Fidalgo
 
 # Create a resource group for the Dev Center
 az group create \
