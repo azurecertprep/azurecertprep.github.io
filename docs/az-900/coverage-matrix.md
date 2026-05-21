@@ -25,11 +25,8 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 
 | Skill | Challenge(s) |
 |-------|-------------|
-| Describe the benefits of high availability | 02 |
-| Describe the benefits of scalability | 02 |
-| Describe the benefits of elasticity | 02 |
-| Describe the benefits of reliability | 02 |
-| Describe the benefits of predictability | 02 |
+| Describe the benefits of high availability and scalability in the cloud | 02 |
+| Describe the benefits of reliability and predictability in the cloud | 02 |
 | Describe the benefits of security and governance in the cloud | 02 |
 | Describe the benefits of manageability in the cloud | 02 |
 
@@ -40,8 +37,7 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 | Describe Infrastructure as a Service (IaaS) | 04 |
 | Describe Platform as a Service (PaaS) | 05 |
 | Describe Software as a Service (SaaS) | 06 |
-| Identify appropriate use cases for IaaS, PaaS, SaaS | 04, 05, 06 |
-| Describe the shared responsibility model as it relates to service types | 04, 05, 06 |
+| Identify appropriate use cases for each cloud service type (IaaS, PaaS, and SaaS) | 04, 05, 06 |
 
 ## Domain 2: Describe Azure architecture and services (35-40%)
 
@@ -65,7 +61,6 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 | Describe VM options (Azure VMs, VM Scale Sets, availability sets, Azure Virtual Desktop) | 09 |
 | Describe resources required for VMs | 09 |
 | Describe application hosting options (web apps, containers, VMs) | 10 |
-| Describe Azure Functions | 10 |
 | Describe virtual networking (VNets, subnets, peering, Azure DNS, VPN Gateway, ExpressRoute) | 11, 12 |
 | Define public and private endpoints | 11 |
 
@@ -86,8 +81,8 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 |-------|-------------|
 | Describe directory services (Microsoft Entra ID, Entra Domain Services) | 16 |
 | Describe authentication methods (SSO, MFA, passwordless) | 16 |
-| Describe external identities and guest access (B2B) | 17 |
-| Describe Conditional Access | 17 |
+| Describe external identities in Azure | 17 |
+| Describe Microsoft Entra Conditional Access | 17 |
 | Describe Azure role-based access control (RBAC) | 17 |
 | Describe the concept of Zero Trust | 18 |
 | Describe the purpose of the defense-in-depth model | 18 |
@@ -100,15 +95,15 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 | Skill | Challenge(s) |
 |-------|-------------|
 | Describe factors that can affect costs in Azure | 19 |
-| Compare the Pricing Calculator and the Total Cost of Ownership (TCO) Calculator | 19 |
-| Describe Cost Management capabilities (cost alerts, budgets, recommendations) | 19 |
+| Explore the pricing calculator | 19 |
+| Describe cost management capabilities in Azure | 19 |
 | Describe the purpose of tags | 19 |
 
 ### Describe features and tools for governance and compliance
 
 | Skill | Challenge(s) |
 |-------|-------------|
-| Describe the purpose of Microsoft Purview | 20 |
+| Describe the purpose of Microsoft Purview in Azure | 20 |
 | Describe the purpose of Azure Policy | 20 |
 | Describe the purpose of resource locks | 20 |
 
@@ -117,9 +112,10 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 | Skill | Challenge(s) |
 |-------|-------------|
 | Describe the Azure portal | 21 |
-| Describe Azure Cloud Shell (Azure CLI and Azure PowerShell) | 21 |
+| Describe Azure Cloud Shell, including Azure CLI and Azure PowerShell | 21 |
 | Describe the purpose of Azure Arc | 22 |
-| Describe Azure Resource Manager (ARM) and ARM templates (including Bicep) | 22 |
+| Describe infrastructure as code (IaC) | 22 |
+| Describe Azure Resource Manager (ARM) and ARM templates | 22 |
 
 ### Describe monitoring tools in Azure
 
@@ -135,7 +131,7 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 
 | Domain | Skills | Challenges | Coverage |
 |--------|--------|------------|----------|
-| 1. Cloud Concepts | 19 | 01–06 | ✅ 100% |
+| 1. Cloud Concepts | 15 | 01–06 | ✅ 100% |
 | 2. Azure Architecture & Services | 27 | 07–18 | ✅ 100% |
-| 3. Management & Governance | 14 | 19–24 | ✅ 100% |
-| **Total** | **60** | **24** | **✅ 100%** |
+| 3. Management & Governance | 15 | 19–24 | ✅ 100% |
+| **Total** | **57** | **24** | **✅ 100%** |

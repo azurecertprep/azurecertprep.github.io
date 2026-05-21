@@ -69,8 +69,8 @@ Every challenge in this guide costs $0. We only use the Azure Portal, Azure Clou
 | Learning Path | Modules |
 |---------------|---------|
 | [Azure Fundamentals: Describe cloud concepts](https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/) | 3 |
-| [Azure Fundamentals: Describe Azure architecture and services](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/) | 4 |
-| [Azure Fundamentals: Describe Azure management and governance](https://learn.microsoft.com/en-us/training/paths/describe-azure-management-governance/) | 3 |
+| [Azure Fundamentals: Describe Azure architecture and services](https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/) | 5 |
+| [Azure Fundamentals: Describe Azure management and governance](https://learn.microsoft.com/en-us/training/paths/describe-azure-management-governance/) | 4 |
 
 ## Learning path
 
@@ -79,7 +79,7 @@ graph LR
     A[AZ-900<br/>Fundamentals] --> B[AZ-104<br/>Administrator]
     B --> C[AZ-305<br/>Solutions Architect]
     B --> D[AZ-400<br/>DevOps Engineer]
-    B --> E[SC-500<br/>Security Engineer]
+    B --> E[AZ-500<br/>Security Engineer]
     style A fill:#d5e8d4,stroke:#82b366
     style B fill:#dae8fc,stroke:#6c8ebf
     style C fill:#e1d5e7,stroke:#9673a6

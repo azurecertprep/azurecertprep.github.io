@@ -49,9 +49,9 @@ Blob Storage has three types of blobs:
 
 | Blob type | Description | Use case |
 |-----------|-------------|----------|
-| **Block blobs** | Large objects (up to 190.7 TB) | Files, images, videos, backups |
+| **Block blobs** | Large objects (up to ~190.7 TiB) | Files, images, videos, backups |
 | **Append blobs** | Optimized for append operations | Log files, streaming data |
-| **Page blobs** | Random read/write (up to 8 TB) | VM disks (VHDs) |
+| **Page blobs** | Random read/write (up to 8 TiB) | VM disks (VHDs) |
 
 **Blob containers** organize blobs within a storage account:
 ```

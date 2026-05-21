@@ -78,8 +78,8 @@ Azure provides Service Level Agreements (SLAs) that guarantee uptime. Services a
 # List available Azure Policy definitions (first 10)
 az policy definition list --query "[0:10].{Name:displayName, Category:metadata.category}" --output table
 
-# Check service health
-az monitor activity-log list --resource-provider "Microsoft.ResourceHealth" --output table
+# Check service health events
+az monitor activity-log list --namespace "Microsoft.ResourceHealth" --output table
 ```
 :::
 

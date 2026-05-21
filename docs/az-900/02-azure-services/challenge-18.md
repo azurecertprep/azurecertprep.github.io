@@ -102,7 +102,7 @@ How Azure services implement Zero Trust:
 :::tip Azure CLI Alternative
 ```bash
 # Check Defender for Cloud secure score
-az security secure-score list --output table 2>/dev/null || echo "Explore Defender for Cloud in the portal"
+az security secure-scores list --output table 2>/dev/null || echo "Explore Defender for Cloud in the portal"
 
 # List security recommendations
 az security assessment list --query "[0:5].{Name:displayName, Status:status.code}" --output table 2>/dev/null || echo "View recommendations in the portal"

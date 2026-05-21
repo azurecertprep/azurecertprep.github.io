@@ -97,8 +97,8 @@ ExpressRoute provides a **private connection** to Azure:
 # List DNS zones (if any)
 az network dns zone list --output table 2>/dev/null || echo "No DNS zones configured"
 
-# List available VPN Gateway SKUs
-az network vnet-gateway list-available-sku --output table 2>/dev/null || echo "Explore SKUs in the portal"
+# List VPN gateways in a resource group (if any exist)
+az network vnet-gateway list --resource-group rg-az900-learning --output table 2>/dev/null || echo "No VPN gateways configured (they cost money!)"
 ```
 :::
 

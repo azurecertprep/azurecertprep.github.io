@@ -49,9 +49,9 @@ Review this table:
 | Responsibility | On-premises | IaaS | PaaS | SaaS |
 |---------------|-------------|------|------|------|
 | Data & access | You | You | You | You |
-| Applications | You | You | You | Provider |
+| Applications | You | You | Shared | Shared |
+| Network controls | You | You | Shared | Provider |
 | Operating system | You | You | Provider | Provider |
-| Network controls | You | You | Provider | Provider |
 | Physical infrastructure | You | Provider | Provider | Provider |
 
 **Key insight**: YOU are always responsible for your data, accounts, and access management — regardless of cloud model.
