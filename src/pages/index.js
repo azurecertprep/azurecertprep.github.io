@@ -13,6 +13,64 @@ const stats = [
   { number: 'v2026.05', label: 'Exam Objectives' },
 ];
 
+const examCards = [
+  {
+    icon: '☁️',
+    code: 'AZ-900',
+    level: 'Fundamentals',
+    role: 'Azure Fundamentals',
+    tagline: 'Cloud concepts, services & pricing',
+    challenges: 24,
+    href: '/docs/az-900/overview',
+  },
+  {
+    icon: '🔧',
+    code: 'AZ-104',
+    level: 'Associate',
+    role: 'Azure Administrator',
+    tagline: 'Identity, networking, compute & storage',
+    challenges: 28,
+    href: '/docs/az-104/overview',
+  },
+  {
+    icon: '🏗️',
+    code: 'AZ-305',
+    level: 'Expert',
+    role: 'Solutions Architect',
+    tagline: 'Design, architecture & trade-offs',
+    challenges: 50,
+    href: '/docs/az-305/overview',
+  },
+  {
+    icon: '🚀',
+    code: 'AZ-400',
+    level: 'Expert',
+    role: 'DevOps Engineer',
+    tagline: 'CI/CD, IaC & monitoring',
+    challenges: 51,
+    href: '/docs/az-400/overview',
+  },
+  {
+    icon: '🛡️',
+    code: 'SC-500',
+    level: 'Specialty',
+    role: 'Security Operations',
+    tagline: 'Sentinel, Defender & IAM',
+    challenges: 52,
+    href: '/docs/sc-500/overview',
+  },
+  {
+    icon: '🧪',
+    code: 'Open Lab',
+    level: 'Sandbox',
+    role: 'Free exploration',
+    tagline: 'Your own Azure playground',
+    challenges: null,
+    href: 'https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1',
+    external: true,
+  },
+];
+
 const challenges = [
   { num: '01', title: 'Entra ID: Users & Groups', domain: 'identity', href: '/docs/az-104/identity/challenge-01' },
   { num: '02', title: 'RBAC & Access Management', domain: 'identity', href: '/docs/az-104/identity/challenge-02' },
@@ -295,42 +353,27 @@ function HomepageHeader() {
             </div>
           ))}
         </div>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/az-900/overview">
-            AZ-900 (24 challenges)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/az-104/overview">
-            AZ-104 (28 challenges)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/az-305/overview">
-            AZ-305 (50 challenges)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/az-400/overview">
-            AZ-400 (51 challenges)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/sc-500/overview">
-            SC-500 (52 challenges)
-          </Link>
-          <Link
-            className="button button--outline button--lg"
-            style={{color: 'white', borderColor: 'white', marginLeft: '1rem'}}
-            href="https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1">
-            Open Lab
-          </Link>
+        <div className="exam-cards-grid">
+          {examCards.map((exam) => {
+            const CardTag = exam.external ? 'a' : Link;
+            const cardProps = exam.external
+              ? { href: exam.href, target: '_blank', rel: 'noopener noreferrer' }
+              : { to: exam.href };
+            return (
+              <CardTag key={exam.code} className="exam-card" {...cardProps}>
+                <div className="exam-card__icon">{exam.icon}</div>
+                <div className="exam-card__code">{exam.code}</div>
+                <span className={`exam-card__level exam-card__level--${exam.level.toLowerCase()}`}>
+                  {exam.level}
+                </span>
+                <div className="exam-card__role">{exam.role}</div>
+                <div className="exam-card__tagline">{exam.tagline}</div>
+                {exam.challenges && (
+                  <div className="exam-card__challenges">{exam.challenges} challenges</div>
+                )}
+              </CardTag>
+            );
+          })}
         </div>
       </div>
     </header>

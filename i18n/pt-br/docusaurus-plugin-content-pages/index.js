@@ -333,6 +333,64 @@ function HomepageFeatures() {
   );
 }
 
+const examCards = [
+  {
+    icon: '☁️',
+    code: 'AZ-900',
+    level: 'Fundamentals',
+    role: 'Azure Fundamentals',
+    tagline: 'Conceitos de nuvem, serviços e preços',
+    challenges: 24,
+    href: '/docs/az-900/overview',
+  },
+  {
+    icon: '🔧',
+    code: 'AZ-104',
+    level: 'Associate',
+    role: 'Azure Administrator',
+    tagline: 'Identidade, rede, computação e armazenamento',
+    challenges: 28,
+    href: '/docs/az-104/overview',
+  },
+  {
+    icon: '🏗️',
+    code: 'AZ-305',
+    level: 'Expert',
+    role: 'Solutions Architect',
+    tagline: 'Design, arquitetura e trade-offs',
+    challenges: 50,
+    href: '/docs/az-305/overview',
+  },
+  {
+    icon: '🚀',
+    code: 'AZ-400',
+    level: 'Expert',
+    role: 'DevOps Engineer',
+    tagline: 'CI/CD, IaC e monitoramento',
+    challenges: 51,
+    href: '/docs/az-400/overview',
+  },
+  {
+    icon: '🛡️',
+    code: 'SC-500',
+    level: 'Specialty',
+    role: 'Security Operations',
+    tagline: 'Sentinel, Defender e IAM',
+    challenges: 52,
+    href: '/docs/sc-500/overview',
+  },
+  {
+    icon: '🧪',
+    code: 'Open Lab',
+    level: 'Sandbox',
+    role: 'Exploração livre',
+    tagline: 'Seu próprio playground Azure',
+    challenges: null,
+    href: 'https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1',
+    external: true,
+  },
+];
+
 function HomepageHeader() {
   return (
     <header className="hero--azure">
@@ -349,42 +407,27 @@ function HomepageHeader() {
             </div>
           ))}
         </div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/az-900/overview">
-            AZ-900 (24 desafios)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/az-104/overview">
-            AZ-104 (28 desafios)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/az-305/overview">
-            AZ-305 (50 desafios)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/az-400/overview">
-            AZ-400 (51 desafios)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            style={{marginLeft: '1rem'}}
-            to="/docs/sc-500/overview">
-            SC-500 (52 desafios)
-          </Link>
-          <Link
-            className="button button--outline button--lg"
-            style={{color: 'white', borderColor: 'white', marginLeft: '1rem'}}
-            href="https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1">
-            Abrir Lab
-          </Link>
+        <div className="exam-cards-grid">
+          {examCards.map((exam) => {
+            const CardTag = exam.external ? 'a' : Link;
+            const cardProps = exam.external
+              ? { href: exam.href, target: '_blank', rel: 'noopener noreferrer' }
+              : { to: exam.href };
+            return (
+              <CardTag key={exam.code} className="exam-card" {...cardProps}>
+                <div className="exam-card__icon">{exam.icon}</div>
+                <div className="exam-card__code">{exam.code}</div>
+                <span className={`exam-card__level exam-card__level--${exam.level.toLowerCase()}`}>
+                  {exam.level}
+                </span>
+                <div className="exam-card__role">{exam.role}</div>
+                <div className="exam-card__tagline">{exam.tagline}</div>
+                {exam.challenges && (
+                  <div className="exam-card__challenges">{exam.challenges} desafios</div>
+                )}
+              </CardTag>
+            );
+          })}
         </div>
       </div>
     </header>
