@@ -349,10 +349,11 @@ az keyvault secret set \
 ```
 
 ```bash
-az keyvault set-policy \
-  --name "kv-ch04-${SUFFIX}" \
-  --object-id "$PRINCIPAL_ID" \
-  --secret-permissions get list
+KV_ID=$(az keyvault show --name "kv-ch04-${SUFFIX}" --query id -o tsv)
+az role assignment create \
+  --assignee "$PRINCIPAL_ID" \
+  --role "Key Vault Secrets User" \
+  --scope "$KV_ID"
 ```
 
 ### Step 4: prove passwordless authentication works
@@ -404,10 +405,11 @@ Compare this to traditional credential-based auth: if you rotate a password, the
 ### Step 6: restore access and confirm recovery
 
 ```bash
-az keyvault set-policy \
-  --name "kv-ch04-${SUFFIX}" \
-  --object-id "$PRINCIPAL_ID" \
-  --secret-permissions get list
+KV_ID=$(az keyvault show --name "kv-ch04-${SUFFIX}" --query id -o tsv)
+az role assignment create \
+  --assignee "$PRINCIPAL_ID" \
+  --role "Key Vault Secrets User" \
+  --scope "$KV_ID"
 ```
 
 ```bash

@@ -269,7 +269,7 @@ az group create --name rg-az305-challenge02 --location eastus
 az monitor log-analytics workspace create \
   --resource-group rg-az305-challenge02 \
   --workspace-name law-routing-lab \
-  --retention-time 30
+  --retention-in-days 30
 ```
 
 3. Deploy an Event Hub namespace as a secondary routing target:

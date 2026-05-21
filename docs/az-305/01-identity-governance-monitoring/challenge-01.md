@@ -146,14 +146,14 @@ az monitor log-analytics workspace table update \
   --resource-group rg-logging-centralus \
   --workspace-name law-northwind-central \
   --name SecurityEvent \
-  --retention-time 365
+  --retention-in-days 365
 
 # Set perf table to 30 days
 az monitor log-analytics workspace table update \
   --resource-group rg-logging-centralus \
   --workspace-name law-northwind-central \
   --name Perf \
-  --retention-time 30
+  --retention-in-days 30
 ```
 
 </details>
@@ -245,7 +245,7 @@ az group create --name rg-az305-challenge01 --location eastus
 az monitor log-analytics workspace create \
   --resource-group rg-az305-challenge01 \
   --workspace-name law-centralized-lab \
-  --retention-time 90
+  --retention-in-days 90
 ```
 
 3. Configure workspace daily cap to control costs:

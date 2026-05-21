@@ -174,7 +174,7 @@ az group create --name rg-az305-challenge13 --location eastus
 az monitor log-analytics workspace create \
   --resource-group rg-az305-challenge13 \
   --workspace-name law-capstone-lab \
-  --retention-time 30
+  --retention-in-days 30
 ```
 
 3. Deploy a Key Vault (secrets management):

@@ -184,10 +184,11 @@ IDENTITY_OID=$(az identity show \
   --name id-az305-challenge08 \
   --resource-group rg-az305-challenge08 \
   --query principalId -o tsv)
-az keyvault set-policy \
-  --name "$KV_NAME" \
-  --object-id "$IDENTITY_OID" \
-  --secret-permissions get list
+KV_ID=$(az keyvault show --name "$KV_NAME" --query id -o tsv)
+az role assignment create \
+  --assignee "$IDENTITY_OID" \
+  --role "Key Vault Secrets User" \
+  --scope "$KV_ID"
 ```
 
 5. Verify the managed identity can access secrets (via policy listing):
