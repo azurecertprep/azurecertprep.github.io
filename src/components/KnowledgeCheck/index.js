@@ -19,7 +19,7 @@ export default function KnowledgeCheck({ questions }) {
           index={index}
           question={q.question}
           options={q.options}
-          correctIndex={q.correctIndex}
+          correctIndex={q.correctAnswer ?? q.correctIndex}
           explanation={q.explanation}
           onAnswer={handleAnswer}
         />
