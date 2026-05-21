@@ -258,14 +258,20 @@ az role assignment create \
 Configure semantic caching to return cached responses for semantically similar prompts.
 
 ```bash
-# Create Azure Cache for Redis (Enterprise tier for semantic caching)
-az redis create \
+# Create Azure Cache for Redis Enterprise (required for semantic caching with RediSearch module)
+# Note: Semantic caching requires Enterprise tier, not Premium, because it needs the RediSearch module
+az redisenterprise create \
     --name "contoso-ai-cache" \
     --resource-group "rg-contoso-aigateway" \
     --location "eastus" \
-    --sku "Premium" \
-    --vm-size "P1" \
-    --redis-version "6"
+    --sku "Enterprise_E10"
+
+# Create a Redis database with the RediSearch module enabled
+az redisenterprise database create \
+    --cluster-name "contoso-ai-cache" \
+    --resource-group "rg-contoso-aigateway" \
+    --modules "[{\"name\":\"RediSearch\"}]" \
+    --eviction-policy "NoEviction"
 ```
 
 ```xml
@@ -415,10 +421,9 @@ cat <<'EOF'
 EOF
 
 # 5. Flush the current cache
-az redis force-reboot \
-    --name "contoso-ai-cache" \
-    --resource-group "rg-contoso-aigateway" \
-    --reboot-type "AllNodes"
+az redisenterprise database flush \
+    --cluster-name "contoso-ai-cache" \
+    --resource-group "rg-contoso-aigateway"
 ```
 
 </details>

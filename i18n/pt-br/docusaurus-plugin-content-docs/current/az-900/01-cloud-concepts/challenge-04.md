@@ -36,7 +36,7 @@ No Azure, IaaS significa que você gerencia o sistema operacional, aplicações,
 | Runtime | **Você** |
 | Sistema operacional | **Você** |
 | Máquina virtual | **Você** |
-| Controles de rede | Compartilhado |
+| Controles de rede | **Você** |
 | Host físico | **Azure** |
 | Rede física | **Azure** |
 | Datacenter físico | **Azure** |

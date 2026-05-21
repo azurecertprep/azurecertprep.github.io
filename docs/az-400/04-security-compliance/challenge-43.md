@@ -328,14 +328,20 @@ Enable secret scanning push protection at the repository or organization level:
 
 ```bash
 # Enable via GitHub API (organization-wide)
-gh api orgs/contoso -X PATCH \
-  --field security_and_analysis[secret_scanning][status]="enabled" \
-  --field security_and_analysis[secret_scanning_push_protection][status]="enabled"
+gh api orgs/contoso -X PATCH --input - <<< '{
+  "security_and_analysis": {
+    "secret_scanning": {"status": "enabled"},
+    "secret_scanning_push_protection": {"status": "enabled"}
+  }
+}'
 
 # Enable for a specific repository
-gh api repos/contoso/webapp -X PATCH \
-  --field security_and_analysis[secret_scanning][status]="enabled" \
-  --field security_and_analysis[secret_scanning_push_protection][status]="enabled"
+gh api repos/contoso/webapp -X PATCH --input - <<< '{
+  "security_and_analysis": {
+    "secret_scanning": {"status": "enabled"},
+    "secret_scanning_push_protection": {"status": "enabled"}
+  }
+}'
 ```
 
 When push protection blocks a commit:

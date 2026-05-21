@@ -50,7 +50,7 @@ Contoso Ltd. is standardizing disk management across their VM fleet. The securit
 # Create resource group
 az group create --name rg-disks-lab --location eastus
 
-# Create a Linux VM with a standard OS disk
+# Create a Linux VM with a Premium OS disk
 az vm create \
   --name vm-disk-lab \
   --resource-group rg-disks-lab \

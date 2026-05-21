@@ -91,11 +91,10 @@ on:
     branches: [main]
     paths:
       - "backend/**"
+      - "!backend/docs/**"
+      - "!backend/**/*.md"
       - "shared/**"
       - ".github/workflows/backend.yml"
-    paths-ignore:
-      - "backend/docs/**"
-      - "backend/**/*.md"
   pull_request:
     branches: [main]
     paths:
@@ -799,18 +798,7 @@ on:
       - "!backend/docs/**"  # Negation pattern to exclude
 ```
 
-Note: GitHub Actions does not support negation in `paths`. The correct approach is to use only `paths-ignore` or use only `paths` and accept that docs changes will trigger the workflow:
-
-```yaml
-on:
-  push:
-    branches: [main]
-    paths:
-      - "backend/src/**"
-      - "backend/package.json"
-      - "backend/package-lock.json"
-      - "backend/Dockerfile"
-```
+This uses the `!` negation prefix supported by GitHub Actions to exclude specific paths while still using `paths` filters.
 
 </details>
 

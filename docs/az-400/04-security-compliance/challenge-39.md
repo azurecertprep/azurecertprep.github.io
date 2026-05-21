@@ -239,8 +239,8 @@ az ad app federated-credential create \
   --parameters '{
     "name": "github-release-tags",
     "issuer": "https://token.actions.githubusercontent.com",
-    "subject": "repo:contoso/webapp:ref:refs/tags/v*",
-    "description": "GitHub Actions release tags",
+    "subject": "repo:contoso/webapp:ref:refs/tags/v1.0.0",
+    "description": "GitHub Actions release tag v1.0.0 (one credential per tag needed - wildcards not supported)",
     "audiences": ["api://AzureADTokenExchange"]
   }'
 

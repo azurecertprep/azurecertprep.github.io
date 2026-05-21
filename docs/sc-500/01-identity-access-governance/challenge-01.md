@@ -236,8 +236,9 @@ az rest --method POST \
 
 # Configure the Azure resource role policy (max 2 hours for Owner)
 # First get the policy for Owner role on the subscription
+# Note: Azure resource PIM policies use the ARM API (scope is in the URL path, not directoryScopeId)
 az rest --method GET \
-  --url "https://graph.microsoft.com/v1.0/policies/roleManagementPolicies?\$filter=scopeId eq '/subscriptions/$SUB_ID' and scopeType eq 'subscription'" \
+  --url "https://management.azure.com/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleManagementPolicies?api-version=2020-10-01&\$filter=roleDefinitionId eq '/subscriptions/$SUB_ID/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'" \
   --headers "Content-Type=application/json"
 ```
 

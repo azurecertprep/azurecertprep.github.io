@@ -275,9 +275,9 @@ Restore options:
 </details>
 
 <details>
-<summary>4. Point-in-time restore for blobs has a maximum retention of 14 days. What alternative provides longer point-in-time recovery capability for blob data?</summary>
+<summary>4. Point-in-time restore for blobs has a maximum retention of 365 days. What alternative provides even longer point-in-time recovery capability for blob data?</summary>
 
-**Blob versioning combined with lifecycle management provides extended point-in-time recovery.** While the built-in point-in-time restore feature is limited to 14 days, blob versioning retains every version indefinitely (until lifecycle policies delete them). You can set lifecycle rules to retain versions for 90, 180, or 365+ days. For compliance-level long-term recovery (7+ years), use vaulted backup with extended retention configured in the backup policy. The trade-off is that versioning requires you to identify the specific blob version to restore, while point-in-time restore can roll back an entire container atomically.
+**Blob versioning combined with lifecycle management provides extended point-in-time recovery.** While the built-in point-in-time restore feature supports a maximum of 365 days, blob versioning retains every version indefinitely (until lifecycle policies delete them). You can set lifecycle rules to retain versions for extended periods beyond 365 days. For compliance-level long-term recovery (7+ years), use vaulted backup with extended retention configured in the backup policy. The trade-off is that versioning requires you to identify the specific blob version to restore, while point-in-time restore can roll back an entire container atomically.
 
 </details>
 

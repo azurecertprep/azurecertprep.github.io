@@ -158,7 +158,7 @@ az connectedmachine extension create \
     --publisher "Microsoft.Azure.AzureDefenderForServers" \
     --type "MDE.Linux" \
     --location "eastus" \
-    --auto-upgrade true
+    --auto-upgrade-minor-version true
 
 # For Windows Arc servers
 az connectedmachine extension create \
@@ -168,7 +168,7 @@ az connectedmachine extension create \
     --publisher "Microsoft.Azure.AzureDefenderForServers" \
     --type "MDE.Windows" \
     --location "eastus" \
-    --auto-upgrade true
+    --auto-upgrade-minor-version true
 
 # Install vulnerability assessment extension (Qualys or MDVM)
 az connectedmachine extension create \

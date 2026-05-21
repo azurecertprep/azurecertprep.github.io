@@ -103,11 +103,12 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Get secrets from Key Vault
-        uses: Azure/get-keyvault-secrets@v1
-        with:
-          keyvault: kv-contoso-secrets-001
-          secrets: 'SqlConnectionString, ApiKey-PaymentGateway'
         id: keyvault
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            echo "SqlConnectionString=$(az keyvault secret show --vault-name kv-contoso-secrets-001 --name SqlConnectionString --query value -o tsv)" >> $GITHUB_OUTPUT
+            echo "ApiKey-PaymentGateway=$(az keyvault secret show --vault-name kv-contoso-secrets-001 --name ApiKey-PaymentGateway --query value -o tsv)" >> $GITHUB_OUTPUT
 
       - name: Deploy with secrets (automatically masked in logs)
         run: |

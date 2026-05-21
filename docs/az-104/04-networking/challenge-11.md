@@ -322,7 +322,7 @@ az network vnet peering show -g rg-network-lab \
 | **Cross-subscription** | ✅ | ✅ |
 | **On-premises** | ❌ | ✅ |
 | **Cost** | Ingress + egress per GB | Gateway + egress per GB |
-| **Transitivity** | Not transitive by default | Supports transitive routing |
+| **Transitivity** | Not transitive by default | Not transitive by default; requires NVA or route tables for transitive routing |
 </details>
 
 **2. When should you use User-Defined Routes (UDRs)?**

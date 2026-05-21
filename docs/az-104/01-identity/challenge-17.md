@@ -270,7 +270,7 @@ When a subscription is moved, it **immediately loses** policies from the old man
 <details>
 <summary>3. Can you move the Tenant Root Group or rename it?</summary>
 
-The **Tenant Root Group cannot be moved or deleted**. It can be renamed (display name only) by a user with Owner or User Access Administrator role at that scope. Its ID is always the tenant ID.
+The **Tenant Root Group cannot be moved or deleted**. It can be renamed (display name only) by a user with Owner or User Access Administrator role at that scope. Its name defaults to the tenant ID, but the display name is "Tenant Root Group" and can be customized.
 
 </details>
 

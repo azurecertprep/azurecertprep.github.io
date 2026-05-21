@@ -79,7 +79,7 @@ Additional constraints: content must remain accessible to editors in Los Angeles
 
 10. Design the Azure storage tier strategy for the migrated content:
     - Active productions (800TB, accessed daily): Hot tier or Premium file shares
-    - Recent archive (400GB, accessed monthly): Cool tier
+    - Recent archive (400TB, accessed monthly): Cool tier
     - Deep archive (1.2PB, accessed quarterly or less): Archive tier with rehydration procedures
 11. Design lifecycle management policies that automatically tier content based on access patterns post-migration.
 12. Calculate the total Azure storage cost for 2PB across tiers and compare to the current on-premises NAS total cost of ownership (hardware, power, cooling, floor space, IT labor, disaster recovery).

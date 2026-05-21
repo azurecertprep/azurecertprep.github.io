@@ -228,9 +228,11 @@ az rest --method GET \
 az ad app list --all --query "[?passwordCredentials[?endDateTime<='$(date -u -d '+30 days' +%Y-%m-%dT%H:%M:%SZ)']].{name:displayName, appId:appId}" -o table
 
 # Find apps that haven't been signed into recently (stale apps)
+# Note: signInActivity requires the beta API endpoint
 az rest --method GET \
-  --url "https://graph.microsoft.com/v1.0/servicePrincipals?\$filter=servicePrincipalType eq 'Application'&\$select=displayName,appId,lastSignInDateTime" \
-  --headers "Content-Type=application/json"
+  --url "https://graph.microsoft.com/beta/servicePrincipals?\$filter=servicePrincipalType eq 'Application'&\$select=displayName,appId,signInActivity" \
+  --headers "Content-Type=application/json" \
+  --query "value[].{name:displayName, appId:appId, lastSignIn:signInActivity.lastSignInDateTime}"
 
 # Check for apps with owner assignment issues
 az rest --method GET \

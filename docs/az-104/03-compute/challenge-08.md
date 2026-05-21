@@ -139,12 +139,17 @@ az group create --name rg-vm-prod --location eastus
 # Get the VM's resource ID
 VM_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query id -o tsv)
 
-# Move the VM and all dependent resources (nic, disk, public IP, nsg)
+# Move the VM and ALL dependent resources (NIC, disk, public IP, NSG)
+# IMPORTANT: You must include all dependent resource IDs in a single move operation
+NIC_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query "networkProfile.networkInterfaces[0].id" -o tsv)
+DISK_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query "storageProfile.osDisk.managedDisk.id" -o tsv)
+PIP_ID=$(az network nic show --ids $NIC_ID --query "ipConfigurations[0].publicIPAddress.id" -o tsv)
+
 az resource move \
   --destination-group rg-vm-prod \
-  --ids $VM_ID
+  --ids $VM_ID $NIC_ID $DISK_ID $PIP_ID
 
-# NOTE: moving VMs also requires moving dependent resources.
+# NOTE: Moving only the VM without its dependent resources will fail.
 # List all resources to get their IDs:
 az resource list -g rg-vm-lab --query "[].id" -o tsv
 ```
@@ -332,7 +337,7 @@ az monitor autoscale update \
 <details>
 <summary>Show Answer</summary>
 
-- **Uniform**: All instances use the same VM model/configuration. Best for large-scale stateless workloads. Supports up to 1,000 instances (3,000 with custom images).
+- **Uniform**: All instances use the same VM model/configuration. Best for large-scale stateless workloads. Supports up to 1,000 instances per VMSS (for both Uniform and Flexible orchestration modes).
 - **Flexible**: Instances can mix VM sizes and configurations. Better for mixed workloads. Supports availability zones natively. This is the newer, recommended mode.
 </details>
 

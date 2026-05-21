@@ -459,7 +459,8 @@ az identity federated-credential create \
   --identity-name "id-contoso-github-deploy" \
   --resource-group $RG_NAME \
   --issuer "https://token.actions.githubusercontent.com" \
-  --subject "repo:contoso/contoso-app:ref:refs/tags/*" \
+  # Note: Wildcards not supported. Create one credential per tag, or use environment-based subjects.
+  --subject "repo:contoso/contoso-app:ref:refs/tags/v1.0.0" \
   --audiences "api://AzureADTokenExchange"
 
 # Verify the GitHub Actions workflow YAML uses correct parameters:

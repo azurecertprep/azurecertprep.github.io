@@ -36,7 +36,7 @@ PaaS é ideal para desenvolvedores que querem construir aplicações sem se preo
 | Runtime | **Azure** |
 | Sistema operacional | **Azure** |
 | Máquina virtual | **Azure** |
-| Controles de rede | **Azure** |
+| Controles de rede | **Compartilhado** |
 | Infraestrutura física | **Azure** |
 
 Compare isso com IaaS — observe quanto mais o Azure gerencia para você!

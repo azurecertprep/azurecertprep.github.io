@@ -565,7 +565,7 @@ The following pipeline fails with template validation errors:
 parameters:
   - name: environment
     type: string
-    values:           # ERROR 1: 'values' should be 'allowed' for enum validation
+    values:
       - dev
       - staging
       - prod

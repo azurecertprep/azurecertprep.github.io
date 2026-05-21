@@ -84,7 +84,7 @@ az webapp auth update \
     --resource-group "rg-contoso-app-security" \
     --name "app-contoso-frontend" \
     --enabled true \
-    --action "RedirectToLoginPage" \
+    --unauthenticated-client-action "RedirectToLoginPage" \
     --aad-allowed-token-audiences "api://app-contoso-frontend" \
     --aad-client-id "{app-registration-client-id}" \
     --aad-token-issuer-url "https://login.microsoftonline.com/{tenant-id}/v2.0"
@@ -154,7 +154,6 @@ az functionapp auth update \
     --resource-group "rg-contoso-app-security" \
     --name "func-contoso-processor" \
     --enabled true \
-    --action "Return401" \
     --unauthenticated-client-action "Return401"
 
 # Set function access level to require authentication

@@ -488,15 +488,16 @@ az network firewall network-rule create \
   --action Allow \
   --priority 100
 
-# Create firewall application rules (restrict to approved FQDNs)
-az network firewall application-rule create \
+# Create firewall network rules for Azure service tags (AzureCloud, AzureActiveDirectory are service tags, not FQDN tags)
+az network firewall network-rule create \
   --resource-group $RG_CORE \
   --firewall-name "fw-contoso-hub" \
   --collection-name "AllowAzureServices" \
   --name "AllowAzureManagement" \
-  --protocols Https=443 \
+  --protocols TCP \
   --source-addresses "10.1.0.0/16" \
-  --fqdn-tags "AzureCloud" "MicrosoftActiveDirectory" \
+  --destination-addresses "AzureCloud" "AzureActiveDirectory" \
+  --destination-ports 443 \
   --action Allow \
   --priority 200
 

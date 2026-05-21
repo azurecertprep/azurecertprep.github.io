@@ -230,8 +230,8 @@ jobs:
       - name: Check drift between main and release branches
         run: |
           for branch in $(git branch -r | grep 'release/'); do
-            BEHIND=$(git rev-list --count "origin/main..${branch}")
-            AHEAD=$(git rev-list --count "${branch}..origin/main")
+            AHEAD=$(git rev-list --count "origin/main..${branch}")
+            BEHIND=$(git rev-list --count "${branch}..origin/main")
             echo "Branch ${branch}: ${BEHIND} commits behind, ${AHEAD} commits ahead"
             if [ "$BEHIND" -gt 50 ]; then
               echo "::warning::${branch} is ${BEHIND} commits behind main - sync needed"

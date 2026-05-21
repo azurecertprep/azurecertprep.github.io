@@ -184,7 +184,7 @@ az policy definition create \
     "if": {
       "not": {
         "field": "location",
-        "in": ["eastus2", "centralus", "westeurope", "northeurope"]
+        "in": "[parameters('"'"'allowedLocations'"'"')]"
       }
     },
     "then": {

@@ -94,8 +94,8 @@ az vm extension set \
   --name AzureMonitorLinuxAgent \
   --publisher Microsoft.Azure.Monitor \
   --vm-name vm-contoso-orders \
-  --resource-group rg-contoso-prod \
-  --settings "{\"workspaceId\": \"$LAW_ID\"}"
+  --resource-group rg-contoso-prod
+# AMA uses Data Collection Rules for workspace targeting (configured below)
 
 # Create a data collection rule for VM Insights
 az monitor data-collection rule create \

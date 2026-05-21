@@ -135,6 +135,12 @@ az eventgrid system-topic create \
   --source "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RG/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT" \
   --topic-type "Microsoft.Storage.StorageAccounts"
 
+# Create the queue first (must exist before Event Grid subscription targets it)
+az storage queue create \
+  --name scan-results \
+  --account-name $STORAGE_ACCOUNT \
+  --account-key $STORAGE_KEY
+
 # Create an Event Grid subscription to filter malware scanning results
 # This would typically trigger an Azure Function or Logic App
 az eventgrid system-topic event-subscription create \
@@ -144,12 +150,6 @@ az eventgrid system-topic event-subscription create \
   --included-event-types "Microsoft.Security.MalwareScanningResult" \
   --endpoint-type storagequeue \
   --endpoint "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RG/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT/queueServices/default/queues/scan-results"
-
-# Create the queue first
-az storage queue create \
-  --name scan-results \
-  --account-name $STORAGE_ACCOUNT \
-  --account-key $STORAGE_KEY
 ```
 
 ---

@@ -482,11 +482,11 @@ az network vnet subnet create -g rg-netsec-lab \
 <details>
 <summary>Show Answer</summary>
 
-**Inbound traffic**: Subnet NSG is evaluated **first**, then NIC NSG. Traffic must be allowed by **both** NSGs.
+**Inbound traffic**: Subnet NSG is evaluated **first**, then NIC NSG. Traffic must be allowed by **both** NSGs to reach the VM.
 
-**Outbound traffic**: NIC NSG is evaluated **first**, then subnet NSG. Traffic must be allowed by **both** NSGs.
+**Outbound traffic**: NIC NSG is evaluated **first**, then subnet NSG. Traffic must be allowed by **both** NSGs to leave the VM.
 
-This means the most restrictive combination applies. If the subnet NSG allows port 80 but the NIC NSG denies it, traffic is denied.
+The effective security is the **most restrictive combination** (intersection) of both NSGs. If the subnet NSG allows port 80 but the NIC NSG denies it, traffic is denied. Conversely, if the NIC NSG allows a port but the subnet NSG blocks it, traffic is also denied.
 </details>
 
 **4. What is the difference between service endpoints and private endpoints?**

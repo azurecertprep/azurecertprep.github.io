@@ -260,7 +260,7 @@ With multi-region writes: SLA is 99.999% for both reads and writes
 
 This is the highest SLA of any Azure database service. Compare:
 - Azure SQL Business Critical zone-redundant: 99.995%
-- Azure SQL General Purpose zone-redundant: 99.995%
+- Azure SQL General Purpose zone-redundant: 99.99%
 - Cosmos DB single-region zone-redundant: 99.99%
 - Cosmos DB multi-region multi-write: 99.999%
 

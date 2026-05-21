@@ -444,7 +444,7 @@ Every subnet automatically gets these system routes:
 | 192.168.0.0/16 | None (drop) |
 | 100.64.0.0/10 | None (drop) |
 
-The RFC 1918 "None" routes are overridden when you create subnets in those ranges.
+> **Note:** The RFC 1918 routes (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) shown above are VNet-specific system routes that appear for the VNet's own address space—they are not universal defaults applied to every VNet. The specific prefixes shown here are illustrative. These "None" routes drop traffic to private ranges not covered by your VNet, and are overridden when you create subnets in those ranges.
 </details>
 
 **3. What happens when the NVA (next-hop) is unavailable?**

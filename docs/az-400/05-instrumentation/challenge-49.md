@@ -221,7 +221,9 @@ deployments
 requests
 | where timestamp > ago(24h)
 | summarize avgDuration = avg(duration) by bin(timestamp, 5m)
-| extend movingAvg = avg_if(avgDuration, timestamp > ago(1h))
+| order by timestamp asc
+| serialize
+| extend movingAvg = (prev(avgDuration, 1, avgDuration) + prev(avgDuration, 2, avgDuration) + avgDuration) / 3.0
 | extend isAnomaly = avgDuration > (movingAvg * 2)
 | render timechart
 ```

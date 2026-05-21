@@ -158,7 +158,7 @@ az monitor data-collection rule create \
   --data-flows '[{"streams":["Microsoft-Perf","Microsoft-Event"],"destinations":["law-destination"]}]' \
   --log-analytics "[{\"name\":\"law-destination\",\"workspace-resource-id\":\"$WORKSPACE_RESOURCE_ID\"}]" \
   --performance-counters '[{"name":"winPerfCounters","streams":["Microsoft-Perf"],"sampling-frequency":60,"counter-specifiers":["\\Processor(*)\\% Processor Time","\\Memory\\% Committed Bytes In Use","\\LogicalDisk(*)\\% Free Space"]}]' \
-  --windows-event-logs '[{"name":"winEvents","streams":["Microsoft-Event"],"x-path-queries":["Application!*[System[(Level=1 or Level=2 or Level=3)]]","System!*[System[(Level=1 or Level=2 or Level=3)]]","Security!*[System[(band(Keywords,13510798882111488))]]"]}]'
+  --windows-event-logs '[{"name":"winEvents","streams":["Microsoft-Event"],"xPathQueries":["Application!*[System[(Level=1 or Level=2 or Level=3)]]","System!*[System[(Level=1 or Level=2 or Level=3)]]","Security!*[System[(band(Keywords,13510798882111488))]]"]}]'
 
 # List DCRs
 az monitor data-collection rule list --resource-group $RG -o table

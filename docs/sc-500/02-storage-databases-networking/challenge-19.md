@@ -143,6 +143,19 @@ echo "  DPD Timeout: 45 seconds"
 Set up P2S VPN gateway with certificate-based authentication for remote workers.
 
 ```bash
+# First, create VPN Server Configuration with certificate auth
+# Generate a root CA certificate (for testing)
+# In production, use enterprise PKI
+
+# Create VPN Server Configuration (must exist before P2S gateway references it)
+az network vpn-server-config create \
+  --name "vsc-contoso-cert" \
+  --resource-group $RG \
+  --location $LOCATION \
+  --vpn-client-root-certs "[{\"name\":\"ContosoRootCA\",\"publicCertData\":\"<BASE64_ENCODED_ROOT_CERT>\"}]" \
+  --vpn-protocols IkeV2 OpenVPN \
+  --auth-types Certificate
+
 # Create P2S VPN Gateway in the hub
 az network p2s-vpn-gateway create \
   --name "p2svpngw-hub-eastus" \
@@ -151,19 +164,6 @@ az network p2s-vpn-gateway create \
   --vhub "hub-eastus" \
   --scale-unit 1 \
   --vpn-server-config "vsc-contoso-cert"
-
-# First, create VPN Server Configuration with certificate auth
-# Generate a root CA certificate (for testing)
-# In production, use enterprise PKI
-
-# Create VPN Server Configuration
-az network vpn-server-config create \
-  --name "vsc-contoso-cert" \
-  --resource-group $RG \
-  --location $LOCATION \
-  --vpn-client-root-certs "[{\"name\":\"ContosoRootCA\",\"publicCertData\":\"<BASE64_ENCODED_ROOT_CERT>\"}]" \
-  --vpn-protocols IkeV2 OpenVPN \
-  --auth-types Certificate
 
 # For production: Generate certificates using PowerShell
 echo "=== Generate Root and Client Certificates (PowerShell) ==="
