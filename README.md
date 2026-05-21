@@ -6,6 +6,7 @@
 [![AZ-104](https://img.shields.io/badge/AZ--104-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-104/coverage-matrix)
 [![AZ-305](https://img.shields.io/badge/AZ--305-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-305/coverage-matrix)
 [![AZ-400](https://img.shields.io/badge/AZ--400-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-400/coverage-matrix)
+[![SC-500](https://img.shields.io/badge/SC--500-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/sc-500/coverage-matrix)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open%20Lab-181717?logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
 ### Don't just study — build it.
@@ -35,7 +36,7 @@ Your Codespace comes pre-configured with:
 | **AZ-104** | Azure Administrator | 28 | Available |
 | **AZ-305** | Solutions Architect Expert | 50 | Available |
 | **AZ-400** | DevOps Engineer Expert | 51 | Available |
-| SC-500 | Cloud and AI Security Engineer | — | Planned |
+| **SC-500** | Cloud and AI Security Engineer | 52 | Available |
 
 ## AZ-104: Azure Administrator
 
@@ -73,6 +74,18 @@ Your Codespace comes pre-configured with:
 | Security & Compliance | 10-15% | 39-45 | Secret scanning, SAST/DAST, container security, governance |
 | Instrumentation | 5-10% | 46-50 | App Insights, monitoring, alerting, SRE practices |
 | Capstone | All | 51 | End-to-end DevOps scenario |
+
+## SC-500: Cloud and AI Security Engineer
+
+52 challenges covering **100% of the exam domains** (replaces AZ-500, retiring Aug 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Identity, Access & Governance | 20-25% | 01-12 | Entra ID, Conditional Access, PIM, Purview, Azure Policy |
+| Storage, Databases & Networking | 25-30% | 13-25 | Key Vault, SQL/Cosmos security, NSG, Firewall, Private Endpoints |
+| Secure Compute (incl. AI Security) | 20-25% | 26-38 | Copilot Studio, AI Foundry, Defender for AI, AKS, VMs |
+| Security Posture & Monitoring | 20-25% | 39-51 | Defender for Cloud, Sentinel, KQL, Security Copilot, SOAR |
+| Capstone | All | 52 | End-to-end security scenario |
 
 **Estimated total cost: ~$5-10** (with cleanup after each challenge)
 
