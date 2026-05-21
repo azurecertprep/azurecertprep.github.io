@@ -42,18 +42,18 @@ Contoso's development team has containerized their internal dashboard applicatio
 
 ```bash
 # Create a resource group
-az group create --name rg-containers-lab --location eastus
+az group create --name rg-az104-challenge09 --location eastus
 
 # Create an ACR (Basic SKU for lab purposes)
 # Name must be globally unique, 5-50 alphanumeric characters
 az acr create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name contosoreglab$RANDOM \
   --sku Basic \
   --admin-enabled true
 
 # Store the registry name for later use
-ACR_NAME=$(az acr list -g rg-containers-lab --query "[0].name" -o tsv)
+ACR_NAME=$(az acr list -g rg-az104-challenge09 --query "[0].name" -o tsv)
 echo "ACR Name: $ACR_NAME"
 
 # Verify the registry
@@ -104,7 +104,7 @@ ACR_PASSWORD=$(az acr credential show --name $ACR_NAME --query "passwords[0].val
 
 # Deploy to ACI
 az container create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name aci-dashboard \
   --image "$ACR_LOGIN/contoso-dashboard:v1" \
   --registry-login-server $ACR_LOGIN \
@@ -116,14 +116,14 @@ az container create \
   --memory 0.5
 
 # Get the FQDN and test
-az container show -g rg-containers-lab -n aci-dashboard \
+az container show -g rg-az104-challenge09 -n aci-dashboard \
   --query "{FQDN:ipAddress.fqdn, State:instanceView.state, IP:ipAddress.ip}" -o table
 
-ACI_FQDN=$(az container show -g rg-containers-lab -n aci-dashboard --query ipAddress.fqdn -o tsv)
+ACI_FQDN=$(az container show -g rg-az104-challenge09 -n aci-dashboard --query ipAddress.fqdn -o tsv)
 echo "Test: http://$ACI_FQDN"
 
 # View container logs
-az container logs -g rg-containers-lab -n aci-dashboard
+az container logs -g rg-az104-challenge09 -n aci-dashboard
 ```
 
 ### Task 4: create a Container Apps environment
@@ -138,7 +138,7 @@ az provider register --namespace Microsoft.OperationalInsights
 
 # Create a Container Apps environment
 az containerapp env create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name cae-contoso-lab \
   --location eastus
 ```
@@ -148,7 +148,7 @@ az containerapp env create \
 ```bash
 # Using admin credentials for lab simplicity (for production, use --registry-identity system)
 az containerapp create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name ca-dashboard \
   --environment cae-contoso-lab \
   --image "$ACR_LOGIN/contoso-dashboard:v1" \
@@ -161,7 +161,7 @@ az containerapp create \
   --max-replicas 5
 
 # Get the URL
-az containerapp show -g rg-containers-lab -n ca-dashboard \
+az containerapp show -g rg-az104-challenge09 -n ca-dashboard \
   --query "properties.configuration.ingress.fqdn" -o tsv
 ```
 
@@ -170,14 +170,14 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 ```bash
 # Configure basic replica scaling
 az containerapp update \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name ca-dashboard \
   --min-replicas 1 \
   --max-replicas 10
 
 # For custom HTTP scale rules, use a YAML configuration:
 # 1. Export current config
-az containerapp show -g rg-containers-lab -n ca-dashboard -o yaml > ca-dashboard.yaml
+az containerapp show -g rg-az104-challenge09 -n ca-dashboard -o yaml > ca-dashboard.yaml
 # 2. Edit the YAML to add scale rules under properties.template.scale:
 #    scale:
 #      minReplicas: 1
@@ -188,14 +188,15 @@ az containerapp show -g rg-containers-lab -n ca-dashboard -o yaml > ca-dashboard
 #            metadata:
 #              concurrentRequests: "10"
 # 3. Apply the updated YAML
-az containerapp update -g rg-containers-lab -n ca-dashboard --yaml ca-dashboard.yaml
+az containerapp update -g rg-az104-challenge09 -n ca-dashboard --yaml ca-dashboard.yaml
 
 # Verify scaling configuration
-az containerapp show -g rg-containers-lab -n ca-dashboard \
+az containerapp show -g rg-az104-challenge09 -n ca-dashboard \
   --query "properties.template.scale" -o json
 
-# Check current replica count
-az containerapp replica list -g rg-containers-lab -n ca-dashboard -o table
+# Check current replica count (requires --revision)
+REVISION_NAME=$(az containerapp revision list -g rg-az104-challenge09 -n ca-dashboard --query "[0].name" -o tsv)
+az containerapp replica list -g rg-az104-challenge09 -n ca-dashboard --revision $REVISION_NAME -o table
 ```
 
 ### Task 7: compare ACI vs Container Apps
@@ -205,12 +206,12 @@ Run both deployments and compare:
 ```bash
 # Compare ACI details
 echo "=== ACI ==="
-az container show -g rg-containers-lab -n aci-dashboard \
+az container show -g rg-az104-challenge09 -n aci-dashboard \
   --query "{Name:name, CPU:containers[0].resources.requests.cpu, Memory:containers[0].resources.requests.memoryInGb, State:instanceView.state}" -o table
 
 # Compare Container Apps details
 echo "=== Container Apps ==="
-az containerapp show -g rg-containers-lab -n ca-dashboard \
+az containerapp show -g rg-az104-challenge09 -n ca-dashboard \
   --query "{Name:name, Replicas:properties.template.scale, Ingress:properties.configuration.ingress.fqdn}" -o json
 ```
 
@@ -246,21 +247,21 @@ az containerapp show -g rg-containers-lab -n ca-dashboard \
 ```bash
 # Deploy ACI with a misspelled image name
 az container create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name aci-broken \
   --image "$ACR_LOGIN/contoso-dashbord:v1" \
   --registry-login-server $ACR_LOGIN \
   --registry-username $ACR_NAME \
   --registry-password $ACR_PASSWORD \
   --ports 80
-# What error do you get? check: az container show -g rg-containers-lab -n aci-broken --query "instanceView"
+# What error do you get? check: az container show -g rg-az104-challenge09 -n aci-broken --query "instanceView"
 ```
 
 ### Scenario b: ACR permission issue
 ```bash
 # Try deploying Container Apps without providing registry credentials
 az containerapp create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name ca-broken \
   --environment cae-contoso-lab \
   --image "$ACR_LOGIN/contoso-dashboard:v1" \
@@ -273,7 +274,7 @@ az containerapp create \
 ```bash
 # Deploy with wrong target port
 az containerapp create \
-  --resource-group rg-containers-lab \
+  --resource-group rg-az104-challenge09 \
   --name ca-wrong-port \
   --environment cae-contoso-lab \
   --image "$ACR_LOGIN/contoso-dashboard:v1" \
@@ -333,7 +334,7 @@ az containerapp create \
 
 ```bash
 # Delete all resources
-az group delete --name rg-containers-lab --yes --no-wait
+az group delete --name rg-az104-challenge09 --yes --no-wait
 
 # Clean up local files
 rm -rf container-app

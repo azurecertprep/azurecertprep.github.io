@@ -218,7 +218,7 @@ az monitor data-collection rule association list --resource $WIN_VM_ID -o table
 
 AMA replaces the legacy Log Analytics agent (MMA/OMS) and Diagnostics extension:
 - **AMA**: Uses Data Collection Rules (DCR), supports multi-homing, uses managed identity
-- **Legacy MMA**: Uses workspace configuration, being deprecated
+- **Legacy MMA**: Uses workspace configuration, deprecated (retirement August 2024)
 - For the AZ-104 exam, focus on AMA + DCR (the modern approach)
 
 :::

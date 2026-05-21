@@ -47,17 +47,17 @@ Contoso's marketing team needs a web application deployed for an upcoming campai
 
 ```bash
 # Create a resource group
-az group create --name rg-appservice-lab --location eastus
+az group create --name rg-az104-challenge10 --location eastus
 
 # Create an App Service plan (Standard s1: required for deployment slots)
 az appservice plan create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name plan-contoso-web \
   --sku S1 \
   --is-linux
 
 # Verify the plan
-az appservice plan show -g rg-appservice-lab -n plan-contoso-web \
+az appservice plan show -g rg-az104-challenge10 -n plan-contoso-web \
   --query "{Name:name, SKU:sku.name, Tier:sku.tier, Workers:sku.capacity}" -o table
 ```
 
@@ -66,17 +66,17 @@ az appservice plan show -g rg-appservice-lab -n plan-contoso-web \
 ```bash
 # Create a web app with node.js runtime
 az webapp create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --plan plan-contoso-web \
   --name contoso-web-$RANDOM \
   --runtime "NODE:18-lts"
 
 # Store the app name for later
-APP_NAME=$(az webapp list -g rg-appservice-lab --query "[0].name" -o tsv)
+APP_NAME=$(az webapp list -g rg-az104-challenge10 --query "[0].name" -o tsv)
 echo "App Name: $APP_NAME"
 
 # Verify it's running
-az webapp show -g rg-appservice-lab -n $APP_NAME \
+az webapp show -g rg-az104-challenge10 -n $APP_NAME \
   --query "{Name:name, State:state, URL:defaultHostName}" -o table
 ```
 
@@ -111,14 +111,14 @@ EOF
 # Deploy using zip deploy
 zip -r app.zip index.js package.json
 az webapp deploy \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --src-path app.zip \
   --type zip
 
 # Set an app setting
 az webapp config appsettings set \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --settings APP_VERSION=v1
 
@@ -131,12 +131,12 @@ echo "Visit: https://$APP_NAME.azurewebsites.net"
 ```bash
 # Create a staging slot
 az webapp deployment slot create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --slot staging
 
 # Verify the slot
-az webapp deployment slot list -g rg-appservice-lab -n $APP_NAME -o table
+az webapp deployment slot list -g rg-az104-challenge10 -n $APP_NAME -o table
 
 # The staging slot has its own URL
 echo "Staging URL: https://$APP_NAME-staging.azurewebsites.net"
@@ -147,7 +147,7 @@ echo "Staging URL: https://$APP_NAME-staging.azurewebsites.net"
 ```bash
 # Update the version in staging
 az webapp config appsettings set \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --slot staging \
   --settings APP_VERSION=v2
@@ -158,7 +158,7 @@ sed -i "s/Contoso Marketing/Contoso Marketing 2.0/" index.js
 zip -r app-v2.zip index.js package.json
 
 az webapp deploy \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --slot staging \
   --src-path app-v2.zip \
@@ -173,11 +173,11 @@ echo "Production: https://$APP_NAME.azurewebsites.net"
 
 ```bash
 # Preview what will change
-az webapp deployment slot list -g rg-appservice-lab -n $APP_NAME -o table
+az webapp deployment slot list -g rg-az104-challenge10 -n $APP_NAME -o table
 
 # Swap staging to production (zero-downtime)
 az webapp deployment slot swap \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --slot staging \
   --target-slot production
@@ -191,11 +191,11 @@ echo "Staging: https://$APP_NAME-staging.azurewebsites.net"
 
 ```bash
 # Get the App Service plan resource ID
-PLAN_ID=$(az appservice plan show -g rg-appservice-lab -n plan-contoso-web --query id -o tsv)
+PLAN_ID=$(az appservice plan show -g rg-az104-challenge10 -n plan-contoso-web --query id -o tsv)
 
 # Create autoscale settings
 az monitor autoscale create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --resource $PLAN_ID \
   --resource-type Microsoft.Web/serverfarms \
   --name autoscale-web \
@@ -205,20 +205,20 @@ az monitor autoscale create \
 
 # Scale out when CPU > 70%
 az monitor autoscale rule create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --autoscale-name autoscale-web \
   --condition "CpuPercentage > 70 avg 5m" \
   --scale out 1
 
 # Scale in when CPU < 30%
 az monitor autoscale rule create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --autoscale-name autoscale-web \
   --condition "CpuPercentage < 30 avg 10m" \
   --scale in 1
 
 # Verify autoscale settings
-az monitor autoscale show -g rg-appservice-lab -n autoscale-web \
+az monitor autoscale show -g rg-az104-challenge10 -n autoscale-web \
   --query "profiles[0].rules[].{Metric:metricTrigger.metricName, Op:metricTrigger.operator, Threshold:metricTrigger.threshold, Direction:scaleAction.direction}" -o table
 ```
 
@@ -228,7 +228,7 @@ az monitor autoscale show -g rg-appservice-lab -n autoscale-web \
 # Create a storage account for backups
 BACKUP_STORAGE="contosobackup$RANDOM"
 az storage account create \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $BACKUP_STORAGE \
   --sku Standard_LRS
 
@@ -250,7 +250,7 @@ CONTAINER_URL="https://$BACKUP_STORAGE.blob.core.windows.net/webapp-backups?$SAS
 
 # Configure backup
 az webapp config backup update \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --webapp-name $APP_NAME \
   --container-url "$CONTAINER_URL" \
   --backup-name "contoso-backup" \
@@ -265,7 +265,7 @@ az webapp config backup update \
 MY_IP=$(curl -s ifconfig.me)
 
 az webapp config access-restriction add \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --rule-name "AllowMyIP" \
   --priority 100 \
@@ -274,7 +274,7 @@ az webapp config access-restriction add \
 
 # Add a deny-all rule at lower priority
 az webapp config access-restriction add \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --rule-name "DenyAll" \
   --priority 200 \
@@ -283,7 +283,7 @@ az webapp config access-restriction add \
 
 # Show effective rules
 az webapp config access-restriction show \
-  -g rg-appservice-lab -n $APP_NAME -o table
+  -g rg-az104-challenge10 -n $APP_NAME -o table
 ```
 
 ## Success criteria
@@ -307,7 +307,7 @@ az webapp config access-restriction show \
 # You deployed v2 to production instead of staging. how do you roll back?
 # Hint: the previous version is now in the staging slot after a swap.
 az webapp deployment slot swap \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name $APP_NAME \
   --slot staging \
   --target-slot production
@@ -317,7 +317,7 @@ az webapp deployment slot swap \
 ```bash
 # Try setting min-count higher than max-count
 az monitor autoscale update \
-  --resource-group rg-appservice-lab \
+  --resource-group rg-az104-challenge10 \
   --name autoscale-web \
   --min-count 10 --max-count 3
 # What error do you get?
@@ -326,9 +326,10 @@ az monitor autoscale update \
 ### Scenario c: slots on Free tier
 ```bash
 # Create a Free tier plan and try to add a slot
-az appservice plan create -g rg-appservice-lab -n plan-free --sku F1 --is-linux
-az webapp create -g rg-appservice-lab --plan plan-free --name free-app-$RANDOM --runtime "NODE:18-lts"
-az webapp deployment slot create -g rg-appservice-lab --name free-app-$RANDOM --slot staging
+SUFFIX=$RANDOM
+az appservice plan create -g rg-az104-challenge10 -n plan-free --sku F1 --is-linux
+az webapp create -g rg-az104-challenge10 --plan plan-free --name free-app-$SUFFIX --runtime "NODE:18-lts"
+az webapp deployment slot create -g rg-az104-challenge10 --name free-app-$SUFFIX --slot staging
 # What error do you get? which tiers support deployment slots?
 ```
 
@@ -388,7 +389,7 @@ The swap is atomic from the user's perspective | no downtime.
 
 ```bash
 # Delete all resources
-az group delete --name rg-appservice-lab --yes --no-wait
+az group delete --name rg-az104-challenge10 --yes --no-wait
 
 # Clean up local files
 rm -rf webapp

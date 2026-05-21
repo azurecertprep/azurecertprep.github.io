@@ -126,6 +126,31 @@ az network vnet create \
   --subnet-name subnet-backend \
   --subnet-prefix 10.0.1.0/24
 
+# Create cloud-init file to install a web server
+cat <<EOF > cloud-init-web.txt
+#cloud-config
+package_upgrade: true
+packages:
+  - nginx
+runcmd:
+  - systemctl enable nginx
+  - systemctl start nginx
+  - echo "Hello from \$(hostname)" > /var/www/html/index.html
+EOF
+
+# Create an NSG that allows health probe and HTTP traffic
+az network nsg create --resource-group $RG --name nsg-lb-backend
+az network nsg rule create \
+  --resource-group $RG \
+  --nsg-name nsg-lb-backend \
+  --name AllowHTTP \
+  --priority 100 \
+  --direction Inbound \
+  --source-address-prefixes "*" \
+  --destination-port-ranges 80 \
+  --protocol Tcp \
+  --access Allow
+
 # Create VMs (repeat for vm-web-1 and vm-web-2)
 for i in 1 2; do
   az vm create \
@@ -135,13 +160,19 @@ for i in 1 2; do
     --size Standard_B1s \
     --vnet-name vnet-lb \
     --subnet subnet-backend \
-    --nsg "" \
+    --nsg nsg-lb-backend \
     --public-ip-address "" \
     --custom-data cloud-init-web.txt \
     --admin-username azureuser \
     --generate-ssh-keys
 done
 ```
+
+:::warning Health Probes with Standard Load Balancer
+
+Standard Load Balancer requires an NSG on the backend VMs that explicitly allows health probe traffic. Without an NSG rule allowing inbound traffic on the probe port, all backend instances will be marked as unhealthy and no traffic will be forwarded.
+
+:::
 
 </details>
 

@@ -46,12 +46,12 @@ Contoso Ltd. has a fleet of 50 VMs across development, staging, and production e
 
 ```bash
 # Create resource group
-az group create --name rg-automation-lab --location eastus
+az group create --name rg-az104-challenge21 --location eastus
 
 # Create a Linux VM
 az vm create \
   --name vm-linux-auto \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --image Ubuntu2404 \
   --size Standard_B2s \
   --admin-username azureuser \
@@ -61,7 +61,7 @@ az vm create \
 # Create a Windows VM
 az vm create \
   --name vm-win-auto \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --image Win2022Datacenter \
   --size Standard_B2s \
   --admin-username azureuser \
@@ -76,7 +76,7 @@ Install Nginx on the Linux VM using the Custom Script Extension:
 ```bash
 # Deploy custom script extension to install nginx
 az vm extension set \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-linux-auto \
   --name customScript \
   --publisher Microsoft.Azure.Extensions \
@@ -87,7 +87,7 @@ az vm extension set \
 
 # Verify the extension status
 az vm extension show \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-linux-auto \
   --name customScript \
   --query "{Name:name, Status:provisioningState, Publisher:publisher}" -o table
@@ -100,7 +100,7 @@ Install IIS on the Windows VM using Custom Script Extension:
 ```bash
 # Deploy custom script extension for Windows
 az vm extension set \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-win-auto \
   --name CustomScriptExtension \
   --publisher Microsoft.Compute \
@@ -111,7 +111,7 @@ az vm extension set \
 
 # Verify extension status
 az vm extension show \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-win-auto \
   --name CustomScriptExtension \
   --query "{Name:name, Status:provisioningState}" -o table
@@ -125,11 +125,11 @@ Host a configuration script in a storage account and reference it:
 # Create a storage account for scripts
 az storage account create \
   --name stscripts$RANDOM \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --location eastus \
   --sku Standard_LRS
 
-SCRIPT_ACCOUNT=$(az storage account list -g rg-automation-lab --query "[?contains(name,'script')].name" -o tsv | head -1)
+SCRIPT_ACCOUNT=$(az storage account list -g rg-az104-challenge21 --query "[?contains(name,'script')].name" -o tsv | head -1)
 
 # Create a container
 az storage container create \
@@ -169,13 +169,13 @@ SCRIPT_SAS=$(az storage blob generate-sas \
 
 # Remove existing extension before redeploying
 az vm extension delete \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-linux-auto \
   --name customScript
 
 # Deploy with external script reference
 az vm extension set \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-linux-auto \
   --name customScript \
   --publisher Microsoft.Azure.Extensions \
@@ -195,28 +195,28 @@ Run commands on VMs without SSH/RDP access:
 ```bash
 # Linux: check disk space
 az vm run-command invoke \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "df -h && echo '---' && free -m && echo '---' && uptime"
 
 # Linux: check if nginx is running
 az vm run-command invoke \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "systemctl status nginx --no-pager"
 
 # Windows: get system information
 az vm run-command invoke \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --name vm-win-auto \
   --command-id RunPowerShellScript \
   --scripts "Get-ComputerInfo | Select-Object WindowsProductName, OsArchitecture, CsProcessors, OsTotalVisibleMemorySize"
 
 # Windows: check IIS status
 az vm run-command invoke \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --name vm-win-auto \
   --command-id RunPowerShellScript \
   --scripts "Get-Service W3SVC | Format-Table Name, Status, StartType"
@@ -227,7 +227,7 @@ az vm run-command invoke \
 ```bash
 # List all extensions on a VM
 az vm extension list \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-linux-auto \
   --query "[].{Name:name, Publisher:publisher, Version:typeHandlerVersion, State:provisioningState}" -o table
 
@@ -244,13 +244,13 @@ az vm extension image list \
 # Create automation account
 az automation account create \
   --name auto-contoso-ops \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --location eastus
 
 # Verify the account
 az automation account show \
   --name auto-contoso-ops \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --query "{Name:name, State:state, Location:location}" -o table
 ```
 
@@ -259,7 +259,7 @@ az automation account show \
 ```bash
 # Create a PowerShell runbook
 az automation runbook create \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --automation-account-name auto-contoso-ops \
   --name "Stop-DevVMs" \
   --type PowerShell \
@@ -276,7 +276,7 @@ cat > stop-dev-vms.ps1 << 'EOF'
 #>
 
 param(
-    [string]$ResourceGroupName = "rg-automation-lab",
+    [string]$ResourceGroupName = "rg-az104-challenge21",
     [string]$TagName = "Environment",
     [string]$TagValue = "Development"
 )
@@ -308,14 +308,14 @@ EOF
 
 # Upload the runbook content
 az automation runbook replace-content \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --automation-account-name auto-contoso-ops \
   --name "Stop-DevVMs" \
   --content @stop-dev-vms.ps1
 
 # Publish the runbook
 az automation runbook publish \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --automation-account-name auto-contoso-ops \
   --name "Stop-DevVMs"
 
@@ -327,17 +327,17 @@ rm -f stop-dev-vms.ps1
 ```bash
 # Create a schedule (weekdays at 7 pm)
 az automation schedule create \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --automation-account-name auto-contoso-ops \
   --name "weekday-evening-shutdown" \
   --frequency Day \
   --interval 1 \
-  --start-time "2024-01-01T19:00:00-05:00" \
+  --start-time "2025-07-01T19:00:00-05:00" \
   --description "Runs every weekday at 7 PM ET to stop dev VMs"
 
 # Link the schedule to the runbook
 az automation job-schedule create \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --automation-account-name auto-contoso-ops \
   --runbook-name "Stop-DevVMs" \
   --schedule-name "weekday-evening-shutdown"
@@ -400,14 +400,14 @@ Deploy a Custom Script Extension with an intentional error (e.g., referencing a 
 ```bash
 # Check extension provisioning state
 az vm extension show \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --vm-name vm-linux-auto \
   --name customScript \
   --query "{Status:provisioningState, Message:instanceView.statuses[0].message}"
 
 # Use run command to check extension logs
 az vm run-command invoke \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --name vm-linux-auto \
   --command-id RunShellScript \
   --scripts "cat /var/log/azure/custom-script/handler.log | tail -20"
@@ -465,11 +465,11 @@ On Windows:
 # Delete the automation account
 az automation account delete \
   --name auto-contoso-ops \
-  --resource-group rg-automation-lab \
+  --resource-group rg-az104-challenge21 \
   --yes
 
 # Delete the resource group (VMs, storage, extensions)
-az group delete --name rg-automation-lab --yes --no-wait
+az group delete --name rg-az104-challenge21 --yes --no-wait
 
 echo "Cleanup complete."
 ```

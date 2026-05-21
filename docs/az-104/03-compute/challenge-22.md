@@ -48,12 +48,12 @@ Contoso Ltd. is standardizing disk management across their VM fleet. The securit
 
 ```bash
 # Create resource group
-az group create --name rg-disks-lab --location eastus
+az group create --name rg-az104-challenge22 --location eastus
 
 # Create a Linux VM with a Premium OS disk
 az vm create \
   --name vm-disk-lab \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --image Ubuntu2404 \
   --size Standard_D2s_v3 \
   --admin-username azureuser \
@@ -66,12 +66,12 @@ az vm create \
 # Create a Key Vault for disk encryption
 az keyvault create \
   --name kv-disk-enc-$RANDOM \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --location eastus \
   --enabled-for-disk-encryption true \
   --enable-purge-protection true
 
-KV_NAME=$(az keyvault list -g rg-disks-lab --query "[0].name" -o tsv)
+KV_NAME=$(az keyvault list -g rg-az104-challenge22 --query "[0].name" -o tsv)
 ```
 
 ### Task 2: create and attach managed disks
@@ -82,7 +82,7 @@ Create disks of different performance tiers and attach them:
 # Create a Standard HDD data disk (cost-effective, low iops)
 az disk create \
   --name disk-data-standard \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --location eastus \
   --size-gb 128 \
   --sku Standard_LRS \
@@ -91,7 +91,7 @@ az disk create \
 # Create a Premium SSD data disk (high IOPS for databases)
 az disk create \
   --name disk-data-premium \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --location eastus \
   --size-gb 256 \
   --sku Premium_LRS \
@@ -99,7 +99,7 @@ az disk create \
 
 # Attach the Standard disk to the VM (lun 0)
 az vm disk attach \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --vm-name vm-disk-lab \
   --name disk-data-standard \
   --lun 0 \
@@ -107,7 +107,7 @@ az vm disk attach \
 
 # Attach the Premium disk to the VM (lun 1)
 az vm disk attach \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --vm-name vm-disk-lab \
   --name disk-data-premium \
   --lun 1 \
@@ -115,7 +115,7 @@ az vm disk attach \
 
 # Verify attached disks
 az vm show \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
   --query "storageProfile.dataDisks[].{Name:name, SizeGB:diskSizeGb, Lun:lun, Caching:caching}" -o table
 ```
@@ -125,7 +125,7 @@ az vm show \
 ```bash
 # Use run command to partition and mount the disks
 az vm run-command invoke \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
   --command-id RunShellScript \
   --scripts '
@@ -159,20 +159,20 @@ Enable Azure Disk Encryption using Key Vault:
 ```bash
 # Enable Azure disk encryption on the VM
 az vm encryption enable \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
   --disk-encryption-keyvault $KV_NAME \
   --volume-type All
 
 # Check encryption status (may take several minutes)
 az vm encryption show \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
-  --query "{OsDisk:disks[?name=='os'].encryptionSettings[0], DataDisks:disks[?name!='os'].encryptionSettings[0], Status:status}" -o json
+  --query "{OsDiskEncryption:osDisk, DataDiskEncryption:dataDisk, Status:status}" -o json
 
 # Wait and re-check until encryption is complete
 az vm encryption show \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
   --query "status" -o tsv
 ```
@@ -190,32 +190,32 @@ Create point-in-time snapshots for backup purposes:
 ```bash
 # Get the OS disk resource ID
 OS_DISK_ID=$(az vm show \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
   --query "storageProfile.osDisk.managedDisk.id" -o tsv)
 
 # Create a snapshot of the OS disk
 az snapshot create \
   --name snap-os-disk-$(date +%Y%m%d) \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --source $OS_DISK_ID \
   --tags Purpose=Backup Date=$(date +%Y-%m-%d)
 
 # Create a snapshot of the Premium data disk
 PREMIUM_DISK_ID=$(az disk show \
   --name disk-data-premium \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --query id -o tsv)
 
 az snapshot create \
   --name snap-premium-disk-$(date +%Y%m%d) \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --source $PREMIUM_DISK_ID \
   --tags Purpose=Backup Date=$(date +%Y-%m-%d)
 
 # List all snapshots
 az snapshot list \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --query "[].{Name:name, SizeGB:diskSizeGb, Source:creationData.sourceResourceId}" -o table
 ```
 
@@ -225,12 +225,12 @@ az snapshot list \
 # Create a new managed disk from the snapshot
 SNAP_ID=$(az snapshot show \
   --name snap-premium-disk-$(date +%Y%m%d) \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --query id -o tsv)
 
 az disk create \
   --name disk-restored-from-snap \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --source $SNAP_ID \
   --sku Premium_LRS \
   --size-gb 256
@@ -238,7 +238,7 @@ az disk create \
 # Verify the restored disk
 az disk show \
   --name disk-restored-from-snap \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --query "{Name:name, SizeGB:diskSizeGb, Sku:sku.name, ProvisioningState:provisioningState}" -o table
 ```
 
@@ -250,32 +250,32 @@ Create a reusable image from the VM for rapid deployment:
 # First, generalize the VM (warning: VM cannot be used after this)
 # Run the deprovisioning command inside the VM
 az vm run-command invoke \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab \
   --command-id RunShellScript \
   --scripts "waagent -deprovision+user -force"
 
 # Deallocate the VM
 az vm deallocate \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab
 
 # Mark the VM as generalized
 az vm generalize \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-disk-lab
 
 # Create a custom image from the generalized VM
 az image create \
   --name img-contoso-base-linux \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --source vm-disk-lab \
   --tags Version=1.0 OS=Ubuntu2404 Purpose=BaseImage
 
 # Verify the image
 az image show \
   --name img-contoso-base-linux \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --query "{Name:name, State:provisioningState, Source:sourceVirtualMachine.id}" -o table
 ```
 
@@ -285,7 +285,7 @@ az image show \
 # Create a new VM from the custom image
 az vm create \
   --name vm-from-image \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --image img-contoso-base-linux \
   --size Standard_B2s \
   --admin-username azureuser \
@@ -294,7 +294,7 @@ az vm create \
 
 # Verify the new VM is running with the pre-configured software
 az vm run-command invoke \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-from-image \
   --command-id RunShellScript \
   --scripts "cat /opt/contoso/logs/setup.log 2>/dev/null || echo 'No pre-config found (expected if image was from fresh VM)'"
@@ -305,23 +305,23 @@ az vm run-command invoke \
 ```bash
 # Deallocate the new VM to resize its OS disk
 az vm deallocate \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-from-image
 
 # Resize the OS disk from default to 128 GB
 az disk update \
-  --resource-group rg-disks-lab \
-  --name $(az vm show -g rg-disks-lab -n vm-from-image --query "storageProfile.osDisk.name" -o tsv) \
+  --resource-group rg-az104-challenge22 \
+  --name $(az vm show -g rg-az104-challenge22 -n vm-from-image --query "storageProfile.osDisk.name" -o tsv) \
   --size-gb 128
 
 # Restart the VM
 az vm start \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-from-image
 
 # Expand the filesystem inside the VM
 az vm run-command invoke \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --name vm-from-image \
   --command-id RunShellScript \
   --scripts "growpart /dev/sda 1 && resize2fs /dev/sda1 && df -h /"
@@ -332,7 +332,7 @@ az vm run-command invoke \
 ```bash
 # View disk performance characteristics
 az disk list \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --query "[].{Name:name, SKU:sku.name, SizeGB:diskSizeGb, IOPS:diskIOPSReadWrite, Throughput:diskMBpsReadWrite}" -o table
 ```
 
@@ -424,9 +424,15 @@ Create a snapshot while the VM is running and data is being written. Is the snap
 Attempt to detach a data disk that is currently mounted inside the VM without unmounting first. What happens? (Answer: The detach operation at the Azure level may succeed, but the VM will experience I/O errors on that mount point.)
 
 ```bash
-# Force detach a disk (dangerous)
+# First, attach the restored snapshot disk to the VM
+az vm disk attach \
+  --resource-group rg-az104-challenge22 \
+  --vm-name vm-from-image \
+  --name disk-restored-from-snap
+
+# Force detach the disk without unmounting inside the VM (dangerous)
 az vm disk detach \
-  --resource-group rg-disks-lab \
+  --resource-group rg-az104-challenge22 \
   --vm-name vm-from-image \
   --name disk-restored-from-snap
 ```
@@ -471,7 +477,7 @@ If the encryption key is lost or permanently deleted, the encrypted disks become
 
 ```bash
 # Delete the entire resource group and all resources (VMs, disks, snapshots, images, Key vault)
-az group delete --name rg-disks-lab --yes --no-wait
+az group delete --name rg-az104-challenge22 --yes --no-wait
 
 echo "Cleanup complete. Key Vault will remain in soft-delete state."
 ```

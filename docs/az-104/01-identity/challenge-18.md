@@ -48,21 +48,21 @@ Create a consistent tagging strategy and apply tags to existing resources:
 ```bash
 # Create a resource group with cost-tracking tags
 az group create \
-  --name rg-cost-lab \
+  --name rg-az104-challenge18 \
   --location eastus \
   --tags Department=Engineering Environment=Development CostCenter=CC-4200 Owner=admin@contoso.com
 
 # Create sample resources with tags
 az storage account create \
   --name stcostlab$RANDOM \
-  --resource-group rg-cost-lab \
+  --resource-group rg-az104-challenge18 \
   --location eastus \
   --sku Standard_LRS \
   --tags Department=Engineering Environment=Development CostCenter=CC-4200 Project=WebApp
 
 az vm create \
   --name vm-cost-test \
-  --resource-group rg-cost-lab \
+  --resource-group rg-az104-challenge18 \
   --image Ubuntu2404 \
   --size Standard_B1s \
   --admin-username azureuser \
@@ -76,14 +76,31 @@ Create a monthly budget with multiple alert thresholds:
 
 ```bash
 # Create a budget for the resource group (monthly, $100 limit)
+# Note: Adjust start-date/end-date to your current billing period
 az consumption budget create \
   --budget-name "budget-engineering-dev" \
   --amount 100 \
   --category Cost \
   --time-grain Monthly \
-  --start-date "2024-01-01" \
+  --start-date "2025-01-01" \
   --end-date "2025-12-31" \
-  --resource-group rg-cost-lab
+  --resource-group rg-az104-challenge18 \
+  --notifications '{
+    "Actual_GreaterThan_80_Percent": {
+      "enabled": true,
+      "operator": "GreaterThan",
+      "threshold": 80,
+      "contactEmails": ["admin@contoso.com"],
+      "thresholdType": "Actual"
+    },
+    "Forecasted_GreaterThan_100_Percent": {
+      "enabled": true,
+      "operator": "GreaterThan",
+      "threshold": 100,
+      "contactEmails": ["admin@contoso.com"],
+      "thresholdType": "Forecasted"
+    }
+  }'
 ```
 
 :::tip Portal Instructions for Budget Alerts
@@ -136,7 +153,7 @@ Set up automated cost data export to a storage account:
 
 ```bash
 # Get the storage account name
-STORAGE_NAME=$(az storage account list -g rg-cost-lab --query "[0].name" -o tsv)
+STORAGE_NAME=$(az storage account list -g rg-az104-challenge18 --query "[0].name" -o tsv)
 
 # Create a container for cost exports
 az storage container create \
@@ -150,7 +167,7 @@ az costmanagement export create \
   --scope "/subscriptions/$(az account show --query id -o tsv)" \
   --type ActualCost \
   --timeframe MonthToDate \
-  --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-cost-lab --query id -o tsv) \
+  --storage-account-id $(az storage account show -n $STORAGE_NAME -g rg-az104-challenge18 --query id -o tsv) \
   --storage-container cost-exports \
   --storage-directory "exports" \
   --recurrence Daily \
@@ -192,14 +209,14 @@ Navigate to **Azure Advisor** > **Cost** tab to see:
 # Create an action group for cost alerts
 az monitor action-group create \
   --name "ag-cost-alerts" \
-  --resource-group rg-cost-lab \
+  --resource-group rg-az104-challenge18 \
   --short-name "CostAlert" \
   --action email finance-team finance@contoso.com
 
 # Verify the action group
 az monitor action-group show \
   --name "ag-cost-alerts" \
-  --resource-group rg-cost-lab \
+  --resource-group rg-az104-challenge18 \
   --query "{Name:name, Receivers:emailReceivers[].{Name:name, Email:emailAddress}}" -o json
 ```
 
@@ -217,13 +234,13 @@ az policy assignment create \
   --name "require-costcenter-tag" \
   --display-name "Require CostCenter Tag" \
   --policy "$POLICY_DEF" \
-  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-cost-lab" \
+  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-az104-challenge18" \
   --params '{"tagName": {"value": "CostCenter"}}'
 
 # Test: try creating a resource without the tag (should fail after policy takes effect)
 az storage account create \
   --name stnotagtest$RANDOM \
-  --resource-group rg-cost-lab \
+  --resource-group rg-az104-challenge18 \
   --location eastus \
   --sku Standard_LRS
 ```
@@ -284,7 +301,7 @@ Run a query to find all resources in a resource group that are missing the CostC
 
 ```bash
 # Find resources missing the CostCenter tag
-az resource list --resource-group rg-cost-lab \
+az resource list --resource-group rg-az104-challenge18 \
   --query "[?tags.CostCenter==null].{Name:name, Type:type}" -o table
 ```
 
@@ -309,15 +326,13 @@ Your daily cost export stopped working. Check the export status and common cause
 </details>
 
 <details>
-<summary>3. What are the four categories of Azure Advisor recommendations?</summary>
+<summary>3. What are the five categories of Azure Advisor recommendations?</summary>
 
 1. **Cost** | Right-size or shut down underutilized resources
 2. **Security** | Vulnerability and threat detection
 3. **Reliability** | High availability and business continuity
 4. **Performance** | Speed and responsiveness improvements
 5. **Operational Excellence** | Process and workflow best practices
-
-(Note: There are actually five categories as of recent updates.)
 
 </details>
 
@@ -334,7 +349,7 @@ To create budgets, you need the **Cost Management Contributor** role (or Contrib
 # Delete policy assignment
 az policy assignment delete \
   --name "require-costcenter-tag" \
-  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-cost-lab"
+  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-az104-challenge18"
 
 # Delete cost export
 az costmanagement export delete \
@@ -344,10 +359,10 @@ az costmanagement export delete \
 # Delete action group
 az monitor action-group delete \
   --name "ag-cost-alerts" \
-  --resource-group rg-cost-lab
+  --resource-group rg-az104-challenge18
 
 # Delete the entire resource group and all resources
-az group delete --name rg-cost-lab --yes --no-wait
+az group delete --name rg-az104-challenge18 --yes --no-wait
 
 echo "Cleanup complete. Cost data may still appear for 24-48 hours."
 ```

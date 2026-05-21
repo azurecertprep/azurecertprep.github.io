@@ -43,11 +43,11 @@ Contoso is building a multi-tier architecture with a hub-spoke network topology.
 
 ```bash
 # Create a resource group
-az group create --name rg-network-lab --location eastus
+az group create --name rg-az104-challenge11 --location eastus
 
 # Create the Hub VNet with two subnets
 az network vnet create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name vnet-hub \
   --address-prefix 10.0.0.0/16 \
   --subnet-name snet-frontend \
@@ -55,13 +55,13 @@ az network vnet create \
 
 # Add a backend subnet
 az network vnet subnet create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --vnet-name vnet-hub \
   --name snet-backend \
   --address-prefix 10.0.2.0/24
 
 # Verify the VNet
-az network vnet show -g rg-network-lab -n vnet-hub \
+az network vnet show -g rg-az104-challenge11 -n vnet-hub \
   --query "{Name:name, AddressSpace:addressSpace.addressPrefixes, Subnets:subnets[].{Name:name, Prefix:addressPrefix}}" -o json
 ```
 
@@ -70,26 +70,26 @@ az network vnet show -g rg-network-lab -n vnet-hub \
 ```bash
 # Create the spoke VNet
 az network vnet create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name vnet-spoke \
   --address-prefix 10.1.0.0/16 \
   --subnet-name snet-workloads \
   --subnet-prefix 10.1.1.0/24
 
 # Verify
-az network vnet list -g rg-network-lab -o table
+az network vnet list -g rg-az104-challenge11 -o table
 ```
 
 ### Task 3: create bidirectional VNet peering
 
 ```bash
 # Get VNet resource IDs
-HUB_ID=$(az network vnet show -g rg-network-lab -n vnet-hub --query id -o tsv)
-SPOKE_ID=$(az network vnet show -g rg-network-lab -n vnet-spoke --query id -o tsv)
+HUB_ID=$(az network vnet show -g rg-az104-challenge11 -n vnet-hub --query id -o tsv)
+SPOKE_ID=$(az network vnet show -g rg-az104-challenge11 -n vnet-spoke --query id -o tsv)
 
 # Create peering: Hub → spoke
 az network vnet peering create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name hub-to-spoke \
   --vnet-name vnet-hub \
   --remote-vnet $SPOKE_ID \
@@ -98,7 +98,7 @@ az network vnet peering create \
 
 # Create peering: spoke → Hub
 az network vnet peering create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name spoke-to-hub \
   --vnet-name vnet-spoke \
   --remote-vnet $HUB_ID \
@@ -106,8 +106,8 @@ az network vnet peering create \
   --allow-forwarded-traffic true
 
 # Verify peering status (should be "Connected")
-az network vnet peering list -g rg-network-lab --vnet-name vnet-hub -o table
-az network vnet peering list -g rg-network-lab --vnet-name vnet-spoke -o table
+az network vnet peering list -g rg-az104-challenge11 --vnet-name vnet-hub -o table
+az network vnet peering list -g rg-az104-challenge11 --vnet-name vnet-spoke -o table
 ```
 
 ### Task 4: deploy VMs and test connectivity
@@ -115,7 +115,7 @@ az network vnet peering list -g rg-network-lab --vnet-name vnet-spoke -o table
 ```bash
 # Deploy a VM in the Hub VNet
 az vm create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name vm-hub \
   --image Ubuntu2204 \
   --size Standard_B1s \
@@ -128,7 +128,7 @@ az vm create \
 
 # Deploy a VM in the spoke VNet
 az vm create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name vm-spoke \
   --image Ubuntu2204 \
   --size Standard_B1s \
@@ -140,12 +140,12 @@ az vm create \
   --no-wait
 
 # Wait for both VMs to be created, then get private IPs
-az vm list -g rg-network-lab \
+az vm list -g rg-az104-challenge11 \
   --query "[].{Name:name, PrivateIP:privateIps, PublicIP:publicIps}" -d -o table
 
 # SSH into vm-hub and ping vm-spoke's private IP
-HUB_PUBLIC_IP=$(az vm show -g rg-network-lab -n vm-hub -d --query publicIps -o tsv)
-SPOKE_PRIVATE_IP=$(az vm show -g rg-network-lab -n vm-spoke -d --query privateIps -o tsv)
+HUB_PUBLIC_IP=$(az vm show -g rg-az104-challenge11 -n vm-hub -d --query publicIps -o tsv)
+SPOKE_PRIVATE_IP=$(az vm show -g rg-az104-challenge11 -n vm-spoke -d --query privateIps -o tsv)
 
 echo "SSH into hub: ssh azureuser@$HUB_PUBLIC_IP"
 echo "Then ping spoke: ping $SPOKE_PRIVATE_IP"
@@ -157,10 +157,10 @@ echo "Then ping spoke: ping $SPOKE_PRIVATE_IP"
 ICMP (ping) may be blocked by the default NSG. Allow ICMP:
 ```bash
 # Get the NSG name associated with the spoke VM's NIC
-NSG_NAME=$(az network nsg list -g rg-network-lab --query "[?contains(name,'spoke')].name" -o tsv)
+NSG_NAME=$(az network nsg list -g rg-az104-challenge11 --query "[?contains(name,'spoke')].name" -o tsv)
 
 az network nsg rule create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --nsg-name $NSG_NAME \
   --name AllowICMP \
   --priority 100 \
@@ -175,14 +175,14 @@ az network nsg rule create \
 ```bash
 # Create a static Standard public IP
 az network public-ip create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name pip-static-web \
   --sku Standard \
   --allocation-method Static \
   --version IPv4
 
 # Show the IP address
-az network public-ip show -g rg-network-lab -n pip-static-web \
+az network public-ip show -g rg-az104-challenge11 -n pip-static-web \
   --query "{Name:name, IP:ipAddress, SKU:sku.name, Method:publicIpAllocationMethod}" -o table
 ```
 
@@ -191,15 +191,15 @@ az network public-ip show -g rg-network-lab -n pip-static-web \
 ```bash
 # Create a route table
 az network route-table create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --name rt-spoke-to-hub
 
 # Add a route that forces spoke traffic to hub's frontend subnet
 # to go through a simulated NVA (vm-hub's private ip)
-HUB_PRIVATE_IP=$(az vm show -g rg-network-lab -n vm-hub -d --query privateIps -o tsv)
+HUB_PRIVATE_IP=$(az vm show -g rg-az104-challenge11 -n vm-hub -d --query privateIps -o tsv)
 
 az network route-table route create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --route-table-name rt-spoke-to-hub \
   --name route-via-hub-nva \
   --address-prefix 10.0.1.0/24 \
@@ -208,13 +208,13 @@ az network route-table route create \
 
 # Associate the route table with the spoke subnet
 az network vnet subnet update \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --vnet-name vnet-spoke \
   --name snet-workloads \
   --route-table rt-spoke-to-hub
 
 # Verify the route table association
-az network vnet subnet show -g rg-network-lab \
+az network vnet subnet show -g rg-az104-challenge11 \
   --vnet-name vnet-spoke -n snet-workloads \
   --query "routeTable.id" -o tsv
 ```
@@ -230,7 +230,7 @@ az network watcher configure \
 
 # IP flow verify: check if traffic from spoke VM to hub VM is allowed
 az network watcher test-ip-flow \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --vm vm-spoke \
   --direction Outbound \
   --protocol TCP \
@@ -239,13 +239,13 @@ az network watcher test-ip-flow \
 
 # Next hop: check where traffic from spoke goes
 az network watcher show-next-hop \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --vm vm-spoke \
   --source-ip $SPOKE_PRIVATE_IP \
   --dest-ip $HUB_PRIVATE_IP
 
 # Show effective routes on the spoke VM's NIC
-SPOKE_NIC=$(az vm show -g rg-network-lab -n vm-spoke \
+SPOKE_NIC=$(az vm show -g rg-az104-challenge11 -n vm-spoke \
   --query "networkProfile.networkInterfaces[0].id" -o tsv)
 
 az network nic show-effective-route-table \
@@ -271,11 +271,11 @@ az network nic show-effective-route-table \
 ### Scenario a: overlapping address spaces
 ```bash
 # Try to create a VNet with overlapping address space and peer it
-az network vnet create -g rg-network-lab \
+az network vnet create -g rg-az104-challenge11 \
   --name vnet-overlap --address-prefix 10.0.0.0/16 \
   --subnet-name default --subnet-prefix 10.0.3.0/24
 
-az network vnet peering create -g rg-network-lab \
+az network vnet peering create -g rg-az104-challenge11 \
   --name hub-to-overlap --vnet-name vnet-hub \
   --remote-vnet vnet-overlap --allow-vnet-access true
 # What error do you get? why can't overlapping VNets be peered?
@@ -285,7 +285,7 @@ az network vnet peering create -g rg-network-lab \
 ```bash
 # Create a UDR with a next hop IP that doesn't exist
 az network route-table route create \
-  --resource-group rg-network-lab \
+  --resource-group rg-az104-challenge11 \
   --route-table-name rt-spoke-to-hub \
   --name route-to-nowhere \
   --address-prefix 192.168.0.0/24 \
@@ -297,10 +297,10 @@ az network route-table route create \
 ### Scenario c: One-Way peering
 ```bash
 # Delete only one side of the peering
-az network vnet peering delete -g rg-network-lab \
+az network vnet peering delete -g rg-az104-challenge11 \
   --vnet-name vnet-hub --name hub-to-spoke
 # Check the peering status on vnet-spoke:
-az network vnet peering show -g rg-network-lab \
+az network vnet peering show -g rg-az104-challenge11 \
   --vnet-name vnet-spoke --name spoke-to-hub \
   --query peeringState -o tsv
 # What state is it in? can traffic still flow?
@@ -370,7 +370,7 @@ It does **not** check UDRs, firewalls, or NVAs — only NSG rules. For routing i
 
 ```bash
 # Delete all resources
-az group delete --name rg-network-lab --yes --no-wait
+az group delete --name rg-az104-challenge11 --yes --no-wait
 
 echo "Resources are being deleted in the background."
 echo "VMs will stop billing immediately upon resource group deletion."

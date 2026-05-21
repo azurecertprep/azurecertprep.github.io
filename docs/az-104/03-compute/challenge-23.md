@@ -107,8 +107,8 @@ az network dns record-set cname set-record \
 
 # Map the custom domain (requires real DNS delegation in production)
 # az webapp config hostname add \
-# --resource-group $rg \
-# --webapp-name $app_name \
+# --resource-group $RG \
+# --webapp-name $APP_NAME \
 # --hostname www.contoso-lab.com
 ```
 
@@ -126,14 +126,14 @@ az network dns record-set cname set-record \
 # Create an App Service managed certificate (free, auto-renewed)
 # Note: requires custom domain to be validated first
 # az webapp config ssl create \
-# --resource-group $rg \
-# --name $app_name \
+# --resource-group $RG \
+# --name $APP_NAME \
 # --hostname www.contoso-lab.com
 
 # Bind the certificate to the custom domain
 # az webapp config ssl bind \
-# --resource-group $rg \
-# --name $app_name \
+# --resource-group $RG \
+# --name $APP_NAME \
 # --certificate-thumbprint <thumbprint> \
 # --ssl-type SNI
 

@@ -47,12 +47,12 @@ Create two storage accounts to simulate a migration scenario:
 
 ```bash
 # Create resource group
-az group create --name rg-azcopy-lab --location eastus
+az group create --name rg-az104-challenge19 --location eastus
 
 # Create source storage account
 az storage account create \
   --name stsource$RANDOM \
-  --resource-group rg-azcopy-lab \
+  --resource-group rg-az104-challenge19 \
   --location eastus \
   --sku Standard_LRS \
   --kind StorageV2
@@ -60,14 +60,14 @@ az storage account create \
 # Create destination storage account (different region for DR scenario)
 az storage account create \
   --name stdest$RANDOM \
-  --resource-group rg-azcopy-lab \
+  --resource-group rg-az104-challenge19 \
   --location westus2 \
   --sku Standard_LRS \
   --kind StorageV2
 
 # Store account names for later use
-SOURCE_ACCOUNT=$(az storage account list -g rg-azcopy-lab --query "[?contains(name,'source')].name" -o tsv | head -1)
-DEST_ACCOUNT=$(az storage account list -g rg-azcopy-lab --query "[?contains(name,'dest')].name" -o tsv | head -1)
+SOURCE_ACCOUNT=$(az storage account list -g rg-az104-challenge19 --query "[?contains(name,'source')].name" -o tsv | head -1)
+DEST_ACCOUNT=$(az storage account list -g rg-az104-challenge19 --query "[?contains(name,'dest')].name" -o tsv | head -1)
 
 # Create containers
 az storage container create --name documents --account-name $SOURCE_ACCOUNT --auth-mode login
@@ -320,9 +320,9 @@ Attempt to copy to a container that does not exist at the destination. Does AzCo
 During a large copy operation, simulate a failure by revoking the SAS token mid-transfer. Use `azcopy jobs resume` to restart the failed job with a new valid token.
 
 ```bash
-# Resume a failed job (credentials are persisted in the job plan file;
-# no need to supply SAS tokens again — azcopy reuses the original auth)
-azcopy jobs resume <job-id>
+# Resume a failed job (the original SAS was revoked, so supply a new SAS or use account key)
+# azcopy uses credentials from the command line, not persisted from previous runs
+azcopy jobs resume <job-id> --source-sas="<new-source-sas>" --destination-sas="<new-dest-sas>"
 ```
 
 ## Knowledge check
@@ -366,7 +366,7 @@ Note: The classic "Reader" or "Contributor" roles on the storage account are NOT
 
 ```bash
 # Remove the resource group and all storage accounts
-az group delete --name rg-azcopy-lab --yes --no-wait
+az group delete --name rg-az104-challenge19 --yes --no-wait
 
 # Clear AzCopy job log (optional)
 azcopy jobs clean

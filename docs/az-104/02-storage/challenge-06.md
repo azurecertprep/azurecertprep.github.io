@@ -47,7 +47,7 @@ Your mission: implement lifecycle management policies to control costs, configur
 1. Create two storage accounts in different regions (needed for object replication):
 
 ```bash
-RG="rg-lifecycle-challenge"
+RG="rg-az104-challenge06"
 LOCATION_PRIMARY="eastus"
 LOCATION_SECONDARY="westus2"
 STORAGE_PRIMARY="stlifecyclepri$RANDOM"
@@ -297,7 +297,7 @@ STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $R
 # Replace with your actual user or group object ID
 # USER_ID=$(az ad user show --id "alice@YOUR_TENANT.onmicrosoft.com" --query id -o tsv)
 # az role assignment create \
-# --assignee $user_id \
+# --assignee $USER_ID \
 # --role "Storage file Data SMB share contributor" \
 # --scope "$STORAGE_ID/fileServices/default/fileshares/secure-share"
 ```
@@ -319,21 +319,17 @@ The effective permission is the **intersection** of both layers | a user needs b
 <TabItem value="cli" label="Azure CLI">
 
 ```bash
-# Create a replication policy
-cat <<EOF > replication-policy.json
-{
-  "sourceAccount": "$STORAGE_PRIMARY",
-  "destinationAccount": "$STORAGE_SECONDARY",
-  "rules": [
-    {
-      "sourceContainer": "replicated-data",
-      "destinationContainer": "replicated-data",
-      "filters": {
-        "minCreationTime": "2024-01-01T00:00:00Z"
-      }
+# Create the replication rules file (must contain only the rules array)
+cat <<EOF > replication-rules.json
+[
+  {
+    "sourceContainer": "replicated-data",
+    "destinationContainer": "replicated-data",
+    "filters": {
+      "minCreationTime": "2025-01-01T00:00:00Z"
     }
-  ]
-}
+  }
+]
 EOF
 
 az storage account or-policy create \
@@ -341,7 +337,7 @@ az storage account or-policy create \
   --resource-group $RG \
   --source-account $STORAGE_PRIMARY \
   --destination-account $STORAGE_SECONDARY \
-  --rules @replication-policy.json
+  --rules @replication-rules.json
 ```
 
 </TabItem>
@@ -651,7 +647,7 @@ The destination account creates the replication policy and specifies the source 
 
 ```bash
 # Delete the resource group (removes both storage accounts and all data)
-az group delete --name rg-lifecycle-challenge --yes --no-wait
+az group delete --name rg-az104-challenge06 --yes --no-wait
 
 # Clean up local files
 rm -f lifecycle-policy.json replication-policy.json

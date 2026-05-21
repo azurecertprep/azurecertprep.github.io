@@ -352,7 +352,7 @@ az monitor metrics alert show \
 az monitor action-group update \
   --resource-group rg-az104-capstone-monitor \
   --name ag-ops-team \
-  --add-action email ops-email correctemail@contoso.com
+  --add email ops-email correctemail@contoso.com
 
 # Enable the alert rule
 az monitor metrics alert update \

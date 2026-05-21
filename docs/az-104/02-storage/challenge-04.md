@@ -55,7 +55,7 @@ Storage accounts are one of the most tested topics on the AZ-104 exam. You'll ne
 1. Create a resource group and storage account:
 
 ```bash
-RG="rg-storage-challenge"
+RG="rg-az104-challenge04"
 LOCATION="eastus"
 # Storage account names must be globally unique, 3-24 chars, lowercase + numbers only
 STORAGE_NAME="ststoragechallenge$RANDOM"
@@ -417,7 +417,7 @@ The exam may test which transitions are supported and which require intermediate
 
 ```bash
 # Delete the resource group (removes storage account and all data)
-az group delete --name rg-storage-challenge --yes --no-wait
+az group delete --name rg-az104-challenge04 --yes --no-wait
 
 # Clean up local files
 rm -f testfile.txt

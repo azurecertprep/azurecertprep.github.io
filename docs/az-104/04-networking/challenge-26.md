@@ -71,6 +71,7 @@ az network nsg rule create \
   --nsg-name nsg-web \
   --name AllowHTTP \
   --priority 100 \
+  --direction Inbound \
   --source-address-prefixes "*" \
   --destination-port-ranges 80 443 \
   --protocol Tcp \
@@ -81,6 +82,7 @@ az network nsg rule create \
   --nsg-name nsg-web \
   --name DenySSHFromInternet \
   --priority 200 \
+  --direction Inbound \
   --source-address-prefixes Internet \
   --destination-port-ranges 22 \
   --protocol Tcp \

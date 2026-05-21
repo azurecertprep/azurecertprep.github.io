@@ -47,18 +47,18 @@ Contoso Ltd.'s compliance team has flagged a regulatory requirement: all storage
 
 ```bash
 # Create resource group
-az group create --name rg-encryption-lab --location eastus
+az group create --name rg-az104-challenge20 --location eastus
 
 # Create an Azure Key Vault for CMK
 az keyvault create \
   --name kv-contoso-cmk-$RANDOM \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --location eastus \
   --enable-purge-protection true \
   --retention-days 7
 
 # Store Key Vault name
-KV_NAME=$(az keyvault list -g rg-encryption-lab --query "[0].name" -o tsv)
+KV_NAME=$(az keyvault list -g rg-az104-challenge20 --query "[0].name" -o tsv)
 ```
 
 ### Task 2: create a Storage account with infrastructure encryption
@@ -69,19 +69,19 @@ Infrastructure encryption (double encryption) adds a second layer of encryption 
 # Create storage account with infrastructure encryption enabled
 az storage account create \
   --name stencrypt$RANDOM \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --location eastus \
   --sku Standard_LRS \
   --kind StorageV2 \
   --require-infrastructure-encryption true
 
 # Store account name
-STORAGE_NAME=$(az storage account list -g rg-encryption-lab --query "[?contains(name,'encrypt')].name" -o tsv | head -1)
+STORAGE_NAME=$(az storage account list -g rg-az104-challenge20 --query "[?contains(name,'encrypt')].name" -o tsv | head -1)
 
 # Verify infrastructure encryption is enabled
 az storage account show \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --query "{Name:name, InfraEncryption:encryption.requireInfrastructureEncryption, KeySource:encryption.keySource}" -o table
 ```
 
@@ -119,13 +119,13 @@ echo "Key URI: $KEY_URI"
 # Assign a system-managed identity to the storage account
 az storage account update \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --assign-identity
 
 # Get the managed identity principal ID
 IDENTITY_ID=$(az storage account show \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --query "identity.principalId" -o tsv)
 
 # Grant the storage account Key Vault crypto Service encryption user role
@@ -137,7 +137,7 @@ az role assignment create \
 # Configure CMK on the storage account
 az storage account update \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --encryption-key-source Microsoft.Keyvault \
   --encryption-key-vault $(az keyvault show --name $KV_NAME --query "properties.vaultUri" -o tsv) \
   --encryption-key-name storage-cmk-key
@@ -145,7 +145,7 @@ az storage account update \
 # Verify CMK configuration
 az storage account show \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --query "{KeySource:encryption.keySource, KeyVaultUri:encryption.keyVaultProperties.keyVaultUri, KeyName:encryption.keyVaultProperties.keyName}" -o table
 ```
 
@@ -242,7 +242,7 @@ rm -f evidence.txt
 # Check encryption scope at the account level
 az storage account show \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --query "{
     Name:name,
     KeySource:encryption.keySource,
@@ -273,7 +273,7 @@ az keyvault key create \
 # Verify the key version updated
 az storage account show \
   --name $STORAGE_NAME \
-  --resource-group rg-encryption-lab \
+  --resource-group rg-az104-challenge20 \
   --query "encryption.keyVaultProperties.{KeyName:keyName, KeyVersion:keyVersion}" -o table
 ```
 
@@ -390,7 +390,7 @@ If the key is soft-deleted (Key Vault has soft-delete enabled), the storage acco
 
 ```bash
 # Remove legal hold before deleting containers
-STORAGE_NAME=$(az storage account list -g rg-encryption-lab --query "[?contains(name,'encrypt')].name" -o tsv | head -1)
+STORAGE_NAME=$(az storage account list -g rg-az104-challenge20 --query "[?contains(name,'encrypt')].name" -o tsv | head -1)
 
 az storage container legal-hold clear \
   --account-name $STORAGE_NAME \
@@ -404,7 +404,7 @@ az storage container immutability-policy delete \
   --if-match $(az storage container show --name regulatory-data --account-name $STORAGE_NAME --auth-mode login --query "properties.immutabilityPolicy.etag" -o tsv) 2>/dev/null
 
 # Delete the entire resource group
-az group delete --name rg-encryption-lab --yes --no-wait
+az group delete --name rg-az104-challenge20 --yes --no-wait
 
 echo "Cleanup complete. Key Vault will remain in soft-delete state for retention period."
 ```

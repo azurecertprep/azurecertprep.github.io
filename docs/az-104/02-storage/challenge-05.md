@@ -51,7 +51,7 @@ Understanding the difference between Blob Storage and Azure Files | and when to 
 1. Create a resource group and storage account:
 
 ```bash
-RG="rg-blob-files-challenge"
+RG="rg-az104-challenge05"
 LOCATION="eastus"
 STORAGE_NAME="stblobfiles$RANDOM"
 
@@ -478,7 +478,7 @@ Note: Changing tier incurs a **write operation charge** at the destination tier'
 
 ```bash
 # Delete the resource group (removes storage account and all data)
-az group delete --name rg-blob-files-challenge --yes --no-wait
+az group delete --name rg-az104-challenge05 --yes --no-wait
 
 # Clean up local files
 rm -f profile-alice.txt profile-bob.txt profile-alice-v2.txt app-log-2025-01-15.txt q3-report.txt budget-2025.txt

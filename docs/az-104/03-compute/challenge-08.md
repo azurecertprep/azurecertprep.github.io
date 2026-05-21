@@ -50,11 +50,11 @@ Contoso needs to deploy a web server fleet for their customer-facing application
 
 ```bash
 # Create a resource group
-az group create --name rg-vm-lab --location eastus
+az group create --name rg-az104-challenge08 --location eastus
 
 # Create an ubuntu VM with SSH key authentication
 az vm create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --name vm-web-01 \
   --image Ubuntu2204 \
   --size Standard_B1s \
@@ -64,11 +64,11 @@ az vm create \
   --output table
 
 # Verify the VM is running (requires -d flag to get instance view / powerState)
-az vm show -d --resource-group rg-vm-lab --name vm-web-01 \
+az vm show -d --resource-group rg-az104-challenge08 --name vm-web-01 \
   --query "{Name:name, State:powerState, Size:hardwareProfile.vmSize}" -o table
 
 # SSH into the VM (use the public IP from the create output)
-VM_IP=$(az vm show -g rg-vm-lab -n vm-web-01 -d --query publicIps -o tsv)
+VM_IP=$(az vm show -g rg-az104-challenge08 -n vm-web-01 -d --query publicIps -o tsv)
 echo "SSH with: ssh azureuser@$VM_IP"
 ```
 
@@ -77,7 +77,7 @@ echo "SSH with: ssh azureuser@$VM_IP"
 ```bash
 # Attach a 128 GB data disk
 az vm disk attach \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --vm-name vm-web-01 \
   --name disk-data-01 \
   --size-gb 128 \
@@ -85,7 +85,7 @@ az vm disk attach \
   --new
 
 # List disks attached to the VM
-az vm show -g rg-vm-lab -n vm-web-01 \
+az vm show -g rg-az104-challenge08 -n vm-web-01 \
   --query "storageProfile.dataDisks[].{Name:name, SizeGB:diskSizeGb, LUN:lun}" -o table
 ```
 
@@ -121,12 +121,12 @@ az vm list-sizes --location eastus --query "[?starts_with(name,'Standard_B')]" -
 
 # Resize the VM (requires a restart)
 az vm resize \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --name vm-web-01 \
   --size Standard_B2s
 
 # Verify new size
-az vm show -g rg-vm-lab -n vm-web-01 \
+az vm show -g rg-az104-challenge08 -n vm-web-01 \
   --query "hardwareProfile.vmSize" -o tsv
 ```
 
@@ -137,12 +137,12 @@ az vm show -g rg-vm-lab -n vm-web-01 \
 az group create --name rg-vm-prod --location eastus
 
 # Get the VM's resource ID
-VM_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query id -o tsv)
+VM_ID=$(az vm show -g rg-az104-challenge08 -n vm-web-01 --query id -o tsv)
 
 # Move the VM and ALL dependent resources (NIC, disk, public IP, NSG)
 # IMPORTANT: You must include all dependent resource IDs in a single move operation
-NIC_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query "networkProfile.networkInterfaces[0].id" -o tsv)
-DISK_ID=$(az vm show -g rg-vm-lab -n vm-web-01 --query "storageProfile.osDisk.managedDisk.id" -o tsv)
+NIC_ID=$(az vm show -g rg-az104-challenge08 -n vm-web-01 --query "networkProfile.networkInterfaces[0].id" -o tsv)
+DISK_ID=$(az vm show -g rg-az104-challenge08 -n vm-web-01 --query "storageProfile.osDisk.managedDisk.id" -o tsv)
 PIP_ID=$(az network nic show --ids $NIC_ID --query "ipConfigurations[0].publicIPAddress.id" -o tsv)
 
 az resource move \
@@ -151,7 +151,7 @@ az resource move \
 
 # NOTE: Moving only the VM without its dependent resources will fail.
 # List all resources to get their IDs:
-az resource list -g rg-vm-lab --query "[].id" -o tsv
+az resource list -g rg-az104-challenge08 --query "[].id" -o tsv
 ```
 
 <details>
@@ -159,7 +159,7 @@ az resource list -g rg-vm-lab --query "[].id" -o tsv
 
 You must move the VM and all its dependent resources together:
 ```bash
-RESOURCE_IDS=$(az resource list -g rg-vm-lab --query "[].id" -o tsv | tr '\n' ' ')
+RESOURCE_IDS=$(az resource list -g rg-az104-challenge08 --query "[].id" -o tsv | tr '\n' ' ')
 az resource move --destination-group rg-vm-prod --ids $RESOURCE_IDS
 ```
 </details>
@@ -169,14 +169,14 @@ az resource move --destination-group rg-vm-prod --ids $RESOURCE_IDS
 ```bash
 # Create an availability set
 az vm availability-set create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --name avset-web \
   --platform-fault-domain-count 2 \
   --platform-update-domain-count 5
 
 # Deploy a VM into the availability set
 az vm create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --name vm-web-avset \
   --image Ubuntu2204 \
   --size Standard_B1s \
@@ -191,7 +191,7 @@ az vm create \
 ```bash
 # Create a VM scale set with 2 instances
 az vmss create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --name vmss-web \
   --image Ubuntu2204 \
   --vm-sku Standard_B1s \
@@ -202,11 +202,11 @@ az vmss create \
   --load-balancer lb-vmss-web
 
 # Verify the instances
-az vmss list-instances -g rg-vm-lab -n vmss-web -o table
+az vmss list-instances -g rg-az104-challenge08 -n vmss-web -o table
 
 # Create autoscale settings (scale out on CPU > 75%, scale in on CPU < 25%)
 az monitor autoscale create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --resource vmss-web \
   --resource-type Microsoft.Compute/virtualMachineScaleSets \
   --name autoscale-vmss-web \
@@ -216,14 +216,14 @@ az monitor autoscale create \
 
 # Add scale-out rule
 az monitor autoscale rule create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --autoscale-name autoscale-vmss-web \
   --condition "Percentage CPU > 75 avg 5m" \
   --scale out 1
 
 # Add scale-in rule
 az monitor autoscale rule create \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --autoscale-name autoscale-vmss-web \
   --condition "Percentage CPU < 25 avg 5m" \
   --scale in 1
@@ -233,35 +233,35 @@ az monitor autoscale rule create \
 
 ```bash
 # Get the public IP of the load balancer
-PIP_NAME=$(az network public-ip list -g rg-vm-lab --query "[0].name" -o tsv)
-LB_IP=$(az network public-ip show -g rg-vm-lab \
+PIP_NAME=$(az network public-ip list -g rg-az104-challenge08 --query "[0].name" -o tsv)
+LB_IP=$(az network public-ip show -g rg-az104-challenge08 \
   -n $PIP_NAME --query ipAddress -o tsv)
 
 # SSH into one VMSS instance and generate CPU load
-az vmss list-instance-connection-info -g rg-vm-lab -n vmss-web -o table
+az vmss list-instance-connection-info -g rg-az104-challenge08 -n vmss-web -o table
 
 # Inside the VM, run a CPU stress test:
 # sudo apt-get update && sudo apt-get install -y stress
 # stress --cpu 4 --timeout 300
 
 # Monitor autoscale activity
-az monitor autoscale show -g rg-vm-lab -n autoscale-vmss-web \
+az monitor autoscale show -g rg-az104-challenge08 -n autoscale-vmss-web \
   --query "{MinCount:profiles[0].capacity.minimum, MaxCount:profiles[0].capacity.maximum}" -o table
 
-az vmss list-instances -g rg-vm-lab -n vmss-web -o table
+az vmss list-instances -g rg-az104-challenge08 -n vmss-web -o table
 ```
 
 ### Task 8: deallocate to stop charges
 
 ```bash
 # Deallocate the standalone VM (stops billing for compute)
-az vm deallocate --resource-group rg-vm-lab --name vm-web-avset --no-wait
+az vm deallocate --resource-group rg-az104-challenge08 --name vm-web-avset --no-wait
 
 # Deallocate VMSS instances
-az vmss deallocate --resource-group rg-vm-lab --name vmss-web
+az vmss deallocate --resource-group rg-az104-challenge08 --name vmss-web
 
-# Verify power state
-az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
+# Verify power state (use -d flag to include instance view with powerState)
+az vm list -d -g rg-az104-challenge08 --query "[].{Name:name, State:powerState}" -o table
 ```
 
 ## Success criteria
@@ -284,9 +284,9 @@ az vm list -g rg-vm-lab --query "[].{Name:name, State:powerState}" -o table
 ### Scenario a: unavailable VM size
 ```bash
 # Try resizing to a size not available in the current zone
-az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
+az vm resize -g rg-az104-challenge08 -n vm-web-avset --size Standard_M128s
 # How do you find which sizes are available?
-# az vm list-vm-resize-options -g rg-vm-lab -n vm-web-avset -o table
+# az vm list-vm-resize-options -g rg-az104-challenge08 -n vm-web-avset -o table
 ```
 
 ### Scenario b: move VM with public IP
@@ -299,7 +299,7 @@ az vm resize -g rg-vm-lab -n vm-web-avset --size Standard_M128s
 ```bash
 # Try to set autoscale min-count higher than max-count
 az monitor autoscale update \
-  --resource-group rg-vm-lab \
+  --resource-group rg-az104-challenge08 \
   --name autoscale-vmss-web \
   --min-count 10 --max-count 5
 ```
@@ -346,7 +346,7 @@ az monitor autoscale update \
 
 ```bash
 # Delete all resources: run this when completely finished
-az group delete --name rg-vm-lab --yes --no-wait
+az group delete --name rg-az104-challenge08 --yes --no-wait
 az group delete --name rg-vm-prod --yes --no-wait
 
 echo "Resources are being deleted in the background."

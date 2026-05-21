@@ -319,6 +319,7 @@ az network nsg rule create \
   --nsg-name nsg-privateendpoints \
   --name AllowWorkloadSubnet \
   --priority 100 \
+  --direction Inbound \
   --source-address-prefixes 10.0.1.0/24 \
   --destination-address-prefixes 10.0.2.0/24 \
   --destination-port-ranges 443 \
@@ -331,6 +332,7 @@ az network nsg rule create \
   --nsg-name nsg-privateendpoints \
   --name DenyAllInbound \
   --priority 200 \
+  --direction Inbound \
   --source-address-prefixes "*" \
   --destination-address-prefixes 10.0.2.0/24 \
   --destination-port-ranges "*" \

@@ -62,17 +62,17 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
 
 :::warning
 
-For these tasks, you'll need a resource group. Create one called `rg-rbac-challenge` in your subscription first.
+For these tasks, you'll need a resource group. Create one called `rg-az104-challenge02` in your subscription first.
 
 :::
 3. Create a resource group for this challenge:
 
 ```bash
-az group create --name rg-rbac-challenge --location eastus
+az group create --name rg-az104-challenge02 --location eastus
 ```
 
 4. Assign the **Reader** role to Alice at the **subscription** scope
-5. Assign the **Contributor** role to the `IT-Team` group at the **resource group** scope (`rg-rbac-challenge`)
+5. Assign the **Contributor** role to the `IT-Team` group at the **resource group** scope (`rg-az104-challenge02`)
 6. Assign the **Virtual Machine Contributor** role to Bob at the **resource group** scope
 
 ### Part 3: verify & interpret access
@@ -171,7 +171,7 @@ IT_GROUP_ID=$(az ad group show --group "IT-Team" --query id -o tsv)
 az role assignment create \
   --assignee $IT_GROUP_ID \
   --role "Contributor" \
-  --scope "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/rg-rbac-challenge"
+  --scope "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/rg-az104-challenge02"
 ```
 
 </details>
@@ -184,7 +184,7 @@ az role assignment create \
 az role assignment list --assignee "alice@YOUR_TENANT.onmicrosoft.com" -o table
 
 # List all role assignments at a resource group
-az role assignment list --resource-group rg-rbac-challenge -o table
+az role assignment list --resource-group rg-az104-challenge02 -o table
 
 # List all role assignments in the subscription
 az role assignment list --all -o table
@@ -301,7 +301,7 @@ A role assigned at a **higher scope** is inherited by all **lower scopes**. For 
 
 Each Microsoft Entra ID tenant can have up to **5,000 custom roles**. Custom roles can be scoped to one or more subscriptions or management groups within the tenant.
 
-Custom roles require **Microsoft Entra ID P1 or P2** for service principal assignments, but work with free tier for user assignments.
+Custom roles work with all principal types (users, groups, service principals, and managed identities) without requiring any additional Entra ID licensing.
 
 </details>
 
@@ -329,15 +329,15 @@ IT_GROUP_ID=$(az ad group show --group "IT-Team" --query id -o tsv 2>/dev/null)
 
 # Remove role assignments
 az role assignment delete --assignee $ALICE_ID --role "Reader" --scope "/subscriptions/$SUBSCRIPTION_ID" 2>/dev/null
-az role assignment delete --assignee $IT_GROUP_ID --role "Contributor" --resource-group rg-rbac-challenge 2>/dev/null
-az role assignment delete --assignee $BOB_ID --role "Virtual Machine Contributor" --resource-group rg-rbac-challenge 2>/dev/null
-az role assignment delete --assignee $CAROL_ID --role "VM-Reader" --resource-group rg-rbac-challenge 2>/dev/null
+az role assignment delete --assignee $IT_GROUP_ID --role "Contributor" --resource-group rg-az104-challenge02 2>/dev/null
+az role assignment delete --assignee $BOB_ID --role "Virtual Machine Contributor" --resource-group rg-az104-challenge02 2>/dev/null
+az role assignment delete --assignee $CAROL_ID --role "VM-Reader" --resource-group rg-az104-challenge02 2>/dev/null
 
 # Delete the custom role
 az role definition delete --name "VM-Reader" 2>/dev/null
 
 # Delete the resource group
-az group delete --name rg-rbac-challenge --yes --no-wait
+az group delete --name rg-az104-challenge02 --yes --no-wait
 
 # Clean up temp files
 rm -f vm-reader-role.json

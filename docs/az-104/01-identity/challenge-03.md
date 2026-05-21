@@ -54,8 +54,8 @@ Azure Policy is your enforcement engine. Think of it as Group Policy for the clo
 1. Create two resource groups for this challenge:
 
 ```bash
-az group create --name rg-policy-prod --location eastus --tags Environment=Production CostCenter=IT-001
-az group create --name rg-policy-dev --location eastus --tags Environment=Development CostCenter=IT-002
+az group create --name rg-az104-challenge03-prod --location eastus --tags Environment=Production CostCenter=IT-001
+az group create --name rg-az104-challenge03-dev --location eastus --tags Environment=Development CostCenter=IT-002
 ```
 
 2. Add tags to both resource groups:
@@ -71,17 +71,17 @@ az resource list --tag Environment=Production -o table
 
 ### Part 2: Azure Policy | require tags
 
-4. Assign the built-in policy **"Require a tag and its value on resources"** to `rg-policy-prod`:
+4. Assign the built-in policy **"Require a tag and its value on resources"** to `rg-az104-challenge03-prod`:
    - Tag name: `CostCenter`
    - Effect: **Deny**
 
-5. Test the policy by trying to create a storage account **without** the `CostCenter` tag in `rg-policy-prod`:
+5. Test the policy by trying to create a storage account **without** the `CostCenter` tag in `rg-az104-challenge03-prod`:
 
 ```bash
 # This should FAIL after policy takes effect
 az storage account create \
   --name stpolicytest$RANDOM \
-  --resource-group rg-policy-prod \
+  --resource-group rg-az104-challenge03-prod \
   --location eastus \
   --sku Standard_LRS
 ```
@@ -92,7 +92,7 @@ az storage account create \
 # This should SUCCEED
 az storage account create \
   --name stpolicytest$RANDOM \
-  --resource-group rg-policy-prod \
+  --resource-group rg-az104-challenge03-prod \
   --location eastus \
   --sku Standard_LRS \
   --tags CostCenter=IT-001
@@ -100,10 +100,10 @@ az storage account create \
 
 ### Part 3: Azure Policy | allowed locations
 
-7. Assign the built-in policy **"Allowed locations"** to `rg-policy-prod`:
+7. Assign the built-in policy **"Allowed locations"** to `rg-az104-challenge03-prod`:
    - Allowed locations: East US, West US 2
 
-8. Test by trying to create a resource in `rg-policy-prod` using a disallowed location (e.g., West Europe)
+8. Test by trying to create a resource in `rg-az104-challenge03-prod` using a disallowed location (e.g., West Europe)
 
 ### Part 4: Policy initiative
 
@@ -112,16 +112,16 @@ az storage account create \
    - Require `Environment` tag on resources
    - Allowed locations (East US, West US 2)
 
-10. Assign the initiative to `rg-policy-dev`
+10. Assign the initiative to `rg-az104-challenge03-dev`
 
 ### Part 5: Resource locks
 
-11. Create a **CanNotDelete** lock on `rg-policy-prod`:
+11. Create a **CanNotDelete** lock on `rg-az104-challenge03-prod`:
 
 ```bash
 az lock create --name "PreventDeletion" \
   --lock-type CanNotDelete \
-  --resource-group rg-policy-prod \
+  --resource-group rg-az104-challenge03-prod \
   --notes "Production resources - do not delete"
 ```
 
@@ -175,12 +175,12 @@ Budget alerts via CLI require additional configuration for notification threshol
   storageKey="az104-challenge-03"
   items={[
     "Two resource groups exist with proper tags (Environment, CostCenter, Owner)",
-    "Policy \"Require CostCenter tag\" is assigned to rg-policy-prod with Deny effect",
-    "Deploying a resource without the tag fails in rg-policy-prod",
+    "Policy \"Require CostCenter tag\" is assigned to rg-az104-challenge03-prod with Deny effect",
+    "Deploying a resource without the tag fails in rg-az104-challenge03-prod",
     "Deploying a resource with the tag succeeds",
     "Allowed locations policy restricts deployments to East US and West US 2",
-    "Policy initiative Contoso-Governance is created with 3 policies and assigned to rg-policy-dev",
-    "CanNotDelete lock exists on rg-policy-prod",
+    "Policy initiative Contoso-Governance is created with 3 policies and assigned to rg-az104-challenge03-dev",
+    "CanNotDelete lock exists on rg-az104-challenge03-prod",
     "Attempting to delete the locked resource group fails",
     "Azure Advisor recommendations have been reviewed"
   ]}
@@ -209,14 +209,14 @@ az policy definition show --name "1e30110a-5ceb-460c-a204-c1c3969c6d62"
 ```bash
 # Assign "Require a tag and its value on resources"
 # Built-in policy ID: 1e30110a-5ceb-460c-a204-c1c3969c6d62
-RG_ID=$(az group show --name rg-policy-prod --query id -o tsv)
+RG_ID=$(az group show --name rg-az104-challenge03-prod --query id -o tsv)
 
 az policy assignment create \
   --name "require-costcenter-tag" \
   --display-name "Require CostCenter tag" \
-  --policy "871b6d14-10aa-478d-b466-ef6698f3ef28" \
+  --policy "1e30110a-5ceb-460c-a204-c1c3969c6d62" \
   --scope "$RG_ID" \
-  --params '{"tagName":{"value":"CostCenter"}}'
+  --params '{"tagName":{"value":"CostCenter"},"tagValue":{"value":"IT-001"}}'
 
 # Assign "Allowed locations" built-in policy
 az policy assignment create \
@@ -269,8 +269,8 @@ az policy set-definition create \
   --definitions initiative.json \
   --description "Requires tags and restricts locations"
 
-# Assign the initiative to rg-policy-dev
-DEV_RG_ID=$(az group show --name rg-policy-dev --query id -o tsv)
+# Assign the initiative to rg-az104-challenge03-dev
+DEV_RG_ID=$(az group show --name rg-az104-challenge03-dev --query id -o tsv)
 az policy assignment create \
   --name "contoso-governance" \
   --display-name "Contoso Governance Initiative" \
@@ -285,14 +285,14 @@ az policy assignment create \
 
 ```bash
 # List locks on a resource group
-az lock list --resource-group rg-policy-prod -o table
+az lock list --resource-group rg-az104-challenge03-prod -o table
 
 # Try to delete (will fail with CanNotDelete lock)
-az group delete --name rg-policy-prod --yes
+az group delete --name rg-az104-challenge03-prod --yes
 # Error: resource group is locked
 
 # To delete, you must first remove the lock
-az lock delete --name "PreventDeletion" --resource-group rg-policy-prod
+az lock delete --name "PreventDeletion" --resource-group rg-az104-challenge03-prod
 ```
 
 </details>
@@ -303,12 +303,12 @@ az lock delete --name "PreventDeletion" --resource-group rg-policy-prod
 ```bash
 # View compliance state for a policy assignment
 az policy state list \
-  --resource-group rg-policy-prod \
+  --resource-group rg-az104-challenge03-prod \
   --query "[].{Resource:resourceId, Compliance:complianceState, Policy:policyAssignmentName}" \
   -o table
 
 # Trigger an on-demand policy evaluation
-az policy state trigger-scan --resource-group rg-policy-prod --no-wait
+az policy state trigger-scan --resource-group rg-az104-challenge03-prod --no-wait
 ```
 
 </details>
@@ -406,19 +406,19 @@ To enforce tag inheritance, use the built-in policy **"Inherit a tag from the re
 
 ```bash
 # Remove the resource lock first (required before deletion)
-az lock delete --name "PreventDeletion" --resource-group rg-policy-prod 2>/dev/null
+az lock delete --name "PreventDeletion" --resource-group rg-az104-challenge03-prod 2>/dev/null
 
 # Remove policy assignments (created in Parts 2 and 3)
-az policy assignment delete --name "require-costcenter-tag" --scope $(az group show --name rg-policy-prod --query id -o tsv) 2>/dev/null
-az policy assignment delete --name "allowed-locations" --scope $(az group show --name rg-policy-prod --query id -o tsv) 2>/dev/null
+az policy assignment delete --name "require-costcenter-tag" --scope $(az group show --name rg-az104-challenge03-prod --query id -o tsv) 2>/dev/null
+az policy assignment delete --name "allowed-locations" --scope $(az group show --name rg-az104-challenge03-prod --query id -o tsv) 2>/dev/null
 
 # Remove initiative assignment (created in Part 4) and definition
-az policy assignment delete --name "contoso-governance" --scope $(az group show --name rg-policy-dev --query id -o tsv) 2>/dev/null
+az policy assignment delete --name "contoso-governance" --scope $(az group show --name rg-az104-challenge03-dev --query id -o tsv) 2>/dev/null
 az policy set-definition delete --name "Contoso-Governance" 2>/dev/null
 
 # Delete resource groups
-az group delete --name rg-policy-prod --yes --no-wait
-az group delete --name rg-policy-dev --yes --no-wait
+az group delete --name rg-az104-challenge03-prod --yes --no-wait
+az group delete --name rg-az104-challenge03-dev --yes --no-wait
 
 # Clean up temp files
 rm -f initiative.json

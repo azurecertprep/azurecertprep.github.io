@@ -101,7 +101,7 @@ Add a `environment` tag parameter to the template so every deployed resource get
 ```bash
 # After modifying storage.json, validate it:
 az deployment group validate \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file storage.json \
   --parameters storagePrefix=contoso environment=dev
 ```
@@ -130,18 +130,18 @@ Then add a `tags` property to the resource:
 
 ```bash
 # Create a resource group for this lab
-az group create --name rg-iac-lab --location eastus
+az group create --name rg-az104-challenge07 --location eastus
 
 # Deploy the ARM template
 az deployment group create \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file storage.json \
   --parameters storagePrefix=contoso environment=dev \
   --name deploy-storage-v1
 
 # Verify the deployment
 az deployment group show \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --name deploy-storage-v1 \
   --query "properties.outputs"
 ```
@@ -150,7 +150,7 @@ az deployment group show \
 
 ```bash
 # Export the entire resource group as an ARM template
-az group export --name rg-iac-lab --output json > exported-template.json
+az group export --name rg-az104-challenge07 --output json > exported-template.json
 
 # Review what was exported
 cat exported-template.json | python -m json.tool | head -50
@@ -227,14 +227,14 @@ output storageName string = storageAccount.name
 ```bash
 # Deploy the Bicep file
 az deployment group create \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file storage.bicep \
   --parameters storagePrefix=contoso environment=prod \
   --name deploy-storage-v2
 
 # Verify the container was created
 STORAGE_NAME=$(az deployment group show \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --name deploy-storage-v2 \
   --query "properties.outputs.storageName.value" -o tsv)
 
@@ -246,7 +246,7 @@ az storage container list --account-name $STORAGE_NAME --auth-mode login -o tabl
 ```bash
 # Run a what-if deployment to preview changes without deploying
 az deployment group what-if \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file storage.bicep \
   --parameters storagePrefix=contoso environment=staging
 ```
@@ -271,7 +271,7 @@ Deploy this broken template and fix the error:
 # Introduce a typo in the template (e.g., "Standar_LRS" instead of "Standard_LRS")
 # Deploy and observe the error message
 az deployment group create \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file broken-storage.json \
   --parameters storagePrefix=contoso
 ```
@@ -280,7 +280,7 @@ az deployment group create \
 ```bash
 # Deploy without the required storagePrefix parameter
 az deployment group create \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file storage.json \
   --name deploy-broken
 # What error do you get? how does Azure validate parameters?
@@ -290,7 +290,7 @@ az deployment group create \
 ```bash
 # WARNING: complete mode deletes resources not in the template!
 az deployment group what-if \
-  --resource-group rg-iac-lab \
+  --resource-group rg-az104-challenge07 \
   --template-file storage.bicep \
   --parameters storagePrefix=contoso environment=dev \
   --mode Complete
@@ -336,7 +336,7 @@ Storage account names must be globally unique across all of Azure (3–24 chars,
 
 ```bash
 # Remove all resources created in this challenge
-az group delete --name rg-iac-lab --yes --no-wait
+az group delete --name rg-az104-challenge07 --yes --no-wait
 
 # Clean up local files
 rm -f storage.json storage.bicep exported-template.json broken-storage.json
