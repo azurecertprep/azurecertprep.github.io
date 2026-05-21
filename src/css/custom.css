@@ -10,6 +10,15 @@
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 120, 212, 0.1);
   --ifm-font-family-base: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --coverage-identity: #9b59b6;
+  --coverage-storage: #27ae60;
+  --coverage-compute: #2980b9;
+  --coverage-networking: #e67e22;
+  --coverage-monitor: #e74c3c;
+  --coverage-cloud-concepts: #2ecc71;
+  --coverage-azure-services: #3498db;
+  --coverage-management: #f39c12;
+  --coverage-ai-security: #e91e63;
 }
 
 [data-theme='dark'] {
@@ -344,4 +353,111 @@
 [data-theme='dark'] .exam-card:hover {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Coverage stacked bars */
+.coverage-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.coverage-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.coverage-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 220px;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: opacity 0.2s;
+}
+
+.coverage-label:hover {
+  opacity: 0.7;
+}
+
+.coverage-exam {
+  font-weight: 800;
+  font-size: 0.95rem;
+  min-width: 55px;
+}
+
+.coverage-title {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.coverage-count {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.coverage-bar {
+  flex: 1;
+  display: flex;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.coverage-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.coverage-segment:hover {
+  opacity: 0.85;
+  transform: scaleY(1.08);
+  z-index: 1;
+}
+
+.coverage-segment-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.4rem;
+}
+
+@media screen and (max-width: 768px) {
+  .coverage-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  .coverage-label {
+    min-width: unset;
+  }
+
+  .coverage-bar {
+    height: 28px;
+  }
+
+  .coverage-segment-label {
+    font-size: 0.55rem;
+  }
+}
+
+[data-theme='dark'] .coverage-count {
+  background: var(--ifm-color-emphasis-300);
 }

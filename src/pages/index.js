@@ -520,114 +520,104 @@ function SC500ChallengeGrid() {
   );
 }
 
+const coverageData = [
+  {
+    exam: 'AZ-900',
+    title: 'Azure Fundamentals',
+    challenges: 24,
+    href: '/docs/az-900/overview',
+    domains: [
+      { name: 'Cloud Concepts', weight: 27, color: 'var(--coverage-cloud-concepts)' },
+      { name: 'Azure Services', weight: 38, color: 'var(--coverage-azure-services)' },
+      { name: 'Management & Governance', weight: 35, color: 'var(--coverage-management)' },
+    ],
+  },
+  {
+    exam: 'AZ-104',
+    title: 'Azure Administrator',
+    challenges: 28,
+    href: '/docs/az-104/overview',
+    domains: [
+      { name: 'Identity & Governance', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'Storage', weight: 18, color: 'var(--coverage-storage)' },
+      { name: 'Compute', weight: 22, color: 'var(--coverage-compute)' },
+      { name: 'Networking', weight: 18, color: 'var(--coverage-networking)' },
+      { name: 'Monitor & Maintain', weight: 20, color: 'var(--coverage-monitor)' },
+    ],
+  },
+  {
+    exam: 'AZ-305',
+    title: 'Solutions Architect',
+    challenges: 50,
+    href: '/docs/az-305/overview',
+    domains: [
+      { name: 'Identity & Monitoring', weight: 27, color: 'var(--coverage-identity)' },
+      { name: 'Data Storage', weight: 22, color: 'var(--coverage-storage)' },
+      { name: 'Business Continuity', weight: 18, color: 'var(--coverage-networking)' },
+      { name: 'Infrastructure', weight: 33, color: 'var(--coverage-compute)' },
+    ],
+  },
+  {
+    exam: 'AZ-400',
+    title: 'DevOps Engineer',
+    challenges: 51,
+    href: '/docs/az-400/overview',
+    domains: [
+      { name: 'Processes', weight: 12, color: 'var(--coverage-cloud-concepts)' },
+      { name: 'Source Control', weight: 12, color: 'var(--coverage-azure-services)' },
+      { name: 'Pipelines', weight: 39, color: 'var(--coverage-compute)' },
+      { name: 'Security', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'Instrumentation', weight: 15, color: 'var(--coverage-monitor)' },
+    ],
+  },
+  {
+    exam: 'SC-500',
+    title: 'Security Operations',
+    challenges: 52,
+    href: '/docs/sc-500/overview',
+    domains: [
+      { name: 'Identity & Governance', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'Storage & Networking', weight: 27, color: 'var(--coverage-networking)' },
+      { name: 'AI Security', weight: 10, color: 'var(--coverage-ai-security)' },
+      { name: 'Secure Compute', weight: 20, color: 'var(--coverage-compute)' },
+      { name: 'Security Posture', weight: 21, color: 'var(--coverage-monitor)' },
+    ],
+  },
+];
+
 function CertificationCoverage() {
   return (
     <section style={{padding: '2rem 0'}}>
-      <div className="container" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <Heading as="h2" style={{textAlign: 'center', fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem'}}>100% Certification Coverage</Heading>
-        <p style={{textAlign: 'center', color: 'var(--ifm-color-emphasis-600)', fontSize: '1.1rem', maxWidth: '600px', marginBottom: '2rem'}}>
-          Every exam domain from the official study guides mapped to hands-on challenges.
-        </p>
-        <div style={{display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center'}}>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-900 (24 challenges)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domain</th>
-                  <th style={{textAlign: 'center'}}>Weight</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--cloud-concepts">Cloud Concepts</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--azure-services">Azure Services</span></td><td style={{textAlign: 'center'}}>35-40%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--management">Management & Governance</span></td><td style={{textAlign: 'center'}}>30-35%</td></tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
-              Exploration-based | $0 cost | Portal-first
-            </p>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-104 (28 challenges)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domain</th>
-                  <th style={{textAlign: 'center'}}>Weight</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identity & Governance</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--storage">Storage</span></td><td style={{textAlign: 'center'}}>15-20%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Compute</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Networking</span></td><td style={{textAlign: 'center'}}>15-20%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitor">Monitor & Maintain</span></td><td style={{textAlign: 'center'}}>10-15%</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-305 (50 challenges)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domain</th>
-                  <th style={{textAlign: 'center'}}>Weight</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity-gov">Identity & Monitoring</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--data">Data Storage</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--bcdr">Business Continuity</span></td><td style={{textAlign: 'center'}}>15-20%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--infra">Infrastructure</span></td><td style={{textAlign: 'center'}}>30-35%</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-400 (51 challenges)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domain</th>
-                  <th style={{textAlign: 'center'}}>Skills</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--processes">Processes & Communications</span></td><td style={{textAlign: 'center'}}>6 challenges</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--source-control">Source Control</span></td><td style={{textAlign: 'center'}}>6 challenges</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--pipelines">Build & Release Pipelines</span></td><td style={{textAlign: 'center'}}>20 challenges</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--security">Security & Compliance</span></td><td style={{textAlign: 'center'}}>7 challenges</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--instrumentation">Instrumentation</span></td><td style={{textAlign: 'center'}}>5 challenges</td></tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
-              67 skills covered | 100% exam coverage
-            </p>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>SC-500 (52 challenges)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domain</th>
-                  <th style={{textAlign: 'center'}}>Weight</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identity & Governance</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Storage & Networking</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--ai-security">AI Security</span></td><td style={{textAlign: 'center'}}>NEW</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Secure Compute</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitoring">Security Posture</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
-              89 skills covered | 100% exam coverage
-            </p>
-          </div>
+      <div className="container" style={{maxWidth: '800px', margin: '0 auto'}}>
+        <div className="section-heading">
+          <Heading as="h2">100% Certification Coverage</Heading>
+          <p>Every exam domain from the official study guides mapped to hands-on challenges.</p>
         </div>
-        <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
-          Aligned with official Microsoft study guides as of April 2026.
+        <div className="coverage-bars">
+          {coverageData.map((exam) => (
+            <div key={exam.exam} className="coverage-row">
+              <Link to={exam.href} className="coverage-label">
+                <span className="coverage-exam">{exam.exam}</span>
+                <span className="coverage-title">{exam.title}</span>
+                <span className="coverage-count">{exam.challenges}</span>
+              </Link>
+              <div className="coverage-bar">
+                {exam.domains.map((domain, idx) => (
+                  <div
+                    key={idx}
+                    className="coverage-segment"
+                    style={{width: `${domain.weight}%`, background: domain.color}}
+                    title={`${domain.name}: ~${domain.weight}%`}
+                  >
+                    <span className="coverage-segment-label">{domain.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{textAlign: 'center', marginTop: '1.5rem', fontSize: '0.85rem', opacity: 0.6}}>
+          Aligned with official Microsoft study guides — May 2026
         </p>
       </div>
     </section>
