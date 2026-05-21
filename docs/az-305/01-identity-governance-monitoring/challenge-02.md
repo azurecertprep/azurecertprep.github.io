@@ -120,7 +120,8 @@ az monitor diagnostic-settings create \
   --event-hub-rule "/subscriptions/{sub}/resourceGroups/rg-logging/providers/Microsoft.EventHub/namespaces/eh-contoso-security/authorizationRules/RootManageSharedAccessKey" \
   --storage-account "/subscriptions/{sub}/resourceGroups/rg-logging/providers/Microsoft.Storage/storageAccounts/stcontosologarchive" \
   --logs '[{"category":"AuditEvent","enabled":true}]'
-  # Note: Use Storage lifecycle management policies for retention (retentionPolicy deprecated Sept 2025)
+
+# Note: Use Storage lifecycle management policies for retention (retentionPolicy deprecated Sept 2025)
 
 # Create diagnostic setting sending to Log Analytics
 az monitor diagnostic-settings create \
@@ -148,7 +149,7 @@ az monitor data-collection rule create \
   --data-flows '[{
     "streams": ["Microsoft-AppServiceHTTPLogs"],
     "destinations": ["law-contoso-ops"],
-    "transformKql": "source | where CsUriStem != \"/health\" or ScStatus != 200"
+    "transformKql": "source | where not(CsUriStem == \"/health\" and ScStatus == 200)"
   }]' \
   --destinations '{
     "logAnalytics": [{
@@ -227,7 +228,7 @@ az storage account management-policy create \
 <details>
 <summary>1. Contoso needs security audit logs delivered to their Splunk SIEM within 5 minutes and archived for 7 years at lowest cost. Which combination of destinations should you configure in the diagnostic settings?</summary>
 
-**Azure Event Hub for SIEM delivery + Azure Storage Account (archive tier) for long-term retention.** Event Hub provides near real-time streaming (sub-minute latency) with native Splunk integration via the Azure Event Hub input add-on. Storage Account with archive tier provides the lowest cost for 7-year retention at approximately $0.001/GB/month. You do NOT need to route through Log Analytics first -- diagnostic settings can send directly to Event Hub and Storage simultaneously.
+**Azure Event Hub for SIEM delivery + Azure Storage Account (archive tier) for long-term retention.** Event Hub provides near real-time streaming (sub-minute latency) with native Splunk integration via the Azure Event Hub input add-on. Storage Account with archive tier provides the lowest cost for 7-year retention (pricing varies by region). You do NOT need to route through Log Analytics first -- diagnostic settings can send directly to Event Hub and Storage simultaneously.
 
 </details>
 
@@ -241,7 +242,7 @@ az storage account management-policy create \
 <details>
 <summary>3. What is the maximum number of diagnostic settings per Azure resource, and what constraint does this impose on routing architecture?</summary>
 
-**Each resource supports a maximum of 5 diagnostic settings.** Each setting can target one destination of each type (one Log Analytics workspace, one Storage Account, one Event Hub, one partner solution). This means a single resource can send logs to at most 5 Log Analytics workspaces, 5 Storage Accounts, and 5 Event Hubs across all its diagnostic settings. You cannot create two settings targeting the same destination. This limit rarely impacts designs but must be considered when multiple teams each want their own destination.
+**Each resource supports a maximum of 5 diagnostic settings.** Each setting can target one destination of each type (one Log Analytics workspace, one Storage Account, one Event Hub, one partner solution). This means a single resource can send logs to at most 5 separate destinations across all its diagnostic settings combined. You cannot create two settings targeting the same destination. This limit rarely impacts designs but must be considered when multiple teams each want their own destination.
 
 </details>
 

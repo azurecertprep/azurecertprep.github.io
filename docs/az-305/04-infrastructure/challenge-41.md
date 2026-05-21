@@ -123,7 +123,7 @@ Calculate memory needs considering: serialization overhead (JSON is 2-3x larger 
 <details>
 <summary>1. A social media platform needs sub-millisecond read latency for session data with 99.99% availability across two regions with active-active writes. Which Azure Cache for Redis tier is required?</summary>
 
-**Enterprise tier.** Only the Enterprise tier supports active geo-replication (multi-region active-active writes) where writes to any region are replicated to all others. Premium tier supports geo-replication but only in active-passive mode (one primary, one read-only replica). The Enterprise tier also provides 99.99% SLA with zone redundancy, compared to 99.9% for Standard and Premium tiers.
+**Enterprise tier.** Only the Enterprise tier supports active geo-replication (multi-region active-active writes) where writes to any region are replicated to all others. Premium tier supports geo-replication but only in active-passive mode (one primary, one read-only replica). The Enterprise tier provides 99.999% SLA with active geo-replication, or 99.99% with zone redundancy alone, compared to 99.9% for Standard and Premium tiers.
 
 </details>
 

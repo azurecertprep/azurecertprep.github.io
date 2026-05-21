@@ -34,9 +34,9 @@ The challenge is designing an event-driven architecture that routes events to th
 | Feature | Event Hubs | Event Grid | IoT Hub |
 |---------|-----------|-----------|---------|
 | Throughput | Millions/second | 5,000 events/sec per topic (higher via multiple topics) | Hundreds of thousands/second |
-| Protocol | AMQP, Kafka, HTTPS | HTTP, MQTT (for IoT) | MQTT, AMQP, HTTPS |
+| Protocol | AMQP, Kafka, HTTPS | HTTP (webhooks), MQTT (via Event Grid Namespaces for IoT) | MQTT, AMQP, HTTPS |
 | Consumer model | Pull (consumer groups) | Push (subscriptions) | Pull (consumer groups) + routing |
-| Message retention | 1-7 days (Standard), up to 90 days (Premium/Dedicated) | 24 hours (retry) | 1-7 days |
+| Message retention | 1-90 days (configurable; Standard 1-7 days, Premium/Dedicated up to 90 days) | 24 hours (retry) | 1-7 days |
 | Ordering | Per-partition | No guarantee | Per-device |
 | Device management | No | No | Yes (device twin, C2D) |
 | Cost model | Per throughput unit | Per event | Per message + per device |

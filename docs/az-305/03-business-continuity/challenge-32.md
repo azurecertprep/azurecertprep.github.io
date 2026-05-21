@@ -45,7 +45,7 @@ The primary technical challenge is balancing consistency vs. availability in Cos
   headers={["Player Profiles", "Match State", "Leaderboards"]}
   rows={[
     {criteria: "Strong", values: ["Not available with multi-region writes; unnecessary latency overhead for profile data", "Ideal for correctness but NOT available with multi-region writes; requires single-write-region configuration", "Not recommended - excessive cost and latency for data that tolerates seconds of staleness"]},
-    {criteria: "Bounded Staleness", values: ["Higher latency than needed; staleness guarantees add overhead without meaningful profile benefit", "Best alternative when multi-region writes enabled; configure tight K/T bounds for near-real-time consistency", "Good fit - ensures rankings are no more than T seconds behind actual state with predictable lag"]},
+    {criteria: "Bounded Staleness", values: ["Higher latency than needed; staleness guarantees add overhead without meaningful profile benefit", "Best alternative when multi-region writes enabled; configure tight K/T bounds for near-real-time consistency. Note: Strong and Bounded Staleness are NOT supported with multi-region writes — use Session or Consistent Prefix instead", "Good fit - ensures rankings are no more than T seconds behind actual state with predictable lag"]},
     {criteria: "Session", values: ["Recommended - player sees their own writes immediately while others see updates with minimal delay", "Insufficient - different players in the same match may see different game state causing desync issues", "Acceptable - each player sees their own ranking changes consistently within their session"]},
     {criteria: "Consistent Prefix", values: ["Acceptable - guarantees write order preserved but no read-your-own-write guarantee without session token", "Insufficient - guarantees ordering but not recency so players may see stale match state", "Good fit - rank changes always appear in correct order without the cost overhead of bounded staleness"]},
     {criteria: "Eventual", values: ["Not recommended - player may not see their own recent profile changes creating confusing UX", "Not suitable - players would see inconsistent and potentially out-of-order match state updates", "Acceptable for non-competitive or social leaderboards where slight staleness is tolerable"]}
@@ -76,7 +76,7 @@ az cosmosdb create \
 ### Part 2: Cosmos DB availability and failover
 
 5. Analyze the availability characteristics of the multi-region write configuration:
-   - What SLA does multi-region write Cosmos DB provide? (99.999% read and write)
+   - What SLA does multi-region write Cosmos DB provide? (99.999% read availability; 99.999% write availability with multi-region writes)
    - What happens when one region fails? (Other regions continue serving reads AND writes)
    - How does zone redundancy within each region add further protection?
 
@@ -241,7 +241,7 @@ Cost estimate for BattleForge:
 - Player profile operations: ~5,000 RU/s average (peaks to 15,000 during events)
 - 3 write regions: 15,000 RU/s base provisioned
 - At $0.008 per 100 RU/s/hour: 15,000/100 x $0.008 x 730 hours = ~$876/month
-- With autoscale (max 50,000 RU/s): billed at 10% of max when idle = $292/month base
+- With autoscale (max 50,000 RU/s): scales between 10% of max (5,000 RU/s) and the max; billed for actual consumption per hour
 
 Storage: $0.25/GB/month for data, replicated to 3 regions = $0.75/GB/month effective
 

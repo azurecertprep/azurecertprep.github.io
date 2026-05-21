@@ -45,7 +45,7 @@ This is the Domain 2 capstone challenge. You will synthesize design decisions fr
    Evaluate on: transaction throughput (50K-200K orders/day), read/write latency requirements, ACID guarantees, scaling strategy for seasonal peaks (4x normal load), and cost at steady-state vs peak.
 
 2. Design the scaling strategy for holiday peaks:
-   - If using Azure SQL Database: auto-scaling DTU/vCore tiers, read replicas for reporting offload
+   - If using Azure SQL Database: vCore serverless tier for auto-scaling compute, read replicas for reporting offload (note: DTU tiers do not auto-scale — only vCore serverless provides automatic scaling)
    - Connection pooling strategy for the application tier
    - Read/write split: primary for writes, replicas for real-time inventory checks
 

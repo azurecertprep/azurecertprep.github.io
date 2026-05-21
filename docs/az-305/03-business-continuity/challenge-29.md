@@ -170,7 +170,7 @@ Failover group key settings:
 - **Grace period**: Minimum 1 hour. This is how long automatic failover waits after detecting primary failure before switching. Shorter = faster failover but higher risk of false positives.
 - **Read-write endpoint**: `fg-shopstream.database.windows.net` (always points to primary)
 - **Read-only endpoint**: `fg-shopstream.secondary.database.windows.net` (always points to secondary)
-- **RPO**: Approximately 5 seconds for asynchronous geo-replication (guaranteed by SLA)
+- **RPO**: Typically under 5 seconds for asynchronous geo-replication (varies based on transaction volume and network conditions)
 
 ```bash
 az sql failover-group create \

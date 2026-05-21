@@ -232,7 +232,7 @@ az containerapp create --resource-group rg-az305-challenge36 \
 
 ```bash
 az containerapp show --resource-group rg-az305-challenge36 --name ca-hello \
-  --query "{FQDN:properties.configuration.ingress.fqdn, Replicas:properties.runningStatus}" --output table
+  --query "{FQDN:properties.configuration.ingress.fqdn, Replicas:properties.template.scale}" --output table
 ```
 
 :::tip

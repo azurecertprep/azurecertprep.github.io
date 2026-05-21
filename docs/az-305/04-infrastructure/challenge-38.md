@@ -36,7 +36,7 @@ The architecture team needs to design a messaging solution that guarantees exact
 | Duplicate detection | Built-in (time window) | None | Built-in (24-hour) |
 | Dead-letter queue | Yes | No | Yes |
 | Transactions | Yes | No | No |
-| Max queue size | 1-80 GB | 500 TB | N/A (push delivery) |
+| Max queue size | 1-80 GB | No per-queue limit (storage account limit applies) | N/A (push delivery) |
 | Delivery guarantee | At-least-once / At-most-once | At-least-once | At-least-once |
 
 2. Justify why Azure Service Bus is required over Storage Queues for this scenario. Identify which specific features (sessions, duplicate detection, dead-letter, transactions) map to which business problems.

@@ -82,7 +82,7 @@ Your challenge is to design and implement a data integration solution using Azur
 
 10. Implement error handling and retry logic:
     - Set retry count to 3 with 10-minute intervals on copy activities
-    - Add a Web activity to send failure notifications via webhook/email
+    - Add a Web activity to send failure notifications via webhook (e.g., call a Logic App or SendGrid API for email)
     - Log pipeline run metadata (start time, duration, rows copied, errors) to a monitoring table
     - Design an alerting rule using Azure Monitor for consecutive pipeline failures
 

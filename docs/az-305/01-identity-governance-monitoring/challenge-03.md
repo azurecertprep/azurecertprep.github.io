@@ -151,6 +151,7 @@ az monitor app-insights component create \
   --app appins-tailspin-prod \
   --location eastus \
   --resource-group rg-monitoring \
+  --application-type web \
   --workspace "/subscriptions/{sub}/resourceGroups/rg-logging/providers/Microsoft.OperationalInsights/workspaces/law-tailspin"
 
 # Create action group

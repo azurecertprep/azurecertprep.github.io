@@ -334,7 +334,7 @@ True exactly-once processing requires idempotent message handlers combined with 
 <details>
 <summary>Hint 4: Data Residency with Multi-Region Access</summary>
 
-Store patient data in the patient's region (mandatory for GDPR/HIPAA). When a US doctor needs to see a UK patient's record, the API in the US region makes a cross-region call to the UK region's API (not directly to the UK database). This keeps the data access auditable, ensures data does not replicate outside its region, and allows region-specific authorization policies. Use Azure Front Door to route patient requests to their home region based on geographic routing rules or authentication claims (patient's registered country).
+Store patient data in the patient's region (mandatory for GDPR/HIPAA). When a US doctor needs to see a UK patient's record, the API in the US region makes a cross-region call to the UK region's API (not directly to the UK database). This keeps the data access auditable, ensures data does not replicate outside its region, and allows region-specific authorization policies. Use Azure Front Door with custom routing rules to route patient requests to their home region based on authentication claims (patient's registered country) or custom headers — note that Front Door's built-in geographic routing alone routes based on client location, not patient data residency, so application-level routing logic is also needed.
 
 </details>
 

@@ -124,7 +124,7 @@ Azure Virtual WAN provides a managed hub with automated connectivity (VPN, Expre
 <details>
 <summary>Hint 3: Private DNS Zone for Private Endpoints</summary>
 
-Each Azure PaaS service type has a specific private DNS zone name (e.g., `privatelink.database.windows.net` for Azure SQL, `privatelink.blob.core.windows.net` for Blob Storage). Create one private DNS zone per service type, link it to all VNets that need resolution, and configure on-premises DNS to forward these zones to Azure DNS (via DNS forwarder VMs or Azure DNS Private Resolver inbound endpoint at 168.63.129.16 accessible through the VNet).
+Each Azure PaaS service type has a specific private DNS zone name (e.g., `privatelink.database.windows.net` for Azure SQL, `privatelink.blob.core.windows.net` for Blob Storage). Create one private DNS zone per service type, link it to all VNets that need resolution, and configure on-premises DNS to forward these zones to Azure DNS (via DNS forwarder VMs or Azure DNS Private Resolver inbound endpoint, which receives queries on a private IP within its delegated subnet — note: 168.63.129.16 is Azure's internal recursive resolver, not the inbound endpoint IP).
 
 </details>
 

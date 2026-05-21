@@ -235,7 +235,7 @@ az storage share-rm create \
 
 # Assign share-level RBAC (Storage file Data SMB share contributor)
 az role assignment create \
-  --assignee-object-id $(az ad group show -g "Engineering-Team" --query id -o tsv) \
+  --assignee-object-id $(az ad group show --group "Engineering-Team" --query id -o tsv) \
   --role "Storage File Data SMB Share Contributor" \
   --scope "/subscriptions/{sub}/resourceGroups/rg-files/providers/Microsoft.Storage/storageAccounts/stadventureworksfiles/fileServices/default/fileshares/engineering-cad"
 ```
@@ -334,7 +334,7 @@ az group create --name rg-az305-challenge07 --location eastus
 
 ```bash
 az storage account create \
-  --name staz305challenge07$RANDOM \
+  --name staz305ch07$RANDOM \
   --resource-group rg-az305-challenge07 \
   --location eastus \
   --sku Standard_LRS \

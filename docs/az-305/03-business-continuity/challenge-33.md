@@ -177,7 +177,7 @@ Per-region failure probability = 1 - 0.99914 = 0.00086
 All-regions-fail probability = 0.00086^3 = 0.000000000636
 Multi-region availability = 1 - 0.000000000636 = 99.9999999% (effectively 9+ nines)
 
-The key insight: even though no single region meets 99.99%, three active regions together far exceed it. This is the fundamental value proposition of active-active multi-region architecture.
+Note: This calculation assumes independent failures across regions, which is a simplification. Correlated failures (e.g., a shared dependency outage) would reduce actual availability. The key insight: even though no single region meets 99.99%, three active regions together far exceed it. This is the fundamental value proposition of active-active multi-region architecture.
 
 However, this assumes Front Door perfectly routes around failures. Front Door's own 99.99% SLA becomes the limiting factor:
 Effective SLA = Front Door SLA x Multi-region backend SLA = 0.9999 x ~1.0 = 99.99%
@@ -302,7 +302,7 @@ For the < 50ms requirement to be met globally, the CDN is not optional - it's ar
 <details>
 <summary>3. StreamFlix uses Cosmos DB multi-region writes for user profiles. If a user updates their profile in East US 2 and immediately reads from Japan East, what do they see under Session consistency?</summary>
 
-**Under Session consistency with multi-region writes, the user sees their own update ONLY if they continue reading from the same region (East US 2).** Session consistency guarantees are scoped to a single session token and a single region. If the user's next read is routed to Japan East (e.g., because they traveled or Front Door rerouted), they might see stale data until replication catches up (typically milliseconds to a few seconds). To guarantee read-your-own-writes globally, the application must pass the session token and route the read to the write region, or use Bounded Staleness with a tight window. In practice, this edge case rarely matters for profile reads.
+**Under Session consistency with multi-region writes, the user sees their own update ONLY if they continue reading from the same region (East US 2) and pass the same session token.** Session consistency guarantees are scoped to a single client session (identified by the session token), not to a region. If the user's next read is routed to Japan East (e.g., because they traveled or Front Door rerouted), they might see stale data until replication catches up (typically milliseconds to a few seconds), unless the application forwards the session token. To guarantee read-your-own-writes globally, the application must pass the session token with each request regardless of region, or use Bounded Staleness with a tight window. In practice, this edge case rarely matters for profile reads.
 
 </details>
 

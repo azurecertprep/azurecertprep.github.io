@@ -188,7 +188,7 @@ az role definition create --role-definition product-team-engineer.json
 
 # Assign the role to a group at resource group scope
 az role assignment create \
-  --assignee-object-id $(az ad group show -g "team-alpha-engineers" --query id -o tsv) \
+  --assignee-object-id $(az ad group show --group "team-alpha-engineers" --query id -o tsv) \
   --role "Product Team Engineer" \
   --scope "/subscriptions/{sub-id}/resourceGroups/team-alpha-compute-dev"
 ```

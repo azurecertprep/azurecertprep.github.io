@@ -101,7 +101,7 @@ Azure App Configuration feature management supports built-in filters: `Microsoft
 <details>
 <summary>Hint 4: Configuration Store Tiers</summary>
 
-Azure App Configuration offers Free and Standard tiers. The Free tier is limited to 10MB storage, 1,000 requests/day, and no SLA. The Standard tier provides 1GB storage, 30,000 requests/hour per replica, 99.9% SLA, private endpoints, managed identity, and geo-replication. For production workloads with 30 services polling configuration, the Standard tier with replicas is essential.
+Azure App Configuration offers Free and Standard tiers. The Free tier is limited to 10MB storage, 1,000 requests/day, and no SLA. The Standard tier provides 1GB storage, higher request throughput per replica (see current Azure documentation for exact limits), 99.9% SLA, private endpoints, managed identity, and geo-replication. For production workloads with 30 services polling configuration, the Standard tier with replicas is essential.
 
 </details>
 

@@ -167,7 +167,7 @@ Bronze zone: raw data as-is from sources (JSON, CSV, raw Parquet). Silver zone: 
 <details>
 <summary>2. The daily dashboards are queried by 50 managers simultaneously between 7:00 AM and 9:00 AM. Outside those hours, no one queries the warehouse. Which SQL pool option minimizes cost while ensuring consistent performance during peak hours?</summary>
 
-**Dedicated SQL pool with auto-pause or manual pause scheduling.** During the 7-9 AM peak, dedicated SQL pool provides guaranteed DWU compute for consistent query performance across 50 concurrent users. Outside those hours, the pool can be paused (zero compute cost, only storage charges). Serverless SQL pool would scale per-query but performance may vary with 50 concurrent complex dashboard queries, and cost becomes unpredictable. The pattern of predictable peak hours with zero off-peak usage makes dedicated pool with pause/resume the most cost-effective choice.
+**Dedicated SQL pool with scheduled pause/resume.** During the 7-9 AM peak, dedicated SQL pool provides guaranteed DWU compute for consistent query performance across 50 concurrent users. Outside those hours, the pool can be paused via automation (zero compute cost, only storage charges). Note: dedicated SQL pools do NOT auto-pause — use Azure Automation or Logic Apps to schedule pause/resume. Serverless SQL pool would scale per-query but performance may vary with 50 concurrent complex dashboard queries, and cost becomes unpredictable. The pattern of predictable peak hours with zero off-peak usage makes dedicated pool with scheduled pause/resume the most cost-effective choice.
 
 </details>
 
@@ -219,6 +219,7 @@ az synapse workspace create \
 3. Open the firewall to allow your client IP:
 
 ```bash
+# WARNING: 0.0.0.0-255.255.255.255 allows ALL IPs (lab only — never use in production)
 az synapse workspace firewall-rule create \
   --name AllowClient \
   --resource-group rg-az305-challenge23 \

@@ -160,7 +160,7 @@ az ad app create \
   --display-name "Relecloud Internal Portal" \
   --sign-in-audience "AzureADMyOrg" \
   --web-redirect-uris "https://portal.relecloud.com/auth/callback" \
-  --enable-id-token-issuance true
+  --enable-id-token-issuance
 
 # Create a service principal for the app
 APP_ID=$(az ad app list --display-name "Relecloud Internal Portal" --query "[0].appId" -o tsv)
@@ -177,11 +177,12 @@ IDENTITY_ID=$(az webapp identity show \
   --resource-group rg-relecloud \
   --query principalId -o tsv)
 
-# Grant Key Vault access to the managed identity
-az keyvault set-policy \
-  --name kv-relecloud-prod \
-  --object-id $IDENTITY_ID \
-  --secret-permissions get list
+# Grant Key Vault access to the managed identity (using RBAC role assignment)
+az role assignment create \
+  --assignee-object-id $IDENTITY_ID \
+  --assignee-principal-type ServicePrincipal \
+  --role "Key Vault Secrets User" \
+  --scope $(az keyvault show --name kv-relecloud-prod --query id -o tsv)
 ```
 
 </details>
@@ -287,6 +288,7 @@ az group create \
 ```
 
 ```bash
+# $RANDOM generates a random integer (0-32767) for unique resource names
 SUFFIX=$RANDOM
 ```
 
@@ -311,7 +313,7 @@ az webapp create \
   --name "app-ch04-${SUFFIX}" \
   --resource-group rg-az305-challenge04 \
   --plan "plan-ch04-${SUFFIX}" \
-  --runtime "NODE:18-lts"
+  --runtime "NODE|18-lts"
 ```
 
 ### Step 2: enable system-assigned managed identity
@@ -461,16 +463,6 @@ This lab proved three architectural principles: (1) Managed identity eliminates 
 :::
 
 ## Cleanup
-
-```bash
-APP_ID=$(az ad app list \
-  --display-name "az305-challenge04-lab-app" \
-  --query "[0].appId" -o tsv)
-```
-
-```bash
-if [ -n "$APP_ID" ]; then az ad app delete --id "$APP_ID"; fi
-```
 
 ```bash
 az group delete \

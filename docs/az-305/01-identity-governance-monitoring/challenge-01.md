@@ -122,7 +122,7 @@ az monitor log-analytics workspace create \
   --resource-group rg-logging-centralus \
   --workspace-name law-northwind-central \
   --location centralus \
-  --retention-time 90 \
+  --retention-in-days 90 \
   --sku PerGB2018
 
 # Create EU workspace for data residency
@@ -130,7 +130,7 @@ az monitor log-analytics workspace create \
   --resource-group rg-logging-westeurope \
   --workspace-name law-northwind-eu \
   --location westeurope \
-  --retention-time 90
+  --retention-in-days 90
 ```
 
 </details>
@@ -204,7 +204,7 @@ Compare: 300 GB commitment tier + 50 GB overage vs. 400 GB commitment tier with 
 <details>
 <summary>1. Northwind Traders has 350 GB/day of log ingestion split across three teams. The security team needs to query all logs, but the analytics team should only see their own data. What is the most cost-effective workspace architecture?</summary>
 
-**A hybrid approach with a single workspace using resource-context access control** is most cost-effective. A single workspace qualifies for the 300 GB/day commitment tier (significant discount), while resource-context RBAC ensures the analytics team only sees logs from their own resources. The security team gets workspace-level Log Analytics Reader for full visibility. Only add a second workspace if EU data residency requires physical separation.
+**A hybrid approach with a single workspace using resource-context access control** is most cost-effective. A single workspace qualifies for a commitment tier (significant discount at 100+ GB/day levels), while resource-context RBAC ensures the analytics team only sees logs from their own resources. The security team gets workspace-level Log Analytics Reader for full visibility. Only add a second workspace if EU data residency requires physical separation.
 
 </details>
 

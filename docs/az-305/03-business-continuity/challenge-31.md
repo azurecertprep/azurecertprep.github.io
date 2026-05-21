@@ -102,12 +102,12 @@ GlobalPay cannot afford ANY data loss during a failover. A mid-processing failov
 | Failover group scope | Selected databases | All databases on instance |
 
 11. Design the HA architecture if GlobalPay uses SQL Managed Instance:
-    - BC tier with zone redundancy (4-node Always On AG)
+    - BC tier with zone redundancy (3-replica Always On AG: primary + 2 secondary, distributed across availability zones)
     - Failover group to secondary region (entire instance fails over together)
     - Impact on failover: all databases move together (advantage for related payroll DBs)
 
 12. Create a monitoring and alerting strategy:
-    - Monitor replication lag to secondaries (should be < 5 seconds)
+    - Monitor replication lag to secondaries (typically under 5 seconds but varies with load)
     - Alert on failover events (automated notification to DBA team)
     - Monitor DTU/vCore utilization during payroll runs
     - Track successful connections to failover group endpoint

@@ -138,7 +138,7 @@ Private endpoints provide the strongest network isolation (traffic stays on the 
 <details>
 <summary>4. During a vault failover to a secondary region, Meridian discovers their private endpoint DNS records still point to the primary region. What is the root cause and fix?</summary>
 
-**Private DNS zone records need to be updated for the secondary region.** When using private endpoints, DNS resolution is handled by Azure Private DNS zones. During a manual failover (Key Vault supports geo-replication), the private endpoint in the secondary region has a different IP address. The fix is to ensure Private DNS zones are configured with records for both regions, or use Azure Traffic Manager / DNS-based failover for the Key Vault FQDN. Key Vault's built-in geo-replication handles this automatically for the public endpoint, but private endpoint DNS requires explicit planning.
+**Private DNS zone records need to be updated for the secondary region.** When using private endpoints, DNS resolution is handled by Azure Private DNS zones. During a manual failover (Key Vault uses Azure's infrastructure redundancy via LRS/ZRS/GRS for built-in replication), the private endpoint in the secondary region has a different IP address. The fix is to ensure Private DNS zones are configured with records for both regions, or use Azure Traffic Manager / DNS-based failover for the Key Vault FQDN. Key Vault's built-in replication handles this automatically for the public endpoint, but private endpoint DNS requires explicit planning.
 
 </details>
 
@@ -160,6 +160,7 @@ az keyvault create \
   --resource-group rg-az305-challenge08 \
   --location eastus \
   --enable-rbac-authorization false \
+  --enable-purge-protection true \
   --retention-days 7
 ```
 

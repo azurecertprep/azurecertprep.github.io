@@ -178,7 +178,7 @@ echo "Catalog ID: $CATALOG_ID"
 az rest --method POST \
   --url "https://graph.microsoft.com/v1.0/identityGovernance/entitlementManagement/accessPackages" \
   --headers "Content-Type=application/json" \
-  --body "{\"displayName\":\"Lab Developer Access\",\"description\":\"Access package for development resources\",\"catalog\":{\"id\":\"$CATALOG_ID\"},\"isHidden\":false}"
+  --body "{\"displayName\":\"Lab Developer Access\",\"description\":\"Access package for development resources\",\"catalogId\":\"$CATALOG_ID\",\"isHidden\":false}"
 ```
 
 5. Verify the catalog and access package were created:

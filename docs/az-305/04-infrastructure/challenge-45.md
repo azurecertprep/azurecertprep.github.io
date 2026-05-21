@@ -21,7 +21,9 @@ Following the Cloud Adoption Framework strategy developed for Precision Manufact
 
 **Linux VMs (50):** 20 web servers (12 Apache with PHP, 8 Nginx with Node.js), 15 application servers (Python Flask/Django), 10 utility servers (monitoring, logging, scheduling), 5 containerized applications already running Docker.
 
-**Legacy applications (40):** 8 applications with hard-coded IP addresses in configuration, 12 applications with dependencies on specific OS versions (Windows Server 2012 R2), 10 applications with local file system dependencies, 10 applications with undocumented third-party integrations.
+**Legacy applications (30):** 8 applications with hard-coded IP addresses in configuration, 12 applications with dependencies on specific OS versions (Windows Server 2012 R2), 10 applications with local file system dependencies.
+
+**Other infrastructure (40):** 10 applications with undocumented third-party integrations, 15 database servers (covered in Challenge 46), 15 network/storage appliances.
 
 The migration team needs to categorize each workload group, select the appropriate Azure target (IaaS vs PaaS), recommend specific migration tools, and design a validation strategy.
 

@@ -243,7 +243,7 @@ docs = [
 for doc in docs:
     response = container.create_item(body=doc)
     print(f'Inserted {doc[\"id\"]} into partition {doc[\"deviceId\"]}')
-    # Show the RU charge for each write (returned in response headers)
+    # Show the RU charge for each write (Python SDK v4 pattern: last_response_headers stores headers from most recent operation)
     print(f'  Write RU charge: {container.client_connection.last_response_headers[\"x-ms-request-charge\"]}')
 "
 ```
@@ -265,6 +265,7 @@ item_list = list(container.query_items(
     query='SELECT * FROM c WHERE c.deviceId = \"device-A\"',
     partition_key='device-A'
 ))
+# Python SDK v4 pattern: client_connection.last_response_headers captures headers from the most recent operation
 ru_charge = container.client_connection.last_response_headers['x-ms-request-charge']
 print(f'Results: {len(item_list)} documents')
 print(f'RU cost: {ru_charge} RUs')
@@ -276,6 +277,7 @@ item_list2 = list(container.query_items(
     query='SELECT * FROM c WHERE c.facility = \"us-east\"',
     enable_cross_partition_query=True
 ))
+# Python SDK v4 pattern: client_connection.last_response_headers captures headers from the most recent operation
 ru_charge2 = container.client_connection.last_response_headers['x-ms-request-charge']
 print(f'Results: {len(item_list2)} documents')
 print(f'RU cost: {ru_charge2} RUs')

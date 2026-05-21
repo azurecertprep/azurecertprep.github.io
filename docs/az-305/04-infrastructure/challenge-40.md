@@ -144,7 +144,7 @@ The architecture must protect backend services from direct exposure, enforce con
 <details>
 <summary>Hint 1: APIM Premium for Healthcare</summary>
 
-Azure API Management Premium is required for HIPAA-regulated healthcare APIs because:
+Azure API Management Premium tier is recommended for production workloads requiring compliance certifications (such as HIPAA) because:
 - **VNet integration (internal mode)**: APIM gateway is deployed inside the VNet with no public IP. Backend services are only reachable from within the VNet. This ensures PHI never traverses the public internet between APIM and backends.
 - **Private endpoints**: Consumers can access APIM via Azure Private Link, keeping traffic on the Microsoft backbone.
 - **Multi-region**: Deploy APIM in 2+ regions for the 99.9%+ SLA required by partner contracts.
@@ -162,11 +162,11 @@ Use `rate-limit-by-key` for per-consumer rate limiting:
 ```xml
 <inbound>
     <choose>
-        <when condition="@(context.Subscription.Name.Contains("free"))">
+        <when condition="@(context.Subscription.Name.Contains(&quot;free&quot;))">
             <rate-limit-by-key calls="100" renewal-period="60"
                 counter-key="@(context.Subscription.Id)" />
         </when>
-        <when condition="@(context.Subscription.Name.Contains("paid"))">
+        <when condition="@(context.Subscription.Name.Contains(&quot;paid&quot;))">
             <rate-limit-by-key calls="1000" renewal-period="60"
                 counter-key="@(context.Subscription.Id)" />
         </when>

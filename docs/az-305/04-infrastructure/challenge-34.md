@@ -320,7 +320,7 @@ sleep 60
 az vmss list-instances \
   --resource-group rg-az305-challenge34 \
   --name vmss-autoscale-lab \
-  --query "length([])"
+  --query "length(@)"
 ```
 
 ### Step 6: check autoscale activity log
@@ -358,7 +358,7 @@ sleep 300
 INSTANCE_COUNT=$(az vmss list-instances \
   --resource-group rg-az305-challenge34 \
   --name vmss-autoscale-lab \
-  --query "length([])")
+  --query "length(@)")
 echo "Current instance count after load stopped: $INSTANCE_COUNT"
 ```
 
@@ -373,7 +373,7 @@ sleep 120
 INSTANCE_COUNT=$(az vmss list-instances \
   --resource-group rg-az305-challenge34 \
   --name vmss-autoscale-lab \
-  --query "length([])")
+  --query "length(@)")
 echo "Final instance count: $INSTANCE_COUNT (should be trending back to 2)"
 ```
 

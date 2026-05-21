@@ -146,7 +146,7 @@ For SQL Server VMs, always use application-consistent to avoid transaction log c
 <details>
 <summary>Hint 2: Cross-Region Restore RPO</summary>
 
-Cross-region restore uses GRS replication, which has an RPO of up to 12 hours (Azure does not guarantee exact replication lag). Key points:
+Cross-region restore uses GRS replication, which has an RPO of up to 12 hours (Azure does not guarantee exact replication lag, and in practice it can be shorter). Key points:
 - CRR data is always at least 12 hours behind production
 - You can trigger CRR anytime for testing or during a disaster (no need to wait for Azure to declare an outage)
 - Paired regions: East US / West US, West Europe / North Europe, Southeast Asia / East Asia

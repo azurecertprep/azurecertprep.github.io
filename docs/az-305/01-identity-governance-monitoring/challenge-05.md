@@ -326,6 +326,8 @@ az group create --name rg-az305-challenge05 --location eastus
 2. Create a security group to simulate a privileged access group:
 
 ```bash
+# Note: For production scenarios, Microsoft recommends using Microsoft Graph API
+# directly for Entra ID (Azure AD) operations instead of legacy az ad commands
 az ad group create \
   --display-name "sg-az305-challenge05-admins" \
   --mail-nickname "sg-az305-challenge05-admins"
@@ -355,7 +357,7 @@ az role assignment create \
 ```bash
 az role assignment list \
   --resource-group rg-az305-challenge05 \
-  --query "[?principalId=='$GROUP_ID'].{role:roleDefinitionName, scope:scope}" -o table
+  --query "[?principalId=='${GROUP_ID}'].{role:roleDefinitionName, scope:scope}" -o table
 ```
 
 :::tip

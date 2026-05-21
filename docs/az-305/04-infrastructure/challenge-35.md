@@ -46,7 +46,7 @@ Your task is to design a VM-based solution that addresses scale-to-zero economic
 
 4. For PII-processing workloads that cannot share hardware with other tenants, evaluate:
    - **Azure Dedicated Hosts**: Physical server dedicated to your organization
-   - **Confidential Computing (DCsv2/DCsv3 VMs)**: Hardware-based TEE (Trusted Execution Environments) with Intel SGX enclaves
+   - **Confidential Computing (DCsv2/DCsv3 VMs)**: Hardware-based TEE (Trusted Execution Environments) using Intel SGX enclaves or AMD SEV-SNP for memory encryption during processing
 
 5. Determine which isolation approach meets regulatory requirements:
    - If the requirement is "no other tenant on the same physical server" → which solution?
