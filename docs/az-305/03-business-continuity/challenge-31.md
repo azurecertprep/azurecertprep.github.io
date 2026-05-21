@@ -424,7 +424,7 @@ echo "Applications using this endpoint required ZERO connection string changes."
 ```bash
 # Verify data on the new primary using sqlcmd
 sqlcmd -S "$SECONDARY_SERVER.database.windows.net" -d payrolldb \
-  -U sqladmin -P $ADMIN_PASS \
+  -U sqladmin -P "$ADMIN_PASS" \
   -Q "SELECT * FROM EmployeePayroll;"
 ```
 

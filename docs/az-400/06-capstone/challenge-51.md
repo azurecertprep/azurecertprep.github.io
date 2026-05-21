@@ -644,7 +644,7 @@ Add deployment markers to Application Insights after each production deployment:
           )
 
           az rest --method put \
-            --uri "/subscriptions/{sub}/resourceGroups/rg-payments-production/providers/microsoft.insights/components/ai-payments-production/Annotations" \
+            --uri "/subscriptions/{sub}/resourceGroups/rg-payments-production/providers/microsoft.insights/components/ai-payments-production/Annotations?api-version=2015-05-01" \
             --body "$ANNOTATION_BODY"
 ```
 

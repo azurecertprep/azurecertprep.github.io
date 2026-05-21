@@ -95,7 +95,7 @@ Every official exam skill is mapped to at least one challenge. Use this matrix t
 | Skill | Challenge(s) |
 |-------|-------------|
 | Describe factors that can affect costs in Azure | 19 |
-| Explore the pricing calculator | 19 |
+| Compare the Pricing Calculator and the Total Cost of Ownership (TCO) Calculator | 19 |
 | Describe cost management capabilities in Azure | 19 |
 | Describe the purpose of tags | 19 |
 

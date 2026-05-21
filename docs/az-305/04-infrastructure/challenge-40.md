@@ -36,7 +36,7 @@ The architecture must protect backend services from direct exposure, enforce con
 | SLA | No SLA | No SLA | 99.95% | 99.95% | 99.95%+ (multi-region) |
 | VNet integration | No | No | No | No | Yes (external/internal) |
 | Multi-region | No | No | No | No | Yes |
-| Self-hosted gateway | No | No | No | No | Yes |
+| Self-hosted gateway | No | Yes | No | No | Yes |
 | Developer portal | Managed only | Yes | Yes | Yes | Yes |
 | Capacity (units) | Serverless | 1 | 1 | 1-4 | 1-12+ per region |
 | Private endpoint | No | No | No | No | Yes |

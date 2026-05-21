@@ -514,9 +514,9 @@ az network firewall policy update \
   --resource-group $RG \
   --threat-intel-whitelist fqdns="" ip-addresses=""
 
-# Note: Application rules with explicit FQDN allow take precedence
-# over threat intelligence. Check if an app rule allows the domain.
-# Remove or modify the conflicting application rule.
+# Note: Threat intelligence in Deny mode has highest precedence, blocking
+# traffic even if an explicit allow rule exists. If legitimate traffic is
+# blocked, add the FQDN/IP to the threat intelligence whitelist.
 ```
 
 </details>

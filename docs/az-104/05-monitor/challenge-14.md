@@ -133,7 +133,7 @@ Perf
 ```kusto
 // Find error events in the last 24 hours
 Syslog
-| where SeverityLevel == "error" or SeverityLevel == "err"
+| where SeverityLevel == "err"
 | where TimeGenerated > ago(24h)
 | project TimeGenerated, Computer, SyslogMessage, Facility
 | order by TimeGenerated desc

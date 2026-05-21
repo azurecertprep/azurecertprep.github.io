@@ -117,7 +117,7 @@ Private endpoints provide the strongest network isolation (traffic stays on the 
 <details>
 <summary>1. Meridian needs to store a root CA private key that signs all internal service certificates. The key must never leave hardware and must meet FIPS 140-2 Level 3. Which service should they use?</summary>
 
-**Azure Key Vault Managed HSM.** Standard Key Vault provides FIPS 140-2 Level 1 protection (software-protected keys). Premium provides FIPS 140-3 Level 3 for HSM-backed keys in a multi-tenant HSM. Managed HSM provides single-tenant, FIPS 140-3 Level 3 validated HSMs where keys are guaranteed to never leave the hardware boundary. This is required for root CA keys in regulated environments.
+**Azure Key Vault Managed HSM.** Standard Key Vault provides FIPS 140-2 Level 1 protection (software-protected keys). Premium provides FIPS 140-2 Level 2 for HSM-backed keys in a multi-tenant HSM. Managed HSM provides single-tenant, FIPS 140-2 Level 3 validated HSMs where keys are guaranteed to never leave the hardware boundary. This is required for root CA keys in regulated environments.
 
 </details>
 

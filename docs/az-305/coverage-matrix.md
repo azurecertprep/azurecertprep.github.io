@@ -141,10 +141,10 @@ Every skill from the [official AZ-305 study guide](https://learn.microsoft.com/e
 
 | Domain | Skills | Challenges | Coverage |
 |--------|--------|-----------|----------|
-| Identity, Governance & Monitoring | 11 | 01-13 | 100% |
+| Identity, Governance & Monitoring | 12 | 01-13 | 100% |
 | Data Storage | 10 | 14-24 | 100% |
 | Business Continuity | 7 | 25-33 | 100% |
 | Infrastructure | 21 | 34-50 | 100% |
-| **Total** | **49** | **50** | **100%** |
+| **Total** | **50** | **50** | **100%** |
 
-All 49 skills from the official study guide are covered, plus 4 domain capstone challenges and 1 cross-domain capstone for integrated practice.
+All 50 skills from the official study guide are covered, plus 4 domain capstone challenges and 1 cross-domain capstone for integrated practice.

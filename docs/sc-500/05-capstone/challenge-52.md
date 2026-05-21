@@ -937,6 +937,8 @@ az apim api policy set \
       calls="60" 
       renewal-period="60" 
       counter-key="@(context.Subscription.Id)" />
+    <!-- Semantic cache lookup -->
+    <azure-openai-semantic-cache-lookup score-threshold="0.8" embeddings-backend-id="embeddings-backend" />
     <!-- Token limit policy for AI workloads -->
     <azure-openai-token-limit
       counter-key="@(context.Subscription.Id)"

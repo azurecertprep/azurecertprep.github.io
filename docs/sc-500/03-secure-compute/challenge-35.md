@@ -216,7 +216,7 @@ Author a custom policy to enforce organization-specific security settings.
 # Install-Module -Name GuestConfiguration -Force
 
 # Create a custom configuration (PowerShell DSC)
-cat << 'EOF' > ContosSecurityBaseline.ps1
+cat << 'EOF' > ContosoSecurityBaseline.ps1
 Configuration ContosoSecurityBaseline {
     Import-DscResource -ModuleName 'PSDscResources'
 

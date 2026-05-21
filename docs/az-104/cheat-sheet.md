@@ -186,7 +186,7 @@ az backup protection enable-for-vm --resource-group myRG --vault-name myVault --
 az backup protection backup-now --resource-group myRG --vault-name myVault --item-name myVM --container-name myVM
 
 # Site Recovery (basic)
-az site-recovery vault create --resource-group myRG --name mySRVault --location eastus
+az backup vault create --resource-group myRG --name mySRVault --location eastus
 ```
 
 ---

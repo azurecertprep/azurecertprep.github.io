@@ -85,7 +85,7 @@ RA-GRS: Same as GRS, but secondary is READABLE
 2. On the **Basics** tab, observe:
    - **Redundancy** dropdown: LRS, ZRS, GRS, RA-GRS, GZRS, RA-GZRS
 3. On the **Advanced** tab, observe:
-   - **Default access tier**: Hot or Cool
+   - **Default access tier**: Hot, Cool, or Cold
 4. Click **Cancel**
 
 :::tip Azure CLI Alternative

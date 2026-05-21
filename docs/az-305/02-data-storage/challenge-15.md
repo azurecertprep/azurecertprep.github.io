@@ -79,7 +79,7 @@ General Purpose: Remote storage, 99.99% SLA, up to 128 vCores, max 4TB (single d
 <details>
 <summary>Hint 3: Serverless Compute</summary>
 
-Serverless is available only in the vCore model under the General Purpose tier and Hyperscale (single-node dev/test only). It automatically scales compute based on workload demand and can auto-pause the database after a configurable period of inactivity (minimum 1 hour). When paused, you pay only for storage. Cold start (resuming from pause) takes approximately 1-2 minutes. Serverless is ideal for intermittent, unpredictable workloads. It is NOT suitable for workloads requiring constant low latency.
+Serverless is available only in the vCore model under the General Purpose tier and Hyperscale (serverless compute tier — auto-scales, pay-per-use). It automatically scales compute based on workload demand and can auto-pause the database after a configurable period of inactivity (minimum 1 hour). When paused, you pay only for storage. Cold start (resuming from pause) takes approximately 1-2 minutes. Serverless is ideal for intermittent, unpredictable workloads. It is NOT suitable for workloads requiring constant low latency.
 
 </details>
 

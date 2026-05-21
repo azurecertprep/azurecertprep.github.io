@@ -438,7 +438,7 @@ az network nsg rule list --resource-group "MC_rg-contoso-containers_aks-contoso-
 
 # 7. Alert processing delay - Defender alerts can take 5-10 minutes
 # Check again after waiting
-az security alert list --query "[?alertType contains 'K8S']"
+az security alert list --query "[?contains(alertType, 'K8S')]"
 ```
 
 </details>

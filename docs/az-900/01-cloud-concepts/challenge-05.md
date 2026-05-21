@@ -136,7 +136,6 @@ az webapp list-runtimes --os linux --output table
       question: 'What is a disadvantage of PaaS compared to IaaS?',
       options: ['Higher cost', 'Less control over the operating system', 'Slower deployment', 'No auto-scaling'],
       correctAnswer: 1,
-
       explanation: 'The main trade-off with PaaS is reduced control. You cannot access or configure the underlying OS, install custom drivers, or make OS-level changes. In exchange, you get simpler management.'
     },
     {

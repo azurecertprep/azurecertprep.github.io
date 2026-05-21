@@ -454,12 +454,12 @@ az identity federated-credential list \
 
 # Common fix: The subject claim doesn't match
 # If the workflow runs on a tag, it needs a different credential:
+# Note: Wildcards not supported. Create one credential per tag, or use environment-based subjects.
 az identity federated-credential create \
   --name "github-actions-tags" \
   --identity-name "id-contoso-github-deploy" \
   --resource-group $RG_NAME \
   --issuer "https://token.actions.githubusercontent.com" \
-  # Note: Wildcards not supported. Create one credential per tag, or use environment-based subjects.
   --subject "repo:contoso/contoso-app:ref:refs/tags/v1.0.0" \
   --audiences "api://AzureADTokenExchange"
 
