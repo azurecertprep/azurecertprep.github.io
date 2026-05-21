@@ -36,7 +36,7 @@ There are three cloud deployment models. Review the differences:
 |-------|-------------|---------|
 | **Public cloud** | Resources owned by cloud provider, shared across customers | Azure, AWS, Google Cloud |
 | **Private cloud** | Resources dedicated to a single organization | Azure Stack, on-premises datacenter |
-| **Hybrid cloud** | Combination of public and private clouds | On-prem AD + Azure Entra ID |
+| **Hybrid cloud** | Combination of public and private clouds | On-prem AD + Microsoft Entra ID |
 
 **Your task**: Think about your current or previous organization. Which cloud model would fit best? Why?
 

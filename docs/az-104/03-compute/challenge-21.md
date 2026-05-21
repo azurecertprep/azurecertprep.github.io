@@ -333,8 +333,17 @@ az automation schedule create \
   --frequency Week \
   --interval 1 \
   --start-time "2025-07-01T19:00:00-05:00" \
-  --weekdays Monday Tuesday Wednesday Thursday Friday \
-  --description "Runs every weekday at 7 PM ET to stop dev VMs"
+  --description "Runs weekly starting Monday at 7 PM ET to stop dev VMs"
+
+# NOTE: Azure CLI's 'az automation schedule create --frequency Week' creates a
+# weekly recurrence but doesn't support selecting specific weekdays. To schedule
+# on specific days (Mon-Fri), use PowerShell:
+#   New-AzAutomationSchedule -ResourceGroupName rg-az104-challenge21 \
+#     -AutomationAccountName auto-contoso-ops \
+#     -Name "weekday-evening-shutdown" \
+#     -StartTime "2025-07-01T19:00:00-05:00" \
+#     -WeekInterval 1 \
+#     -DaysOfWeek Monday,Tuesday,Wednesday,Thursday,Friday
 
 # Link the schedule to the runbook
 az automation job-schedule create \

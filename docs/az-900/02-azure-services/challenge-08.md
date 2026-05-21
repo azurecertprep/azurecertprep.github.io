@@ -125,7 +125,7 @@ az group show --name rg-az900-learning --output table
 | **Subscription** | Billing unit and access control boundary |
 | **Management group** | Container for managing access/policy across subscriptions |
 | **Inheritance** | Policies and access flow DOWN the hierarchy |
-| **Tenant** | The top-level Azure AD (Entra ID) organization |
+| **Tenant** | The top-level Microsoft Entra ID organization |
 
 ## Knowledge Check
 

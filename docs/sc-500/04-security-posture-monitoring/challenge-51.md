@@ -399,7 +399,7 @@ az logic workflow create \
           },
           "host": {
             "connection": {
-              "name": "@parameters($connections)['azuresentinel']['connectionId']"
+              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
             }
           },
           "path": "/incident-creation"
@@ -412,7 +412,7 @@ az logic workflow create \
         "inputs": {
           "host": {
             "connection": {
-              "name": "@parameters($connections)['azuresentinel']['connectionId']"
+              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
             }
           },
           "method": "post",
@@ -444,7 +444,7 @@ az logic workflow create \
         "inputs": {
           "host": {
             "connection": {
-              "name": "@parameters($connections)['teams']['connectionId']"
+              "name": "@parameters('$connections')['teams']['connectionId']"
             }
           },
           "method": "post",
@@ -460,7 +460,7 @@ az logic workflow create \
         "inputs": {
           "host": {
             "connection": {
-              "name": "@parameters($connections)['azuresentinel']['connectionId']"
+              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
             }
           },
           "method": "post",

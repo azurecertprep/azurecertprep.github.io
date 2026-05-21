@@ -6,7 +6,7 @@ title: "AZ-900: Azure Fundamentals"
 # AZ-900: Azure Fundamentals
 
 :::info Exam Details
-**Exam version**: Skills measured as of January 14, 2026 | **Passing score**: 700/1000 | **Duration**: ~45 minutes | **Cost**: $0 labs
+**Exam version**: Skills measured as of January 14, 2025 | **Passing score**: 700/1000 | **Duration**: ~45 minutes | **Cost**: $0 labs
 :::
 
 ## Who is this for?

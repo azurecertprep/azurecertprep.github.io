@@ -405,7 +405,7 @@ az monitor log-analytics workspace update \
 az monitor log-analytics workspace update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
-  --retention-time 60
+  --retention-in-days 60
 
 # Configure table-level retention (different retention per table)
 # Some tables may need longer retention for compliance
@@ -413,7 +413,7 @@ az monitor log-analytics workspace table update \
   --resource-group $RG \
   --workspace-name law-contoso-ops \
   --name Syslog \
-  --retention-time 90
+  --retention-in-days 90
 
 # Show workspace configuration
 az monitor log-analytics workspace show \

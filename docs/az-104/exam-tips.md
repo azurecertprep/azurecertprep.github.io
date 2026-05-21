@@ -82,7 +82,7 @@ Monitoring is 10-15% but the concepts (Azure Monitor, KQL, alerts) connect every
 4. **NSG rules** are stateful | if you allow inbound, the response outbound is automatic
 5. **Storage redundancy** | know LRS, ZRS, GRS, RA-GRS, GZRS, RA-GZRS and when to use each
 6. **Azure Advisor** shows recommendations but does NOT auto-apply them
-7. **Management groups** can be nested up to 6 levels deep (root + 5 levels)
+7. **Management groups** can be nested up to 6 levels deep (root + 6 levels, 7 total)
 8. **Custom DNS names** for App Service require a CNAME or A record + TXT verification
 
 :::

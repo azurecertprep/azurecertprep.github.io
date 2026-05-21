@@ -222,7 +222,7 @@ az logic workflow create \
         "inputs": {
           "host": {
             "connection": {
-              "name": "@parameters($connections)[azuresentinel][connectionId]"
+              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
             }
           },
           "body": {
@@ -238,11 +238,11 @@ az logic workflow create \
         "inputs": {
           "host": {
             "connection": {
-              "name": "@parameters($connections)[azuresentinel][connectionId]"
+              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
             }
           },
           "method": "post",
-          "path": "/entities/@{triggerBody()?[object]?[properties]?[incidentNumber]}"
+          "path": "/entities/@{triggerBody()?['object']?['properties']?['incidentNumber']}"
         },
         "runAfter": {}
       },
@@ -251,12 +251,12 @@ az logic workflow create \
         "inputs": {
           "host": {
             "connection": {
-              "name": "@parameters($connections)[azuresentinel][connectionId]"
+              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
             }
           },
           "method": "post",
           "body": {
-            "incidentArmId": "@triggerBody()?[object]?[id]",
+            "incidentArmId": "@triggerBody()?['object']?['id']",
             "message": "Automated response: IP address has been submitted for blocking via NSG rule."
           },
           "path": "/comment"

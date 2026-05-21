@@ -422,12 +422,10 @@ echo "Applications using this endpoint required ZERO connection string changes."
 ```
 
 ```bash
-az sql db execute \
-  --resource-group rg-az305-challenge31-dr \
-  --server $SECONDARY_SERVER \
-  --name payrolldb \
-  --query "SELECT * FROM EmployeePayroll;" \
-  -o table
+# Verify data on the new primary using sqlcmd
+sqlcmd -S "$SECONDARY_SERVER.database.windows.net" -d payrolldb \
+  -U $ADMIN_USER -P $ADMIN_PASSWORD \
+  -Q "SELECT * FROM EmployeePayroll;"
 ```
 
 All data is intact on the new primary.
