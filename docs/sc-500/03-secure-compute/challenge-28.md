@@ -46,13 +46,15 @@ Create managed identities specifically for AI agents using Entra Agent ID, repla
 
 ```bash
 # Register a workload identity for the AI agent
-az ad app create \
+APP_ID=$(az ad app create \
     --display-name "CS-Agent-CustomerService-Prod" \
     --sign-in-audience "AzureADMyOrg" \
-    --notes "Entra Agent ID - Customer Service AI Agent"
+    --query appId -o tsv)
 
-# Get the application ID
-APP_ID=$(az ad app list --display-name "CS-Agent-CustomerService-Prod" --query "[0].appId" -o tsv)
+# Set notes via Microsoft Graph (not available in az ad app create)
+az rest --method PATCH \
+    --uri "https://graph.microsoft.com/v1.0/applications(appId='$APP_ID')" \
+    --body '{"notes": "Entra Agent ID - Customer Service AI Agent"}'
 
 # Create a service principal for the agent
 az ad sp create --id $APP_ID
