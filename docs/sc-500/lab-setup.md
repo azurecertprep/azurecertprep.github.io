@@ -96,10 +96,10 @@ az provider register --namespace Microsoft.Security
 az security pricing list --query "[].{name:name, tier:pricingTier}" -o table
 ```
 
-Defender for Cloud's **free tier** (CSPM) provides:
+Defender for Cloud's **free tier** (Foundational CSPM) provides:
 - Secure Score and recommendations
-- Security alerts for Azure resources
-- Basic security posture assessment
+- Asset inventory
+- Azure Policy integration and security posture assessment
 
 Individual **Defender plans** (paid) are enabled per-challenge and disabled after.
 

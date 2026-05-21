@@ -650,7 +650,7 @@ The destination account creates the replication policy and specifies the source 
 az group delete --name rg-az104-challenge06 --yes --no-wait
 
 # Clean up local files
-rm -f lifecycle-policy.json replication-policy.json
+rm -f lifecycle-policy.json replication-rules.json
 rm -f log-*.txt repl-test.txt new-repl-data.txt
 ```
 

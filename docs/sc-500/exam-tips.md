@@ -50,10 +50,9 @@ When multiple answers seem correct, the exam often wants the **most specific** c
 ### 3. Conditional Access is heavily tested
 
 Know the evaluation order:
-1. Session state evaluated
-2. Assignments checked (users, apps, conditions)
-3. Access controls enforced (grant/block, MFA, device compliance)
-4. Session controls applied (sign-in frequency, app-enforced restrictions)
+1. Assignments evaluated (users/groups, cloud apps, conditions)
+2. Grant controls enforced (MFA, compliant device, block access)
+3. Session controls applied (sign-in frequency, app-enforced restrictions)
 
 ### 4. Know the difference between similar services
 
@@ -95,7 +94,7 @@ This is net-new content from AZ-500. Expect questions on:
 ### Domain 3: Secure compute (20–25%)
 
 - **Defender plans**: Know which plan covers which resource:
-  - Defender for Servers (Plan 1 = EDR only, Plan 2 = EDR + vulnerability scanning + JIT + adaptive controls)
+  - Defender for Servers (Plan 1 = MDE integration with EDR + vulnerability management via MDVM, Plan 2 = adds JIT VM access + FIM + adaptive application controls + agentless scanning)
   - Defender for Containers (registry scanning + runtime protection)
   - Defender for App Service, Storage, SQL, Key Vault, DNS, Resource Manager
 - **AI security is NEW**: Purview DSPM, sensitivity labels for Copilot readiness, Azure AI content safety

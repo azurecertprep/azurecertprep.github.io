@@ -364,7 +364,7 @@ az automation job-schedule create \
     "Run Command successfully executes ad-hoc commands on both VMs",
     "All installed extensions are visible via az vm extension list",
     "Azure Automation Account exists with a published runbook",
-    "Runbook is linked to a daily schedule",
+    "Runbook is linked to a weekly schedule",
     "Runbook logic correctly identifies VMs by tag"
   ]}
 />

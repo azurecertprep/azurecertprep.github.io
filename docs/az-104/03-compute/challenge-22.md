@@ -340,7 +340,7 @@ az disk list \
 
 | Disk Type | Max IOPS | Max Throughput | Use Case |
 |-----------|----------|----------------|----------|
-| Standard HDD (Standard_LRS) | 500 | 60 MB/s | Backups, dev/test, infrequent access |
+| Standard HDD (Standard_LRS) | 2,000 | 500 MB/s | Backups, dev/test, infrequent access |
 | Standard SSD (StandardSSD_LRS) | 6,000 | 750 MB/s | Web servers, light databases |
 | Premium SSD (Premium_LRS) | 20,000 | 900 MB/s | Production databases, I/O intensive |
 | Ultra Disk (UltraSSD_LRS) | 160,000 | 4,000 MB/s | SAP HANA, top-tier databases |

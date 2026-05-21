@@ -77,7 +77,7 @@ Consider separating vaults along these boundaries: (1) production vs. non-produc
 <details>
 <summary>Hint 2: Managed HSM Decision Criteria</summary>
 
-Managed HSM provides FIPS 140-3 Level 3 validated hardware, single-tenant key storage, and full cryptographic control. Use it for: payment card industry encryption keys, root CA keys, and keys where regulatory requirements mandate hardware-level protection. Standard Key Vault (FIPS 140-2 Level 1) suffices for TLS certificates, application secrets, and non-regulated encryption keys. Managed HSM costs approximately $3/hour per HSM pool, so limit usage to workloads where the compliance requirement justifies the cost.
+Managed HSM provides FIPS 140-2 Level 3 validated hardware, single-tenant key storage, and full cryptographic control. Use it for: payment card industry encryption keys, root CA keys, and keys where regulatory requirements mandate hardware-level protection. Standard Key Vault (FIPS 140-2 Level 1) suffices for TLS certificates, application secrets, and non-regulated encryption keys. Managed HSM costs approximately $3/hour per HSM pool, so limit usage to workloads where the compliance requirement justifies the cost.
 
 </details>
 

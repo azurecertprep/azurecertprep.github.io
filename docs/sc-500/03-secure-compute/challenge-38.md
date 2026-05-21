@@ -103,13 +103,14 @@ az webapp vnet-integration add \
     --vnet "vnet-app-platform" \
     --subnet "subnet-app-integration"
 
-# Restrict inbound access to only allow from WAF
+# Restrict inbound access to only allow from App Gateway subnet
 az webapp config access-restriction add \
     --resource-group "rg-contoso-app-security" \
     --name "app-contoso-frontend" \
-    --rule-name "AllowWAFOnly" \
+    --rule-name "AllowAppGatewayOnly" \
     --priority 100 \
-    --service-tag "AzureFrontDoor.Backend" \
+    --vnet-name "vnet-app-platform" \
+    --subnet "subnet-appgw" \
     --action "Allow"
 
 az webapp config access-restriction add \

@@ -522,10 +522,26 @@ jobs:
 For Azure Pipelines, use Service Hooks:
 
 ```bash
-# Configure a service hook for pipeline failure notifications
+# Create endpoint configuration file
+cat <<EOF > endpoint-config.json
+{
+  "data": {},
+  "name": "pipeline-alerts-webhook",
+  "type": "generic",
+  "url": "https://your-webhook-endpoint.example.com",
+  "authorization": {
+    "parameters": {
+      "username": "",
+      "password": ""
+    },
+    "scheme": "UsernamePassword"
+  }
+}
+EOF
+
+# Create a service endpoint for pipeline failure notifications
 az devops service-endpoint create \
-  --service-endpoint-type generic \
-  --name "pipeline-alerts-webhook" \
+  --service-endpoint-configuration endpoint-config.json \
   --org https://dev.azure.com/contoso \
   --project ContosoAPI
 

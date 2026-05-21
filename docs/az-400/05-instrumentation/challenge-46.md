@@ -264,7 +264,7 @@ az monitor action-group create \
   --action email sre-team "sre-team@contoso.com" \
   --action webhook teams-webhook "https://contoso.webhook.office.com/webhookb2/..." \
   --action webhook slack-webhook "https://hooks.slack.com/services/T00/B00/xxx" \
-  --action azurefunction rollback-func "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/Microsoft.Web/sites/func-contoso-ops/functions/TriggerRollback" "https://func-contoso-ops.azurewebsites.net/api/TriggerRollback" "true"
+  --action azurefunction TriggerRollback "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/Microsoft.Web/sites/func-contoso-ops" TriggerRollback "https://func-contoso-ops.azurewebsites.net/api/TriggerRollback" useCommonAlertSchema
 
 # Test the action group
 az monitor action-group test-notifications create \
