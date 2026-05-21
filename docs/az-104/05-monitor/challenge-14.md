@@ -209,7 +209,7 @@ Use the Azure Portal: **Monitor → Alerts → Create → Log alert rule**
 
 - **Scope**: Your Log Analytics workspace
 - **Condition**: Custom log search with KQL
-- **Query**: `Syslog | where SeverityLevel == "error" | where TimeGenerated > ago(5m)`
+- **Query**: `Syslog | where SeverityLevel == "err" | where TimeGenerated > ago(5m)`
 - **Threshold**: Greater than 0
 - **Action Group**: `ag-ops-team`
 
