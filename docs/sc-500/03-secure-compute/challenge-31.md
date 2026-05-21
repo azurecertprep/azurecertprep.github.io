@@ -64,7 +64,7 @@ Enable and review security recommendations specific to AI workloads.
 # List AI-related security recommendations
 az security assessment list \
     --query "[?contains(displayName, 'AI') || contains(displayName, 'cognitive') || contains(displayName, 'OpenAI')]" \
-    --output json | jq '.[].{name: .displayName, status: .status.code, severity: .metadata.severity}'
+    --output json | jq '.[] | {name: .displayName, status: .status.code, severity: .metadata.severity}'
 
 # Common AI security recommendations to address:
 # - "Azure AI services should restrict network access"

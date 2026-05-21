@@ -54,7 +54,7 @@ az sql server create \
   --location $LOCATION \
   --admin-user $SQL_ADMIN \
   --admin-password $SQL_PASSWORD \
-  --enable-public-network false \
+  --public-network-access Disabled \
   --minimal-tls-version 1.2
 
 # Create SQL Database

@@ -437,7 +437,7 @@ The content safety policy is producing false positives — blocking legal and co
 ```xml
 <!-- Fix: Add allowlist for specific subscription IDs (Legal team) -->
 <choose>
-    <when condition="@(context.Subscription.Name == "Legal-Team-Subscription")">
+    <when condition="@(context.Subscription.Name == &quot;Legal-Team-Subscription&quot;)">
         <!-- Legal team: Use higher threshold for jailbreak detection -->
         <send-request mode="new" response-variable-name="contentSafetyResponse" timeout="10">
             <set-url>https://contoso-content-safety.cognitiveservices.azure.com/contentsafety/text:shieldPrompt?api-version=2024-09-01</set-url>

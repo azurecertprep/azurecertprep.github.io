@@ -308,7 +308,7 @@ Deploy the security admin configurations to the target regions.
 BLOCK_HIGH_RISK_ID=$(az network manager security-admin-config show --name sac-block-high-risk --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)
 ENV_ISOLATION_ID=$(az network manager security-admin-config show --name sac-env-isolation --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)
 
-az network manager post-commit \
+az network manager commit \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --commit-type "SecurityAdmin" \
@@ -346,7 +346,7 @@ az network vnet create \
 HUB_VNET_ID=$(az network vnet show --name vnet-hub --resource-group $RG --query id -o tsv)
 
 # Create connectivity configuration (hub-and-spoke)
-az network manager connect-config create \
+az network manager connectivity-configuration create \
   --configuration-name "cc-prod-hub-spoke" \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
@@ -355,11 +355,11 @@ az network manager connect-config create \
   --applies-to-groups "[{\"networkGroupId\":\"$(az network manager group show --name ng-production --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)\",\"useHubGateway\":\"False\",\"isGlobal\":\"False\",\"groupConnectivity\":\"DirectlyConnected\"}]"
 
 # Deploy connectivity configuration
-az network manager post-commit \
+az network manager commit \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --commit-type "Connectivity" \
-  --configuration-ids "$(az network manager connect-config show --name cc-prod-hub-spoke --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)" \
+  --configuration-ids "$(az network manager connectivity-configuration show --name cc-prod-hub-spoke --network-manager-name avnm-contoso-security --resource-group $RG --query id -o tsv)" \
   --target-locations $LOCATION
 
 # Verify connectivity deployment
@@ -397,7 +397,7 @@ az network manager group static-member list \
 
 # Ensure the region in the deployment matches the VNet location
 # Re-deploy if needed
-az network manager post-commit \
+az network manager commit \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --commit-type "SecurityAdmin" \
@@ -489,14 +489,14 @@ az network manager security-admin-config rule-collection rule show \
 
 ```bash
 # Remove deployments first (required before deleting configurations)
-az network manager post-commit \
+az network manager commit \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --commit-type "SecurityAdmin" \
   --configuration-ids "[]" \
   --target-locations $LOCATION
 
-az network manager post-commit \
+az network manager commit \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --commit-type "Connectivity" \

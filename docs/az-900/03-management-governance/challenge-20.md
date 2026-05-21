@@ -32,7 +32,7 @@ Azure Policy enforces organizational standards. Policies evaluate resources and 
 | **Deny** | Prevent non-compliant resource creation | "VMs must be in allowed regions only" |
 | **Audit** | Flag existing non-compliant resources | "Storage accounts without encryption" |
 | **Modify** | Add or update resource properties automatically | "Auto-add required tags" |
-| **Modify** | Change resource properties | "Enable diagnostic logging" |
+| **DeployIfNotExists** | Deploy a resource if it doesn't exist | "Enable diagnostic logging" |
 
 ### Task 2: Explore Azure Policy in the Portal
 
@@ -59,8 +59,8 @@ Resource locks prevent accidental changes or deletion:
 | Lock type | Can read? | Can modify? | Can delete? |
 |-----------|----------|------------|-------------|
 | **No lock** | ✅ | ✅ | ✅ |
-| **ReadOnly** | ✅ | ❌ | ❌ |
-| **CanNotDelete** | ✅ | ✅ | ❌ |
+| **Read-only (ReadOnly)** | ✅ | ❌ | ❌ |
+| **Delete (CanNotDelete)** | ✅ | ✅ | ❌ |
 
 **Key facts:**
 - Locks are inherited (lock on RG applies to all resources)
@@ -74,7 +74,7 @@ Resource locks prevent accidental changes or deletion:
 3. Click **+ Add** to see lock options:
    - Lock name, Lock type (Read-only or Delete)
    - Notes explaining why the lock exists
-4. Optionally add a **CanNotDelete** lock to your resource group
+4. Optionally add a **Delete (CanNotDelete)** lock to your resource group
 5. Try to delete the RG — you'll be blocked!
 
 ### Task 5: Understand Microsoft Purview

@@ -118,7 +118,7 @@ az vm image list --output table
     {
       id: 'az900-04-q3',
       question: 'Which of the following is an example of IaaS in Azure?',
-      options: ['Microsoft 365', 'Azure App Service', 'Azure Virtual Machines', 'Azure Active Directory'],
+      options: ['Microsoft 365', 'Azure App Service', 'Azure Virtual Machines', 'Microsoft Entra ID'],
       correctAnswer: 2,
       explanation: 'Azure Virtual Machines is IaaS — you get a virtualized server and manage the OS, applications, and data. App Service is PaaS, and Microsoft 365 is SaaS.'
     },
