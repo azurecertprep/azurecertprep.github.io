@@ -544,7 +544,7 @@ EOF
 
 <KnowledgeCheck questions={[
   {
-    question: ": In GitHub, what is the difference between the \"Maintain\" and \"Write\" permission levels?",
+    question: "In GitHub, what is the difference between the \"Maintain\" and \"Write\" permission levels?",
     options: [
       "Maintain can merge PRs; Write cannot",
       "Maintain can manage repository settings; Write can only push code and manage issues/PRs",
@@ -566,7 +566,7 @@ EOF
     explanation: "Annotated tags (git tag -a) create a full Git object that stores the tagger name, email, date, and a message. They can be GPG-signed and show up in git describe. Lightweight tags (git tag without -a) are simply a reference pointing to a commit with no additional metadata. Annotated tags are recommended for releases; lightweight tags for temporary or private bookmarks."
   },
   {
-    question: ": In Azure DevOps, how do you restrict a specific group from modifying files in a particular path within a repository?",
+    question: "In Azure DevOps, how do you restrict a specific group from modifying files in a particular path within a repository?",
     options: [
       "Create a .gitignore entry for the path",
       "Use path-level security with the Git Repositories security namespace and path-scoped tokens",
@@ -577,7 +577,7 @@ EOF
     explanation: "Azure DevOps supports path-level permissions through its security namespace system. By using the Git Repositories namespace (2e9eb7ed-3c0a-47d4-87c1-0ffdd275fd87) with path-scoped security tokens (format: repoV2/project-id/repo-id/refs/heads/branch//path), you can deny specific groups write access to specific paths while allowing them access elsewhere in the repository."
   },
   {
-    question: ": A CI pipeline uses 'git describe --tags' to determine the application version. The command returns 'v1.2.0-47-g2414721'. What does this output mean?",
+    question: "A CI pipeline uses 'git describe --tags' to determine the application version. The command returns 'v1.2.0-47-g2414721'. What does this output mean?",
     options: [
       "Version 1.2.0 was released 47 days ago at commit 2414721",
       "The current commit is 47 commits ahead of the 'v1.2.0' tag, and the current short SHA is 2414721",

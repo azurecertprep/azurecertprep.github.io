@@ -411,8 +411,8 @@ echo "EMERGENCY ROLLBACK: Swapping production back to previous version..."
 az webapp deployment slot swap \
   --name $APP_NAME \
   --resource-group $RESOURCE_GROUP \
-  --slot production \
-  --target-slot staging
+  --slot staging \
+  --target-slot production
 
 echo "Rollback complete. Verifying..."
 

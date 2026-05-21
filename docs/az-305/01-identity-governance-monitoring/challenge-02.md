@@ -146,7 +146,7 @@ az monitor data-collection rule create \
   --resource-group rg-logging \
   --location centralus \
   --data-flows '[{
-    "streams": ["Microsoft-Table-AppServiceHTTPLogs"],
+    "streams": ["Microsoft-AppServiceHTTPLogs"],
     "destinations": ["law-contoso-ops"],
     "transformKql": "source | where CsUriStem != \"/health\" or ScStatus != 200"
   }]' \

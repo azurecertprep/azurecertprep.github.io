@@ -197,7 +197,7 @@ az container create \
     --cpu 2 \
     --memory 4 \
     --assign-identity "[system]" \
-    --sku "Confidential" \
+    --sku "Confidential" \ # Note: Confidential containers requires preview features. Register with: az feature register --namespace Microsoft.ContainerInstance --name ConfidentialContainers
     --cce-policy "default"
 
 # Grant ACI managed identity access to ACR (instead of admin credentials)

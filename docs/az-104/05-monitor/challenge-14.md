@@ -104,8 +104,7 @@ VM_ID=$(az vm show \
   --name vm-monitored \
   --query id -o tsv)
 
-# Enable diagnostic settings (via portal for VMs, or CLI for supported resources)
-# For a storage account example:
+# Enable diagnostic settings for the VM:
 az monitor diagnostic-settings create \
   --name diag-to-law \
   --resource $VM_ID \

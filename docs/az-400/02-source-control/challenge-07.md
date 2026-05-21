@@ -360,7 +360,7 @@ gh pr create --title "Recover: direct push to main" --base main
 
 <KnowledgeCheck questions={[
   {
-    question: ": A team releases daily and needs main always deployable. They use feature flags to hide incomplete work. Which branching strategy best fits this requirement?",
+    question: "A team releases daily and needs main always deployable. They use feature flags to hide incomplete work. Which branching strategy best fits this requirement?",
     options: [
       "Git Flow with develop and release branches",
       "Trunk-based development with short-lived branches",
@@ -382,7 +382,7 @@ gh pr create --title "Recover: direct push to main" --base main
     explanation: "Long-lived branches accumulate changes that differ from main. The longer they live without syncing, the more the codebases diverge, leading to painful merge conflicts. Regular forward-integration (merging main into the release branch) mitigates this risk."
   },
   {
-    question: ": When using 'git rebase' instead of 'git merge' for a feature branch, what happens to the branch history?",
+    question: "When using 'git rebase' instead of 'git merge' for a feature branch, what happens to the branch history?",
     options: [
       "The feature branch commits are replayed on top of the target branch, creating new commit hashes",
       "A merge commit is created that combines both histories",
@@ -393,7 +393,7 @@ gh pr create --title "Recover: direct push to main" --base main
     explanation: "Rebase takes each commit from the feature branch and re-applies it on top of the target branch tip. This creates new commits with different SHA hashes (because the parent commit changed) but the same changes. The result is a linear history without merge commits."
   },
   {
-    question: ": A team uses GitHub Flow. A critical bug is found in production. What is the correct procedure?",
+    question: "A team uses GitHub Flow. A critical bug is found in production. What is the correct procedure?",
     options: [
       "Create a hotfix branch from the release tag, fix, merge to release, then cherry-pick to main",
       "Create a branch from main, fix the bug, open a PR, merge to main, deploy",

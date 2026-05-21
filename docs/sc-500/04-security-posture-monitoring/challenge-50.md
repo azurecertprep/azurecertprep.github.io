@@ -407,11 +407,11 @@ az sentinel automation-rule create \
   --automation-rule-name "auto-rule-compromise-response" \
   --display-name "Auto-Respond to Account Compromise Incidents" \
   --order 1 \
-  --triggering-logic \
-    is-enabled=true \
-    triggers-on="Incidents" \
-    triggers-when="Created" \
-    conditions='[
+  --triggering-logic '{
+    "isEnabled": true,
+    "triggersOn": "Incidents",
+    "triggersWhen": "Created",
+    "conditions": [
       {
         "conditionType": "Property",
         "conditionProperties": {
@@ -421,14 +421,15 @@ az sentinel automation-rule create \
         }
       },
       {
-        "conditionType": "Property", 
+        "conditionType": "Property",
         "conditionProperties": {
           "propertyName": "IncidentTactics",
           "operator": "Contains",
           "propertyValues": ["InitialAccess", "CredentialAccess"]
         }
       }
-    ]' \
+    ]
+  }' \
   --actions '[
     {
       "actionType": "ModifyProperties",

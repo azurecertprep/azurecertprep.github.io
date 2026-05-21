@@ -235,7 +235,7 @@ Use BFG for faster removal of large files and secrets (simpler interface than fi
 
 ```bash
 # Download BFG Repo Cleaner
-curl -L -o bfg.jar https://repo1.maven.org/maven2/com/madgp/bfg/1.14.0/bfg-1.14.0.jar
+curl -L -o bfg.jar https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar
 
 # Clone a fresh mirror of the repo (BFG works on bare repos)
 git clone --mirror https://github.com/contoso/platform-api.git platform-api-mirror.git
@@ -425,7 +425,7 @@ git push origin --force --tags
 
 <KnowledgeCheck questions={[
   {
-    question: ": A developer committed a database password 50 commits ago. The password has been in the repository history across 3 branches. Which tool should you use to remove it from ALL history?",
+    question: "A developer committed a database password 50 commits ago. The password has been in the repository history across 3 branches. Which tool should you use to remove it from ALL history?",
     options: [
       "'git rm' followed by a commit to delete the file",
       "'git filter-repo --replace-text' to replace the password across all history",
@@ -436,7 +436,7 @@ git push origin --force --tags
     explanation: "git filter-repo rewrites the entire repository history, replacing the sensitive text in every commit across all branches and tags. git rm only removes the file from the current commit forward (the password remains in history). git reset would lose 50 commits of work and doesn't affect other branches. git revert creates a new commit that undoes the change but the password remains visible in the original commit."
   },
   {
-    question: ": After rewriting repository history with 'git filter-repo', what must all other team members do with their local clones?",
+    question: "After rewriting repository history with 'git filter-repo', what must all other team members do with their local clones?",
     options: [
       "Run 'git pull --rebase' to update their history",
       "Run 'git fetch --all' followed by 'git reset --hard origin/main'",
@@ -447,7 +447,7 @@ git push origin --force --tags
     explanation: "When history is rewritten, every commit SHA changes from the point of rewrite forward. Existing clones have the old SHAs which are incompatible with the new history. Running git pull would attempt to merge two completely different histories, creating duplicate commits. The safest approach is to delete the local clone entirely and start fresh. Developers should save any uncommitted work before doing this."
   },
   {
-    question: ": A branch 'feature/analytics' was deleted from both local and remote 2 days ago. The developer who created it no longer has a local clone. How can the commits be recovered?",
+    question: "A branch 'feature/analytics' was deleted from both local and remote 2 days ago. The developer who created it no longer has a local clone. How can the commits be recovered?",
     options: [
       "The commits are permanently lost and cannot be recovered",
       "Use 'git reflog' on any machine that had the branch checked out (within the reflog expiry window)",

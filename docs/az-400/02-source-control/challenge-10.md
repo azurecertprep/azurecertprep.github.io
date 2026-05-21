@@ -493,7 +493,7 @@ git config lfs.url "https://lfs.contoso.internal/game-studio"
 
 <KnowledgeCheck questions={[
   {
-    question: ": A repository uses Git LFS to track '*.psd' files. A new developer clones the repository with 'GIT_LFS_SKIP_SMUDGE=1'. What will the '.psd' files contain in their working directory?",
+    question: "A repository uses Git LFS to track '*.psd' files. A new developer clones the repository with 'GIT_LFS_SKIP_SMUDGE=1'. What will the '.psd' files contain in their working directory?",
     options: [
       "Empty files with zero bytes",
       "Text pointer files containing the LFS object ID and file size",
@@ -504,7 +504,7 @@ git config lfs.url "https://lfs.contoso.internal/game-studio"
     explanation: "When GIT_LFS_SKIP_SMUDGE=1 is set, the LFS smudge filter is skipped during checkout. Instead of downloading the actual binary content from the LFS server, Git writes the LFS pointer file to disk. This pointer contains the LFS spec version, a SHA-256 OID of the actual content, and the file size. The developer can later run git lfs pull to download the actual content."
   },
   {
-    question: ": After running 'git lfs migrate import --include=\"*.fbx\" --everything', what must all other team members do?",
+    question: "After running 'git lfs migrate import --include=\"*.fbx\" --everything', what must all other team members do?",
     options: [
       "Run 'git lfs install' only",
       "Run 'git pull' to get the updated history",
@@ -526,7 +526,7 @@ git config lfs.url "https://lfs.contoso.internal/game-studio"
     explanation: "git-fat allows teams to store large files on any storage backend they control (AWS S3, rsync servers, etc.) rather than relying on the hosting provider's LFS implementation and its associated quotas and costs. This is particularly useful for organizations with existing storage infrastructure or those who want to avoid per-GB bandwidth charges from GitHub or Azure DevOps LFS."
   },
   {
-    question: ": A game artist locks 'character.fbx' with 'git lfs lock' and goes on vacation. Another artist needs to edit the file urgently. What is the correct approach?",
+    question: "A game artist locks 'character.fbx' with 'git lfs lock' and goes on vacation. Another artist needs to edit the file urgently. What is the correct approach?",
     options: [
       "Delete the file and recreate it to bypass the lock",
       "Use 'git lfs unlock --path=\"character.fbx\" --force' (requires maintain or admin permission)",

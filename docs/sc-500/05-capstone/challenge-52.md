@@ -501,7 +501,7 @@ az network firewall network-rule create \
   --action Allow \
   --priority 200
 
-# Create DNAT rule to deny known malicious destinations
+# Create network rule collection to deny known malicious destinations
 az network firewall network-rule create \
   --resource-group $RG_CORE \
   --firewall-name "fw-contoso-hub" \
@@ -623,6 +623,7 @@ az security pricing create \
   --tier "Standard"
 
 # Enable Defender for DNS
+# Note: Defender for DNS is being deprecated. DNS protection is now included in Defender for Servers.
 az security pricing create \
   --name "Dns" \
   --tier "Standard"
@@ -945,7 +946,6 @@ az apim api policy set \
       estimate-prompt-tokens="true"
       remaining-tokens-variable-name="remainingTokens" />
     <!-- Content safety filter -->
-    <azure-openai-semantic-cache-store duration="300" />
     <!-- Validate JWT for authentication -->
     <validate-azure-ad-token tenant-id="'$TENANT_ID'" header-name="Authorization">
       <client-application-ids>
@@ -962,6 +962,8 @@ az apim api policy set \
   </backend>
   <outbound>
     <base />
+    <!-- Store semantic cache response in outbound -->
+    <azure-openai-semantic-cache-store duration="300" />
     <!-- Emit token usage metrics -->
     <azure-openai-emit-token-metric namespace="AIGateway">
       <dimension name="Subscription" value="@(context.Subscription.Id)" />

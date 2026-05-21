@@ -278,6 +278,7 @@ Set up periodic reviews of role assignments to identify and remove stale access.
 
 ```bash
 # Create an access review for subscription-level Owner role assignments
+# Note: roleDefinitionId uses the Owner role GUID (8e3af657-a8ff-443c-a75c-2fe8c4bcb635)
 az rest --method POST \
   --url "https://graph.microsoft.com/v1.0/identityGovernance/accessReviews/definitions" \
   --headers "Content-Type=application/json" \
@@ -287,7 +288,7 @@ az rest --method POST \
     \"descriptionForReviewers\": \"Confirm these users/groups still need Owner access to Azure subscriptions\",
     \"scope\": {
       \"@odata.type\": \"#microsoft.graph.accessReviewQueryScope\",
-      \"query\": \"/roleManagement/azure/roleAssignments?\$filter=roleDefinitionId eq 'Owner'\",
+      \"query\": \"/roleManagement/azure/roleAssignments?\$filter=roleDefinitionId eq '8e3af657-a8ff-443c-a75c-2fe8c4bcb635'\",
       \"queryType\": \"MicrosoftGraph\"
     },
     \"reviewers\": [

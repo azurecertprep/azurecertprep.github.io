@@ -259,7 +259,7 @@ az vmss list-instances \
 INSTANCE_COUNT=$(az vmss list-instances \
   --resource-group rg-az305-challenge34 \
   --name vmss-autoscale-lab \
-  --query "length([])")
+  --query "length(@)")
 echo "Current instance count: $INSTANCE_COUNT (should be 2)"
 ```
 
@@ -309,7 +309,7 @@ az vmss list-instances \
 INSTANCE_COUNT=$(az vmss list-instances \
   --resource-group rg-az305-challenge34 \
   --name vmss-autoscale-lab \
-  --query "length([])")
+  --query "length(@)")
 echo "Current instance count: $INSTANCE_COUNT (should be > 2, scaling out)"
 ```
 

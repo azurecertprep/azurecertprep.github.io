@@ -255,17 +255,17 @@ Azure DevOps Analytics provides OData endpoints for advanced querying.
 ANALYTICS_URL="https://analytics.dev.azure.com/contoso-org/Contoso%20Web%20Platform/_odata/v4.0-preview"
 
 curl -s -u ":$AZURE_DEVOPS_PAT" \
-  "$ANALYTICS_URL/WorkItems?\$filter=WorkItemType eq 'User Story' and StateCategory eq 'Completed' and CompletedDate gt 2025-01-01Z&\$select=WorkItemId,Title,CycleTimeDays&\$orderby=CompletedDate desc&\$top=50" | \
+  "$ANALYTICS_URL/WorkItems?\$filter=WorkItemType eq 'User Story' and StateCategory eq 'Completed' and CompletedDate gt 2025-01-01T00:00:00Z&\$select=WorkItemId,Title,CycleTimeDays&\$orderby=CompletedDate desc&\$top=50" | \
   jq '.value[] | {id: .WorkItemId, title: .Title, cycle_time_days: .CycleTimeDays}'
 
 # Get lead time distribution
 curl -s -u ":$AZURE_DEVOPS_PAT" \
-  "$ANALYTICS_URL/WorkItems?\$filter=WorkItemType eq 'User Story' and StateCategory eq 'Completed' and CompletedDate gt 2024-12-01Z&\$apply=groupby((Area/AreaPath),aggregate(LeadTimeDays with average as AvgLeadTime, LeadTimeDays with max as MaxLeadTime, \$count as Count))" | \
+  "$ANALYTICS_URL/WorkItems?\$filter=WorkItemType eq 'User Story' and StateCategory eq 'Completed' and CompletedDate gt 2024-12-01T00:00:00Z&\$apply=groupby((Area/AreaPath),aggregate(LeadTimeDays with average as AvgLeadTime, LeadTimeDays with max as MaxLeadTime, \$count as Count))" | \
   jq '.value'
 
 # Pipeline pass rate over time
 curl -s -u ":$AZURE_DEVOPS_PAT" \
-  "$ANALYTICS_URL/PipelineRuns?\$filter=CompletedDate gt 2025-01-01Z and Pipeline/PipelineName eq 'contoso-webapp-ci'&\$apply=groupby((CompletedDateSK),aggregate(\$count as TotalRuns, SucceededCount with sum as Passed))" | \
+  "$ANALYTICS_URL/PipelineRuns?\$filter=CompletedDate gt 2025-01-01T00:00:00Z and Pipeline/PipelineName eq 'contoso-webapp-ci'&\$apply=groupby((CompletedDateSK),aggregate(\$count as TotalRuns, SucceededCount with sum as Passed))" | \
   jq '.value[] | {date: .CompletedDateSK, total: .TotalRuns, passed: .Passed, pass_rate: (.Passed * 100 / .TotalRuns)}'
 ```
 
@@ -274,7 +274,7 @@ curl -s -u ":$AZURE_DEVOPS_PAT" \
 ```bash
 # Count production deployments per week
 curl -s -u ":$AZURE_DEVOPS_PAT" \
-  "$ANALYTICS_URL/PipelineRuns?\$filter=Pipeline/PipelineName eq 'contoso-webapp-deploy' and RunOutcome eq 'Succeed' and CompletedDate gt 2024-10-01Z&\$apply=groupby((CompletedDate/WeekStartingMonday),aggregate(\$count as DeployCount))&\$orderby=CompletedDate/WeekStartingMonday desc" | \
+  "$ANALYTICS_URL/PipelineRuns?\$filter=Pipeline/PipelineName eq 'contoso-webapp-deploy' and RunOutcome eq 'Succeed' and CompletedDate gt 2024-10-01T00:00:00Z&\$apply=groupby((CompletedDate/WeekStartingMonday),aggregate(\$count as DeployCount))&\$orderby=CompletedDate/WeekStartingMonday desc" | \
   jq '.value'
 ```
 

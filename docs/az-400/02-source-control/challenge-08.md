@@ -583,7 +583,7 @@ EOF
 
 <KnowledgeCheck questions={[
   {
-    question: ": A repository has branch protection requiring 2 approving reviews and the 'ci/test' status check. A developer pushes a new commit to their PR branch after receiving 2 approvals. What happens?",
+    question: "A repository has branch protection requiring 2 approving reviews and the 'ci/test' status check. A developer pushes a new commit to their PR branch after receiving 2 approvals. What happens?",
     options: [
       "The PR can still be merged because it already has 2 approvals",
       "The approvals are dismissed and the developer needs 2 new reviews",
@@ -594,7 +594,7 @@ EOF
     explanation: "When \"Dismiss stale pull request approvals when new commits are pushed\" is enabled (configured in Task 1 with dismiss_stale_reviews_on_push: true), any new commits pushed to the PR branch automatically dismiss all existing approvals. This ensures reviewers approve the final version of the code, not an earlier version that may have changed."
   },
   {
-    question: ": In Azure Repos, what is the effect of setting \"Reset code reviewer votes when there are new changes\" on a branch policy?",
+    question: "In Azure Repos, what is the effect of setting \"Reset code reviewer votes when there are new changes\" on a branch policy?",
     options: [
       "All reviewers are removed from the PR",
       "Reviewer votes are reset to no vote, requiring re-approval",
@@ -605,7 +605,7 @@ EOF
     explanation: "This Azure Repos setting is equivalent to GitHub's \"Dismiss stale reviews on push.\" When new changes are pushed to the source branch, all existing reviewer votes (Approve, Approve with suggestions, Wait for author, Reject) are reset to \"No vote,\" requiring reviewers to re-evaluate and vote again on the updated code."
   },
   {
-    question: ": A CODEOWNERS file contains these entries in order. Who is required to review a change to '/src/api/billing/invoice.ts'?  ''' * @contoso/platform-team /src/api/ @contoso/backend-team /src/api/billing/ @contoso/billing-team @sarah-lead '''",
+    question: "A CODEOWNERS file contains these entries in order. Who is required to review a change to '/src/api/billing/invoice.ts'?  ''' * @contoso/platform-team /src/api/ @contoso/backend-team /src/api/billing/ @contoso/billing-team @sarah-lead '''",
     options: [
       "'@contoso/platform-team' only (first match wins)",
       "'@contoso/backend-team' only (parent directory match)",

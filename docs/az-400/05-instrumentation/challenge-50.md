@@ -374,7 +374,7 @@ az monitor metrics alert create \
   --name "alert-dynamic-response-time" \
   --resource-group rg-contoso-prod \
   --scopes "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/components/ai-contoso-webapp" \
-  --condition "avg requests/duration > dynamic medium 3" \
+  --condition "avg requests/duration > dynamic medium 3 of 5" \
   --window-size 5m \
   --evaluation-frequency 5m \
   --action "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/actionGroups/ag-sre-team" \

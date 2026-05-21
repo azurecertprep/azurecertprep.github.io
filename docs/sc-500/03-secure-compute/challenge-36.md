@@ -62,7 +62,7 @@ az aks create \
     --enable-defender \
     --enable-workload-identity \
     --enable-oidc-issuer \
-    --enable-image-integrity \
+    --enable-image-integrity \ # Note: Requires aks-preview extension (az extension add --name aks-preview)
     --generate-ssh-keys \
     --kubernetes-version "1.29" \
     --tier "standard"

@@ -640,7 +640,7 @@ git commit -m "chore: update shared-libs submodule to latest"
 
 <KnowledgeCheck questions={[
   {
-    question: ": Contoso has a mono-repo with 15 microservices. A developer only works on the order-service and needs to clone the repo quickly. Which combination of Git features provides the fastest clone with minimal disk usage?",
+    question: "Contoso has a mono-repo with 15 microservices. A developer only works on the order-service and needs to clone the repo quickly. Which combination of Git features provides the fastest clone with minimal disk usage?",
     options: [
       "'git clone --depth=1' (shallow clone)",
       "'git clone --filter=blob:none --sparse' followed by 'git sparse-checkout set services/order-service'",
@@ -662,7 +662,7 @@ git commit -m "chore: update shared-libs submodule to latest"
     explanation: "scalar register configures the local repository with performance optimizations that are all part of standard Git but not enabled by default. These include: FSMonitor (filesystem watcher for faster git status), commit-graph (pre-computed graph for faster log/traversal), multi-pack index (faster object lookups), and scheduled background maintenance tasks (prefetch, commit-graph updates, loose object cleanup, incremental repack). The repository remains a standard Git repository accessible by any Git client."
   },
   {
-    question: ": In a multi-repo setup, team A updates 'shared-libs' v2.3.0 to v2.4.0 with a breaking change. What is the primary challenge this creates?",
+    question: "In a multi-repo setup, team A updates 'shared-libs' v2.3.0 to v2.4.0 with a breaking change. What is the primary challenge this creates?",
     options: [
       "All other repos automatically update and may break",
       "Each consuming repo must independently update their dependency, test, and release, creating coordination overhead and risk of version drift",
@@ -673,7 +673,7 @@ git commit -m "chore: update shared-libs submodule to latest"
     explanation: "In a multi-repo setup, updating a shared dependency requires each consuming repository to explicitly update their reference (submodule pointer, package version, etc.), run their own tests, and deploy. This creates coordination overhead, especially with breaking changes. Some repos may stay on v2.3.0 while others move to v2.4.0, creating version drift. In a mono-repo, the breaking change and all updates to consumers happen in a single atomic commit."
   },
   {
-    question: ": An Azure Pipelines YAML file uses 'trigger.paths.include' to only build when specific paths change. A developer modifies 'libs/shared-types/index.ts'. Which pipeline behavior is correct?",
+    question: "An Azure Pipelines YAML file uses 'trigger.paths.include' to only build when specific paths change. A developer modifies 'libs/shared-types/index.ts'. Which pipeline behavior is correct?",
     options: [
       "All pipelines trigger because any file change triggers all pipelines by default",
       "Only pipelines whose 'paths.include' matches 'libs/shared-types/**' will trigger",

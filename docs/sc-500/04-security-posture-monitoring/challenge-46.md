@@ -131,6 +131,7 @@ Define a custom table and DCR for ingesting proprietary HR application logs.
 
 ```bash
 # Create a custom log table in the workspace
+# Note: Custom table creation may require REST API in some CLI versions. Alternative: use az rest with the Tables API
 az monitor log-analytics workspace table create \
   --workspace-name $WORKSPACE_NAME \
   --resource-group $RG_NAME \

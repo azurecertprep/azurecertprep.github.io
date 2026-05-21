@@ -313,7 +313,7 @@ This capstone challenge integrates all 4 exam domains: Identity/Governance/Monit
 <details>
 <summary>Hint 1: Composite SLA Calculation</summary>
 
-For 99.99% composite SLA, each service in the critical path must exceed 99.99% individually, or you must add redundancy. Azure Container Apps SLA is 99.95%, Azure SQL Business Critical is 99.995%, Cosmos DB multi-region is 99.999%, Service Bus Premium is 99.9% (99.95% with Availability Zones). The critical path SLA = product of all services: 0.9995 x 0.99995 x 0.99999 x 0.999 = approximately 99.84%. To achieve 99.99%, add multi-region redundancy for the weakest links (Container Apps in 2 regions with Front Door = 1 - (1 - 0.9995)^2 = 99.999975%).
+For 99.99% composite SLA, each service in the critical path must exceed 99.99% individually, or you must add redundancy. Azure Container Apps SLA is 99.95%, Azure SQL Business Critical is 99.995%, Cosmos DB multi-region is 99.999%, Service Bus Premium is 99.95% (with Availability Zones). The critical path SLA = product of all services: 0.9995 x 0.99995 x 0.99999 x 0.9995 = approximately 99.89%. To achieve 99.99%, add multi-region redundancy for the weakest links (Container Apps in 2 regions with Front Door = 1 - (1 - 0.9995)^2 = 99.999975%).
 
 </details>
 

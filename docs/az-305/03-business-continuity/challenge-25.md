@@ -269,7 +269,7 @@ az vm list \
 ```bash
 az vm list \
   --resource-group rg-az305-challenge25 \
-  --query "length(unique([].zones[0]))" -o tsv
+  --query "[].zones[0]" -o tsv | sort -u
 ```
 
 :::tip

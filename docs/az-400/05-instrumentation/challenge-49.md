@@ -290,15 +290,15 @@ Azure DevOps provides Analytics views accessible via OData for querying work ite
 ```bash
 # Query pipeline run duration analytics
 curl -u :$PAT \
-  "https://analytics.dev.azure.com/contoso/ContosoWeb/_odata/v4.0-preview/PipelineRuns?\$filter=CompletedDate gt 2024-11-01Z and PipelineName eq 'Production-Deploy'&\$select=PipelineRunId,CompletedDate,RunDuration,RunOutcome&\$orderby=CompletedDate desc&\$top=50"
+  "https://analytics.dev.azure.com/contoso/ContosoWeb/_odata/v4.0-preview/PipelineRuns?\$filter=CompletedDate gt 2024-11-01T00:00:00Z and PipelineName eq 'Production-Deploy'&\$select=PipelineRunId,CompletedDate,RunDuration,RunOutcome&\$orderby=CompletedDate desc&\$top=50"
 
 # Query work item cycle time
 curl -u :$PAT \
-  "https://analytics.dev.azure.com/contoso/ContosoWeb/_odata/v4.0-preview/WorkItems?\$filter=WorkItemType eq 'User Story' and State eq 'Closed' and ClosedDate gt 2024-10-01Z&\$select=WorkItemId,Title,CycleTimeDays,LeadTimeDays&\$orderby=ClosedDate desc&\$top=50"
+  "https://analytics.dev.azure.com/contoso/ContosoWeb/_odata/v4.0-preview/WorkItems?\$filter=WorkItemType eq 'User Story' and State eq 'Closed' and ClosedDate gt 2024-10-01T00:00:00Z&\$select=WorkItemId,Title,CycleTimeDays,LeadTimeDays&\$orderby=ClosedDate desc&\$top=50"
 
 # Query test run pass rates
 curl -u :$PAT \
-  "https://analytics.dev.azure.com/contoso/ContosoWeb/_odata/v4.0-preview/TestRuns?\$filter=CompletedDate gt 2024-11-01Z&\$select=Title,TotalTests,PassedTests,FailedTests,NotExecutedTests&\$orderby=CompletedDate desc&\$top=20"
+  "https://analytics.dev.azure.com/contoso/ContosoWeb/_odata/v4.0-preview/TestRuns?\$filter=CompletedDate gt 2024-11-01T00:00:00Z&\$select=Title,TotalTests,PassedTests,FailedTests,NotExecutedTests&\$orderby=CompletedDate desc&\$top=20"
 ```
 
 ### Task 7: Save and share queries as workbook templates

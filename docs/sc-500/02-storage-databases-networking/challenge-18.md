@@ -351,7 +351,7 @@ HUB_VNET_ID=$(az network vnet show --name vnet-hub --resource-group $RG --query 
 
 # Create connectivity configuration (hub-and-spoke)
 az network manager connect-config create \
-  --name "cc-prod-hub-spoke" \
+  --configuration-name "cc-prod-hub-spoke" \
   --network-manager-name "avnm-contoso-security" \
   --resource-group $RG \
   --connectivity-topology "HubAndSpoke" \

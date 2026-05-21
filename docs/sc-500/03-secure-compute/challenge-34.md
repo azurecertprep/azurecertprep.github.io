@@ -151,6 +151,7 @@ az security pricing show --name "VirtualMachines" \
     --query "{name: name, tier: pricingTier, subPlan: subPlan}"
 
 # Install the Defender for Endpoint extension on Arc servers
+# Extension names may vary by OS and region. Verify with: az connectedmachine extension list --machine-name $ARC_SERVER -g $RG
 az connectedmachine extension create \
     --resource-group "rg-contoso-arc-servers" \
     --machine-name "srv-onprem-web01" \

@@ -82,10 +82,12 @@ The easiest way is via the Azure Portal:
 Or via CLI (using a policy JSON):
 
 ```bash
-az backup policy set \
+az backup policy create \
   --resource-group $RG \
   --vault-name rsv-contoso \
-  --policy '{"name":"policy-daily-30","properties":{"backupManagementType":"AzureIaasVM","schedulePolicy":{"schedulePolicyType":"SimpleSchedulePolicy","scheduleRunFrequency":"Daily","scheduleRunTimes":["2024-01-01T02:00:00Z"]},"retentionPolicy":{"retentionPolicyType":"LongTermRetentionPolicy","dailySchedule":{"retentionTimes":["2024-01-01T02:00:00Z"],"retentionDuration":{"count":30,"durationType":"Days"}}}}}'
+  --name policy-daily-30 \
+  --backup-management-type AzureIaasVM \
+  --policy '{"properties":{"backupManagementType":"AzureIaasVM","schedulePolicy":{"schedulePolicyType":"SimpleSchedulePolicy","scheduleRunFrequency":"Daily","scheduleRunTimes":["2024-01-01T02:00:00Z"]},"retentionPolicy":{"retentionPolicyType":"LongTermRetentionPolicy","dailySchedule":{"retentionTimes":["2024-01-01T02:00:00Z"],"retentionDuration":{"count":30,"durationType":"Days"}}}}}'
 ```
 
 </details>

@@ -194,7 +194,7 @@ az vm encryption enable \
 az vm encryption show \
     --resource-group "rg-contoso-vm-security" \
     --name "vm-legacy-app01" \
-    --query "{osVolume: .disks[0].statuses[0].displayStatus, dataVolumes: .disks[1:]}"
+    --query "{osDisk: osDisk, dataDisk: dataDisk}"
 ```
 
 ---

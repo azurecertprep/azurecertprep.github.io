@@ -61,9 +61,9 @@ az rest --method PUT \
       "pricingTier": "Standard",
       "subPlan": "P2",
       "extensions": [
-        {"name": "AgentlessVmScanning", "isEnabled": "True"},
-        {"name": "MdeDesignatedSubscription", "isEnabled": "True"},
-        {"name": "FileIntegrityMonitoring", "isEnabled": "True"}
+        {"name": "AgentlessVmScanning", "isEnabled": true},
+        {"name": "MdeDesignatedSubscription", "isEnabled": true},
+        {"name": "FileIntegrityMonitoring", "isEnabled": true}
       ]
     }
   }'
