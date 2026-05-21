@@ -74,18 +74,7 @@ Every challenge in this guide costs $0. We only use the Azure Portal, Azure Clou
 
 ## Learning path
 
-```mermaid
-graph LR
-    A[AZ-900<br/>Fundamentals] --> B[AZ-104<br/>Administrator]
-    B --> C[AZ-305<br/>Solutions Architect]
-    B --> D[AZ-400<br/>DevOps Engineer]
-    B --> E[AZ-500<br/>Security Engineer]
-    style A fill:#d5e8d4,stroke:#82b366
-    style B fill:#dae8fc,stroke:#6c8ebf
-    style C fill:#e1d5e7,stroke:#9673a6
-    style D fill:#e1d5e7,stroke:#9673a6
-    style E fill:#e1d5e7,stroke:#9673a6
-```
+![Certification Path](/img/certification-path.svg)
 
 ## What's different about AZ-900?
 

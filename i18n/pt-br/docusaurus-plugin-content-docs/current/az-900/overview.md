@@ -74,17 +74,7 @@ Todos os desafios neste guia custam $0. Utilizamos apenas o Portal Azure, Azure 
 
 ## Trilha de certificação
 
-```mermaid
-graph LR
-    A[AZ-900<br/>Fundamentals] --> B[AZ-104<br/>Administrator]
-    B --> C[AZ-305<br/>Solutions Architect]
-    B --> D[AZ-400<br/>DevOps Engineer]
-    B --> E[SC-500<br/>Security Engineer]
-    style A fill:#d5e8d4,stroke:#82b366
-    style B fill:#dae8fc,stroke:#6c8ebf
-    style C fill:#e1d5e7,stroke:#9673a6
-    style D fill:#e1d5e7,stroke:#9673a6
-    style E fill:#e1d5e7,stroke:#9673a6
+![Trilha de Certificação](/img/certification-path.svg)
 ```
 
 ## O que é diferente no AZ-900?
