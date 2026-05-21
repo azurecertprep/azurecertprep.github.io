@@ -71,44 +71,36 @@ WORKSPACE_ID=$(az monitor log-analytics workspace show \
 ### Analytics Rule 1: Suspicious sign-in followed by Azure resource access
 
 ```bash
-# Create scheduled analytics rule for impossible travel + resource access
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "rule-suspicious-signin-resource-access" \
-  --scheduled \
-  --name "Suspicious Sign-in Followed by Azure Resource Access" \
-  --description "Detects sign-ins from unusual locations followed by access to sensitive Azure resources within 1 hour" \
-  --severity "High" \
-  --enabled true \
-  --query "let timeframe = 1h;
-let suspicious_signins = SigninLogs
-| where TimeGenerated > ago(timeframe)
-| where ResultType == 0
-| where RiskLevelDuringSignIn in ('high', 'medium')
-| where LocationDetails.city != '' 
-| project SignInTime=TimeGenerated, UserPrincipalName, IPAddress, 
-          City=tostring(LocationDetails.city), 
-          Country=tostring(LocationDetails.countryOrRegion),
-          RiskLevel=RiskLevelDuringSignIn, AppDisplayName;
-let resource_access = AzureActivity
-| where TimeGenerated > ago(timeframe)
-| where CategoryValue == 'Administrative'
-| where OperationNameValue has_any ('Microsoft.KeyVault', 'Microsoft.Storage', 'Microsoft.Sql')
-| project AccessTime=TimeGenerated, Caller, ResourceGroup, 
-          OperationName=OperationNameValue, ResourceId;
-suspicious_signins
-| join kind=inner (resource_access) on \$left.UserPrincipalName == \$right.Caller
-| where AccessTime > SignInTime
-| where datetime_diff('minute', AccessTime, SignInTime) < 60
-| project SignInTime, AccessTime, UserPrincipalName, IPAddress, City, Country, 
-          RiskLevel, OperationName, ResourceId" \
-  --query-frequency "PT15M" \
-  --query-period "PT1H" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "InitialAccess" "Collection" \
-  --techniques "T1078" "T1530"
+# Create scheduled analytics rule for suspicious sign-in + resource access
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/rule-suspicious-signin-resource-access?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Suspicious Sign-in Followed by Azure Resource Access",
+      "description": "Detects sign-ins from unusual locations followed by access to sensitive Azure resources within 1 hour",
+      "severity": "High",
+      "enabled": true,
+      "query": "let timeframe = 1h;\nlet suspicious_signins = SigninLogs\n| where TimeGenerated > ago(timeframe)\n| where ResultType == 0\n| where RiskLevelDuringSignIn in (\"high\", \"medium\")\n| where LocationDetails.city != \"\"\n| project SignInTime=TimeGenerated, UserPrincipalName, IPAddress,\n          City=tostring(LocationDetails.city),\n          Country=tostring(LocationDetails.countryOrRegion),\n          RiskLevel=RiskLevelDuringSignIn, AppDisplayName;\nlet resource_access = AzureActivity\n| where TimeGenerated > ago(timeframe)\n| where CategoryValue == \"Administrative\"\n| where OperationNameValue has_any (\"Microsoft.KeyVault\", \"Microsoft.Storage\", \"Microsoft.Sql\")\n| project AccessTime=TimeGenerated, Caller, ResourceGroup,\n          OperationName=OperationNameValue, ResourceId;\nsuspicious_signins\n| join kind=inner (resource_access) on $left.UserPrincipalName == $right.Caller\n| where AccessTime > SignInTime\n| where datetime_diff(\"minute\", AccessTime, SignInTime) < 60\n| project SignInTime, AccessTime, UserPrincipalName, IPAddress, City, Country,\n          RiskLevel, OperationName, ResourceId",
+      "queryFrequency": "PT15M",
+      "queryPeriod": "PT1H",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["InitialAccess", "Collection"],
+      "techniques": ["T1078", "T1530"],
+      "suppressionEnabled": false,
+      "suppressionDuration": "PT5H",
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ### Analytics Rule 2: Credential access after initial compromise
@@ -116,73 +108,67 @@ suspicious_signins
 Create a Near Real-Time (NRT) rule for detecting credential harvesting post-compromise:
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "rule-post-compromise-cred-access" \
-  --nrt \
-  --name "Post-Compromise Credential Access Attempt" \
-  --description "NRT rule detecting Key Vault secret access or password changes after a risky sign-in" \
-  --severity "High" \
-  --enabled true \
-  --query "let risky_users = SigninLogs
-| where TimeGenerated > ago(15m)
-| where RiskLevelDuringSignIn in ('high')
-| where ResultType == 0
-| distinct UserPrincipalName;
-let keyvault_access = AzureDiagnostics
-| where TimeGenerated > ago(15m)
-| where ResourceProvider == 'MICROSOFT.KEYVAULT'
-| where OperationName in ('SecretGet', 'SecretList', 'KeyGet', 'CertificateGet')
-| project TimeGenerated, CallerIPAddress, 
-          identity_claim_upn_s, OperationName, ResourceId;
-let password_changes = AuditLogs
-| where TimeGenerated > ago(15m)
-| where OperationName has_any ('Change password', 'Reset password', 'Add app role assignment')
-| extend InitiatedBy = tostring(InitiatedBy.user.userPrincipalName)
-| project TimeGenerated, InitiatedBy, OperationName, TargetResources;
-union
-  (keyvault_access | where identity_claim_upn_s in (risky_users) 
-   | project TimeGenerated, User=identity_claim_upn_s, Action=OperationName, Resource=ResourceId),
-  (password_changes | where InitiatedBy in (risky_users)
-   | project TimeGenerated, User=InitiatedBy, Action=OperationName, Resource=tostring(TargetResources))" \
-  --tactics "CredentialAccess" "Persistence" \
-  --techniques "T1555" "T1098"
+# Create NRT rule for post-compromise credential access
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/rule-post-compromise-cred-access?api-version=2024-03-01" \
+  --body '{
+    "kind": "NRT",
+    "properties": {
+      "displayName": "Post-Compromise Credential Access Attempt",
+      "description": "NRT rule detecting Key Vault secret access or password changes after a risky sign-in",
+      "severity": "High",
+      "enabled": true,
+      "query": "let risky_users = SigninLogs\n| where TimeGenerated > ago(15m)\n| where RiskLevelDuringSignIn in (\"high\")\n| where ResultType == 0\n| distinct UserPrincipalName;\nlet keyvault_access = AzureDiagnostics\n| where TimeGenerated > ago(15m)\n| where ResourceProvider == \"MICROSOFT.KEYVAULT\"\n| where OperationName in (\"SecretGet\", \"SecretList\", \"KeyGet\", \"CertificateGet\")\n| project TimeGenerated, CallerIPAddress,\n          identity_claim_upn_s, OperationName, ResourceId;\nlet password_changes = AuditLogs\n| where TimeGenerated > ago(15m)\n| where OperationName has_any (\"Change password\", \"Reset password\", \"Add app role assignment\")\n| extend InitiatedBy = tostring(InitiatedBy.user.userPrincipalName)\n| project TimeGenerated, InitiatedBy, OperationName, TargetResources;\nunion\n  (keyvault_access | where identity_claim_upn_s in (risky_users)\n   | project TimeGenerated, User=identity_claim_upn_s, Action=OperationName, Resource=ResourceId),\n  (password_changes | where InitiatedBy in (risky_users)\n   | project TimeGenerated, User=InitiatedBy, Action=OperationName, Resource=tostring(TargetResources))",
+      "tactics": ["CredentialAccess", "Persistence"],
+      "techniques": ["T1555", "T1098"],
+      "suppressionEnabled": false,
+      "suppressionDuration": "PT5H",
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ### Analytics Rule 3: Lateral movement detection
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "rule-lateral-movement-detection" \
-  --scheduled \
-  --name "Lateral Movement via Azure Resource Access Escalation" \
-  --description "Detects when a compromised account accesses resources across multiple subscriptions or resource groups" \
-  --severity "Medium" \
-  --enabled true \
-  --query "AzureActivity
-| where TimeGenerated > ago(1h)
-| where CategoryValue == 'Administrative'
-| where ActivityStatusValue == 'Success'
-| summarize 
-    ResourceGroupCount = dcount(ResourceGroup),
-    SubscriptionCount = dcount(SubscriptionId),
-    OperationCount = count(),
-    ResourceGroups = make_set(ResourceGroup, 10),
-    Operations = make_set(OperationNameValue, 10)
-    by Caller, bin(TimeGenerated, 5m)
-| where ResourceGroupCount > 3 or SubscriptionCount > 1
-| where OperationCount > 10
-| project TimeGenerated, Caller, ResourceGroupCount, SubscriptionCount, 
-          OperationCount, ResourceGroups, Operations" \
-  --query-frequency "PT5M" \
-  --query-period "PT1H" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "LateralMovement" "Discovery" \
-  --techniques "T1580" "T1087"
+# Create scheduled rule for lateral movement detection
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/rule-lateral-movement-detection?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Lateral Movement via Azure Resource Access Escalation",
+      "description": "Detects when a compromised account accesses resources across multiple subscriptions or resource groups",
+      "severity": "Medium",
+      "enabled": true,
+      "query": "AzureActivity\n| where TimeGenerated > ago(1h)\n| where CategoryValue == \"Administrative\"\n| where ActivityStatusValue == \"Success\"\n| summarize\n    ResourceGroupCount = dcount(ResourceGroup),\n    SubscriptionCount = dcount(SubscriptionId),\n    OperationCount = count(),\n    ResourceGroups = make_set(ResourceGroup, 10),\n    Operations = make_set(OperationNameValue, 10)\n    by Caller, bin(TimeGenerated, 5m)\n| where ResourceGroupCount > 3 or SubscriptionCount > 1\n| where OperationCount > 10\n| project TimeGenerated, Caller, ResourceGroupCount, SubscriptionCount,\n          OperationCount, ResourceGroups, Operations",
+      "queryFrequency": "PT5M",
+      "queryPeriod": "PT1H",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["LateralMovement", "Discovery"],
+      "techniques": ["T1580", "T1087"],
+      "suppressionEnabled": false,
+      "suppressionDuration": "PT5H",
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ---
@@ -197,10 +183,13 @@ az sentinel data-connector create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
   --data-connector-id "MicrosoftThreatProtection" \
-  --microsoft-threat-protection \
-  --tenant-id $(az account show --query tenantId -o tsv) \
-  --data-types-incidents-state "Enabled" \
-  --data-types-alerts-state "Enabled"
+  --microsoft-protection "{
+    \"tenantId\": \"$(az account show --query tenantId -o tsv)\",
+    \"dataTypes\": {
+      \"incidents\": {\"state\": \"Enabled\"},
+      \"alerts\": {\"state\": \"Enabled\"}
+    }
+  }"
 ```
 
 **Portal verification for unified incident queue:**
@@ -413,8 +402,8 @@ az rest --method POST \
 az sentinel automation-rule create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --automation-rule-id "auto-rule-compromise-response" \
-  --name "Auto-Respond to Account Compromise Incidents" \
+  --automation-rule-name "auto-rule-compromise-response" \
+  --display-name "Auto-Respond to Account Compromise Incidents" \
   --order 1 \
   --triggering-logic \
     is-enabled=true \
@@ -566,7 +555,7 @@ The Near Real-Time analytics rule for credential access doesn't fire even though
    az sentinel alert-rule show \
      --resource-group $RG_NAME \
      --workspace-name $WORKSPACE_NAME \
-     --rule-id "rule-post-compromise-cred-access"
+     --name "rule-post-compromise-cred-access"
    ```
 4. Verify the rule's last run time and any errors in the health blade
 5. NRT rules run every ~1 minute—wait for the next execution cycle
@@ -644,23 +633,23 @@ The Near Real-Time analytics rule for credential access doesn't fire even though
 az sentinel alert-rule delete \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --rule-id "rule-suspicious-signin-resource-access" --yes
+  --name "rule-suspicious-signin-resource-access" --yes
 
 az sentinel alert-rule delete \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --rule-id "rule-post-compromise-cred-access" --yes
+  --name "rule-post-compromise-cred-access" --yes
 
 az sentinel alert-rule delete \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --rule-id "rule-lateral-movement-detection" --yes
+  --name "rule-lateral-movement-detection" --yes
 
 # Remove automation rules
 az sentinel automation-rule delete \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --automation-rule-id "auto-rule-compromise-response" --yes
+  --automation-rule-name "auto-rule-compromise-response" --yes
 
 # Delete resource group
 az group delete --name $RG_NAME --yes --no-wait

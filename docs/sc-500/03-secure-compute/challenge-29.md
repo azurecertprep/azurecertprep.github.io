@@ -161,23 +161,23 @@ Apply token-based rate limiting policy:
 <policies>
     <inbound>
         <base />
-        <!-- Token-based rate limiting using azure-openai-token-limit -->
-        <azure-openai-token-limit
+        <!-- Token-based rate limiting using llm-token-limit -->
+        <!-- (Previously named azure-openai-token-limit; renamed to support all LLM providers) -->
+        <llm-token-limit
             tokens-per-minute="100000"
             counter-key="@(context.Subscription.Id)"
             estimate-prompt-tokens="true"
-            remaining-tokens-variable-name="remainingTokens"
-            remaining-tokens-header-name="x-ratelimit-remaining-tokens" />
+            remaining-tokens-variable-name="remainingTokens" />
     </inbound>
     <outbound>
         <base />
         <!-- Emit token usage metrics for cost tracking -->
-        <azure-openai-emit-token-metric
+        <llm-emit-token-metric
             namespace="AIGateway">
             <dimension name="Subscription" value="@(context.Subscription.Name)" />
             <dimension name="BusinessUnit" value="@(context.Request.Headers.GetValueOrDefault("X-Business-Unit", "Unknown"))" />
             <dimension name="Model" value="@(context.Request.MatchedParameters["deployment-id"])" />
-        </azure-openai-emit-token-metric>
+        </llm-emit-token-metric>
     </outbound>
 </policies>
 ```
@@ -274,7 +274,8 @@ az redis create \
     <inbound>
         <base />
         <!-- Check semantic cache before calling backend -->
-        <azure-openai-semantic-cache-lookup
+        <!-- (Previously named azure-openai-semantic-cache-lookup; renamed to support all LLM providers) -->
+        <llm-semantic-cache-lookup
             score-threshold="0.8"
             embeddings-backend-id="openai-embeddings"
             embeddings-backend-auth="system-assigned" />
@@ -282,7 +283,7 @@ az redis create \
     <outbound>
         <base />
         <!-- Store response in semantic cache -->
-        <azure-openai-semantic-cache-store duration="3600" />
+        <llm-semantic-cache-store duration="3600" />
     </outbound>
 </policies>
 ```
@@ -352,7 +353,7 @@ az monitor metrics list \
 # Check APIM gateway logs to see if BackendResponseCode is 429
 # This means the backend model deployment has its own TPM limits
 
-# 3. Verify the azure-openai-token-limit policy is using estimate-prompt-tokens
+# 3. Verify the llm-token-limit policy is using estimate-prompt-tokens
 # If not, tokens are only counted AFTER the response, allowing bursts
 
 # 4. Fix: Implement proper retry with exponential backoff
@@ -391,12 +392,12 @@ Users are receiving cached responses that are factually incorrect because the un
 
 # 3. Fix: Reduce cache duration and increase threshold
 cat <<'EOF'
-<azure-openai-semantic-cache-lookup
+<llm-semantic-cache-lookup
     score-threshold="0.95"
     embeddings-backend-id="openai-embeddings"
     embeddings-backend-auth="system-assigned" />
 
-<azure-openai-semantic-cache-store duration="600" />
+<llm-semantic-cache-store duration="600" />
 EOF
 
 # 4. Add cache bypass for specific scenarios
@@ -406,7 +407,7 @@ cat <<'EOF'
         <!-- Skip cache lookup for explicit bypass -->
     </when>
     <otherwise>
-        <azure-openai-semantic-cache-lookup score-threshold="0.95"
+        <llm-semantic-cache-lookup score-threshold="0.95"
             embeddings-backend-id="openai-embeddings"
             embeddings-backend-auth="system-assigned" />
     </otherwise>
@@ -488,7 +489,7 @@ The content safety policy is producing false positives — blocking legal and co
     explanation: "APIM as AI Gateway provides centralized governance over all AI model traffic, enabling consistent rate limiting, content safety filtering, cost allocation per consumer, semantic caching, and load balancing across multiple model endpoints."
   },
   {
-    question: "How does the azure-openai-token-limit policy differ from standard APIM rate limiting?",
+    question: "How does the llm-token-limit policy differ from standard APIM rate limiting?",
     options: [
       "It counts individual HTTP requests instead of tokens",
       "It measures and limits consumption based on token usage (prompt + completion tokens) rather than request count",
@@ -496,7 +497,7 @@ The content safety policy is producing false positives — blocking legal and co
       "It requires a separate licensing tier"
     ],
     correctIndex: 1,
-    explanation: "The azure-openai-token-limit policy specifically counts AI tokens (prompt tokens estimated before the request and completion tokens counted after) rather than HTTP requests, providing accurate consumption-based rate limiting for AI workloads."
+    explanation: "The llm-token-limit policy (previously azure-openai-token-limit) specifically counts AI tokens (prompt tokens estimated before the request and completion tokens counted after) rather than HTTP requests, providing accurate consumption-based rate limiting for AI workloads."
   },
   {
     question: "What is the purpose of semantic caching in an AI Gateway?",

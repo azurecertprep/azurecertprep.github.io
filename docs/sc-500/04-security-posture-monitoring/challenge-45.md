@@ -125,7 +125,10 @@ az sentinel data-connector create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
   --data-connector-id "defender-for-cloud-connector" \
-  --kind "AzureSecurityCenter" 2>/dev/null
+  --azure-security-center "{
+    \"subscriptionId\": \"${SUBSCRIPTION_ID}\",
+    \"dataTypes\": {\"alerts\": {\"state\": \"Enabled\"}}
+  }" 2>/dev/null
 
 # Alternative: Use REST API for the connector
 az rest --method PUT \

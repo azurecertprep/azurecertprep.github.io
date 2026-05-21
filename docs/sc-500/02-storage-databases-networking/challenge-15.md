@@ -240,12 +240,18 @@ az sql db audit-policy update \
             "BATCH_COMPLETED_GROUP"
 
 # Enable Advanced Threat Protection (ATP)
-az sql server threat-policy update \
+az sql server advanced-threat-protection-setting update \
   --server $SQL_SERVER \
   --resource-group $RG \
-  --state Enabled \
-  --email-addresses "security@contoso.com" \
-  --email-account-admins true
+  --state Enabled
+
+# Configure security contact for ATP email notifications
+# (managed through Microsoft Defender for Cloud, not per-server)
+az security contact create \
+  --name "default" \
+  --emails "security@contoso.com" \
+  --alert-notifications '{"state":"On","minimalSeverity":"Medium"}' \
+  --notifications-by-role '{"state":"On","roles":["Owner"]}'
 
 # Enable Vulnerability Assessment
 az sql server va-setting update \

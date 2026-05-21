@@ -190,21 +190,21 @@ az ad app permission add --id $APP_ID \
 az ad app permission admin-consent --id $APP_ID
 ```
 
-```bash
+```powershell
 # Configure application access policy to restrict mailbox access
 # This limits which mailboxes the agent can access even with granted permissions
 Connect-ExchangeOnline
 
 # Create a mail-enabled security group for allowed mailboxes
-New-DistributionGroup -Name "Agent-Accessible-Mailboxes" \
-    -Type "Security" \
+New-DistributionGroup -Name "Agent-Accessible-Mailboxes" `
+    -Type "Security" `
     -ManagedBy "securityteam@contoso.com"
 
 # Restrict the agent to only access specific mailboxes
-New-ApplicationAccessPolicy \
-    -AppId $APP_ID \
-    -PolicyScopeGroupId "Agent-Accessible-Mailboxes" \
-    -AccessRight "RestrictAccess" \
+New-ApplicationAccessPolicy `
+    -AppId $APP_ID `
+    -PolicyScopeGroupId "Agent-Accessible-Mailboxes" `
+    -AccessRight "RestrictAccess" `
     -Description "Restrict CS agent to customer service mailboxes only"
 ```
 
@@ -406,8 +406,11 @@ Security alerts show the customer service agent identity is accessing the Financ
 <summary>Show solution</summary>
 
 ```bash
-# 1. IMMEDIATELY revoke all tokens for the compromised agent
-az ad sp credential delete --id $SP_ID --key-id "all"
+# 1. IMMEDIATELY revoke all credentials for the compromised agent
+# List all credentials and delete each one
+for KEY_ID in $(az ad sp credential list --id $SP_ID --query "[].keyId" -o tsv); do
+    az ad sp credential delete --id $SP_ID --key-id "$KEY_ID"
+done
 
 # Revoke active tokens via continuous access evaluation
 az rest --method POST \

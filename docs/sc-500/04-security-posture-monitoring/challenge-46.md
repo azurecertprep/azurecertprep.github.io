@@ -137,16 +137,7 @@ az monitor log-analytics workspace table create \
   --name "ContosoHRApp_CL" \
   --retention-time 90 \
   --total-retention-time 180 \
-  --columns '[
-    {"name": "TimeGenerated", "type": "datetime"},
-    {"name": "EventType", "type": "string"},
-    {"name": "UserPrincipalName", "type": "string"},
-    {"name": "Action", "type": "string"},
-    {"name": "TargetResource", "type": "string"},
-    {"name": "SourceIP", "type": "string"},
-    {"name": "Result", "type": "string"},
-    {"name": "AdditionalDetails", "type": "string"}
-  ]'
+  --columns TimeGenerated=datetime EventType=string UserPrincipalName=string Action=string TargetResource=string SourceIP=string Result=string AdditionalDetails=string
 
 # Verify custom table was created
 az monitor log-analytics workspace table show \

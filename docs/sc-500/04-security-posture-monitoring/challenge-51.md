@@ -127,50 +127,59 @@ az sentinel data-connector create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
   --data-connector-id "AzureActiveDirectory" \
-  --aad \
-  --tenant-id $(az account show --query tenantId -o tsv) \
-  --data-types-alerts-state "Enabled" \
-  --data-types-sign-in-logs-state "Enabled" \
-  --data-types-audit-logs-state "Enabled"
+  --azure-active-directory "{
+    \"tenantId\": \"$(az account show --query tenantId -o tsv)\",
+    \"dataTypes\": {
+      \"alerts\": {\"state\": \"Enabled\"},
+      \"msGraphSignIns\": {\"state\": \"Enabled\"}
+    }
+  }"
 
 # Microsoft Defender XDR connector
 az sentinel data-connector create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
   --data-connector-id "MicrosoftThreatProtection" \
-  --microsoft-threat-protection \
-  --tenant-id $(az account show --query tenantId -o tsv) \
-  --data-types-incidents-state "Enabled" \
-  --data-types-alerts-state "Enabled"
+  --microsoft-protection "{
+    \"tenantId\": \"$(az account show --query tenantId -o tsv)\",
+    \"dataTypes\": {
+      \"incidents\": {\"state\": \"Enabled\"},
+      \"alerts\": {\"state\": \"Enabled\"}
+    }
+  }"
 
 # Microsoft Defender for Cloud connector
 az sentinel data-connector create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
   --data-connector-id "AzureSecurityCenter" \
-  --asc \
-  --subscription-id $SUBSCRIPTION_ID \
-  --data-types-alerts-state "Enabled"
+  --azure-security-center "{
+    \"subscriptionId\": \"${SUBSCRIPTION_ID}\",
+    \"dataTypes\": {\"alerts\": {\"state\": \"Enabled\"}}
+  }"
 
-# Azure Activity connector
-az sentinel data-connector create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --data-connector-id "AzureActivity" \
-  --azure-activity \
-  --subscription-id $SUBSCRIPTION_ID \
-  --data-types-azure-activity-state "Enabled"
+# Azure Activity connector (configured via diagnostic settings)
+az monitor diagnostic-settings create \
+  --name "activity-to-sentinel" \
+  --resource "/subscriptions/${SUBSCRIPTION_ID}" \
+  --workspace $WORKSPACE_ID \
+  --logs '[{"category": "Administrative", "enabled": true},
+           {"category": "Security", "enabled": true},
+           {"category": "Alert", "enabled": true}]'
 
 # Microsoft 365 connector (Exchange, SharePoint, Teams)
 az sentinel data-connector create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
   --data-connector-id "Office365" \
-  --office365 \
-  --tenant-id $(az account show --query tenantId -o tsv) \
-  --data-types-exchange-state "Enabled" \
-  --data-types-share-point-state "Enabled" \
-  --data-types-teams-state "Enabled"
+  --office365 "{
+    \"tenantId\": \"$(az account show --query tenantId -o tsv)\",
+    \"dataTypes\": {
+      \"exchange\": {\"state\": \"Enabled\"},
+      \"sharePoint\": {\"state\": \"Enabled\"},
+      \"teams\": {\"state\": \"Enabled\"}
+    }
+  }"
 
 # Configure diagnostic settings for Key Vault
 az monitor diagnostic-settings create \
@@ -208,227 +217,162 @@ Implement detection rules for each threat category in Contoso's requirements.
 ### Detection 1: Brute-force attack detection
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "detect-brute-force" \
-  --scheduled \
-  --name "Brute Force Attack Detected" \
-  --description "Detects multiple failed sign-in attempts followed by a success from the same IP" \
-  --severity "High" \
-  --enabled true \
-  --query "let failureThreshold = 10;
-let timeWindow = 15m;
-let successWindow = 1h;
-// Find IPs with many failures
-let bruteForceAttempts = SigninLogs
-| where TimeGenerated > ago(successWindow)
-| where ResultType != 0
-| summarize 
-    FailureCount = count(),
-    FailedAccounts = make_set(UserPrincipalName, 20),
-    FirstFailure = min(TimeGenerated),
-    LastFailure = max(TimeGenerated)
-    by IPAddress
-| where FailureCount >= failureThreshold;
-// Check if any succeeded after failures
-let successfulLogins = SigninLogs
-| where TimeGenerated > ago(successWindow)
-| where ResultType == 0
-| project SuccessTime=TimeGenerated, UserPrincipalName, IPAddress, 
-          AppDisplayName, DeviceDetail, Location=LocationDetails;
-bruteForceAttempts
-| join kind=inner (successfulLogins) on IPAddress
-| where SuccessTime > LastFailure
-| project IPAddress, FailureCount, FailedAccounts, 
-          CompromisedUser=UserPrincipalName, SuccessTime, 
-          AppDisplayName, FirstFailure, LastFailure" \
-  --query-frequency "PT10M" \
-  --query-period "PT1H" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "CredentialAccess" \
-  --techniques "T1110"
+# Create scheduled analytics rule for brute-force detection
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/detect-brute-force?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Brute Force Attack Detected",
+      "description": "Detects multiple failed sign-in attempts followed by a success from the same IP",
+      "severity": "High",
+      "enabled": true,
+      "query": "let failureThreshold = 10;\nlet timeWindow = 15m;\nlet successWindow = 1h;\nlet bruteForceAttempts = SigninLogs\n| where TimeGenerated > ago(successWindow)\n| where ResultType != 0\n| summarize\n    FailureCount = count(),\n    FailedAccounts = make_set(UserPrincipalName, 20),\n    FirstFailure = min(TimeGenerated),\n    LastFailure = max(TimeGenerated)\n    by IPAddress\n| where FailureCount >= failureThreshold;\nlet successfulLogins = SigninLogs\n| where TimeGenerated > ago(successWindow)\n| where ResultType == 0\n| project SuccessTime=TimeGenerated, UserPrincipalName, IPAddress,\n          AppDisplayName, DeviceDetail, Location=LocationDetails;\nbruteForceAttempts\n| join kind=inner (successfulLogins) on IPAddress\n| where SuccessTime > LastFailure\n| project IPAddress, FailureCount, FailedAccounts,\n          CompromisedUser=UserPrincipalName, SuccessTime,\n          AppDisplayName, FirstFailure, LastFailure",
+      "queryFrequency": "PT10M",
+      "queryPeriod": "PT1H",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["CredentialAccess"],
+      "techniques": ["T1110"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ### Detection 2: Impossible travel
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "detect-impossible-travel" \
-  --scheduled \
-  --name "Impossible Travel Detected" \
-  --description "Detects sign-ins from geographically distant locations within an impossible timeframe" \
-  --severity "Medium" \
-  --enabled true \
-  --query "let maxTimeDiffMinutes = 60;
-let maxDistanceKm = 500;
-SigninLogs
-| where TimeGenerated > ago(1h)
-| where ResultType == 0
-| extend City = tostring(LocationDetails.city),
-         State = tostring(LocationDetails.state),
-         Country = tostring(LocationDetails.countryOrRegion),
-         Latitude = toreal(LocationDetails.geoCoordinates.latitude),
-         Longitude = toreal(LocationDetails.geoCoordinates.longitude)
-| where isnotempty(Latitude) and isnotempty(Longitude)
-| sort by UserPrincipalName, TimeGenerated asc
-| serialize
-| extend PrevTime = prev(TimeGenerated, 1),
-         PrevLatitude = prev(Latitude, 1),
-         PrevLongitude = prev(Longitude, 1),
-         PrevCity = prev(City, 1),
-         PrevCountry = prev(Country, 1),
-         PrevUser = prev(UserPrincipalName, 1)
-| where UserPrincipalName == PrevUser
-| extend TimeDiffMinutes = datetime_diff('minute', TimeGenerated, PrevTime)
-| where TimeDiffMinutes <= maxTimeDiffMinutes and TimeDiffMinutes > 0
-// Haversine distance approximation
-| extend DistanceKm = 6371 * acos(
-    sin(radians(Latitude)) * sin(radians(PrevLatitude)) +
-    cos(radians(Latitude)) * cos(radians(PrevLatitude)) * 
-    cos(radians(PrevLongitude - Longitude)))
-| where DistanceKm > maxDistanceKm
-| project TimeGenerated, UserPrincipalName, 
-          CurrentLocation=strcat(City, ', ', Country),
-          PreviousLocation=strcat(PrevCity, ', ', PrevCountry),
-          TimeDiffMinutes, DistanceKm, IPAddress" \
-  --query-frequency "PT15M" \
-  --query-period "PT2H" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "InitialAccess" \
-  --techniques "T1078"
+# Create scheduled rule for impossible travel detection
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/detect-impossible-travel?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Impossible Travel Detected",
+      "description": "Detects sign-ins from geographically distant locations within an impossible timeframe",
+      "severity": "Medium",
+      "enabled": true,
+      "query": "let maxTimeDiffMinutes = 60;\nlet maxDistanceKm = 500;\nSigninLogs\n| where TimeGenerated > ago(1h)\n| where ResultType == 0\n| extend City = tostring(LocationDetails.city),\n         State = tostring(LocationDetails.state),\n         Country = tostring(LocationDetails.countryOrRegion),\n         Latitude = toreal(LocationDetails.geoCoordinates.latitude),\n         Longitude = toreal(LocationDetails.geoCoordinates.longitude)\n| where isnotempty(Latitude) and isnotempty(Longitude)\n| sort by UserPrincipalName, TimeGenerated asc\n| serialize\n| extend PrevTime = prev(TimeGenerated, 1),\n         PrevLatitude = prev(Latitude, 1),\n         PrevLongitude = prev(Longitude, 1),\n         PrevCity = prev(City, 1),\n         PrevCountry = prev(Country, 1),\n         PrevUser = prev(UserPrincipalName, 1)\n| where UserPrincipalName == PrevUser\n| extend TimeDiffMinutes = datetime_diff(\"minute\", TimeGenerated, PrevTime)\n| where TimeDiffMinutes <= maxTimeDiffMinutes and TimeDiffMinutes > 0\n| extend DistanceKm = 6371 * acos(\n    sin(radians(Latitude)) * sin(radians(PrevLatitude)) +\n    cos(radians(Latitude)) * cos(radians(PrevLatitude)) *\n    cos(radians(PrevLongitude - Longitude)))\n| where DistanceKm > maxDistanceKm\n| project TimeGenerated, UserPrincipalName,\n          CurrentLocation=strcat(City, \", \", Country),\n          PreviousLocation=strcat(PrevCity, \", \", PrevCountry),\n          TimeDiffMinutes, DistanceKm, IPAddress",
+      "queryFrequency": "PT15M",
+      "queryPeriod": "PT2H",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["InitialAccess"],
+      "techniques": ["T1078"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ### Detection 3: Privilege escalation via unauthorized role assignment
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "detect-privilege-escalation" \
-  --nrt \
-  --name "Unauthorized Privileged Role Assignment (NRT)" \
-  --description "Near real-time detection of privileged role assignments outside PIM or approved processes" \
-  --severity "High" \
-  --enabled true \
-  --query "let privilegedRoles = dynamic([
-  'Global Administrator', 'Privileged Role Administrator',
-  'Security Administrator', 'Exchange Administrator',
-  'SharePoint Administrator', 'User Administrator',
-  'Application Administrator', 'Cloud Application Administrator']);
-AuditLogs
-| where TimeGenerated > ago(5m)
-| where OperationName == 'Add member to role'
-| extend TargetRole = tostring(TargetResources[0].displayName)
-| where TargetRole in (privilegedRoles)
-// Exclude PIM-activated assignments
-| where OperationName != 'Add eligible member to role in PIM'
-| extend InitiatedBy = tostring(InitiatedBy.user.userPrincipalName),
-         TargetUser = tostring(TargetResources[0].userPrincipalName),
-         InitiatedByIP = tostring(InitiatedBy.user.ipAddress)
-// Exclude approved service accounts
-| where InitiatedBy !in ('pim-service@contoso.com', 'identity-governance@contoso.com')
-| project TimeGenerated, InitiatedBy, InitiatedByIP, 
-          TargetUser, TargetRole, OperationName,
-          AdditionalDetails" \
-  --tactics "PrivilegeEscalation" "Persistence" \
-  --techniques "T1078.004" "T1098"
+# Create NRT rule for unauthorized privilege escalation
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/detect-privilege-escalation?api-version=2024-03-01" \
+  --body '{
+    "kind": "NRT",
+    "properties": {
+      "displayName": "Unauthorized Privileged Role Assignment (NRT)",
+      "description": "Near real-time detection of privileged role assignments outside PIM or approved processes",
+      "severity": "High",
+      "enabled": true,
+      "query": "let privilegedRoles = dynamic([\"Global Administrator\", \"Privileged Role Administrator\", \"Security Administrator\", \"Exchange Administrator\", \"SharePoint Administrator\", \"User Administrator\", \"Application Administrator\", \"Cloud Application Administrator\"]);\nAuditLogs\n| where TimeGenerated > ago(5m)\n| where OperationName == \"Add member to role\"\n| extend TargetRole = tostring(TargetResources[0].displayName)\n| where TargetRole in (privilegedRoles)\n| where OperationName != \"Add eligible member to role in PIM\"\n| extend InitiatedBy = tostring(InitiatedBy.user.userPrincipalName),\n         TargetUser = tostring(TargetResources[0].userPrincipalName),\n         InitiatedByIP = tostring(InitiatedBy.user.ipAddress)\n| where InitiatedBy !in (\"pim-service@contoso.com\", \"identity-governance@contoso.com\")\n| project TimeGenerated, InitiatedBy, InitiatedByIP,\n          TargetUser, TargetRole, OperationName, AdditionalDetails",
+      "tactics": ["PrivilegeEscalation", "Persistence"],
+      "techniques": ["T1078.004", "T1098"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ### Detection 4: Data exfiltration from SharePoint/OneDrive
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "detect-data-exfiltration" \
-  --scheduled \
-  --name "Anomalous Data Download from SharePoint/OneDrive" \
-  --description "Detects unusually large file downloads that may indicate data exfiltration" \
-  --severity "Medium" \
-  --enabled true \
-  --query "let lookback = 14d;
-let threshold_multiplier = 3;
-// Calculate baseline download volume per user
-let baseline = OfficeActivity
-| where TimeGenerated > ago(lookback) and TimeGenerated < ago(1d)
-| where Operation in ('FileDownloaded', 'FileSyncDownloadedFull')
-| where OfficeWorkload in ('SharePoint', 'OneDrive')
-| summarize 
-    AvgDailyDownloads = count() / 14.0,
-    AvgDailyBytes = sum(toint(OfficeObjectId)) / 14.0
-    by UserId;
-// Today's activity
-let today_activity = OfficeActivity
-| where TimeGenerated > ago(1d)
-| where Operation in ('FileDownloaded', 'FileSyncDownloadedFull')
-| where OfficeWorkload in ('SharePoint', 'OneDrive')
-| summarize 
-    TodayDownloads = count(),
-    UniqueFiles = dcount(OfficeObjectId),
-    Sites = make_set(Site_Url, 10)
-    by UserId;
-today_activity
-| join kind=inner (baseline) on UserId
-| where TodayDownloads > AvgDailyDownloads * threshold_multiplier
-| where TodayDownloads > 50
-| project UserId, TodayDownloads, AvgDailyDownloads, 
-          AnomalyRatio = round(TodayDownloads / AvgDailyDownloads, 1),
-          UniqueFiles, Sites" \
-  --query-frequency "PT1H" \
-  --query-period "PT14D" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "Exfiltration" \
-  --techniques "T1567"
+# Create scheduled rule for data exfiltration detection
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/detect-data-exfiltration?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Anomalous Data Download from SharePoint/OneDrive",
+      "description": "Detects unusually large file downloads that may indicate data exfiltration",
+      "severity": "Medium",
+      "enabled": true,
+      "query": "let lookback = 14d;\nlet threshold_multiplier = 3;\nlet baseline = OfficeActivity\n| where TimeGenerated > ago(lookback) and TimeGenerated < ago(1d)\n| where Operation in (\"FileDownloaded\", \"FileSyncDownloadedFull\")\n| where OfficeWorkload in (\"SharePoint\", \"OneDrive\")\n| summarize\n    AvgDailyDownloads = count() / 14.0,\n    AvgDailyBytes = sum(toint(OfficeObjectId)) / 14.0\n    by UserId;\nlet today_activity = OfficeActivity\n| where TimeGenerated > ago(1d)\n| where Operation in (\"FileDownloaded\", \"FileSyncDownloadedFull\")\n| where OfficeWorkload in (\"SharePoint\", \"OneDrive\")\n| summarize\n    TodayDownloads = count(),\n    UniqueFiles = dcount(OfficeObjectId),\n    Sites = make_set(Site_Url, 10)\n    by UserId;\ntoday_activity\n| join kind=inner (baseline) on UserId\n| where TodayDownloads > AvgDailyDownloads * threshold_multiplier\n| where TodayDownloads > 50\n| project UserId, TodayDownloads, AvgDailyDownloads,\n          AnomalyRatio = round(TodayDownloads / AvgDailyDownloads, 1),\n          UniqueFiles, Sites",
+      "queryFrequency": "PT1H",
+      "queryPeriod": "P14D",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["Exfiltration"],
+      "techniques": ["T1567"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ### Detection 5: Cloud resource abuse (cryptomining indicators)
 
 ```bash
-az sentinel alert-rule create \
-  --resource-group $RG_NAME \
-  --workspace-name $WORKSPACE_NAME \
-  --rule-id "detect-cryptomining" \
-  --scheduled \
-  --name "Potential Cryptomining - Unusual VM Deployments" \
-  --description "Detects bulk VM creation or GPU VM deployments that may indicate cryptomining" \
-  --severity "High" \
-  --enabled true \
-  --query "let cryptoVmSizes = dynamic(['Standard_NC', 'Standard_ND', 'Standard_NV', 
-  'Standard_HB', 'Standard_HC', 'Standard_F72s']);
-// Detect bulk VM creation
-let bulkDeployment = AzureActivity
-| where TimeGenerated > ago(1h)
-| where OperationNameValue == 'Microsoft.Compute/virtualMachines/write'
-| where ActivityStatusValue == 'Success'
-| summarize 
-    VMCount = count(),
-    ResourceGroups = make_set(ResourceGroup, 5),
-    VMNames = make_set(Resource, 10)
-    by Caller, bin(TimeGenerated, 15m)
-| where VMCount > 5;
-// Detect GPU VM creation
-let gpuDeployment = AzureActivity
-| where TimeGenerated > ago(1h)
-| where OperationNameValue == 'Microsoft.Compute/virtualMachines/write'
-| where ActivityStatusValue == 'Success'
-| where Properties_d has_any (cryptoVmSizes)
-| project TimeGenerated, Caller, ResourceGroup, Resource,
-          VMSize = tostring(parse_json(tostring(Properties_d)).responseBody);
-union 
-  (bulkDeployment | extend DetectionType = 'BulkVMDeployment'),
-  (gpuDeployment | extend DetectionType = 'GPUVMDeployment')" \
-  --query-frequency "PT15M" \
-  --query-period "PT1H" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "Impact" \
-  --techniques "T1496"
+# Create scheduled rule for cryptomining detection
+az rest --method PUT \
+  --uri "https://management.azure.com${WORKSPACE_ID}/providers/Microsoft.SecurityInsights/alertRules/detect-cryptomining?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Potential Cryptomining - Unusual VM Deployments",
+      "description": "Detects bulk VM creation or GPU VM deployments that may indicate cryptomining",
+      "severity": "High",
+      "enabled": true,
+      "query": "let cryptoVmSizes = dynamic([\"Standard_NC\", \"Standard_ND\", \"Standard_NV\",\n  \"Standard_HB\", \"Standard_HC\", \"Standard_F72s\"]);\nlet bulkDeployment = AzureActivity\n| where TimeGenerated > ago(1h)\n| where OperationNameValue == \"Microsoft.Compute/virtualMachines/write\"\n| where ActivityStatusValue == \"Success\"\n| summarize\n    VMCount = count(),\n    ResourceGroups = make_set(ResourceGroup, 5),\n    VMNames = make_set(Resource, 10)\n    by Caller, bin(TimeGenerated, 15m)\n| where VMCount > 5;\nlet gpuDeployment = AzureActivity\n| where TimeGenerated > ago(1h)\n| where OperationNameValue == \"Microsoft.Compute/virtualMachines/write\"\n| where ActivityStatusValue == \"Success\"\n| where Properties_d has_any (cryptoVmSizes)\n| project TimeGenerated, Caller, ResourceGroup, Resource,\n          VMSize = tostring(parse_json(tostring(Properties_d)).responseBody);\nunion\n  (bulkDeployment | extend DetectionType = \"BulkVMDeployment\"),\n  (gpuDeployment | extend DetectionType = \"GPUVMDeployment\")",
+      "queryFrequency": "PT15M",
+      "queryPeriod": "PT1H",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["Impact"],
+      "techniques": ["T1496"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 ```
 
 ---
@@ -545,29 +489,30 @@ PLAYBOOK_ID=$(az logic workflow show \
 az sentinel automation-rule create \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --automation-rule-id "auto-brute-force-response" \
-  --name "Auto-Respond to Brute Force" \
+  --automation-rule-name "auto-brute-force-response" \
+  --display-name "Auto-Respond to Brute Force" \
   --order 1 \
-  --triggering-logic \
-    is-enabled=true \
-    triggers-on="Incidents" \
-    triggers-when="Created" \
-    conditions='[{
-      "conditionType": "Property",
-      "conditionProperties": {
-        "propertyName": "IncidentRelatedAnalyticRuleIds",
-        "operator": "Contains",
-        "propertyValues": ["detect-brute-force"]
+  --triggering-logic "{
+    \"isEnabled\": true,
+    \"triggersOn\": \"Incidents\",
+    \"triggersWhen\": \"Created\",
+    \"conditions\": [{
+      \"conditionType\": \"Property\",
+      \"conditionProperties\": {
+        \"propertyName\": \"IncidentRelatedAnalyticRuleIds\",
+        \"operator\": \"Contains\",
+        \"propertyValues\": [\"detect-brute-force\"]
       }
-    }]' \
-  --actions '[{
-    "actionType": "RunPlaybook",
-    "order": 1,
-    "actionConfiguration": {
-      "logicAppResourceId": "'$PLAYBOOK_ID'",
-      "tenantId": "'$(az account show --query tenantId -o tsv)'"
+    }]
+  }" \
+  --actions "[{
+    \"actionType\": \"RunPlaybook\",
+    \"order\": 1,
+    \"actionConfiguration\": {
+      \"logicAppResourceId\": \"${PLAYBOOK_ID}\",
+      \"tenantId\": \"$(az account show --query tenantId -o tsv)\"
     }
-  }]'
+  }]"
 ```
 
 ---
@@ -896,14 +841,14 @@ Monthly costs jump from $3,000 to $12,000 due to a sudden increase in log ingest
 az sentinel automation-rule delete \
   --resource-group $RG_NAME \
   --workspace-name $WORKSPACE_NAME \
-  --automation-rule-id "auto-brute-force-response" --yes
+  --automation-rule-name "auto-brute-force-response" --yes
 
 # Delete analytics rules
 for RULE_ID in "detect-brute-force" "detect-impossible-travel" "detect-privilege-escalation" "detect-data-exfiltration" "detect-cryptomining"; do
   az sentinel alert-rule delete \
     --resource-group $RG_NAME \
     --workspace-name $WORKSPACE_NAME \
-    --rule-id $RULE_ID --yes
+    --name $RULE_ID --yes
 done
 
 # Delete Logic App playbook

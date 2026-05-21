@@ -131,9 +131,10 @@ az acr token create \
     --status "enabled"
 
 # Enable image quarantine (preview) - images must pass scan before availability
-az acr config quarantine update \
-    --registry "contosoacrprod" \
-    --status "enabled"
+# Note: Quarantine is configured via ARM property, not a CLI config command
+az resource update \
+    --ids "$(az acr show --name contosoacrprod --query id -o tsv)" \
+    --set "properties.policies.quarantinePolicy.status=enabled"
 ```
 
 Sign images during CI/CD:

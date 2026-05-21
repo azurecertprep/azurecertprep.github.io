@@ -324,15 +324,18 @@ az policy state trigger-scan \
     --resource-group "rg-contoso-machine-config" \
     --no-wait
 
-# Create an alert for non-compliant machines
-az monitor metrics alert create \
+# Create an alert for non-compliant machines (using scheduled query on Resource Graph)
+# Note: NonCompliantResources is not a metric at subscription scope;
+# use a scheduled query alert on policy compliance data instead
+az monitor scheduled-query create \
     --name "machine-config-drift-alert" \
     --resource-group "rg-contoso-machine-config" \
     --scopes "/subscriptions/{sub-id}" \
-    --condition "total NonCompliantResources > 5" \
+    --condition "count 'policyresources | where type == \"microsoft.guestconfiguration/guestconfigurationassignments\" | where properties.complianceStatus == \"NonCompliant\"' > 5" \
     --description "Alert when more than 5 machines drift from security baseline" \
     --window-size "PT1H" \
-    --evaluation-frequency "PT15M"
+    --evaluation-frequency "PT15M" \
+    --severity 2
 ```
 
 ---

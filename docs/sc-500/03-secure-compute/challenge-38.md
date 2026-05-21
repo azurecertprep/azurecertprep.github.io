@@ -54,12 +54,17 @@ az webapp create \
     --runtime "NODE:20-lts" \
     --assign-identity "[system]"
 
-# Configure TLS settings (minimum TLS 1.2, HTTPS only)
+# Enforce HTTPS only
 az webapp update \
     --resource-group "rg-contoso-app-security" \
     --name "app-contoso-frontend" \
-    --min-tls-version "1.2" \
     --https-only true
+
+# Configure minimum TLS 1.2
+az webapp config set \
+    --resource-group "rg-contoso-app-security" \
+    --name "app-contoso-frontend" \
+    --min-tls-version "1.2"
 
 # Disable FTP access (security best practice)
 az webapp config set \
@@ -217,7 +222,8 @@ Secure Logic App trigger endpoints:
 
 ```bash
 # Configure IP-based access restrictions for Logic App triggers
-az logicapp config access-restriction add \
+# (Logic Apps Standard uses webapp access-restriction commands)
+az webapp config access-restriction add \
     --resource-group "rg-contoso-app-security" \
     --name "logic-contoso-workflow" \
     --rule-name "AllowAPIMOnly" \
@@ -226,7 +232,8 @@ az logicapp config access-restriction add \
     --action "Allow"
 
 # Configure Logic App to use managed identity for connectors
-LOGIC_IDENTITY=$(az logicapp identity show \
+# (Logic Apps Standard identity is managed via webapp commands)
+LOGIC_IDENTITY=$(az webapp identity show \
     --resource-group "rg-contoso-app-security" \
     --name "logic-contoso-workflow" \
     --query "principalId" -o tsv)
@@ -587,14 +594,18 @@ The Logic App's HTTP trigger URL (including SAS token) was accidentally committe
 # Navigate to Logic App > Workflow > Trigger > "Regenerate Access Key"
 # This invalidates the leaked URL
 
-# 2. Alternatively via CLI, regenerate workflow access keys
-az logicapp regenerate-access-key \
-    --resource-group "rg-contoso-app-security" \
-    --name "logic-contoso-workflow" \
-    --key-type "Primary"
+# 2. Regenerate workflow access keys via REST API
+# (az logicapp does not have a regenerate-access-key subcommand)
+az rest --method POST \
+    --url "https://management.azure.com/subscriptions/{sub-id}/resourceGroups/rg-contoso-app-security/providers/Microsoft.Web/sites/logic-contoso-workflow/host/default/listkeys?api-version=2022-03-01"
+# Then regenerate:
+az rest --method POST \
+    --url "https://management.azure.com/subscriptions/{sub-id}/resourceGroups/rg-contoso-app-security/providers/Microsoft.Web/sites/logic-contoso-workflow/host/default/functionkeys/default?api-version=2022-03-01" \
+    --body '{"properties": {}}'
 
 # 3. Add IP-based access restrictions to prevent future abuse
-az logicapp config access-restriction add \
+# (Logic Apps Standard uses the webapp access-restriction commands)
+az webapp config access-restriction add \
     --resource-group "rg-contoso-app-security" \
     --name "logic-contoso-workflow" \
     --rule-name "AllowAPIMOnly" \
@@ -602,7 +613,7 @@ az logicapp config access-restriction add \
     --ip-address "10.0.3.0/24" \
     --action "Allow"
 
-az logicapp config access-restriction add \
+az webapp config access-restriction add \
     --resource-group "rg-contoso-app-security" \
     --name "logic-contoso-workflow" \
     --rule-name "DenyAll" \

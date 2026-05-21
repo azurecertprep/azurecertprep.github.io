@@ -683,40 +683,42 @@ az sentinel onboarding-state create \
   --name "default"
 
 # Enable Azure Activity data connector
-az sentinel data-connector create \
-  --resource-group $RG_CORE \
+# Send Azure Activity logs to Sentinel workspace (via diagnostic settings)
+SENTINEL_WS_ID=$(az monitor log-analytics workspace show \
   --workspace-name $SENTINEL_WORKSPACE \
-  --data-connector-id "AzureActivity" \
-  --azure-activity \
-  --subscription-id $SUBSCRIPTION_ID \
-  --data-types-azure-activity-state "Enabled"
+  --resource-group $RG_CORE \
+  --query id -o tsv)
+
+az monitor diagnostic-settings create \
+  --name "activity-to-sentinel" \
+  --resource "/subscriptions/${SUBSCRIPTION_ID}" \
+  --workspace $SENTINEL_WS_ID \
+  --logs '[{"category":"Administrative","enabled":true},{"category":"Security","enabled":true},{"category":"Alert","enabled":true},{"category":"Policy","enabled":true}]'
 
 # Enable Entra ID data connector
 az sentinel data-connector create \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
   --data-connector-id "AzureActiveDirectory" \
-  --aad \
-  --tenant-id $TENANT_ID \
-  --data-types-sign-in-logs-state "Enabled" \
-  --data-types-audit-logs-state "Enabled" \
-  --data-types-alerts-state "Enabled"
+  --azure-active-directory "{
+    \"tenantId\": \"${TENANT_ID}\",
+    \"dataTypes\": {
+      \"alerts\": {\"state\": \"Enabled\"},
+      \"msGraphSignIns\": {\"state\": \"Enabled\"}
+    }
+  }"
 
 # Enable Defender for Cloud connector
 az sentinel data-connector create \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
   --data-connector-id "AzureSecurityCenter" \
-  --asc \
-  --subscription-id $SUBSCRIPTION_ID \
-  --data-types-alerts-state "Enabled"
+  --azure-security-center "{
+    \"subscriptionId\": \"${SUBSCRIPTION_ID}\",
+    \"dataTypes\": {\"alerts\": {\"state\": \"Enabled\"}}
+  }"
 
 # Send Azure Firewall logs to Sentinel workspace
-SENTINEL_WS_ID=$(az monitor log-analytics workspace show \
-  --workspace-name $SENTINEL_WORKSPACE \
-  --resource-group $RG_CORE \
-  --query id -o tsv)
-
 az monitor diagnostic-settings create \
   --name "firewall-to-sentinel" \
   --resource $(az network firewall show --resource-group $RG_CORE --name "fw-contoso-hub" --query id -o tsv) \
@@ -742,56 +744,63 @@ Build detection and automated response for credential attacks.
 
 ```bash
 # Create brute-force detection rule
-az sentinel alert-rule create \
-  --resource-group $RG_CORE \
+SENTINEL_WS_ID=$(az monitor log-analytics workspace show \
   --workspace-name $SENTINEL_WORKSPACE \
-  --rule-id "capstone-brute-force" \
-  --scheduled \
-  --name "Capstone: Brute Force Sign-in with Subsequent Success" \
-  --description "Detects brute-force attacks where attacker eventually succeeds" \
-  --severity "High" \
-  --enabled true \
-  --query "let failThreshold = 10;
-SigninLogs
-| where TimeGenerated > ago(1h)
-| summarize 
-    FailCount = countif(ResultType != 0),
-    SuccessCount = countif(ResultType == 0),
-    FirstAttempt = min(TimeGenerated),
-    LastAttempt = max(TimeGenerated),
-    AttemptedAccounts = make_set(UserPrincipalName, 20)
-    by IPAddress
-| where FailCount >= failThreshold and SuccessCount > 0
-| project IPAddress, FailCount, SuccessCount, 
-          FirstAttempt, LastAttempt, AttemptedAccounts" \
-  --query-frequency "PT10M" \
-  --query-period "PT1H" \
-  --trigger-operator "GreaterThan" \
-  --trigger-threshold 0 \
-  --tactics "CredentialAccess" \
-  --techniques "T1110"
+  --resource-group $RG_CORE \
+  --query id -o tsv)
+
+az rest --method PUT \
+  --uri "https://management.azure.com${SENTINEL_WS_ID}/providers/Microsoft.SecurityInsights/alertRules/capstone-brute-force?api-version=2024-03-01" \
+  --body '{
+    "kind": "Scheduled",
+    "properties": {
+      "displayName": "Capstone: Brute Force Sign-in with Subsequent Success",
+      "description": "Detects brute-force attacks where attacker eventually succeeds",
+      "severity": "High",
+      "enabled": true,
+      "query": "let failThreshold = 10;\nSigninLogs\n| where TimeGenerated > ago(1h)\n| summarize\n    FailCount = countif(ResultType != 0),\n    SuccessCount = countif(ResultType == 0),\n    FirstAttempt = min(TimeGenerated),\n    LastAttempt = max(TimeGenerated),\n    AttemptedAccounts = make_set(UserPrincipalName, 20)\n    by IPAddress\n| where FailCount >= failThreshold and SuccessCount > 0\n| project IPAddress, FailCount, SuccessCount,\n          FirstAttempt, LastAttempt, AttemptedAccounts",
+      "queryFrequency": "PT10M",
+      "queryPeriod": "PT1H",
+      "triggerOperator": "GreaterThan",
+      "triggerThreshold": 0,
+      "tactics": ["CredentialAccess"],
+      "techniques": ["T1110"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 
 # Create privilege escalation detection (NRT)
-az sentinel alert-rule create \
-  --resource-group $RG_CORE \
-  --workspace-name $SENTINEL_WORKSPACE \
-  --rule-id "capstone-priv-esc" \
-  --nrt \
-  --name "Capstone: Unauthorized Role Assignment (NRT)" \
-  --description "Detects direct privileged role assignment bypassing PIM" \
-  --severity "High" \
-  --enabled true \
-  --query "AuditLogs
-| where TimeGenerated > ago(5m)
-| where OperationName == 'Add member to role'
-| extend RoleName = tostring(TargetResources[0].displayName)
-| where RoleName has_any ('Global Administrator', 'Privileged Role Administrator', 'Security Administrator')
-| where OperationName != 'Add eligible member to role in PIM'
-| extend Actor = tostring(InitiatedBy.user.userPrincipalName),
-         Target = tostring(TargetResources[0].userPrincipalName)
-| project TimeGenerated, Actor, Target, RoleName" \
-  --tactics "PrivilegeEscalation" \
-  --techniques "T1078.004"
+az rest --method PUT \
+  --uri "https://management.azure.com${SENTINEL_WS_ID}/providers/Microsoft.SecurityInsights/alertRules/capstone-priv-esc?api-version=2024-03-01" \
+  --body '{
+    "kind": "NRT",
+    "properties": {
+      "displayName": "Capstone: Unauthorized Role Assignment (NRT)",
+      "description": "Detects direct privileged role assignment bypassing PIM",
+      "severity": "High",
+      "enabled": true,
+      "query": "AuditLogs\n| where TimeGenerated > ago(5m)\n| where OperationName == \"Add member to role\"\n| extend RoleName = tostring(TargetResources[0].displayName)\n| where RoleName has_any (\"Global Administrator\", \"Privileged Role Administrator\", \"Security Administrator\")\n| where OperationName != \"Add eligible member to role in PIM\"\n| extend Actor = tostring(InitiatedBy.user.userPrincipalName),\n         Target = tostring(TargetResources[0].userPrincipalName)\n| project TimeGenerated, Actor, Target, RoleName",
+      "tactics": ["PrivilegeEscalation"],
+      "techniques": ["T1078.004"],
+      "incidentConfiguration": {
+        "createIncident": true,
+        "groupingConfiguration": {
+          "enabled": true,
+          "reopenClosedIncident": false,
+          "lookbackDuration": "PT5H",
+          "matchingMethod": "AllEntities"
+        }
+      }
+    }
+  }'
 
 # Create Logic App playbook for automated response
 az logic workflow create \
@@ -847,8 +856,8 @@ PLAYBOOK_ID=$(az logic workflow show \
 az sentinel automation-rule create \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
-  --automation-rule-id "capstone-auto-brute-force" \
-  --name "Capstone: Auto-respond Brute Force" \
+  --automation-rule-name "capstone-auto-brute-force" \
+  --display-name "Capstone: Auto-respond Brute Force" \
   --order 1 \
   --triggering-logic \
     is-enabled=true \
@@ -1136,7 +1145,7 @@ Also verify the automation rule condition matches the incident properties:
 az sentinel automation-rule show \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
-  --automation-rule-id "capstone-auto-brute-force"
+  --automation-rule-name "capstone-auto-brute-force"
 ```
 
 </details>
@@ -1226,17 +1235,17 @@ az sentinel automation-rule show \
 az sentinel automation-rule delete \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
-  --automation-rule-id "capstone-auto-brute-force" --yes 2>/dev/null
+  --automation-rule-name "capstone-auto-brute-force" --yes 2>/dev/null
 
 az sentinel alert-rule delete \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
-  --rule-id "capstone-brute-force" --yes 2>/dev/null
+  --name "capstone-brute-force" --yes 2>/dev/null
 
 az sentinel alert-rule delete \
   --resource-group $RG_CORE \
   --workspace-name $SENTINEL_WORKSPACE \
-  --rule-id "capstone-priv-esc" --yes 2>/dev/null
+  --name "capstone-priv-esc" --yes 2>/dev/null
 
 # Delete Logic App
 az logic workflow delete \

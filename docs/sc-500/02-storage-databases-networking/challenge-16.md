@@ -238,7 +238,7 @@ az cosmosdb create \
   --locations regionName=$LOCATION failoverPriority=0 \
   --default-consistency-level Session \
   --kind GlobalDocumentDB \
-  --enable-public-network true
+  --public-network-access ENABLED
 
 # Disable key-based metadata access (security hardening)
 az cosmosdb update \

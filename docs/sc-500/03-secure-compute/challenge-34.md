@@ -42,10 +42,10 @@ Connect on-premises and multicloud servers to Azure Arc for unified management.
 az group create --name "rg-contoso-arc-servers" --location "eastus"
 
 # Generate the onboarding script for a single server (interactive)
-az connectedmachine connect \
-    --resource-group "rg-contoso-arc-servers" \
-    --name "srv-onprem-web01" \
-    --location "eastus"
+# Note: Single-server onboarding is done by running azcmagent on the target machine.
+# The Azure CLI can generate the onboarding script via the portal or REST API.
+# On the target server, after installing the agent:
+# azcmagent connect --resource-group "rg-contoso-arc-servers" --name "srv-onprem-web01" --location "eastus" --tenant-id "{tenant-id}" --subscription-id "{sub-id}"
 
 # For at-scale onboarding, create a service principal
 az ad sp create-for-rbac \
@@ -188,8 +188,12 @@ Enable and review vulnerability scanning for Arc-connected servers.
 
 ```bash
 # Enable Microsoft Defender Vulnerability Management (MDVM) as the VA solution
-az security va sql baseline set \
-    --resource-group "rg-contoso-arc-servers"
+# MDVM is automatically included with Defender for Servers Plan 2
+# No separate command needed; ensure Plan 2 is enabled:
+az security pricing create \
+    --name "VirtualMachines" \
+    --tier "Standard" \
+    --subplan "P2"
 
 # List vulnerability assessment results for Arc servers
 az security assessment list \

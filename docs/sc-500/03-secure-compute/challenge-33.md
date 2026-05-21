@@ -78,8 +78,8 @@ az network bastion create \
 az network bastion update \
     --resource-group "rg-contoso-bastion" \
     --name "bastion-contoso-hub" \
-    --enable-shareable-link true \
-    --enable-session-recording true
+    --shareable-link true \
+    --session-recording true
 ```
 
 ---
@@ -196,36 +196,39 @@ az network bastion ssh \
 Enable JIT access to provide time-limited, approval-based connectivity to VMs.
 
 ```bash
-# Enable JIT VM access policy via Defender for Cloud
-az security jit-policy create \
-    --resource-group "rg-contoso-bastion" \
-    --name "default" \
-    --location "eastus" \
-    --virtual-machines '[{
-        "id": "/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Compute/virtualMachines/vm-linux-web01",
-        "ports": [
-            {"number": 22, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT3H"},
-            {"number": 3389, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT3H"}
-        ]
-    }, {
-        "id": "/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Compute/virtualMachines/vm-win-db01",
-        "ports": [
-            {"number": 3389, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT1H"},
-            {"number": 1433, "protocol": "TCP", "allowedSourceAddressPrefix": "10.0.0.0/8", "maxRequestAccessDuration": "PT2H"}
-        ]
-    }]'
+# Create JIT VM access policy via REST API (az security jit-policy only supports list/show)
+az rest --method PUT \
+    --url "https://management.azure.com/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Security/locations/eastus/jitNetworkAccessPolicies/default?api-version=2020-01-01" \
+    --body '{
+        "kind": "Basic",
+        "properties": {
+            "virtualMachines": [{
+                "id": "/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Compute/virtualMachines/vm-linux-web01",
+                "ports": [
+                    {"number": 22, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT3H"},
+                    {"number": 3389, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT3H"}
+                ]
+            }, {
+                "id": "/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Compute/virtualMachines/vm-win-db01",
+                "ports": [
+                    {"number": 3389, "protocol": "TCP", "allowedSourceAddressPrefix": "*", "maxRequestAccessDuration": "PT1H"},
+                    {"number": 1433, "protocol": "TCP", "allowedSourceAddressPrefix": "10.0.0.0/8", "maxRequestAccessDuration": "PT2H"}
+                ]
+            }]
+        }
+    }'
 
-# Request JIT access for a specific VM
-az security jit-policy initiate \
-    --resource-group "rg-contoso-bastion" \
-    --name "default" \
-    --location "eastus" \
-    --virtual-machines '[{
-        "id": "/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Compute/virtualMachines/vm-linux-web01",
-        "ports": [{"number": 22, "duration": "PT1H", "allowedSourceAddressPrefix": "203.0.113.50"}]
-    }]'
+# Request (initiate) JIT access for a specific VM
+az rest --method POST \
+    --url "https://management.azure.com/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Security/locations/eastus/jitNetworkAccessPolicies/default/initiate?api-version=2020-01-01" \
+    --body '{
+        "virtualMachines": [{
+            "id": "/subscriptions/{sub-id}/resourceGroups/rg-contoso-bastion/providers/Microsoft.Compute/virtualMachines/vm-linux-web01",
+            "ports": [{"number": 22, "duration": "PT1H", "allowedSourceAddressPrefix": "203.0.113.50"}]
+        }]
+    }'
 
-# List active JIT requests
+# List active JIT policies
 az security jit-policy list \
     --resource-group "rg-contoso-bastion" \
     --query "[].{name: name, vms: virtualMachines[].id}" \

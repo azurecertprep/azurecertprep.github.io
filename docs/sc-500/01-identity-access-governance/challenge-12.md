@@ -159,9 +159,10 @@ az rest --method GET \
   --query "properties.securitySettings"
 
 # Create a backup policy with proper retention
-az backup policy set \
+az backup policy create \
   --vault-name "rsv-contoso-prod" \
   --resource-group $RG_NAME \
+  --backup-management-type AzureIaasVM \
   --name "contoso-vm-policy" \
   --policy '{
     "properties": {

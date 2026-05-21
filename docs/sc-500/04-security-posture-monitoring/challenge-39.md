@@ -79,7 +79,7 @@ Query the current Secure Score and list top security recommendations.
 
 ```bash
 # Get current Secure Score
-az security secure-score list \
+az security secure-scores list \
   --query "[].{Name:name, Current:score.current, Max:score.max, Percentage:score.percentage}" -o table
 
 # List active security recommendations
