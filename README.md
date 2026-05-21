@@ -7,6 +7,7 @@
 [![AZ-305](https://img.shields.io/badge/AZ--305-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-305/coverage-matrix)
 [![AZ-400](https://img.shields.io/badge/AZ--400-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-400/coverage-matrix)
 [![SC-500](https://img.shields.io/badge/SC--500-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/sc-500/coverage-matrix)
+[![AZ-900](https://img.shields.io/badge/AZ--900-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-900/coverage-matrix)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open%20Lab-181717?logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
 ### Don't just study — build it.
@@ -33,10 +34,23 @@ Your Codespace comes pre-configured with:
 
 | Exam | Title | Challenges | Status |
 |------|-------|-----------|--------|
+| **AZ-900** | Azure Fundamentals | 24 | Available |
 | **AZ-104** | Azure Administrator | 28 | Available |
 | **AZ-305** | Solutions Architect Expert | 50 | Available |
 | **AZ-400** | DevOps Engineer Expert | 51 | Available |
 | **SC-500** | Cloud and AI Security Engineer | 52 | Available |
+
+## AZ-900: Azure Fundamentals
+
+24 exploration-based challenges covering **100% of the exam domains** (as of January 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Cloud Concepts | 25-30% | 01-06 | Cloud models, shared responsibility, IaaS/PaaS/SaaS, pricing |
+| Azure Architecture & Services | 35-40% | 07-18 | Regions, compute, networking, storage, identity, security |
+| Management & Governance | 30-35% | 19-24 | Cost management, Azure Policy, CLI/PowerShell, Arc, Monitor |
+
+**Format**: Exploration-based, portal-first, $0 cost. Includes KnowledgeCheck quiz questions.
 
 ## AZ-104: Azure Administrator
 

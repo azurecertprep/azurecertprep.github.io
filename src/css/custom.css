@@ -159,6 +159,9 @@
 .domain-badge--capstone { background: #f9e79f; color: #7d6608; }
 .domain-badge--ai-security { background: #fce4ec; color: #ad1457; }
 .domain-badge--monitoring { background: #e0f2f1; color: #00695c; }
+.domain-badge--cloud-concepts { background: #e8f5e9; color: #2e7d32; }
+.domain-badge--azure-services { background: #e3f2fd; color: #1565c0; }
+.domain-badge--management { background: #fff3e0; color: #e65100; }
 
 [data-theme='dark'] .domain-badge--identity { background: #4a235a; color: #d7bde2; }
 [data-theme='dark'] .domain-badge--storage { background: #1e4d2b; color: #abebc6; }
@@ -172,6 +175,9 @@
 [data-theme='dark'] .domain-badge--capstone { background: #4a3f0a; color: #f9e79f; }
 [data-theme='dark'] .domain-badge--ai-security { background: #4a0e23; color: #f8bbd0; }
 [data-theme='dark'] .domain-badge--monitoring { background: #1a3c3a; color: #b2dfdb; }
+[data-theme='dark'] .domain-badge--cloud-concepts { background: #1b4332; color: #a7d7c5; }
+[data-theme='dark'] .domain-badge--azure-services { background: #0d3b66; color: #90caf9; }
+[data-theme='dark'] .domain-badge--management { background: #4a2c0a; color: #ffcc80; }
 
 /* Reference table */
 .reference-table {

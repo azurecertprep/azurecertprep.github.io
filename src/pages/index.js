@@ -7,10 +7,10 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 const stats = [
-  { number: '181', label: 'Challenges' },
-  { number: '4', label: 'Exams' },
+  { number: '205', label: 'Challenges' },
+  { number: '5', label: 'Exams' },
   { number: '100%', label: 'Coverage' },
-  { number: 'v2026.04', label: 'Exam Objectives' },
+  { number: 'v2026.05', label: 'Exam Objectives' },
 ];
 
 const challenges = [
@@ -245,6 +245,39 @@ const sc500Challenges = [
   { num: '52', title: 'End-to-End Security (Capstone)', domain: 'capstone', href: '/docs/sc-500/capstone/challenge-52' },
 ];
 
+const az900DomainLabels = {
+  'cloud-concepts': 'Cloud Concepts',
+  'azure-services': 'Azure Services',
+  'management': 'Management & Governance',
+};
+
+const az900Challenges = [
+  { num: '01', title: 'What is Cloud Computing?', domain: 'cloud-concepts', href: '/docs/az-900/cloud-concepts/challenge-01' },
+  { num: '02', title: 'Benefits of Cloud Services', domain: 'cloud-concepts', href: '/docs/az-900/cloud-concepts/challenge-02' },
+  { num: '03', title: 'Cloud Pricing Models', domain: 'cloud-concepts', href: '/docs/az-900/cloud-concepts/challenge-03' },
+  { num: '04', title: 'IaaS — Infrastructure as a Service', domain: 'cloud-concepts', href: '/docs/az-900/cloud-concepts/challenge-04' },
+  { num: '05', title: 'PaaS — Platform as a Service', domain: 'cloud-concepts', href: '/docs/az-900/cloud-concepts/challenge-05' },
+  { num: '06', title: 'SaaS — Software as a Service', domain: 'cloud-concepts', href: '/docs/az-900/cloud-concepts/challenge-06' },
+  { num: '07', title: 'Azure Global Infrastructure', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-07' },
+  { num: '08', title: 'Azure Resource Hierarchy', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-08' },
+  { num: '09', title: 'Virtual Machines & Availability', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-09' },
+  { num: '10', title: 'Containers & App Hosting', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-10' },
+  { num: '11', title: 'Azure Networking Basics', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-11' },
+  { num: '12', title: 'VPN Gateway, ExpressRoute & DNS', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-12' },
+  { num: '13', title: 'Azure Storage Accounts & Types', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-13' },
+  { num: '14', title: 'Storage Redundancy & Tiers', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-14' },
+  { num: '15', title: 'Data Migration Options', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-15' },
+  { num: '16', title: 'Microsoft Entra ID & Authentication', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-16' },
+  { num: '17', title: 'RBAC, Conditional Access & External IDs', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-17' },
+  { num: '18', title: 'Security — Zero Trust & Defender', domain: 'azure-services', href: '/docs/az-900/azure-services/challenge-18' },
+  { num: '19', title: 'Azure Cost Management & Pricing', domain: 'management', href: '/docs/az-900/management-governance/challenge-19' },
+  { num: '20', title: 'Governance — Policy & Resource Locks', domain: 'management', href: '/docs/az-900/management-governance/challenge-20' },
+  { num: '21', title: 'Azure Cloud Shell, CLI & PowerShell', domain: 'management', href: '/docs/az-900/management-governance/challenge-21' },
+  { num: '22', title: 'Azure Arc & ARM Templates', domain: 'management', href: '/docs/az-900/management-governance/challenge-22' },
+  { num: '23', title: 'Azure Advisor & Service Health', domain: 'management', href: '/docs/az-900/management-governance/challenge-23' },
+  { num: '24', title: 'Azure Monitor, Log Analytics & Alerts', domain: 'management', href: '/docs/az-900/management-governance/challenge-24' },
+];
+
 
 function HomepageHeader() {
   return (
@@ -265,6 +298,12 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
+            to="/docs/az-900/overview">
+            AZ-900 (24 challenges)
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            style={{marginLeft: '1rem'}}
             to="/docs/az-104/overview">
             AZ-104 (28 challenges)
           </Link>
@@ -295,6 +334,34 @@ function HomepageHeader() {
         </div>
       </div>
     </header>
+  );
+}
+
+function AZ900ChallengeGrid() {
+  return (
+    <section style={{padding: '2rem 0'}}>
+      <div className="container">
+        <div className="section-heading">
+          <Heading as="h2">AZ-900: Azure Fundamentals</Heading>
+          <p>24 exploration-based challenges — understand cloud concepts through hands-on portal navigation. $0 cost.</p>
+        </div>
+        <div className="row">
+          {az900Challenges.map((ch) => (
+            <div key={ch.num} className="col col--3" style={{marginBottom: '1rem'}}>
+              <Link to={ch.href} className="challenge-card">
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem'}}>
+                  <span className="challenge-number">{ch.num}</span>
+                  <span className={`domain-badge domain-badge--${ch.domain}`}>
+                    {az900DomainLabels[ch.domain]}
+                  </span>
+                </div>
+                <strong>{ch.title}</strong>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -420,6 +487,25 @@ function CertificationCoverage() {
         </p>
         <div style={{display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center'}}>
           <div>
+            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-900 (24 challenges)</h3>
+            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
+              <thead>
+                <tr>
+                  <th style={{textAlign: 'center'}}>Domain</th>
+                  <th style={{textAlign: 'center'}}>Weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--cloud-concepts">Cloud Concepts</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--azure-services">Azure Services</span></td><td style={{textAlign: 'center'}}>35-40%</td></tr>
+                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--management">Management & Governance</span></td><td style={{textAlign: 'center'}}>30-35%</td></tr>
+              </tbody>
+            </table>
+            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
+              Exploration-based | $0 cost | Portal-first
+            </p>
+          </div>
+          <div>
             <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-104 (28 challenges)</h3>
             <table style={{width: 'auto', borderCollapse: 'collapse'}}>
               <thead>
@@ -523,6 +609,11 @@ function ExamRoadmap() {
           </thead>
           <tbody>
             <tr>
+              <td style={{textAlign: 'center'}}><strong>AZ-900</strong></td>
+              <td style={{textAlign: 'center'}}>Azure Fundamentals</td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available (24 challenges)</span></td>
+            </tr>
+            <tr>
               <td style={{textAlign: 'center'}}><strong>AZ-104</strong></td>
               <td style={{textAlign: 'center'}}>Azure Administrator</td>
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available (28 challenges)</span></td>
@@ -553,10 +644,11 @@ export default function Home() {
   return (
     <Layout
       title="Hands-on Azure Certification Prep"
-      description="Don't just study — build it. Hands-on challenges for Azure certification exams. AZ-104, AZ-305, and AZ-400 available.">
+      description="Don't just study — build it. Hands-on challenges for Azure certification exams. AZ-900, AZ-104, AZ-305, AZ-400, and SC-500 available.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <AZ900ChallengeGrid />
         <ChallengeGrid />
         <AZ305ChallengeGrid />
         <AZ400ChallengeGrid />
