@@ -629,7 +629,7 @@ function ExamRoadmap() {
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available (51 challenges)</span></td>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}>SC-500</td>
+              <td style={{textAlign: 'center'}}><strong>SC-500</strong></td>
               <td style={{textAlign: 'center'}}>Cloud and AI Security Engineer <small style={{opacity: 0.7}}>(replaces AZ-500)</small></td>
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Available (52 challenges)</span></td>
             </tr>
