@@ -104,6 +104,18 @@ const config = {
             label: 'AZ-700',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'ai900Sidebar',
+            position: 'left',
+            label: 'AI-900',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'ai102Sidebar',
+            position: 'left',
+            label: 'AI-102',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },

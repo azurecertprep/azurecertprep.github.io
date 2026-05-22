@@ -7,8 +7,8 @@ import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
 const stats = [
-  { number: '254', label: 'Challenges' },
-  { number: '6', label: 'Exams' },
+  { number: '327', label: 'Challenges' },
+  { number: '8', label: 'Exams' },
   { number: '100%', label: 'Coverage' },
   { number: 'v2026.05', label: 'Exam Objectives' },
 ];
@@ -67,6 +67,24 @@ const examCards = [
     tagline: 'VPN, ExpressRoute, Firewall & LB',
     challenges: 49,
     href: '/docs/az-700/overview',
+  },
+  {
+    icon: '🧠',
+    code: 'AI-900',
+    level: 'Fundamentals',
+    role: 'Azure AI Fundamentals',
+    tagline: 'ML, Vision, NLP & Generative AI',
+    challenges: 24,
+    href: '/docs/ai-900/overview',
+  },
+  {
+    icon: '🤖',
+    code: 'AI-102',
+    level: 'Associate',
+    role: 'Azure AI Engineer',
+    tagline: 'OpenAI, Search, Vision & Agents',
+    challenges: 49,
+    href: '/docs/ai-102/overview',
   },
   {
     icon: '🧪',
