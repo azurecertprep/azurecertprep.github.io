@@ -19,31 +19,42 @@ MedSecure Health, a healthcare company, is migrating their PaaS services to priv
 
 **Architecture:**
 
-```
-                    Azure VNet (10.0.0.0/16)
-                    ┌──────────────────────────────────────────────┐
-                    │                                              │
-                    │  snet-workloads (10.0.1.0/24)                │
-                    │  ┌──────────┐                                │
-                    │  │  vm-test  │ ── nslookup ──┐               │
-                    │  └──────────┘                │               │
-                    │                              v               │
-                    │  snet-pe (10.0.2.0/24)                       │
-                    │  ┌──────────────────────────┐                │
-                    │  │ pe-storage (10.0.2.4)    │                │
-                    │  └──────────────────────────┘                │
-                    │              │                                │
-                    └──────────────┼────────────────────────────────┘
-                                   │ Private connection
-                                   v
-                    ┌──────────────────────────────┐
-                    │  stmedsecure.blob.core...    │
-                    │  (Storage Account - Blob)    │
-                    └──────────────────────────────┘
-
-    Private DNS Zone: privatelink.blob.core.windows.net
-    A record: stmedsecure → 10.0.2.4
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" style={{maxWidth: '520px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch34" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Azure VNet -->
+  <rect x="30" y="10" width="460" height="230" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="260" y="32" text-anchor="middle" font-size="12" font-weight="bold">Azure VNet (10.0.0.0/16)</text>
+  <!-- snet-workloads -->
+  <rect x="50" y="45" width="200" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="150" y="63" text-anchor="middle" font-size="10" font-weight="bold">snet-workloads (10.0.1.0/24)</text>
+  <rect x="65" y="74" width="100" height="30" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="115" y="93" text-anchor="middle" font-size="10">vm-test</text>
+  <!-- nslookup arrow -->
+  <path d="M 165 89 C 220 89 280 60 280 100" stroke="#666" stroke-width="1.5" fill="none" stroke-dasharray="4" marker-end="url(#arrow-ch34)"/>
+  <text x="240" y="75" font-size="9" fill="#555">nslookup</text>
+  <!-- snet-pe -->
+  <rect x="50" y="130" width="420" height="90" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="260" y="150" text-anchor="middle" font-size="10" font-weight="bold">snet-pe (10.0.2.0/24)</text>
+  <rect x="130" y="160" width="260" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="260" y="184" text-anchor="middle" font-size="11" font-weight="bold">pe-storage (10.0.2.4)</text>
+  <!-- Private connection arrow -->
+  <line x1="260" y1="240" x2="260" y2="270" stroke="#9673a6" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow-ch34)"/>
+  <text x="330" y="260" font-size="9" fill="#9673a6">Private connection</text>
+  <!-- Storage Account -->
+  <rect x="130" y="275" width="260" height="55" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="260" y="298" text-anchor="middle" font-size="11" font-weight="bold">stmedsecure.blob.core...</text>
+  <text x="260" y="318" text-anchor="middle" font-size="10" fill="#555">(Storage Account - Blob)</text>
+  <!-- DNS Zone info -->
+  <rect x="80" y="350" width="360" height="50" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1" stroke-dasharray="4"/>
+  <text x="260" y="370" text-anchor="middle" font-size="10" font-weight="bold">Private DNS Zone: privatelink.blob.core.windows.net</text>
+  <text x="260" y="388" text-anchor="middle" font-size="10" fill="#555">A record: stmedsecure → 10.0.2.4</text>
+</svg>
+</div>
 
 ## Learning objectives
 

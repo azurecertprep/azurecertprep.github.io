@@ -24,17 +24,35 @@ Contoso's public-facing web applications have been targeted by volumetric DDoS a
 
 **Architecture:**
 
-```
-Internet
-    |
-[Public IP: pip-web-frontend]  ←  DDoS IP Protection enabled
-    |
-[Application Gateway / Load Balancer]
-    |
-  VNet (10.0.0.0/16)
-    ├── snet-frontend (10.0.1.0/24)
-    └── snet-backend  (10.0.2.0/24)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 340" style={{maxWidth: '450px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch13" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Internet -->
+  <rect x="155" y="5" width="140" height="36" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="2"/>
+  <text x="225" y="28" text-anchor="middle" font-size="12" font-weight="bold">Internet</text>
+  <line x1="225" y1="41" x2="225" y2="60" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch13)"/>
+  <!-- Public IP with DDoS -->
+  <rect x="100" y="63" width="250" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="225" y="82" text-anchor="middle" font-size="10" font-weight="bold">Public IP: pip-web-frontend</text>
+  <text x="225" y="100" text-anchor="middle" font-size="9" fill="#2e7d32">🛡 DDoS IP Protection enabled</text>
+  <line x1="225" y1="108" x2="225" y2="128" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch13)"/>
+  <!-- App Gateway / LB -->
+  <rect x="105" y="130" width="240" height="40" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="225" y="155" text-anchor="middle" font-size="11" font-weight="bold">Application Gateway / Load Balancer</text>
+  <line x1="225" y1="170" x2="225" y2="195" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch13)"/>
+  <!-- VNet -->
+  <rect x="60" y="198" width="330" height="130" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="225" y="220" text-anchor="middle" font-size="12" font-weight="bold">VNet (10.0.0.0/16)</text>
+  <rect x="80" y="230" width="290" height="30" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="225" y="250" text-anchor="middle" font-size="10">snet-frontend (10.0.1.0/24)</text>
+  <rect x="80" y="270" width="290" height="30" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="225" y="290" text-anchor="middle" font-size="10">snet-backend (10.0.2.0/24)</text>
+</svg>
+</div>
 
 ## Learning objectives
 

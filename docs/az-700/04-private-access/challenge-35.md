@@ -19,32 +19,49 @@ Contoso Enterprise is standardizing private access for all PaaS services consume
 
 **Architecture:**
 
-```
-                         Azure VNet: vnet-enterprise (10.0.0.0/16)
-                         ┌─────────────────────────────────────────────┐
-                         │  snet-app (10.0.1.0/24)                     │
-                         │  ┌────────────────┐                         │
-                         │  │  App VMs/AKS   │                         │
-                         │  └────────────────┘                         │
-                         │                                             │
-                         │  snet-pe (10.0.2.0/24)                      │
-                         │  ┌──────────┬──────────┬──────────┐         │
-                         │  │ PE-Blob  │ PE-File  │ PE-SQL   │         │
-                         │  │ .2.4     │ .2.5     │ .2.6     │         │
-                         │  ├──────────┼──────────┼──────────┤         │
-                         │  │ PE-KV    │ PE-Web   │ PE-Cosmos│         │
-                         │  │ .2.7     │ .2.8     │ .2.9     │         │
-                         │  └──────────┴──────────┴──────────┘         │
-                         └─────────────────────────────────────────────┘
-
-    Private DNS Zones:
-    ├── privatelink.blob.core.windows.net
-    ├── privatelink.file.core.windows.net
-    ├── privatelink.database.windows.net
-    ├── privatelink.vaultcore.azure.net
-    ├── privatelink.azurewebsites.net
-    └── privatelink.documents.azure.com
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" style={{maxWidth: '560px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <!-- VNet container -->
+  <rect x="30" y="10" width="500" height="245" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="280" y="32" text-anchor="middle" font-size="12" font-weight="bold">Azure VNet: vnet-enterprise (10.0.0.0/16)</text>
+  <!-- snet-app -->
+  <rect x="50" y="42" width="200" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="150" y="62" text-anchor="middle" font-size="10" font-weight="bold">snet-app (10.0.1.0/24)</text>
+  <text x="150" y="80" text-anchor="middle" font-size="10" fill="#555">App VMs / AKS</text>
+  <!-- snet-pe -->
+  <rect x="50" y="105" width="460" height="135" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="280" y="125" text-anchor="middle" font-size="10" font-weight="bold">snet-pe (10.0.2.0/24)</text>
+  <!-- Row 1 of PEs -->
+  <rect x="70" y="135" width="135" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="137" y="153" text-anchor="middle" font-size="10" font-weight="bold">PE-Blob</text>
+  <text x="137" y="168" text-anchor="middle" font-size="9" fill="#555">.2.4</text>
+  <rect x="215" y="135" width="135" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="282" y="153" text-anchor="middle" font-size="10" font-weight="bold">PE-File</text>
+  <text x="282" y="168" text-anchor="middle" font-size="9" fill="#555">.2.5</text>
+  <rect x="360" y="135" width="135" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="427" y="153" text-anchor="middle" font-size="10" font-weight="bold">PE-SQL</text>
+  <text x="427" y="168" text-anchor="middle" font-size="9" fill="#555">.2.6</text>
+  <!-- Row 2 of PEs -->
+  <rect x="70" y="185" width="135" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="137" y="203" text-anchor="middle" font-size="10" font-weight="bold">PE-KV</text>
+  <text x="137" y="218" text-anchor="middle" font-size="9" fill="#555">.2.7</text>
+  <rect x="215" y="185" width="135" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="282" y="203" text-anchor="middle" font-size="10" font-weight="bold">PE-Web</text>
+  <text x="282" y="218" text-anchor="middle" font-size="9" fill="#555">.2.8</text>
+  <rect x="360" y="185" width="135" height="40" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="427" y="203" text-anchor="middle" font-size="10" font-weight="bold">PE-Cosmos</text>
+  <text x="427" y="218" text-anchor="middle" font-size="9" fill="#555">.2.9</text>
+  <!-- Private DNS Zones -->
+  <rect x="50" y="275" width="460" height="130" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="280" y="298" text-anchor="middle" font-size="11" font-weight="bold">Private DNS Zones</text>
+  <text x="100" y="318" font-size="10" fill="#555">● privatelink.blob.core.windows.net</text>
+  <text x="100" y="336" font-size="10" fill="#555">● privatelink.file.core.windows.net</text>
+  <text x="100" y="354" font-size="10" fill="#555">● privatelink.database.windows.net</text>
+  <text x="310" y="318" font-size="10" fill="#555">● privatelink.vaultcore.azure.net</text>
+  <text x="310" y="336" font-size="10" fill="#555">● privatelink.azurewebsites.net</text>
+  <text x="310" y="354" font-size="10" fill="#555">● privatelink.documents.azure.com</text>
+</svg>
+</div>
 
 ## Learning objectives
 

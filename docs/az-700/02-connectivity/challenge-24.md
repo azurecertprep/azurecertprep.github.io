@@ -578,27 +578,82 @@ After updating, verify ARP resolves within 1-2 minutes and BGP routes begin appe
 
 ## Troubleshooting decision tree
 
-```
-VPN Tunnel Down?
-├── Check connectionStatus
-│   ├── NotConnected → Check on-prem device reachability (UDP 500/4500)
-│   ├── Connecting → IKE negotiation failing
-│   │   ├── Check shared key match
-│   │   ├── Check IKE/IPsec policy alignment
-│   │   └── Run Network Watcher troubleshooting
-│   └── Connected but no traffic → Check routing (UDR, BGP, NSG)
-│
-P2S VPN Failing?
-├── Certificate error → Verify root cert uploaded, client cert not revoked
-├── Tunnel type error → Match client protocol to gateway config (IKEv2/OpenVPN/SSTP)
-└── No IPs available → Expand address pool
-│
-ExpressRoute Not Working?
-├── Provider State = NotProvisioned → Contact provider
-├── Peering State = Disabled → Check peering configuration
-├── ARP table empty → VLAN mismatch or L2 issue with provider
-└── Routes missing → BGP ASN mismatch or prefix filtering
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 520" style={{maxWidth: '650px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Section 1: VPN Tunnel Down -->
+  <rect x="10" y="5" width="630" height="195" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="20" y="25" font-size="12" font-weight="bold" fill="#6c8ebf">VPN Tunnel Down?</text>
+  <!-- NotConnected -->
+  <rect x="30" y="35" width="150" height="28" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="105" y="53" text-anchor="middle" font-size="9" font-weight="bold">NotConnected</text>
+  <rect x="210" y="35" width="290" height="28" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="355" y="53" text-anchor="middle" font-size="9">Check on-prem device reachability (UDP 500/4500)</text>
+  <line x1="180" y1="49" x2="208" y2="49" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <!-- Connecting -->
+  <rect x="30" y="70" width="150" height="28" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="105" y="88" text-anchor="middle" font-size="9" font-weight="bold">Connecting</text>
+  <text x="210" y="83" font-size="9" fill="#555">IKE negotiation failing:</text>
+  <rect x="210" y="88" width="180" height="22" rx="3" fill="#f5f5f5" stroke="#666" stroke-width="0.5"/>
+  <text x="215" y="103" font-size="8">• Check shared key match</text>
+  <rect x="210" y="112" width="180" height="22" rx="3" fill="#f5f5f5" stroke="#666" stroke-width="0.5"/>
+  <text x="215" y="127" font-size="8">• Check IKE/IPsec policy alignment</text>
+  <rect x="210" y="136" width="180" height="22" rx="3" fill="#f5f5f5" stroke="#666" stroke-width="0.5"/>
+  <text x="215" y="151" font-size="8">• Run Network Watcher troubleshooting</text>
+  <line x1="180" y1="84" x2="208" y2="84" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <!-- Connected but no traffic -->
+  <rect x="30" y="165" width="150" height="28" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="105" y="183" text-anchor="middle" font-size="9" font-weight="bold">Connected, no traffic</text>
+  <rect x="210" y="165" width="260" height="28" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="340" y="183" text-anchor="middle" font-size="9">Check routing (UDR, BGP, NSG)</text>
+  <line x1="180" y1="179" x2="208" y2="179" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <!-- Section 2: P2S VPN -->
+  <rect x="10" y="210" width="630" height="120" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="20" y="232" font-size="12" font-weight="bold" fill="#d6b656">P2S VPN Failing?</text>
+  <rect x="30" y="240" width="140" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="100" y="257" text-anchor="middle" font-size="9">Certificate error</text>
+  <rect x="200" y="240" width="340" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="370" y="257" text-anchor="middle" font-size="9">Verify root cert uploaded, client cert not revoked</text>
+  <line x1="170" y1="253" x2="198" y2="253" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <rect x="30" y="272" width="140" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="100" y="289" text-anchor="middle" font-size="9">Tunnel type error</text>
+  <rect x="200" y="272" width="340" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="370" y="289" text-anchor="middle" font-size="9">Match client protocol to gateway config (IKEv2/OpenVPN/SSTP)</text>
+  <line x1="170" y1="285" x2="198" y2="285" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <rect x="30" y="304" width="140" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="100" y="321" text-anchor="middle" font-size="9">No IPs available</text>
+  <rect x="200" y="304" width="340" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="370" y="321" text-anchor="middle" font-size="9">Expand address pool</text>
+  <line x1="170" y1="317" x2="198" y2="317" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <!-- Section 3: ExpressRoute -->
+  <rect x="10" y="340" width="630" height="160" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="20" y="362" font-size="12" font-weight="bold" fill="#9673a6">ExpressRoute Not Working?</text>
+  <rect x="30" y="372" width="180" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="120" y="389" text-anchor="middle" font-size="9">Provider State = NotProvisioned</text>
+  <rect x="240" y="372" width="200" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="340" y="389" text-anchor="middle" font-size="9">Contact provider</text>
+  <line x1="210" y1="385" x2="238" y2="385" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <rect x="30" y="404" width="180" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="120" y="421" text-anchor="middle" font-size="9">Peering State = Disabled</text>
+  <rect x="240" y="404" width="200" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="340" y="421" text-anchor="middle" font-size="9">Check peering configuration</text>
+  <line x1="210" y1="417" x2="238" y2="417" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <rect x="30" y="436" width="180" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="120" y="453" text-anchor="middle" font-size="9">ARP table empty</text>
+  <rect x="240" y="436" width="260" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="370" y="453" text-anchor="middle" font-size="9">VLAN mismatch or L2 issue with provider</text>
+  <line x1="210" y1="449" x2="238" y2="449" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+  <rect x="30" y="468" width="180" height="26" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="120" y="485" text-anchor="middle" font-size="9">Routes missing</text>
+  <rect x="240" y="468" width="260" height="26" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="370" y="485" text-anchor="middle" font-size="9">BGP ASN mismatch or prefix filtering</text>
+  <line x1="210" y1="481" x2="238" y2="481" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch24)"/>
+</svg>
+</div>
 
 ---
 

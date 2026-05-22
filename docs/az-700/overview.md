@@ -77,12 +77,33 @@ Some challenges in this exam involve resources that incur significant costs:
 
 ## Certification path
 
-```
-AZ-900 (Fundamentals)
-   ↓
-AZ-104 (Administrator) ←── prerequisite knowledge
-   ↓
-AZ-700 (Network Engineer) ←── YOU ARE HERE
-   ↓
-AZ-305 (Solutions Architect) — broader design perspective
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 340" style={{maxWidth: '400px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ov" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <!-- AZ-900 -->
+  <rect x="100" y="10" width="200" height="50" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="2"/>
+  <text x="200" y="32" text-anchor="middle" font-size="12" font-weight="bold">AZ-900</text>
+  <text x="200" y="50" text-anchor="middle" font-size="10" fill="#555">Fundamentals</text>
+  <line x1="200" y1="60" x2="200" y2="85" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow-ov)"/>
+  <!-- AZ-104 -->
+  <rect x="100" y="88" width="200" height="50" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="200" y="110" text-anchor="middle" font-size="12" font-weight="bold">AZ-104</text>
+  <text x="200" y="128" text-anchor="middle" font-size="10" fill="#555">Administrator</text>
+  <text x="330" y="113" font-size="9" fill="#555">← prerequisite knowledge</text>
+  <line x1="200" y1="138" x2="200" y2="163" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow-ov)"/>
+  <!-- AZ-700 (highlighted) -->
+  <rect x="80" y="166" width="240" height="55" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="3"/>
+  <text x="200" y="189" text-anchor="middle" font-size="14" font-weight="bold">AZ-700</text>
+  <text x="200" y="210" text-anchor="middle" font-size="10" fill="#555">Network Engineer</text>
+  <text x="345" y="194" font-size="10" fill="#82b366" font-weight="bold">← YOU ARE HERE</text>
+  <line x1="200" y1="221" x2="200" y2="248" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow-ov)"/>
+  <!-- AZ-305 -->
+  <rect x="100" y="251" width="200" height="50" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="200" y="273" text-anchor="middle" font-size="12" font-weight="bold">AZ-305</text>
+  <text x="200" y="291" text-anchor="middle" font-size="10" fill="#555">Solutions Architect</text>
+</svg>
+</div>

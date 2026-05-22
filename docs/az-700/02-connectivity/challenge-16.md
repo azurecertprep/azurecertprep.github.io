@@ -18,16 +18,40 @@ Contoso must connect to a financial services partner (Woodgrove Bank) whose comp
 
 **Architecture:**
 
-```
-Contoso Azure (10.1.0.0/16)              Woodgrove Bank (172.16.0.0/12)
-                                         Compliance requirement:
-[VPN Gateway: VpnGw3]                      - IKE: AES256 / SHA384 / DHGroup14
-     |                                     - IPsec: GCMAES256 / GCMAES256
-     |──── Custom IPsec Policy ────────── [Partner VPN Device]
-     |                                       198.51.100.100
-  vnet-hub
-    └── GatewaySubnet (10.1.255.0/27)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" style={{maxWidth: '640px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch16" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Contoso Azure -->
+  <rect x="15" y="20" width="240" height="220" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="135" y="42" text-anchor="middle" font-size="12" font-weight="bold">Contoso Azure</text>
+  <text x="135" y="58" text-anchor="middle" font-size="10" fill="#555">10.1.0.0/16</text>
+  <rect x="35" y="70" width="200" height="40" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="135" y="94" text-anchor="middle" font-size="11" font-weight="bold">VPN Gateway: VpnGw3</text>
+  <rect x="35" y="125" width="200" height="28" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="135" y="143" text-anchor="middle" font-size="10">GatewaySubnet (10.1.255.0/27)</text>
+  <!-- IPsec connection -->
+  <line x1="255" y1="90" x2="385" y2="90" stroke="#9673a6" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <rect x="270" y="100" width="130" height="22" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="335" y="115" text-anchor="middle" font-size="9" font-weight="bold">Custom IPsec Policy</text>
+  <!-- Woodgrove Bank -->
+  <rect x="390" y="20" width="235" height="220" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="507" y="42" text-anchor="middle" font-size="12" font-weight="bold">Woodgrove Bank</text>
+  <text x="507" y="58" text-anchor="middle" font-size="10" fill="#555">172.16.0.0/12</text>
+  <rect x="410" y="70" width="195" height="40" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="507" y="87" text-anchor="middle" font-size="10" font-weight="bold">Partner VPN Device</text>
+  <text x="507" y="102" text-anchor="middle" font-size="9" fill="#555">198.51.100.100</text>
+  <!-- Compliance requirements -->
+  <rect x="410" y="125" width="195" height="80" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="507" y="142" text-anchor="middle" font-size="9" font-weight="bold">Compliance requirements:</text>
+  <text x="418" y="158" font-size="9" fill="#555">IKE: AES256 / SHA384 / DHGroup14</text>
+  <text x="418" y="173" font-size="9" fill="#555">IPsec: GCMAES256 / GCMAES256</text>
+  <text x="418" y="188" font-size="9" fill="#555">PFS: PFS2048</text>
+</svg>
+</div>
 
 ## Learning objectives
 

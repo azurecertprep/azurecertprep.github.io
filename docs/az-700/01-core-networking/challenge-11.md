@@ -18,16 +18,39 @@ Contoso's operations team receives tickets about VMs that cannot connect to serv
 
 **Network topology:**
 
-```
-  Internet
-      |
-  VNet (10.0.0.0/16)
-   ├── snet-web (10.0.1.0/24)
-   │    └── vm-web: 10.0.1.4 (NSG: nsg-web)
-   ├── snet-app (10.0.2.0/24)
-   │    └── vm-app: 10.0.2.4 (NSG: nsg-app)
-   └── Route Table: rt-app (attached to snet-app)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 320" style={{maxWidth: '460px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Internet -->
+  <rect x="165" y="5" width="130" height="36" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="2"/>
+  <text x="230" y="28" text-anchor="middle" font-size="12" font-weight="bold">Internet</text>
+  <line x1="230" y1="41" x2="230" y2="65" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch11)"/>
+  <!-- VNet -->
+  <rect x="30" y="68" width="400" height="240" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="230" y="90" text-anchor="middle" font-size="12" font-weight="bold">VNet (10.0.0.0/16)</text>
+  <!-- snet-web -->
+  <rect x="50" y="102" width="170" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="135" y="120" text-anchor="middle" font-size="10" font-weight="bold">snet-web (10.0.1.0/24)</text>
+  <rect x="65" y="130" width="140" height="40" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="135" y="148" text-anchor="middle" font-size="10">vm-web: 10.0.1.4</text>
+  <text x="135" y="163" text-anchor="middle" font-size="9" fill="#555">NSG: nsg-web</text>
+  <!-- snet-app -->
+  <rect x="240" y="102" width="170" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="325" y="120" text-anchor="middle" font-size="10" font-weight="bold">snet-app (10.0.2.0/24)</text>
+  <rect x="255" y="130" width="140" height="40" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="325" y="148" text-anchor="middle" font-size="10">vm-app: 10.0.2.4</text>
+  <text x="325" y="163" text-anchor="middle" font-size="9" fill="#555">NSG: nsg-app</text>
+  <!-- Route Table -->
+  <rect x="240" y="200" width="170" height="36" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="325" y="222" text-anchor="middle" font-size="10" font-weight="bold">rt-app (Route Table)</text>
+  <line x1="325" y1="182" x2="325" y2="200" stroke="#9673a6" stroke-width="1" stroke-dasharray="4"/>
+  <text x="325" y="250" text-anchor="middle" font-size="9" fill="#555">attached to snet-app</text>
+</svg>
+</div>
 
 ## Learning objectives
 

@@ -31,26 +31,54 @@ Their requirements:
 
 ## Architecture overview
 
-```
-                    ┌─────────────────────────────────────────┐
-                    │         Virtual Hub (East US)            │
-                    │                                         │
-                    │  ┌─────────────┐  ┌──────────────────┐ │
-                    │  │ RT_PROD     │  │ RT_DEV           │ │
-                    │  │ (label:prod)│  │ (label:dev)      │ │
-                    │  └──────┬──────┘  └────────┬─────────┘ │
-                    │         │                   │           │
-                    │  ┌──────┴───────────────────┴────────┐  │
-                    │  │         NVA / Azure Firewall       │  │
-                    │  │  (routing intent: 0.0.0.0/0)      │  │
-                    │  └───────────────────────────────────-┘  │
-                    └────────────┬──────────────┬──────────────┘
-                                 │              │
-                    ┌────────────┼──┐     ┌─────┼────────────┐
-                    │            │  │     │     │            │
-                 prod-1      prod-2│  dev-1   dev-2
-                 (RT_PROD)  (RT_PROD)  (RT_DEV)  (RT_DEV)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" style={{maxWidth: '600px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Virtual Hub container -->
+  <rect x="50" y="10" width="500" height="210" rx="10" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="300" y="35" text-anchor="middle" font-size="13" font-weight="bold">Virtual Hub (East US)</text>
+  <!-- RT_PROD -->
+  <rect x="80" y="50" width="180" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="170" y="72" text-anchor="middle" font-size="11" font-weight="bold">RT_PROD</text>
+  <text x="170" y="90" text-anchor="middle" font-size="9" fill="#555">label: prod</text>
+  <!-- RT_DEV -->
+  <rect x="340" y="50" width="180" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="430" y="72" text-anchor="middle" font-size="11" font-weight="bold">RT_DEV</text>
+  <text x="430" y="90" text-anchor="middle" font-size="9" fill="#555">label: dev</text>
+  <!-- NVA / Azure Firewall -->
+  <rect x="100" y="125" width="400" height="55" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="300" y="148" text-anchor="middle" font-size="12" font-weight="bold">NVA / Azure Firewall</text>
+  <text x="300" y="168" text-anchor="middle" font-size="10" fill="#555">Routing intent: 0.0.0.0/0</text>
+  <!-- Lines from route tables to NVA -->
+  <line x1="170" y1="100" x2="200" y2="123" stroke="#82b366" stroke-width="1.5"/>
+  <line x1="430" y1="100" x2="400" y2="123" stroke="#d6b656" stroke-width="1.5"/>
+  <!-- Spokes -->
+  <rect x="50" y="265" width="100" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="100" y="284" text-anchor="middle" font-size="10" font-weight="bold">prod-1</text>
+  <text x="100" y="300" text-anchor="middle" font-size="9" fill="#555">(RT_PROD)</text>
+  <rect x="170" y="265" width="100" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="220" y="284" text-anchor="middle" font-size="10" font-weight="bold">prod-2</text>
+  <text x="220" y="300" text-anchor="middle" font-size="9" fill="#555">(RT_PROD)</text>
+  <rect x="330" y="265" width="100" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="380" y="284" text-anchor="middle" font-size="10" font-weight="bold">dev-1</text>
+  <text x="380" y="300" text-anchor="middle" font-size="9" fill="#555">(RT_DEV)</text>
+  <rect x="450" y="265" width="100" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="500" y="284" text-anchor="middle" font-size="10" font-weight="bold">dev-2</text>
+  <text x="500" y="300" text-anchor="middle" font-size="9" fill="#555">(RT_DEV)</text>
+  <!-- Lines from hub to spokes -->
+  <line x1="200" y1="220" x2="100" y2="263" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow-ch23)"/>
+  <line x1="250" y1="220" x2="220" y2="263" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow-ch23)"/>
+  <line x1="350" y1="220" x2="380" y2="263" stroke="#d6b656" stroke-width="1.5" marker-end="url(#arrow-ch23)"/>
+  <line x1="400" y1="220" x2="500" y2="263" stroke="#d6b656" stroke-width="1.5" marker-end="url(#arrow-ch23)"/>
+  <!-- Isolation label -->
+  <line x1="290" y1="265" x2="290" y2="310" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4"/>
+  <text x="290" y="340" text-anchor="middle" font-size="9" fill="#b85450">Isolated</text>
+</svg>
+</div>
 
 ## Key concepts
 

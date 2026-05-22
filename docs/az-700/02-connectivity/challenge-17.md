@@ -27,20 +27,48 @@ Contoso's remote workforce needs secure access to Azure virtual networks from th
 
 ## Architecture overview
 
-```
-Remote Clients                        Azure
-+------------------+                  +---------------------------+
-| Windows laptop   |---[OpenVPN]----->|                           |
-| macOS laptop     |---[IKEv2]------->|   VPN Gateway (VpnGw1)   |
-| Linux laptop     |---[OpenVPN]----->|   P2S Address Pool:       |
-| Windows (corp)   |---[SSTP]-------->|   172.16.201.0/24         |
-+------------------+                  +---------------------------+
-                                              |
-                                      +-------+-------+
-                                      |  VNet         |
-                                      | 10.60.0.0/16  |
-                                      +---------------+
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 300" style={{maxWidth: '620px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch17" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Remote Clients -->
+  <rect x="15" y="30" width="200" height="180" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="115" y="52" text-anchor="middle" font-size="12" font-weight="bold">Remote Clients</text>
+  <rect x="30" y="62" width="170" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="115" y="80" text-anchor="middle" font-size="10">🖥 Windows laptop</text>
+  <rect x="30" y="96" width="170" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="115" y="114" text-anchor="middle" font-size="10">🍎 macOS laptop</text>
+  <rect x="30" y="130" width="170" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="115" y="148" text-anchor="middle" font-size="10">🐧 Linux laptop</text>
+  <rect x="30" y="164" width="170" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="115" y="182" text-anchor="middle" font-size="10">🏢 Windows (corp)</text>
+  <!-- Connections -->
+  <line x1="215" y1="76" x2="375" y2="76" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow-ch17)"/>
+  <text x="295" y="70" text-anchor="middle" font-size="9" fill="#2e7d32">OpenVPN</text>
+  <line x1="215" y1="110" x2="375" y2="100" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow-ch17)"/>
+  <text x="295" y="100" text-anchor="middle" font-size="9" fill="#6c8ebf">IKEv2</text>
+  <line x1="215" y1="144" x2="375" y2="124" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow-ch17)"/>
+  <text x="295" y="134" text-anchor="middle" font-size="9" fill="#2e7d32">OpenVPN</text>
+  <line x1="215" y1="178" x2="375" y2="148" stroke="#d6b656" stroke-width="1.5" marker-end="url(#arrow-ch17)"/>
+  <text x="295" y="166" text-anchor="middle" font-size="9" fill="#d6b656">SSTP</text>
+  <!-- VPN Gateway -->
+  <rect x="380" y="40" width="225" height="140" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="492" y="65" text-anchor="middle" font-size="12" font-weight="bold">VPN Gateway (VpnGw1)</text>
+  <text x="492" y="85" text-anchor="middle" font-size="10" fill="#555">P2S Address Pool:</text>
+  <text x="492" y="102" text-anchor="middle" font-size="11" font-weight="bold">172.16.201.0/24</text>
+  <rect x="400" y="115" width="185" height="50" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="492" y="137" text-anchor="middle" font-size="10">Tunnel types:</text>
+  <text x="492" y="155" text-anchor="middle" font-size="9" fill="#555">OpenVPN | IKEv2 | SSTP</text>
+  <!-- VNet -->
+  <rect x="400" y="210" width="185" height="60" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="492" y="235" text-anchor="middle" font-size="12" font-weight="bold">VNet</text>
+  <text x="492" y="255" text-anchor="middle" font-size="10" fill="#555">10.60.0.0/16</text>
+  <line x1="492" y1="180" x2="492" y2="208" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch17)"/>
+</svg>
+</div>
 
 ## Prerequisites
 
@@ -308,14 +336,29 @@ $profile.VPNProfileSASUrl
 
 The downloaded ZIP file contains folders for each configured protocol:
 
-```
-VpnClientConfiguration.zip
-├── OpenVPN/          # OpenVPN profile (.ovpn file)
-├── WindowsAmd64/    # Windows 64-bit native client installer
-├── WindowsX86/      # Windows 32-bit native client installer
-├── Generic/         # Profile XML for manual configuration
-└── AzureVPN/        # Azure VPN Client profile (azurevpnconfig.xml)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" style={{maxWidth: '480px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <!-- ZIP file header -->
+  <rect x="20" y="10" width="440" height="30" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="240" y="30" text-anchor="middle" font-size="11" font-weight="bold">📦 VpnClientConfiguration.zip</text>
+  <!-- Folder entries -->
+  <rect x="40" y="50" width="420" height="28" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="55" y="68" font-size="10" font-weight="bold">OpenVPN/</text>
+  <text x="250" y="68" font-size="9" fill="#555">OpenVPN profile (.ovpn file)</text>
+  <rect x="40" y="82" width="420" height="28" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="55" y="100" font-size="10" font-weight="bold">WindowsAmd64/</text>
+  <text x="250" y="100" font-size="9" fill="#555">Windows 64-bit native client installer</text>
+  <rect x="40" y="114" width="420" height="28" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="55" y="132" font-size="10" font-weight="bold">WindowsX86/</text>
+  <text x="250" y="132" font-size="9" fill="#555">Windows 32-bit native client installer</text>
+  <rect x="40" y="146" width="420" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="55" y="164" font-size="10" font-weight="bold">Generic/</text>
+  <text x="250" y="164" font-size="9" fill="#555">Profile XML for manual configuration</text>
+  <rect x="40" y="178" width="420" height="28" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="55" y="196" font-size="10" font-weight="bold">AzureVPN/</text>
+  <text x="250" y="196" font-size="9" fill="#555">Azure VPN Client profile (azurevpnconfig.xml)</text>
+</svg>
+</div>
 
 | Client | Protocol used | Configuration file |
 |--------|--------------|-------------------|

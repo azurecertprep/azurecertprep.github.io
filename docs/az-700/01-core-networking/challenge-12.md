@@ -18,17 +18,44 @@ Contoso's NOC team needs end-to-end visibility into their Azure network. They mu
 
 **Monitoring topology:**
 
-```
-Source VM (East US)
-    |
-    ├── TCP test → Load Balancer (East US) → Backend VMs
-    ├── HTTP test → Web App endpoint
-    └── ICMP test → VM in West US
-            |
-All results → Log Analytics Workspace
-            |
-    Alerts → Action Group (NOC email)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" style={{maxWidth: '600px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Source VM -->
+  <rect x="20" y="50" width="150" height="50" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="95" y="73" text-anchor="middle" font-size="11" font-weight="bold">Source VM</text>
+  <text x="95" y="89" text-anchor="middle" font-size="10" fill="#555">(East US)</text>
+  <!-- Test targets -->
+  <rect x="250" y="10" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="33" text-anchor="middle" font-size="10">Load Balancer → Backend VMs</text>
+  <rect x="250" y="56" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="79" text-anchor="middle" font-size="10">Web App endpoint</text>
+  <rect x="250" y="102" width="200" height="36" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="125" text-anchor="middle" font-size="10">VM in West US</text>
+  <!-- Arrows from source to targets -->
+  <line x1="170" y1="62" x2="248" y2="30" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch12)"/>
+  <line x1="170" y1="75" x2="248" y2="74" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch12)"/>
+  <line x1="170" y1="88" x2="248" y2="118" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch12)"/>
+  <!-- Labels -->
+  <text x="195" y="48" font-size="9" fill="#555">TCP</text>
+  <text x="195" y="72" font-size="9" fill="#555">HTTP</text>
+  <text x="195" y="108" font-size="9" fill="#555">ICMP</text>
+  <!-- Log Analytics -->
+  <rect x="175" y="180" width="250" height="50" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="300" y="203" text-anchor="middle" font-size="11" font-weight="bold">Log Analytics Workspace</text>
+  <text x="300" y="220" text-anchor="middle" font-size="10" fill="#555">All results collected here</text>
+  <line x1="300" y1="138" x2="300" y2="178" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch12)"/>
+  <!-- Alerts -->
+  <rect x="200" y="265" width="200" height="45" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="300" y="286" text-anchor="middle" font-size="11" font-weight="bold">Action Group</text>
+  <text x="300" y="302" text-anchor="middle" font-size="10" fill="#555">NOC email alerts</text>
+  <line x1="300" y1="230" x2="300" y2="263" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow-ch12)"/>
+</svg>
+</div>
 
 ## Learning objectives
 

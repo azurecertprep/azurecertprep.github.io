@@ -19,29 +19,57 @@ NovaTech Solutions, an ISV company, has built an internal API platform behind an
 
 **Architecture:**
 
-```
-    PROVIDER (NovaTech VNet: 10.0.0.0/16)            CONSUMER (Customer VNet: 10.1.0.0/16)
-    ┌────────────────────────────────────┐            ┌────────────────────────────┐
-    │                                    │            │                            │
-    │  snet-backend (10.0.1.0/24)        │            │  snet-consumer (10.1.1.0/24)│
-    │  ┌─────────┐  ┌─────────┐         │            │  ┌──────────────┐           │
-    │  │  VM-1   │  │  VM-2   │         │            │  │ consumer-vm  │           │
-    │  └────┬────┘  └────┬────┘         │            │  └──────┬───────┘           │
-    │       └──────┬──────┘              │            │         │                   │
-    │              v                     │            │         v                   │
-    │  ┌─────────────────────┐           │            │  ┌────────────────┐         │
-    │  │ Standard ILB        │           │            │  │  PE to PLS     │         │
-    │  │ frontend: 10.0.0.4  │           │            │  │  (10.1.1.5)    │         │
-    │  └──────────┬──────────┘           │            │  └───────┬────────┘         │
-    │             v                      │            │          │                  │
-    │  snet-pls (10.0.2.0/24)           │            └──────────┼──────────────────┘
-    │  ┌─────────────────────────┐       │                       │
-    │  │ Private Link Service    │◄──────┼───────────────────────┘
-    │  │ NAT IP: 10.0.2.4       │       │         Private Link connection
-    │  │ Alias: pls-novatech... │       │
-    │  └─────────────────────────┘       │
-    └────────────────────────────────────┘
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 340" style={{maxWidth: '650px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch36" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- PROVIDER VNet -->
+  <rect x="15" y="10" width="295" height="320" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="162" y="30" text-anchor="middle" font-size="11" font-weight="bold">PROVIDER — NovaTech VNet</text>
+  <text x="162" y="45" text-anchor="middle" font-size="9" fill="#555">10.0.0.0/16</text>
+  <!-- snet-backend -->
+  <rect x="30" y="55" width="265" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="162" y="72" text-anchor="middle" font-size="9" font-weight="bold">snet-backend (10.0.1.0/24)</text>
+  <rect x="45" y="80" width="80" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="85" y="98" text-anchor="middle" font-size="9">VM-1</text>
+  <rect x="140" y="80" width="80" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="180" y="98" text-anchor="middle" font-size="9">VM-2</text>
+  <!-- Standard ILB -->
+  <rect x="45" y="148" width="240" height="40" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="165" y="166" text-anchor="middle" font-size="10" font-weight="bold">Standard ILB</text>
+  <text x="165" y="181" text-anchor="middle" font-size="9" fill="#555">frontend: 10.0.0.4</text>
+  <line x1="130" y1="108" x2="130" y2="146" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch36)"/>
+  <!-- PLS -->
+  <rect x="30" y="210" width="265" height="100" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="162" y="228" text-anchor="middle" font-size="9" font-weight="bold">snet-pls (10.0.2.0/24)</text>
+  <rect x="45" y="238" width="235" height="55" rx="4" fill="#f5f5f5" stroke="#82b366" stroke-width="1"/>
+  <text x="162" y="256" text-anchor="middle" font-size="10" font-weight="bold">Private Link Service</text>
+  <text x="162" y="272" text-anchor="middle" font-size="9" fill="#555">NAT IP: 10.0.2.4</text>
+  <text x="162" y="286" text-anchor="middle" font-size="9" fill="#555">Alias: pls-novatech...</text>
+  <line x1="165" y1="188" x2="165" y2="208" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch36)"/>
+  <!-- CONSUMER VNet -->
+  <rect x="360" y="10" width="275" height="200" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="497" y="30" text-anchor="middle" font-size="11" font-weight="bold">CONSUMER — Customer VNet</text>
+  <text x="497" y="45" text-anchor="middle" font-size="9" fill="#555">10.1.0.0/16</text>
+  <!-- snet-consumer -->
+  <rect x="375" y="55" width="245" height="140" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="497" y="72" text-anchor="middle" font-size="9" font-weight="bold">snet-consumer (10.1.1.0/24)</text>
+  <rect x="420" y="82" width="120" height="28" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="480" y="100" text-anchor="middle" font-size="9">consumer-vm</text>
+  <!-- PE to PLS -->
+  <rect x="400" y="130" width="160" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="480" y="150" text-anchor="middle" font-size="10" font-weight="bold">PE to PLS</text>
+  <text x="480" y="167" text-anchor="middle" font-size="9" fill="#555">(10.1.1.5)</text>
+  <line x1="480" y1="110" x2="480" y2="128" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch36)"/>
+  <!-- Private Link connection -->
+  <line x1="398" y1="152" x2="312" y2="260" stroke="#9673a6" stroke-width="2.5" stroke-dasharray="8,4" marker-end="url(#arrow-ch36)"/>
+  <text x="385" y="240" font-size="9" fill="#9673a6" font-weight="bold">Private Link</text>
+  <text x="385" y="253" font-size="9" fill="#9673a6">connection</text>
+</svg>
+</div>
 
 ## Learning objectives
 

@@ -30,26 +30,57 @@ Their current architecture requires dozens of peering relationships and route ta
 
 ## Architecture overview
 
-```
-On-premises Branch
-       |
-   [VPN Site]
-       |
-  ┌────┴────────────────────────────────────┐
-  │        Virtual WAN (Standard)            │
-  │                                          │
-  │  ┌──────────────┐  ┌──────────────────┐ │
-  │  │  Hub East US │  │  Hub West Europe  │ │
-  │  │  10.1.0.0/24 │  │  10.2.0.0/24     │ │
-  │  │              │  │                   │ │
-  │  │ [VPN GW]     │  │  [VPN GW]        │ │
-  │  └──────┬───────┘  └────────┬─────────┘ │
-  └─────────┼────────────────────┼───────────┘
-            │                    │
-     ┌──────┼──────┐      ┌─────┼──────┐
-     │      │      │      │     │      │
-  Spoke1  Spoke2  Spoke3  Spoke4  Spoke5
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 380" style={{maxWidth: '650px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- On-premises Branch -->
+  <rect x="240" y="5" width="170" height="45" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="325" y="25" text-anchor="middle" font-size="11" font-weight="bold">On-premises Branch</text>
+  <text x="325" y="42" text-anchor="middle" font-size="10" fill="#555">[VPN Site]</text>
+  <line x1="325" y1="50" x2="325" y2="75" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch22)"/>
+  <!-- Virtual WAN container -->
+  <rect x="40" y="78" width="570" height="175" rx="10" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="325" y="100" text-anchor="middle" font-size="13" font-weight="bold">Virtual WAN (Standard)</text>
+  <!-- Hub East US -->
+  <rect x="70" y="115" width="220" height="115" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="180" y="137" text-anchor="middle" font-size="11" font-weight="bold">Hub East US</text>
+  <text x="180" y="155" text-anchor="middle" font-size="10" fill="#555">10.1.0.0/24</text>
+  <rect x="90" y="165" width="180" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="180" y="184" text-anchor="middle" font-size="10">VPN Gateway</text>
+  <!-- Hub West Europe -->
+  <rect x="360" y="115" width="220" height="115" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="470" y="137" text-anchor="middle" font-size="11" font-weight="bold">Hub West Europe</text>
+  <text x="470" y="155" text-anchor="middle" font-size="10" fill="#555">10.2.0.0/24</text>
+  <rect x="380" y="165" width="180" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="470" y="184" text-anchor="middle" font-size="10">VPN Gateway</text>
+  <!-- Hub-to-Hub link -->
+  <line x1="290" y1="172" x2="360" y2="172" stroke="#6c8ebf" stroke-width="2" stroke-dasharray="5,3"/>
+  <!-- Spokes under East US -->
+  <rect x="60" y="290" width="80" height="35" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="100" y="312" text-anchor="middle" font-size="10">Spoke1</text>
+  <rect x="150" y="290" width="80" height="35" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="190" y="312" text-anchor="middle" font-size="10">Spoke2</text>
+  <rect x="240" y="290" width="80" height="35" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="280" y="312" text-anchor="middle" font-size="10">Spoke3</text>
+  <line x1="100" y1="253" x2="100" y2="288" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch22)"/>
+  <line x1="190" y1="253" x2="190" y2="288" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch22)"/>
+  <line x1="180" y1="230" x2="280" y2="288" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch22)"/>
+  <!-- Spokes under West Europe -->
+  <rect x="380" y="290" width="80" height="35" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="420" y="312" text-anchor="middle" font-size="10">Spoke4</text>
+  <rect x="480" y="290" width="80" height="35" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="520" y="312" text-anchor="middle" font-size="10">Spoke5</text>
+  <line x1="420" y1="253" x2="420" y2="288" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch22)"/>
+  <line x1="470" y1="230" x2="520" y2="288" stroke="#666" stroke-width="1" marker-end="url(#arrow-ch22)"/>
+  <!-- Labels -->
+  <text x="180" y="272" text-anchor="middle" font-size="9" fill="#555">Connected VNets</text>
+  <text x="470" y="272" text-anchor="middle" font-size="9" fill="#555">Connected VNets</text>
+</svg>
+</div>
 
 ## Key concepts
 

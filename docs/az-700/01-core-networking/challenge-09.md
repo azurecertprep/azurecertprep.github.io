@@ -24,21 +24,46 @@ Contoso deploys third-party NVAs (Cisco, Palo Alto) in their hub VNet for traffi
 
 **Network topology:**
 
-```
-On-Premises (172.16.0.0/16, 172.17.0.0/16)
-        |
-   VPN Gateway (ASN 65010)
-        |
-  Hub VNet (10.0.0.0/16)
-   ├── GatewaySubnet (10.0.0.0/27)
-   ├── RouteServerSubnet (10.0.1.0/26)
-   ├── NVA Subnet (10.0.2.0/24) — NVA: 10.0.2.4
-   └── Management Subnet (10.0.3.0/24)
-        |
-  Peered to:
-  Spoke VNet (10.1.0.0/16)
-   └── Workload Subnet (10.1.1.0/24) — VM: 10.1.1.4
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 540" style={{maxWidth: '500px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- On-Premises -->
+  <rect x="120" y="10" width="260" height="50" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="250" y="32" text-anchor="middle" font-size="12" font-weight="bold">On-Premises</text>
+  <text x="250" y="48" text-anchor="middle" font-size="10" fill="#555">172.16.0.0/16, 172.17.0.0/16</text>
+  <!-- VPN Gateway -->
+  <rect x="155" y="80" width="190" height="40" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="250" y="104" text-anchor="middle" font-size="11" font-weight="bold">VPN Gateway (ASN 65010)</text>
+  <line x1="250" y1="60" x2="250" y2="80" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch9)"/>
+  <!-- Hub VNet -->
+  <rect x="60" y="145" width="380" height="195" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="250" y="165" text-anchor="middle" font-size="12" font-weight="bold">Hub VNet (10.0.0.0/16)</text>
+  <rect x="80" y="178" width="160" height="30" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="160" y="197" text-anchor="middle" font-size="10">GatewaySubnet (10.0.0.0/27)</text>
+  <rect x="260" y="178" width="160" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="340" y="197" text-anchor="middle" font-size="10">RouteServerSubnet (10.0.1.0/26)</text>
+  <rect x="80" y="218" width="160" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="160" y="233" text-anchor="middle" font-size="10">NVA Subnet (10.0.2.0/24)</text>
+  <text x="160" y="247" text-anchor="middle" font-size="9" fill="#555">NVA: 10.0.2.4</text>
+  <rect x="260" y="218" width="160" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="340" y="233" text-anchor="middle" font-size="10">Management Subnet</text>
+  <text x="340" y="247" text-anchor="middle" font-size="9" fill="#555">10.0.3.0/24</text>
+  <line x1="250" y1="120" x2="250" y2="145" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch9)"/>
+  <!-- Peering -->
+  <line x1="250" y1="340" x2="250" y2="375" stroke="#6c8ebf" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="300" y="362" font-size="10" fill="#6c8ebf">Peered</text>
+  <!-- Spoke VNet -->
+  <rect x="100" y="380" width="300" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="250" y="403" text-anchor="middle" font-size="12" font-weight="bold">Spoke VNet (10.1.0.0/16)</text>
+  <rect x="120" y="415" width="260" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="250" y="433" text-anchor="middle" font-size="10">Workload Subnet (10.1.1.0/24)</text>
+  <text x="250" y="445" text-anchor="middle" font-size="9" fill="#555">VM: 10.1.1.4</text>
+</svg>
+</div>
 
 ## Learning objectives
 

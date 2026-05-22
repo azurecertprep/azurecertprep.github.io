@@ -18,28 +18,62 @@ Contoso runs 200+ VMs behind an internal Load Balancer for backend processing. T
 
 **Current topology:**
 
-```
-Internet
-    X (SNAT exhaustion)
-    |
-Internal Load Balancer (no outbound rules)
-    |
-Backend Subnet (10.0.1.0/24)
-    ├── VM-1 ... VM-200+
-    └── No public IPs, no NAT Gateway
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" style={{maxWidth: '400px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch10a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Internet -->
+  <rect x="125" y="10" width="150" height="40" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="2"/>
+  <text x="200" y="35" text-anchor="middle" font-size="12" font-weight="bold">Internet</text>
+  <!-- X mark (SNAT exhaustion) -->
+  <line x1="190" y1="58" x2="210" y2="72" stroke="#b85450" stroke-width="3"/>
+  <line x1="210" y1="58" x2="190" y2="72" stroke="#b85450" stroke-width="3"/>
+  <text x="260" y="68" font-size="9" fill="#b85450">SNAT exhaustion</text>
+  <!-- ILB -->
+  <rect x="100" y="85" width="200" height="40" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="200" y="103" text-anchor="middle" font-size="10" font-weight="bold">Internal Load Balancer</text>
+  <text x="200" y="117" text-anchor="middle" font-size="9" fill="#555">(no outbound rules)</text>
+  <line x1="200" y1="125" x2="200" y2="150" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch10a)"/>
+  <!-- Backend Subnet -->
+  <rect x="60" y="155" width="280" height="110" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="200" y="178" text-anchor="middle" font-size="11" font-weight="bold">Backend Subnet (10.0.1.0/24)</text>
+  <rect x="80" y="190" width="220" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="190" y="208" text-anchor="middle" font-size="10">VM-1 ... VM-200+</text>
+  <rect x="80" y="225" width="220" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="190" y="243" text-anchor="middle" font-size="10" fill="#b85450">No public IPs, no NAT Gateway</text>
+</svg>
+</div>
 
 **Target topology:**
 
-```
-Internet
-    |
-NAT Gateway (public-ip-nat: 52.x.x.x)
-    |
-Backend Subnet (10.0.1.0/24)
-    ├── VM-1 ... VM-200+
-    └── All outbound traffic uses NAT GW IP
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" style={{maxWidth: '400px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch10b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Internet -->
+  <rect x="125" y="10" width="150" height="40" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="2"/>
+  <text x="200" y="35" text-anchor="middle" font-size="12" font-weight="bold">Internet</text>
+  <line x1="200" y1="50" x2="200" y2="75" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch10b)"/>
+  <!-- NAT Gateway -->
+  <rect x="85" y="78" width="230" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="200" y="97" text-anchor="middle" font-size="11" font-weight="bold">NAT Gateway</text>
+  <text x="200" y="113" text-anchor="middle" font-size="9" fill="#555">public-ip-nat: 52.x.x.x</text>
+  <line x1="200" y1="123" x2="200" y2="153" stroke="#666" stroke-width="1.5" marker-end="url(#arrow-ch10b)"/>
+  <!-- Backend Subnet -->
+  <rect x="60" y="155" width="280" height="110" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="200" y="178" text-anchor="middle" font-size="11" font-weight="bold">Backend Subnet (10.0.1.0/24)</text>
+  <rect x="80" y="190" width="220" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="190" y="208" text-anchor="middle" font-size="10">VM-1 ... VM-200+</text>
+  <rect x="80" y="225" width="220" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="190" y="243" text-anchor="middle" font-size="10" fill="#2e7d32">All outbound via NAT GW IP ✓</text>
+</svg>
+</div>
 
 ## Learning objectives
 

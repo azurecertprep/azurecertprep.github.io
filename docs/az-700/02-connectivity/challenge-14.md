@@ -24,17 +24,38 @@ Contoso has a hub virtual network in Azure (`vnet-hub`, 10.1.0.0/16) and an on-p
 
 **Architecture:**
 
-```
-On-premises datacenter                     Azure
-(192.168.0.0/16)                          (10.1.0.0/16)
-
-[VPN Device: 203.0.113.50] ---IPsec--- [VPN Gateway: vgw-hub]
-                                              |
-                                         vnet-hub
-                                           ├── GatewaySubnet (10.1.255.0/27)
-                                           ├── snet-workloads (10.1.1.0/24)
-                                           └── snet-mgmt (10.1.2.0/24)
-```
+<div style={{textAlign: 'center', margin: '20px 0'}}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 280" style={{maxWidth: '620px', height: 'auto'}} font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-ch14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- On-premises -->
+  <rect x="15" y="40" width="210" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="120" y="62" text-anchor="middle" font-size="12" font-weight="bold">On-premises datacenter</text>
+  <text x="120" y="80" text-anchor="middle" font-size="10" fill="#555">192.168.0.0/16</text>
+  <rect x="35" y="92" width="170" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="120" y="110" text-anchor="middle" font-size="10">VPN Device: 203.0.113.50</text>
+  <!-- IPsec tunnel -->
+  <line x1="225" y1="85" x2="365" y2="85" stroke="#9673a6" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <text x="295" y="75" text-anchor="middle" font-size="10" font-weight="bold" fill="#9673a6">IPsec/IKE</text>
+  <!-- Azure side -->
+  <rect x="370" y="15" width="235" height="250" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="487" y="37" text-anchor="middle" font-size="12" font-weight="bold">Azure — vnet-hub</text>
+  <text x="487" y="53" text-anchor="middle" font-size="10" fill="#555">10.1.0.0/16</text>
+  <!-- VPN Gateway -->
+  <rect x="390" y="65" width="195" height="40" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="487" y="89" text-anchor="middle" font-size="11" font-weight="bold">VPN Gateway: vgw-hub</text>
+  <!-- Subnets -->
+  <rect x="390" y="120" width="195" height="30" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="487" y="139" text-anchor="middle" font-size="10">GatewaySubnet (10.1.255.0/27)</text>
+  <rect x="390" y="160" width="195" height="30" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="487" y="179" text-anchor="middle" font-size="10">snet-workloads (10.1.1.0/24)</text>
+  <rect x="390" y="200" width="195" height="30" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="487" y="219" text-anchor="middle" font-size="10">snet-mgmt (10.1.2.0/24)</text>
+</svg>
+</div>
 
 ## Learning objectives
 
