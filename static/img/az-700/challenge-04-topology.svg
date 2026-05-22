@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">VNet Peering — Transitivity &amp; Configuration</text>
+
+  <!-- VNet A -->
+  <rect x="40" y="80" width="180" height="150" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="130" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">VNet A</text>
+  <text x="130" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.1.0.0/16</text>
+  <rect x="60" y="135" width="140" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="130" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">VM-A (10.1.1.4)</text>
+  <rect x="60" y="180" width="140" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="130" y="202" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">VM-A2 (10.1.2.4)</text>
+
+  <!-- VNet B -->
+  <rect x="260" y="80" width="180" height="150" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="350" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">VNet B</text>
+  <text x="350" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.2.0.0/16</text>
+  <rect x="280" y="135" width="140" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="350" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">VM-B (10.2.1.4)</text>
+  <rect x="280" y="180" width="140" height="35" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="350" y="202" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">NVA (10.2.2.4)</text>
+
+  <!-- VNet C -->
+  <rect x="480" y="80" width="180" height="150" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="570" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">VNet C</text>
+  <text x="570" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.3.0.0/16</text>
+  <rect x="500" y="135" width="140" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="570" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">VM-C (10.3.1.4)</text>
+
+  <!-- Peering A ↔ B (active) -->
+  <line x1="220" y1="140" x2="260" y2="140" stroke="#82b366" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <rect x="222" y="247" width="115" height="28" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="280" y="265" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">A ↔ B Peered ✓</text>
+
+  <!-- Peering B ↔ C (active) -->
+  <line x1="440" y1="140" x2="480" y2="140" stroke="#82b366" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <rect x="440" y="247" width="115" height="28" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="498" y="265" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">B ↔ C Peered ✓</text>
+
+  <!-- No transit A → C -->
+  <path d="M 130 230 Q 350 320 570 230" stroke="#b85450" stroke-width="2" stroke-dasharray="6,4" fill="none"/>
+  <text x="350" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#b85450" font-weight="bold">✗ A cannot reach C (non-transitive)</text>
+
+  <!-- Properties Box -->
+  <rect x="80" y="345" width="540" height="90" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="350" y="368" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Peering Properties</text>
+  <text x="100" y="390" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Allow forwarded traffic — enables NVA routing between peered VNets</text>
+  <text x="100" y="407" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Allow gateway transit — share VPN/ER gateway with peered VNet</text>
+  <text x="100" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Use remote gateways — consume gateway from peered VNet</text>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Challenge 34: Private Endpoint DNS Resolution Chain</text>
+
+  <!-- VNet Container -->
+  <rect x="20" y="45" width="660" height="160" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="35" y="65" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Virtual Network (10.0.0.0/16)</text>
+
+  <!-- VM -->
+  <rect x="40" y="85" width="120" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="100" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">VM</text>
+  <text x="100" y="123" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.0.4</text>
+
+  <!-- VNet DNS Settings -->
+  <rect x="220" y="85" width="140" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="290" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">VNet DNS</text>
+  <text x="290" y="123" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Azure DNS (168.63.129.16)</text>
+
+  <!-- Private Endpoint -->
+  <rect x="520" y="85" width="140" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="590" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Private Endpoint</text>
+  <text x="590" y="123" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">NIC: 10.0.1.4</text>
+
+  <!-- Private DNS Zone -->
+  <rect x="320" y="150" width="200" height="45" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="420" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Private DNS Zone</text>
+  <text x="420" y="184" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.blob.core.windows.net</text>
+
+  <!-- Arrows in VNet -->
+  <line x1="160" y1="110" x2="218" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="360" y1="110" x2="518" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="135" x2="380" y2="150" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- DNS Resolution Flow -->
+  <rect x="20" y="225" width="660" height="180" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="35" y="245" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">DNS Resolution Chain</text>
+
+  <!-- Step 1 -->
+  <rect x="40" y="260" width="280" height="35" rx="4" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="50" y="275" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">1. Client queries:</text>
+  <text x="50" y="289" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">storageaccount.blob.core.windows.net</text>
+
+  <!-- Step 2 -->
+  <rect x="360" y="260" width="300" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="370" y="275" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">2. CNAME redirect:</text>
+  <text x="370" y="289" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">→ storageaccount.privatelink.blob.core.windows.net</text>
+
+  <!-- Step 3 -->
+  <rect x="40" y="310" width="280" height="35" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="50" y="325" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">3. Private DNS Zone lookup:</text>
+  <text x="50" y="339" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.blob.core.windows.net zone</text>
+
+  <!-- Step 4 -->
+  <rect x="360" y="310" width="300" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="370" y="325" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">4. A Record returned:</text>
+  <text x="370" y="339" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">→ 10.0.1.4 (Private Endpoint IP)</text>
+
+  <!-- Flow arrows -->
+  <line x1="320" y1="277" x2="358" y2="277" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <line x1="500" y1="295" x2="200" y2="310" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <line x1="320" y1="327" x2="358" y2="327" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Result box -->
+  <rect x="40" y="360" width="620" height="30" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="350" y="380" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#2e7d32">✓ Traffic flows privately via VNet backbone — never traverses the public internet</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">DNS Resolution Flow in Azure</text>
+
+  <!-- Client VM -->
+  <rect x="30" y="160" width="100" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="80" y="185" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Client VM</text>
+  <text x="80" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.4</text>
+
+  <!-- DNS Query Arrow -->
+  <line x1="130" y1="190" x2="195" y2="190" stroke="#666" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="162" y="180" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Query</text>
+
+  <!-- Azure DNS Resolver -->
+  <rect x="200" y="140" width="140" height="100" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="270" y="165" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Azure DNS</text>
+  <text x="270" y="180" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Resolver</text>
+  <text x="270" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">168.63.129.16</text>
+  <text x="270" y="225" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Virtual IP</text>
+
+  <!-- Decision Arrows -->
+  <line x1="340" y1="160" x2="430" y2="80" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="400" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Private zone?</text>
+
+  <line x1="340" y1="190" x2="430" y2="190" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="385" y="182" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Public?</text>
+
+  <line x1="340" y1="220" x2="430" y2="300" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="400" y="275" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Custom?</text>
+
+  <!-- Private DNS Zone -->
+  <rect x="435" y="45" width="230" height="80" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="550" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Private DNS Zone</text>
+  <text x="550" y="85" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">contoso.internal</text>
+  <text x="550" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">A: vm1 → 10.0.1.4</text>
+  <text x="550" y="113" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">CNAME: app → vm1.contoso.internal</text>
+
+  <!-- Public DNS Zone -->
+  <rect x="435" y="150" width="230" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="550" y="173" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Azure Public DNS Zone</text>
+  <text x="550" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">contoso.com</text>
+  <text x="550" y="205" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">A: www → 20.50.1.1</text>
+  <text x="550" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">MX: mail → mail.contoso.com</text>
+
+  <!-- Custom DNS -->
+  <rect x="435" y="270" width="230" height="65" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="550" y="293" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Custom DNS Server</text>
+  <text x="550" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">On-premises / Conditional Forwarder</text>
+  <text x="550" y="325" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.100.0.5</text>
+
+  <!-- Record Types Legend -->
+  <rect x="50" y="340" width="280" height="65" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="65" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Common Record Types:</text>
+  <text x="65" y="375" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">A = IPv4 address | AAAA = IPv6 address</text>
+  <text x="65" y="390" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">CNAME = Alias | MX = Mail | TXT = Verification</text>
+  <text x="65" y="405" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">SOA = Start of Authority | NS = Name Server</text>
+</svg>

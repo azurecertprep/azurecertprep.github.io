@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6b656"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Secured Virtual Hub Architecture</text>
+
+  <!-- Internet -->
+  <ellipse cx="350" cy="60" rx="50" ry="22" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="64" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Internet</text>
+
+  <!-- vWAN Hub Container -->
+  <rect x="150" y="100" width="400" height="200" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Virtual WAN Hub (Secured Hub)</text>
+  <text x="350" y="136" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Routing Intent Enabled</text>
+
+  <!-- Azure Firewall inside hub -->
+  <rect x="240" y="150" width="220" height="80" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="350" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Azure Firewall</text>
+  <text x="350" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Firewall Policy attached</text>
+  <text x="350" y="206" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Premium SKU • IDPS • TLS Inspection</text>
+  <text x="350" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Next hop for all traffic</text>
+
+  <!-- Internet traffic arrow -->
+  <line x1="350" y1="82" x2="350" y2="147" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="380" y="118" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#b85450">Internet traffic</text>
+
+  <!-- Spoke VNet 1 -->
+  <rect x="20" y="350" width="160" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="100" y="375" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Spoke VNet 1</text>
+  <text x="100" y="393" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Production</text>
+  <text x="100" y="410" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.1.0.0/16</text>
+  <text x="100" y="427" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Web + App VMs</text>
+
+  <!-- Spoke VNet 2 -->
+  <rect x="270" y="350" width="160" height="90" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="350" y="375" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Spoke VNet 2</text>
+  <text x="350" y="393" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Database</text>
+  <text x="350" y="410" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.2.0.0/16</text>
+  <text x="350" y="427" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">SQL + Storage</text>
+
+  <!-- Spoke VNet 3 (On-prem) -->
+  <rect x="520" y="350" width="160" height="90" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="600" y="375" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">On-Premises</text>
+  <text x="600" y="393" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">VPN/ExpressRoute</text>
+  <text x="600" y="410" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">192.168.0.0/16</text>
+  <text x="600" y="427" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Branch office</text>
+
+  <!-- Routing intent arrows (private traffic) -->
+  <line x1="250" y1="230" x2="100" y2="347" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowOrange)"/>
+  <line x1="350" y1="230" x2="350" y2="347" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowOrange)"/>
+  <line x1="450" y1="230" x2="600" y2="347" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowOrange)"/>
+
+  <!-- Routing intent labels -->
+  <rect x="30" y="308" width="130" height="20" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="95" y="322" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Private Traffic Intent</text>
+
+  <rect x="530" y="308" width="130" height="20" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="595" y="322" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Private Traffic Intent</text>
+
+  <!-- Legend -->
+  <text x="618" y="118" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#d6b656" font-weight="bold">- - - Routing Intent</text>
+  <text x="618" y="133" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">(All traffic via FW)</text>
+</svg>

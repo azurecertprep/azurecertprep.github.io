@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 430">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Zero-Trust Network Zones — Layered Security</text>
+
+  <!-- Layer 1: AVNM Security Admin Rules (outermost) -->
+  <rect x="20" y="45" width="660" height="370" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Layer 1: AVNM Security Admin Rules</text>
+  <text x="350" y="84" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Organization-wide guardrails (cannot be overridden by NSG)</text>
+
+  <!-- Layer 2: NSG -->
+  <rect x="50" y="95" width="600" height="300" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="350" y="118" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Layer 2: Network Security Groups (NSG)</text>
+  <text x="350" y="134" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Subnet + NIC level microsegmentation</text>
+
+  <!-- Layer 3: JIT Access -->
+  <rect x="80" y="145" width="540" height="230" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="350" y="168" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Layer 3: Just-In-Time (JIT) Access</text>
+  <text x="350" y="184" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Time-limited management port access (Defender for Cloud)</text>
+
+  <!-- Layer 4: Azure Bastion -->
+  <rect x="110" y="195" width="240" height="165" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="230" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Layer 4: Azure Bastion</text>
+  <text x="230" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">No public IP on VM</text>
+  <text x="230" y="250" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Browser-based RDP/SSH</text>
+
+  <!-- VM (innermost) -->
+  <rect x="155" y="265" width="150" height="80" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="230" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">VM Workload</text>
+  <text x="230" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">No public IP</text>
+  <text x="230" y="324" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Private endpoint access</text>
+  <text x="230" y="340" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Disk encryption enabled</text>
+
+  <!-- Right side: detail breakdown -->
+  <rect x="380" y="200" width="230" height="160" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="495" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Zero-Trust Principles:</text>
+
+  <text x="395" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">🔒 Verify explicitly</text>
+  <text x="405" y="259" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Every access request authenticated</text>
+
+  <text x="395" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">🛡 Least privilege</text>
+  <text x="405" y="295" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">JIT + just-enough-access</text>
+
+  <text x="395" y="316" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">⚠ Assume breach</text>
+  <text x="405" y="331" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Segment, monitor, encrypt</text>
+
+  <text x="395" y="352" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">📊 Continuous monitoring</text>
+
+  <!-- Evaluation order arrow (left side) -->
+  <line x1="35" y1="90" x2="35" y2="395" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="38" y="240" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#6c8ebf" font-weight="bold" transform="rotate(-90, 38, 240)">Evaluation Order (Outside → In)</text>
+</svg>

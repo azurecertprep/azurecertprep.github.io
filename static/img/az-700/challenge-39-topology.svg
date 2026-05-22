@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 480">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Challenge 39: SE to PE Migration Steps</text>
+  <text x="350" y="42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Sequential migration without downtime</text>
+
+  <!-- Step 1 -->
+  <rect x="250" y="60" width="200" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="350" y="82" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">1. Deploy Private Endpoint</text>
+  <text x="350" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Create PE in target subnet</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="350" y1="110" x2="350" y2="130" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Step 2 -->
+  <rect x="250" y="132" width="200" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="154" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">2. Configure DNS</text>
+  <text x="350" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Create Private DNS Zone + link to VNet</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="350" y1="182" x2="350" y2="202" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Step 3 -->
+  <rect x="250" y="204" width="200" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">3. Verify DNS Resolution</text>
+  <text x="350" y="242" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">nslookup → must return private IP</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="350" y1="254" x2="350" y2="274" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Step 4 -->
+  <rect x="250" y="276" width="200" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="350" y="298" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">4. Test Connectivity</text>
+  <text x="350" y="314" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Verify data access works via PE</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="350" y1="326" x2="350" y2="346" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Step 5 -->
+  <rect x="250" y="348" width="200" height="50" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="350" y="370" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">5. Disable Public Access</text>
+  <text x="350" y="386" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Set publicNetworkAccess = Disabled</text>
+
+  <!-- Arrow 5→6 -->
+  <line x1="350" y1="398" x2="350" y2="418" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Step 6 -->
+  <rect x="250" y="420" width="200" height="50" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="350" y="442" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">6. Remove Service Endpoint</text>
+  <text x="350" y="458" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Remove SE + VNet rules from firewall</text>
+
+  <!-- Left annotations -->
+  <rect x="30" y="65" width="200" height="38" rx="4" fill="white" stroke="#82b366" stroke-width="1"/>
+  <text x="130" y="82" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Both SE and PE active simultaneously</text>
+  <text x="130" y="95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">No downtime — traffic shifts via DNS</text>
+
+  <rect x="30" y="209" width="200" height="38" rx="4" fill="white" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="130" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">CRITICAL: If DNS still resolves to</text>
+  <text x="130" y="239" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">public IP, traffic bypasses PE!</text>
+
+  <rect x="30" y="353" width="200" height="38" rx="4" fill="white" stroke="#b85450" stroke-width="1"/>
+  <text x="130" y="370" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#b85450">⚠ Only disable public AFTER</text>
+  <text x="130" y="383" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#b85450">verifying PE works correctly!</text>
+
+  <!-- Right annotations -->
+  <rect x="470" y="137" width="200" height="38" rx="4" fill="white" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="570" y="154" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Zone name must match service type</text>
+  <text x="570" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">e.g., privatelink.blob.core.windows.net</text>
+
+  <rect x="470" y="281" width="200" height="38" rx="4" fill="white" stroke="#d6b656" stroke-width="1"/>
+  <text x="570" y="298" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Test from VM inside VNet</text>
+  <text x="570" y="311" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Validate read/write operations</text>
+
+  <rect x="470" y="425" width="200" height="38" rx="4" fill="white" stroke="#b85450" stroke-width="1"/>
+  <text x="570" y="442" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Remove from subnet config:</text>
+  <text x="570" y="455" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Microsoft.Storage SE + VNet rules</text>
+</svg>

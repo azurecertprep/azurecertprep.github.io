@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 560">
+  <defs>
+    <marker id="arrow-yes" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrow-no" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c62828"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Private Access Decision Tree: SE vs PE vs PE + DNS Resolver</text>
+
+  <!-- Q1: Need private access? -->
+  <rect x="230" y="45" width="240" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Need private access</text>
+  <text x="350" y="83" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">to PaaS service?</text>
+
+  <!-- NO from Q1 -->
+  <line x1="470" y1="70" x2="540" y2="70" stroke="#c62828" stroke-width="2" marker-end="url(#arrow-no)"/>
+  <text x="500" y="62" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+  <rect x="545" y="50" width="140" height="40" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="615" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Use Public</text>
+  <text x="615" y="82" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Endpoint + Firewall</text>
+
+  <!-- YES from Q1 -->
+  <line x1="350" y1="95" x2="350" y2="125" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-yes)"/>
+  <text x="360" y="113" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Q2: Access from on-premises? -->
+  <rect x="230" y="127" width="240" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Need access from</text>
+  <text x="350" y="165" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">on-premises?</text>
+
+  <!-- YES from Q2 -->
+  <line x1="230" y1="152" x2="180" y2="152" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-yes)"/>
+  <text x="205" y="144" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Answer: PE + DNS Resolver -->
+  <rect x="20" y="130" width="155" height="55" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="97" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">Private Endpoint +</text>
+  <text x="97" y="164" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">DNS Private Resolver</text>
+  <text x="97" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Conditional forwarder required</text>
+
+  <!-- NO from Q2 -->
+  <line x1="350" y1="177" x2="350" y2="210" stroke="#c62828" stroke-width="2" marker-end="url(#arrow-no)"/>
+  <text x="360" y="197" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Q3: Only restrict to VNet? -->
+  <rect x="230" y="212" width="240" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="235" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Only need to restrict</text>
+  <text x="350" y="250" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">traffic to VNet?</text>
+
+  <!-- NO from Q3 -->
+  <line x1="470" y1="237" x2="540" y2="237" stroke="#c62828" stroke-width="2" marker-end="url(#arrow-no)"/>
+  <text x="500" y="229" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+  <rect x="545" y="215" width="140" height="45" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="615" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">Private Endpoint</text>
+  <text x="615" y="249" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Full private IP in VNet</text>
+
+  <!-- YES from Q3 -->
+  <line x1="350" y1="262" x2="350" y2="295" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-yes)"/>
+  <text x="360" y="282" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Q4: Cost sensitive? -->
+  <rect x="230" y="297" width="240" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Cost sensitive?</text>
+  <text x="350" y="335" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">(budget constraints)</text>
+
+  <!-- YES from Q4: Service Endpoint -->
+  <line x1="230" y1="322" x2="180" y2="322" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-yes)"/>
+  <text x="205" y="314" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+  <rect x="20" y="300" width="155" height="45" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="97" y="319" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">Service Endpoint</text>
+  <text x="97" y="335" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Free, backbone routing</text>
+
+  <!-- NO from Q4: Private Endpoint -->
+  <line x1="470" y1="322" x2="540" y2="322" stroke="#c62828" stroke-width="2" marker-end="url(#arrow-no)"/>
+  <text x="500" y="314" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+  <rect x="545" y="300" width="140" height="45" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="615" y="319" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">Private Endpoint</text>
+  <text x="615" y="335" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Better security posture</text>
+
+  <!-- Summary comparison table -->
+  <rect x="30" y="380" width="640" height="170" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="400" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Quick Comparison</text>
+
+  <!-- Table headers -->
+  <text x="100" y="425" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Feature</text>
+  <text x="270" y="425" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Service Endpoint</text>
+  <text x="450" y="425" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Private Endpoint</text>
+  <text x="610" y="425" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">PE + Resolver</text>
+
+  <line x1="40" y1="432" x2="660" y2="432" stroke="#999" stroke-width="1"/>
+
+  <!-- Row 1 -->
+  <text x="100" y="450" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">IP Used</text>
+  <text x="270" y="450" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">Public IP</text>
+  <text x="450" y="450" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">Private IP</text>
+  <text x="610" y="450" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">Private IP</text>
+
+  <!-- Row 2 -->
+  <text x="100" y="470" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">On-Prem Access</text>
+  <text x="270" y="470" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ No</text>
+  <text x="450" y="470" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ DNS issue</text>
+  <text x="610" y="470" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Yes</text>
+
+  <!-- Row 3 -->
+  <text x="100" y="490" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Cost</text>
+  <text x="270" y="490" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">Free</text>
+  <text x="450" y="490" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">~$7.30/mo</text>
+  <text x="610" y="490" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">~$7.30 + Resolver</text>
+
+  <!-- Row 4 -->
+  <text x="100" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Disable Public</text>
+  <text x="270" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ Cannot</text>
+  <text x="450" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Yes</text>
+  <text x="610" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Yes</text>
+
+  <!-- Row 5 -->
+  <text x="100" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Data Exfiltration</text>
+  <text x="270" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ Vulnerable</text>
+  <text x="450" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Protected</text>
+  <text x="610" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Protected</text>
+</svg>

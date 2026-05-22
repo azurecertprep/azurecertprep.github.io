@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Challenge 38: Service Endpoints vs Private Endpoints</text>
+
+  <!-- LEFT SIDE: Service Endpoints -->
+  <rect x="20" y="45" width="320" height="380" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="180" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Service Endpoint</text>
+
+  <!-- SE VNet -->
+  <rect x="35" y="80" width="290" height="150" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="180" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">VNet (10.0.0.0/16)</text>
+
+  <!-- SE VM -->
+  <rect x="55" y="110" width="110" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="110" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">VM</text>
+  <text x="110" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.0.4</text>
+
+  <!-- SE enabled on subnet -->
+  <rect x="55" y="165" width="250" height="30" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="180" y="185" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">SE enabled: Microsoft.Storage on subnet</text>
+
+  <!-- Route -->
+  <rect x="55" y="205" width="250" height="18" rx="3" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="180" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#333">Optimized route via Azure backbone (not internet)</text>
+
+  <!-- SE Storage (public IP) -->
+  <rect x="80" y="250" width="200" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="180" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Azure Storage</text>
+  <text x="180" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Public IP: 52.x.x.x</text>
+  <text x="180" y="298" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#b85450">Still uses public endpoint!</text>
+
+  <!-- Arrow SE -->
+  <line x1="140" y1="150" x2="160" y2="165" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <line x1="180" y1="223" x2="180" y2="248" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- SE characteristics -->
+  <rect x="35" y="320" width="290" height="95" rx="4" fill="white" stroke="#666" stroke-width="1"/>
+  <text x="180" y="338" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">Characteristics:</text>
+  <text x="50" y="355" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Traffic stays on Azure backbone</text>
+  <text x="50" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Service still accessed via public IP</text>
+  <text x="50" y="385" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Free — no additional cost</text>
+  <text x="50" y="400" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450">• NOT accessible from on-premises</text>
+
+  <!-- RIGHT SIDE: Private Endpoints -->
+  <rect x="360" y="45" width="320" height="380" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="520" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Private Endpoint</text>
+
+  <!-- PE VNet -->
+  <rect x="375" y="80" width="290" height="150" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="520" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">VNet (10.0.0.0/16)</text>
+
+  <!-- PE VM -->
+  <rect x="395" y="110" width="110" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="450" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">VM</text>
+  <text x="450" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.0.4</text>
+
+  <!-- PE NIC -->
+  <rect x="530" y="110" width="120" height="40" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="590" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">Private Endpoint</text>
+  <text x="590" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.1.4</text>
+
+  <!-- Private DNS Zone -->
+  <rect x="395" y="165" width="250" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="520" y="185" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#333">Private DNS: privatelink.blob.core.windows.net</text>
+
+  <!-- PE Storage -->
+  <rect x="420" y="250" width="200" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="520" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Azure Storage</text>
+  <text x="520" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Accessed via: 10.0.1.4</text>
+  <text x="520" y="298" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#2e7d32">Private IP in your VNet!</text>
+
+  <!-- Arrow PE -->
+  <line x1="505" y1="130" x2="530" y2="130" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+  <line x1="590" y1="150" x2="540" y2="250" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+  <!-- PE characteristics -->
+  <rect x="375" y="320" width="290" height="95" rx="4" fill="white" stroke="#666" stroke-width="1"/>
+  <text x="520" y="338" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">Characteristics:</text>
+  <text x="390" y="355" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Private IP injected into VNet</text>
+  <text x="390" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• DNS resolution to private IP</text>
+  <text x="390" y="385" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Costs ~$7.30/month + data processing</text>
+  <text x="390" y="400" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">• ✓ Accessible from on-premises (VPN/ER)</text>
+
+  <!-- Comparison footer -->
+  <rect x="20" y="440" width="660" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="350" y="458" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Key Decision Factors</text>
+  <text x="350" y="475" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">SE: Simple, free, VNet-only | PE: More secure, costs money, works with on-prem, enables disable public access</text>
+</svg>

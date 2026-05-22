@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 560">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Hybrid Connectivity Troubleshooting Decision Tree</text>
+
+  <!-- Start -->
+  <rect x="250" y="45" width="200" height="40" rx="20" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Connection Failing?</text>
+
+  <!-- Arrow to Decision 1 -->
+  <line x1="350" y1="85" x2="350" y2="105" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Decision 1: Gateway Status -->
+  <polygon points="350,105 470,150 350,195 230,150" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Gateway status</text>
+  <text x="350" y="161" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">= Succeeded?</text>
+
+  <!-- NO from Decision 1 -->
+  <line x1="230" y1="150" x2="140" y2="150" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="188" y="142" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#b85450" font-weight="bold">NO</text>
+  <rect x="30" y="130" width="110" height="45" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="85" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Fix Gateway</text>
+  <text x="85" y="163" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Reset/Redeploy</text>
+  <text x="85" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Check SKU</text>
+
+  <!-- YES from Decision 1 -->
+  <line x1="350" y1="195" x2="350" y2="220" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="365" y="212" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#82b366" font-weight="bold">YES</text>
+
+  <!-- Decision 2: BGP Established? -->
+  <polygon points="350,220 470,265 350,310 230,265" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">BGP peers</text>
+  <text x="350" y="274" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">established?</text>
+
+  <!-- NO from Decision 2 -->
+  <line x1="230" y1="265" x2="140" y2="265" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="188" y="257" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#b85450" font-weight="bold">NO</text>
+  <rect x="30" y="240" width="110" height="55" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="85" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Fix BGP</text>
+  <text x="85" y="273" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Check ASN</text>
+  <text x="85" y="284" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Check peer IPs</text>
+
+  <!-- YES from Decision 2 -->
+  <line x1="350" y1="310" x2="350" y2="335" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="365" y="327" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#82b366" font-weight="bold">YES</text>
+
+  <!-- Decision 3: Routes learned? -->
+  <polygon points="350,335 470,380 350,425 230,380" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="375" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Routes learned</text>
+  <text x="350" y="389" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">correctly?</text>
+
+  <!-- NO from Decision 3 -->
+  <line x1="230" y1="380" x2="140" y2="380" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="188" y="372" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#b85450" font-weight="bold">NO</text>
+  <rect x="30" y="355" width="110" height="55" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="85" y="373" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Fix Routes</text>
+  <text x="85" y="388" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Check prefixes</text>
+  <text x="85" y="399" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Check UDRs</text>
+
+  <!-- YES from Decision 3 -->
+  <line x1="350" y1="425" x2="350" y2="450" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="365" y="442" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#82b366" font-weight="bold">YES</text>
+
+  <!-- Decision 4: NSG blocking? -->
+  <polygon points="350,450 470,495 350,540 230,495" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="492" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">NSG allowing</text>
+  <text x="350" y="506" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">traffic?</text>
+
+  <!-- NO from Decision 4 -->
+  <line x1="230" y1="495" x2="140" y2="495" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="188" y="487" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#b85450" font-weight="bold">NO</text>
+  <rect x="30" y="470" width="110" height="55" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="85" y="488" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Fix NSG</text>
+  <text x="85" y="503" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Add allow rules</text>
+  <text x="85" y="514" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Check flow logs</text>
+
+  <!-- YES from Decision 4 -->
+  <line x1="470" y1="495" x2="545" y2="495" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="503" y="487" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#82b366" font-weight="bold">YES</text>
+  <rect x="547" y="472" width="130" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="612" y="493" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Check App Layer</text>
+  <text x="612" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">OS firewall, port,</text>
+  <text x="612" y="521" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">service binding</text>
+
+  <!-- Right side: Tools reference -->
+  <rect x="545" y="105" width="135" height="190" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="612" y="125" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Diagnostic Tools</text>
+
+  <text x="560" y="148" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Network Watcher</text>
+  <text x="560" y="165" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Connection Monitor</text>
+  <text x="560" y="182" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• VPN Diagnostics</text>
+  <text x="560" y="199" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Effective Routes</text>
+  <text x="560" y="216" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• BGP Peer Status</text>
+  <text x="560" y="233" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• NSG Flow Logs</text>
+  <text x="560" y="250" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• IP Flow Verify</text>
+  <text x="560" y="267" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Next Hop</text>
+  <text x="560" y="284" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Packet Capture</text>
+
+  <!-- Legend -->
+  <text x="350" y="553" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Follow top-down: Gateway → BGP → Routes → NSG → Application layer</text>
+</svg>

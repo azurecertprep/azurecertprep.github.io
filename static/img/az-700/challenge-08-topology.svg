@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Azure Virtual Network Manager (AVNM)</text>
+
+  <!-- Management Scope -->
+  <rect x="30" y="45" width="640" height="60" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="350" y="70" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">AVNM Instance — Scope: Management Group / Subscription</text>
+  <text x="350" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Centrally manage network topology, connectivity, and security policies</text>
+
+  <!-- Network Groups -->
+  <rect x="30" y="125" width="640" height="100" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="350" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Network Groups</text>
+
+  <rect x="55" y="155" width="160" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="135" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Production VNets</text>
+  <text x="135" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Static + Dynamic members</text>
+
+  <rect x="240" y="155" width="160" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="320" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Dev/Test VNets</text>
+  <text x="320" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Azure Policy condition</text>
+
+  <rect x="425" y="155" width="160" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="505" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Hub VNets</text>
+  <text x="505" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Manual selection</text>
+
+  <!-- Configurations -->
+  <text x="350" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Configurations</text>
+
+  <!-- Connectivity Config -->
+  <rect x="40" y="265" width="290" height="110" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="185" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Connectivity Configuration</text>
+
+  <rect x="60" y="295" width="120" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="120" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">Hub-Spoke</text>
+  <text x="120" y="323" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Hub: Hub VNets group</text>
+
+  <rect x="195" y="295" width="120" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="255" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">Mesh</text>
+  <text x="255" y="323" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Dev/Test group</text>
+
+  <text x="185" y="360" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Auto-creates peerings between members</text>
+
+  <!-- Security Config -->
+  <rect x="370" y="265" width="290" height="110" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="515" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Security Admin Configuration</text>
+
+  <rect x="390" y="295" width="250" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="515" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">Security Admin Rules</text>
+  <text x="515" y="323" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Priority over NSG | Allow / Deny / Always Allow</text>
+
+  <text x="515" y="360" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Cannot be overridden by member NSGs</text>
+
+  <!-- Deployment -->
+  <rect x="150" y="400" width="400" height="55" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="350" y="420" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Deployment (Region-specific)</text>
+  <text x="350" y="438" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Configurations must be deployed to target regions to take effect</text>
+  <text x="350" y="450" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">East US | West Europe | Southeast Asia</text>
+
+  <!-- Arrows -->
+  <line x1="185" y1="375" x2="300" y2="400" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="515" y1="375" x2="400" y2="400" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Note -->
+  <text x="350" y="485" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">AVNM evaluates: Security Admin Rules → NSG Rules → Application Rules</text>
+</svg>

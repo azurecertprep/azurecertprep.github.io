@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Challenge 26: Cross-Region Load Balancer</text>
+
+  <!-- Client -->
+  <rect x="290" y="42" width="120" height="36" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="65" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Global Clients</text>
+
+  <!-- Arrow to Global LB -->
+  <line x1="350" y1="78" x2="350" y2="108" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Global Load Balancer -->
+  <rect x="220" y="112" width="260" height="55" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="134" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Cross-Region Load Balancer</text>
+  <text x="350" y="150" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">Tier: Global | Anycast Frontend IP</text>
+  <text x="350" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Routes to nearest healthy region</text>
+
+  <!-- Arrows to regional LBs -->
+  <line x1="280" y1="167" x2="160" y2="215" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="167" x2="540" y2="215" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Region: East US -->
+  <rect x="40" y="210" width="280" height="270" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="180" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">East US Region</text>
+
+  <!-- Regional LB East -->
+  <rect x="75" y="245" width="210" height="45" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="180" y="265" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Regional LB (Standard)</text>
+  <text x="180" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Frontend: Regional Public IP</text>
+
+  <!-- Backend Pool East -->
+  <rect x="60" y="310" width="240" height="155" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="180" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Backend Pool</text>
+
+  <rect x="80" y="340" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="127" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VM-East-01</text>
+  <text x="127" y="373" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Zone 1</text>
+
+  <rect x="185" y="340" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="232" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VM-East-02</text>
+  <text x="232" y="373" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Zone 2</text>
+
+  <rect x="80" y="395" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="127" y="413" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VM-East-03</text>
+  <text x="127" y="428" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Zone 3</text>
+
+  <rect x="185" y="395" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="232" y="413" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VMSS</text>
+  <text x="232" y="428" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Auto-scale</text>
+
+  <!-- Arrows East -->
+  <line x1="180" y1="290" x2="180" y2="310" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Region: West Europe -->
+  <rect x="380" y="210" width="280" height="270" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="520" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">West Europe Region</text>
+
+  <!-- Regional LB West -->
+  <rect x="415" y="245" width="210" height="45" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="520" y="265" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Regional LB (Standard)</text>
+  <text x="520" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Frontend: Regional Public IP</text>
+
+  <!-- Backend Pool West -->
+  <rect x="400" y="310" width="240" height="155" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="520" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Backend Pool</text>
+
+  <rect x="420" y="340" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="467" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VM-West-01</text>
+  <text x="467" y="373" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Zone 1</text>
+
+  <rect x="525" y="340" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="572" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VM-West-02</text>
+  <text x="572" y="373" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Zone 2</text>
+
+  <rect x="420" y="395" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="467" y="413" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VM-West-03</text>
+  <text x="467" y="428" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Zone 3</text>
+
+  <rect x="525" y="395" width="95" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="572" y="413" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">VMSS</text>
+  <text x="572" y="428" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Auto-scale</text>
+
+  <!-- Arrows West -->
+  <line x1="520" y1="290" x2="520" y2="310" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Note -->
+  <text x="350" y="495" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Failover: If East US becomes unhealthy, all traffic routes to West Europe automatically</text>
+</svg>

@@ -98,6 +98,12 @@ const config = {
             label: 'SC-500',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'az700Sidebar',
+            position: 'left',
+            label: 'AZ-700',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },
@@ -144,6 +150,10 @@ const config = {
                 label: 'SC-500: Cloud & AI Security',
                 to: '/docs/sc-500/overview',
               },
+              {
+                label: 'AZ-700: Network Engineer',
+                to: '/docs/az-700/overview',
+              },
             ],
           },
           {
@@ -168,6 +178,10 @@ const config = {
               {
                 label: 'Microsoft Learn — SC-500',
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/',
+              },
+              {
+                label: 'Microsoft Learn — AZ-700',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-network-engineer-associate/',
               },
               {
                 label: 'Free Practice Assessment',

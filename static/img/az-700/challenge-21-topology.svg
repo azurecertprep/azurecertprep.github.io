@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">ExpressRoute Peering Types: Private vs Microsoft</text>
+
+  <!-- On-Premises -->
+  <rect x="20" y="55" width="150" height="330" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="95" y="77" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">On-Premises</text>
+
+  <rect x="35" y="95" width="120" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="95" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Private Servers</text>
+  <text x="95" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.1.0.0/16</text>
+
+  <rect x="35" y="155" width="120" height="40" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="95" y="179" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">CE Router</text>
+
+  <rect x="35" y="260" width="120" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="95" y="280" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Users/Apps</text>
+  <text x="95" y="293" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Need M365/PaaS</text>
+
+  <!-- MSEE -->
+  <rect x="220" y="55" width="110" height="330" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="275" y="77" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">MSEE</text>
+
+  <!-- Private Peering box -->
+  <rect x="235" y="100" width="80" height="55" rx="4" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="275" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Private</text>
+  <text x="275" y="135" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Peering</text>
+  <text x="275" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">/30 BGP</text>
+
+  <!-- Microsoft Peering box -->
+  <rect x="235" y="240" width="80" height="55" rx="4" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="275" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Microsoft</text>
+  <text x="275" y="275" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Peering</text>
+  <text x="275" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Public IPs</text>
+
+  <!-- Route Filter -->
+  <rect x="235" y="310" width="80" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="275" y="330" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Route Filter</text>
+  <text x="275" y="343" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Required</text>
+
+  <!-- Arrows On-prem to MSEE -->
+  <line x1="155" y1="127" x2="233" y2="127" stroke="#82b366" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="155" y1="267" x2="233" y2="267" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Private Peering reaches -->
+  <rect x="380" y="55" width="300" height="145" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="530" y="77" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Private Peering Reaches</text>
+
+  <rect x="395" y="90" width="120" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="455" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Azure VNets</text>
+
+  <rect x="545" y="90" width="120" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="605" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Azure VMs</text>
+
+  <rect x="395" y="140" width="120" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="455" y="162" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">ILBs</text>
+
+  <rect x="545" y="140" width="120" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="605" y="162" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Private Endpoints</text>
+
+  <!-- Microsoft Peering reaches -->
+  <rect x="380" y="225" width="300" height="145" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="530" y="247" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Microsoft Peering Reaches</text>
+
+  <rect x="395" y="260" width="120" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="455" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Microsoft 365</text>
+
+  <rect x="545" y="260" width="120" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="605" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Azure PaaS IPs</text>
+
+  <rect x="395" y="310" width="120" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="455" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Dynamics 365</text>
+
+  <rect x="545" y="310" width="120" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="605" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Power Platform</text>
+
+  <!-- Arrows MSEE to services -->
+  <line x1="315" y1="127" x2="378" y2="127" stroke="#82b366" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="315" y1="267" x2="378" y2="290" stroke="#9673a6" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Legend -->
+  <text x="350" y="405" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Private peering = RFC 1918 (VNet IPs) | Microsoft peering = public MS services (route filter required)</text>
+</svg>

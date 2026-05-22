@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 480">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Hub-Spoke VNet Topology</text>
+
+  <!-- Hub VNet -->
+  <rect x="200" y="50" width="300" height="220" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Hub VNet (10.0.0.0/16)</text>
+
+  <!-- Hub Subnets -->
+  <rect x="220" y="85" width="120" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="280" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">GatewaySubnet</text>
+  <text x="280" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.0.1.0/27</text>
+
+  <rect x="360" y="85" width="120" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="420" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">AzureFirewallSubnet</text>
+  <text x="420" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.0.2.0/26</text>
+
+  <rect x="220" y="155" width="120" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="280" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">SharedServices</text>
+  <text x="280" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.0.3.0/24</text>
+
+  <rect x="360" y="155" width="120" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="420" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">DNS / NVA</text>
+  <text x="420" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.0.4.0/24</text>
+
+  <!-- VPN Gateway Icon -->
+  <rect x="230" y="225" width="100" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="280" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">VPN Gateway</text>
+
+  <!-- Spoke 1 -->
+  <rect x="30" y="340" width="240" height="120" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="150" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Spoke 1 VNet (10.1.0.0/16)</text>
+
+  <rect x="50" y="375" width="95" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="97" y="395" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Web Tier</text>
+  <text x="97" y="408" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.1.1.0/24</text>
+
+  <rect x="155" y="375" width="95" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="202" y="395" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">App Tier</text>
+  <text x="202" y="408" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.1.2.0/24</text>
+
+  <!-- Spoke 2 -->
+  <rect x="430" y="340" width="240" height="120" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="550" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Spoke 2 VNet (10.2.0.0/16)</text>
+
+  <rect x="450" y="375" width="95" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="497" y="395" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Data Tier</text>
+  <text x="497" y="408" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.2.1.0/24</text>
+
+  <rect x="555" y="375" width="95" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="602" y="395" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">DB Tier</text>
+  <text x="602" y="408" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.2.2.0/24</text>
+
+  <!-- Peering Arrows -->
+  <line x1="280" y1="270" x2="180" y2="340" stroke="#666" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="200" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" transform="rotate(-30 200,300)">Peering</text>
+
+  <line x1="420" y1="270" x2="520" y2="340" stroke="#666" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="490" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" transform="rotate(30 490,300)">Peering</text>
+
+  <!-- No direct spoke-to-spoke -->
+  <line x1="270" y1="420" x2="430" y2="420" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5,5"/>
+  <text x="350" y="440" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450">No direct connectivity (non-transitive)</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Azure Route Server with BGP Peering</text>
+
+  <!-- VNet -->
+  <rect x="50" y="45" width="600" height="340" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Hub VNet (10.0.0.0/16)</text>
+
+  <!-- Route Server Subnet -->
+  <rect x="230" y="85" width="240" height="110" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="350" y="107" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">RouteServerSubnet</text>
+  <text x="350" y="123" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.0.0/27 (min /27)</text>
+
+  <!-- Route Server instances -->
+  <rect x="250" y="135" width="90" height="45" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="295" y="155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">RS Instance 1</text>
+  <text x="295" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.0.4</text>
+
+  <rect x="360" y="135" width="90" height="45" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="405" y="155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">RS Instance 2</text>
+  <text x="405" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.0.5</text>
+
+  <!-- NVA 1 -->
+  <rect x="80" y="230" width="150" height="65" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="155" y="253" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">NVA (Firewall)</text>
+  <text x="155" y="268" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.4</text>
+  <text x="155" y="283" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">BGP ASN: 65001</text>
+
+  <!-- NVA 2 / SD-WAN -->
+  <rect x="470" y="230" width="150" height="65" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="545" y="253" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">SD-WAN NVA</text>
+  <text x="545" y="268" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.5</text>
+  <text x="545" y="283" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">BGP ASN: 65002</text>
+
+  <!-- BGP Peering Arrows -->
+  <line x1="270" y1="180" x2="180" y2="230" stroke="#9673a6" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="210" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#9673a6">BGP</text>
+
+  <line x1="430" y1="180" x2="520" y2="230" stroke="#9673a6" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="490" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#9673a6">BGP</text>
+
+  <!-- Route exchange arrow between NVAs via Route Server -->
+  <path d="M 230 262 Q 350 320 470 262" stroke="#666" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="350" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Route exchange via RS (ASN 65515)</text>
+
+  <!-- VPN Gateway -->
+  <rect x="270" y="340" width="160" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">VPN Gateway</text>
+
+  <!-- Branch-to-branch -->
+  <rect x="295" y="328" width="110" height="14" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="350" y="338" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#333">Branch-to-branch: ON</text>
+
+  <!-- Info Box -->
+  <rect x="80" y="400" width="540" height="45" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="350" y="418" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Route Server injects NVA-learned routes into VNet effective routes (no UDR needed)</text>
+  <text x="350" y="435" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">ASN 65515 reserved for Route Server | Supports up to 8 BGP peers | HA with 2 instances</text>
+</svg>

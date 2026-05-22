@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 550">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Challenge 33: Multi-Tier Load Balancing Architecture</text>
+  <text x="350" y="42" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555" text-anchor="middle">When to use each service together</text>
+
+  <!-- Internet Users -->
+  <rect x="120" y="55" width="100" height="32" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="170" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">HTTP Users</text>
+
+  <rect x="480" y="55" width="100" height="32" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="530" y="75" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Non-HTTP</text>
+
+  <!-- Arrows -->
+  <line x1="170" y1="87" x2="170" y2="115" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="530" y1="87" x2="530" y2="115" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Tier 1: Global -->
+  <rect x="20" y="110" width="350" height="75" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="195" y="128" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Tier 1: Azure Front Door (Global HTTP)</text>
+  <text x="195" y="145" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Global anycast, edge caching, WAF</text>
+  <text x="195" y="159" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• SSL offload at edge, URL routing</text>
+  <text x="195" y="173" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Session affinity, rate limiting</text>
+
+  <!-- Traffic Manager -->
+  <rect x="400" y="110" width="270" height="75" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="535" y="128" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Traffic Manager (Global Non-HTTP)</text>
+  <text x="535" y="145" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• DNS-based, no inline traffic</text>
+  <text x="535" y="159" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Priority/Weighted/Geographic</text>
+  <text x="535" y="173" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• TCP/UDP protocols, gaming, IoT</text>
+
+  <!-- Arrow from Front Door to AppGW -->
+  <line x1="195" y1="185" x2="195" y2="220" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="535" y1="185" x2="535" y2="355" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Tier 2: Regional -->
+  <rect x="20" y="223" width="350" height="85" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="195" y="243" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Tier 2: Application Gateway (Regional L7)</text>
+  <text x="195" y="260" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Path-based routing, multi-site hosting</text>
+  <text x="195" y="274" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• WAF v2, TLS termination/E2E</text>
+  <text x="195" y="288" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Autoscale, connection draining</text>
+  <text x="195" y="302" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Cookie-based session affinity</text>
+
+  <!-- Arrow from AppGW to Internal LB -->
+  <line x1="195" y1="308" x2="195" y2="345" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Tier 3: Internal -->
+  <rect x="20" y="348" width="350" height="85" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="195" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Tier 3: Internal Load Balancer (L4)</text>
+  <text x="195" y="385" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Private IP only, no internet exposure</text>
+  <text x="195" y="399" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• HA Ports for all protocols/ports</text>
+  <text x="195" y="413" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Ultra-low latency, zone-redundant</text>
+  <text x="195" y="427" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Backend: VMs, VMSS, databases</text>
+
+  <!-- Public LB for TM -->
+  <rect x="400" y="348" width="270" height="85" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="535" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Public Load Balancer (L4)</text>
+  <text x="535" y="385" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Standard SKU, zone-redundant</text>
+  <text x="535" y="399" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Outbound rules (SNAT)</text>
+  <text x="535" y="413" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• TCP/UDP health probes</text>
+  <text x="535" y="427" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">• Cross-region LB capable</text>
+
+  <!-- Backend Tier -->
+  <rect x="100" y="455" width="200" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="200" y="472" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Backend: APIs / Microservices</text>
+  <text x="200" y="485" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">DB / Cache / Message Queue</text>
+
+  <rect x="430" y="455" width="200" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="530" y="472" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Backend: VMs / VMSS</text>
+  <text x="530" y="485" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">TCP services, game servers</text>
+
+  <line x1="195" y1="433" x2="195" y2="455" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="535" y1="433" x2="535" y2="455" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- When to use summary -->
+  <rect x="50" y="505" width="600" height="35" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="350" y="520" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Summary: Front Door (global HTTP) → AppGW (regional L7) → Internal LB (backend L4)</text>
+  <text x="350" y="533" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Traffic Manager + Public LB for non-HTTP global workloads (TCP/UDP)</text>
+</svg>

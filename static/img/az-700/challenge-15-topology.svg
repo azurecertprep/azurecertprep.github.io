@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">High-Availability VPN: Active-Active Configuration</text>
+
+  <!-- On-Premises -->
+  <rect x="20" y="50" width="180" height="340" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="110" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">On-Premises</text>
+
+  <!-- VPN Device 1 -->
+  <rect x="40" y="100" width="140" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="110" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VPN Device 1</text>
+  <text x="110" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Public IP: A.A.A.A</text>
+
+  <!-- VPN Device 2 -->
+  <rect x="40" y="280" width="140" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="110" y="302" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VPN Device 2</text>
+  <text x="110" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Public IP: B.B.B.B</text>
+
+  <!-- Local Network -->
+  <rect x="50" y="180" width="120" height="70" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="110" y="205" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Local Network</text>
+  <text x="110" y="220" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">BGP: AS 65001</text>
+  <text x="110" y="235" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.1.0.0/16</text>
+
+  <!-- Azure Cloud -->
+  <rect x="380" y="50" width="300" height="340" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="530" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Azure (Zone-Redundant)</text>
+
+  <!-- VPN GW Instance 1 -->
+  <rect x="400" y="100" width="130" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="465" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">GW Instance 1</text>
+  <text x="465" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">AZ 1 • IP: X.X.X.X</text>
+
+  <!-- VPN GW Instance 2 -->
+  <rect x="400" y="280" width="130" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="465" y="300" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">GW Instance 2</text>
+  <text x="465" y="318" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">AZ 2 • IP: Y.Y.Y.Y</text>
+
+  <!-- VNet -->
+  <rect x="560" y="150" width="100" height="130" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="610" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VNet</text>
+  <text x="610" y="195" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">10.0.0.0/16</text>
+  <rect x="570" y="210" width="80" height="28" rx="4" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="610" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">Workloads</text>
+  <rect x="570" y="244" width="80" height="28" rx="4" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="610" y="262" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">Apps</text>
+
+  <!-- 4 Tunnels -->
+  <!-- Tunnel 1: Device1 → GW1 -->
+  <line x1="180" y1="115" x2="398" y2="115" stroke="#9673a6" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="290" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#9673a6">Tunnel 1</text>
+
+  <!-- Tunnel 2: Device1 → GW2 -->
+  <line x1="180" y1="140" x2="398" y2="295" stroke="#9673a6" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="270" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#9673a6">Tunnel 2</text>
+
+  <!-- Tunnel 3: Device2 → GW1 -->
+  <line x1="180" y1="295" x2="398" y2="140" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="310" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#d6b656">Tunnel 3</text>
+
+  <!-- Tunnel 4: Device2 → GW2 -->
+  <line x1="180" y1="320" x2="398" y2="320" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="290" y="338" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#d6b656">Tunnel 4</text>
+
+  <!-- GW to VNet arrows -->
+  <line x1="530" y1="127" x2="558" y2="190" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="530" y1="307" x2="558" y2="245" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Legend -->
+  <text x="350" y="408" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">4 tunnels provide redundancy: survives single device or gateway instance failure</text>
+</svg>

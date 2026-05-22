@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Challenge 31: Azure Front Door Global Routing</text>
+
+  <!-- Global Users -->
+  <rect x="130" y="42" width="100" height="35" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="180" y="64" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">EU Users</text>
+
+  <rect x="300" y="42" width="100" height="35" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="64" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">US Users</text>
+
+  <rect x="470" y="42" width="100" height="35" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="520" y="64" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Asia Users</text>
+
+  <!-- Arrows to Anycast -->
+  <line x1="180" y1="77" x2="280" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="77" x2="350" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="520" y1="77" x2="420" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Anycast Layer -->
+  <rect x="220" y="112" width="260" height="40" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="130" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Anycast IP (Global)</text>
+  <text x="350" y="145" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Routes to nearest POP via BGP Anycast</text>
+
+  <!-- Arrows to POPs -->
+  <line x1="280" y1="152" x2="160" y2="190" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="152" x2="350" y2="190" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="152" x2="540" y2="190" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- POP Layer -->
+  <rect x="30" y="190" width="640" height="100" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Edge POPs (Microsoft Global Network)</text>
+
+  <!-- POP 1 -->
+  <rect x="55" y="218" width="150" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="130" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">POP: Amsterdam</text>
+  <text x="130" y="251" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">TLS Termination</text>
+  <text x="130" y="264" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">WAF Inspection</text>
+
+  <!-- POP 2 -->
+  <rect x="275" y="218" width="150" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="350" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">POP: Virginia</text>
+  <text x="350" y="251" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">TLS Termination</text>
+  <text x="350" y="264" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">WAF Inspection</text>
+
+  <!-- POP 3 -->
+  <rect x="495" y="218" width="150" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="570" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">POP: Singapore</text>
+  <text x="570" y="251" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">TLS Termination</text>
+  <text x="570" y="264" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">WAF Inspection</text>
+
+  <!-- Cache Layer -->
+  <rect x="170" y="305" width="360" height="35" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="350" y="327" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Edge Cache (if cache hit → return immediately)</text>
+
+  <!-- Arrow from cache to origin group -->
+  <line x1="350" y1="340" x2="350" y2="365" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="410" y="356" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Cache MISS</text>
+
+  <!-- Origin Group -->
+  <rect x="150" y="368" width="400" height="40" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Origin Group (Health Probes + Load Balancing)</text>
+  <text x="350" y="401" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Latency-based routing | Priority | Weighted</text>
+
+  <!-- Arrows to Origins -->
+  <line x1="270" y1="408" x2="170" y2="445" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="430" y1="408" x2="530" y2="445" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Origin 1: East US -->
+  <rect x="60" y="448" width="220" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="170" y="468" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Origin: East US</text>
+  <text x="170" y="483" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">App Service / Container App</text>
+  <text x="170" y="498" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Priority: 1 | Weight: 50</text>
+
+  <!-- Origin 2: West Europe -->
+  <rect x="420" y="448" width="220" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="530" y="468" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Origin: West Europe</text>
+  <text x="530" y="483" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">App Service / Container App</text>
+  <text x="530" y="498" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Priority: 1 | Weight: 50</text>
+
+  <!-- Microsoft Backbone label -->
+  <text x="350" y="516" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">All POP-to-Origin traffic travels over Microsoft private backbone (split TCP, connection reuse)</text>
+</svg>

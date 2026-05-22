@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Challenge 35: Multi-Service Private Endpoint Topology</text>
+
+  <!-- Central VNet -->
+  <rect x="200" y="180" width="300" height="140" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Hub VNet (10.0.0.0/16)</text>
+  <text x="350" y="215" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">PE Subnet: 10.0.1.0/24</text>
+
+  <!-- PE Icons inside VNet -->
+  <rect x="220" y="230" width="50" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="245" y="249" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#333">PE1</text>
+
+  <rect x="285" y="230" width="50" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="310" y="249" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#333">PE2</text>
+
+  <rect x="350" y="230" width="50" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="375" y="249" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#333">PE3</text>
+
+  <rect x="415" y="230" width="50" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="440" y="249" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#333">PE4</text>
+
+  <rect x="310" y="275" width="50" height="30" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="335" y="294" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold" fill="#333">PE5</text>
+
+  <!-- Storage Account (top-left) -->
+  <rect x="30" y="50" width="170" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="115" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Azure Storage</text>
+  <text x="115" y="87" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.blob.core</text>
+  <text x="115" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">.windows.net</text>
+
+  <!-- SQL Database (top-right) -->
+  <rect x="500" y="50" width="170" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="585" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Azure SQL</text>
+  <text x="585" y="87" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.database</text>
+  <text x="585" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">.windows.net</text>
+
+  <!-- Key Vault (left) -->
+  <rect x="10" y="220" width="170" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="95" y="242" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Key Vault</text>
+  <text x="95" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.vaultcore</text>
+  <text x="95" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">.azure.net</text>
+
+  <!-- Web App (right) -->
+  <rect x="520" y="220" width="170" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="605" y="242" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Web App</text>
+  <text x="605" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.azurewebsites</text>
+  <text x="605" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">.net</text>
+
+  <!-- Cosmos DB (bottom) -->
+  <rect x="250" y="370" width="200" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="392" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Cosmos DB</text>
+  <text x="350" y="407" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">privatelink.documents.azure.com</text>
+
+  <!-- Connection lines -->
+  <line x1="245" y1="230" x2="140" y2="110" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="440" y1="230" x2="560" y2="110" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="220" y1="245" x2="180" y2="245" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="465" y1="245" x2="520" y2="245" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="335" y1="305" x2="340" y2="370" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- DNS Zone Legend -->
+  <rect x="30" y="450" width="640" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="350" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Each PE requires its own Private DNS Zone linked to the VNet for automatic DNS registration</text>
+  <text x="350" y="482" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">DNS zones must match the service's privatelink subdomain (e.g., privatelink.blob.core.windows.net for Storage)</text>
+</svg>

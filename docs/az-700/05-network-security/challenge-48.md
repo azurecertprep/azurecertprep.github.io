@@ -1,11 +1,11 @@
 ---
 sidebar_position: 9
-title: "Challenge 48: Network Segmentation & Just-in-Time Access"
+title: "Challenge 48: Network segmentation and Just-in-Time access"
 sidebar_label: "Challenge 48"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 48: Network segmentation & Just-in-Time access
+# Challenge 48: Network segmentation and Just-in-Time access
 
 :::info Estimated time and cost
 
@@ -556,7 +556,7 @@ az network bastion ssh \
 
 ---
 
-## Break & Fix scenarios
+## Break and fix
 
 ### Scenario 1: AVNM security admin rule blocks Bastion
 
@@ -676,7 +676,80 @@ az network bastion update \
 
 ## Knowledge check
 
-<KnowledgeCheck questions={[{id:"q1", question:"How do AVNM security admin rules interact with NSG rules?", options:["A) NSG rules are evaluated first, then AVNM rules override conflicts", "B) AVNM security admin rules are evaluated BEFORE NSG rules and take precedence", "C) AVNM rules and NSG rules are merged and the lowest priority number wins", "D) AVNM rules only apply when no NSG is associated with the subnet"], correctIndex:1, explanation:"AVNM security admin rules are evaluated before NSG rules. A Deny rule in AVNM cannot be overridden by an Allow rule in an NSG. This allows central security teams to enforce organization-wide policies that subnet owners cannot circumvent."},{id:"q2", question:"What is required for Just-in-Time VM access to function?", options:["A) Azure Firewall Premium and a public IP on the VM", "B) Microsoft Defender for Servers (Plan 2) and an NSG associated with the VM", "C) Azure Bastion Standard SKU and a network security perimeter", "D) Azure Virtual Network Manager and a security admin configuration"], correctIndex:1, explanation:"JIT VM access requires Microsoft Defender for Servers Plan 2 (part of Defender for Cloud enhanced security). The VM must also have an NSG associated with its subnet or NIC, because JIT works by dynamically adding and removing NSG rules."},{id:"q3", question:"Which Azure Bastion SKU supports native client connectivity (az network bastion ssh)?", options:["A) Basic SKU", "B) Standard SKU with tunneling enabled", "C) Developer SKU", "D) Any SKU with a public IP"], correctIndex:1, explanation:"Native client support (allowing az network bastion ssh and az network bastion rdp commands) requires the Standard SKU with the enable-tunneling feature turned on. The Basic SKU only supports browser-based connections through the Azure portal."},{id:"q4", question:"What are the three access actions available in AVNM security admin rules?", options:["A) Allow, Deny, Drop", "B) Permit, Block, Override", "C) Allow, Deny, AlwaysAllow", "D) Accept, Reject, Force"], correctIndex:2, explanation:"AVNM security admin rules support three actions: Allow (permits traffic but can be overridden by NSG deny), Deny (blocks traffic and cannot be overridden by NSG allow), and AlwaysAllow (permits traffic bypassing both admin deny rules and NSG rules)."},{id:"q5", question:"You created an AVNM security admin rule that denies all inbound traffic. Azure Bastion can no longer connect to VMs. What should you do?", options:["A) Add an NSG allow rule for the Bastion subnet - it will override the AVNM deny", "B) Remove the AVNM deny rule entirely", "C) Add an AlwaysAllow rule with a lower priority number for traffic from the AzureBastionSubnet", "D) Redeploy Bastion in a different VNet not managed by AVNM"], correctIndex:2, explanation:"An AlwaysAllow rule with a lower priority number (evaluated first) will permit Bastion traffic regardless of other deny rules. NSG allow rules cannot override AVNM deny rules. The AlwaysAllow action is specifically designed for this use case -- exempting critical infrastructure traffic."},{id:"q6", question:"How can you define dynamic membership for an AVNM network group?", options:["A) Using Azure Policy with conditional expressions that match VNet properties like tags", "B) Using NSG flow logs to automatically detect VNet communication patterns", "C) Using Azure Monitor alerts to add VNets when traffic thresholds are met", "D) Using ARM template deployments with linked resource IDs"], correctIndex:0, explanation:"AVNM supports dynamic membership through Azure Policy. You define a policy condition (such as matching a specific tag like Environment=Production) and VNets that match the condition are automatically added to the network group. This eliminates manual membership management as new VNets are deployed."}]} />
+<KnowledgeCheck questions={[
+  {
+    id: "az700-48-q1",
+    question: "How do AVNM security admin rules interact with NSG rules?",
+    options: [
+      "NSG rules are evaluated first, then AVNM rules override conflicts",
+      "AVNM security admin rules are evaluated BEFORE NSG rules and take precedence ✅",
+      "AVNM rules and NSG rules are merged and the lowest priority number wins",
+      "AVNM rules only apply when no NSG is associated with the subnet"
+    ],
+    correctIndex: 1,
+    explanation: "AVNM security admin rules are evaluated before NSG rules. A Deny rule in AVNM cannot be overridden by an Allow rule in an NSG. This allows central security teams to enforce organization-wide policies that subnet owners cannot circumvent."
+  },
+  {
+    id: "az700-48-q2",
+    question: "What is required for Just-in-Time VM access to function?",
+    options: [
+      "Azure Firewall Premium and a public IP on the VM",
+      "Microsoft Defender for Servers (Plan 2) and an NSG associated with the VM ✅",
+      "Azure Bastion Standard SKU and a network security perimeter",
+      "Azure Virtual Network Manager and a security admin configuration"
+    ],
+    correctIndex: 1,
+    explanation: "JIT VM access requires Microsoft Defender for Servers Plan 2 (part of Defender for Cloud enhanced security). The VM must also have an NSG associated with its subnet or NIC, because JIT works by dynamically adding and removing NSG rules."
+  },
+  {
+    id: "az700-48-q3",
+    question: "Which Azure Bastion SKU supports native client connectivity (az network bastion ssh)?",
+    options: [
+      "Basic SKU",
+      "Standard SKU with tunneling enabled ✅",
+      "Developer SKU",
+      "Any SKU with a public IP"
+    ],
+    correctIndex: 1,
+    explanation: "Native client support (allowing az network bastion ssh and az network bastion rdp commands) requires the Standard SKU with the enable-tunneling feature turned on. The Basic SKU only supports browser-based connections through the Azure portal."
+  },
+  {
+    id: "az700-48-q4",
+    question: "What are the three access actions available in AVNM security admin rules?",
+    options: [
+      "Allow, Deny, Drop",
+      "Permit, Block, Override",
+      "Allow, Deny, AlwaysAllow ✅",
+      "Accept, Reject, Force"
+    ],
+    correctIndex: 2,
+    explanation: "AVNM security admin rules support three actions: Allow (permits traffic but can be overridden by NSG deny), Deny (blocks traffic and cannot be overridden by NSG allow), and AlwaysAllow (permits traffic bypassing both admin deny rules and NSG rules)."
+  },
+  {
+    id: "az700-48-q5",
+    question: "You created an AVNM security admin rule that denies all inbound traffic. Azure Bastion can no longer connect to VMs. What should you do?",
+    options: [
+      "Add an NSG allow rule for the Bastion subnet - it will override the AVNM deny",
+      "Remove the AVNM deny rule entirely",
+      "Add an AlwaysAllow rule with a lower priority number for traffic from the AzureBastionSubnet ✅",
+      "Redeploy Bastion in a different VNet not managed by AVNM"
+    ],
+    correctIndex: 2,
+    explanation: "An AlwaysAllow rule with a lower priority number (evaluated first) will permit Bastion traffic regardless of other deny rules. NSG allow rules cannot override AVNM deny rules. The AlwaysAllow action is specifically designed for this use case -- exempting critical infrastructure traffic."
+  },
+  {
+    id: "az700-48-q6",
+    question: "How can you define dynamic membership for an AVNM network group?",
+    options: [
+      "Using Azure Policy with conditional expressions that match VNet properties like tags ✅",
+      "Using NSG flow logs to automatically detect VNet communication patterns",
+      "Using Azure Monitor alerts to add VNets when traffic thresholds are met",
+      "Using ARM template deployments with linked resource IDs"
+    ],
+    correctIndex: 0,
+    explanation: "AVNM supports dynamic membership through Azure Policy. You define a policy condition (such as matching a specific tag like Environment=Production) and VNets that match the condition are automatically added to the network group. This eliminates manual membership management as new VNets are deployed."
+  }
+]} />
 
 ---
 

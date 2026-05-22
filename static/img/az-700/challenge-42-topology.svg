@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Azure Firewall Rule Processing Order</text>
+
+  <!-- Incoming packet -->
+  <rect x="20" y="80" width="100" height="60" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="70" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Incoming</text>
+  <text x="70" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Packet</text>
+
+  <!-- Arrow to DNAT -->
+  <line x1="120" y1="110" x2="158" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 1: DNAT Rules -->
+  <rect x="162" y="55" width="150" height="110" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="237" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450" font-weight="bold">① FIRST</text>
+  <text x="237" y="97" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">DNAT Rules</text>
+  <text x="237" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Destination NAT</text>
+  <text x="237" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Translate public IP</text>
+  <text x="237" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">→ private IP:port</text>
+
+  <!-- Arrow to Network -->
+  <line x1="312" y1="110" x2="348" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Network Rules -->
+  <rect x="352" y="55" width="150" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="427" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#d6b656" font-weight="bold">② SECOND</text>
+  <text x="427" y="97" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Network Rules</text>
+  <text x="427" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">L3/L4 filtering</text>
+  <text x="427" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">IP, Port, Protocol</text>
+  <text x="427" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Non-HTTP(S) traffic</text>
+
+  <!-- Arrow to Application -->
+  <line x1="502" y1="110" x2="538" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Application Rules -->
+  <rect x="542" y="55" width="140" height="110" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="612" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">③ THIRD</text>
+  <text x="612" y="97" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Application</text>
+  <text x="612" y="113" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Rules</text>
+  <text x="612" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">L7 / FQDN</text>
+  <text x="612" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">HTTP(S) filtering</text>
+
+  <!-- Key behavior notes -->
+  <rect x="40" y="200" width="620" height="90" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="350" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Processing Behavior:</text>
+  <text x="60" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• DNAT rules are processed first — matching DNAT rule implicitly allows translated traffic</text>
+  <text x="60" y="262" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Network rules are evaluated before Application rules (if match found, no further evaluation)</text>
+  <text x="60" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Application rules only process HTTP/HTTPS/MSSQL — uses SNI for TLS inspection</text>
+
+  <!-- Deny behavior -->
+  <rect x="40" y="310" width="300" height="95" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="190" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#b85450">Default: Deny All</text>
+  <text x="60" y="352" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• No matching rule = DROPPED</text>
+  <text x="60" y="369" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Infrastructure rules (FQDN tags)</text>
+  <text x="60" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">  processed before deny</text>
+  <text x="60" y="400" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Threat Intel can override allow</text>
+
+  <!-- Priority within collections -->
+  <rect x="360" y="310" width="300" height="95" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="510" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Priority Within Each Type:</text>
+  <text x="380" y="352" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Rule collections have priority (100-65000)</text>
+  <text x="380" y="369" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Lower number = higher priority</text>
+  <text x="380" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Within collection: rules evaluated</text>
+  <text x="380" y="400" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">  by most specific match</text>
+</svg>

@@ -361,7 +361,7 @@ Add-AzVirtualNetworkPeering `
 1. Navigate to **Virtual networks** and create `vnet-hub-eastus` in East US with address space 10.10.0.0/16
 2. Add subnets: AzureFirewallSubnet (/26), GatewaySubnet (/27), AzureBastionSubnet (/26), snet-nva (/24), snet-shared (/24)
 3. Repeat for West Europe hub and all spoke VNets
-4. Navigate to each hub VNet, select **Peerings**, and create peerings to each spoke with "Allow gateway transit" enabled on the hub side and "Use remote gateways" on the spoke side
+4. Navigate to each hub VNet, select **Peerings**, and create peerings to each spoke with "Allow gateway transit" enabled on the hub side (note: enable "Use remote gateways" on the spoke side only after deploying the VPN Gateway in Task 2)
 5. Create global peering between the two hubs with "Allow forwarded traffic" and "Allow gateway transit" enabled on both sides
 
 :::tip Peering note
@@ -1450,7 +1450,6 @@ az network public-ip show \
 ```powershell
 # Enable DDoS IP Protection on existing public IP
 $pip = Get-AzPublicIpAddress -Name "pip-appgw-eastus" -ResourceGroupName $RG
-$pip.DdosSettings = New-Object Microsoft.Azure.Commands.Network.Models.PSPublicIpDdosSettings
 $pip.DdosSettings.ProtectionMode = "Enabled"
 Set-AzPublicIpAddress -PublicIpAddress $pip
 
@@ -1537,6 +1536,16 @@ az network manager group create \
   --network-manager-name avnm-contoso-global \
   --resource-group $RG \
   --description "All spoke VNets tagged with role=spoke"
+
+# Add static members (dynamic membership requires Azure Policy configuration)
+for VNET in vnet-spoke-web-eastus vnet-spoke-data-eastus vnet-spoke-web-westeurope vnet-spoke-data-westeurope; do
+  az network manager group static-member create \
+    --network-group-name ng-all-spokes \
+    --network-manager-name avnm-contoso-global \
+    --resource-group $RG \
+    --static-member-name "member-$VNET" \
+    --resource-id "/subscriptions/$SUB_ID/resourceGroups/$RG/providers/Microsoft.Network/virtualNetworks/$VNET"
+done
 
 # Create security admin configuration
 az network manager security-admin-config create \
@@ -1868,9 +1877,9 @@ az network firewall policy rule-collection-group collection add-filter-collectio
 
 ### Scenario 5: Front Door health probe failing
 
-**Symptom**: Front Door shows the East US origin as unhealthy. Direct access to the Application Gateway works fine.
+**Symptom**: Front Door shows the East US origin as unhealthy. Direct access to the Application Gateway public IP works fine from other sources.
 
-**Root cause**: The Azure Firewall is blocking Front Door health probe traffic because the AzureFrontDoor.Backend service tag is not allowed in the firewall rules.
+**Root cause**: An NSG on the Application Gateway subnet (`snet-appgw`) is blocking inbound traffic from Azure Front Door. The NSG does not have a rule allowing the `AzureFrontDoor.Backend` service tag, so health probes are dropped before reaching the Application Gateway.
 
 **Diagnosis**:
 ```bash
@@ -1881,34 +1890,28 @@ az afd origin show \
   --origin-group-name og-appgw-global \
   --origin-name origin-eastus
 
-# Check firewall logs for dropped traffic
-az monitor activity-log list \
+# Check the NSG rules on the AppGW subnet
+az network nsg rule list \
   --resource-group $RG \
-  --query "[?contains(operationName.value, 'Firewall')]" -o table
+  --nsg-name nsg-appgw-eastus \
+  --query "[].{Name:name, Priority:priority, Access:access, Source:sourceAddressPrefix, DestPort:destinationPortRange}" -o table
 ```
 
 **Fix**:
 ```bash
-# Create network rule collection group on child policy
-az network firewall policy rule-collection-group create \
+# Allow Front Door backend traffic to the Application Gateway subnet
+az network nsg rule create \
   --resource-group $RG \
-  --policy-name fwpolicy-child-eastus \
-  --name ChildNetworkRuleCollectionGroup \
-  --priority 250
-
-az network firewall policy rule-collection-group collection add-filter-collection \
-  --resource-group $RG \
-  --policy-name fwpolicy-child-eastus \
-  --rule-collection-group-name ChildNetworkRuleCollectionGroup \
-  --name allow-frontdoor \
-  --collection-priority 130 \
-  --action Allow \
-  --rule-type NetworkRule \
-  --rule-name allow-afd-probes \
-  --source-addresses "AzureFrontDoor.Backend" \
-  --destination-addresses "10.11.0.0/24" \
-  --ip-protocols TCP \
-  --destination-ports 80 443
+  --nsg-name nsg-appgw-eastus \
+  --name Allow-FrontDoor-Inbound \
+  --priority 110 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --source-address-prefixes AzureFrontDoor.Backend \
+  --source-port-ranges "*" \
+  --destination-address-prefixes "*" \
+  --destination-port-ranges 80 443
 ```
 
 ---

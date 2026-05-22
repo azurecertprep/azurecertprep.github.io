@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">P2S Authentication Methods Comparison</text>
+
+  <!-- Client at top -->
+  <rect x="275" y="45" width="150" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="350" y="70" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VPN Client</text>
+
+  <!-- Three arrows down -->
+  <line x1="200" y1="85" x2="120" y2="120" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="85" x2="350" y2="120" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="85" x2="580" y2="120" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Path 1: Certificate Auth -->
+  <rect x="20" y="122" width="200" height="230" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="120" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Certificate Auth</text>
+
+  <rect x="40" y="160" width="160" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="120" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Root CA Certificate</text>
+  <text x="120" y="189" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Uploaded to Azure</text>
+
+  <line x1="120" y1="195" x2="120" y2="210" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="212" width="160" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="120" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Client Certificate</text>
+  <text x="120" y="241" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Installed on device</text>
+
+  <line x1="120" y1="247" x2="120" y2="262" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="264" width="160" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="120" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">✓ Validated by GW</text>
+
+  <text x="120" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">No extra infra needed</text>
+  <text x="120" y="335" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Self-signed OK</text>
+  <text x="120" y="348" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">All tunnel types</text>
+
+  <!-- Path 2: RADIUS -->
+  <rect x="250" y="122" width="200" height="230" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">RADIUS Auth</text>
+
+  <rect x="270" y="160" width="160" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="350" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">User Credentials</text>
+  <text x="350" y="189" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Username/Password</text>
+
+  <line x1="350" y1="195" x2="350" y2="210" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="270" y="212" width="160" height="35" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="350" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">RADIUS Server</text>
+  <text x="350" y="241" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">NPS / FreeRADIUS</text>
+
+  <line x1="350" y1="247" x2="350" y2="262" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="270" y="264" width="160" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="350" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">✓ GW proxies to NPS</text>
+
+  <text x="350" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">MFA supported</text>
+  <text x="350" y="335" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Centralized auth</text>
+  <text x="350" y="348" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Requires RADIUS infra</text>
+
+  <!-- Path 3: Entra ID -->
+  <rect x="480" y="122" width="200" height="230" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="580" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Entra ID (Azure AD)</text>
+
+  <rect x="500" y="160" width="160" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="580" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Entra ID Login</text>
+  <text x="580" y="189" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">OAuth 2.0 / OIDC</text>
+
+  <line x1="580" y1="195" x2="580" y2="210" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="500" y="212" width="160" height="35" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="580" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Entra ID Tenant</text>
+  <text x="580" y="241" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Token validation</text>
+
+  <line x1="580" y1="247" x2="580" y2="262" stroke="#666" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="500" y="264" width="160" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="580" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">✓ Token verified</text>
+
+  <text x="580" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Conditional Access</text>
+  <text x="580" y="335" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">MFA built-in</text>
+  <text x="580" y="348" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">OpenVPN only</text>
+
+  <!-- Footer -->
+  <text x="350" y="385" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Certificate = simplest | RADIUS = enterprise legacy | Entra ID = modern cloud-native</text>
+</svg>

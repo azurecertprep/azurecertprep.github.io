@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Challenge 32: Front Door Rules Engine Flow</text>
+
+  <!-- Incoming Request -->
+  <rect x="270" y="42" width="160" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="60" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Incoming Request</text>
+  <text x="350" y="74" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">app.contoso.com/api/v2</text>
+
+  <line x1="350" y1="82" x2="350" y2="108" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Rules Engine Container -->
+  <rect x="50" y="110" width="600" height="290" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="130" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Front Door Rules Engine</text>
+
+  <!-- Rule Set -->
+  <rect x="80" y="140" width="540" height="35" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule Set: "ProductionRules" (order: 1)</text>
+
+  <!-- Rule 1: Condition -->
+  <rect x="80" y="190" width="250" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="205" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule 1: Conditions (IF)</text>
+  <text x="205" y="224" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Request URL path contains "/api/"</text>
+  <text x="205" y="237" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">AND device type = "Mobile"</text>
+
+  <!-- Arrow to Action -->
+  <line x1="330" y1="218" x2="370" y2="218" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="350" y="210" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#2e7d32" text-anchor="middle">MATCH</text>
+
+  <!-- Rule 1: Actions -->
+  <rect x="375" y="190" width="245" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="497" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule 1: Actions (THEN)</text>
+  <text x="497" y="224" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">URL Rewrite: /api/ → /api/mobile/</text>
+  <text x="497" y="237" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Add Header: X-Mobile=true</text>
+
+  <!-- Rule 2: Condition -->
+  <rect x="80" y="260" width="250" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="205" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule 2: Conditions (IF)</text>
+  <text x="205" y="294" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Request URL path = "/old-page"</text>
+  <text x="205" y="307" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">OR URL contains "/legacy/"</text>
+
+  <!-- Arrow to Action 2 -->
+  <line x1="330" y1="288" x2="370" y2="288" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="350" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#2e7d32" text-anchor="middle">MATCH</text>
+
+  <!-- Rule 2: Actions -->
+  <rect x="375" y="260" width="245" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="497" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule 2: Actions (THEN)</text>
+  <text x="497" y="294" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">URL Redirect: 301 → /new-page</text>
+  <text x="497" y="307" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Stop processing ✓</text>
+
+  <!-- Rule 3 -->
+  <rect x="80" y="330" width="250" height="45" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="205" y="348" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule 3: Conditions (IF)</text>
+  <text x="205" y="365" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Request header "Cache-Control" = none</text>
+
+  <line x1="330" y1="353" x2="370" y2="353" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <rect x="375" y="330" width="245" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="497" y="348" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Rule 3: Actions (THEN)</text>
+  <text x="497" y="365" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Override cache: bypass caching</text>
+
+  <!-- Arrow to Origin -->
+  <line x1="350" y1="400" x2="350" y2="425" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Origin Group -->
+  <rect x="200" y="428" width="300" height="40" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="350" y="448" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Route to Origin Group</text>
+  <text x="350" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">(Modified request with applied actions)</text>
+
+  <!-- Available Actions Summary -->
+  <rect x="100" y="478" width="500" height="18" rx="3" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="350" y="491" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Actions: URL Rewrite | URL Redirect | Header Modify | Cache Override | Origin Group Override</text>
+</svg>

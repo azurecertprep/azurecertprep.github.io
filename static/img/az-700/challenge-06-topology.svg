@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 470">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Private DNS Zones — VNet Links &amp; Auto-Registration</text>
+
+  <!-- Private DNS Zone -->
+  <rect x="200" y="45" width="300" height="90" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="350" y="70" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Private DNS Zone</text>
+  <text x="350" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">contoso.internal</text>
+  <text x="350" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">A: vm1 → 10.0.1.4 | A: vm2 → 10.1.1.4 (auto-registered)</text>
+  <text x="350" y="120" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">A: db → 10.0.2.4 (manual)</text>
+
+  <!-- VNet Link arrows -->
+  <line x1="250" y1="135" x2="150" y2="185" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="135" x2="350" y2="185" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="450" y1="135" x2="550" y2="185" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Link labels -->
+  <text x="185" y="160" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#9673a6">VNet Link</text>
+  <text x="360" y="160" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#9673a6">VNet Link</text>
+  <text x="510" y="160" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#9673a6">VNet Link</text>
+
+  <!-- VNet 1 - Auto-registration ON -->
+  <rect x="40" y="190" width="200" height="160" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="140" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VNet-Prod</text>
+  <text x="140" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.0.0/16</text>
+
+  <rect x="55" y="238" width="170" height="25" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="140" y="255" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">✓ Auto-Registration: ON</text>
+
+  <rect x="65" y="275" width="70" height="40" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="100" y="295" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">vm1</text>
+  <text x="100" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.1.4</text>
+
+  <rect x="150" y="275" width="70" height="40" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="185" y="295" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">db</text>
+  <text x="185" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.0.2.4</text>
+
+  <!-- VNet 2 - Auto-registration ON -->
+  <rect x="260" y="190" width="180" height="160" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="350" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VNet-Dev</text>
+  <text x="350" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.1.0.0/16</text>
+
+  <rect x="275" y="238" width="150" height="25" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="350" y="255" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">✓ Auto-Registration: ON</text>
+
+  <rect x="305" y="275" width="90" height="40" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="350" y="295" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">vm2</text>
+  <text x="350" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">10.1.1.4</text>
+
+  <!-- VNet 3 - Resolution only -->
+  <rect x="460" y="190" width="200" height="160" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="560" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VNet-Test</text>
+  <text x="560" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.2.0.0/16</text>
+
+  <rect x="475" y="238" width="170" height="25" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="560" y="255" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">✗ Auto-Registration: OFF</text>
+
+  <rect x="505" y="275" width="110" height="40" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="560" y="295" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">vm3 (resolves</text>
+  <text x="560" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">but not registered)</text>
+
+  <!-- Resolution flow -->
+  <rect x="80" y="385" width="540" height="70" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="350" y="405" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Resolution Flow</text>
+  <text x="350" y="422" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">vm3 queries: vm1.contoso.internal → Azure DNS (168.63.129.16) → Private Zone → 10.0.1.4 ✓</text>
+  <text x="350" y="438" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Auto-registration: VMs in linked VNets automatically get A records created/removed</text>
+</svg>

@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 620">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c62828"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="22" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Azure Load Balancing Decision Tree</text>
+
+  <!-- Q1: Global? -->
+  <rect x="250" y="38" width="200" height="45" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="57" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Need global load</text>
+  <text x="350" y="73" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">balancing?</text>
+
+  <!-- YES arrow (left) to Q2 -->
+  <line x1="270" y1="83" x2="170" y2="125" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="205" y="100" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- NO arrow (right) to Q3 -->
+  <line x1="430" y1="83" x2="530" y2="125" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="490" y="100" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Q2: HTTP traffic? (Global branch) -->
+  <rect x="70" y="128" width="200" height="45" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="170" y="148" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">HTTP/HTTPS</text>
+  <text x="170" y="164" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">traffic?</text>
+
+  <!-- Q2 YES → Front Door -->
+  <line x1="100" y1="173" x2="60" y2="215" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="65" y="193" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Front Door Answer -->
+  <rect x="10" y="218" width="160" height="55" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="90" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">Azure Front Door</text>
+  <text x="90" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Global HTTP L7</text>
+  <text x="90" y="267" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">CDN + WAF + Routing</text>
+
+  <!-- Q2 NO → Traffic Manager -->
+  <line x1="240" y1="173" x2="280" y2="215" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="270" y="193" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Traffic Manager Answer -->
+  <rect x="210" y="218" width="160" height="55" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="290" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">Traffic Manager</text>
+  <text x="290" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Global DNS-based</text>
+  <text x="290" y="267" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">TCP/UDP, any protocol</text>
+
+  <!-- Q3: Layer 7 needed? (Regional branch) -->
+  <rect x="430" y="128" width="200" height="45" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="530" y="148" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Need Layer 7</text>
+  <text x="530" y="164" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">(HTTP routing)?</text>
+
+  <!-- Q3 YES → App Gateway -->
+  <line x1="460" y1="173" x2="420" y2="215" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="425" y="193" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- App Gateway Answer -->
+  <rect x="340" y="218" width="160" height="55" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="420" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">Application Gateway</text>
+  <text x="420" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Regional HTTP L7</text>
+  <text x="420" y="267" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">WAF + Path routing</text>
+
+  <!-- Q3 NO → Q4 -->
+  <line x1="600" y1="173" x2="610" y2="215" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="620" y="193" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Q4: Internal only? -->
+  <rect x="530" y="218" width="160" height="45" rx="8" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="610" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Internal traffic</text>
+  <text x="610" y="254" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">only?</text>
+
+  <!-- Q4 YES → Internal LB -->
+  <line x1="560" y1="263" x2="530" y2="305" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="530" y="285" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Internal LB Answer -->
+  <rect x="445" y="308" width="160" height="55" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="525" y="328" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">Internal LB</text>
+  <text x="525" y="344" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Private IP, L4</text>
+  <text x="525" y="357" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">HA Ports, zone-redundant</text>
+
+  <!-- Q4 NO → Public LB -->
+  <line x1="660" y1="263" x2="670" y2="305" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="680" y="285" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Public LB Answer -->
+  <rect x="615" y="308" width="75" height="55" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="652" y="328" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1b5e20">Public</text>
+  <text x="652" y="342" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1b5e20">LB</text>
+  <text x="652" y="357" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">L4, Standard</text>
+
+  <!-- NVA Chaining Branch -->
+  <rect x="130" y="310" width="200" height="45" rx="8" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="230" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">NVA / Firewall</text>
+  <text x="230" y="346" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">chaining needed?</text>
+
+  <!-- Connect from Internal LB to NVA question -->
+  <line x1="525" y1="363" x2="525" y2="380" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="525" y1="380" x2="340" y2="380" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="340" y1="380" x2="340" y2="355" stroke="#666" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+  <!-- NVA YES → Gateway LB -->
+  <line x1="180" y1="355" x2="140" y2="400" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="145" y="378" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Gateway LB Answer -->
+  <rect x="45" y="403" width="175" height="60" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="132" y="423" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">Gateway LB</text>
+  <text x="132" y="439" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Transparent NVA insertion</text>
+  <text x="132" y="453" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">VXLAN encap, bump-in-wire</text>
+
+  <!-- Summary Table -->
+  <rect x="50" y="490" width="600" height="120" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="510" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Quick Reference</text>
+
+  <!-- Table headers -->
+  <text x="120" y="530" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Service</text>
+  <text x="250" y="530" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Scope</text>
+  <text x="370" y="530" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Layer</text>
+  <text x="500" y="530" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Protocol</text>
+  <text x="610" y="530" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">Key Feature</text>
+
+  <line x1="60" y1="535" x2="640" y2="535" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Row 1 -->
+  <text x="120" y="549" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Front Door</text>
+  <text x="250" y="549" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Global</text>
+  <text x="370" y="549" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">L7</text>
+  <text x="500" y="549" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">HTTP/S</text>
+  <text x="610" y="549" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">CDN + WAF</text>
+
+  <!-- Row 2 -->
+  <text x="120" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Traffic Manager</text>
+  <text x="250" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Global</text>
+  <text x="370" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">DNS</text>
+  <text x="500" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Any</text>
+  <text x="610" y="563" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">DNS failover</text>
+
+  <!-- Row 3 -->
+  <text x="120" y="577" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">App Gateway</text>
+  <text x="250" y="577" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Regional</text>
+  <text x="370" y="577" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">L7</text>
+  <text x="500" y="577" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">HTTP/S</text>
+  <text x="610" y="577" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Path routing + WAF</text>
+
+  <!-- Row 4 -->
+  <text x="120" y="591" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Load Balancer</text>
+  <text x="250" y="591" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Regional</text>
+  <text x="370" y="591" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">L4</text>
+  <text x="500" y="591" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">TCP/UDP</text>
+  <text x="610" y="591" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">HA Ports, zones</text>
+
+  <!-- Row 5 -->
+  <text x="120" y="605" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Gateway LB</text>
+  <text x="250" y="605" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">Regional</text>
+  <text x="370" y="605" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">L3/L4</text>
+  <text x="500" y="605" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">All</text>
+  <text x="610" y="605" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">NVA chaining</text>
+</svg>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">VPN Gateway SKU Decision Tree</text>
+
+  <!-- Start -->
+  <rect x="250" y="45" width="200" height="40" rx="20" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="70" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">What throughput needed?</text>
+
+  <!-- Decision 1: > 1 Gbps? -->
+  <polygon points="350,110 450,150 350,190 250,150" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">&gt; 1 Gbps?</text>
+
+  <line x1="350" y1="85" x2="350" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- YES branch (right) -->
+  <line x1="450" y1="150" x2="530" y2="150" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="485" y="143" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#82b366" font-weight="bold">YES</text>
+
+  <!-- Decision 2: Zone redundant needed? -->
+  <polygon points="600,110 700,150 600,190 500,150" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="600" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">Zone</text>
+  <text x="600" y="158" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">redundant?</text>
+
+  <!-- YES → VpnGw4AZ/5AZ -->
+  <line x1="600" y1="190" x2="600" y2="220" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="612" y="210" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">YES</text>
+  <rect x="530" y="222" width="140" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="600" y="242" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VpnGw4AZ/5AZ</text>
+  <text x="600" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">5-10 Gbps</text>
+
+  <!-- NO branch from Decision 1 (left) -->
+  <line x1="250" y1="150" x2="170" y2="150" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="215" y="143" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#b85450" font-weight="bold">NO</text>
+
+  <!-- Decision 3: > 650 Mbps? -->
+  <polygon points="100,110 200,150 100,190 0,150" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="100" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">&gt; 650 Mbps?</text>
+
+  <!-- YES from Decision 3 -->
+  <line x1="100" y1="190" x2="100" y2="230" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="112" y="215" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">YES</text>
+  <rect x="30" y="232" width="140" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="100" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VpnGw3</text>
+  <text x="100" y="268" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">1 Gbps • 30 tunnels</text>
+
+  <!-- NO from Decision 3 -->
+  <line x1="0" y1="150" x2="0" y2="150" stroke="#b85450" stroke-width="0"/>
+  <line x1="100" y1="190" x2="100" y2="310" stroke="#666" stroke-width="1"/>
+  <line x1="100" y1="310" x2="100" y2="310" stroke="#666" stroke-width="0"/>
+
+  <!-- Decision 4: P2S needed? -->
+  <polygon points="250,280 350,320 250,360 150,320" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="250" y="318" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">P2S needed?</text>
+
+  <line x1="250" y1="150" x2="250" y2="280" stroke="#b85450" stroke-width="1.5"/>
+  <line x1="0" y1="150" x2="0" y2="320" stroke="#666" stroke-width="0"/>
+
+  <!-- Connector from NO Decision 3 -->
+  <line x1="50" y1="170" x2="50" y2="320" stroke="#b85450" stroke-width="1.5"/>
+  <line x1="50" y1="320" x2="148" y2="320" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="65" y="250" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450" font-weight="bold">NO</text>
+
+  <!-- YES from P2S -->
+  <line x1="350" y1="320" x2="430" y2="320" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="385" y="313" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">YES</text>
+  <rect x="432" y="298" width="140" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="502" y="318" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VpnGw2</text>
+  <text x="502" y="334" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">650 Mbps • 128 P2S</text>
+
+  <!-- NO from P2S → Basic check -->
+  <line x1="250" y1="360" x2="250" y2="395" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="262" y="382" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450" font-weight="bold">NO</text>
+
+  <!-- Decision 5: Dev/Test only? -->
+  <polygon points="250,395 350,435 250,475 150,435" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="250" y="433" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Dev/Test?</text>
+
+  <!-- YES → Basic -->
+  <line x1="150" y1="435" x2="80" y2="435" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="118" y="428" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">YES</text>
+  <rect x="10" y="413" width="70" height="45" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="45" y="433" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Basic</text>
+  <text x="45" y="449" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">100 Mbps</text>
+
+  <!-- NO → VpnGw1 -->
+  <line x1="350" y1="435" x2="430" y2="435" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="385" y="428" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450" font-weight="bold">NO</text>
+  <rect x="432" y="413" width="140" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="502" y="433" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VpnGw1</text>
+  <text x="502" y="449" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">650 Mbps • 30 tunnels</text>
+
+  <!-- Legend -->
+  <text x="350" y="505" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Green (YES) = meets requirement • Red (NO) = continue evaluation • Basic SKU not for production</text>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 470">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Network Watcher — Diagnostic Tools</text>
+
+  <!-- Network Watcher container -->
+  <rect x="30" y="45" width="640" height="55" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="350" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Azure Network Watcher</text>
+  <text x="350" y="85" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Enabled per-region | Provides network monitoring and diagnostics</text>
+
+  <!-- Tool 1: Connection Monitor -->
+  <rect x="30" y="120" width="200" height="155" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="130" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Connection Monitor</text>
+
+  <rect x="50" y="155" width="70" height="30" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="85" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8">Source VM</text>
+
+  <line x1="120" y1="170" x2="145" y2="170" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="148" y="155" width="70" height="30" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="183" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8">Destination</text>
+
+  <text x="130" y="205" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• End-to-end</text>
+  <text x="130" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">  reachability</text>
+  <text x="130" y="231" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Latency &amp; loss %</text>
+  <text x="130" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Topology changes</text>
+  <text x="130" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Alerting</text>
+
+  <!-- Tool 2: IP Flow Verify -->
+  <rect x="250" y="120" width="200" height="155" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="350" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">IP Flow Verify</text>
+
+  <rect x="270" y="155" width="75" height="50" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="307" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold">Input:</text>
+  <text x="307" y="188" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Src IP/Port</text>
+  <text x="307" y="199" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Dst IP/Port</text>
+
+  <line x1="345" y1="180" x2="365" y2="180" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="368" y="157" width="72" height="22" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="404" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#333">✓ Allowed</text>
+  <rect x="368" y="183" width="72" height="22" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="404" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#333">✗ Denied</text>
+
+  <text x="350" y="225" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Checks NSG rules</text>
+  <text x="350" y="238" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Shows blocking rule</text>
+  <text x="350" y="251" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Direction: In/Out</text>
+  <text x="350" y="264" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• TCP/UDP protocol</text>
+
+  <!-- Tool 3: Next Hop -->
+  <rect x="470" y="120" width="200" height="155" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="570" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Next Hop</text>
+
+  <rect x="490" y="155" width="80" height="30" rx="4" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="530" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8">VM (src)</text>
+
+  <line x1="530" y1="185" x2="530" y2="200" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="490" y="203" width="160" height="50" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="570" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="bold">Next Hop Type:</text>
+  <text x="570" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">• VirtualNetwork</text>
+  <text x="570" y="242" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">• Internet / VNetPeering</text>
+  <text x="570" y="254" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">• VirtualAppliance / None</text>
+
+  <!-- Additional Tools Row -->
+  <rect x="30" y="295" width="200" height="80" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="130" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">NSG Flow Logs</text>
+  <text x="130" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Log allowed/denied flows</text>
+  <text x="130" y="345" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Storage Account target</text>
+  <text x="130" y="358" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Traffic Analytics</text>
+
+  <rect x="250" y="295" width="200" height="80" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="350" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Packet Capture</text>
+  <text x="350" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Capture on VM NIC</text>
+  <text x="350" y="345" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Filter by protocol/port</text>
+  <text x="350" y="358" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• .cap file output</text>
+
+  <rect x="470" y="295" width="200" height="80" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="570" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">VPN Troubleshoot</text>
+  <text x="570" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• VPN Gateway diag</text>
+  <text x="570" y="345" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Connection health</text>
+  <text x="570" y="358" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Error codes &amp; logs</text>
+
+  <!-- Prerequisite note -->
+  <rect x="80" y="400" width="540" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="350" y="420" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Prerequisites</text>
+  <text x="350" y="435" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Network Watcher Agent VM extension (for packet capture)</text>
+  <text x="350" y="448" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Network Watcher enabled in each region | NSG Flow Logs v2 recommended</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 430">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">WAF Rule Evaluation Flow (Application Gateway)</text>
+
+  <!-- Incoming Request -->
+  <rect x="20" y="100" width="90" height="60" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="65" y="125" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">HTTP(S)</text>
+  <text x="65" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Request</text>
+
+  <!-- Arrow -->
+  <line x1="110" y1="130" x2="148" y2="130" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Custom Rules -->
+  <rect x="152" y="75" width="150" height="110" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="227" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#6c8ebf" font-weight="bold">① FIRST</text>
+  <text x="227" y="116" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Custom Rules</text>
+  <text x="227" y="134" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Priority order</text>
+  <text x="227" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Geo-filtering</text>
+  <text x="227" y="164" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Rate limiting</text>
+  <text x="227" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• IP allow/block</text>
+
+  <!-- Arrow -->
+  <line x1="302" y1="130" x2="338" y2="130" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Managed Rules -->
+  <rect x="342" y="75" width="160" height="110" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="422" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#9673a6" font-weight="bold">② SECOND</text>
+  <text x="422" y="116" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Managed Rules</text>
+  <text x="422" y="134" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">DRS / OWASP CRS</text>
+  <text x="422" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• SQL Injection</text>
+  <text x="422" y="164" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• XSS Protection</text>
+  <text x="422" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Protocol violations</text>
+
+  <!-- Arrow -->
+  <line x1="502" y1="130" x2="538" y2="130" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Backend -->
+  <rect x="542" y="100" width="110" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="597" y="125" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Backend</text>
+  <text x="597" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Pool</text>
+
+  <!-- Mode comparison -->
+  <rect x="40" y="220" width="290" height="120" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="185" y="245" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">Prevention Mode</text>
+  <text x="60" y="268" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Blocks malicious requests (403)</text>
+  <text x="60" y="286" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Logs blocked requests</text>
+  <text x="60" y="304" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Active protection</text>
+  <text x="60" y="322" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Connection terminated</text>
+
+  <rect x="370" y="220" width="290" height="120" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="515" y="245" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#d6b656">Detection Mode</text>
+  <text x="390" y="268" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Logs threats only (no blocking)</text>
+  <text x="390" y="286" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Traffic passes to backend</text>
+  <text x="390" y="304" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Used for tuning/testing</text>
+  <text x="390" y="322" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Monitor false positives</text>
+
+  <!-- Key notes -->
+  <rect x="40" y="360" width="620" height="60" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="350" y="382" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Key Points:</text>
+  <text x="60" y="400" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Custom rules ALWAYS processed before managed rules • Exclusions can disable specific managed rules</text>
+  <text x="60" y="415" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Per-site WAF policies override global • Anomaly scoring (DRS 2.0+): cumulative score threshold</text>
+</svg>

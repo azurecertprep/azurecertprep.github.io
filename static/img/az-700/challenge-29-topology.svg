@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c62828"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Challenge 29: TLS Termination Points</text>
+
+  <!-- Scenario Labels -->
+  <text x="350" y="52" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#555">Two Scenarios: TLS Termination vs End-to-End TLS</text>
+
+  <!-- === SCENARIO 1: TLS Termination === -->
+  <rect x="30" y="68" width="640" height="175" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="88" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#2e7d32">Scenario A: TLS Termination at Gateway</text>
+
+  <!-- Client A -->
+  <rect x="55" y="105" width="90" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="100" y="129" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Client</text>
+
+  <!-- TLS arrow to AppGW -->
+  <line x1="145" y1="125" x2="225" y2="125" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <rect x="155" y="110" width="60" height="18" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="185" y="123" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#2e7d32">TLS 1.2</text>
+
+  <!-- AppGW A -->
+  <rect x="228" y="100" width="180" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="318" y="120" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Application Gateway</text>
+  <text x="318" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">TLS Terminated Here ✓</text>
+  <text x="318" y="147" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">PFX cert stored in Key Vault</text>
+
+  <!-- Plaintext arrow to Backend -->
+  <line x1="408" y1="125" x2="490" y2="125" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <rect x="420" y="110" width="60" height="18" rx="3" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="450" y="123" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#c62828">HTTP</text>
+
+  <!-- Backend A -->
+  <rect x="493" y="100" width="150" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="568" y="120" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Backend Pool</text>
+  <text x="568" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Port 80 (HTTP)</text>
+  <text x="568" y="147" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">No cert management needed</text>
+
+  <!-- Pros/Cons A -->
+  <text x="100" y="175" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Less CPU on backends</text>
+  <text x="100" y="189" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Simpler cert management</text>
+  <text x="400" y="175" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ Unencrypted internal traffic</text>
+  <text x="400" y="189" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ May not meet compliance</text>
+
+  <!-- Divider label -->
+  <text x="350" y="215" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">HTTP Settings: Protocol=HTTP, Port=80</text>
+
+  <!-- === SCENARIO 2: End-to-End TLS === -->
+  <rect x="30" y="260" width="640" height="175" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="350" y="280" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#6c8ebf">Scenario B: End-to-End TLS (Re-encryption)</text>
+
+  <!-- Client B -->
+  <rect x="55" y="297" width="90" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="100" y="321" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Client</text>
+
+  <!-- TLS arrow to AppGW -->
+  <line x1="145" y1="317" x2="225" y2="317" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <rect x="155" y="302" width="60" height="18" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="185" y="315" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#2e7d32">TLS 1.2</text>
+
+  <!-- AppGW B -->
+  <rect x="228" y="292" width="180" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="318" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Application Gateway</text>
+  <text x="318" y="327" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Decrypt → Inspect → Re-encrypt</text>
+  <text x="318" y="339" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Trusted Root CA for backend</text>
+
+  <!-- Re-encrypt arrow to Backend -->
+  <line x1="408" y1="317" x2="490" y2="317" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <rect x="418" y="302" width="70" height="18" rx="3" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="453" y="315" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#2e7d32">HTTPS</text>
+
+  <!-- Backend B -->
+  <rect x="493" y="292" width="150" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="568" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Backend Pool</text>
+  <text x="568" y="327" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Port 443 (HTTPS)</text>
+  <text x="568" y="339" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555" text-anchor="middle">Backend cert required</text>
+
+  <!-- Pros/Cons B -->
+  <text x="100" y="367" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Full encryption in transit</text>
+  <text x="100" y="381" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#2e7d32">✓ Compliance (PCI-DSS, HIPAA)</text>
+  <text x="400" y="367" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ More CPU overhead</text>
+  <text x="400" y="381" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#c62828">✗ Cert management on backends</text>
+
+  <text x="350" y="410" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">HTTP Settings: Protocol=HTTPS, Port=443, Upload trusted root cert (.CER)</text>
+
+  <!-- Key Vault Integration -->
+  <rect x="200" y="450" width="300" height="40" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="468" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">Azure Key Vault Integration</text>
+  <text x="350" y="483" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555" text-anchor="middle">Managed Identity → Key Vault → Auto cert renewal</text>
+</svg>

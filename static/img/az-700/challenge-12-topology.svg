@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Azure Bastion — Secure VM Access Architecture</text>
+
+  <!-- User / Browser -->
+  <rect x="30" y="120" width="120" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="90" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">User</text>
+  <text x="90" y="162" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Browser (HTTPS)</text>
+  <text x="90" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Azure Portal</text>
+
+  <!-- TLS Arrow -->
+  <line x1="150" y1="155" x2="220" y2="155" stroke="#82b366" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="185" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#82b366">TLS 443</text>
+
+  <!-- VNet -->
+  <rect x="220" y="50" width="450" height="340" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="445" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Virtual Network (10.0.0.0/16)</text>
+
+  <!-- AzureBastionSubnet -->
+  <rect x="240" y="90" width="200" height="140" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="340" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">AzureBastionSubnet</text>
+  <text x="340" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.0.0/26 (min /26)</text>
+
+  <!-- Bastion Host -->
+  <rect x="262" y="140" width="155" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="340" y="163" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Azure Bastion</text>
+  <text x="340" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Standard SKU</text>
+  <text x="340" y="193" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Public IP (Bastion)</text>
+
+  <!-- Workload Subnets -->
+  <rect x="470" y="90" width="180" height="270" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="560" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Workload Subnet</text>
+  <text x="560" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.0/24</text>
+
+  <!-- VMs (no public IPs) -->
+  <rect x="490" y="140" width="140" height="50" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="560" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">Linux VM (SSH)</text>
+  <text x="560" y="175" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.4 — No Public IP</text>
+
+  <rect x="490" y="205" width="140" height="50" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="560" y="225" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">Windows VM (RDP)</text>
+  <text x="560" y="240" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.5 — No Public IP</text>
+
+  <rect x="490" y="270" width="140" height="50" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="560" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">VMSS Instance</text>
+  <text x="560" y="305" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.1.6 — No Public IP</text>
+
+  <!-- Bastion → VMs (private) -->
+  <line x1="417" y1="165" x2="490" y2="165" stroke="#9673a6" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="453" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#9673a6">SSH/RDP</text>
+
+  <line x1="417" y1="175" x2="490" y2="230" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="417" y1="185" x2="490" y2="295" stroke="#9673a6" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Crossed out: Direct Internet to VM -->
+  <rect x="240" y="280" width="200" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="340" y="300" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#b85450">✗ No Public IP on VMs</text>
+  <text x="340" y="315" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">No exposed RDP/SSH ports</text>
+  <text x="340" y="328" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">No NSG rule for 3389/22 inbound</text>
+
+  <!-- Benefits -->
+  <rect x="60" y="400" width="580" height="30" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="350" y="420" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Session over TLS (port 443) | No agent needed | Audit logs | Works with peered VNets (Standard SKU)</text>
+</svg>

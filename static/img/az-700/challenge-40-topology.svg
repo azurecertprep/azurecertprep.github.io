@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">NSG Rule Evaluation Flow</text>
+
+  <!-- Inbound Traffic -->
+  <rect x="20" y="60" width="100" height="50" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="70" y="82" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Inbound</text>
+  <text x="70" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Traffic</text>
+
+  <!-- Arrow to Subnet NSG -->
+  <line x1="120" y1="85" x2="165" y2="85" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Subnet NSG -->
+  <rect x="170" y="45" width="150" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="245" y="67" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Subnet NSG</text>
+  <text x="245" y="85" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Priority: Low → High</text>
+  <text x="245" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">100, 200, 300...</text>
+  <text x="245" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">(First match wins)</text>
+
+  <!-- Arrow to NIC NSG -->
+  <line x1="320" y1="85" x2="365" y2="85" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- NIC NSG -->
+  <rect x="370" y="45" width="150" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="445" y="67" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">NIC NSG</text>
+  <text x="445" y="85" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Priority: Low → High</text>
+  <text x="445" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">100, 200, 300...</text>
+  <text x="445" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">(First match wins)</text>
+
+  <!-- Arrow to VM -->
+  <line x1="520" y1="85" x2="565" y2="85" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- VM -->
+  <rect x="570" y="55" width="110" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="625" y="82" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">VM</text>
+  <text x="625" y="98" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Traffic Allowed</text>
+
+  <!-- ASG Grouping -->
+  <rect x="40" y="170" width="620" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="350" y="195" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Application Security Groups (ASG)</text>
+
+  <!-- ASG Web -->
+  <rect x="70" y="210" width="120" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="130" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">ASG: Web</text>
+  <text x="130" y="248" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">VM1, VM2</text>
+
+  <!-- ASG App -->
+  <rect x="230" y="210" width="120" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="290" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">ASG: App</text>
+  <text x="290" y="248" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">VM3, VM4</text>
+
+  <!-- ASG DB -->
+  <rect x="390" y="210" width="120" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="450" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">ASG: DB</text>
+  <text x="450" y="248" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">VM5, VM6</text>
+
+  <!-- NSG Rule Example using ASGs -->
+  <rect x="540" y="205" width="105" height="60" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="592" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">NSG Rule:</text>
+  <text x="592" y="237" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Source: ASG-Web</text>
+  <text x="592" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Dest: ASG-App</text>
+
+  <!-- Key notes -->
+  <rect x="40" y="310" width="620" height="95" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="60" y="332" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Key Evaluation Rules:</text>
+  <text x="60" y="352" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Inbound: Subnet NSG evaluated first, then NIC NSG</text>
+  <text x="60" y="369" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Outbound: NIC NSG evaluated first, then Subnet NSG</text>
+  <text x="60" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Lowest priority number = highest precedence (100 beats 200)</text>
+  <text x="60" y="403" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Both NSGs must ALLOW traffic for it to reach the VM</text>
+</svg>

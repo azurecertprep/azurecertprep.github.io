@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Point-to-Site VPN Topology</text>
+
+  <!-- Remote Clients -->
+  <rect x="20" y="50" width="160" height="280" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="100" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Remote Clients</text>
+
+  <!-- Client 1 -->
+  <rect x="40" y="90" width="120" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="100" y="114" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Windows Laptop</text>
+
+  <!-- Client 2 -->
+  <rect x="40" y="145" width="120" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="100" y="169" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">macOS Client</text>
+
+  <!-- Client 3 -->
+  <rect x="40" y="200" width="120" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="100" y="224" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Linux Client</text>
+
+  <!-- Client 4 -->
+  <rect x="40" y="255" width="120" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="100" y="279" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">Mobile Device</text>
+
+  <!-- Protocol Box -->
+  <rect x="220" y="100" width="130" height="180" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="285" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VPN Protocols</text>
+
+  <rect x="235" y="135" width="100" height="30" rx="4" fill="#fff" stroke="#d6b656" stroke-width="1"/>
+  <text x="285" y="155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">OpenVPN</text>
+
+  <rect x="235" y="175" width="100" height="30" rx="4" fill="#fff" stroke="#d6b656" stroke-width="1"/>
+  <text x="285" y="195" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">IKEv2</text>
+
+  <rect x="235" y="215" width="100" height="30" rx="4" fill="#fff" stroke="#d6b656" stroke-width="1"/>
+  <text x="285" y="235" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">SSTP</text>
+
+  <!-- Protocol notes -->
+  <text x="285" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">OpenVPN: All OS</text>
+  <text x="285" y="272" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">IKEv2: Mac/Win</text>
+
+  <!-- Arrows from clients to protocols -->
+  <line x1="160" y1="110" x2="218" y2="150" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="160" y1="165" x2="218" y2="175" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="160" y1="220" x2="218" y2="200" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="160" y1="275" x2="218" y2="230" stroke="#666" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Azure Cloud -->
+  <rect x="390" y="50" width="290" height="280" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="535" y="72" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Azure Cloud</text>
+
+  <!-- VPN Gateway -->
+  <rect x="410" y="140" width="120" height="70" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="470" y="165" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VPN Gateway</text>
+  <text x="470" y="182" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">P2S Config</text>
+  <text x="470" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Address Pool:</text>
+
+  <!-- Address pool -->
+  <rect x="410" y="225" width="120" height="30" rx="4" fill="#fff" stroke="#9673a6" stroke-width="1"/>
+  <text x="470" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10">172.16.0.0/24</text>
+
+  <!-- Arrow protocol to GW -->
+  <line x1="350" y1="190" x2="408" y2="175" stroke="#666" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="378" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#666">TLS/UDP 443</text>
+
+  <!-- VNet -->
+  <rect x="560" y="100" width="100" height="200" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="610" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VNet</text>
+  <text x="610" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10.0.0.0/16</text>
+
+  <rect x="570" y="150" width="80" height="28" rx="4" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="610" y="168" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">Web Tier</text>
+
+  <rect x="570" y="188" width="80" height="28" rx="4" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="610" y="206" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">App Tier</text>
+
+  <rect x="570" y="226" width="80" height="28" rx="4" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="610" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9">Data Tier</text>
+
+  <!-- Arrow GW to VNet -->
+  <line x1="530" y1="175" x2="558" y2="175" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Legend -->
+  <text x="350" y="360" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Individual clients connect directly to Azure VPN Gateway — no site-to-site device required</text>
+</svg>

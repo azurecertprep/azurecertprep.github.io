@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Flow Log Data Pipeline</text>
+
+  <!-- VNet Source -->
+  <rect x="20" y="70" width="110" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="75" y="95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VNet / Subnet</text>
+  <text x="75" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">NSG attached</text>
+  <text x="75" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Network traffic</text>
+  <text x="75" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">flows generated</text>
+
+  <!-- Arrow -->
+  <line x1="130" y1="110" x2="168" y2="110" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="149" y="103" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">capture</text>
+
+  <!-- NSG Flow Logs -->
+  <rect x="172" y="70" width="120" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="232" y="95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">NSG Flow Logs</text>
+  <text x="232" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Version 2</text>
+  <text x="232" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">5-tuple info</text>
+  <text x="232" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">+ bytes/packets</text>
+
+  <!-- Arrow -->
+  <line x1="292" y1="110" x2="328" y2="110" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="310" y="103" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">store</text>
+
+  <!-- Storage Account -->
+  <rect x="332" y="70" width="120" height="80" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="392" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Storage</text>
+  <text x="392" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Account</text>
+  <text x="392" y="125" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">JSON format</text>
+  <text x="392" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Blob container</text>
+
+  <!-- Arrow -->
+  <line x1="452" y1="110" x2="488" y2="110" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="470" y="103" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">analyze</text>
+
+  <!-- Traffic Analytics -->
+  <rect x="492" y="70" width="120" height="80" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="552" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Traffic</text>
+  <text x="552" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Analytics</text>
+  <text x="552" y="125" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Aggregation</text>
+  <text x="552" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">10min / 60min</text>
+
+  <!-- Arrow -->
+  <line x1="552" y1="150" x2="552" y2="188" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- Log Analytics -->
+  <rect x="472" y="192" width="160" height="80" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="552" y="215" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Log Analytics</text>
+  <text x="552" y="232" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Workspace</text>
+  <text x="552" y="250" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">KQL Queries</text>
+  <text x="552" y="264" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Dashboards & Alerts</text>
+
+  <!-- Data captured details -->
+  <rect x="20" y="200" width="280" height="160" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="160" y="222" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Flow Log Data (5-Tuple):</text>
+  <text x="40" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Source IP &amp; Port</text>
+  <text x="40" y="261" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Destination IP &amp; Port</text>
+  <text x="40" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Protocol (TCP/UDP)</text>
+  <text x="40" y="295" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Traffic state (Allow/Deny)</text>
+  <text x="40" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Bytes &amp; Packets (v2)</text>
+  <text x="40" y="329" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Flow direction (In/Out)</text>
+  <text x="40" y="349" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#9673a6">⚠ Same region required for Storage &amp; Workspace</text>
+
+  <!-- Traffic Analytics insights -->
+  <rect x="330" y="300" width="340" height="65" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="500" y="320" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Traffic Analytics Insights:</text>
+  <text x="500" y="338" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Top talkers • Geo map • Security threats</text>
+  <text x="500" y="355" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Bandwidth utilization • Application ports</text>
+</svg>

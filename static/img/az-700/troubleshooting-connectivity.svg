@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 620">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c62828"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="22" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Decision Tree: VM Cannot Reach Destination</text>
+
+  <!-- Start -->
+  <rect x="240" y="38" width="220" height="45" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="350" y="57" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#b85450">PROBLEM:</text>
+  <text x="350" y="74" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">VM cannot reach destination</text>
+
+  <!-- Arrow down -->
+  <line x1="350" y1="83" x2="350" y2="108" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Q1: Same VNet? -->
+  <rect x="255" y="110" width="190" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="133" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Is destination in</text>
+  <text x="350" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">the same VNet?</text>
+
+  <!-- YES from Q1 -->
+  <line x1="255" y1="135" x2="130" y2="135" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="195" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Answer: Check NSG -->
+  <rect x="20" y="110" width="130" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="85" y="130" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Check NSG</text>
+  <text x="85" y="146" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Effective rules</text>
+
+  <!-- NO from Q1 -->
+  <line x1="350" y1="160" x2="350" y2="195" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="365" y="182" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Q2: Peered VNets? -->
+  <rect x="255" y="198" width="190" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="221" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Are VNets peered</text>
+  <text x="350" y="238" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">directly?</text>
+
+  <!-- YES from Q2 -->
+  <line x1="255" y1="223" x2="130" y2="223" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="195" y="215" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Answer: Check peering -->
+  <rect x="20" y="195" width="130" height="56" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="85" y="213" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Check peering</text>
+  <text x="85" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">State: Connected?</text>
+  <text x="85" y="243" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Forwarding enabled?</text>
+
+  <!-- NO from Q2 -->
+  <line x1="350" y1="248" x2="350" y2="283" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="365" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Q3: Through NVA/Firewall? -->
+  <rect x="240" y="286" width="220" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Traffic routed through</text>
+  <text x="350" y="326" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">NVA or Azure Firewall?</text>
+
+  <!-- YES from Q3 -->
+  <line x1="240" y1="311" x2="130" y2="311" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="188" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#2e7d32">YES</text>
+
+  <!-- Answer: Check NVA -->
+  <rect x="10" y="280" width="140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="80" y="298" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Check NVA/FW:</text>
+  <text x="80" y="313" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• UDR next hop correct?</text>
+  <text x="80" y="328" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• IP forwarding ON?</text>
+  <text x="80" y="340" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Firewall rules allow?</text>
+
+  <!-- NO from Q3 -->
+  <line x1="350" y1="336" x2="350" y2="371" stroke="#c62828" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="365" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#c62828">NO</text>
+
+  <!-- Answer: Check route table -->
+  <rect x="265" y="374" width="170" height="55" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="350" y="393" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Check route table</text>
+  <text x="350" y="409" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Effective routes</text>
+  <text x="350" y="423" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Next hop type/IP</text>
+
+  <!-- Additional tips on right side -->
+  <rect x="490" y="110" width="190" height="260" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="585" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Diagnostic Tools:</text>
+  <text x="505" y="155" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">🔧 Network Watcher</text>
+  <text x="515" y="172" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- IP flow verify</text>
+  <text x="515" y="187" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Next hop</text>
+  <text x="515" y="202" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Connection troubleshoot</text>
+  <text x="515" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Effective routes</text>
+  <text x="505" y="240" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">📋 Common Fixes:</text>
+  <text x="515" y="258" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- NSG deny rule blocking</text>
+  <text x="515" y="273" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Peering not connected</text>
+  <text x="515" y="288" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Missing UDR</text>
+  <text x="515" y="303" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- IP forwarding disabled</text>
+  <text x="515" y="318" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- FW rule not matching</text>
+  <text x="515" y="333" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Gateway transit missing</text>
+  <text x="515" y="348" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- DNS resolution failure</text>
+  <text x="515" y="363" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">- Service endpoint config</text>
+
+  <!-- Legend -->
+  <rect x="180" y="455" width="340" height="55" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="350" y="473" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Legend</text>
+  <line x1="210" y1="488" x2="250" y2="488" stroke="#2e7d32" stroke-width="2"/>
+  <text x="260" y="492" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#2e7d32">= YES path</text>
+  <line x1="340" y1="488" x2="380" y2="488" stroke="#c62828" stroke-width="2"/>
+  <text x="390" y="492" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#c62828">= NO path</text>
+  <rect x="210" y="497" width="14" height="10" rx="2" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="232" y="506" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">= Question</text>
+  <rect x="340" y="497" width="14" height="10" rx="2" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="362" y="506" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">= Action/Answer</text>
+</svg>

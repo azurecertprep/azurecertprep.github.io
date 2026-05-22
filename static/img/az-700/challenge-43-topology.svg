@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#82b366"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Firewall Policy Hierarchy (Inheritance)</text>
+
+  <!-- Parent Policy -->
+  <rect x="200" y="50" width="300" height="130" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="75" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Parent Policy (Base)</text>
+  <text x="350" y="95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Enterprise-wide baseline rules</text>
+  <rect x="220" y="105" width="260" height="60" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="235" y="122" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Threat Intelligence: Alert &amp; Deny</text>
+  <text x="235" y="137" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• DNS Proxy: Enabled</text>
+  <text x="235" y="152" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• IDPS: Alert mode</text>
+  <text x="235" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Base Network Rules (Priority 100-500)</text>
+
+  <!-- Inheritance arrows -->
+  <line x1="280" y1="180" x2="180" y2="240" stroke="#82b366" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="420" y1="180" x2="520" y2="240" stroke="#82b366" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <text x="210" y="210" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">inherits</text>
+  <text x="490" y="210" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366" font-weight="bold">inherits</text>
+
+  <!-- Child Policy A -->
+  <rect x="30" y="245" width="280" height="130" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="170" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Child Policy — Region A</text>
+  <text x="170" y="288" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">East US (Production)</text>
+  <rect x="50" y="298" width="240" height="62" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="65" y="315" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Additional App rules (Priority 600+)</text>
+  <text x="65" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Region-specific DNAT rules</text>
+  <text x="65" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• IDPS: Deny mode (stricter)</text>
+  <text x="65" y="357" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• TLS inspection: Enabled</text>
+
+  <!-- Child Policy B -->
+  <rect x="390" y="245" width="280" height="130" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="530" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Child Policy — Region B</text>
+  <text x="530" y="288" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">West Europe (Dev/Test)</text>
+  <rect x="410" y="298" width="240" height="62" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="425" y="315" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Less restrictive app rules</text>
+  <text x="425" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Dev FQDN tags allowed</text>
+  <text x="425" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• IDPS: Alert mode (inherited)</text>
+  <text x="425" y="357" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• No TLS inspection</text>
+
+  <!-- Key notes -->
+  <rect x="60" y="390" width="580" height="25" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="350" y="407" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">⚠ Parent rules always evaluated FIRST (lower priority) • Child can only ADD rules, not remove inherited ones</text>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold">Virtual WAN Hub-and-Spoke Architecture</text>
+
+  <!-- vWAN Hub (Center) -->
+  <rect x="230" y="120" width="240" height="200" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="350" y="145" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">Virtual WAN Hub</text>
+  <text x="350" y="162" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Managed by Azure</text>
+
+  <!-- VPN Gateway in hub -->
+  <rect x="250" y="180" width="95" height="40" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="297" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">VPN GW</text>
+  <text x="297" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">S2S/P2S</text>
+
+  <!-- ER Gateway in hub -->
+  <rect x="355" y="180" width="95" height="40" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="402" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">ER GW</text>
+  <text x="402" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">ExpressRoute</text>
+
+  <!-- Hub Router -->
+  <rect x="280" y="240" width="140" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="350" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Hub Router</text>
+  <text x="350" y="273" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Transitive routing</text>
+
+  <!-- Firewall -->
+  <rect x="280" y="285" width="140" height="30" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="350" y="304" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Azure Firewall (optional)</text>
+
+  <!-- On-Premises (Left) -->
+  <rect x="20" y="160" width="140" height="80" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="90" y="185" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">On-Premises</text>
+  <text x="90" y="202" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Branch Office</text>
+  <text x="90" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">VPN / ER</text>
+
+  <!-- Arrow On-prem to Hub -->
+  <line x1="160" y1="200" x2="228" y2="200" stroke="#666" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+
+  <!-- Spoke VNet 1 (Top) -->
+  <rect x="280" y="40" width="140" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="350" y="63" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Spoke VNet 1</text>
+  <text x="350" y="80" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Production • 10.1.0.0/16</text>
+  <text x="350" y="93" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Web Apps</text>
+
+  <!-- Arrow Spoke1 to Hub -->
+  <line x1="350" y1="100" x2="350" y2="118" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Spoke VNet 2 (Right) -->
+  <rect x="530" y="100" width="150" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="605" y="123" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Spoke VNet 2</text>
+  <text x="605" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Dev/Test • 10.2.0.0/16</text>
+  <text x="605" y="153" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Dev VMs</text>
+
+  <!-- Arrow Spoke2 to Hub -->
+  <line x1="528" y1="140" x2="472" y2="170" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Spoke VNet 3 (Right bottom) -->
+  <rect x="530" y="250" width="150" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="605" y="273" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Spoke VNet 3</text>
+  <text x="605" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Shared Svc • 10.3.0.0/16</text>
+  <text x="605" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">DNS / AD</text>
+
+  <!-- Arrow Spoke3 to Hub -->
+  <line x1="528" y1="275" x2="472" y2="255" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Spoke VNet 4 (Bottom) -->
+  <rect x="280" y="345" width="140" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="350" y="368" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold">Spoke VNet 4</text>
+  <text x="350" y="385" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Data • 10.4.0.0/16</text>
+  <text x="350" y="396" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">SQL / Storage</text>
+
+  <!-- Arrow Spoke4 to Hub -->
+  <line x1="350" y1="343" x2="350" y2="322" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Key features callout -->
+  <text x="90" y="280" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">✓ Any-to-any transit</text>
+  <text x="90" y="295" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">✓ Auto spoke routing</text>
+  <text x="90" y="310" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">✓ Multi-hub support</text>
+  <text x="90" y="325" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">✓ Managed gateways</text>
+</svg>

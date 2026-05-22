@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Azure Front Door WAF Flow</text>
+
+  <!-- Global Request -->
+  <rect x="20" y="55" width="95" height="65" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="67" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Global</text>
+  <text x="67" y="95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Request</text>
+  <text x="67" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Client → Edge</text>
+
+  <!-- Arrow -->
+  <line x1="115" y1="87" x2="148" y2="87" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- POP -->
+  <rect x="152" y="55" width="100" height="65" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="202" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Edge POP</text>
+  <text x="202" y="95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Closest to user</text>
+  <text x="202" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">TLS termination</text>
+
+  <!-- Arrow -->
+  <line x1="252" y1="87" x2="288" y2="87" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- WAF Policy Evaluation container -->
+  <rect x="292" y="40" width="270" height="210" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="427" y="62" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">WAF Policy Evaluation</text>
+
+  <!-- Geo Filter -->
+  <rect x="310" y="72" width="110" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="365" y="86" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">① Geo-Filter</text>
+  <text x="365" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Country allow/block</text>
+
+  <!-- Rate Limit -->
+  <rect x="435" y="72" width="110" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="490" y="86" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">② Rate Limit</text>
+  <text x="490" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Requests/min cap</text>
+
+  <!-- Bot Protection -->
+  <rect x="310" y="118" width="110" height="35" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="365" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">③ Bot Protection</text>
+  <text x="365" y="146" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Good/Bad/Unknown</text>
+
+  <!-- Custom Rules -->
+  <rect x="435" y="118" width="110" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="490" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">④ Custom Rules</text>
+  <text x="490" y="146" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">Match conditions</text>
+
+  <!-- Managed Rules -->
+  <rect x="310" y="164" width="235" height="35" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="427" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold">⑤ Managed Rules (DRS/OWASP)</text>
+  <text x="427" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="#555">SQL injection, XSS, protocol attacks</text>
+
+  <!-- Actions -->
+  <rect x="310" y="208" width="235" height="30" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="427" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#b85450">Actions: Allow | Block | Log | Redirect</text>
+
+  <!-- Arrow to Origin -->
+  <line x1="562" y1="145" x2="595" y2="145" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Origin -->
+  <rect x="598" y="115" width="85" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="640" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold">Origin</text>
+  <text x="640" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Backend</text>
+  <text x="640" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Server</text>
+
+  <!-- Front Door specific features -->
+  <rect x="40" y="275" width="300" height="130" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="190" y="297" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Front Door WAF Features:</text>
+  <text x="60" y="317" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• WAF runs at edge (low latency)</text>
+  <text x="60" y="335" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Global policy per Front Door profile</text>
+  <text x="60" y="353" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Per-endpoint policy override</text>
+  <text x="60" y="371" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Bot manager (good bots auto-allowed)</text>
+  <text x="60" y="389" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Rate limiting by client IP or socket</text>
+
+  <!-- Difference from AppGW -->
+  <rect x="370" y="275" width="300" height="130" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="520" y="297" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">vs. Application Gateway WAF:</text>
+  <text x="390" y="317" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Front Door = Global (anycast)</text>
+  <text x="390" y="335" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• AppGW WAF = Regional (VNet)</text>
+  <text x="390" y="353" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Front Door: no private IP backend</text>
+  <text x="390" y="371" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Both support custom + managed rules</text>
+  <text x="390" y="389" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">• Front Door adds JS challenge action</text>
+</svg>
