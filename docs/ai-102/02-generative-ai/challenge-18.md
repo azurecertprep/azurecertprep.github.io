@@ -726,6 +726,7 @@ Time: 2.8s | Tokens: 1542
 
 <KnowledgeCheck questions={[
   {
+    id: "ch18-q1",
     question: "What image sizes does DALL-E 3 support in Azure OpenAI?",
     options: [
       "256x256, 512x512, 1024x1024",
@@ -737,6 +738,7 @@ Time: 2.8s | Tokens: 1542
     explanation: "DALL-E 3 supports three fixed sizes: 1024x1024 (square), 1024x1792 (portrait), and 1792x1024 (landscape). The older DALL-E 2 supported 256x256 and 512x512, but these are not available in DALL-E 3."
   },
   {
+    id: "ch18-q2",
     question: "How are images provided to GPT-4o for vision analysis?",
     options: [
       "As a separate API call to a vision-specific endpoint",
@@ -748,6 +750,7 @@ Time: 2.8s | Tokens: 1542
     explanation: "GPT-4o vision uses the standard chat completions API. Images are included as content parts (type: 'image_url') within user messages, alongside text parts. The image can be provided as a URL or base64-encoded data URI."
   },
   {
+    id: "ch18-q3",
     question: "What does the 'detail' parameter control when sending images to GPT-4o?",
     options: [
       "The output quality of generated images",
@@ -759,6 +762,7 @@ Time: 2.8s | Tokens: 1542
     explanation: "The 'detail' parameter (low/high/auto) controls image processing resolution. 'low' uses a fixed 85 tokens regardless of size. 'high' processes at full resolution, with token costs proportional to the number of 512x512 tiles needed, providing more accurate analysis."
   },
   {
+    id: "ch18-q4",
     question: "What is the 'revised_prompt' field in a DALL-E 3 response?",
     options: [
       "A suggested improvement for next time",
@@ -770,6 +774,7 @@ Time: 2.8s | Tokens: 1542
     explanation: "DALL-E 3 automatically rewrites prompts to add detail and improve generation quality. The 'revised_prompt' field shows the enhanced prompt that was actually used to generate the image. This is a built-in feature and cannot be disabled."
   },
   {
+    id: "ch18-q5",
     question: "How long are DALL-E 3 generated image URLs valid before they expire?",
     options: [
       "1 hour",

@@ -936,6 +936,7 @@ Sentiment: positive
 
 <KnowledgeCheck questions={[
   {
+    id: "ch20-q1",
     question: "In Azure OpenAI function calling, what does the model return when it decides to use a tool?",
     options: [
       "The actual function result",
@@ -947,6 +948,7 @@ Sentiment: positive
     explanation: "When the model decides to use a tool, it returns a message with finish_reason='tool_calls' containing a tool_calls array. Each entry includes the function name and serialized arguments. The application must execute the function and send results back in a follow-up request."
   },
   {
+    id: "ch20-q2",
     question: "What is the primary advantage of using a model router in multi-model architectures?",
     options: [
       "It increases the accuracy of all responses",
@@ -958,6 +960,7 @@ Sentiment: positive
     explanation: "A model router directs simple requests to cheaper, faster models (like GPT-4o-mini) and complex requests to more capable models (like GPT-4o). This optimizes costs without sacrificing quality where it matters, as simple tasks don't benefit from expensive models."
   },
   {
+    id: "ch20-q3",
     question: "Which environment variable is required for Azure AI containers to function correctly?",
     options: [
       "AZURE_OPENAI_ENDPOINT only",
@@ -969,6 +972,7 @@ Sentiment: positive
     explanation: "Azure AI containers require three environment variables: Eula=accept (legal agreement), Billing (the Azure AI endpoint URL for usage metering), and ApiKey (authentication). The container sends usage data to the billing endpoint but processes requests locally."
   },
   {
+    id: "ch20-q4",
     question: "In Semantic Kernel, what is a 'plugin'?",
     options: [
       "A pre-trained model checkpoint",
@@ -980,6 +984,7 @@ Sentiment: positive
     explanation: "In Semantic Kernel, a plugin is a collection of kernel functions (either native code functions or prompt-based semantic functions) that extend what the AI can do. Plugins are registered with the kernel and can be invoked by the model via function calling or directly by application code."
   },
   {
+    id: "ch20-q5",
     question: "When implementing function calling, what happens after the application executes the function and returns results?",
     options: [
       "The conversation ends and the result is returned directly to the user",

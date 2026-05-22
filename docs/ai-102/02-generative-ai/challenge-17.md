@@ -709,6 +709,7 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
 
 <KnowledgeCheck questions={[
   {
+    id: "ch17-q1",
     question: "What is the recommended approach when you want both low randomness and high quality in Azure OpenAI responses?",
     options: [
       "Set temperature=0 and top_p=0 simultaneously",
@@ -720,6 +721,7 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
     explanation: "Microsoft recommends adjusting either temperature OR top_p, not both. Setting temperature=0 gives deterministic results. Setting top_p=0 would prevent any token selection. The recommended approach is temperature=0 with top_p at its default value of 1."
   },
   {
+    id: "ch17-q2",
     question: "In the chat completions API, what is the purpose of including assistant messages in the messages array?",
     options: [
       "To define the system behavior constraints",
@@ -731,6 +733,7 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
     explanation: "Assistant messages represent prior model responses. They serve two purposes: providing conversation history for multi-turn chat, and providing example responses in few-shot prompting patterns where user/assistant pairs demonstrate the desired behavior."
   },
   {
+    id: "ch17-q3",
     question: "What must be true when using response_format: {type: 'json_object'} with Azure OpenAI?",
     options: [
       "The model must be GPT-3.5 or later",
@@ -742,6 +745,7 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
     explanation: "When using JSON mode, the system or user message must explicitly mention that the response should be in JSON format. The API will return an error if JSON mode is enabled but 'JSON' is not mentioned in the messages. This ensures intentional use of the feature."
   },
   {
+    id: "ch17-q4",
     question: "Which parameter reduces the likelihood of the model repeating the same words or phrases it has already used?",
     options: [
       "presence_penalty",
@@ -753,6 +757,7 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
     explanation: "frequency_penalty (range -2 to 2) reduces repetition proportionally to how often a token has appeared. The more a word is repeated, the more it is penalized. presence_penalty penalizes tokens that have appeared at all (regardless of frequency), encouraging new topics."
   },
   {
+    id: "ch17-q5",
     question: "What is the key difference between zero-shot and few-shot prompting?",
     options: [
       "Zero-shot uses temperature=0; few-shot uses temperature>0",

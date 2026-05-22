@@ -386,10 +386,8 @@ var dataSource = new AzureSearchChatDataSource
     InScope = true
 };
 
-var options = new ChatCompletionOptions
-{
-    AddDataSource(dataSource)
-};
+var options = new ChatCompletionOptions();
+options.AddDataSource(dataSource);
 
 var messages = new ChatMessage[]
 {

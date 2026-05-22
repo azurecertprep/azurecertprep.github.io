@@ -355,7 +355,7 @@ client = AzureOpenAI(
     api_version="2024-10-21"
 )
 
-# Get the tokenizer for GPT-4o (uses cl100k_base encoding)
+# Get the tokenizer for GPT-4o (uses o200k_base encoding)
 encoding = tiktoken.encoding_for_model("gpt-4o")
 
 def count_message_tokens(messages: list, model: str = "gpt-4o") -> int:
@@ -749,6 +749,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
 
 <KnowledgeCheck questions={[
   {
+    id: "ch19-q1",
     question: "What is the primary benefit of streaming responses in Azure OpenAI?",
     options: [
       "Reduces total token consumption",
@@ -760,6 +761,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
     explanation: "Streaming delivers tokens incrementally via Server-Sent Events (SSE), reducing time-to-first-token from seconds to typically under 500ms. Total generation time remains similar, but users perceive faster responses because content appears immediately."
   },
   {
+    id: "ch19-q2",
     question: "What is the minimum number of training examples required for fine-tuning in Azure OpenAI?",
     options: [
       "3 examples",
@@ -771,6 +773,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
     explanation: "Azure OpenAI requires a minimum of 10 training examples for fine-tuning. However, Microsoft recommends 50-100 well-crafted examples for meaningful improvement. The training data must be in JSONL format with system/user/assistant message arrays."
   },
   {
+    id: "ch19-q3",
     question: "Which library is used to count tokens locally for GPT-4o before making API calls?",
     options: [
       "transformers",
@@ -779,9 +782,10 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
       "sentencepiece"
     ],
     correctAnswer: 1,
-    explanation: "tiktoken is OpenAI's official tokenizer library for Python. GPT-4o uses the cl100k_base encoding. Local token counting with tiktoken enables cost estimation, prompt optimization, and context window management before making API calls."
+    explanation: "tiktoken is OpenAI's official tokenizer library for Python. GPT-4o uses the o200k_base encoding. Local token counting with tiktoken enables cost estimation, prompt optimization, and context window management before making API calls."
   },
   {
+    id: "ch19-q4",
     question: "When configuring OpenTelemetry tracing for Azure OpenAI, which metric is most important for cost monitoring?",
     options: [
       "Request latency (ms)",
@@ -793,6 +797,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
     explanation: "Token usage directly determines cost since Azure OpenAI charges per token. Tracking prompt_tokens and completion_tokens per request enables cost attribution, budget monitoring, and optimization. Latency and status codes are important for reliability but don't directly correlate with cost."
   },
   {
+    id: "ch19-q5",
     question: "What format must training data use for Azure OpenAI fine-tuning?",
     options: [
       "CSV with columns for input and output",

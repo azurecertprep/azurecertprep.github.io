@@ -559,6 +559,7 @@ Global Standard Deployment:
 
 <KnowledgeCheck questions={[
   {
+    id: "ch16-q1",
     question: "Which SKU is required when creating an Azure OpenAI resource via Azure CLI?",
     options: [
       "F0 (Free tier)",
@@ -570,6 +571,7 @@ Global Standard Deployment:
     explanation: "Azure OpenAI Service uses the S0 SKU. There is no free tier for Azure OpenAI. The --sku parameter must be set to S0 when using az cognitiveservices account create --kind OpenAI."
   },
   {
+    id: "ch16-q2",
     question: "What deployment type provides guaranteed throughput capacity with a fixed monthly cost?",
     options: [
       "Standard",
@@ -581,6 +583,7 @@ Global Standard Deployment:
     explanation: "Provisioned Throughput Units (PTU) provide dedicated compute capacity with guaranteed throughput and predictable monthly costs, ideal for production workloads with consistent traffic patterns."
   },
   {
+    id: "ch16-q3",
     question: "When Azure OpenAI returns HTTP 429, which header indicates how long to wait before retrying?",
     options: [
       "x-ratelimit-remaining-tokens",
@@ -592,6 +595,7 @@ Global Standard Deployment:
     explanation: "The Retry-After header specifies the number of seconds to wait before making another request. The x-ratelimit-remaining-tokens header shows remaining quota but does not indicate retry timing."
   },
   {
+    id: "ch16-q4",
     question: "What is the capacity unit for Standard deployments when configuring rate limits?",
     options: [
       "Requests Per Second (RPS)",
@@ -603,6 +607,7 @@ Global Standard Deployment:
     explanation: "Standard deployments are configured with capacity measured in thousands of Tokens Per Minute (TPM). For example, --sku-capacity 30 means 30,000 TPM. RPM limits are derived from TPM."
   },
   {
+    id: "ch16-q5",
     question: "Which API version format does Azure OpenAI use, and what happens when a version is retired?",
     options: [
       "Semantic versioning (v1.2.3); retired versions return 410 Gone",
