@@ -44,7 +44,40 @@ Deployment model: Video → IoT Edge device (Spatial Analysis container) → IoT
 
 ## Implementation
 
-### Task 1: Configure Spatial Analysis Operation
+### Task 1: Create IoT Hub and Register Edge Device
+
+```bash
+az group create --name rg-ai102-spatial --location eastus2
+
+# Create Computer Vision resource (S1 tier required for Spatial Analysis)
+az cognitiveservices account create \
+  --name cv-spatial-ai102 \
+  --resource-group rg-ai102-spatial \
+  --kind ComputerVision \
+  --sku S1 \
+  --location eastus2
+
+# Create IoT Hub
+az iot hub create \
+  --name iothub-spatial-ai102 \
+  --resource-group rg-ai102-spatial \
+  --sku S1 \
+  --location eastus2
+
+# Register IoT Edge device
+az iot hub device-identity create \
+  --hub-name iothub-spatial-ai102 \
+  --device-id edge-spatial-device \
+  --edge-enabled
+
+# Get connection string for device provisioning
+az iot hub device-identity connection-string show \
+  --hub-name iothub-spatial-ai102 \
+  --device-id edge-spatial-device \
+  --output tsv
+```
+
+### Task 2: Configure Spatial Analysis Operation
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -131,7 +164,7 @@ print(json.dumps(spatial_analysis_config, indent=2))
 </TabItem>
 </Tabs>
 
-### Task 2: IoT Edge Deployment Manifest
+### Task 3: IoT Edge Deployment Manifest
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -142,6 +175,29 @@ deployment_manifest = {
     "modulesContent": {
         "$edgeAgent": {
             "properties.desired": {
+                "schemaVersion": "1.1",
+                "runtime": {
+                    "type": "docker",
+                    "settings": {
+                        "minDockerVersion": "v1.25"
+                    }
+                },
+                "systemModules": {
+                    "edgeAgent": {
+                        "type": "docker",
+                        "settings": {
+                            "image": "mcr.microsoft.com/azureiotedge-agent:1.4"
+                        }
+                    },
+                    "edgeHub": {
+                        "type": "docker",
+                        "status": "running",
+                        "restartPolicy": "always",
+                        "settings": {
+                            "image": "mcr.microsoft.com/azureiotedge-hub:1.4"
+                        }
+                    }
+                },
                 "modules": {
                     "spatialanalysis": {
                         "version": "1.0",
@@ -164,6 +220,17 @@ deployment_manifest = {
                             })
                         }
                     }
+                }
+            }
+        },
+        "$edgeHub": {
+            "properties.desired": {
+                "schemaVersion": "1.1",
+                "routes": {
+                    "spatialToHub": "FROM /messages/modules/spatialanalysis/outputs/* INTO $upstream"
+                },
+                "storeAndForwardConfiguration": {
+                    "timeToLiveSecs": 7200
                 }
             }
         },
@@ -208,9 +275,26 @@ print(json.dumps(deployment_manifest["modulesContent"]["spatialanalysis"], inden
 ```
 
 </TabItem>
+<TabItem value="cli" label="Deploy via CLI">
+
+```bash
+# Deploy the manifest to the IoT Edge device
+az iot edge set-modules \
+  --hub-name iothub-spatial-ai102 \
+  --device-id edge-spatial-device \
+  --content deployment-manifest.json
+
+# Verify modules are running on the edge device
+az iot hub module-identity list \
+  --hub-name iothub-spatial-ai102 \
+  --device-id edge-spatial-device \
+  --output table
+```
+
+</TabItem>
 </Tabs>
 
-### Task 3: Process Spatial Analysis Events
+### Task 4: Process Spatial Analysis Events
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -418,7 +502,7 @@ Distance violations: 1
 ## Cleanup
 
 ```bash
-az group delete --name rg-ai102-videoindexer --yes --no-wait
+az group delete --name rg-ai102-spatial --yes --no-wait
 ```
 
 ## Learn More

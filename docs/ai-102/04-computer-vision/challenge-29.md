@@ -15,7 +15,7 @@ import TabItem from '@theme/TabItem';
 
 ## Exam skills covered
 - Use Azure AI Video Indexer to extract insights from video
-- Extract transcripts, faces, topics, and emotions
+- Extract transcripts, faces, topics, and sentiments
 - Query video content by keyword and time
 
 ## Overview
@@ -29,7 +29,7 @@ Azure AI Video Indexer extracts rich insights from video and audio content:
 | **Topics** | Wikipedia-based topic extraction |
 | **Keywords** | Key terms from transcript |
 | **Faces** | Face detection and grouping (not identification without approval) |
-| **Emotions** | Sentiment from transcript text |
+| **Sentiments** | Sentiment analysis (positive/negative/neutral) from transcript text |
 | **Scenes/Shots** | Visual scene segmentation |
 | **Labels** | Visual object labels per frame |
 
