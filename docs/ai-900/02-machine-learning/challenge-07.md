@@ -117,8 +117,8 @@ The exam trigger for clustering: **"No labels"** or **"discover groups"** or **"
     {
       id: 'ai900-07-q1',
       question: 'A marketing team wants to group their customers into segments based on purchasing behavior, but they do not have predefined customer categories. Which ML technique should they use?',
-      options: ['Regression', 'Classification', 'Clustering', 'Anomaly detection'],
-      correctAnswer: 2,
+      options: ['Regression', 'Classification', 'Anomaly detection', 'Clustering'],
+      correctAnswer: 3,
       explanation: 'Clustering groups similar items without predefined categories. Since the marketing team wants to DISCOVER customer segments (not assign to known ones), clustering is the correct approach.'
     },
     {
@@ -138,8 +138,8 @@ The exam trigger for clustering: **"No labels"** or **"discover groups"** or **"
     {
       id: 'ai900-07-q4',
       question: 'Which of the following is NOT a clustering scenario?',
-      options: ['Grouping similar news articles by topic', 'Segmenting customers by shopping behavior', 'Predicting whether an email is spam or not spam', 'Discovering groups of similar genes'],
-      correctAnswer: 2,
+      options: ['Predicting whether an email is spam or not spam', 'Grouping similar news articles by topic', 'Segmenting customers by shopping behavior', 'Discovering groups of similar genes'],
+      correctAnswer: 0,
       explanation: 'Predicting spam/not-spam is classification — the categories (spam, not-spam) are predefined, and you train with labeled examples. All other options discover unknown groupings without predefined labels.'
     },
     {

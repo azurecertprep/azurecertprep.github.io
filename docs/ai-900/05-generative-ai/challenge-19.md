@@ -136,8 +136,8 @@ The exam expects you to know that generative AI can produce incorrect informatio
     {
       id: 'ai900-19-q2',
       question: 'What is a "hallucination" in the context of generative AI?',
-      options: ['When the model refuses to answer a question', 'When the model generates plausible but factually incorrect information', 'When the model takes too long to respond', 'When the model generates content in the wrong language'],
-      correctAnswer: 1,
+      options: ['When the model refuses to answer a question', 'When the model generates content in the wrong language', 'When the model takes too long to respond', 'When the model generates plausible but factually incorrect information'],
+      correctAnswer: 3,
       explanation: 'A hallucination occurs when a generative AI model produces content that sounds plausible and confident but is factually incorrect. This is a well-known limitation that grounding techniques help mitigate.'
     },
     {
@@ -150,8 +150,8 @@ The exam expects you to know that generative AI can produce incorrect informatio
     {
       id: 'ai900-19-q4',
       question: 'What is a foundation model?',
-      options: ['A model that can only perform one specific task', 'A small model designed for edge devices', 'A large pre-trained model that can be adapted for many different tasks', 'A model that requires no data to function'],
-      correctAnswer: 2,
+      options: ['A large pre-trained model that can be adapted for many different tasks', 'A small model designed for edge devices', 'A model that can only perform one specific task', 'A model that requires no data to function'],
+      correctAnswer: 0,
       explanation: 'A foundation model is a large AI model trained on broad data that can be adapted (through fine-tuning or prompting) for many different downstream tasks — rather than building separate models for each task.'
     },
     {

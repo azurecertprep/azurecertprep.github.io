@@ -130,22 +130,22 @@ Look for these keywords in exam scenarios:
     {
       id: 'ai900-11-q2',
       question: 'What information does a bounding box provide in object detection?',
-      options: ['The color of the detected object', 'The rectangular coordinates showing where the object is located in the image', 'The name of the person in the image', 'The distance of the object from the camera'],
-      correctAnswer: 1,
+      options: ['The color of the detected object', 'The name of the person in the image', 'The rectangular coordinates showing where the object is located in the image', 'The distance of the object from the camera'],
+      correctAnswer: 2,
       explanation: 'A bounding box provides rectangular coordinates (x, y, width, height) that define where a detected object is located within the image. It frames the object with a rectangle.'
     },
     {
       id: 'ai900-11-q3',
       question: 'An autonomous vehicle system detects a pedestrian with 0.55 confidence and the safety threshold is set to 0.30. What should the system do?',
-      options: ['Ignore the detection because 0.55 is low', 'Accept the detection because 0.55 exceeds the 0.30 threshold', 'Ask the driver to confirm', 'Reduce the threshold'],
-      correctAnswer: 1,
+      options: ['Accept the detection because 0.55 exceeds the 0.30 threshold', 'Ignore the detection because 0.55 is low', 'Ask the driver to confirm', 'Reduce the threshold'],
+      correctAnswer: 0,
       explanation: 'Since the confidence score (0.55) exceeds the threshold (0.30), the detection is accepted. Safety-critical systems use lower thresholds to catch more potential hazards, even at the cost of some false positives.'
     },
     {
       id: 'ai900-11-q4',
       question: 'What is the KEY feature that distinguishes object detection from image classification?',
-      options: ['Object detection is more accurate', 'Object detection provides the location (bounding box) of each object, not just labels', 'Object detection only works with Custom Vision', 'Object detection can only detect one object type'],
-      correctAnswer: 1,
+      options: ['Object detection is more accurate', 'Object detection only works with Custom Vision', 'Object detection can only detect one object type', 'Object detection provides the location (bounding box) of each object, not just labels'],
+      correctAnswer: 3,
       explanation: 'The defining feature of object detection is localization — it tells you WHERE each object is (bounding box coordinates), not just what the image contains. Classification labels the whole image; detection locates individual objects.'
     },
     {

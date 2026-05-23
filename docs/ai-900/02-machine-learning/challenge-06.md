@@ -116,22 +116,22 @@ The exam loves questions about when accuracy alone is misleading. If 99% of emai
     {
       id: 'ai900-06-q2',
       question: 'An image recognition system needs to identify whether a photo contains a cat, dog, bird, or fish. What type of classification is this?',
-      options: ['Binary classification', 'Multi-class classification', 'Regression', 'Clustering'],
-      correctAnswer: 1,
+      options: ['Binary classification', 'Clustering', 'Regression', 'Multi-class classification'],
+      correctAnswer: 3,
       explanation: 'This is multi-class classification because there are more than two possible categories (cat, dog, bird, fish). Each image is assigned one of multiple class labels.'
     },
     {
       id: 'ai900-06-q3',
       question: 'A spam detection model has high precision but low recall. What does this mean in practice?',
-      options: ['It catches all spam but also flags some legitimate emails', 'When it flags something as spam, it is usually correct, but it misses many actual spam emails', 'It is very fast but not very accurate', 'It works well on training data but poorly on new data'],
-      correctAnswer: 1,
+      options: ['When it flags something as spam, it is usually correct, but it misses many actual spam emails', 'It catches all spam but also flags some legitimate emails', 'It is very fast but not very accurate', 'It works well on training data but poorly on new data'],
+      correctAnswer: 0,
       explanation: 'High precision means the model is usually correct when it predicts spam (few false positives). Low recall means it misses many actual spam emails (many false negatives). It is conservative — when unsure, it says "not spam."'
     },
     {
       id: 'ai900-06-q4',
       question: 'Which Azure Machine Learning capability automatically tries multiple algorithms and selects the best classification model?',
-      options: ['Azure ML Designer', 'Automated ML (AutoML)', 'Azure ML Notebooks', 'Azure AI Language'],
-      correctAnswer: 1,
+      options: ['Azure ML Designer', 'Azure ML Notebooks', 'Automated ML (AutoML)', 'Azure AI Language'],
+      correctAnswer: 2,
       explanation: 'Automated ML (AutoML) automatically tests multiple algorithms, tunes hyperparameters, and selects the best-performing model for your dataset. It simplifies the model selection process.'
     },
     {

@@ -294,45 +294,45 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
   {
     question: "What audio format does the Speech SDK expect for file input?",
     options: [
+      "Any audio format — it auto-converts",
       "MP3 only",
       "WAV with PCM encoding (default: 16kHz, 16-bit, mono)",
-      "Any audio format — it auto-converts",
       "FLAC or OGG Vorbis"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The SDK expects WAV files with PCM encoding. Default expected format is 16kHz sample rate, 16-bit depth, mono channel. Other formats may need explicit AudioStreamFormat configuration."
   },
   {
     question: "When should you use batch transcription instead of real-time recognition?",
     options: [
       "When you need results in under 1 second",
-      "When transcribing pre-recorded audio files asynchronously, especially long recordings or multiple files",
+      "Batch is always preferred over real-time",
       "When you need speaker diarization",
-      "Batch is always preferred over real-time"
+      "When transcribing pre-recorded audio files asynchronously, especially long recordings or multiple files"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Batch transcription is for pre-recorded files processed asynchronously via REST API. It's ideal for long recordings, multiple files, and when real-time results aren't needed."
   },
   {
     question: "What does diarization provide in speech-to-text?",
     options: [
-      "Translation to another language",
       "Identification of which speaker said what (speaker separation)",
+      "Translation to another language",
       "Punctuation correction",
       "Noise reduction"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Diarization separates speech by speaker, identifying 'who said what.' It labels transcript segments with speaker IDs, useful for meetings with multiple participants."
   },
   {
     question: "How do you handle the CancellationReason.Error in speech recognition?",
     options: [
       "Ignore it — it's informational only",
-      "Check cancellation_details.error_details for the specific error (auth, network, format issue) and fix accordingly",
       "Restart the recognizer automatically",
+      "Check cancellation_details.error_details for the specific error (auth, network, format issue) and fix accordingly",
       "Switch to a different language"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "CancellationReason.Error indicates a real failure. Check error_details for specifics — common causes are invalid credentials, network issues, or unsupported audio format."
   }
 ]} />

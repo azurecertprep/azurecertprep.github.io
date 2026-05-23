@@ -741,12 +741,12 @@ Time: 2.8s | Tokens: 1542
     id: "ch18-q2",
     question: "How are images provided to GPT-4o for vision analysis?",
     options: [
-      "As a separate API call to a vision-specific endpoint",
       "As content parts within the chat completions messages array",
+      "As a separate API call to a vision-specific endpoint",
       "By uploading to Azure Blob Storage and providing a SAS token",
       "Through the Azure AI Vision API only"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "GPT-4o vision uses the standard chat completions API. Images are included as content parts (type: 'image_url') within user messages, alongside text parts. The image can be provided as a URL or base64-encoded data URI."
   },
   {
@@ -754,11 +754,11 @@ Time: 2.8s | Tokens: 1542
     question: "What does the 'detail' parameter control when sending images to GPT-4o?",
     options: [
       "The output quality of generated images",
-      "The resolution at which the model processes the image, affecting token cost and accuracy",
       "Whether the model returns structured or unstructured analysis",
+      "The resolution at which the model processes the image, affecting token cost and accuracy",
       "The compression level applied before transmission"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The 'detail' parameter (low/high/auto) controls image processing resolution. 'low' uses a fixed 85 tokens regardless of size. 'high' processes at full resolution, with token costs proportional to the number of 512x512 tiles needed, providing more accurate analysis."
   },
   {
@@ -778,11 +778,11 @@ Time: 2.8s | Tokens: 1542
     question: "How long are DALL-E 3 generated image URLs valid before they expire?",
     options: [
       "1 hour",
-      "24 hours",
       "7 days",
-      "They never expire"
+      "They never expire",
+      "24 hours"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "DALL-E 3 image URLs are temporary and expire after 24 hours. Applications that need to persist images should download them immediately after generation and store them in their own storage (e.g., Azure Blob Storage)."
   }
 ]} />

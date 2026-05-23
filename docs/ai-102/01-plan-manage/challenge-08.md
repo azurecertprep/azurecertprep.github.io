@@ -140,7 +140,7 @@ var pricing = new Dictionary<string, (double Prompt, double Completion)>
 };
 
 // Load tokenizer for the model
-var tokenizer = await Tokenizer.CreateByModelNameAsync("gpt-4o");
+var tokenizer = TiktokenTokenizer.CreateForModel("gpt-4o");
 
 string systemMessage = "You are a helpful assistant that summarizes documents.";
 string userMessage = "Summarize the following quarterly report in 3 bullet points: " +

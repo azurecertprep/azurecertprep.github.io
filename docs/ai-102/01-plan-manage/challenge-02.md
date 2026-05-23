@@ -366,22 +366,22 @@ Public access: Enabled
     question: "Why is a custom subdomain name required when using Microsoft Entra ID (Azure AD) authentication with Azure AI services?",
     options: [
       "Custom subdomains provide faster response times through CDN caching",
-      "Microsoft Entra tokens can only be validated against custom domain endpoints",
       "Custom subdomains are required for CORS configuration",
+      "Microsoft Entra tokens can only be validated against custom domain endpoints",
       "Regional endpoints do not support HTTPS for token-based auth"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Microsoft Entra ID authentication requires a custom subdomain because token validation is tied to the unique endpoint URL. Regional shared endpoints (like eastus.api.cognitive.microsoft.com) only support key-based authentication."
   },
   {
     question: "You need to rotate API keys for a production Azure AI resource without any downtime. What is the correct procedure?",
     options: [
       "Regenerate both keys simultaneously, then update all applications",
-      "Update all apps to use Key 2, regenerate Key 1, update apps to Key 1, regenerate Key 2",
+      "Use managed identity instead—key rotation always causes downtime",
       "Create a new resource, migrate traffic, then delete the old resource",
-      "Use managed identity instead—key rotation always causes downtime"
+      "Update all apps to use Key 2, regenerate Key 1, update apps to Key 1, regenerate Key 2"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "The zero-downtime key rotation pattern is: switch apps to Key 2, regenerate Key 1, switch apps back to Key 1, then regenerate Key 2. This ensures at least one valid key is always in use."
   },
   {
@@ -398,23 +398,23 @@ Public access: Enabled
   {
     question: "You configure network rules on your Azure AI resource with default action set to 'Deny'. Which traffic is still allowed?",
     options: [
-      "All traffic from within the same Azure region",
       "Only traffic from configured IP rules, VNet rules, and private endpoints",
+      "All traffic from within the same Azure region",
       "All Azure service traffic plus configured rules",
       "Only traffic from the Azure portal and configured rules"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "When the default action is Deny, only traffic matching explicitly configured IP rules, virtual network rules, or private endpoints is allowed. Azure portal access also requires the user's IP to be in the allow list."
   },
   {
     question: "Which SKU should you choose for a development/testing Azure AI multi-service resource to minimize costs while accessing all service APIs?",
     options: [
       "F0 (Free tier) for zero-cost development",
-      "S0 (Standard tier) for multi-service resources",
       "S1 for higher rate limits during testing",
+      "S0 (Standard tier) for multi-service resources",
       "P1 (Premium) for all API access"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Multi-service resources (kind: CognitiveServices) use the S0 SKU. There is no F0 free tier for multi-service resources—free tiers are only available for individual single-service resources. S0 is the standard and only available SKU for multi-service."
   }
 ]} />

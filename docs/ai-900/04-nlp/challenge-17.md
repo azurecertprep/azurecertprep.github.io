@@ -141,8 +141,8 @@ az cognitiveservices account create \
     {
       id: 'ai900-17-q2',
       question: 'What is the purpose of transliteration in Azure AI Translator?',
-      options: ['Translating text between languages', 'Converting text from one script to another within the same language', 'Detecting the language of text', 'Improving translation quality with custom models'],
-      correctAnswer: 1,
+      options: ['Translating text between languages', 'Improving translation quality with custom models', 'Detecting the language of text', 'Converting text from one script to another within the same language'],
+      correctAnswer: 3,
       explanation: 'Transliteration converts text from one writing script to another (e.g., Japanese Kanji to Latin characters, or Hindi Devanagari to Latin script) without changing the language itself.'
     },
     {
@@ -155,8 +155,8 @@ az cognitiveservices account create \
     {
       id: 'ai900-17-q4',
       question: 'Which Azure service provides real-time spoken language translation during a multilingual meeting?',
-      options: ['Azure AI Translator (text)', 'Azure AI Language', 'Azure AI Speech (speech translation)', 'Azure AI Vision'],
-      correctAnswer: 2,
+      options: ['Azure AI Speech (speech translation)', 'Azure AI Language', 'Azure AI Translator (text)', 'Azure AI Vision'],
+      correctAnswer: 0,
       explanation: 'Speech translation, part of the Azure AI Speech service, translates spoken audio from one language to another in real time — ideal for live multilingual meetings and conversations.'
     },
     {

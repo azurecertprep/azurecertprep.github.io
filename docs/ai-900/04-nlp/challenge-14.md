@@ -43,7 +43,7 @@ Key phrase extraction pulls out the most important talking points from text. Rev
 
 Navigate to the Azure AI Language Studio demo: [language.cognitive.azure.com](https://language.cognitive.azure.com/)
 
-1. Select **Classify text** → **Named entity recognition**
+1. Select **Extract information** → **Named entity recognition**
 2. Try the following sample text:
 
 > "On January 15, 2024, Contoso Ltd. announced a $2.5 billion investment in their Seattle headquarters. CEO Jane Smith said the expansion would create 5,000 new jobs."
@@ -141,8 +141,8 @@ az cognitiveservices account create \
     {
       id: 'ai900-14-q3',
       question: 'What is the primary difference between key phrase extraction and named entity recognition?',
-      options: ['Key phrases work only in English while NER works in all languages', 'Key phrases identify important topics while NER identifies and categorizes specific named things', 'NER is faster than key phrase extraction', 'Key phrase extraction requires training while NER does not'],
-      correctAnswer: 1,
+      options: ['Key phrases identify important topics while NER identifies and categorizes specific named things', 'Key phrases work only in English while NER works in all languages', 'NER is faster than key phrase extraction', 'Key phrase extraction requires training while NER does not'],
+      correctAnswer: 0,
       explanation: 'Key phrase extraction identifies important concepts and topics in text, while NER identifies specific named entities (people, places, organizations, dates) and assigns them categories.'
     },
     {
@@ -155,8 +155,8 @@ az cognitiveservices account create \
     {
       id: 'ai900-14-q5',
       question: 'Which Azure service provides both key phrase extraction and named entity recognition as pre-built capabilities?',
-      options: ['Azure Machine Learning', 'Azure AI Language', 'Azure AI Vision', 'Azure OpenAI Service'],
-      correctAnswer: 1,
+      options: ['Azure Machine Learning', 'Azure OpenAI Service', 'Azure AI Vision', 'Azure AI Language'],
+      correctAnswer: 3,
       explanation: 'Azure AI Language (formerly Text Analytics) provides pre-built NLP capabilities including key phrase extraction, named entity recognition, sentiment analysis, and language detection.'
     }
   ]}

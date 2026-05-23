@@ -337,33 +337,33 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
     question: "How do you route a translation request to your custom model?",
     options: [
       "Use a different API endpoint",
-      "Add the 'category' parameter with your model's Category ID to the translate request",
       "Include the model name in the request body",
+      "Add the 'category' parameter with your model's Category ID to the translate request",
       "Custom models are used automatically once published"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The category parameter routes requests to your custom model. Without it (or with category='general'), the default Microsoft model is used."
   },
   {
     question: "What is the BLEU score used for in Custom Translator?",
     options: [
-      "Measuring translation speed",
       "Evaluating translation quality by comparing custom model output against reference translations (0-100 scale)",
+      "Measuring translation speed",
       "Calculating the cost of translation",
       "Measuring the number of supported languages"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "BLEU (Bilingual Evaluation Understudy) measures translation quality against reference translations. Higher scores (0-100) indicate better quality; compare custom vs baseline scores."
   },
   {
     question: "What type of training data does Custom Translator require?",
     options: [
       "Only source language text — the model learns target language automatically",
-      "Parallel data: aligned sentence pairs in both source and target languages",
       "A dictionary of terminology",
-      "Example translations from Google Translate"
+      "Example translations from Google Translate",
+      "Parallel data: aligned sentence pairs in both source and target languages"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Custom Translator requires parallel data — sentence-aligned pairs in both languages. The model learns domain patterns from these aligned examples."
   },
   {
@@ -381,11 +381,11 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
     question: "What is the minimum recommended amount of parallel training data for meaningful improvement?",
     options: [
       "10 sentence pairs",
-      "10,000+ sentence pairs for significant domain-specific improvement",
       "100 sentence pairs",
-      "1 million sentence pairs"
+      "1 million sentence pairs",
+      "10,000+ sentence pairs for significant domain-specific improvement"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Microsoft recommends 10,000+ aligned sentence pairs for meaningful improvement. More data (especially diverse, domain-specific content) generally produces better models."
   }
 ]} />

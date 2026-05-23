@@ -162,8 +162,8 @@ training_data = {
                 "intent": "BookFlight",
                 "language": "en",
                 "entities": [
-                    {"category": "Destination", "offset": 19, "length": 6},
-                    {"category": "DepartureDate", "offset": 26, "length": 11}
+                    {"category": "Destination", "offset": 17, "length": 6},
+                    {"category": "DepartureDate", "offset": 24, "length": 11}
                 ]
             },
             {
@@ -407,11 +407,11 @@ Query: 'Cancel my reservation please'
     question: "What is the relationship between intents and utterances in CLU?",
     options: [
       "Each intent can have only one utterance",
-      "Utterances are example texts labeled with an intent, teaching the model to recognize user goals",
       "Intents are extracted from utterances automatically",
+      "Utterances are example texts labeled with an intent, teaching the model to recognize user goals",
       "Utterances and intents are the same concept"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Utterances are labeled training examples mapped to intents. Multiple diverse utterances per intent teach the model to recognize the same goal expressed differently."
   },
   {
@@ -429,33 +429,33 @@ Query: 'Cancel my reservation please'
     question: "What replaced LUIS (Language Understanding) in Azure AI?",
     options: [
       "Azure Bot Service",
-      "Conversational Language Understanding (CLU) in Azure AI Language",
       "Azure OpenAI function calling",
-      "Custom Text Classification"
+      "Custom Text Classification",
+      "Conversational Language Understanding (CLU) in Azure AI Language"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "CLU is the successor to LUIS, providing the same intent/entity recognition with improved accuracy, integrated in the Azure AI Language service."
   },
   {
     question: "What is the purpose of the 'None' intent?",
     options: [
-      "It handles errors in the model",
       "It captures utterances that don't match any defined intent (out-of-scope queries)",
+      "It handles errors in the model",
       "It is automatically assigned to untrained utterances",
       "It disables intent recognition"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "The 'None' intent captures out-of-scope utterances that don't belong to any defined intent. It should have diverse examples of irrelevant queries."
   },
   {
     question: "How do you specify character positions for entity labels in training utterances?",
     options: [
       "By word index (first word = 0, second = 1)",
-      "By character offset and length within the utterance text",
       "By start and end word positions",
-      "By percentage position in the text"
+      "By percentage position in the text",
+      "By character offset and length within the utterance text"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Entities are labeled using character offset (starting position) and length (number of characters) within the utterance text, using UTF-16 code unit indexing."
   }
 ]} />

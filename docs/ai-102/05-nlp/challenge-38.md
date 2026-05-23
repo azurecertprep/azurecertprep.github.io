@@ -90,10 +90,9 @@ create_url = f"{endpoint}/language/authoring/query-knowledgebases/projects/{proj
 project_body = {
     "description": "Product FAQ knowledge base",
     "language": "en",
-    "defaultAnswer": "I'm sorry, I don't have information about that. Please contact support.",
     "multilingualResource": False,
     "settings": {
-        "defaultAnswer": "Sorry, I can't find an answer to that question."
+        "defaultAnswer": "I'm sorry, I don't have information about that. Please contact support."
     }
 }
 
@@ -335,44 +334,44 @@ Q: What vision services are available?
     question: "What Azure resource is required in addition to the Language resource for Custom Question Answering?",
     options: [
       "Azure Cosmos DB",
-      "Azure AI Search (for indexing the knowledge base content)",
       "Azure Blob Storage",
+      "Azure AI Search (for indexing the knowledge base content)",
       "Azure SQL Database"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Custom Question Answering requires an Azure AI Search resource to index the knowledge base content and enable semantic matching of questions to answers."
   },
   {
     question: "How do you create multi-turn conversations in Custom QA?",
     options: [
-      "Create separate projects for each turn",
       "Add follow-up prompts (dialog.prompts) to QA pairs that reference other QA pair IDs",
+      "Create separate projects for each turn",
       "Write conversation scripts in a separate file",
       "Multi-turn is automatic — no configuration needed"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Multi-turn is created by adding dialog.prompts to QA pairs. Each prompt has displayText (shown to user) and qnaId (the target answer), creating a dialogue tree."
   },
   {
     question: "What is the purpose of alternate questions on a QA pair?",
     options: [
       "To provide multiple correct answers",
-      "To capture different phrasings of the same question so the model matches more variations",
       "To create separate QA pairs automatically",
+      "To capture different phrasings of the same question so the model matches more variations",
       "To translate the question into other languages"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Alternate questions teach the model to recognize different phrasings of the same question (e.g., 'What's the cost?', 'How much?', 'Pricing info?') all mapping to one answer."
   },
   {
     question: "What happens when no answer meets the confidence threshold?",
     options: [
       "The API returns a 404 error",
-      "The API returns the configured default answer",
       "The API returns all answers regardless of confidence",
-      "The request times out"
+      "The request times out",
+      "The API returns the configured default answer"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "When no answer exceeds the confidence threshold, the API returns the project's configured defaultAnswer, providing a graceful fallback."
   },
   {

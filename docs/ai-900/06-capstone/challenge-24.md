@@ -220,15 +220,15 @@ For each scenario, identify the responsible AI considerations:
     {
       id: 'ai900-24-q4',
       question: 'An AI chatbot answers employee questions about company policies. Which technique ensures responses are accurate and based on actual policy documents?',
-      options: ['Increasing the temperature parameter', 'Using a larger language model', 'Grounding with Retrieval-Augmented Generation (RAG)', 'Fine-tuning the model on all internet data'],
-      correctAnswer: 2,
+      options: ['Grounding with Retrieval-Augmented Generation (RAG)', 'Using a larger language model', 'Increasing the temperature parameter', 'Fine-tuning the model on all internet data'],
+      correctAnswer: 0,
       explanation: 'RAG (Retrieval-Augmented Generation) retrieves relevant policy documents and includes them in the prompt, grounding the AI\'s answers in actual source material. This dramatically reduces hallucinations and ensures accuracy for factual Q&A.'
     },
     {
       id: 'ai900-24-q5',
       question: 'Which responsible AI principle requires that an AI-powered customer service bot clearly informs users they are chatting with AI, not a human?',
-      options: ['Fairness', 'Reliability', 'Transparency', 'Privacy'],
-      correctAnswer: 2,
+      options: ['Fairness', 'Reliability', 'Privacy', 'Transparency'],
+      correctAnswer: 3,
       explanation: 'Transparency requires that users are informed about how AI systems work and when they are interacting with AI. Disclosing that a chatbot is AI-powered (not human) is a core transparency requirement.'
     },
     {
@@ -241,15 +241,15 @@ For each scenario, identify the responsible AI considerations:
     {
       id: 'ai900-24-q7',
       question: 'A company deploys AI for warehouse safety monitoring (detecting blocked fire exits). Which responsible AI principle is MOST critical for this scenario?',
-      options: ['Inclusiveness', 'Transparency', 'Reliability and Safety', 'Fairness'],
-      correctAnswer: 2,
+      options: ['Reliability and Safety', 'Transparency', 'Inclusiveness', 'Fairness'],
+      correctAnswer: 0,
       explanation: 'For safety-critical applications like detecting blocked fire exits, Reliability and Safety is the most important principle. The system must not miss genuine hazards (dangerous false negatives) — a missed detection could endanger lives.'
     },
     {
       id: 'ai900-24-q8',
       question: 'Which combination of Azure AI services would you use to build a multilingual customer support chatbot that understands user intent, generates helpful responses, and communicates in the customer\'s language?',
-      options: ['Azure AI Vision + Azure Machine Learning', 'Azure AI Language (CLU) + Azure OpenAI + Azure AI Translator', 'Azure AI Speech + Azure AI Vision', 'Azure Machine Learning + Azure AI Translator only'],
-      correctAnswer: 1,
+      options: ['Azure AI Vision + Azure Machine Learning', 'Azure Machine Learning + Azure AI Translator only', 'Azure AI Speech + Azure AI Vision', 'Azure AI Language (CLU) + Azure OpenAI + Azure AI Translator'],
+      correctAnswer: 3,
       explanation: 'A multilingual chatbot needs: Azure AI Language (CLU) to understand user intent, Azure OpenAI to generate natural responses, and Azure AI Translator to communicate in the customer\'s language. This combines NLP understanding, generation, and translation.'
     }
   ]}

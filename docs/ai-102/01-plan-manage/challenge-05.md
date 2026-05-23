@@ -832,33 +832,33 @@ Job: smoke-test ✓
     question: "How should you manage environment-specific configurations (dev/staging/prod) for Azure AI deployments in a pipeline?",
     options: [
       "Use separate Bicep templates for each environment",
-      "Use parameter files (e.g., params.dev.json, params.prod.json) with the same template",
+      "Use Git branches—one branch per environment with different templates",
       "Hard-code environment values in the workflow YAML",
-      "Use Git branches—one branch per environment with different templates"
+      "Use parameter files (e.g., params.dev.json, params.prod.json) with the same template"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Parameter files keep infrastructure DRY—one template with environment-specific parameter files. This ensures consistency across environments while allowing different capacities, SKUs, and configurations per stage."
   },
   {
     question: "What Bicep resource property ensures a model deployment waits for its parent Azure OpenAI account to be created first?",
     options: [
-      "An explicit dependsOn array referencing the account resource",
       "The parent property on the deployment resource that references the account",
+      "An explicit dependsOn array referencing the account resource",
       "A deployment script that checks account existence before deploying",
       "Setting the deployment in a separate Bicep module with a dependency"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "In Bicep, using the 'parent' property (e.g., parent: openai) on a child resource automatically creates an implicit dependency. The deployment won't begin until the parent account is successfully provisioned. Explicit dependsOn is unnecessary when parent is used."
   },
   {
     question: "Your pipeline deploys a new model version but the smoke test fails. What should the pipeline do?",
     options: [
       "Immediately delete the resource group and alert the team",
-      "Automatically rollback to the previous model version using a pipeline rollback step",
       "Continue the pipeline and mark the deployment as degraded",
+      "Automatically rollback to the previous model version using a pipeline rollback step",
       "Retry the smoke test 10 times before failing"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "A well-designed pipeline should automatically rollback on smoke test failure—redeploying the previous known-good model version. This can be achieved with a conditional rollback job triggered on smoke-test failure, using the previous Bicep parameters."
   }
 ]} />

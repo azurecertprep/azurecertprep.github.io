@@ -795,33 +795,33 @@ token-spike-alert       3         True     total TokenTransaction > 100000
     question: "Which KQL table contains diagnostic logs from Azure Cognitive Services resources?",
     options: [
       "CognitiveServicesLogs",
-      "AzureDiagnostics",
+      "AIServicesMetrics",
       "AzureActivity",
-      "AIServicesMetrics"
+      "AzureDiagnostics"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Azure Cognitive Services diagnostic logs are stored in the AzureDiagnostics table in Log Analytics. You filter by ResourceProvider == 'MICROSOFT.COGNITIVESERVICES' to isolate AI service logs."
   },
   {
     question: "When creating a metric alert rule, what does the 'window size' parameter control?",
     options: [
-      "How long the alert stays active after firing",
       "The time range over which the metric is aggregated for evaluation",
+      "How long the alert stays active after firing",
       "The maximum number of notifications to send",
       "The delay before the alert rule becomes active"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "The window size defines the lookback period over which the metric values are aggregated (e.g., average over 15 minutes). The evaluation frequency determines how often this window is checked."
   },
   {
     question: "Which log category must be enabled in diagnostic settings to capture API request and response details for Azure AI services?",
     options: [
       "Audit",
-      "RequestResponse",
       "AllMetrics",
+      "RequestResponse",
       "OperationalLogs"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The RequestResponse category captures detailed information about API requests and responses including status codes, duration, and for Azure OpenAI, token counts. The Audit category captures control-plane operations like key regeneration."
   }
 ]} />

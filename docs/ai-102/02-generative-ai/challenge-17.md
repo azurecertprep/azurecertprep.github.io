@@ -713,23 +713,23 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
     question: "What is the recommended approach when you want both low randomness and high quality in Azure OpenAI responses?",
     options: [
       "Set temperature=0 and top_p=0 simultaneously",
-      "Set temperature=0 and leave top_p at default (1)",
       "Set top_p=0.1 and temperature=2",
+      "Set temperature=0 and leave top_p at default (1)",
       "Set frequency_penalty=2 and presence_penalty=2"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Microsoft recommends adjusting either temperature OR top_p, not both. Setting temperature=0 gives deterministic results. Setting top_p=0 would prevent any token selection. The recommended approach is temperature=0 with top_p at its default value of 1."
   },
   {
     id: "ch17-q2",
     question: "In the chat completions API, what is the purpose of including assistant messages in the messages array?",
     options: [
-      "To define the system behavior constraints",
       "To provide conversation history and examples for few-shot prompting",
+      "To define the system behavior constraints",
       "To set the output format to JSON",
       "To increase the rate limit for the request"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Assistant messages represent prior model responses. They serve two purposes: providing conversation history for multi-turn chat, and providing example responses in few-shot prompting patterns where user/assistant pairs demonstrate the desired behavior."
   },
   {
@@ -749,23 +749,23 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
     question: "Which parameter reduces the likelihood of the model repeating the same words or phrases it has already used?",
     options: [
       "presence_penalty",
-      "frequency_penalty",
+      "top_p",
       "temperature",
-      "top_p"
+      "frequency_penalty"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "frequency_penalty (range -2 to 2) reduces repetition proportionally to how often a token has appeared. The more a word is repeated, the more it is penalized. presence_penalty penalizes tokens that have appeared at all (regardless of frequency), encouraging new topics."
   },
   {
     id: "ch17-q5",
     question: "What is the key difference between zero-shot and few-shot prompting?",
     options: [
-      "Zero-shot uses temperature=0; few-shot uses temperature>0",
       "Zero-shot provides no examples; few-shot includes example input/output pairs in the prompt",
+      "Zero-shot uses temperature=0; few-shot uses temperature>0",
       "Zero-shot works only with GPT-3.5; few-shot requires GPT-4",
       "Zero-shot is synchronous; few-shot is asynchronous"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Zero-shot prompting gives the model a task without examples, relying on its training. Few-shot prompting includes example input/output pairs in the prompt (as user/assistant message pairs) to demonstrate the desired format and behavior, improving consistency."
   }
 ]} />

@@ -660,12 +660,12 @@ After completing all tasks, you should have:
     id: "ch14-q1",
     question: "What is the primary purpose of the RAG (Retrieval Augmented Generation) pattern?",
     options: [
-      "To fine-tune the model on new data",
       "To ground LLM responses in external knowledge, reducing hallucinations",
+      "To fine-tune the model on new data",
       "To reduce the cost of API calls by caching responses",
       "To replace the need for prompt engineering"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "RAG grounds LLM responses in external knowledge by first retrieving relevant documents from a search index, then providing them as context to the model. This reduces hallucinations and enables answering questions about data the model wasn't trained on."
   },
   {
@@ -673,11 +673,11 @@ After completing all tasks, you should have:
     question: "In Azure OpenAI's 'On Your Data' feature, what does the 'in_scope' parameter control?",
     options: [
       "Whether the model can access the internet",
-      "Whether responses are restricted to only information found in the configured data source",
       "The geographic region of the search service",
+      "Whether responses are restricted to only information found in the configured data source",
       "Whether the model uses its training data in addition to the index"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "When 'in_scope' is set to true, the model restricts its responses to only information found in the configured data source. If the answer isn't in the indexed data, the model will indicate it cannot answer rather than hallucinating."
   },
   {
@@ -709,11 +709,11 @@ After completing all tasks, you should have:
     question: "What happens when you query Azure OpenAI with 'On Your Data' and the answer is not in the indexed documents (with in_scope=true)?",
     options: [
       "The model generates an answer from its training data",
-      "The model indicates it cannot find the information in the available data",
       "The request fails with a 404 error",
-      "The model searches the internet for the answer"
+      "The model searches the internet for the answer",
+      "The model indicates it cannot find the information in the available data"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "With in_scope=true, if the answer is not found in the indexed documents, the model will indicate it cannot find the relevant information rather than generating potentially incorrect answers from its training data."
   }
 ]} />

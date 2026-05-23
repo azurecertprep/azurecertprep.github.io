@@ -74,7 +74,7 @@ The Transformer architecture introduced in 2017 revolutionized AI. Key concepts:
 | **BERT** | Encoder-only Transformer | Understands text for classification, entity extraction |
 | **DALL-E** | Transformer + Diffusion | Generates images from text descriptions |
 | **Whisper** | Encoder-Decoder Transformer | Transcribes speech to text |
-| **Codex** | Decoder-only Transformer | Generates and understands code |
+| **GitHub Copilot (GPT-4)** | Decoder-only Transformer | Generates and understands code |
 
 **Key insight for the exam**: You don't need to understand the math. Know that:
 - Transformers use attention to understand context
@@ -128,15 +128,15 @@ The exam tests conceptual understanding, not mathematical details. Focus on:
     {
       id: 'ai900-08-q2',
       question: 'Which type of neural network is most commonly used for image recognition tasks?',
-      options: ['RNN (Recurrent Neural Network)', 'CNN (Convolutional Neural Network)', 'GAN (Generative Adversarial Network)', 'Transformer'],
-      correctAnswer: 1,
+      options: ['CNN (Convolutional Neural Network)', 'RNN (Recurrent Neural Network)', 'GAN (Generative Adversarial Network)', 'Transformer'],
+      correctAnswer: 0,
       explanation: 'CNNs (Convolutional Neural Networks) are specifically designed for image processing. They use convolutional filters that slide across images to detect patterns like edges, textures, and shapes at various scales.'
     },
     {
       id: 'ai900-08-q3',
       question: 'What is the key innovation of the Transformer architecture that powers models like GPT-4?',
-      options: ['It uses more layers than other networks', 'The attention mechanism that processes all input simultaneously', 'It processes data one word at a time in sequence', 'It requires less training data than other models'],
-      correctAnswer: 1,
+      options: ['It uses more layers than other networks', 'It processes data one word at a time in sequence', 'The attention mechanism that processes all input simultaneously', 'It requires less training data than other models'],
+      correctAnswer: 2,
       explanation: 'The Transformer\'s key innovation is the self-attention mechanism, which allows it to look at all parts of the input simultaneously and determine which parts are most relevant to each other. This enables better understanding of context.'
     },
     {
@@ -149,8 +149,8 @@ The exam tests conceptual understanding, not mathematical details. Focus on:
     {
       id: 'ai900-08-q5',
       question: 'In the context of Transformers, what is a "token"?',
-      options: ['A security credential for API access', 'The basic unit of text the model processes (roughly words or word pieces)', 'A type of neural network layer', 'A measure of model accuracy'],
-      correctAnswer: 1,
+      options: ['A security credential for API access', 'A type of neural network layer', 'A measure of model accuracy', 'The basic unit of text the model processes (roughly words or word pieces)'],
+      correctAnswer: 3,
       explanation: 'In Transformer models, text is broken into tokens — roughly corresponding to words or word pieces. The model processes, predicts, and generates text at the token level. "Tokenization" converts text into these units.'
     }
   ]}
@@ -158,7 +158,7 @@ The exam tests conceptual understanding, not mathematical details. Focus on:
 
 ## Learn More
 
-- [Microsoft Learn: Fundamentals of deep learning](https://learn.microsoft.com/en-us/training/modules/introduction-to-classical-machine-learning/)
+- [Microsoft Learn: Fundamentals of machine learning (includes deep learning)](https://learn.microsoft.com/en-us/training/modules/fundamentals-machine-learning/)
 - [Introduction to Transformer models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models)
 - [How GPT models work](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering)
 - [Azure OpenAI Service models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models)

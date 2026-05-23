@@ -947,12 +947,12 @@ After completing all tasks, you should have:
     id: "ch15-q3",
     question: "When configuring 'On Your Data' with query_type 'vector_semantic_hybrid', what three search techniques are combined?",
     options: [
-      "OCR, entity recognition, and sentiment analysis",
       "Keyword (full-text) search, vector similarity search, and semantic re-ranking",
+      "OCR, entity recognition, and sentiment analysis",
       "Document search, image search, and audio search",
       "SQL queries, graph queries, and text queries"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "The 'vector_semantic_hybrid' query type combines: 1) keyword/full-text search for exact matching, 2) vector similarity search for semantic understanding, and 3) semantic re-ranking using a deep learning model to re-order results by true relevance."
   },
   {
@@ -960,11 +960,11 @@ After completing all tasks, you should have:
     question: "What does the 'groundedness' evaluation metric measure in a RAG system?",
     options: [
       "Whether the system is connected to the ground truth database",
-      "Whether the generated answer is fully supported by the retrieved context documents",
       "Whether the model was fine-tuned on domain data",
-      "Whether the vector embeddings are accurate"
+      "Whether the vector embeddings are accurate",
+      "Whether the generated answer is fully supported by the retrieved context documents"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Groundedness measures whether the generated answer is supported by the retrieved context. A high groundedness score means the LLM's response is factually based on the provided documents rather than hallucinated from training data. This is a key metric for RAG quality."
   },
   {
@@ -972,11 +972,11 @@ After completing all tasks, you should have:
     question: "What is the purpose of overlapping chunks in a RAG chunking strategy?",
     options: [
       "To increase the index size for better billing",
-      "To preserve context that might be split at chunk boundaries",
       "To make vector search faster",
+      "To preserve context that might be split at chunk boundaries",
       "To reduce the number of embedding API calls needed"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Overlapping chunks (e.g., 512 tokens with 128-token overlap) ensure that information spanning a chunk boundary is captured in at least one chunk. Without overlap, relevant context split between two chunks might not be retrieved for queries about that boundary content."
   }
 ]} />

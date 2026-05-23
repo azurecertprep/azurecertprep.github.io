@@ -116,7 +116,7 @@ These parameters control the randomness and creativity of outputs:
 | 0.7-1.0 | Creative, varied responses | Creative writing, brainstorming, storytelling |
 | >1.0 | Very random, potentially incoherent | Rarely useful in production |
 
-**Top-p** (0 to 1) — Nuclear sampling:
+**Top-p** (0 to 1) — Nucleus sampling:
 - Top-p 0.1: Only considers the top 10% most likely tokens → very focused
 - Top-p 0.9: Considers the top 90% most likely tokens → more diverse
 - Works as an alternative to temperature (use one or the other, not both)
@@ -195,8 +195,8 @@ For the exam, remember: system messages set behavior, few-shot examples show for
     {
       id: 'ai900-22-q2',
       question: 'What is the primary purpose of grounding in prompt engineering?',
-      options: ['To make responses longer and more detailed', 'To reduce hallucinations by connecting the model to real source data', 'To increase the creativity of responses', 'To speed up response generation'],
-      correctAnswer: 1,
+      options: ['To make responses longer and more detailed', 'To speed up response generation', 'To increase the creativity of responses', 'To reduce hallucinations by connecting the model to real source data'],
+      correctAnswer: 3,
       explanation: 'Grounding provides relevant, factual source data in the prompt so the model answers based on real information rather than generating potentially incorrect content from its training data. This reduces hallucinations.'
     },
     {

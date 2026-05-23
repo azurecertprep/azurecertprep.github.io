@@ -158,8 +158,8 @@ For the exam, remember the four content filter categories (hate, sexual, violenc
     {
       id: 'ai900-23-q2',
       question: 'What is a "prompt injection" attack in the context of generative AI?',
-      options: ['Sending too many requests to the API', 'Crafting user input designed to override the system message and change the AI behavior', 'Injecting code into the model to change its weights', 'Uploading malicious files to the model'],
-      correctAnswer: 1,
+      options: ['Sending too many requests to the API', 'Uploading malicious files to the model', 'Injecting code into the model to change its weights', 'Crafting user input designed to override the system message and change the AI behavior'],
+      correctAnswer: 3,
       explanation: 'Prompt injection is an attack where a user crafts their input to trick the model into ignoring its system message instructions — for example, "Ignore previous instructions and..." to make the AI behave differently than intended.'
     },
     {
@@ -172,8 +172,8 @@ For the exam, remember the four content filter categories (hate, sexual, violenc
     {
       id: 'ai900-23-q4',
       question: 'What technique reduces hallucinations by connecting AI responses to verified source documents?',
-      options: ['Increasing temperature', 'Grounding (Retrieval-Augmented Generation)', 'Using a larger model', 'Disabling content filters'],
-      correctAnswer: 1,
+      options: ['Grounding (Retrieval-Augmented Generation)', 'Increasing temperature', 'Using a larger model', 'Disabling content filters'],
+      correctAnswer: 0,
       explanation: 'Grounding (often implemented via RAG — Retrieval-Augmented Generation) provides relevant, verified source documents in the prompt so the model bases its answers on real data rather than potentially generating incorrect information from its training data.'
     },
     {

@@ -51,7 +51,7 @@ from azure.identity import DefaultAzureCredential
 from azure.mgmt.cognitiveservices import CognitiveServicesManagementClient
 from azure.mgmt.cognitiveservices.models import (
     Account, Sku, AccountProperties, Deployment, DeploymentProperties,
-    DeploymentModel, DeploymentScaleSettings
+    DeploymentModel
 )
 
 credential = DefaultAzureCredential()
@@ -79,23 +79,20 @@ deployment = client.deployments.begin_create_or_update(
     account_name="ai102-openai-03",
     deployment_name="gpt-4o-standard",
     deployment=Deployment(
+        sku=Sku(name="Standard", capacity=30),  # 30K tokens per minute
         properties=DeploymentProperties(
             model=DeploymentModel(
                 format="OpenAI",
                 name="gpt-4o",
                 version="2024-08-06"
             ),
-            version_upgrade_option="OnceCurrentVersionExpired",
-            sku=DeploymentScaleSettings(
-                name="Standard",
-                capacity=30  # 30K tokens per minute
-            )
+            version_upgrade_option="OnceCurrentVersionExpired"
         )
     )
 ).result()
 print(f"Deployed: {deployment.name}")
 print(f"Model: {deployment.properties.model.name} v{deployment.properties.model.version}")
-print(f"Capacity: {deployment.properties.sku.capacity}K TPM")
+print(f"Capacity: {deployment.sku.capacity}K TPM")
 ```
 
 </TabItem>
@@ -204,17 +201,14 @@ mini_deployment = client.deployments.begin_create_or_update(
     account_name="ai102-openai-03",
     deployment_name="gpt-4o-mini-standard",
     deployment=Deployment(
+        sku=Sku(name="GlobalStandard", capacity=50),  # 50K TPM with global routing
         properties=DeploymentProperties(
             model=DeploymentModel(
                 format="OpenAI",
                 name="gpt-4o-mini",
                 version="2024-07-18"
             ),
-            version_upgrade_option="OnceNewDefaultVersionAvailable",
-            sku=DeploymentScaleSettings(
-                name="GlobalStandard",
-                capacity=50  # 50K TPM with global routing
-            )
+            version_upgrade_option="OnceNewDefaultVersionAvailable"
         )
     )
 ).result()
@@ -230,8 +224,8 @@ print("\n--- All Deployments ---")
 for d in deployments:
     print(f"  {d.name}:")
     print(f"    Model: {d.properties.model.name} v{d.properties.model.version}")
-    print(f"    Type: {d.properties.sku.name}")
-    print(f"    Capacity: {d.properties.sku.capacity}K TPM")
+    print(f"    Type: {d.sku.name}")
+    print(f"    Capacity: {d.sku.capacity}K TPM")
     print(f"    Upgrade: {d.properties.version_upgrade_option}")
 ```
 
@@ -347,6 +341,7 @@ print(f"Tokens this call: {response.usage.total_tokens}")
 ```csharp
 using Azure;
 using Azure.AI.OpenAI;
+using OpenAI.Chat;
 
 var endpoint = new Uri("https://ai102-openai-03.openai.azure.com/");
 var key = new AzureKeyCredential(Environment.GetEnvironmentVariable("AZURE_OPENAI_KEY")!);
@@ -471,8 +466,8 @@ Response: Azure OpenAI supports three deployment types...
       "OnceCurrentVersionExpired",
       "ManualUpgradeOnly"
     ],
-    correctAnswer: 2,
-    explanation: "OnceCurrentVersionExpired means the deployment stays on its current version until that version is retired, giving you maximum control. OnceNewDefaultVersionAvailable upgrades sooner when a new default is designated. NoAutoUpgrade is not a valid option."
+    correctAnswer: 0,
+    explanation: "NoAutoUpgrade means the deployment will never automatically upgrade to a newer model version—you must manually update it, giving you complete control over timing. OnceCurrentVersionExpired still auto-upgrades when the version is retired. OnceNewDefaultVersionAvailable upgrades when a new default is designated. ManualUpgradeOnly is not a valid option."
   },
   {
     question: "When making an API call to Azure OpenAI, what value should you pass as the 'model' parameter in the SDK?",

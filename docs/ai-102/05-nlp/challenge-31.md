@@ -311,34 +311,34 @@ Doc 0:
   {
     question: "What does opinion mining add to standard sentiment analysis?",
     options: [
-      "It detects the language of the text",
-      "It identifies specific targets (aspects) and the assessments (opinions) about them",
       "It provides more accurate overall sentiment scores",
-      "It translates text before analyzing sentiment"
+      "It translates text before analyzing sentiment",
+      "It identifies specific targets (aspects) and the assessments (opinions) about them",
+      "It detects the language of the text"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Opinion mining extracts aspect-based sentiment: targets (e.g., 'room', 'service') and assessments (e.g., 'clean', 'slow') with their individual sentiment polarity."
   },
   {
     question: "What is the maximum document size for a single text analytics request?",
     options: [
-      "1,000 characters per document",
       "5,120 characters per document (up to 25 documents per batch)",
+      "1,000 characters per document",
       "10,000 words per document",
       "No limit"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Each document can be up to 5,120 characters. A single batch request can contain up to 25 documents (or 125,000 characters total)."
   },
   {
     question: "What is the difference between Named Entity Recognition (NER) and Entity Linking?",
     options: [
       "NER is faster; Entity Linking is more accurate",
-      "NER categorizes entities (Person, Location, etc.); Entity Linking connects entities to Wikipedia knowledge base entries",
+      "They are the same feature with different names",
       "NER works only in English; Entity Linking supports all languages",
-      "They are the same feature with different names"
+      "NER categorizes entities (Person, Location, etc.); Entity Linking connects entities to Wikipedia knowledge base entries"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "NER identifies entities and assigns categories (Person, Org, Location, DateTime). Entity Linking goes further by matching entities to Wikipedia entries with URLs and IDs."
   },
   {
@@ -356,11 +356,11 @@ Doc 0:
     question: "What confidence score format does language detection return?",
     options: [
       "A percentage from 0% to 100%",
-      "A float from 0.0 to 1.0 indicating detection confidence",
       "An integer from 1 to 10",
+      "A float from 0.0 to 1.0 indicating detection confidence",
       "A boolean (detected or not detected)"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Language detection returns a confidence score from 0.0 to 1.0 for each detected language. A score of 1.0 means maximum confidence."
   }
 ]} />

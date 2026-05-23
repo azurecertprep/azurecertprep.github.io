@@ -752,12 +752,12 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
     id: "ch19-q1",
     question: "What is the primary benefit of streaming responses in Azure OpenAI?",
     options: [
-      "Reduces total token consumption",
       "Reduces time-to-first-token, improving perceived latency",
+      "Reduces total token consumption",
       "Improves response quality and accuracy",
       "Enables longer maximum token limits"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Streaming delivers tokens incrementally via Server-Sent Events (SSE), reducing time-to-first-token from seconds to typically under 500ms. Total generation time remains similar, but users perceive faster responses because content appears immediately."
   },
   {
@@ -777,11 +777,11 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
     question: "Which library is used to count tokens locally for GPT-4o before making API calls?",
     options: [
       "transformers",
-      "tiktoken",
+      "sentencepiece",
       "tokenizers",
-      "sentencepiece"
+      "tiktoken"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "tiktoken is OpenAI's official tokenizer library for Python. GPT-4o uses the o200k_base encoding. Local token counting with tiktoken enables cost estimation, prompt optimization, and context window management before making API calls."
   },
   {

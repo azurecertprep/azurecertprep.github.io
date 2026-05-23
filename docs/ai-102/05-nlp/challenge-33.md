@@ -300,33 +300,33 @@ Transliterated: namaste duniya
     question: "What is the global endpoint for the Azure Translator text API?",
     options: [
       "https://<resource>.cognitiveservices.azure.com/translate",
-      "https://api.cognitive.microsofttranslator.com",
       "https://translator.azure.com/api",
+      "https://api.cognitive.microsofttranslator.com",
       "https://<resource>.translator.azure.com"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The Text Translator uses the global endpoint https://api.cognitive.microsofttranslator.com. It requires the Ocp-Apim-Subscription-Region header for regional routing."
   },
   {
     question: "Which header is required in addition to the subscription key for Translator requests?",
     options: [
-      "Content-Length",
       "Ocp-Apim-Subscription-Region (specifying the resource's Azure region)",
+      "Content-Length",
       "Accept-Language",
       "X-Forwarded-For"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "The Ocp-Apim-Subscription-Region header is required to route the request to the correct regional endpoint. Without it, requests fail with 401."
   },
   {
     question: "How does Document Translation differ from Text Translation?",
     options: [
       "Document Translation is synchronous; Text Translation is async",
-      "Document Translation translates entire files (preserving formatting) via Blob Storage; Text Translation handles raw text strings",
       "Document Translation supports more languages",
-      "There is no difference — they use the same endpoint"
+      "There is no difference — they use the same endpoint",
+      "Document Translation translates entire files (preserving formatting) via Blob Storage; Text Translation handles raw text strings"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Document Translation is asynchronous — it translates entire files (Word, PDF, etc.) between Blob Storage containers while preserving original formatting and layout."
   },
   {
@@ -344,11 +344,11 @@ Transliterated: namaste duniya
     question: "How many target languages can you specify in a single text translation request?",
     options: [
       "Only 1 target language per request",
-      "Multiple target languages by repeating the 'to' parameter",
       "Maximum of 2 target languages",
+      "Multiple target languages by repeating the 'to' parameter",
       "Unlimited, but only the first 5 are processed"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "You can translate to multiple languages in one request by specifying the 'to' parameter multiple times (e.g., to=es&to=fr&to=ja). Each translation appears in the response."
   }
 ]} />

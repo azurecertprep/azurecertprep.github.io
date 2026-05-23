@@ -151,8 +151,8 @@ For the exam, remember that Azure AI Foundry is the platform that brings everyth
     {
       id: 'ai900-21-q2',
       question: 'In Azure AI Foundry, what is the relationship between a hub and a project?',
-      options: ['They are the same thing with different names', 'A hub contains multiple projects and provides shared resources and governance', 'A project contains multiple hubs', 'Hubs are for production, projects are for development only'],
-      correctAnswer: 1,
+      options: ['They are the same thing with different names', 'Hubs are for production, projects are for development only', 'A project contains multiple hubs', 'A hub contains multiple projects and provides shared resources and governance'],
+      correctAnswer: 3,
       explanation: 'A hub is the top-level container that manages shared resources (compute, connections, security) across an organization. Projects live inside a hub and are where teams do their individual AI development work.'
     },
     {
@@ -165,8 +165,8 @@ For the exam, remember that Azure AI Foundry is the platform that brings everyth
     {
       id: 'ai900-21-q4',
       question: 'What does the "groundedness" evaluation metric measure in Azure AI Foundry?',
-      options: ['How fast the model responds', 'Whether the responses are based on provided source data rather than hallucinated', 'The grammatical correctness of responses', 'How many tokens the response uses'],
-      correctAnswer: 1,
+      options: ['Whether the responses are based on provided source data rather than hallucinated', 'How fast the model responds', 'The grammatical correctness of responses', 'How many tokens the response uses'],
+      correctAnswer: 0,
       explanation: 'Groundedness measures whether the AI\'s responses are based on the provided source data/context rather than containing hallucinated or made-up information. This is critical for enterprise applications where accuracy matters.'
     },
     {

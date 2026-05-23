@@ -580,23 +580,23 @@ After completing all tasks, you should have:
     question: "Which model would be most cost-effective for a high-volume classification task that doesn't require advanced reasoning?",
     options: [
       "GPT-4o with Provisioned deployment",
-      "GPT-4o with Standard deployment",
       "GPT-4o-mini with Global Standard deployment",
+      "GPT-4o with Standard deployment",
       "GPT-4o-mini with Provisioned deployment"
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation: "GPT-4o-mini is significantly cheaper per token than GPT-4o and performs well for straightforward tasks like classification. Global Standard provides higher throughput across global regions, making it ideal for high-volume workloads that don't need GPT-4o's advanced capabilities."
   },
   {
     id: "ch12-q4",
     question: "What happens when a deployment's rate limit (TPM/RPM) is exceeded?",
     options: [
+      "The API returns HTTP 429 (Too Many Requests) with a Retry-After header",
       "The request is queued and processed later",
       "The deployment automatically scales up",
-      "The API returns HTTP 429 (Too Many Requests) with a Retry-After header",
       "The request is routed to another deployment"
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation: "When rate limits are exceeded, Azure OpenAI returns HTTP 429 (Too Many Requests) with a Retry-After header indicating how long to wait before retrying. Applications should implement exponential backoff to handle rate limiting gracefully."
   },
   {

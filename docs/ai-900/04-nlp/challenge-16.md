@@ -21,7 +21,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 **Speech recognition** (speech-to-text) converts spoken audio into written text. This powers applications like meeting transcription, voice assistants, closed captioning, and voice commands. Azure AI Speech supports real-time transcription (processing audio as it streams) and batch transcription (processing pre-recorded audio files). It recognizes natural speech patterns including hesitations, filler words, and different speaking styles.
 
-**Speech synthesis** (text-to-speech) converts written text into natural-sounding spoken audio. Modern neural text-to-speech voices sound remarkably human, with natural intonation, emphasis, and rhythm. Azure AI Speech offers 400+ neural voices across 140+ languages and variants. Use cases include virtual assistants, audiobook narration, accessibility features for visually impaired users, and automated phone systems.
+**Speech synthesis** (text-to-speech) converts written text into natural-sounding spoken audio. Modern neural text-to-speech voices sound remarkably human, with natural intonation, emphasis, and rhythm. Azure AI Speech offers 500+ neural voices across 140+ languages and variants. Use cases include virtual assistants, audiobook narration, accessibility features for visually impaired users, and automated phone systems.
 
 Both capabilities are part of the **Azure AI Speech** service, which also includes speech translation (real-time translation of spoken audio) and speaker recognition (identifying who is speaking). Together, these enable natural voice-based human-computer interaction.
 
@@ -65,7 +65,7 @@ Text-to-speech (TTS) converts text into natural-sounding audio. Review the optio
 
 | Feature | Description |
 |---------|-------------|
-| Neural voices | AI-generated voices with natural intonation (400+ available) |
+| Neural voices | AI-generated voices with natural intonation (500+ available) |
 | SSML control | Speech Synthesis Markup Language for fine-tuning pronunciation, speed, pitch |
 | Voice styles | Emotional variations (cheerful, empathetic, angry) for select voices |
 | Custom Neural Voice | Create a unique branded voice from training audio |
@@ -150,8 +150,8 @@ az cognitiveservices account keys list \
     {
       id: 'ai900-16-q2',
       question: 'What technology makes modern text-to-speech voices sound natural and human-like?',
-      options: ['Rule-based phonetics', 'Simple concatenation of recorded sounds', 'Deep neural networks (neural voices)', 'Text pattern matching'],
-      correctAnswer: 2,
+      options: ['Deep neural networks (neural voices)', 'Simple concatenation of recorded sounds', 'Rule-based phonetics', 'Text pattern matching'],
+      correctAnswer: 0,
       explanation: 'Neural text-to-speech uses deep neural networks to generate speech that sounds natural, with proper intonation, emphasis, and rhythm — unlike older robotic-sounding synthesis methods.'
     },
     {
@@ -171,8 +171,8 @@ az cognitiveservices account keys list \
     {
       id: 'ai900-16-q5',
       question: 'What is SSML used for in Azure AI Speech?',
-      options: ['Converting speech to text', 'Detecting the language of spoken audio', 'Controlling how text-to-speech output sounds (speed, pitch, pauses)', 'Training custom speech models'],
-      correctAnswer: 2,
+      options: ['Converting speech to text', 'Detecting the language of spoken audio', 'Training custom speech models', 'Controlling how text-to-speech output sounds (speed, pitch, pauses)'],
+      correctAnswer: 3,
       explanation: 'Speech Synthesis Markup Language (SSML) is an XML-based format that lets you control text-to-speech output — adjusting pronunciation, speaking rate, pitch, pauses, and emphasis for more natural-sounding results.'
     }
   ]}

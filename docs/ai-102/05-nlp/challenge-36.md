@@ -274,11 +274,11 @@ Translated 3 segments
     question: "What class is used for speech translation instead of SpeechConfig?",
     options: [
       "TranslatorConfig",
-      "SpeechTranslationConfig",
       "TranslationSpeechConfig",
-      "SpeechConfig with translation parameters"
+      "SpeechConfig with translation parameters",
+      "SpeechTranslationConfig"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "SpeechTranslationConfig is the dedicated configuration class for speech translation. It extends speech configuration with target language and voice settings."
   },
   {
@@ -295,34 +295,34 @@ Translated 3 segments
   {
     question: "What is the difference between the 'recognizing' and 'recognized' events?",
     options: [
-      "They are the same event with different names",
       "'recognizing' provides partial/interim results during speech; 'recognized' provides final results after an utterance completes",
+      "They are the same event with different names",
       "'recognizing' is for the first utterance; 'recognized' is for subsequent ones",
       "'recognizing' is for translation; 'recognized' is for the source text only"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "'recognizing' fires with interim (partial) results as speech is being processed — useful for live captions. 'recognized' fires with the final, complete result for each utterance."
   },
   {
     question: "How do you enable speech-to-speech translation (synthesized output)?",
     options: [
       "Use a separate SpeechSynthesizer after translation",
-      "Set the voice_name property on SpeechTranslationConfig and handle the synthesizing event",
       "Enable a 'synthesize' flag in the config",
+      "Set the voice_name property on SpeechTranslationConfig and handle the synthesizing event",
       "Call synthesize_translation() after recognition"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Set voice_name on the config to a voice matching the target language. The recognizer then emits synthesizing events with audio data for the translated speech."
   },
   {
     question: "What advantage does speech translation have over separate STT + Translator API?",
     options: [
       "It supports more languages",
-      "Lower latency with streaming partial results in a single pipeline",
       "It's cheaper per character",
-      "Better translation accuracy"
+      "Better translation accuracy",
+      "Lower latency with streaming partial results in a single pipeline"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Speech translation combines recognition and translation in one streaming pipeline, providing lower latency and real-time partial results — critical for live translation scenarios."
   }
 ]} />

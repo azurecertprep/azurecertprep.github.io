@@ -31,7 +31,7 @@ The exam tests whether you can recognize which pattern applies to a given busine
 
 | Pattern | What it does | Input → Output | Azure Services |
 |---------|-------------|----------------|----------------|
-| **Anomaly Detection** | Identifies unusual data points that don't fit normal patterns | Time-series data → Alerts on outliers | Azure AI Anomaly Detector |
+| **Anomaly Detection** | Identifies unusual data points that don't fit normal patterns | Time-series data → Alerts on outliers | Azure AI services (Anomaly Detection) / Azure Machine Learning |
 | **Prediction (Regression)** | Forecasts numeric values based on historical data | Historical data → Future values | Azure Machine Learning |
 | **Classification** | Assigns categories/labels to data | Data → Category label | Azure Machine Learning, Azure AI Language |
 | **Knowledge Mining** | Extracts insights from large volumes of unstructured content | Documents/images → Structured insights | Azure AI Search (Cognitive Search) |
@@ -65,7 +65,7 @@ Practice identifying which pattern each scenario uses:
    - Works on **time-series data** (values over time)
    - Detects spikes, dips, and trend changes
    - Use cases: IoT sensor monitoring, financial fraud, website traffic anomalies
-3. Note: The standalone Anomaly Detector is being retired into Azure AI services — the concept still applies as a pattern
+3. Note: The standalone Anomaly Detector service was retired in 2023. Multivariate anomaly detection remains available through Azure AI services, and the concept is still tested on the exam as a pattern
 
 :::tip Exam strategy
 When the exam gives you a scenario, ask:

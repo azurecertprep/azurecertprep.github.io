@@ -136,22 +136,22 @@ az ml model list --workspace-name my-workspace --resource-group my-rg --output t
     {
       id: 'ai900-09-q2',
       question: 'What is the purpose of a real-time endpoint in Azure Machine Learning?',
-      options: ['To store training data', 'To serve immediate predictions via REST API when applications send data', 'To train the model faster', 'To monitor model performance'],
-      correctAnswer: 1,
+      options: ['To store training data', 'To train the model faster', 'To serve immediate predictions via REST API when applications send data', 'To monitor model performance'],
+      correctAnswer: 2,
       explanation: 'A real-time endpoint deploys a trained model as a REST API that applications can call. When data is sent to the endpoint, it returns predictions immediately — enabling real-time inference in applications.'
     },
     {
       id: 'ai900-09-q3',
       question: 'Which Azure ML component provides a visual, drag-and-drop experience for building machine learning pipelines?',
-      options: ['Automated ML', 'Designer', 'Notebooks', 'Compute clusters'],
-      correctAnswer: 1,
+      options: ['Designer', 'Automated ML', 'Notebooks', 'Compute clusters'],
+      correctAnswer: 0,
       explanation: 'Azure ML Designer provides a visual canvas where you drag and drop components (data modules, algorithms, evaluation steps) to build ML pipelines without writing code.'
     },
     {
       id: 'ai900-09-q4',
       question: 'What is the difference between a compute instance and a compute cluster in Azure ML?',
-      options: ['Compute instances are free; clusters cost money', 'Compute instances are for development; clusters scale for training jobs', 'Compute instances are for deployment; clusters are for training', 'There is no difference — they are the same thing'],
-      correctAnswer: 1,
+      options: ['Compute instances are free; clusters cost money', 'Compute instances are for deployment; clusters are for training', 'There is no difference — they are the same thing', 'Compute instances are for development; clusters scale for training jobs'],
+      correctAnswer: 3,
       explanation: 'A compute instance is a single VM for individual development work (running notebooks, exploring data). A compute cluster is a scalable group of VMs that automatically grows and shrinks based on training job demands.'
     },
     {

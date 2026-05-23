@@ -126,8 +126,8 @@ The exam frequently presents scenarios and asks "Which Responsible AI principle 
     {
       id: 'ai900-02-q3',
       question: 'Which Responsible AI principle requires that people can get an explanation for why an AI system made a particular decision?',
-      options: ['Accountability', 'Fairness', 'Transparency', 'Inclusiveness'],
-      correctAnswer: 2,
+      options: ['Transparency', 'Fairness', 'Accountability', 'Inclusiveness'],
+      correctAnswer: 0,
       explanation: 'Transparency requires that AI systems are understandable. Users should know when AI is being used, how it works, and be able to get explanations for decisions that affect them.'
     },
     {

@@ -122,22 +122,22 @@ Know which is which!
     {
       id: 'ai900-10-q2',
       question: 'An image classification model returns a confidence score of 0.45 for "cat" and 0.42 for "dog". What should the application do?',
-      options: ['Always accept the highest score (cat)', 'Reject the prediction because confidence is below a typical threshold', 'Average the two scores', 'Return both labels'],
-      correctAnswer: 1,
+      options: ['Always accept the highest score (cat)', 'Average the two scores', 'Return both labels', 'Reject the prediction because confidence is below a typical threshold'],
+      correctAnswer: 3,
       explanation: 'Low confidence scores (below typical thresholds like 0.7) indicate the model is uncertain. Applications should typically reject predictions below their confidence threshold and potentially flag for human review.'
     },
     {
       id: 'ai900-10-q3',
       question: 'A manufacturing company needs to classify products on their assembly line as "pass" or "fail" based on photos. The categories are specific to their products. Which Azure service is most appropriate?',
-      options: ['Azure AI Vision (pre-built)', 'Custom Vision', 'Azure AI Language', 'Azure OpenAI'],
-      correctAnswer: 1,
+      options: ['Custom Vision', 'Azure AI Vision (pre-built)', 'Azure AI Language', 'Azure OpenAI'],
+      correctAnswer: 0,
       explanation: 'Custom Vision is designed for domain-specific classification where you train with your own images and categories. A manufacturing pass/fail classifier needs training on that company\'s specific products — pre-built models won\'t know what "defective" looks like for their products.'
     },
     {
       id: 'ai900-10-q4',
       question: 'What is the minimum number of training images recommended per category when using Azure Custom Vision?',
-      options: ['At least 1 image per category', 'At least 15 images per category', 'At least 1,000 images per category', 'At least 10,000 images per category'],
-      correctAnswer: 1,
+      options: ['At least 1 image per category', 'At least 1,000 images per category', 'At least 15 images per category', 'At least 10,000 images per category'],
+      correctAnswer: 2,
       explanation: 'Azure Custom Vision recommends at least 15 images per category as a minimum starting point. While more images generally improve accuracy, Custom Vision is designed to work with relatively small datasets.'
     },
     {

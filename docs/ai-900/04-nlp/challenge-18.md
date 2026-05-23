@@ -111,7 +111,6 @@ Compare the two studios side by side:
 - Classify text (sentiment, custom classification)
 - Extract information (entities, key phrases, PII, summarization)
 - Understand questions and conversational language (CLU, Q&A)
-- Translate text
 
 **Azure AI Speech Studio** ([speech.microsoft.com](https://speech.microsoft.com/)):
 - Speech-to-text (real-time and batch)
@@ -186,8 +185,8 @@ az cognitiveservices account show \
     {
       id: 'ai900-18-q3',
       question: 'Which capability is part of Azure AI Speech (NOT Azure AI Language)?',
-      options: ['Sentiment analysis', 'Named entity recognition', 'Speaker recognition', 'Key phrase extraction'],
-      correctAnswer: 2,
+      options: ['Sentiment analysis', 'Named entity recognition', 'Key phrase extraction', 'Speaker recognition'],
+      correctAnswer: 3,
       explanation: 'Speaker recognition (identifying who is speaking based on voice characteristics) is part of the Azure AI Speech service. Sentiment analysis, NER, and key phrase extraction are all Azure AI Language capabilities.'
     },
     {
@@ -200,8 +199,8 @@ az cognitiveservices account show \
     {
       id: 'ai900-18-q5',
       question: 'A company wants to automatically detect and redact Social Security numbers and email addresses from customer documents. Which Azure AI Language capability should they use?',
-      options: ['Key phrase extraction', 'Sentiment analysis', 'PII detection', 'Custom text classification'],
-      correctAnswer: 2,
+      options: ['PII detection', 'Sentiment analysis', 'Key phrase extraction', 'Custom text classification'],
+      correctAnswer: 0,
       explanation: 'PII (Personally Identifiable Information) detection identifies sensitive information like SSNs, email addresses, phone numbers, and credit card numbers in text — and can optionally redact them.'
     }
   ]}

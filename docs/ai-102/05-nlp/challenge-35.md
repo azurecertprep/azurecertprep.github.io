@@ -94,7 +94,6 @@ var speechConfig = SpeechConfig.FromSubscription(
     Environment.GetEnvironmentVariable("AZURE_SPEECH_REGION"));
 
 speechConfig.SpeechSynthesisVoiceName = "en-US-JennyNeural";
-speechConfig.SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3);
 
 using var audioConfig = AudioConfig.FromWavFileOutput("output.wav");
 using var synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
@@ -268,22 +267,22 @@ Available en-US voices (148):
     question: "What is the purpose of the <prosody> SSML element?",
     options: [
       "To select which voice to use",
-      "To control rate, pitch, and volume of speech output",
       "To insert silence between words",
+      "To control rate, pitch, and volume of speech output",
       "To specify the output audio format"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The <prosody> element controls speech characteristics: rate (speed), pitch (high/low), and volume (loud/soft). Attributes accept percentages or preset values."
   },
   {
     question: "Which method do you use to synthesize speech from SSML?",
     options: [
-      "speak_text_async(ssml)",
       "speak_ssml_async(ssml)",
+      "speak_text_async(ssml)",
       "synthesize(ssml, format='ssml')",
       "speak_async(ssml, mode='ssml')"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Use speak_ssml_async() for SSML input and speak_text_async() for plain text. The SSML method parses the XML markup for voice control."
   },
   {
@@ -301,22 +300,22 @@ Available en-US voices (148):
     question: "What audio output formats are available for text-to-speech?",
     options: [
       "Only WAV files",
-      "WAV, MP3, OGG Opus, raw PCM, and other compressed formats",
       "Only MP3",
-      "Only streaming — no file output"
+      "Only streaming — no file output",
+      "WAV, MP3, OGG Opus, raw PCM, and other compressed formats"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "TTS supports many formats: uncompressed WAV/PCM, compressed MP3 and OGG Opus at various bitrates and sample rates, configurable via SpeechSynthesisOutputFormat."
   },
   {
     question: "How do you insert a pause in synthesized speech?",
     options: [
       "Add spaces in the text",
-      "Use the <break time='500ms'/> SSML element",
       "Use the pause() method between text segments",
+      "Use the <break time='500ms'/> SSML element",
       "Add '...' in the text"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The <break> element inserts silence. Specify duration with time='500ms' or time='1s'. You can also use strength='weak|medium|strong' for relative pauses."
   }
 ]} />

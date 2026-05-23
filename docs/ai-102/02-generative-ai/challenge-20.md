@@ -601,7 +601,7 @@ public class TextAnalysisPlugin
     private readonly Kernel _kernel;
     public TextAnalysisPlugin(Kernel kernel) => _kernel = kernel;
 
-    [KernelFunction, Description("Summarize text into key points")]
+    [KernelFunction("Summarize"), Description("Summarize text into key points")]
     public async Task<string> SummarizeAsync(string input)
     {
         var result = await _kernel.InvokePromptAsync(
@@ -611,7 +611,7 @@ public class TextAnalysisPlugin
         return result.ToString();
     }
 
-    [KernelFunction, Description("Extract action items from text")]
+    [KernelFunction("ExtractActions"), Description("Extract action items from text")]
     public async Task<string> ExtractActionsAsync(string input)
     {
         var result = await _kernel.InvokePromptAsync(
@@ -621,7 +621,7 @@ public class TextAnalysisPlugin
         return result.ToString();
     }
 
-    [KernelFunction, Description("Analyze text sentiment")]
+    [KernelFunction("AnalyzeSentiment"), Description("Analyze text sentiment")]
     public async Task<string> AnalyzeSentimentAsync(string input)
     {
         var result = await _kernel.InvokePromptAsync(
@@ -951,12 +951,12 @@ Sentiment: positive
     id: "ch20-q2",
     question: "What is the primary advantage of using a model router in multi-model architectures?",
     options: [
-      "It increases the accuracy of all responses",
       "It optimizes cost-quality tradeoffs by matching task complexity to model capability",
+      "It increases the accuracy of all responses",
       "It eliminates the need for rate limiting",
       "It provides automatic failover between regions"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "A model router directs simple requests to cheaper, faster models (like GPT-4o-mini) and complex requests to more capable models (like GPT-4o). This optimizes costs without sacrificing quality where it matters, as simple tasks don't benefit from expensive models."
   },
   {
@@ -964,11 +964,11 @@ Sentiment: positive
     question: "Which environment variable is required for Azure AI containers to function correctly?",
     options: [
       "AZURE_OPENAI_ENDPOINT only",
-      "Eula=accept, Billing (endpoint URL), and ApiKey",
       "ConnectionString and ContainerName",
+      "Eula=accept, Billing (endpoint URL), and ApiKey",
       "AZURE_TENANT_ID and AZURE_CLIENT_ID"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Azure AI containers require three environment variables: Eula=accept (legal agreement), Billing (the Azure AI endpoint URL for usage metering), and ApiKey (authentication). The container sends usage data to the billing endpoint but processes requests locally."
   },
   {
@@ -976,23 +976,23 @@ Sentiment: positive
     question: "In Semantic Kernel, what is a 'plugin'?",
     options: [
       "A pre-trained model checkpoint",
-      "A collection of functions (native or prompt-based) that extend the kernel's capabilities",
+      "A logging middleware component",
       "A database connection configuration",
-      "A logging middleware component"
+      "A collection of functions (native or prompt-based) that extend the kernel's capabilities"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "In Semantic Kernel, a plugin is a collection of kernel functions (either native code functions or prompt-based semantic functions) that extend what the AI can do. Plugins are registered with the kernel and can be invoked by the model via function calling or directly by application code."
   },
   {
     id: "ch20-q5",
     question: "When implementing function calling, what happens after the application executes the function and returns results?",
     options: [
-      "The conversation ends and the result is returned directly to the user",
       "The function result is added as a tool message and a new completion request is made",
+      "The conversation ends and the result is returned directly to the user",
       "The model automatically retrains with the new data",
       "The function result is cached for future calls only"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "After executing the function, the application adds the result as a 'tool' message (with matching tool_call_id) and makes another chat completion request. The model then generates a natural language response incorporating the tool results, which may include additional tool calls if needed."
   }
 ]} />

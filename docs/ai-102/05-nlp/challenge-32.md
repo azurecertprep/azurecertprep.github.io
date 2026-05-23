@@ -252,31 +252,31 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
   {
     question: "What does the redacted_text property contain?",
     options: [
-      "The original text with PII entities highlighted",
       "The original text with detected PII replaced by asterisk characters matching the entity length",
+      "The original text with PII entities highlighted",
       "A summary of the text without any sensitive information",
       "The text translated to a different language"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "redacted_text contains the original text with all detected PII entities replaced by asterisk (*) characters matching the length of the original PII text."
   },
   {
     question: "How do you limit PII detection to only specific categories like SSN and email?",
     options: [
       "Use a different API endpoint for each category",
-      "Pass a categories_filter parameter with the desired PiiEntityCategory values",
       "Create a custom model trained on those categories only",
-      "PII detection always returns all categories — filter client-side"
+      "PII detection always returns all categories — filter client-side",
+      "Pass a categories_filter parameter with the desired PiiEntityCategory values"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "The categories_filter parameter (SDK) or piiCategories (REST) limits detection to only the specified categories, reducing noise from unwanted detections."
   },
   {
     question: "What is the 'phi' domain filter used for?",
     options: [
-      "Detecting philosophical content",
-      "Detecting Protected Health Information in healthcare/medical text",
       "Detecting phishing attempts",
+      "Detecting Protected Health Information in healthcare/medical text",
+      "Detecting philosophical content",
       "Detecting physical addresses only"
     ],
     correctAnswer: 1,
@@ -286,22 +286,22 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
     question: "What information does each detected PII entity include?",
     options: [
       "Only the text and category",
-      "Text, category, subcategory, confidence score, offset, and length",
       "Only the redacted position",
+      "Text, category, subcategory, confidence score, offset, and length",
       "Text, category, and a unique entity ID"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Each PII entity includes: the matched text, category, optional subcategory, confidence score (0.0-1.0), character offset in the document, and length."
   },
   {
     question: "Can PII detection process multiple documents in a single request?",
     options: [
       "No — only one document per request",
-      "Yes — batch operations support up to 25 documents per request",
       "Yes — unlimited documents per request",
+      "Yes — batch operations support up to 25 documents per request",
       "Only if documents are in the same language"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "PII detection supports batch operations with up to 25 documents (or 125,000 total characters) per request. Each document can be in a different language."
   }
 ]} />

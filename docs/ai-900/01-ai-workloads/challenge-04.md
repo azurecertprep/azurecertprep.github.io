@@ -129,8 +129,8 @@ az cognitiveservices account show \
     {
       id: 'ai900-04-q1',
       question: 'A developer wants a single Azure resource that provides access to Vision, Language, and Speech AI services with one set of credentials. What should they create?',
-      options: ['Three separate Azure AI resources', 'An Azure AI services multi-service resource', 'An Azure OpenAI resource', 'An Azure Machine Learning workspace'],
-      correctAnswer: 1,
+      options: ['Three separate Azure AI resources', 'An Azure Machine Learning workspace', 'An Azure OpenAI resource', 'An Azure AI services multi-service resource'],
+      correctAnswer: 3,
       explanation: 'A multi-service Azure AI services resource provides access to multiple AI capabilities (Vision, Language, Speech, etc.) through a single key and endpoint, simplifying management.'
     },
     {
@@ -143,8 +143,8 @@ az cognitiveservices account show \
     {
       id: 'ai900-04-q3',
       question: 'Why does Azure provide TWO keys for each AI services resource?',
-      options: ['One key is for reading and one is for writing', 'To enable key rotation without service interruption', 'The second key is a backup in case the first is lost', 'Each key has different permission levels'],
-      correctAnswer: 1,
+      options: ['To enable key rotation without service interruption', 'One key is for reading and one is for writing', 'The second key is a backup in case the first is lost', 'Each key has different permission levels'],
+      correctAnswer: 0,
       explanation: 'Two keys enable seamless key rotation. You can regenerate Key 1 while applications use Key 2, then switch applications to the new Key 1. This avoids any downtime during security rotation.'
     },
     {

@@ -167,7 +167,7 @@ var client = new ArmClient(credential);
 var subscription = await client.GetDefaultSubscriptionAsync();
 
 // List available SKUs to see service kinds
-var skus = subscription.GetCognitiveServicesAccountSkusAsync();
+var skus = subscription.GetCognitiveServicesResourceSkusAsync();
 var serviceKinds = new HashSet<string>();
 
 await foreach (var sku in skus)

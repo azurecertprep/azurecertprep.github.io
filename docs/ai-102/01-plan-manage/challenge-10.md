@@ -1018,11 +1018,11 @@ Hallucinated response: ungroundedDetected = true, 67% ungrounded ⚠
     question: "What are the four content harm categories analyzed by Azure AI Content Safety?",
     options: [
       "Spam, Phishing, Malware, Fraud",
-      "Hate, Violence, Self-Harm, Sexual",
+      "Toxic, Offensive, Dangerous, Inappropriate",
       "Profanity, Bullying, Misinformation, Threats",
-      "Toxic, Offensive, Dangerous, Inappropriate"
+      "Hate, Violence, Self-Harm, Sexual"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Azure AI Content Safety analyzes text and images across four harm categories: Hate (hate speech, discrimination), Violence (physical harm, threats), Self-Harm (self-injury, suicide), and Sexual (explicit content). Each category reports a severity level from 0 (safe) to 6 (high)."
   },
   {
@@ -1040,11 +1040,11 @@ Hallucinated response: ungroundedDetected = true, 67% ungrounded ⚠
     question: "When configuring Azure OpenAI content filters, what does setting 'allowedContentLevel' to 'Medium' mean?",
     options: [
       "Only medium-length content is allowed",
-      "Content with Low severity passes through; Medium and above is blocked",
       "All content is allowed regardless of severity",
+      "Content with Low severity passes through; Medium and above is blocked",
       "Only exactly medium-severity content is blocked"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Setting allowedContentLevel to Medium means content at Low severity is allowed through, while content at Medium severity and above (Medium, High) is blocked. Lower thresholds are stricter — 'Low' blocks everything at Low severity and above."
   },
   {

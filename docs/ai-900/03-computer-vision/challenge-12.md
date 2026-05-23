@@ -101,7 +101,7 @@ az cognitiveservices account show \
   --query "properties.endpoint"
 
 # Document Intelligence is accessed via REST API:
-# POST {endpoint}/formrecognizer/documentModels/prebuilt-invoice:analyze
+# POST {endpoint}/documentintelligence/documentModels/prebuilt-invoice:analyze?api-version=2024-02-29
 ```
 :::
 
@@ -143,15 +143,15 @@ az cognitiveservices account show \
     {
       id: 'ai900-12-q2',
       question: 'A developer needs to extract all text from photographs of street signs in multiple languages. Which Azure capability should they use?',
-      options: ['Azure AI Document Intelligence', 'Azure AI Vision Read API', 'Azure AI Translator', 'Azure Custom Vision'],
-      correctAnswer: 1,
+      options: ['Azure AI Document Intelligence', 'Azure AI Translator', 'Azure AI Vision Read API', 'Azure Custom Vision'],
+      correctAnswer: 2,
       explanation: 'The Azure AI Vision Read API extracts text from any image (including photographs of signs) and supports 120+ languages. Document Intelligence is for structured documents, not general photographs.'
     },
     {
       id: 'ai900-12-q3',
       question: 'What does the Read API return in addition to the extracted text?',
-      options: ['Only the raw text string', 'Text with position coordinates (bounding polygons) and confidence scores for each word', 'A summary of the document content', 'The language of the text only'],
-      correctAnswer: 1,
+      options: ['Only the raw text string', 'A summary of the document content', 'The language of the text only', 'Text with position coordinates (bounding polygons) and confidence scores for each word'],
+      correctAnswer: 3,
       explanation: 'The Read API returns extracted text organized by pages and lines, with each word including its position coordinates (bounding polygon) and a confidence score indicating reliability.'
     },
     {
@@ -164,8 +164,8 @@ az cognitiveservices account show \
     {
       id: 'ai900-12-q5',
       question: 'What is the key difference between OCR (Read API) and Document Intelligence?',
-      options: ['OCR is faster; Document Intelligence is slower', 'OCR extracts raw text; Document Intelligence extracts structured fields and understands document layout', 'Document Intelligence only works with PDFs', 'OCR requires more training data'],
-      correctAnswer: 1,
+      options: ['OCR extracts raw text; Document Intelligence extracts structured fields and understands document layout', 'OCR is faster; Document Intelligence is slower', 'Document Intelligence only works with PDFs', 'OCR requires more training data'],
+      correctAnswer: 0,
       explanation: 'OCR (Read API) extracts text as-is from images. Document Intelligence goes further — it understands document structure and extracts named, structured fields (like "InvoiceTotal" or "VendorName") from specific document types.'
     }
   ]}

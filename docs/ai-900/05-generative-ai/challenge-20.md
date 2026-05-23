@@ -181,15 +181,15 @@ az cognitiveservices account list-models \
     {
       id: 'ai900-20-q3',
       question: 'What is the purpose of the "system message" in Azure OpenAI Chat Completions?',
-      options: ['To authenticate the API request', 'To define the AI assistant\'s behavior, persona, and constraints', 'To specify the deployment name', 'To set the billing account for the request'],
-      correctAnswer: 1,
+      options: ['To authenticate the API request', 'To set the billing account for the request', 'To specify the deployment name', 'To define the AI assistant\'s behavior, persona, and constraints'],
+      correctAnswer: 3,
       explanation: 'The system message sets the AI\'s behavior and persona — for example, "You are a helpful customer service agent that only discusses our products." It provides context and constraints for how the model should respond.'
     },
     {
       id: 'ai900-20-q4',
       question: 'What is a key benefit of using Azure OpenAI Service instead of OpenAI\'s direct API?',
-      options: ['Azure OpenAI offers more models than OpenAI', 'Azure OpenAI is always free', 'Azure OpenAI provides enterprise security, compliance, and content filtering', 'Azure OpenAI generates faster responses'],
-      correctAnswer: 2,
+      options: ['Azure OpenAI provides enterprise security, compliance, and content filtering', 'Azure OpenAI is always free', 'Azure OpenAI offers more models than OpenAI', 'Azure OpenAI generates faster responses'],
+      correctAnswer: 0,
       explanation: 'Azure OpenAI provides enterprise features including Azure compliance certifications, Microsoft Entra ID authentication, private networking, built-in content filtering, and regional data residency — making it suitable for regulated industries.'
     },
     {
