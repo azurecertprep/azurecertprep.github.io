@@ -480,36 +480,36 @@ Document type: purchase-order-model
     id: "ai102-46-q1",
     question: "You receive invoices from 5 different vendors, each with a completely different layout. Which custom model build mode is most appropriate?",
     options: [
-      "Neural (custom neural model)",
       "Template (custom template model)",
       "Composed model with 5 template models",
-      "Prebuilt invoice model"
+      "Prebuilt invoice model",
+      "Neural (custom neural model)"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "Custom neural models handle variable layouts and can learn field extraction across different document structures. Template models require fixed layouts. While a composed model with 5 template models would work, neural is simpler and handles cross-layout variation natively."
   },
   {
     id: "ai102-46-q2",
     question: "What is the minimum number of training documents required for a custom template model?",
     options: [
-      "5 documents",
       "1 document",
+      "5 documents",
       "10 documents",
       "50 documents"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Custom template models require a minimum of 5 labeled training documents. In practice, more documents (especially representing layout variations) improve accuracy. Neural models need at least 10 documents."
   },
   {
     id: "ai102-46-q3",
     question: "You have separate custom models for purchase orders, invoices, and receipts. You want a single endpoint that auto-classifies and extracts. What should you create?",
     options: [
-      "A composed model combining all three custom models",
       "A new neural model trained on all document types",
       "Three separate endpoints with a custom classifier in front",
+      "A composed model combining all three custom models",
       "A single template model with all field labels from all types"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "A composed model combines multiple custom models into one. It automatically classifies the incoming document and routes it to the correct sub-model for extraction. This provides a single API endpoint for multiple document types."
   },
   {
@@ -528,12 +528,12 @@ Document type: purchase-order-model
     id: "ai102-46-q5",
     question: "What is the maximum number of custom models that can be composed into a single composed model?",
     options: [
-      "200 models",
       "10 models",
       "50 models",
-      "500 models"
+      "500 models",
+      "200 models"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "A single composed model can contain up to 200 component models. This allows for comprehensive document processing pipelines that route many different document types through a single API call."
   }
 ]} />

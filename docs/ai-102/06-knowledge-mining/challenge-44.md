@@ -401,6 +401,7 @@ results = search_client.search(
     vector_queries=[vector_query],
     query_type="semantic",
     semantic_configuration_name="semantic-config",
+    query_caption="extractive",
     select=["id", "title", "content"],
     top=5
 )
@@ -470,6 +471,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
     }],
     "queryType": "semantic",
     "semanticConfiguration": "semantic-config",
+    "captions": "extractive",
     "select": "id,title,content",
     "top": 5
   }'
@@ -506,12 +508,12 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
     id: "ai102-44-q1",
     question: "You implement hybrid search combining keyword and vector queries. How are the two result sets merged into a single ranked list?",
     options: [
-      "Reciprocal Rank Fusion (RRF)",
       "Simple score addition",
       "Maximum score selection",
+      "Reciprocal Rank Fusion (RRF)",
       "Weighted average of BM25 and cosine similarity"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Azure AI Search uses Reciprocal Rank Fusion (RRF) to merge keyword (BM25) and vector similarity results. RRF combines rankings rather than raw scores, making it robust to score scale differences between the two approaches."
   },
   {
@@ -530,36 +532,36 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
     id: "ai102-44-q3",
     question: "What is the key difference between semantic ranking and vector search?",
     options: [
-      "Semantic ranking re-ranks existing keyword results; vector search retrieves documents based on embedding similarity",
       "Semantic ranking uses embeddings; vector search uses keywords",
+      "Semantic ranking re-ranks existing keyword results; vector search retrieves documents based on embedding similarity",
       "Semantic ranking creates new content; vector search only retrieves",
       "They are the same feature with different names"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Semantic ranking is a RERANKER — it takes the initial keyword results and re-orders them using language understanding. Vector search is a RETRIEVER — it finds documents based on embedding distance. They can be combined: vector search retrieves candidates, then semantic ranking re-orders them."
   },
   {
     id: "ai102-44-q4",
     question: "You need to generate embeddings for a vector search index. Which Azure OpenAI model is purpose-built for this?",
     options: [
-      "text-embedding-3-small",
       "gpt-4o",
       "dall-e-3",
-      "whisper"
+      "whisper",
+      "text-embedding-3-small"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "text-embedding-3-small (and text-embedding-3-large, text-embedding-ada-002) are purpose-built embedding models that convert text to dense vectors. GPT models are for generation, DALL-E for images, and Whisper for speech. Only embedding models produce the vector format needed for search."
   },
   {
     id: "ai102-44-q5",
     question: "You execute a vector query with k=5 and also set top=3 in search options. How many results are returned?",
     options: [
-      "3 (top limits the final response)",
       "5 (k overrides top)",
       "8 (k + top combined)",
+      "3 (top limits the final response)",
       "Error — k and top cannot be used together"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "The 'k' parameter controls how many nearest neighbors the vector search retrieves internally, while 'top' limits the final number of results returned to the client. With k=5 and top=3, vector search retrieves 5 candidates but only the top 3 (after scoring/ranking) are returned."
   }
 ]} />

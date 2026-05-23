@@ -544,7 +544,7 @@ Console.WriteLine($"OCR: {string.Join(" ", imageResult.Value.Read.Blocks.SelectM
 
 ```python
 from azure.ai.contentsafety import ContentSafetyClient
-from azure.ai.contentsafety.models import AnalyzeTextOptions, TextCategory
+from azure.ai.contentsafety.models import AnalyzeTextOptions
 
 safety_client = ContentSafetyClient(
     endpoint=AI_ENDPOINT,
@@ -959,24 +959,24 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
     id: "ai102-49-q1",
     question: "You're designing an enterprise AI pipeline that processes documents in 12 languages. Where in the pipeline should translation occur?",
     options: [
-      "After extraction (Document Intelligence) but before NLP enrichment",
       "Before extraction (translate the raw file first)",
+      "After extraction (Document Intelligence) but before NLP enrichment",
       "After indexing (translate search results on demand)",
       "Translation is not needed — AI services handle multilingual natively"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Translation should occur after Document Intelligence extracts text (which handles multilingual OCR) but before NLP enrichment services like Text Analytics that work best with a target language. This ensures accurate extraction of the original document followed by consistent NLP processing in a standard language."
   },
   {
     id: "ai102-49-q2",
     question: "Your RAG system returns hallucinated answers that aren't in the source documents. What is the MOST effective mitigation?",
     options: [
-      "Use a system prompt that instructs the model to only answer from context, lower temperature, and include source citations",
       "Switch to a larger model (GPT-4o to GPT-4-turbo)",
       "Increase the number of search results in the context",
-      "Add content moderation on the output"
+      "Add content moderation on the output",
+      "Use a system prompt that instructs the model to only answer from context, lower temperature, and include source citations"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "The most effective approach combines: (1) explicit system prompt constraining answers to provided context, (2) low temperature (0.1-0.3) to reduce creative responses, and (3) requiring source citations so you can verify grounding. More context or larger models don't inherently solve grounding issues."
   },
   {
@@ -995,36 +995,36 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
     id: "ai102-49-q4",
     question: "You need to handle a document that contains both printed text AND handwritten notes. Which extraction approach handles both?",
     options: [
-      "Document Intelligence prebuilt-read model (supports both print and handwriting)",
       "Computer Vision OCR API only",
       "Document Intelligence prebuilt-layout model (print only)",
+      "Document Intelligence prebuilt-read model (supports both print and handwriting)",
       "Content Understanding document analyzer"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Document Intelligence's prebuilt-read model supports both printed and handwritten text recognition. It uses advanced OCR that handles mixed content (machine-printed + handwritten) in a single analysis pass."
   },
   {
     id: "ai102-49-q5",
     question: "For RBAC best practices, which identity approach should you use in production for service-to-service communication?",
     options: [
-      "Managed identity with RBAC role assignments",
       "API keys stored in environment variables",
+      "Managed identity with RBAC role assignments",
       "Service principal with client secret in Key Vault",
       "Shared access signatures (SAS tokens)"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Managed identity is the recommended approach for Azure service-to-service authentication. It eliminates credential management entirely — no secrets to rotate, no keys to store. Combined with RBAC roles (e.g., Cognitive Services User), it provides least-privilege access without credential exposure."
   },
   {
     id: "ai102-49-q6",
     question: "Your search index has 1 million documents. Hybrid search (keyword + vector) returns results in 2 seconds. How can you improve latency?",
     options: [
-      "Add semantic ranking only on the top-N pre-filtered results (reranking, not full semantic search)",
       "Remove the vector search component entirely",
       "Increase the HNSW ef_search parameter to maximum",
-      "Switch to exhaustive KNN instead of HNSW"
+      "Switch to exhaustive KNN instead of HNSW",
+      "Add semantic ranking only on the top-N pre-filtered results (reranking, not full semantic search)"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "Semantic ranking as a reranker on pre-filtered results (e.g., top 50) adds quality without significant latency. Removing vector search loses relevance, increasing ef_search adds latency, and exhaustive KNN is O(n) which is far slower than HNSW at scale."
   },
   {
@@ -1043,12 +1043,12 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
     id: "ai102-49-q8",
     question: "You want to enable voice-based queries against your document search system. What is the correct service chain?",
     options: [
-      "Speech-to-Text → Search query → RAG response → Text-to-Speech",
       "Speech-to-Text → Direct OpenAI chat → Text-to-Speech",
       "LUIS → Search query → Text-to-Speech",
+      "Speech-to-Text → Search query → RAG response → Text-to-Speech",
       "Custom Speech model → Search → Audio file generation"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "The correct chain for voice-enabled RAG: (1) Azure Speech-to-Text converts spoken query to text, (2) text drives a hybrid search query, (3) search results feed into RAG with Azure OpenAI for a grounded answer, (4) Azure Text-to-Speech converts the answer to audio. This leverages real-time speech with grounded AI responses."
   }
 ]} />

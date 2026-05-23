@@ -572,24 +572,24 @@ After the indexer completes, querying the index should return enriched documents
     id: "ai102-40-q2",
     question: "You define a KeyPhraseExtractionSkill in your skillset. The skill output is 'keyPhrases' with targetName 'keyphrases'. What path do you use in outputFieldMappings to map this to the index?",
     options: [
-      "/document/keyphrases",
       "/document/keyPhrases",
       "keyphrases",
+      "/document/keyphrases",
       "/document/content/keyphrases"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "The outputFieldMappings source path uses the format '/document/{targetName}'. Since the skill output has targetName='keyphrases', the correct source path in the indexer's outputFieldMappings is '/document/keyphrases'."
   },
   {
     id: "ai102-40-q3",
     question: "Which built-in skill would you use to extract text from scanned PDF documents containing images?",
     options: [
-      "OcrSkill",
       "ImageAnalysisSkill",
+      "OcrSkill",
       "EntityRecognitionSkill",
       "TextTranslationSkill"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "The OcrSkill (Optical Character Recognition) extracts text from images within documents. For scanned PDFs where content is embedded in images rather than as selectable text, OCR is required. ImageAnalysisSkill generates descriptions/tags but doesn't extract text."
   },
   {
@@ -608,12 +608,12 @@ After the indexer completes, querying the index should return enriched documents
     id: "ai102-40-q5",
     question: "Your indexer needs an Azure AI Services resource to run built-in cognitive skills. What happens if you don't attach one?",
     options: [
-      "Skills execute but are limited to 20 free enrichments per indexer per day",
       "The indexer fails immediately without processing any documents",
       "Skills are skipped entirely and only raw content is indexed",
+      "Skills execute but are limited to 20 free enrichments per indexer per day",
       "Azure AI Search uses its own built-in processing without any limits"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Without an attached Azure AI Services resource, the skillset still works but is limited to 20 free enrichments per indexer per day. This is useful for testing but insufficient for production. Attaching a billable AI Services resource removes this limit."
   }
 ]} />

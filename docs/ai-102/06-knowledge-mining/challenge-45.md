@@ -389,12 +389,12 @@ Confidence: 95.20%
     id: "ai102-45-q1",
     question: "You need to extract the vendor name, invoice total, and line items from scanned invoices. Which model should you use?",
     options: [
-      "prebuilt-invoice",
       "prebuilt-layout",
+      "prebuilt-invoice",
       "prebuilt-read",
       "prebuilt-document"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "The prebuilt-invoice model is specifically trained to extract invoice-specific fields like VendorName, InvoiceTotal, DueDate, and LineItems. While prebuilt-layout can extract tables, it doesn't understand invoice semantics."
   },
   {
@@ -413,36 +413,36 @@ Confidence: 95.20%
     id: "ai102-45-q3",
     question: "A field is extracted with confidence 0.45 (45%). What should your application do?",
     options: [
-      "Flag the field for human review based on a confidence threshold",
       "Reject the entire document",
       "Re-submit the document with higher resolution settings",
+      "Flag the field for human review based on a confidence threshold",
       "Accept the value since any extraction is better than manual entry"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Best practice is to set a confidence threshold (typically 0.8 or 80%) and flag fields below it for human review. A 45% confidence suggests the model is uncertain. Don't reject the whole document — other fields may have high confidence."
   },
   {
     id: "ai102-45-q4",
     question: "Which prebuilt model extracts tables, paragraphs, and selection marks from ANY document type without needing to know the document format?",
     options: [
-      "prebuilt-layout",
       "prebuilt-read",
       "prebuilt-document",
-      "prebuilt-invoice"
+      "prebuilt-invoice",
+      "prebuilt-layout"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "prebuilt-layout is the general-purpose structure extraction model. It identifies pages, tables, paragraphs, selection marks (checkboxes), and barcodes from any document. prebuilt-read only extracts text. Prebuilt-invoice/receipt are format-specific."
   },
   {
     id: "ai102-45-q5",
     question: "What is the correct API endpoint format for analyzing a document with Document Intelligence (2024-11-30 API)?",
     options: [
-      "{endpoint}/documentintelligence/documentModels/{modelId}:analyze?api-version=2024-11-30",
       "{endpoint}/formrecognizer/v2.1/prebuilt/{modelId}/analyze",
+      "{endpoint}/documentintelligence/documentModels/{modelId}:analyze?api-version=2024-11-30",
       "{endpoint}/vision/documentanalysis:analyze?api-version=2024-11-30",
       "{endpoint}/documentintelligence/analyze/{modelId}?api-version=2024-11-30"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "The current Document Intelligence API (v4.0, 2024-11-30) uses the endpoint format: {endpoint}/documentintelligence/documentModels/{modelId}:analyze. The old formrecognizer path is deprecated."
   }
 ]} />

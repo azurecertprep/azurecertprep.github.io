@@ -523,24 +523,24 @@ curl -X DELETE "${AI_ENDPOINT}/contentunderstanding/analyzers/invoice-analyzer?a
     id: "ai102-47-q1",
     question: "You need to extract custom fields from documents where the schema changes per client. Which Azure service lets you define extraction fields with natural language descriptions?",
     options: [
-      "Azure Content Understanding with custom field schema",
       "Azure Document Intelligence prebuilt-layout model",
+      "Azure Content Understanding with custom field schema",
       "Azure AI Search with built-in cognitive skills",
       "Azure OpenAI with structured output"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Azure Content Understanding lets you define custom field schemas with natural language descriptions. The AI model uses these descriptions to understand what to extract, making it flexible for varying document formats without training."
   },
   {
     id: "ai102-47-q2",
     question: "What is the primary difference between Azure Content Understanding and Azure Document Intelligence for document processing?",
     options: [
-      "Content Understanding uses LLM-powered extraction with schema descriptions; Document Intelligence uses trained ML models with labeled data",
       "Content Understanding only works with images; Document Intelligence only works with PDFs",
       "They are the same service with different names",
+      "Content Understanding uses LLM-powered extraction with schema descriptions; Document Intelligence uses trained ML models with labeled data",
       "Content Understanding requires training; Document Intelligence does not"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Content Understanding leverages LLM capabilities and natural language field descriptions for extraction (no training needed). Document Intelligence uses purpose-trained ML models, which provide high accuracy for specific document types but require training for custom scenarios."
   },
   {
@@ -559,24 +559,24 @@ curl -X DELETE "${AI_ENDPOINT}/contentunderstanding/analyzers/invoice-analyzer?a
     id: "ai102-47-q4",
     question: "How does Content Understanding determine what data to extract from a document?",
     options: [
-      "From the natural language descriptions in the fieldSchema definition",
       "From pre-trained models that understand all document types",
       "From labeled training data provided during model creation",
-      "From the file extension and MIME type"
+      "From the file extension and MIME type",
+      "From the natural language descriptions in the fieldSchema definition"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "Content Understanding uses the field descriptions you provide in the fieldSchema as instructions for the AI model. Clear, specific descriptions improve extraction accuracy. No training data or labeled samples are needed."
   },
   {
     id: "ai102-47-q5",
     question: "What HTTP status code indicates the analysis operation has been accepted and is processing asynchronously?",
     options: [
-      "202 Accepted",
       "200 OK",
+      "202 Accepted",
       "201 Created",
       "204 No Content"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "HTTP 202 Accepted indicates the request has been accepted for processing but is not yet complete. The response includes an Operation-Location header with the URL to poll for results. This is the standard async pattern for Azure AI services."
   }
 ]} />

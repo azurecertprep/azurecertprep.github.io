@@ -488,6 +488,7 @@ results = search_client.search(
     semantic_configuration_name="semantic-config",
     filter="source_type eq 'pdf'",
     facets=["source_type", "language"],
+    include_total_count=True,
     select=["id", "title", "content", "source_type", "confidence_score"],
     top=10
 )
@@ -567,24 +568,24 @@ Results:
     id: "ai102-48-q1",
     question: "You're building a pipeline that processes PDFs, images, and audio files into a single search index. What is the BEST approach for handling these different formats?",
     options: [
-      "Use format-specific extractors (Doc Intelligence for PDFs, Content Understanding for images) and a unified search index",
       "Convert all files to PDF first, then process with a single Document Intelligence model",
       "Use a single AI Search indexer that handles all formats natively",
+      "Use format-specific extractors (Doc Intelligence for PDFs, Content Understanding for images) and a unified search index",
       "Create separate indexes for each format and federate queries across them"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "The best approach uses specialized services for each format (Document Intelligence excels at structured PDFs, Content Understanding at images/multimodal) and stores all results in a unified search index. This leverages each service's strengths while providing a single query endpoint."
   },
   {
     id: "ai102-48-q2",
     question: "Your pipeline generates embeddings for documents before indexing. A new embedding model is released with better performance. What must you do?",
     options: [
-      "Re-generate embeddings for ALL existing documents and re-index them",
       "Only generate new embeddings for newly added documents",
+      "Re-generate embeddings for ALL existing documents and re-index them",
       "Update the index vector dimensions and existing vectors will adapt",
       "Add a new vector field for the new model while keeping the old one"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Embedding models produce vectors in different spaces. You cannot mix vectors from different models in the same field — similarity calculations would be meaningless. You must re-embed all existing documents with the new model and re-index. Adding a new field (option D) works but wastes storage."
   },
   {
@@ -603,12 +604,12 @@ Results:
     id: "ai102-48-q4",
     question: "You want to query your unified index for 'all invoices from Contoso with amount over $1000'. Which combination of search features is most appropriate?",
     options: [
-      "Keyword search for 'Contoso' combined with an OData filter on a structured amount field",
       "Pure vector search with the query as embedding",
       "Semantic search only",
-      "Full Lucene syntax with regex pattern matching"
+      "Full Lucene syntax with regex pattern matching",
+      "Keyword search for 'Contoso' combined with an OData filter on a structured amount field"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "This query has two components: a text match ('Contoso') best served by keyword search, and a numeric condition ('over $1000') best served by OData filter on a structured field. Combining search_text with $filter gives precise results. Vector search alone can't do numeric comparisons."
   },
   {

@@ -485,48 +485,48 @@ cat projected-doc.json | python -m json.tool
     id: "ai102-43-q2",
     question: "Two table projections (documentsTable and keyphrasesTable) need a foreign key relationship. How do you ensure they can be joined?",
     options: [
-      "Define both tables in the same projection group",
       "Use the same tableName for both",
       "Set referenceKeyName on the child table",
+      "Define both tables in the same projection group",
       "Define them in separate projection groups with identical source paths"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Tables defined in the SAME projection group share a generated key that serves as a foreign key. Tables in different projection groups are independent and cannot be joined. The system auto-generates the relationship key."
   },
   {
     id: "ai102-43-q3",
     question: "What is the purpose of the Shaper skill in a knowledge store pipeline?",
     options: [
-      "To consolidate enrichment outputs into a custom JSON structure suitable for projections",
       "To split large documents into smaller chunks",
+      "To consolidate enrichment outputs into a custom JSON structure suitable for projections",
       "To convert enrichment outputs into the search index schema",
       "To validate the skill output format before projection"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "The Shaper skill creates custom JSON shapes by combining multiple enrichment outputs into a single structured object. This is useful for projections because you can design the exact shape of data you want to store."
   },
   {
     id: "ai102-43-q4",
     question: "What indexer parameter must be set for file projections to store images extracted from documents?",
     options: [
-      "imageAction: generateNormalizedImages",
       "imageAction: extractImages",
       "imageProcessing: enabled",
-      "fileProjections: includeImages"
+      "fileProjections: includeImages",
+      "imageAction: generateNormalizedImages"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "Setting 'imageAction' to 'generateNormalizedImages' in the indexer configuration tells the indexer to extract and normalize images from documents. This creates '/document/normalized_images/*' nodes that file projections can reference."
   },
   {
     id: "ai102-43-q5",
     question: "Where does an object projection physically store its data?",
     options: [
-      "Azure Blob Storage as JSON files",
       "Azure Table Storage as entities",
       "Azure Cosmos DB as documents",
+      "Azure Blob Storage as JSON files",
       "Within the AI Search index as stored fields"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "Object projections store each enriched document as a JSON blob in Azure Blob Storage. The container is specified in the projection definition. Each document becomes a separate JSON file in the container."
   }
 ]} />

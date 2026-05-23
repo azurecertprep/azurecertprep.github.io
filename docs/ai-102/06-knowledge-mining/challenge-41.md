@@ -494,24 +494,24 @@ After re-indexing, documents should contain custom skill enrichments:
     id: "ai102-41-q1",
     question: "Your custom Web API skill processes documents but the indexer reports errors for some records. What is the MOST LIKELY cause if the function returns HTTP 200 but certain records show errors?",
     options: [
-      "The function returned errors in the 'errors' array for those specific records",
-      "The function returned HTTP 200 so no records can have errors",
       "The indexer timeout was exceeded",
+      "The function returned HTTP 200 so no records can have errors",
+      "The function returned errors in the 'errors' array for those specific records",
       "The function key expired during processing"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "A custom skill can return HTTP 200 (success) while still reporting per-record errors in the 'errors' array within each record's response. This allows partial success where some records enrich successfully and others report issues."
   },
   {
     id: "ai102-41-q2",
     question: "What is the maximum timeout value you can set for a custom Web API skill?",
     options: [
-      "230 seconds (PT230S)",
       "60 seconds (PT60S)",
+      "230 seconds (PT230S)",
       "300 seconds (PT5M)",
       "30 seconds (PT30S)"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "The maximum timeout for a custom Web API skill is 230 seconds (PT230S). The default is 30 seconds. If your function requires longer processing, consider optimizing the code or using async patterns."
   },
   {
@@ -530,24 +530,24 @@ After re-indexing, documents should contain custom skill enrichments:
     id: "ai102-41-q4",
     question: "A custom skill must match each input record with its corresponding output. What field links them together?",
     options: [
-      "recordId",
       "documentId",
       "correlationId",
-      "sourceId"
+      "sourceId",
+      "recordId"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "The 'recordId' field is the correlation key. Each input record has a recordId, and the custom skill must return the same recordId in its output so the indexer can match enrichment results back to the correct document."
   },
   {
     id: "ai102-41-q5",
     question: "Which @odata.type value identifies a custom Web API skill in the skillset JSON definition?",
     options: [
-      "#Microsoft.Skills.Custom.WebApiSkill",
       "#Microsoft.Skills.Text.CustomSkill",
+      "#Microsoft.Skills.Custom.WebApiSkill",
       "#Microsoft.Skills.Custom.AzureFunctionSkill",
       "#Microsoft.Skills.WebApi.CustomSkill"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "The correct OData type for a custom Web API skill is '#Microsoft.Skills.Custom.WebApiSkill'. This applies regardless of whether the endpoint is an Azure Function, App Service, or any other HTTP endpoint."
   }
 ]} />

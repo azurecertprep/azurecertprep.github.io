@@ -525,36 +525,36 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/documents-
     id: "ai102-42-q1",
     question: "You want users to search for 'programing' and still find documents containing 'programming'. Which query syntax supports this?",
     options: [
-      "Full Lucene with fuzzy: programing~1",
       "Simple syntax: +programing",
+      "Full Lucene with fuzzy: programing~1",
       "OData filter: content eq 'programing'",
       "Simple syntax: programing*"
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation: "Fuzzy search (term~N) in full Lucene syntax finds terms within an edit distance of N. 'programing~1' matches 'programming' because they differ by one character (one missing 'm'). Wildcards only match prefixes, not typos."
   },
   {
     id: "ai102-42-q2",
     question: "You need to filter documents where ANY keyphrase equals 'machine learning'. Which OData filter is correct?",
     options: [
-      "keyphrases/any(k: k eq 'machine learning')",
       "keyphrases eq 'machine learning'",
       "keyphrases/contains('machine learning')",
+      "keyphrases/any(k: k eq 'machine learning')",
       "search.in(keyphrases, 'machine learning')"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "For Collection fields, you must use lambda expressions (any/all) to filter. The syntax 'collection/any(variable: expression)' tests if any element matches. Direct eq comparison doesn't work on collections."
   },
   {
     id: "ai102-42-q3",
     question: "What is the maximum value allowed for $skip in Azure AI Search?",
     options: [
-      "100,000",
+      "No limit",
       "10,000",
       "1,000,000",
-      "No limit"
+      "100,000"
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation: "Azure AI Search limits $skip to 100,000. For deeper pagination beyond this limit, use the orderby + filter pattern with a unique sortable field, or the continuation token approach for scrolling through large result sets."
   },
   {
@@ -573,12 +573,12 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/documents-
     id: "ai102-42-q5",
     question: "You configure facets=['language,count:5']. What does the 'count:5' parameter control?",
     options: [
-      "The maximum number of facet buckets returned for that field",
       "The minimum document count for a facet value to appear",
       "The total number of documents to scan for facets",
+      "The maximum number of facet buckets returned for that field",
       "The number of characters to include in facet values"
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation: "The 'count:N' parameter limits the number of facet values (buckets) returned. If a field has 100 unique values, count:5 returns only the top 5 most common values. The default is 10 facet values per field."
   }
 ]} />
