@@ -1,26 +1,26 @@
 ---
 sidebar_position: 3
-title: "Challenge 22: Microsoft Foundry Agent Service"
+title: "Challenge 22: Azure AI Agent Service"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 22: Microsoft Foundry Agent Service
+# Challenge 22: Azure AI Agent Service
 
 :::info Estimated Time
 **60 min** | **Cost**: $3-8 (estimated) | **Domain**: Implement Agentic Solutions (5-10%)
 :::
 
 ## Exam skills covered
-- Create an agent with Microsoft Foundry Agent Service
+- Create an agent with Azure AI Agent Service
 - Configure agent tools (file search, code interpreter)
 - Manage threads and runs for agent conversations
 
 ## Overview
 
-Microsoft Foundry Agent Service provides a managed platform for building AI agents. It handles thread management, tool execution (file search, code interpreter, custom functions), run lifecycle, and file management.
+Azure AI Agent Service provides a managed platform for building AI agents. It handles thread management, tool execution (file search, code interpreter, custom functions), run lifecycle, and file management.
 
 The architecture: create an agent → create a thread → add messages → create a run → poll until complete → read responses.
 
@@ -227,18 +227,18 @@ Monthly Cost Breakdown:
 
 <KnowledgeCheck questions={[
   {
-    question: "What is the correct sequence for using Microsoft Foundry Agent Service?",
+    question: "What is the correct sequence for using Azure AI Agent Service?",
     options: [
-      "Create thread → Create agent → Add message → Create run",
       "Create agent → Create thread → Add message → Create run",
+      "Create thread → Create agent → Add message → Create run",
       "Create run → Create agent → Create thread → Add message",
       "Create agent → Create run → Create thread → Add message"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "The correct flow: create an agent (defines behavior and tools), create a thread (conversation container), add messages to the thread, then create a run (triggers agent processing)."
   },
   {
-    question: "What does the file_search tool provide in Foundry Agent Service?",
+    question: "What does the file_search tool provide in Azure AI Agent Service?",
     options: [
       "Searches the local file system for files",
       "Performs semantic search over uploaded files indexed in a vector store",
@@ -252,33 +252,33 @@ Monthly Cost Breakdown:
     question: "What is the purpose of the code_interpreter tool?",
     options: [
       "Translates code between programming languages",
-      "Executes Python in a sandboxed environment for calculations, analysis, and file generation",
       "Interprets natural language and converts it to code",
-      "Debugs user-submitted code"
+      "Debugs user-submitted code",
+      "Executes Python in a sandboxed environment for calculations, analysis, and file generation"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Code interpreter runs Python code in a sandboxed environment, allowing calculations, data analysis, visualizations, and file generation."
   },
   {
     question: "How should you handle the 'requires_action' run status?",
     options: [
       "Cancel and retry the run",
-      "Submit tool outputs for the requested function calls",
       "Create a new run with different parameters",
+      "Submit tool outputs for the requested function calls",
       "Wait — it resolves automatically"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "When status is 'requires_action', the agent needs function results. Execute the requested functions and submit outputs via submit_tool_outputs."
   },
   {
     question: "What is the relationship between agents and threads?",
     options: [
+      "Agents and threads are independent — any agent can run on any thread",
       "Each agent can only process one thread",
       "Each thread is permanently bound to one agent",
-      "Agents and threads are independent — any agent can run on any thread",
       "Threads are auto-created when agents are created"
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation: "Agents and threads are independent resources. The same agent can process many threads, and a thread can be processed by different agents via separate runs."
   }
 ]} />
@@ -291,7 +291,7 @@ az group delete --name rg-ai102-foundry-agents --yes --no-wait
 
 ## Learn More
 
-- [Foundry Agent Service overview](https://learn.microsoft.com/azure/ai-services/agents/overview)
+- [Azure AI Agent Service overview](https://learn.microsoft.com/azure/ai-services/agents/overview)
 - [Quickstart: Create an agent](https://learn.microsoft.com/azure/ai-services/agents/quickstart)
 - [File search tool](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/file-search)
 - [Code interpreter tool](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/code-interpreter)

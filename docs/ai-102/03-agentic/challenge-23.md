@@ -18,7 +18,7 @@ Multi-agent frameworks are rapidly evolving. APIs shown here may change. This ch
 :::
 
 ## Exam skills covered
-- Implement complex agents with Microsoft Agent Framework
+- Implement complex agents with Semantic Kernel Agent Framework
 - Design multi-agent solutions with orchestration patterns
 - Test and deploy agent solutions
 
@@ -397,11 +397,11 @@ The content is well-structured and accurate. APPROVED.
     question: "What is the 'sequential' orchestration pattern in multi-agent systems?",
     options: [
       "All agents process the input simultaneously and vote on the best response",
-      "Agents take turns processing in a fixed order, each building on previous output",
       "A supervisor assigns tasks to random agents",
-      "Agents compete and the fastest response wins"
+      "Agents compete and the fastest response wins",
+      "Agents take turns processing in a fixed order, each building on previous output"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Sequential (pipeline) pattern has agents process in a defined order. Each agent receives the output of the previous agent, progressively refining the result."
   },
   {
@@ -418,23 +418,23 @@ The content is well-structured and accurate. APPROVED.
   {
     question: "What is the 'handoff' pattern in multi-agent architecture?",
     options: [
-      "Agents share their memory with other agents",
       "One agent explicitly transfers conversation control to another specialized agent",
+      "Agents share their memory with other agents",
       "All agents process every message in parallel",
       "Agents are replaced with newer versions during runtime"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Handoff is when one agent recognizes it cannot handle a request and explicitly transfers control to a more appropriate specialized agent."
   },
   {
     question: "How should you prevent infinite loops in multi-agent orchestration?",
     options: [
       "Use only one agent at a time",
-      "Set maximum_iterations on the termination strategy and define clear termination keywords",
       "Restart the application after each conversation",
+      "Set maximum_iterations on the termination strategy and define clear termination keywords",
       "Limit each agent to one response"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Infinite loops are prevented by setting maximum_iterations as a hard stop and defining clear termination conditions (like 'APPROVED' keywords) that agents are instructed to use."
   },
   {

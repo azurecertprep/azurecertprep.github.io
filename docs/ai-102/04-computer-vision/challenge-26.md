@@ -270,34 +270,34 @@ Objects found: 4
   {
     question: "How are bounding box coordinates represented in Custom Vision object detection?",
     options: [
-      "Absolute pixel coordinates (x, y, width, height)",
       "Normalized coordinates from 0.0 to 1.0 relative to image dimensions (left, top, width, height)",
+      "Absolute pixel coordinates (x, y, width, height)",
       "Percentage values from 0% to 100%",
       "Center point plus radius"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Custom Vision uses normalized coordinates (0.0 to 1.0) for bounding boxes: left, top, width, height — all relative to image dimensions. This makes them resolution-independent."
   },
   {
     question: "What does mAP (mean Average Precision) measure in object detection?",
     options: [
       "The average confidence score across all detections",
-      "The mean of Average Precision computed independently for each object class",
       "The maximum number of objects detected per image",
-      "The average processing time per image"
+      "The average processing time per image",
+      "The mean of Average Precision computed independently for each object class"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "mAP is the mean of AP values calculated separately for each class, providing a single metric that summarizes detection performance across all categories."
   },
   {
     question: "What is the key difference between the classify and detect prediction endpoints?",
     options: [
       "Classify is faster than detect",
-      "Classify returns a single tag; detect returns multiple tags with bounding box coordinates",
       "Detect requires more training images",
+      "Classify returns a single tag; detect returns multiple tags with bounding box coordinates",
       "Classify works with URLs; detect only works with local files"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The classify endpoint returns tags for the whole image. The detect endpoint returns multiple object predictions, each with a tag AND bounding box coordinates."
   },
   {
@@ -315,11 +315,11 @@ Objects found: 4
     question: "When labeling training images for object detection, what coordinates do you need for each object?",
     options: [
       "Only the center point of the object",
-      "Left, top, width, and height of the bounding box (normalized 0.0–1.0) plus the tag ID",
       "The pixel coordinates of all four corners",
-      "A polygon outline of the object shape"
+      "A polygon outline of the object shape",
+      "Left, top, width, and height of the bounding box (normalized 0.0–1.0) plus the tag ID"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Each region requires: tag_id (which object class), left, top, width, height — all as normalized values between 0.0 and 1.0 relative to image dimensions."
   }
 ]} />

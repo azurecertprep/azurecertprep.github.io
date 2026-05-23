@@ -256,22 +256,22 @@ Found 5 faces in group photo
     question: "Which Face service features require Limited Access approval?",
     options: [
       "Face detection and attribute analysis",
-      "Face identification (1:N) and verification (1:1)",
       "Bounding box detection and head pose",
-      "Blur, exposure, and noise detection"
+      "Blur, exposure, and noise detection",
+      "Face identification (1:N) and verification (1:1)"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Face identification (matching against a group) and verification (comparing two faces) require Limited Access approval. Detection and attribute analysis are available without approval."
   },
   {
     question: "What is the minimum detectable face size in Azure Face service?",
     options: [
-      "10x10 pixels",
       "36x36 pixels",
+      "10x10 pixels",
       "100x100 pixels",
       "200x200 pixels"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "The minimum face size for detection is 36x36 pixels. For better attribute analysis, larger face regions (ideally 200x200+) are recommended."
   },
   {
@@ -300,11 +300,11 @@ Found 5 faces in group photo
     question: "What is the difference between face detection and face identification?",
     options: [
       "Detection is faster; identification is more accurate",
-      "Detection locates faces and returns attributes; identification matches faces against a known person group",
       "Detection works on video; identification works on images",
-      "There is no difference — they are the same operation"
+      "There is no difference — they are the same operation",
+      "Detection locates faces and returns attributes; identification matches faces against a known person group"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Detection finds faces in an image and returns locations + attributes. Identification takes a detected face and matches it against a PersonGroup to determine WHO the person is."
   }
 ]} />

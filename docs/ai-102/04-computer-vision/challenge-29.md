@@ -263,34 +263,34 @@ Search 'Azure AI': 4 matches
   {
     question: "What API endpoint does Azure AI Video Indexer use?",
     options: [
-      "https://<resource>.cognitiveservices.azure.com",
       "https://api.videoindexer.ai",
+      "https://<resource>.cognitiveservices.azure.com",
       "https://<resource>.videoindexer.azure.com",
       "https://video.cognitive.microsoft.com"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Video Indexer uses its own dedicated API at https://api.videoindexer.ai, separate from the standard Cognitive Services endpoint."
   },
   {
     question: "What is the typical workflow for processing a video with Video Indexer?",
     options: [
       "Upload → Process → Delete",
-      "Get access token → Upload video → Poll for completion → Retrieve insights",
       "Create index → Add video → Query results",
-      "Deploy model → Send video → Get predictions"
+      "Deploy model → Send video → Get predictions",
+      "Get access token → Upload video → Poll for completion → Retrieve insights"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "The workflow is: authenticate (get token) → upload video → poll status until 'Processed' → retrieve structured insights via the Index endpoint."
   },
   {
     question: "Which insights does Video Indexer extract from the audio track?",
     options: [
       "Only speech-to-text transcript",
-      "Transcript with speaker identification, language detection, and sentiment",
       "Only keywords and topics",
+      "Transcript with speaker identification, language detection, and sentiment",
       "Audio is not analyzed — only visual content"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Video Indexer extracts transcript with speaker diarization (who spoke when), language detection, keywords, topics, and text-based sentiment analysis from the audio."
   },
   {

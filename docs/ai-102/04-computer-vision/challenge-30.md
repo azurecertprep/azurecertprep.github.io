@@ -468,22 +468,22 @@ Distance violations: 1
     question: "Which operation would you use to count how many people are in a store section?",
     options: [
       "spatialanalysis-personcrossingline",
-      "spatialanalysis-personcount",
       "spatialanalysis-persondistance",
-      "spatialanalysis-persondetection"
+      "spatialanalysis-persondetection",
+      "spatialanalysis-personcount"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "personcount monitors the number of people within a defined polygon zone, suitable for occupancy monitoring in store sections."
   },
   {
     question: "What triggers a 'personCrossingLine' event?",
     options: [
-      "A person is detected anywhere in the frame",
       "A person's detected footprint crosses a defined virtual line with a specified direction",
+      "A person is detected anywhere in the frame",
       "A person stands still for more than 30 seconds",
       "Two people come within 6 feet of each other"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "personCrossingLine fires when a person's position crosses a defined virtual line. Direction (in/out) is determined by the line's configured from/to sides."
   },
   {

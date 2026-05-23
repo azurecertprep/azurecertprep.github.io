@@ -265,22 +265,22 @@ Document contains 3 pages
     question: "What is the text hierarchy returned by the Azure AI Vision Read feature?",
     options: [
       "Document → Paragraphs → Sentences → Words",
-      "Blocks → Lines → Words (each with bounding polygons and confidence)",
       "Pages → Columns → Rows → Characters",
+      "Blocks → Lines → Words (each with bounding polygons and confidence)",
       "Regions → Paragraphs → Lines → Characters"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "The Read feature returns: Blocks (text regions) → Lines (text lines) → Words (individual words with bounding polygons and confidence scores)."
   },
   {
     question: "What is the maximum image size supported by the Image Analysis Read feature?",
     options: [
-      "5MB",
       "20MB with minimum 50x50 pixels",
+      "5MB",
       "100MB",
       "10MB with minimum 100x100 pixels"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Image Analysis supports images up to 20MB with a minimum dimension of 50x50 pixels."
   },
   {
@@ -298,22 +298,22 @@ Document contains 3 pages
     question: "How does the API indicate uncertainty in handwritten text recognition?",
     options: [
       "It marks words with an 'uncertain' flag",
-      "Each word has a confidence score (0.0-1.0); handwriting typically scores lower than print",
       "It returns alternative text suggestions",
-      "It highlights uncertain regions in red"
+      "It highlights uncertain regions in red",
+      "Each word has a confidence score (0.0-1.0); handwriting typically scores lower than print"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Each word includes a confidence score from 0.0 to 1.0. Handwritten text typically returns lower confidence scores than printed text due to variability."
   },
   {
     question: "What Content-Type header should you use when sending a local image file for OCR?",
     options: [
-      "application/json with base64 encoded image",
       "application/octet-stream with raw binary data",
+      "application/json with base64 encoded image",
       "multipart/form-data with file attachment",
       "image/jpeg or image/png matching the file format"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "When sending binary image data directly, use Content-Type: application/octet-stream. When sending an image URL, use application/json."
   }
 ]} />

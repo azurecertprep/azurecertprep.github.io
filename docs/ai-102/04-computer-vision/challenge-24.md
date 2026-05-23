@@ -300,23 +300,23 @@ Text (OCR):
   {
     question: "What does the smartCrops feature return?",
     options: [
-      "Cropped image files at specified resolutions",
       "Bounding box coordinates for optimal crop regions at specified aspect ratios",
+      "Cropped image files at specified resolutions",
       "A list of objects that should be excluded from cropping",
       "Automatically resized versions of the image"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "smartCrops returns bounding box coordinates for the optimal crop regions at your specified aspect ratios, ensuring important content is preserved in thumbnails."
   },
   {
     question: "How are confidence scores expressed in Image Analysis 4.0 responses?",
     options: [
       "As percentages from 0% to 100%",
-      "As floating-point values from 0.0 to 1.0",
       "As integer values from 1 to 10",
-      "As categorical labels (low, medium, high)"
+      "As categorical labels (low, medium, high)",
+      "As floating-point values from 0.0 to 1.0"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Confidence scores are floating-point values between 0.0 and 1.0, where higher values indicate greater confidence in the detection or classification."
   },
   {
@@ -334,11 +334,11 @@ Text (OCR):
     question: "Which parameter specifies what information to extract from the image?",
     options: [
       "capabilities",
-      "visual_features (SDK) / features (REST query parameter)",
       "analysis_type",
-      "extract_mode"
+      "extract_mode",
+      "visual_features (SDK) / features (REST query parameter)"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "In the Python/C# SDK you pass visual_features (a list of VisualFeatures enum values); in REST you pass the 'features' query parameter with comma-separated feature names."
   }
 ]} />

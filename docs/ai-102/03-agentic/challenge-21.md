@@ -550,23 +550,23 @@ Parallel tool calls made: 2
   {
     question: "When the model returns tool_calls in the response, what must you include in the follow-up tool message?",
     options: [
-      "The function name and a new system prompt",
       "The tool_call_id and the function result as a JSON string",
+      "The function name and a new system prompt",
       "Only the function result — the model tracks the call internally",
       "The original user message and the function result"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "Each tool response message must include the tool_call_id (matching the specific call) and the function result serialized as a JSON string in the content field."
   },
   {
     question: "How does Azure OpenAI handle multiple tool calls in a single response?",
     options: [
       "It is not supported — only one tool can be called per turn",
-      "The model returns multiple tool_calls in the same response; you execute all and return all results before the next completion",
       "You must enable parallel_tool_calls=true in the request",
-      "Multiple tools are called sequentially with intermediate responses"
+      "Multiple tools are called sequentially with intermediate responses",
+      "The model returns multiple tool_calls in the same response; you execute all and return all results before the next completion"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "The model can return multiple tool_calls in a single response (parallel function calling). You execute all of them and return all results in separate tool messages before requesting the next completion."
   },
   {

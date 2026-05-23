@@ -259,33 +259,33 @@ Prediction results:
     question: "What is the difference between Multiclass and Multilabel classification?",
     options: [
       "Multiclass uses more training images than Multilabel",
-      "Multiclass assigns exactly one tag per image; Multilabel can assign multiple tags",
       "Multilabel is more accurate than Multiclass",
-      "Multiclass only works with 2 categories"
+      "Multiclass only works with 2 categories",
+      "Multiclass assigns exactly one tag per image; Multilabel can assign multiple tags"
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: "Multiclass: each image gets exactly one tag (mutually exclusive categories). Multilabel: each image can have zero or more tags simultaneously."
   },
   {
     question: "What does Average Precision (AP) measure in Custom Vision?",
     options: [
       "The average confidence score of predictions",
-      "The area under the precision-recall curve, summarizing model performance across thresholds",
       "The average number of correct predictions per batch",
+      "The area under the precision-recall curve, summarizing model performance across thresholds",
       "The time taken to make predictions on average"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "AP is the area under the precision-recall curve. It provides a single metric summarizing the trade-off between precision and recall across all confidence thresholds."
   },
   {
     question: "What is required before making predictions with a trained Custom Vision model?",
     options: [
-      "Export the model to a container",
       "Publish the iteration to a prediction resource with a publish name",
+      "Export the model to a container",
       "Convert the model to ONNX format",
       "Deploy the model to an Azure Function"
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: "You must publish a trained iteration to a prediction resource endpoint with a named version before it can serve predictions via the prediction API."
   },
   {
@@ -303,11 +303,11 @@ Prediction results:
     question: "How do you consume a published Custom Vision model for predictions?",
     options: [
       "Use the Training client with the iteration ID",
-      "Use the Prediction client with project ID and publish name",
       "Call the model directly via its iteration endpoint",
+      "Use the Prediction client with project ID and publish name",
       "Export and run locally only"
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: "Predictions use the CustomVisionPredictionClient with the project ID and the publish name assigned during iteration publishing."
   }
 ]} />
