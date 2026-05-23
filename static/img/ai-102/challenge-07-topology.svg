@@ -1,4 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 380" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="380" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Azure AI Services — Monitoring &amp; Logging</text>
+  <!-- Azure AI Service (source) -->
+  <rect x="30" y="80" width="170" height="220" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="115" y="102" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Azure AI Service</text>
+  <!-- Metrics -->
+  <rect x="45" y="115" width="140" height="35" rx="4" fill="#fff" stroke="#6c8ebf" stroke-width="0.8"/>
+  <text x="115" y="130" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Platform Metrics</text>
+  <text x="115" y="143" text-anchor="middle" font-size="8" fill="#555">Calls, Latency, Errors</text>
+  <!-- Activity Log -->
+  <rect x="45" y="158" width="140" height="35" rx="4" fill="#fff" stroke="#6c8ebf" stroke-width="0.8"/>
+  <text x="115" y="173" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Activity Log</text>
+  <text x="115" y="186" text-anchor="middle" font-size="8" fill="#555">CRUD operations</text>
+  <!-- Resource Logs -->
+  <rect x="45" y="201" width="140" height="35" rx="4" fill="#fff" stroke="#6c8ebf" stroke-width="0.8"/>
+  <text x="115" y="216" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Resource Logs</text>
+  <text x="115" y="229" text-anchor="middle" font-size="8" fill="#555">Request/Response details</text>
+  <!-- Audit -->
+  <rect x="45" y="244" width="140" height="35" rx="4" fill="#fff" stroke="#6c8ebf" stroke-width="0.8"/>
+  <text x="115" y="259" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Audit Logs</text>
+  <text x="115" y="272" text-anchor="middle" font-size="8" fill="#555">Auth, access events</text>
+  <!-- Diagnostic Settings (middle) -->
+  <rect x="230" y="120" width="140" height="80" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="300" y="145" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Diagnostic</text>
+  <text x="300" y="162" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Settings</text>
+  <text x="300" y="180" text-anchor="middle" font-size="9" fill="#555">Route logs &amp; metrics</text>
+  <text x="300" y="193" text-anchor="middle" font-size="9" fill="#555">to destinations</text>
+  <!-- Arrow from AI Service to Diagnostic Settings -->
+  <line x1="200" y1="160" x2="228" y2="160" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Arrows from Diagnostic Settings to destinations -->
+  <line x1="370" y1="135" x2="430" y2="90" stroke="#666" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <line x1="370" y1="160" x2="430" y2="170" stroke="#666" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <line x1="370" y1="185" x2="430" y2="260" stroke="#666" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <!-- Destination 1: Log Analytics -->
+  <rect x="435" y="55" width="190" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.2"/>
+  <text x="530" y="75" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Log Analytics Workspace</text>
+  <text x="530" y="92" text-anchor="middle" font-size="9" fill="#555">KQL queries &amp; analytics</text>
+  <text x="530" y="105" text-anchor="middle" font-size="9" fill="#555">Alerts &amp; Workbooks</text>
+  <text x="530" y="118" text-anchor="middle" font-size="9" fill="#555">30-730 day retention</text>
+  <!-- Destination 2: Storage Account -->
+  <rect x="435" y="140" width="190" height="60" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.2"/>
+  <text x="530" y="160" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Storage Account</text>
+  <text x="530" y="177" text-anchor="middle" font-size="9" fill="#555">Long-term archival</text>
+  <text x="530" y="192" text-anchor="middle" font-size="9" fill="#555">Cost-effective retention</text>
+  <!-- Destination 3: Event Hub -->
+  <rect x="435" y="230" width="190" height="60" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.2"/>
+  <text x="530" y="250" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Event Hub</text>
+  <text x="530" y="267" text-anchor="middle" font-size="9" fill="#555">Stream to SIEM / 3rd party</text>
+  <text x="530" y="282" text-anchor="middle" font-size="9" fill="#555">Real-time processing</text>
+  <!-- Azure Monitor Alerts section -->
+  <rect x="230" y="225" width="185" height="75" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.2"/>
+  <text x="322" y="245" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Azure Monitor Alerts</text>
+  <text x="240" y="262" font-size="9" fill="#555">• Metric alerts (latency, errors)</text>
+  <text x="240" y="277" font-size="9" fill="#555">• Log alerts (KQL query based)</text>
+  <text x="240" y="292" font-size="9" fill="#555">• Action Groups (email, SMS, webhook)</text>
+  <!-- Arrow from alerts to log analytics -->
+  <line x1="350" y1="225" x2="460" y2="125" stroke="#b85450" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- Key Metrics box -->
+  <rect x="30" y="315" width="595" height="52" rx="6" fill="#fff" stroke="#666" stroke-width="1"/>
+  <text x="325" y="333" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Key Metrics to Monitor</text>
+  <text x="40" y="350" font-size="9" fill="#555">TotalCalls | SuccessfulCalls | TotalErrors | Latency | TokenTransaction | ProcessedPromptTokens | BlockedCalls | ClientErrors (4xx) | ServerErrors (5xx)</text>
 </svg>

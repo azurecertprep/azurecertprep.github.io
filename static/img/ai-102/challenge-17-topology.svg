@@ -1,4 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="370" viewBox="0 0 650 370">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="370" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Prompt Engineering Architecture</text>
+  <!-- Prompt Construction -->
+  <rect x="20" y="45" width="280" height="250" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="160" y="65" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Prompt Construction</text>
+  <!-- System Message -->
+  <rect x="40" y="80" width="240" height="48" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="160" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">System Message</text>
+  <text x="160" y="118" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Role, behavior, constraints, format</text>
+  <!-- Few-shot Examples -->
+  <rect x="40" y="138" width="240" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="160" y="158" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Few-shot Examples</text>
+  <text x="160" y="176" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">User/assistant example pairs</text>
+  <!-- User Prompt -->
+  <rect x="40" y="196" width="240" height="48" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="160" y="216" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">User Prompt</text>
+  <text x="160" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Actual user question/task</text>
+  <!-- Combined arrow to model -->
+  <line x1="300" y1="170" x2="360" y2="170" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Model -->
+  <rect x="370" y="110" width="150" height="70" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="445" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">GPT-4o Model</text>
+  <text x="445" y="158" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Inference engine</text>
+  <!-- Parameters -->
+  <rect x="370" y="195" width="150" height="80" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="445" y="213" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Parameters</text>
+  <text x="445" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Temperature: 0.0–2.0</text>
+  <text x="445" y="245" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Top-p: 0.0–1.0</text>
+  <text x="445" y="260" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Max tokens, Stop seq</text>
+  <!-- Dashed line params to model -->
+  <line x1="445" y1="195" x2="445" y2="180" stroke="#d6b656" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Arrow to Response -->
+  <line x1="520" y1="145" x2="555" y2="145" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Response -->
+  <rect x="565" y="115" width="65" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="597" y="142" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Response</text>
+  <text x="597" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Output</text>
+  <!-- Footer -->
+  <rect x="80" y="315" width="490" height="40" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="325" y="332" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Low temperature (0.1) = deterministic | High temperature (1.5) = creative</text>
+  <text x="325" y="347" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">System message sets persona; few-shot examples guide format &amp; style</text>
 </svg>

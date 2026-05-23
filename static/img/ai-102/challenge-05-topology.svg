@@ -1,4 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 380" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="380" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Private Endpoint Networking for Azure AI Services</text>
+  <!-- Public Internet (blocked) -->
+  <rect x="250" y="42" width="150" height="30" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1.2"/>
+  <text x="325" y="62" text-anchor="middle" font-size="10" font-weight="bold" fill="#b85450">✗ Public Internet (Blocked)</text>
+  <!-- On-premises / VNet -->
+  <rect x="20" y="90" width="250" height="270" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="145" y="112" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">On-Premises / Client VNet</text>
+  <!-- App in VNet -->
+  <rect x="50" y="125" width="190" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.2"/>
+  <text x="145" y="148" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Application / VM</text>
+  <text x="145" y="165" text-anchor="middle" font-size="9" fill="#555">10.0.1.0/24 (Subnet A)</text>
+  <!-- DNS Resolution -->
+  <rect x="50" y="195" width="190" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.2"/>
+  <text x="145" y="215" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">DNS Resolution</text>
+  <text x="145" y="232" text-anchor="middle" font-size="9" fill="#555">*.privatelink.cognitiveservices...</text>
+  <!-- VPN/ExpressRoute -->
+  <rect x="50" y="260" width="190" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.2"/>
+  <text x="145" y="280" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">VPN / ExpressRoute</text>
+  <text x="145" y="296" text-anchor="middle" font-size="9" fill="#555">(For on-premises connectivity)</text>
+  <!-- Arrow from app to private endpoint -->
+  <line x1="240" y1="152" x2="298" y2="152" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="270" y="143" text-anchor="middle" font-size="8" fill="#555">Private IP</text>
+  <!-- Private Endpoint -->
+  <rect x="300" y="110" width="120" height="85" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="360" y="132" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Private</text>
+  <text x="360" y="147" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Endpoint</text>
+  <text x="360" y="165" text-anchor="middle" font-size="9" fill="#555">NIC: 10.0.2.5</text>
+  <text x="360" y="180" text-anchor="middle" font-size="9" fill="#555">Subnet B</text>
+  <!-- Arrow from PE to DNS -->
+  <line x1="360" y1="195" x2="360" y2="218" stroke="#9673a6" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <!-- Private DNS Zone -->
+  <rect x="290" y="220" width="140" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.2"/>
+  <text x="360" y="240" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Private DNS Zone</text>
+  <text x="360" y="255" text-anchor="middle" font-size="8" fill="#555">privatelink.cognitive</text>
+  <text x="360" y="267" text-anchor="middle" font-size="8" fill="#555">services.azure.com</text>
+  <!-- Arrow from PE to AI Service -->
+  <line x1="420" y1="152" x2="458" y2="152" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="440" y="143" text-anchor="middle" font-size="8" fill="#82b366">Private</text>
+  <!-- Azure AI Service -->
+  <rect x="460" y="90" width="170" height="270" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="545" y="112" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Azure AI Service</text>
+  <!-- Public access disabled -->
+  <rect x="478" y="125" width="135" height="35" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="0.8"/>
+  <text x="545" y="140" text-anchor="middle" font-size="9" font-weight="bold" fill="#b85450">Public Access</text>
+  <text x="545" y="153" text-anchor="middle" font-size="9" fill="#b85450">DISABLED</text>
+  <!-- Network rules -->
+  <rect x="478" y="170" width="135" height="35" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="0.8"/>
+  <text x="545" y="185" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Network Rules</text>
+  <text x="545" y="198" text-anchor="middle" font-size="9" fill="#555">Default: Deny</text>
+  <!-- Firewall -->
+  <rect x="478" y="215" width="135" height="35" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="0.8"/>
+  <text x="545" y="230" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">IP Firewall</text>
+  <text x="545" y="243" text-anchor="middle" font-size="9" fill="#555">Allowed IPs (optional)</text>
+  <!-- NSG -->
+  <rect x="478" y="260" width="135" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="545" y="275" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">NSG Rules</text>
+  <text x="545" y="288" text-anchor="middle" font-size="9" fill="#555">On PE Subnet</text>
+  <!-- Service Endpoint option -->
+  <rect x="478" y="305" width="135" height="42" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="545" y="320" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Service Endpoints</text>
+  <text x="545" y="333" text-anchor="middle" font-size="8" fill="#555">Alternative (less secure)</text>
+  <text x="545" y="344" text-anchor="middle" font-size="8" fill="#555">Traffic stays on backbone</text>
+  <!-- Flow label -->
+  <rect x="120" y="340" width="320" height="24" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="280" y="356" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">✓ Traffic flows privately via Microsoft backbone — never touches public internet</text>
 </svg>

@@ -1,4 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="350" viewBox="0 0 650 350">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="350" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Prompt Flow Architecture</text>
+  <!-- Flow container -->
+  <rect x="30" y="40" width="590" height="200" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="325" y="60" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#555">Prompt Flow DAG Pipeline</text>
+  <!-- Input Node -->
+  <rect x="50" y="100" width="110" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="105" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Input</text>
+  <text x="105" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">User query</text>
+  <!-- Arrow -->
+  <line x1="160" y1="125" x2="195" y2="125" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- LLM Node -->
+  <rect x="205" y="100" width="120" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="265" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">LLM Node</text>
+  <text x="265" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Azure OpenAI call</text>
+  <!-- Arrow -->
+  <line x1="325" y1="125" x2="360" y2="125" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Python Node -->
+  <rect x="370" y="100" width="120" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="430" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Python Node</text>
+  <text x="430" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Post-processing</text>
+  <!-- Arrow -->
+  <line x1="490" y1="125" x2="525" y2="125" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Output Node -->
+  <rect x="535" y="100" width="70" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="570" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Output</text>
+  <text x="570" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Result</text>
+  <!-- flow.dag.yaml at center -->
+  <rect x="235" y="170" width="180" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="325" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">flow.dag.yaml</text>
+  <text x="325" y="205" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">DAG definition &amp; node config</text>
+  <!-- Dashed lines from yaml to nodes -->
+  <line x1="265" y1="170" x2="265" y2="150" stroke="#9673a6" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="325" y1="170" x2="430" y2="150" stroke="#9673a6" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Evaluation & Deployment -->
+  <rect x="80" y="265" width="180" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="170" y="288" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Evaluation</text>
+  <text x="170" y="306" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Metrics: groundedness, relevance</text>
+  <rect x="390" y="265" width="180" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="480" y="288" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Deployment</text>
+  <text x="480" y="306" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Managed endpoint or ACA</text>
+  <!-- Arrows from flow to eval/deploy -->
+  <line x1="280" y1="215" x2="170" y2="260" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="370" y1="215" x2="480" y2="260" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
 </svg>

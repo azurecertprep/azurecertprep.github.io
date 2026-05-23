@@ -1,4 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 380" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="380" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Azure AI Services — Container Deployment</text>
+  <!-- Azure Cloud (right side) -->
+  <rect x="420" y="45" width="210" height="135" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="525" y="65" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Azure Cloud</text>
+  <!-- MCR -->
+  <rect x="440" y="78" width="170" height="40" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.2"/>
+  <text x="525" y="95" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Microsoft Container Registry</text>
+  <text x="525" y="110" text-anchor="middle" font-size="9" fill="#555">mcr.microsoft.com</text>
+  <!-- Billing Endpoint -->
+  <rect x="440" y="128" width="170" height="40" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.2"/>
+  <text x="525" y="145" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Billing Endpoint</text>
+  <text x="525" y="160" text-anchor="middle" font-size="9" fill="#555">*.cognitiveservices.azure.com</text>
+  <!-- Arrow: Pull image -->
+  <line x1="420" y1="98" x2="320" y2="98" stroke="#9673a6" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <text x="370" y="90" text-anchor="middle" font-size="8" fill="#9673a6">docker pull</text>
+  <!-- Arrow: Billing -->
+  <line x1="320" y1="148" x2="420" y2="148" stroke="#d6b656" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <text x="370" y="165" text-anchor="middle" font-size="8" fill="#d6b656">billing meter</text>
+  <!-- On-Premises / Local (left side) -->
+  <rect x="20" y="45" width="295" height="310" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="167" y="65" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">On-Premises / Edge / Local</text>
+  <!-- Docker Host -->
+  <rect x="40" y="78" width="255" height="130" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.2"/>
+  <text x="167" y="98" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Docker Host / Kubernetes</text>
+  <!-- Container -->
+  <rect x="60" y="108" width="215" height="85" rx="4" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="167" y="126" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">AI Service Container</text>
+  <text x="70" y="145" font-size="9" fill="#555">• Language (Sentiment, NER, Key Phrase)</text>
+  <text x="70" y="160" font-size="9" fill="#555">• Vision (Read / OCR)</text>
+  <text x="70" y="175" font-size="9" fill="#555">• Speech (STT / TTS)</text>
+  <text x="70" y="190" font-size="9" fill="#555">• LUIS / Custom containers</text>
+  <!-- Local apps -->
+  <rect x="40" y="220" width="120" height="45" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="100" y="240" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Local App</text>
+  <text x="100" y="255" text-anchor="middle" font-size="9" fill="#555">REST client</text>
+  <!-- Arrow from local app to container -->
+  <line x1="160" y1="242" x2="167" y2="210" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="180" y="230" font-size="8" fill="#555">localhost:5000</text>
+  <!-- Config requirements -->
+  <rect x="175" y="220" width="120" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="235" y="238" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Required Config</text>
+  <text x="235" y="253" text-anchor="middle" font-size="8" fill="#555">ApiKey + Billing URL</text>
+  <text x="235" y="265" text-anchor="middle" font-size="8" fill="#555">+ EULA=accept</text>
+  <!-- Data stays local callout -->
+  <rect x="40" y="280" width="255" height="60" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="167" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#82b366">✓ Data Sovereignty</text>
+  <text x="55" y="314" font-size="9" fill="#333">• Data processed locally — never leaves premises</text>
+  <text x="55" y="328" font-size="9" fill="#333">• Only billing metadata sent to Azure</text>
+  <!-- Bottom: Key points -->
+  <rect x="340" y="200" width="290" height="160" rx="8" fill="#fff" stroke="#666" stroke-width="1"/>
+  <text x="485" y="220" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Container Requirements</text>
+  <text x="355" y="240" font-size="9" fill="#555">• Internet access for billing (periodic)</text>
+  <text x="355" y="258" font-size="9" fill="#555">• Valid API key from Azure resource</text>
+  <text x="355" y="276" font-size="9" fill="#555">• EULA acceptance (Eula=accept)</text>
+  <text x="355" y="294" font-size="9" fill="#555">• Min 4GB RAM / 2 CPU cores (varies)</text>
+  <text x="355" y="312" font-size="9" fill="#555">• Connected containers (default)</text>
+  <text x="355" y="330" font-size="9" fill="#555">• Disconnected containers (special approval)</text>
+  <rect x="355" y="340" width="260" height="16" rx="3" fill="#f8cecc" stroke="#b85450" stroke-width="0.6"/>
+  <text x="485" y="352" text-anchor="middle" font-size="8" font-weight="bold" fill="#b85450">⚠ Container stops after 10-15 min without billing connection</text>
 </svg>

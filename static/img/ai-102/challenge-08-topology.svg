@@ -1,4 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 420" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="420" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Azure AI Services — Cost Management &amp; Tier Comparison</text>
+  <!-- Tier comparison table -->
+  <!-- Header -->
+  <rect x="30" y="45" width="590" height="30" rx="4" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="100" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Tier</text>
+  <text x="230" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Pricing</text>
+  <text x="380" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Rate Limits</text>
+  <text x="540" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Best For</text>
+  <!-- Free Tier -->
+  <rect x="30" y="78" width="590" height="45" rx="0" fill="#d5e8d4" stroke="#82b366" stroke-width="0.8"/>
+  <text x="100" y="97" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Free (F0)</text>
+  <text x="100" y="112" text-anchor="middle" font-size="9" fill="#555">Limited quota</text>
+  <text x="230" y="97" text-anchor="middle" font-size="10" fill="#333">$0 / month</text>
+  <text x="230" y="112" text-anchor="middle" font-size="9" fill="#555">Limited transactions</text>
+  <text x="380" y="97" text-anchor="middle" font-size="10" fill="#333">20 calls/min</text>
+  <text x="380" y="112" text-anchor="middle" font-size="9" fill="#555">5K calls/month typical</text>
+  <text x="540" y="97" text-anchor="middle" font-size="10" fill="#333">Dev / Testing</text>
+  <text x="540" y="112" text-anchor="middle" font-size="9" fill="#555">Prototyping, learning</text>
+  <!-- Standard Tier -->
+  <rect x="30" y="126" width="590" height="45" rx="0" fill="#dae8fc" stroke="#6c8ebf" stroke-width="0.8"/>
+  <text x="100" y="145" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Standard (S0)</text>
+  <text x="100" y="160" text-anchor="middle" font-size="9" fill="#555">Pay-as-you-go</text>
+  <text x="230" y="145" text-anchor="middle" font-size="10" fill="#333">Per transaction</text>
+  <text x="230" y="160" text-anchor="middle" font-size="9" fill="#555">$1-$15 per 1K calls (varies)</text>
+  <text x="380" y="145" text-anchor="middle" font-size="10" fill="#333">10-1000 calls/min</text>
+  <text x="380" y="160" text-anchor="middle" font-size="9" fill="#555">Service dependent</text>
+  <text x="540" y="145" text-anchor="middle" font-size="10" fill="#333">Production</text>
+  <text x="540" y="160" text-anchor="middle" font-size="9" fill="#555">Variable workloads</text>
+  <!-- Commitment Tier -->
+  <rect x="30" y="174" width="590" height="45" rx="0" fill="#e1d5e7" stroke="#9673a6" stroke-width="0.8"/>
+  <text x="100" y="193" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Commitment</text>
+  <text x="100" y="208" text-anchor="middle" font-size="9" fill="#555">Pre-purchase discount</text>
+  <text x="230" y="193" text-anchor="middle" font-size="10" fill="#333">Discounted rate</text>
+  <text x="230" y="208" text-anchor="middle" font-size="9" fill="#555">10-40% savings</text>
+  <text x="380" y="193" text-anchor="middle" font-size="10" fill="#333">Higher throughput</text>
+  <text x="380" y="208" text-anchor="middle" font-size="9" fill="#555">Guaranteed capacity</text>
+  <text x="540" y="193" text-anchor="middle" font-size="10" fill="#333">High-volume prod</text>
+  <text x="540" y="208" text-anchor="middle" font-size="9" fill="#555">Predictable workloads</text>
+  <!-- Provisioned (PTU) -->
+  <rect x="30" y="222" width="590" height="45" rx="0" fill="#fff2cc" stroke="#d6b656" stroke-width="0.8"/>
+  <text x="100" y="241" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Provisioned (PTU)</text>
+  <text x="100" y="256" text-anchor="middle" font-size="9" fill="#555">Azure OpenAI only</text>
+  <text x="230" y="241" text-anchor="middle" font-size="10" fill="#333">Per PTU / hour</text>
+  <text x="230" y="256" text-anchor="middle" font-size="9" fill="#555">Reserved throughput units</text>
+  <text x="380" y="241" text-anchor="middle" font-size="10" fill="#333">Guaranteed TPM</text>
+  <text x="380" y="256" text-anchor="middle" font-size="9" fill="#555">No throttling</text>
+  <text x="540" y="241" text-anchor="middle" font-size="10" fill="#333">Enterprise AI</text>
+  <text x="540" y="256" text-anchor="middle" font-size="9" fill="#555">Latency-sensitive apps</text>
+  <!-- Cost Optimization Strategies -->
+  <rect x="30" y="282" width="290" height="125" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.2"/>
+  <text x="175" y="302" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Cost Optimization Strategies</text>
+  <text x="45" y="320" font-size="9" fill="#333">✓ Use Free tier for dev/test environments</text>
+  <text x="45" y="336" font-size="9" fill="#333">✓ Commitment tiers for predictable loads</text>
+  <text x="45" y="352" font-size="9" fill="#333">✓ Monitor usage with Cost Management</text>
+  <text x="45" y="368" font-size="9" fill="#333">✓ Set spending budgets &amp; alerts</text>
+  <text x="45" y="384" font-size="9" fill="#333">✓ Use caching to reduce repeat calls</text>
+  <text x="45" y="400" font-size="9" fill="#333">✓ Batch requests where supported</text>
+  <!-- Cost Tools -->
+  <rect x="335" y="282" width="285" height="125" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.2"/>
+  <text x="477" y="302" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Azure Cost Management Tools</text>
+  <rect x="350" y="312" width="255" height="25" rx="4" fill="#fff" stroke="#d6b656" stroke-width="0.6"/>
+  <text x="477" y="328" text-anchor="middle" font-size="9" fill="#333">Cost Analysis — breakdown by service/resource</text>
+  <rect x="350" y="342" width="255" height="25" rx="4" fill="#fff" stroke="#d6b656" stroke-width="0.6"/>
+  <text x="477" y="358" text-anchor="middle" font-size="9" fill="#333">Budgets — alerts at 50%, 80%, 100% thresholds</text>
+  <rect x="350" y="372" width="255" height="25" rx="4" fill="#fff" stroke="#d6b656" stroke-width="0.6"/>
+  <text x="477" y="388" text-anchor="middle" font-size="9" fill="#333">Advisor — right-sizing &amp; reservation recommendations</text>
 </svg>

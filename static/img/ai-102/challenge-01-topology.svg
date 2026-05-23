@@ -1,4 +1,112 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 420" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="420" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Azure AI Services — Decision Tree</text>
+  <!-- Root question -->
+  <rect x="235" y="45" width="180" height="50" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="325" y="67" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">What's your task?</text>
+  <text x="325" y="82" text-anchor="middle" font-size="10" fill="#555">Select the right AI service</text>
+  <!-- Arrows from root -->
+  <line x1="258" y1="95" x2="80" y2="140" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="290" y1="95" x2="200" y2="140" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="325" y1="95" x2="325" y2="140" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="360" y1="95" x2="450" y2="140" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="392" y1="95" x2="570" y2="140" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <!-- Vision -->
+  <rect x="15" y="140" width="130" height="45" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.2"/>
+  <text x="80" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Vision</text>
+  <text x="80" y="175" text-anchor="middle" font-size="9" fill="#555">Image &amp; Video</text>
+  <!-- Vision sub-items -->
+  <rect x="10" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="40" y="215" text-anchor="middle" font-size="8" fill="#333">Image</text>
+  <text x="40" y="226" text-anchor="middle" font-size="8" fill="#333">Analysis</text>
+  <rect x="78" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="108" y="215" text-anchor="middle" font-size="8" fill="#333">Custom</text>
+  <text x="108" y="226" text-anchor="middle" font-size="8" fill="#333">Vision</text>
+  <rect x="10" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="40" y="257" text-anchor="middle" font-size="8" fill="#333">Face</text>
+  <text x="40" y="268" text-anchor="middle" font-size="8" fill="#333">API</text>
+  <rect x="78" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="108" y="257" text-anchor="middle" font-size="8" fill="#333">OCR</text>
+  <text x="108" y="268" text-anchor="middle" font-size="8" fill="#333">(Read)</text>
+  <!-- Language -->
+  <rect x="152" y="140" width="130" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.2"/>
+  <text x="217" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Language</text>
+  <text x="217" y="175" text-anchor="middle" font-size="9" fill="#555">Text &amp; NLP</text>
+  <!-- Language sub-items -->
+  <rect x="148" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="178" y="215" text-anchor="middle" font-size="8" fill="#333">Sentiment</text>
+  <text x="178" y="226" text-anchor="middle" font-size="8" fill="#333">Analysis</text>
+  <rect x="215" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="245" y="215" text-anchor="middle" font-size="8" fill="#333">Entity</text>
+  <text x="245" y="226" text-anchor="middle" font-size="8" fill="#333">Recognition</text>
+  <rect x="148" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="178" y="257" text-anchor="middle" font-size="8" fill="#333">QnA /</text>
+  <text x="178" y="268" text-anchor="middle" font-size="8" fill="#333">CLU</text>
+  <rect x="215" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="245" y="257" text-anchor="middle" font-size="8" fill="#333">Translator</text>
+  <text x="245" y="268" text-anchor="middle" font-size="8" fill="#333">API</text>
+  <!-- Speech -->
+  <rect x="290" y="140" width="130" height="45" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.2"/>
+  <text x="355" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Speech</text>
+  <text x="355" y="175" text-anchor="middle" font-size="9" fill="#555">Audio &amp; Voice</text>
+  <!-- Speech sub-items -->
+  <rect x="286" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="316" y="215" text-anchor="middle" font-size="8" fill="#333">Speech-to</text>
+  <text x="316" y="226" text-anchor="middle" font-size="8" fill="#333">-Text</text>
+  <rect x="353" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="383" y="215" text-anchor="middle" font-size="8" fill="#333">Text-to-</text>
+  <text x="383" y="226" text-anchor="middle" font-size="8" fill="#333">Speech</text>
+  <rect x="286" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="316" y="257" text-anchor="middle" font-size="8" fill="#333">Translation</text>
+  <text x="316" y="268" text-anchor="middle" font-size="8" fill="#333"> </text>
+  <rect x="353" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="383" y="257" text-anchor="middle" font-size="8" fill="#333">Speaker</text>
+  <text x="383" y="268" text-anchor="middle" font-size="8" fill="#333">Recognition</text>
+  <!-- OpenAI -->
+  <rect x="428" y="140" width="130" height="45" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.2"/>
+  <text x="493" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Azure OpenAI</text>
+  <text x="493" y="175" text-anchor="middle" font-size="9" fill="#555">Generative AI</text>
+  <!-- OpenAI sub-items -->
+  <rect x="424" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="454" y="215" text-anchor="middle" font-size="8" fill="#333">GPT-4o</text>
+  <text x="454" y="226" text-anchor="middle" font-size="8" fill="#333">Chat</text>
+  <rect x="491" y="200" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="521" y="215" text-anchor="middle" font-size="8" fill="#333">DALL-E</text>
+  <text x="521" y="226" text-anchor="middle" font-size="8" fill="#333">Images</text>
+  <rect x="424" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="454" y="257" text-anchor="middle" font-size="8" fill="#333">Embeddings</text>
+  <text x="454" y="268" text-anchor="middle" font-size="8" fill="#333"> </text>
+  <rect x="491" y="242" width="60" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="521" y="257" text-anchor="middle" font-size="8" fill="#333">Whisper</text>
+  <text x="521" y="268" text-anchor="middle" font-size="8" fill="#333">Audio</text>
+  <!-- Document Intelligence & Search -->
+  <rect x="565" y="140" width="75" height="45" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.2"/>
+  <text x="602" y="158" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Doc Intel</text>
+  <text x="602" y="170" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">&amp; Search</text>
+  <text x="602" y="181" text-anchor="middle" font-size="8" fill="#555">Documents</text>
+  <!-- Doc sub-items -->
+  <rect x="562" y="200" width="75" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="599" y="215" text-anchor="middle" font-size="8" fill="#333">Form</text>
+  <text x="599" y="226" text-anchor="middle" font-size="8" fill="#333">Recognizer</text>
+  <rect x="562" y="242" width="75" height="35" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="599" y="257" text-anchor="middle" font-size="8" fill="#333">AI Search</text>
+  <text x="599" y="268" text-anchor="middle" font-size="8" fill="#333">Index</text>
+  <!-- Legend -->
+  <rect x="15" y="300" width="620" height="105" rx="8" fill="#fff" stroke="#ddd" stroke-width="1"/>
+  <text x="325" y="318" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">How to Choose</text>
+  <rect x="30" y="330" width="12" height="12" rx="2" fill="#e1d5e7" stroke="#9673a6"/>
+  <text x="48" y="340" font-size="9" fill="#555">Images/Video → Computer Vision, Custom Vision, Face</text>
+  <rect x="30" y="350" width="12" height="12" rx="2" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="48" y="360" font-size="9" fill="#555">Text/NLP → Language Understanding, Sentiment, Entity Recognition, Translation</text>
+  <rect x="30" y="370" width="12" height="12" rx="2" fill="#fff2cc" stroke="#d6b656"/>
+  <text x="48" y="380" font-size="9" fill="#555">Audio/Voice → Speech-to-Text, Text-to-Speech, Speaker Recognition</text>
+  <rect x="30" y="390" width="12" height="12" rx="2" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="48" y="400" font-size="9" fill="#555">Generative AI → GPT-4o, DALL-E, Embeddings (Azure OpenAI)</text>
 </svg>

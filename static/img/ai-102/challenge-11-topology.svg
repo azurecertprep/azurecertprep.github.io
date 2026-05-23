@@ -1,4 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="370" viewBox="0 0 650 370">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="370" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Azure AI Foundry Setup</text>
+  <!-- AI Foundry Hub -->
+  <rect x="220" y="45" width="210" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="325" y="70" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Azure AI Foundry Hub</text>
+  <text x="325" y="90" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Central management &amp; governance</text>
+  <!-- Arrow Hub to Project -->
+  <line x1="325" y1="105" x2="325" y2="130" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Project -->
+  <rect x="220" y="135" width="210" height="55" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="325" y="158" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">AI Foundry Project</text>
+  <text x="325" y="176" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Workspace for models &amp; data</text>
+  <!-- Arrows to connections -->
+  <line x1="270" y1="190" x2="130" y2="240" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="325" y1="190" x2="325" y2="240" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="380" y1="190" x2="520" y2="240" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Connections Label -->
+  <text x="325" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#555">Connections</text>
+  <!-- OpenAI Connection -->
+  <rect x="40" y="245" width="180" height="55" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="130" y="268" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Azure OpenAI</text>
+  <text x="130" y="286" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">GPT-4o, Embeddings</text>
+  <!-- Search Connection -->
+  <rect x="235" y="245" width="180" height="55" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="325" y="268" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">AI Search</text>
+  <text x="325" y="286" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Index &amp; vector store</text>
+  <!-- Storage Connection -->
+  <rect x="430" y="245" width="180" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="520" y="268" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Azure Storage</text>
+  <text x="520" y="286" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Blob data &amp; artifacts</text>
+  <!-- Footer note -->
+  <rect x="140" y="320" width="370" height="35" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="325" y="342" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Hub provides shared resources; Projects inherit connections &amp; RBAC policies</text>
 </svg>

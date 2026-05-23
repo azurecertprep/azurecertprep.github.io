@@ -1,4 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 380" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="380" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Azure OpenAI — Deployment Architecture</text>
+  <!-- Subscription -->
+  <rect x="20" y="45" width="610" height="320" rx="8" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="40" y="65" font-size="12" font-weight="bold" fill="#333">Azure Subscription</text>
+  <!-- Resource Group -->
+  <rect x="40" y="78" width="570" height="275" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="60" y="98" font-size="11" font-weight="bold" fill="#333">Resource Group: rg-openai-prod</text>
+  <!-- Azure OpenAI Resource -->
+  <rect x="60" y="110" width="530" height="230" rx="8" fill="#fff" stroke="#6c8ebf" stroke-width="1.2"/>
+  <text x="325" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Azure OpenAI Resource</text>
+  <text x="325" y="147" text-anchor="middle" font-size="10" fill="#555">myopenai.openai.azure.com | Region: East US</text>
+  <!-- Deployments -->
+  <text x="80" y="172" font-size="11" font-weight="bold" fill="#333">Model Deployments</text>
+  <!-- GPT-4o -->
+  <rect x="80" y="180" width="150" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.2"/>
+  <text x="155" y="200" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">GPT-4o</text>
+  <text x="155" y="215" text-anchor="middle" font-size="9" fill="#555">deployment: gpt4o-prod</text>
+  <text x="155" y="228" text-anchor="middle" font-size="9" fill="#555">Version: 2024-05-13</text>
+  <text x="155" y="241" text-anchor="middle" font-size="9" fill="#555">Capacity: 80K TPM</text>
+  <!-- GPT-4 -->
+  <rect x="248" y="180" width="150" height="70" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.2"/>
+  <text x="323" y="200" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">GPT-4</text>
+  <text x="323" y="215" text-anchor="middle" font-size="9" fill="#555">deployment: gpt4-prod</text>
+  <text x="323" y="228" text-anchor="middle" font-size="9" fill="#555">Version: turbo-2024-04-09</text>
+  <text x="323" y="241" text-anchor="middle" font-size="9" fill="#555">Capacity: 40K TPM</text>
+  <!-- Embedding -->
+  <rect x="416" y="180" width="155" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.2"/>
+  <text x="493" y="200" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">text-embedding-3-large</text>
+  <text x="493" y="215" text-anchor="middle" font-size="9" fill="#555">deployment: embed-prod</text>
+  <text x="493" y="228" text-anchor="middle" font-size="9" fill="#555">Version: 1</text>
+  <text x="493" y="241" text-anchor="middle" font-size="9" fill="#555">Capacity: 350K TPM</text>
+  <!-- Configuration details -->
+  <rect x="80" y="262" width="250" height="68" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="95" y="280" font-size="10" font-weight="bold" fill="#333">Configuration</text>
+  <text x="95" y="295" font-size="9" fill="#555">• API Version: 2024-02-01</text>
+  <text x="95" y="308" font-size="9" fill="#555">• Content Filter: Default or Custom</text>
+  <text x="95" y="321" font-size="9" fill="#555">• Deployment Type: Standard / Provisioned</text>
+  <!-- Deployment types -->
+  <rect x="345" y="262" width="230" height="68" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="360" y="280" font-size="10" font-weight="bold" fill="#333">Deployment Types</text>
+  <text x="360" y="295" font-size="9" fill="#555">• Standard: Pay-per-token, shared capacity</text>
+  <text x="360" y="308" font-size="9" fill="#555">• Provisioned (PTU): Reserved throughput</text>
+  <text x="360" y="321" font-size="9" fill="#555">• Global Standard: Multi-region routing</text>
 </svg>

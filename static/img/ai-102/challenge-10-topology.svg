@@ -1,4 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 420" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="420" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Responsible AI &amp; Content Safety Architecture</text>
+  <!-- Input -->
+  <rect x="30" y="60" width="120" height="55" rx="6" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="90" y="82" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">User Input</text>
+  <text x="90" y="100" text-anchor="middle" font-size="9" fill="#555">Text / Image</text>
+  <!-- Arrow to Content Safety -->
+  <line x1="150" y1="87" x2="185" y2="87" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Content Safety API -->
+  <rect x="190" y="45" width="280" height="200" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="330" y="67" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Azure AI Content Safety API</text>
+  <text x="330" y="83" text-anchor="middle" font-size="9" fill="#555">Real-time content moderation</text>
+  <!-- Filter categories -->
+  <rect x="205" y="95" width="120" height="40" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="265" y="112" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Hate &amp; Fairness</text>
+  <text x="265" y="128" text-anchor="middle" font-size="9" fill="#555">Hate speech filter</text>
+  <rect x="335" y="95" width="120" height="40" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
+  <text x="395" y="112" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Sexual</text>
+  <text x="395" y="128" text-anchor="middle" font-size="9" fill="#555">Adult content filter</text>
+  <rect x="205" y="145" width="120" height="40" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="265" y="162" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Violence</text>
+  <text x="265" y="178" text-anchor="middle" font-size="9" fill="#555">Violent content filter</text>
+  <rect x="335" y="145" width="120" height="40" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="395" y="162" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Self-Harm</text>
+  <text x="395" y="178" text-anchor="middle" font-size="9" fill="#555">Self-harm content</text>
+  <!-- Severity scale -->
+  <rect x="205" y="195" width="250" height="40" rx="4" fill="#fff" stroke="#666" stroke-width="0.8"/>
+  <text x="330" y="210" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Severity Levels (per category)</text>
+  <rect x="215" y="218" width="45" height="12" rx="2" fill="#d5e8d4" stroke="#82b366" stroke-width="0.5"/>
+  <text x="237" y="228" text-anchor="middle" font-size="7" fill="#333">Safe (0)</text>
+  <rect x="268" y="218" width="45" height="12" rx="2" fill="#fff2cc" stroke="#d6b656" stroke-width="0.5"/>
+  <text x="290" y="228" text-anchor="middle" font-size="7" fill="#333">Low (2)</text>
+  <rect x="321" y="218" width="55" height="12" rx="2" fill="#f8cecc" stroke="#b85450" stroke-width="0.5"/>
+  <text x="348" y="228" text-anchor="middle" font-size="7" fill="#333">Medium (4)</text>
+  <rect x="384" y="218" width="55" height="12" rx="2" fill="#b85450" stroke="#b85450" stroke-width="0.5"/>
+  <text x="411" y="228" text-anchor="middle" font-size="7" fill="#fff">High (6)</text>
+  <!-- Output paths -->
+  <line x1="470" y1="120" x2="510" y2="80" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="470" y1="160" x2="510" y2="190" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Safe output -->
+  <rect x="515" y="55" width="115" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="572" y="75" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">✓ Safe Output</text>
+  <text x="572" y="93" text-anchor="middle" font-size="9" fill="#555">Content allowed</text>
+  <!-- Blocked output -->
+  <rect x="515" y="170" width="115" height="50" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="572" y="190" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">✗ Blocked</text>
+  <text x="572" y="208" text-anchor="middle" font-size="9" fill="#555">Content filtered</text>
+  <!-- Responsible AI Principles -->
+  <rect x="30" y="260" width="595" height="145" rx="8" fill="#fff" stroke="#6c8ebf" stroke-width="1.2"/>
+  <text x="325" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Microsoft Responsible AI Principles</text>
+  <!-- Principle boxes -->
+  <rect x="45" y="292" width="85" height="45" rx="4" fill="#dae8fc" stroke="#6c8ebf" stroke-width="0.8"/>
+  <text x="87" y="310" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Fairness</text>
+  <text x="87" y="325" text-anchor="middle" font-size="8" fill="#555">Equitable</text>
+  <text x="87" y="335" text-anchor="middle" font-size="8" fill="#555">treatment</text>
+  <rect x="140" y="292" width="85" height="45" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="0.8"/>
+  <text x="182" y="310" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Reliability</text>
+  <text x="182" y="325" text-anchor="middle" font-size="8" fill="#555">Safe &amp;</text>
+  <text x="182" y="335" text-anchor="middle" font-size="8" fill="#555">consistent</text>
+  <rect x="235" y="292" width="85" height="45" rx="4" fill="#e1d5e7" stroke="#9673a6" stroke-width="0.8"/>
+  <text x="277" y="310" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Privacy</text>
+  <text x="277" y="325" text-anchor="middle" font-size="8" fill="#555">Data</text>
+  <text x="277" y="335" text-anchor="middle" font-size="8" fill="#555">protection</text>
+  <rect x="330" y="292" width="85" height="45" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="0.8"/>
+  <text x="372" y="310" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Inclusiveness</text>
+  <text x="372" y="325" text-anchor="middle" font-size="8" fill="#555">Empower</text>
+  <text x="372" y="335" text-anchor="middle" font-size="8" fill="#555">everyone</text>
+  <rect x="425" y="292" width="95" height="45" rx="4" fill="#f8cecc" stroke="#b85450" stroke-width="0.8"/>
+  <text x="472" y="310" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Transparency</text>
+  <text x="472" y="325" text-anchor="middle" font-size="8" fill="#555">Understandable</text>
+  <text x="472" y="335" text-anchor="middle" font-size="8" fill="#555">AI systems</text>
+  <rect x="530" y="292" width="85" height="45" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="572" y="305" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">Account-</text>
+  <text x="572" y="318" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">ability</text>
+  <text x="572" y="333" text-anchor="middle" font-size="8" fill="#555">Human</text>
+  <text x="572" y="343" text-anchor="middle" font-size="8" fill="#555">oversight</text>
+  <!-- Content filter configuration note -->
+  <rect x="45" y="348" width="565" height="45" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="325" y="365" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Content Filter Configuration (Azure OpenAI)</text>
+  <text x="55" y="382" font-size="9" fill="#555">Configurable thresholds per category (Low/Medium/High) • Custom blocklists • Jailbreak detection • Protected material detection • Groundedness check</text>
 </svg>

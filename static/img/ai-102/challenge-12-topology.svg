@@ -1,4 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="340" viewBox="0 0 650 340">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="340" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Deploy Generative AI Models</text>
+  <!-- AI Foundry -->
+  <rect x="30" y="55" width="140" height="55" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="100" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">AI Foundry</text>
+  <text x="100" y="96" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Project workspace</text>
+  <!-- Arrow -->
+  <line x1="170" y1="82" x2="210" y2="82" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Model Catalog -->
+  <rect x="220" y="55" width="150" height="55" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="295" y="78" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Model Catalog</text>
+  <text x="295" y="96" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">GPT-4o, Phi, Llama</text>
+  <!-- Arrow to deployment types -->
+  <line x1="370" y1="82" x2="410" y2="82" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Deployment container -->
+  <rect x="420" y="40" width="200" height="130" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="520" y="60" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Deployment Options</text>
+  <!-- Standard -->
+  <rect x="435" y="70" width="170" height="38" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="520" y="86" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Standard (Pay-per-token)</text>
+  <text x="520" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Shared capacity, auto-scale</text>
+  <!-- Provisioned PTU -->
+  <rect x="435" y="116" width="170" height="38" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="520" y="132" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Provisioned (PTU)</text>
+  <text x="520" y="146" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Reserved throughput units</text>
+  <!-- Arrow to Endpoint -->
+  <line x1="520" y1="170" x2="520" y2="210" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Endpoint -->
+  <rect x="410" y="215" width="220" height="55" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="520" y="238" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Model Endpoint</text>
+  <text x="520" y="256" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">REST API + SDK access</text>
+  <!-- Footer -->
+  <rect x="100" y="290" width="450" height="35" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="325" y="312" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Standard = flexible scaling | Provisioned PTU = guaranteed throughput for production workloads</text>
 </svg>

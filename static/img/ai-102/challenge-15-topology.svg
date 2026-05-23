@@ -1,4 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="400" viewBox="0 0 650 400">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="400" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">RAG Pattern — Advanced (Hybrid Search + Semantic Ranker)</text>
+  <!-- Ingestion Pipeline (top) -->
+  <rect x="20" y="40" width="610" height="100" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="60" y="58" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#555">Ingestion Pipeline</text>
+  <!-- Documents -->
+  <rect x="40" y="68" width="110" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="95" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Documents</text>
+  <text x="95" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">PDF, DOCX, HTML</text>
+  <line x1="150" y1="93" x2="180" y2="93" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Chunking -->
+  <rect x="190" y="68" width="110" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="245" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Chunking</text>
+  <text x="245" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Overlap strategy</text>
+  <line x1="300" y1="93" x2="330" y2="93" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Embedding -->
+  <rect x="340" y="68" width="110" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="395" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Embedding</text>
+  <text x="395" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Ada-002 vectors</text>
+  <line x1="450" y1="93" x2="480" y2="93" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Index -->
+  <rect x="490" y="68" width="120" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="550" y="88" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">AI Search Index</text>
+  <text x="550" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Vector + keyword fields</text>
+  <!-- Query Pipeline (bottom) -->
+  <rect x="20" y="160" width="610" height="215" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="60" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#555">Query Pipeline</text>
+  <!-- Query -->
+  <rect x="40" y="195" width="100" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="90" y="215" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Query</text>
+  <text x="90" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">User input</text>
+  <line x1="140" y1="217" x2="170" y2="217" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Hybrid Search -->
+  <rect x="180" y="185" width="140" height="65" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="250" y="205" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Hybrid Search</text>
+  <text x="250" y="220" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Vector similarity +</text>
+  <text x="250" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">BM25 keyword match</text>
+  <line x1="320" y1="217" x2="350" y2="217" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Semantic Ranker -->
+  <rect x="360" y="190" width="130" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="425" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Semantic Ranker</text>
+  <text x="425" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Re-rank by relevance</text>
+  <line x1="425" y1="245" x2="425" y2="280" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- LLM -->
+  <rect x="340" y="285" width="170" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="425" y="307" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Azure OpenAI (LLM)</text>
+  <text x="425" y="325" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Generate grounded response</text>
+  <line x1="510" y1="312" x2="545" y2="312" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Response -->
+  <rect x="555" y="290" width="60" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="585" y="317" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#333">Result</text>
+  <!-- Footer -->
+  <text x="325" y="390" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Hybrid search combines recall of keyword + precision of vectors; Semantic Ranker boosts relevance</text>
 </svg>

@@ -1,4 +1,67 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 400" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="650" height="400" fill="#f9fafb" rx="8"/>
+  <!-- Title -->
+  <text x="325" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">High Availability &amp; Disaster Recovery — Azure AI Services</text>
+  <!-- Traffic Manager / Front Door -->
+  <rect x="225" y="45" width="200" height="50" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="325" y="67" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Azure Front Door / Traffic Manager</text>
+  <text x="325" y="83" text-anchor="middle" font-size="9" fill="#555">Global load balancing &amp; failover</text>
+  <!-- Users -->
+  <rect x="265" y="5" width="120" height="30" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="325" y="24" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Users / Clients</text>
+  <line x1="325" y1="35" x2="325" y2="43" stroke="#666" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <!-- Arrows to regions -->
+  <line x1="275" y1="95" x2="160" y2="128" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="200" y="108" font-size="8" fill="#82b366">Primary</text>
+  <line x1="375" y1="95" x2="490" y2="128" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="445" y="108" font-size="8" fill="#6c8ebf">Failover</text>
+  <!-- Primary Region -->
+  <rect x="30" y="130" width="250" height="185" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="155" y="150" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Primary Region (East US)</text>
+  <text x="155" y="165" text-anchor="middle" font-size="9" fill="#82b366">● Active</text>
+  <!-- Primary AI Service -->
+  <rect x="50" y="175" width="210" height="50" rx="6" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="155" y="195" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Azure AI Service</text>
+  <text x="155" y="210" text-anchor="middle" font-size="9" fill="#555">ai-prod-eastus.cognitiveservices.azure.com</text>
+  <!-- Primary OpenAI -->
+  <rect x="50" y="233" width="210" height="40" rx="6" fill="#fff" stroke="#82b366" stroke-width="1"/>
+  <text x="155" y="250" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Azure OpenAI (GPT-4o)</text>
+  <text x="155" y="265" text-anchor="middle" font-size="9" fill="#555">oai-eastus.openai.azure.com</text>
+  <!-- Custom models -->
+  <rect x="50" y="280" width="210" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="155" y="298" text-anchor="middle" font-size="9" fill="#555">Custom models deployed &amp; trained here</text>
+  <!-- Secondary Region -->
+  <rect x="370" y="130" width="250" height="185" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="495" y="150" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Secondary Region (West US)</text>
+  <text x="495" y="165" text-anchor="middle" font-size="9" fill="#6c8ebf">○ Standby</text>
+  <!-- Secondary AI Service -->
+  <rect x="390" y="175" width="210" height="50" rx="6" fill="#fff" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="495" y="195" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Azure AI Service</text>
+  <text x="495" y="210" text-anchor="middle" font-size="9" fill="#555">ai-prod-westus.cognitiveservices.azure.com</text>
+  <!-- Secondary OpenAI -->
+  <rect x="390" y="233" width="210" height="40" rx="6" fill="#fff" stroke="#6c8ebf" stroke-width="1"/>
+  <text x="495" y="250" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Azure OpenAI (GPT-4o)</text>
+  <text x="495" y="265" text-anchor="middle" font-size="9" fill="#555">oai-westus.openai.azure.com</text>
+  <!-- Secondary models -->
+  <rect x="390" y="280" width="210" height="28" rx="4" fill="#f5f5f5" stroke="#666" stroke-width="0.8"/>
+  <text x="495" y="298" text-anchor="middle" font-size="9" fill="#555">Mirror deployment (same models)</text>
+  <!-- Sync arrow between regions -->
+  <line x1="280" y1="222" x2="370" y2="222" stroke="#9673a6" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="325" y="218" text-anchor="middle" font-size="8" fill="#9673a6">Config sync</text>
+  <!-- DR Strategies bottom -->
+  <rect x="30" y="328" width="295" height="60" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="177" y="345" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">DR Strategies</text>
+  <text x="42" y="362" font-size="9" fill="#555">• Active-Passive: Failover on health probe failure</text>
+  <text x="42" y="377" font-size="9" fill="#555">• Active-Active: Load balance across regions</text>
+  <!-- Key considerations -->
+  <rect x="340" y="328" width="280" height="60" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1"/>
+  <text x="480" y="345" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Key Considerations</text>
+  <text x="352" y="362" font-size="9" fill="#555">• Custom models must be redeployed per region</text>
+  <text x="352" y="377" font-size="9" fill="#555">• Region pairs for data residency compliance</text>
 </svg>

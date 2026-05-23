@@ -1,4 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="370" viewBox="0 0 650 370">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="370" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Optimize Generative AI — Cost &amp; Performance</text>
+  <!-- Input -->
+  <rect x="20" y="100" width="90" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="65" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Input</text>
+  <text x="65" y="138" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">User request</text>
+  <line x1="110" y1="125" x2="140" y2="125" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Token Counter -->
+  <rect x="150" y="90" width="120" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="210" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Token Counter</text>
+  <text x="210" y="133" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">tiktoken encoding</text>
+  <text x="210" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Budget check</text>
+  <line x1="270" y1="125" x2="300" y2="125" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Caching Layer -->
+  <rect x="310" y="90" width="120" height="70" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="370" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Caching Layer</text>
+  <text x="370" y="133" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Semantic cache</text>
+  <text x="370" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Prompt cache</text>
+  <!-- Cache hit arrow -->
+  <line x1="370" y1="160" x2="370" y2="195" stroke="#82b366" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="400" y="182" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366">cache hit</text>
+  <!-- Cache miss arrow -->
+  <line x1="430" y1="125" x2="460" y2="125" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="448" y="118" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">miss</text>
+  <!-- Model -->
+  <rect x="470" y="85" width="130" height="80" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="535" y="110" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Model</text>
+  <text x="535" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">GPT-4o / GPT-4o-mini</text>
+  <text x="535" y="143" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">max_tokens control</text>
+  <!-- Fine-tuning path -->
+  <rect x="470" y="195" width="130" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="535" y="215" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Fine-tuning</text>
+  <text x="535" y="233" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Custom model weights</text>
+  <line x1="535" y1="195" x2="535" y2="170" stroke="#d6b656" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Output -->
+  <rect x="370" y="200" width="80" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="410" y="220" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Output</text>
+  <text x="410" y="235" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Result</text>
+  <!-- Arrow model to output -->
+  <line x1="535" y1="165" x2="535" y2="270" stroke="#6c8ebf" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="535" y1="270" x2="455" y2="270" stroke="#6c8ebf" stroke-width="1.5"/>
+  <line x1="410" y1="245" x2="410" y2="270" stroke="#6c8ebf" stroke-width="1"/>
+  <!-- Cost indicators -->
+  <rect x="40" y="270" width="250" height="80" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="165" y="290" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Cost Optimization Strategies</text>
+  <text x="165" y="308" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Use smaller models when possible (mini)</text>
+  <text x="165" y="322" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Reduce max_tokens &amp; prompt length</text>
+  <text x="165" y="336" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">• Cache repeated queries • Batch requests</text>
 </svg>

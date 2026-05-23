@@ -1,4 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="320" viewBox="0 0 650 320">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="320" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">RAG Pattern — Basic Flow</text>
+  <!-- User Query -->
+  <rect x="20" y="70" width="100" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="70" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">User</text>
+  <text x="70" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Query</text>
+  <!-- Arrow -->
+  <line x1="120" y1="95" x2="155" y2="95" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Embedding -->
+  <rect x="165" y="70" width="110" height="50" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="220" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Embedding</text>
+  <text x="220" y="108" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">text-embedding-ada</text>
+  <!-- Arrow -->
+  <line x1="275" y1="95" x2="310" y2="95" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Vector Search -->
+  <rect x="320" y="60" width="140" height="70" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="390" y="85" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Vector Search</text>
+  <text x="390" y="102" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Azure AI Search</text>
+  <text x="390" y="118" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">k-NN similarity</text>
+  <!-- Arrow down to Context -->
+  <line x1="390" y1="130" x2="390" y2="165" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Context + Query -->
+  <rect x="290" y="170" width="200" height="50" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="390" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Context + Original Query</text>
+  <text x="390" y="208" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Augmented prompt construction</text>
+  <!-- Arrow to OpenAI -->
+  <line x1="390" y1="220" x2="390" y2="250" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Azure OpenAI -->
+  <rect x="310" y="255" width="160" height="45" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="390" y="275" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Azure OpenAI</text>
+  <text x="390" y="291" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">GPT-4o generates answer</text>
+  <!-- Arrow to Response -->
+  <line x1="470" y1="277" x2="530" y2="277" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Response -->
+  <rect x="540" y="255" width="90" height="45" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="585" y="275" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Response</text>
+  <text x="585" y="291" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Grounded</text>
+  <!-- User query line to Context -->
+  <line x1="70" y1="120" x2="70" y2="195" stroke="#82b366" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="70" y1="195" x2="285" y2="195" stroke="#82b366" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="150" y="188" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#82b366">original query passed through</text>
 </svg>

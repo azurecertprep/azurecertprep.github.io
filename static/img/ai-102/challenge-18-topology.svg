@@ -1,4 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="340" viewBox="0 0 650 340">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="340" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">DALL-E &amp; Multimodal (GPT-4o Vision)</text>
+  <!-- Image Generation Path -->
+  <rect x="20" y="45" width="610" height="115" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="60" y="63" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#555">Image Generation</text>
+  <!-- Text Prompt -->
+  <rect x="40" y="78" width="130" height="50" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="105" y="99" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Text Prompt</text>
+  <text x="105" y="116" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Description of image</text>
+  <line x1="170" y1="103" x2="220" y2="103" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- DALL-E 3 -->
+  <rect x="230" y="73" width="150" height="60" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="305" y="97" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">DALL-E 3</text>
+  <text x="305" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">1024x1024, HD quality</text>
+  <line x1="380" y1="103" x2="430" y2="103" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Generated Image -->
+  <rect x="440" y="78" width="140" height="50" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="510" y="99" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Generated Image</text>
+  <text x="510" y="116" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">PNG / URL output</text>
+  <!-- Multimodal Path -->
+  <rect x="20" y="175" width="610" height="115" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="60" y="193" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#555">Multimodal Analysis (Vision)</text>
+  <!-- Image + Text inputs -->
+  <rect x="40" y="205" width="115" height="55" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="97" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Image</text>
+  <text x="97" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">URL or base64</text>
+  <rect x="165" y="210" width="55" height="40" rx="4" fill="#d5e8d4" stroke="#82b366" stroke-width="1"/>
+  <text x="192" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333">+ Text</text>
+  <line x1="220" y1="232" x2="270" y2="232" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- GPT-4o Vision -->
+  <rect x="280" y="205" width="160" height="55" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="360" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">GPT-4o Vision</text>
+  <text x="360" y="246" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Multimodal understanding</text>
+  <line x1="440" y1="232" x2="485" y2="232" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Analysis output -->
+  <rect x="495" y="207" width="120" height="50" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="555" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Analysis</text>
+  <text x="555" y="246" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Description, OCR, Q&amp;A</text>
+  <!-- Footer -->
+  <rect x="100" y="305" width="450" height="25" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="325" y="322" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">DALL-E creates images from text | GPT-4o Vision analyzes images with text</text>
 </svg>

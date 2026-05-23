@@ -1,4 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#f0f4f8" rx="8"/>
-  <text x="300" y="105" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="#4a5568">Architecture diagram — coming soon</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="370" viewBox="0 0 650 370">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect width="650" height="370" fill="#f9fbfd" rx="8"/>
+  <text x="325" y="25" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Azure OpenAI Provisioning &amp; Quota Management</text>
+  <!-- Subscription -->
+  <rect x="230" y="45" width="190" height="50" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="325" y="67" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Azure Subscription</text>
+  <text x="325" y="84" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Regional quota allocation</text>
+  <!-- Arrow -->
+  <line x1="325" y1="95" x2="325" y2="120" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Azure OpenAI Resource -->
+  <rect x="180" y="125" width="290" height="55" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="325" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">Azure OpenAI Resource</text>
+  <text x="325" y="168" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Endpoint + Keys + Managed Identity</text>
+  <!-- Arrow to deployments -->
+  <line x1="250" y1="180" x2="150" y2="215" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="325" y1="180" x2="325" y2="215" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="400" y1="180" x2="510" y2="215" stroke="#6c8ebf" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="325" y="208" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#555">Deployments</text>
+  <!-- Deployment 1 -->
+  <rect x="50" y="220" width="175" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="137" y="240" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">gpt-4o</text>
+  <text x="137" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Standard: 80K TPM</text>
+  <rect x="65" y="265" width="145" height="18" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="137" y="278" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Rate limit: 480 RPM</text>
+  <!-- Deployment 2 -->
+  <rect x="240" y="220" width="175" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="327" y="240" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">gpt-4o-mini</text>
+  <text x="327" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Standard: 120K TPM</text>
+  <rect x="255" y="265" width="145" height="18" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="327" y="278" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Rate limit: 720 RPM</text>
+  <!-- Deployment 3 -->
+  <rect x="430" y="220" width="185" height="70" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="522" y="240" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">text-embedding-3</text>
+  <text x="522" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Standard: 350K TPM</text>
+  <rect x="445" y="265" width="155" height="18" rx="4" fill="#fff2cc" stroke="#d6b656" stroke-width="1"/>
+  <text x="522" y="278" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#555">Rate limit: 2100 RPM</text>
+  <!-- Footer note -->
+  <rect x="80" y="315" width="490" height="40" rx="4" fill="#f5f5f5" stroke="#666666" stroke-width="1"/>
+  <text x="325" y="333" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">TPM = Tokens Per Minute | RPM = Requests Per Minute</text>
+  <text x="325" y="347" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#555">Quota shared across deployments within a subscription + region</text>
 </svg>
