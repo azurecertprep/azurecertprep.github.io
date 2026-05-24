@@ -985,7 +985,7 @@ az apim subscription list \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Ativação do PIM falha com "Authentication context required"
 

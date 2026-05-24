@@ -334,7 +334,7 @@ az relay namespace list --resource-group $RG -o table
     "Hybrid connection concept understood"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: Backup fails with Storage error
 

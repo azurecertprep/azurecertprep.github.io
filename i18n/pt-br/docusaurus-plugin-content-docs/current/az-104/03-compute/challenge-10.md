@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Challenge 10 | Azure App Service"
+title: "Desafio 10: Azure App Service"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

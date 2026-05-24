@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 36: Private Link Service (Provider Side)"
+title: "Desafio 36: Private Link Service (Lado do Provedor)"
 sidebar_label: "Challenge 36"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -13,83 +13,83 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A NovaTech Solutions, uma empresa ISV, construiu uma plataforma de API interna atrás de um Azure Standard Load Balancer. Eles desejam oferecer esse serviço de API a clientes externos (consumidores) usando o Azure Private Link, para que os consumidores possam acessar o serviço da NovaTech por meio de um private endpoint em suas próprias redes virtuais, sem qualquer exposição à internet pública. Você é o engenheiro de rede responsável por configurar o Private Link Service do lado do provedor, gerenciar endereços IP NAT, configurar políticas de visibilidade e aprovação automática, e lidar com aprovações de conexão de consumidores.
+A NovaTech Solutions, uma empresa ISV, construiu uma plataforma de API interna atrÃ¡s de um Azure Standard Load Balancer. Eles desejam oferecer esse serviÃ§o de API a clientes externos (consumidores) usando o Azure Private Link, para que os consumidores possam acessar o serviÃ§o da NovaTech por meio de um private endpoint em suas prÃ³prias redes virtuais, sem qualquer exposiÃ§Ã£o Ã  internet pÃºblica. VocÃª Ã© o engenheiro de rede responsÃ¡vel por configurar o Private Link Service do lado do provedor, gerenciar endereÃ§os IP NAT, configurar polÃ­ticas de visibilidade e aprovaÃ§Ã£o automÃ¡tica, e lidar com aprovaÃ§Ãµes de conexÃ£o de consumidores.
 
 **Arquitetura:**
 
-```
+```text
     PROVIDER (NovaTech VNet: 10.0.0.0/16)            CONSUMER (Customer VNet: 10.1.0.0/16)
-    ┌────────────────────────────────────┐            ┌────────────────────────────────┐
-    │                                    │            │                            │
-    │  snet-backend (10.0.1.0/24)        │            │  snet-consumer (10.1.1.0/24)│
-    │  ┌─────────┐  ┌─────────┐         │            │  ┌──────────────┐           │
-    │  │  VM-1   │  │  VM-2   │         │            │  │ consumer-vm  │           │
-    │  └────┬────┘  └────┬────┘         │            │  └──────┬───────┘           │
-    │       └──────┬──────┘              │            │         │                   │
-    │              v                     │            │         v                   │
-    │  ┌─────────────────────┐           │            │  ┌────────────────┐         │
-    │  │ Standard ILB        │           │            │  │  PE to PLS     │         │
-    │  │ frontend: 10.0.0.4  │           │            │  │  (10.1.1.5)    │         │
-    │  └──────────┬──────────┘           │            │  └───────┬────────┘         │
-    │             v                      │            │          │                  │
-    │  snet-pls (10.0.2.0/24)           │            └──────────┼──────────────────┘
-    │  ┌─────────────────────────┐       │                       │
-    │  │ Private Link Service    │◄──────┼───────────────────────┘
-    │  │ NAT IP: 10.0.2.4       │       │         Private Link connection
-    │  │ Alias: pls-novatech... │       │
-    │  └─────────────────────────┘       │
-    └────────────────────────────────────┘
+    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”            â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    â”‚                                    â”‚            â”‚                            â”‚
+    â”‚  snet-backend (10.0.1.0/24)        â”‚            â”‚  snet-consumer (10.1.1.0/24)â”‚
+    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”‚            â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”‚
+    â”‚  â”‚  VM-1   â”‚  â”‚  VM-2   â”‚         â”‚            â”‚  â”‚ consumer-vm  â”‚           â”‚
+    â”‚  â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”˜         â”‚            â”‚  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜           â”‚
+    â”‚       â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜              â”‚            â”‚         â”‚                   â”‚
+    â”‚              v                     â”‚            â”‚         v                   â”‚
+    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”‚            â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”‚
+    â”‚  â”‚ Standard ILB        â”‚           â”‚            â”‚  â”‚  PE to PLS     â”‚         â”‚
+    â”‚  â”‚ frontend: 10.0.0.4  â”‚           â”‚            â”‚  â”‚  (10.1.1.5)    â”‚         â”‚
+    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜           â”‚            â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜         â”‚
+    â”‚             v                      â”‚            â”‚          â”‚                  â”‚
+    â”‚  snet-pls (10.0.2.0/24)           â”‚            â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”‚                       â”‚
+    â”‚  â”‚ Private Link Service    â”‚â—„â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+    â”‚  â”‚ NAT IP: 10.0.2.4       â”‚       â”‚         Private Link connection
+    â”‚  â”‚ Alias: pls-novatech... â”‚       â”‚
+    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â”‚
+    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ## Objetivos de aprendizagem
 
-Após concluir este desafio, você será capaz de:
+ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
 
 - Criar um Private Link Service (PLS) vinculado a um Standard Load Balancer
-- Configurar endereços IP NAT para SNAT do tráfego de consumidores de entrada
-- Desabilitar políticas de rede na sub-rede do PLS (necessário para a implantação do PLS)
-- Definir restrições de visibilidade para controlar quais assinaturas podem descobrir o serviço
-- Configurar aprovação automática para assinaturas de consumidores confiáveis
+- Configurar endereÃ§os IP NAT para SNAT do trÃ¡fego de consumidores de entrada
+- Desabilitar polÃ­ticas de rede na sub-rede do PLS (necessÃ¡rio para a implantaÃ§Ã£o do PLS)
+- Definir restriÃ§Ãµes de visibilidade para controlar quais assinaturas podem descobrir o serviÃ§o
+- Configurar aprovaÃ§Ã£o automÃ¡tica para assinaturas de consumidores confiÃ¡veis
 - Recuperar o alias do PLS para compartilhamento com consumidores
-- Aprovar ou rejeitar conexões de private endpoint de consumidores
+- Aprovar ou rejeitar conexÃµes de private endpoint de consumidores
 - Entender o fluxo de trabalho e responsabilidades do provedor versus consumidor
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
 - Uma assinatura do Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com módulo Az instalado (`Install-Module Az -Force`)
+- PowerShell com mÃ³dulo Az instalado (`Install-Module Az -Force`)
 - Entendimento do Azure Standard Load Balancer (interno)
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
-| Private Link Service (PLS) | Recurso do lado do provedor que expõe um serviço atrás de um Standard LB via Private Link |
-| Configuração de IP NAT | O PLS realiza SNAT; o IP NAT é o IP de origem visto pelo backend para tráfego de consumidores |
-| Standard Load Balancer | O PLS requer SKU Standard (Basic LB não é suportado) |
+| Private Link Service (PLS) | Recurso do lado do provedor que expÃµe um serviÃ§o atrÃ¡s de um Standard LB via Private Link |
+| ConfiguraÃ§Ã£o de IP NAT | O PLS realiza SNAT; o IP NAT Ã© o IP de origem visto pelo backend para trÃ¡fego de consumidores |
+| Standard Load Balancer | O PLS requer SKU Standard (Basic LB nÃ£o Ã© suportado) |
 | Alias | Um identificador globalmente exclusivo e anonimizado para o PLS que os consumidores usam para criar seu PE |
 | Visibilidade | Controla quais assinaturas podem descobrir e se conectar ao PLS (vazio = todas, especificado = restrito) |
-| Aprovação automática | Assinaturas nesta lista têm conexões aprovadas automaticamente (subconjunto da visibilidade) |
-| Estados de conexão | Pending (aguardando aprovação), Approved (ativa), Rejected (negada), Removed (excluída) |
-| Políticas de rede | Devem ser desabilitadas na sub-rede do PLS (`privateLinkServiceNetworkPolicies = Disabled`) |
+| AprovaÃ§Ã£o automÃ¡tica | Assinaturas nesta lista tÃªm conexÃµes aprovadas automaticamente (subconjunto da visibilidade) |
+| Estados de conexÃ£o | Pending (aguardando aprovaÃ§Ã£o), Approved (ativa), Rejected (negada), Removed (excluÃ­da) |
+| PolÃ­ticas de rede | Devem ser desabilitadas na sub-rede do PLS (`privateLinkServiceNetworkPolicies = Disabled`) |
 
 ### Responsabilidades do provedor versus consumidor
 
-| Etapa | Provedor (proprietário do serviço) | Consumidor (cliente) |
+| Etapa | Provedor (proprietÃ¡rio do serviÃ§o) | Consumidor (cliente) |
 |-------|-------------------------------------|----------------------|
 | 1 | Implanta Standard LB com pool de backend | - |
 | 2 | Cria PLS vinculado ao frontend do LB | - |
 | 3 | Compartilha alias ou ID do recurso com o consumidor | Recebe o alias |
 | 4 | - | Cria PE direcionado ao alias |
-| 5 | Aprova a conexão do PE (ou aprovação automática) | Aguarda aprovação |
-| 6 | Tráfego flui: PE do consumidor -> NAT do PLS -> LB -> backend | Acessa o serviço via IP privado |
+| 5 | Aprova a conexÃ£o do PE (ou aprovaÃ§Ã£o automÃ¡tica) | Aguarda aprovaÃ§Ã£o |
+| 6 | TrÃ¡fego flui: PE do consumidor -> NAT do PLS -> LB -> backend | Acessa o serviÃ§o via IP privado |
 
 :::tip Nota de exame
 
-O exame testa a distinção entre Private Link Service (provedor cria, vinculado ao LB) e Private Endpoint (consumidor cria, obtém IP privado em sua VNet). Lembre-se de que o PLS requer um Standard LB -- esta é uma pergunta armadilha comum.
+O exame testa a distinÃ§Ã£o entre Private Link Service (provedor cria, vinculado ao LB) e Private Endpoint (consumidor cria, obtÃ©m IP privado em sua VNet). Lembre-se de que o PLS requer um Standard LB -- esta Ã© uma pergunta armadilha comum.
 
 :::
 
@@ -231,9 +231,9 @@ New-AzLoadBalancer `
 
 ---
 
-## Tarefa 3: Desabilitar políticas de rede na sub-rede do PLS
+## Tarefa 3: Desabilitar polÃ­ticas de rede na sub-rede do PLS
 
-O Private Link Service requer que as políticas de rede sejam desabilitadas na sub-rede onde ele é implantado. Esta é uma configuração diferente das políticas de rede do private endpoint.
+O Private Link Service requer que as polÃ­ticas de rede sejam desabilitadas na sub-rede onde ele Ã© implantado. Esta Ã© uma configuraÃ§Ã£o diferente das polÃ­ticas de rede do private endpoint.
 
 ### Azure CLI
 
@@ -260,9 +260,9 @@ Set-AzVirtualNetworkSubnetConfig `
 $vnet | Set-AzVirtualNetwork
 ```
 
-:::warning Configuração obrigatória
+:::warning ConfiguraÃ§Ã£o obrigatÃ³ria
 
-Diferente das políticas de rede do private endpoint (que desabilitam a aplicação de NSG no tráfego do PE), a política de sub-rede do PLS controla se um Private Link Service pode ser implantado na sub-rede. Sem desabilitar esta política, a criação do PLS falhará. Este é um parâmetro CLI diferente: `--private-link-service-network-policies` (não `--disable-private-endpoint-network-policies`).
+Diferente das polÃ­ticas de rede do private endpoint (que desabilitam a aplicaÃ§Ã£o de NSG no trÃ¡fego do PE), a polÃ­tica de sub-rede do PLS controla se um Private Link Service pode ser implantado na sub-rede. Sem desabilitar esta polÃ­tica, a criaÃ§Ã£o do PLS falharÃ¡. Este Ã© um parÃ¢metro CLI diferente: `--private-link-service-network-policies` (nÃ£o `--disable-private-endpoint-network-policies`).
 
 :::
 
@@ -321,7 +321,7 @@ $pls.Alias
 
 ---
 
-## Tarefa 5: Configurar visibilidade e aprovação automática
+## Tarefa 5: Configurar visibilidade e aprovaÃ§Ã£o automÃ¡tica
 
 ### Azure CLI
 
@@ -366,11 +366,11 @@ $pls.AutoApproval = @{
 Set-AzPrivateLinkService -InputObject $pls
 ```
 
-:::note Visibilidade vs aprovação automática
+:::note Visibilidade vs aprovaÃ§Ã£o automÃ¡tica
 
-- **Visibilidade** controla quais assinaturas podem descobrir o PLS e criar uma conexão PE com ele. Se vazio, todas as assinaturas podem se conectar. Se especificado, apenas as assinaturas listadas podem se conectar.
-- **Aprovação automática** é sempre um subconjunto da visibilidade. Assinaturas listadas têm suas conexões aprovadas automaticamente sem intervenção do provedor.
-- Uma assinatura na visibilidade, mas NÃO na aprovação automática, terá sua conexão no estado Pending até ser aprovada manualmente.
+- **Visibilidade** controla quais assinaturas podem descobrir o PLS e criar uma conexÃ£o PE com ele. Se vazio, todas as assinaturas podem se conectar. Se especificado, apenas as assinaturas listadas podem se conectar.
+- **AprovaÃ§Ã£o automÃ¡tica** Ã© sempre um subconjunto da visibilidade. Assinaturas listadas tÃªm suas conexÃµes aprovadas automaticamente sem intervenÃ§Ã£o do provedor.
+- Uma assinatura na visibilidade, mas NÃƒO na aprovaÃ§Ã£o automÃ¡tica, terÃ¡ sua conexÃ£o no estado Pending atÃ© ser aprovada manualmente.
 
 :::
 
@@ -378,7 +378,7 @@ Set-AzPrivateLinkService -InputObject $pls
 
 ## Tarefa 6: Consumidor cria um private endpoint (simulado)
 
-Isto simula o lado do consumidor. Em produção, o consumidor estaria em uma assinatura diferente.
+Isto simula o lado do consumidor. Em produÃ§Ã£o, o consumidor estaria em uma assinatura diferente.
 
 ### Azure CLI
 
@@ -446,7 +446,7 @@ New-AzPrivateEndpoint `
 
 ---
 
-## Tarefa 7: Provedor aprova a conexão
+## Tarefa 7: Provedor aprova a conexÃ£o
 
 ### Azure CLI
 
@@ -487,21 +487,21 @@ Approve-AzPrivateEndpointConnection `
 
 ### Portal
 
-1. Navegue até **Private Link** no portal
+1. Navegue atÃ© **Private Link** no portal
 2. Selecione **Private link services** e escolha `pls-novatech-api`
-3. Vá para **Private endpoint connections**
-4. Selecione a conexão pendente e clique em **Approve**
-5. Forneça uma descrição e confirme
+3. VÃ¡ para **Private endpoint connections**
+4. Selecione a conexÃ£o pendente e clique em **Approve**
+5. ForneÃ§a uma descriÃ§Ã£o e confirme
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Criação do PLS falha - Load Balancer SKU Basic
+### CenÃ¡rio 1: CriaÃ§Ã£o do PLS falha - Load Balancer SKU Basic
 
-**Sintoma:** `az network private-link-service create` retorna um erro indicando que o load balancer não é compatível.
+**Sintoma:** `az network private-link-service create` retorna um erro indicando que o load balancer nÃ£o Ã© compatÃ­vel.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 # Check the LB SKU
@@ -512,9 +512,9 @@ az network lb show \
     --output tsv
 ```
 
-**Causa raiz:** O Private Link Service requer um Standard SKU Load Balancer. Basic LB não é suportado.
+**Causa raiz:** O Private Link Service requer um Standard SKU Load Balancer. Basic LB nÃ£o Ã© suportado.
 
-**Correção:** Recrie o load balancer com SKU Standard:
+**CorreÃ§Ã£o:** Recrie o load balancer com SKU Standard:
 
 ```bash
 # Delete the Basic LB
@@ -535,11 +535,11 @@ az network lb create \
 
 ---
 
-### Cenário 2: PE do consumidor rejeitado - assinatura não está na lista de visibilidade
+### CenÃ¡rio 2: PE do consumidor rejeitado - assinatura nÃ£o estÃ¡ na lista de visibilidade
 
-**Sintoma:** O consumidor cria um PE mas o estado da conexão mostra imediatamente `Rejected` ou a criação falha com um erro de acesso.
+**Sintoma:** O consumidor cria um PE mas o estado da conexÃ£o mostra imediatamente `Rejected` ou a criaÃ§Ã£o falha com um erro de acesso.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 # Check PLS visibility settings (provider side)
@@ -553,9 +553,9 @@ az network private-link-service show \
 az account show --query "id" --output tsv
 ```
 
-**Causa raiz:** O PLS possui uma lista de visibilidade configurada, e a assinatura do consumidor não está nela.
+**Causa raiz:** O PLS possui uma lista de visibilidade configurada, e a assinatura do consumidor nÃ£o estÃ¡ nela.
 
-**Correção (lado do provedor):**
+**CorreÃ§Ã£o (lado do provedor):**
 
 ```bash
 # Add the consumer's subscription to the visibility list
@@ -567,11 +567,11 @@ az network private-link-service update \
 
 ---
 
-### Cenário 3: Exaustão de IP NAT
+### CenÃ¡rio 3: ExaustÃ£o de IP NAT
 
-**Sintoma:** Novas conexões de consumidores são bem-sucedidas, mas relatam falhas de conectividade intermitentes. Conexões existentes podem cair sob carga.
+**Sintoma:** Novas conexÃµes de consumidores sÃ£o bem-sucedidas, mas relatam falhas de conectividade intermitentes. ConexÃµes existentes podem cair sob carga.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 # Check current NAT IP configurations
@@ -588,9 +588,9 @@ az network private-link-service connection list \
     --query "length(@)"
 ```
 
-**Causa raiz:** Cada IP NAT suporta aproximadamente 64.000 conexões simultâneas (exaustão de portas). Com muitos consumidores ou contagens de conexão altas, um único IP NAT pode ser insuficiente.
+**Causa raiz:** Cada IP NAT suporta aproximadamente 64.000 conexÃµes simultÃ¢neas (exaustÃ£o de portas). Com muitos consumidores ou contagens de conexÃ£o altas, um Ãºnico IP NAT pode ser insuficiente.
 
-**Correção:** Adicione configurações de IP NAT adicionais:
+**CorreÃ§Ã£o:** Adicione configuraÃ§Ãµes de IP NAT adicionais:
 
 ```bash
 # Add a secondary NAT IP to the PLS
@@ -619,11 +619,11 @@ Set-AzPrivateLinkService -InputObject $pls
 
 ---
 
-### Cenário 4: Políticas de rede não desabilitadas na sub-rede do PLS
+### CenÃ¡rio 4: PolÃ­ticas de rede nÃ£o desabilitadas na sub-rede do PLS
 
-**Sintoma:** A criação do PLS falha com um erro sobre políticas de rede.
+**Sintoma:** A criaÃ§Ã£o do PLS falha com um erro sobre polÃ­ticas de rede.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 az network vnet subnet show \
@@ -636,7 +636,7 @@ az network vnet subnet show \
 
 **Causa raiz:** A sub-rede ainda possui `privateLinkServiceNetworkPolicies` definido como `Enabled`.
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
 ```bash
 az network vnet subnet update \
@@ -648,48 +648,48 @@ az network vnet subnet update \
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-36-q1",
-    question: "Which load balancer SKU is required for Azure Private Link Service?",
+    question: "Qual SKU de load balancer é necessário para o Azure Private Link Service?",
     options: [
       "Basic",
       "Standard ✅",
       "Gateway",
-      "Any SKU is supported"
+      "Qualquer SKU é suportado"
     ],
     correctIndex: 1,
-    explanation: "Private Link Service requires a Standard SKU Load Balancer (internal or public). Basic SKU is not supported. This is because PLS relies on Standard LB features for high availability and zone redundancy."
+    explanation: "O Private Link Service requer um Load Balancer com SKU Standard (interno ou público). O SKU Basic não é suportado. Isso ocorre porque o PLS depende dos recursos do Standard LB para alta disponibilidade e redundância de zona."
   },
   {
     id: "az700-36-q2",
-    question: "A consumer creates a private endpoint to your Private Link Service but the connection status shows 'Pending'. The consumer's subscription IS in your visibility list but NOT in auto-approval. What must happen?",
+    question: "Um consumidor cria um private endpoint para seu Private Link Service, mas o status da conexão mostra 'Pending'. A assinatura do consumidor ESTÁ na lista de visibilidade, mas NÃO está na aprovação automática. O que deve acontecer?",
     options: [
-      "The consumer must upgrade their subscription",
-      "The provider must manually approve the connection ✅",
-      "The PLS must be restarted",
-      "The consumer must recreate the PE with --manual-request false"
+      "O consumidor deve atualizar sua assinatura",
+      "O provedor deve aprovar manualmente a conexão ✅",
+      "O PLS deve ser reiniciado",
+      "O consumidor deve recriar o PE com --manual-request false"
     ],
     correctIndex: 1,
-    explanation: "When a consumer's subscription is in the visibility list (can connect) but not in the auto-approval list, the connection enters a Pending state. The provider (service owner) must manually approve the connection before traffic can flow."
+    explanation: "Quando a assinatura de um consumidor está na lista de visibilidade (pode conectar), mas não na lista de aprovação automática, a conexão entra no estado Pending. O provedor (proprietário do serviço) deve aprovar manualmente a conexão antes que o tráfego possa fluir."
   },
   {
     id: "az700-36-q3",
-    question: "What is the relationship between visibility and auto-approval on a Private Link Service?",
+    question: "Qual é a relação entre visibilidade e aprovação automática em um Private Link Service?",
     options: [
-      "They are independent settings with no relationship",
-      "Auto-approval must be a subset of the visibility list ✅",
-      "Visibility must be a subset of auto-approval",
-      "Auto-approval replaces visibility when configured"
+      "São configurações independentes sem relação",
+      "A aprovação automática deve ser um subconjunto da lista de visibilidade ✅",
+      "A visibilidade deve ser um subconjunto da aprovação automática",
+      "A aprovação automática substitui a visibilidade quando configurada"
     ],
     correctIndex: 1,
-    explanation: "Auto-approval is always a subset of visibility. A subscription must first be visible (allowed to connect) before it can be auto-approved. If auto-approval lists a subscription not in visibility, that subscription still cannot connect."
+    explanation: "A aprovação automática é sempre um subconjunto da visibilidade. Uma assinatura deve primeiro estar visível (autorizada a conectar) antes de poder ser aprovada automaticamente. Se a aprovação automática listar uma assinatura que não está na visibilidade, essa assinatura ainda não poderá se conectar."
   },
   {
     id: "az700-36-q4",
-    question: "What subnet-level setting must be configured before deploying a Private Link Service?",
+    question: "Qual configuração no nível da sub-rede deve ser definida antes de implantar um Private Link Service?",
     options: [
       "--disable-private-endpoint-network-policies true",
       "--private-link-service-network-policies Disabled ✅",
@@ -697,31 +697,31 @@ az network vnet subnet update \
       "--network-security-group none"
     ],
     correctIndex: 1,
-    explanation: "The PLS subnet requires privateLinkServiceNetworkPolicies to be Disabled. This is a different setting from private endpoint network policies. Without this, PLS deployment fails. The CLI parameter is --private-link-service-network-policies Disabled."
+    explanation: "A sub-rede do PLS requer que privateLinkServiceNetworkPolicies esteja como Disabled. Esta é uma configuração diferente das políticas de rede do private endpoint. Sem isso, a implantação do PLS falha. O parâmetro da CLI é --private-link-service-network-policies Disabled."
   },
   {
     id: "az700-36-q5",
-    question: "What is the purpose of the NAT IP configuration on a Private Link Service?",
+    question: "Qual é a finalidade da configuração de NAT IP em um Private Link Service?",
     options: [
-      "It provides the public IP for consumers to connect to",
-      "It performs source NAT so backend servers see the NAT IP as the source of consumer traffic ✅",
-      "It assigns a DNS name to the PLS",
-      "It routes traffic from the PLS to the internet"
+      "Fornece o IP público para os consumidores se conectarem",
+      "Realiza source NAT para que os servidores backend vejam o NAT IP como a origem do tráfego do consumidor ✅",
+      "Atribui um nome DNS ao PLS",
+      "Roteia o tráfego do PLS para a internet"
     ],
     correctIndex: 1,
-    explanation: "The NAT IP performs source network address translation (SNAT) on consumer traffic. Backend servers behind the LB see the NAT IP as the source address, not the consumer's private IP. This prevents IP conflicts between the provider and consumer address spaces."
+    explanation: "O NAT IP realiza tradução de endereço de rede de origem (SNAT) no tráfego do consumidor. Os servidores backend atrás do LB veem o NAT IP como endereço de origem, não o IP privado do consumidor. Isso previne conflitos de IP entre os espaços de endereçamento do provedor e do consumidor."
   },
   {
     id: "az700-36-q6",
-    question: "A PLS alias looks like 'pls-novatech-api.abc123.eastus2.azure.privatelinkservice'. What is the benefit of using the alias instead of the resource ID when sharing with consumers?",
+    question: "Um alias de PLS se parece com 'pls-novatech-api.abc123.eastus2.azure.privatelinkservice'. Qual é o benefício de usar o alias em vez do resource ID ao compartilhar com consumidores?",
     options: [
-      "The alias provides faster connection speeds",
-      "The alias masks the provider's subscription and resource group details for privacy ✅",
-      "The alias enables DNS resolution automatically",
-      "The alias is required for cross-region connections"
+      "O alias fornece velocidades de conexão mais rápidas",
+      "O alias oculta os detalhes de assinatura e grupo de recursos do provedor para privacidade ✅",
+      "O alias habilita a resolução DNS automaticamente",
+      "O alias é necessário para conexões entre regiões"
     ],
     correctIndex: 1,
-    explanation: "The alias is a globally unique, anonymized string that hides the provider's internal Azure details (subscription ID, resource group name, etc.). Consumers can use the alias to create their PE without knowing the provider's Azure topology. The resource ID would expose these details."
+    explanation: "O alias é uma string globalmente única e anonimizada que oculta os detalhes internos do Azure do provedor (ID da assinatura, nome do grupo de recursos, etc.). Os consumidores podem usar o alias para criar seu PE sem conhecer a topologia Azure do provedor. O resource ID exporia esses detalhes."
   }
 ]} />
 
@@ -729,7 +729,7 @@ az network vnet subnet update \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para interromper a cobrança:
+Remova todos os recursos criados neste desafio para interromper a cobranÃ§a:
 
 ```bash
 # Delete both provider and consumer resource groups
@@ -744,13 +744,13 @@ Remove-AzResourceGroup -Name "rg-pls-consumer" -Force -AsJob
 
 :::danger Aviso de custo
 
-Este desafio implanta um Standard Load Balancer (~$0,025/h) e um Private Link Service (~$0,01/h). Se você também implantou VMs de backend para testes, elas geram cobranças adicionais. Exclua ambos os grupos de recursos imediatamente após concluir o laboratório. O custo total estimado é de aproximadamente $0,05/h sem VMs.
+Este desafio implanta um Standard Load Balancer (~$0,025/h) e um Private Link Service (~$0,01/h). Se vocÃª tambÃ©m implantou VMs de backend para testes, elas geram cobranÃ§as adicionais. Exclua ambos os grupos de recursos imediatamente apÃ³s concluir o laboratÃ³rio. O custo total estimado Ã© de aproximadamente $0,05/h sem VMs.
 
 :::
 
 ---
 
-## Referências adicionais
+## ReferÃªncias adicionais
 
 - [What is Azure Private Link Service?](https://learn.microsoft.com/en-us/azure/private-link/private-link-service-overview)
 - [Create a Private Link Service - Azure CLI](https://learn.microsoft.com/en-us/azure/private-link/create-private-link-service-cli)

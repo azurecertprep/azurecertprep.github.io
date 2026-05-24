@@ -289,7 +289,7 @@ git rebase -i HEAD~5
 # squash mno7890 fix: webhook signature validation
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Merge conflict from stale release branch
 

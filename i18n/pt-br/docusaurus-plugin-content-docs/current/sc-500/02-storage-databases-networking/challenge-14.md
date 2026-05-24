@@ -269,7 +269,7 @@ az monitor diagnostic-settings list \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Varredura de malware não é acionada nos uploads de arquivo
 

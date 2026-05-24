@@ -810,7 +810,7 @@ New-AzTrafficManagerEndpoint `
 3. Add endpoint `ep-partner` with subnet `172.16.0.0/16`.
 4. Add default endpoint `ep-public-default` with no subnet mapping (catches unmatched traffic).
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Geographic routing missing region assignment
 

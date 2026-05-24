@@ -1,35 +1,35 @@
 ---
 sidebar_position: 2
-title: "Desafio 35: Otimização de pipeline"
+title: "Desafio 35: OtimizaÃ§Ã£o de pipeline"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 35: Otimização de pipeline
+# Desafio 35: OtimizaÃ§Ã£o de pipeline
 
-:::info Plataforma: comparação
-Este desafio aborda técnicas de otimização tanto para GitHub Actions quanto para Azure Pipelines.
+:::info Plataforma: comparaÃ§Ã£o
+Este desafio aborda tÃ©cnicas de otimizaÃ§Ã£o tanto para GitHub Actions quanto para Azure Pipelines.
 :::
 
 ## Habilidades do exame mapeadas
 
 - Otimizar um pipeline para custo, tempo, desempenho e confiabilidade
-- Otimizar a concorrência do pipeline para desempenho e custo
+- Otimizar a concorrÃªncia do pipeline para desempenho e custo
 
-## Cenário
+## CenÃ¡rio
 
-O pipeline principal de CI/CD da Contoso Ltd atualmente possui estas características de desempenho:
+O pipeline principal de CI/CD da Contoso Ltd atualmente possui estas caracterÃ­sticas de desempenho:
 
-- Duração total: média de 45 minutos
+- DuraÃ§Ã£o total: mÃ©dia de 45 minutos
 - Custo mensal: $200 em minutos de GitHub Actions (ou tempo de agente hospedado do Azure Pipelines)
-- Detalhamento dos jobs: Instalar dependências (5 min), Lint (3 min), Testes unitários (12 min), Testes de integração (15 min), Build Docker (8 min), Deploy (2 min)
+- Detalhamento dos jobs: Instalar dependÃªncias (5 min), Lint (3 min), Testes unitÃ¡rios (12 min), Testes de integraÃ§Ã£o (15 min), Build Docker (8 min), Deploy (2 min)
 - O pipeline executa 20 vezes por dia
 
-Objetivo: Reduzir a duração do pipeline para menos de 15 minutos e o custo mensal para abaixo de $100, mantendo a confiabilidade.
+Objetivo: Reduzir a duraÃ§Ã£o do pipeline para menos de 15 minutos e o custo mensal para abaixo de $100, mantendo a confiabilidade.
 
-O repositório é um monorepo Node.js com 3 pacotes:
+O repositÃ³rio Ã© um monorepo Node.js com 3 pacotes:
 
-```
+```text
 contoso-platform/
   packages/
     api/          (Express.js REST API)
@@ -43,7 +43,7 @@ contoso-platform/
 
 ## Tarefa 1: Implementar caching (npm, Docker layers, actions/cache)
 
-Adicione cache de dependências e de build para eliminar trabalho redundante:
+Adicione cache de dependÃªncias e de build para eliminar trabalho redundante:
 
 ```yaml
 # GitHub Actions - Optimized caching strategy
@@ -154,9 +154,9 @@ steps:
         --cache-to type=registry,ref=contosoregistry.azurecr.io/contoso/api:cache,mode=max
 ```
 
-## Tarefa 2: Execução paralela de jobs (dividir suítes de teste)
+## Tarefa 2: ExecuÃ§Ã£o paralela de jobs (dividir suÃ­tes de teste)
 
-Divida os testes em múltiplos runners paralelos para reduzir o tempo total:
+Divida os testes em mÃºltiplos runners paralelos para reduzir o tempo total:
 
 ```yaml
 # GitHub Actions - Parallel test execution
@@ -218,7 +218,7 @@ Divida os testes em múltiplos runners paralelos para reduzir o tempo total:
             --temp-dir=coverage -t coverage
 ```
 
-Execução paralela de testes no Azure Pipelines:
+ExecuÃ§Ã£o paralela de testes no Azure Pipelines:
 
 ```yaml
 # azure-pipelines.yml - Parallel strategy
@@ -249,9 +249,9 @@ jobs:
           testResultsFiles: "**/junit.xml"
 ```
 
-## Tarefa 3: Execução condicional de jobs
+## Tarefa 3: ExecuÃ§Ã£o condicional de jobs
 
-Pule trabalho desnecessário com base em quais arquivos foram alterados:
+Pule trabalho desnecessÃ¡rio com base em quais arquivos foram alterados:
 
 ```yaml
 # GitHub Actions - Path-based conditional execution
@@ -318,9 +318,9 @@ Pule trabalho desnecessário com base em quais arquivos foram alterados:
       - run: echo "Deploying..."
 ```
 
-## Tarefa 4: Otimização de artefatos
+## Tarefa 4: OtimizaÃ§Ã£o de artefatos
 
-Passe apenas os artefatos necessários entre jobs para reduzir o tempo de upload/download:
+Passe apenas os artefatos necessÃ¡rios entre jobs para reduzir o tempo de upload/download:
 
 ```yaml
 # BEFORE (inefficient): Uploading entire workspace
@@ -389,9 +389,9 @@ EXPOSE 3000
 CMD ["node", "dist/index.js"]
 ```
 
-## Tarefa 5: Análise de custo de self-hosted runner
+## Tarefa 5: AnÃ¡lise de custo de self-hosted runner
 
-Compare runners hospedados vs self-hosted para otimização de custo:
+Compare runners hospedados vs self-hosted para otimizaÃ§Ã£o de custo:
 
 ```yaml
 # GitHub Actions hosted runner pricing (as of 2024):
@@ -412,7 +412,7 @@ Compare runners hospedados vs self-hosted para otimização de custo:
 # After optimization: 20 * 15 * 22 = 6,600 min/month (stay hosted)
 ```
 
-Configure um self-hosted runner para cargas de trabalho específicas:
+Configure um self-hosted runner para cargas de trabalho especÃ­ficas:
 
 ```yaml
 # Use self-hosted for expensive/long jobs, hosted for short ones
@@ -433,7 +433,7 @@ jobs:
 
 ## Tarefa 6: Caching e jobs paralelos no Azure Pipelines
 
-Padrões de otimização específicos do Azure Pipelines:
+PadrÃµes de otimizaÃ§Ã£o especÃ­ficos do Azure Pipelines:
 
 ```yaml
 # azure-pipelines.yml - Fully optimized pipeline
@@ -496,9 +496,9 @@ stages:
             displayName: "Run test shard"
 ```
 
-Entenda a precificação de jobs paralelos do Azure Pipelines:
+Entenda a precificaÃ§Ã£o de jobs paralelos do Azure Pipelines:
 
-```
+```text
 # Azure Pipelines parallel jobs:
 # Free tier: 1 Microsoft-hosted parallel job (1800 min/month)
 # Additional: $40/month per parallel job (unlimited minutes)
@@ -509,7 +509,7 @@ Entenda a precificação de jobs paralelos do Azure Pipelines:
 # ROI: Developer time saved = 30 min * 20 runs * 22 days = 220 hours/month
 ```
 
-## Tarefa 7: Builds incrementais (otimização de monorepo)
+## Tarefa 7: Builds incrementais (otimizaÃ§Ã£o de monorepo)
 
 Compile e teste apenas os pacotes que foram alterados:
 
@@ -564,11 +564,11 @@ Alternativa usando `nx affected` para monorepos:
         run: npx nx affected --target=test --base=HEAD~1 --head=HEAD
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Corrigir o cache quebrado
+### ExercÃ­cio 1: Corrigir o cache quebrado
 
-O pipeline sempre reporta cache miss apesar de ter uma configuração de cache:
+O pipeline sempre reporta cache miss apesar de ter uma configuraÃ§Ã£o de cache:
 
 ```yaml
 # BROKEN: Cache key never matches
@@ -582,9 +582,9 @@ O pipeline sempre reporta cache miss apesar de ter uma configuração de cache:
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
 ```yaml
 # FIXED: Use lock file for stable cache key
@@ -598,9 +598,9 @@ O pipeline sempre reporta cache miss apesar de ter uma configuração de cache:
 
 </details>
 
-### Exercício 2: Corrigir jobs paralelos produzindo cobertura incompleta
+### ExercÃ­cio 2: Corrigir jobs paralelos produzindo cobertura incompleta
 
-O sharding de testes funciona, mas o relatório de cobertura mostra apenas 25% (cobertura de um único shard):
+O sharding de testes funciona, mas o relatÃ³rio de cobertura mostra apenas 25% (cobertura de um Ãºnico shard):
 
 ```yaml
 # BROKEN: Each shard overwrites the same coverage file
@@ -613,9 +613,9 @@ O sharding de testes funciona, mas o relatório de cobertura mostra apenas 25% (
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
 ```yaml
 # FIXED: Unique artifact names per shard, then merge
@@ -640,52 +640,52 @@ O sharding de testes funciona, mas o relatório de cobertura mostra apenas 25% (
 
 </details>
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a estratégia de caching mais eficaz para dependências npm em um pipeline de CI?",
+    question: "Qual Ã© a estratÃ©gia de caching mais eficaz para dependÃªncias npm em um pipeline de CI?",
     options: [
-      "Cachear o diretório '~/.npm' com chave baseada em 'package.json'",
-      "Cachear 'node_modules' com chave baseada em 'package-lock.json' com uma chave de restauração de fallback",
-      "Cachear o diretório inteiro do workspace",
-      "Baixar dependências de um mirror de registro privado"
+      "Cachear o diretÃ³rio '~/.npm' com chave baseada em 'package.json'",
+      "Cachear 'node_modules' com chave baseada em 'package-lock.json' com uma chave de restauraÃ§Ã£o de fallback",
+      "Cachear o diretÃ³rio inteiro do workspace",
+      "Baixar dependÃªncias de um mirror de registro privado"
     ],
     correctIndex: 1,
-    explanation: "Cachear node_modules com chave baseada em package-lock.json oferece o melhor equilíbrio. O arquivo lock muda apenas quando as dependências realmente mudam (diferente do package.json que muda a cada bump de versão). Uma chave de restauração como ${{ runner.os }}-modules- fornece correspondências parciais quando o arquivo lock muda, oferecendo um cache aquecido mesmo após atualizações de dependências."
+    explanation: "Cachear node_modules com chave baseada em package-lock.json oferece o melhor equilÃ­brio. O arquivo lock muda apenas quando as dependÃªncias realmente mudam (diferente do package.json que muda a cada bump de versÃ£o). Uma chave de restauraÃ§Ã£o como ${{ runner.os }}-modules- fornece correspondÃªncias parciais quando o arquivo lock muda, oferecendo um cache aquecido mesmo apÃ³s atualizaÃ§Ãµes de dependÃªncias."
   },
   {
-    question: "Como o sharding de testes reduz a duração do pipeline?",
+    question: "Como o sharding de testes reduz a duraÃ§Ã£o do pipeline?",
     options: [
-      "Ele executa menos testes amostrando um subconjunto da suíte de testes",
-      "Ele divide a suíte de testes em múltiplos runners paralelos, reduzindo o tempo de relógio proporcionalmente",
-      "Ele pula testes que passaram na execução anterior",
-      "Ele executa testes mais rápido reduzindo o isolamento dos testes"
+      "Ele executa menos testes amostrando um subconjunto da suÃ­te de testes",
+      "Ele divide a suÃ­te de testes em mÃºltiplos runners paralelos, reduzindo o tempo de relÃ³gio proporcionalmente",
+      "Ele pula testes que passaram na execuÃ§Ã£o anterior",
+      "Ele executa testes mais rÃ¡pido reduzindo o isolamento dos testes"
     ],
     correctIndex: 1,
-    explanation: "O sharding de testes divide a suíte completa em N partes iguais e executa cada parte em um runner separado simultaneamente. Com 4 shards, uma suíte de testes de 12 minutos leva aproximadamente 3 minutos de tempo de relógio. Todos os testes ainda são executados; apenas o tempo decorrido é reduzido pela paralelização."
+    explanation: "O sharding de testes divide a suÃ­te completa em N partes iguais e executa cada parte em um runner separado simultaneamente. Com 4 shards, uma suÃ­te de testes de 12 minutos leva aproximadamente 3 minutos de tempo de relÃ³gio. Todos os testes ainda sÃ£o executados; apenas o tempo decorrido Ã© reduzido pela paralelizaÃ§Ã£o."
   },
   {
-    question: "Quando você deve escolher self-hosted runners em vez de runners hospedados?",
+    question: "Quando vocÃª deve escolher self-hosted runners em vez de runners hospedados?",
     options: [
-      "Sempre, porque self-hosted runners são mais rápidos",
-      "Quando os custos mensais de runners hospedados excedem o custo de manter uma VM, ou quando você precisa de hardware/software especializado",
-      "Apenas para deploys em produção",
-      "Quando você precisa de acesso à internet pública"
+      "Sempre, porque self-hosted runners sÃ£o mais rÃ¡pidos",
+      "Quando os custos mensais de runners hospedados excedem o custo de manter uma VM, ou quando vocÃª precisa de hardware/software especializado",
+      "Apenas para deploys em produÃ§Ã£o",
+      "Quando vocÃª precisa de acesso Ã  internet pÃºblica"
     ],
     correctIndex: 1,
-    explanation: "Self-hosted runners fazem sentido economicamente quando o uso de runners hospedados excede o ponto de equilíbrio (custo total da VM + overhead de manutenção). Eles também oferecem benefícios como caches persistentes, hardware especializado (GPU, ARM), acesso a redes privadas e ferramentas pré-instaladas que de outra forma desacelerariam cada execução."
+    explanation: "Self-hosted runners fazem sentido economicamente quando o uso de runners hospedados excede o ponto de equilÃ­brio (custo total da VM + overhead de manutenÃ§Ã£o). Eles tambÃ©m oferecem benefÃ­cios como caches persistentes, hardware especializado (GPU, ARM), acesso a redes privadas e ferramentas prÃ©-instaladas que de outra forma desacelerariam cada execuÃ§Ã£o."
   },
   {
-    question: "Qual é o principal benefício da execução condicional de jobs baseada em caminhos de arquivos?",
+    question: "Qual Ã© o principal benefÃ­cio da execuÃ§Ã£o condicional de jobs baseada em caminhos de arquivos?",
     options: [
-      "Reduz o armazenamento do repositório removendo arquivos não alterados",
+      "Reduz o armazenamento do repositÃ³rio removendo arquivos nÃ£o alterados",
       "Previne conflitos de merge nos arquivos alterados",
-      "Evita executar jobs caros (testes, builds, deploys) quando as alterações não afetam esses componentes",
-      "Aprova automaticamente pull requests que alteram apenas documentação"
+      "Evita executar jobs caros (testes, builds, deploys) quando as alteraÃ§Ãµes nÃ£o afetam esses componentes",
+      "Aprova automaticamente pull requests que alteram apenas documentaÃ§Ã£o"
     ],
     correctIndex: 2,
-    explanation: "A filtragem baseada em caminhos pula jobs que não são relevantes para os arquivos alterados. Uma alteração apenas de documentação não deveria acionar uma suíte de testes de integração de 15 minutos. Isso reduz tanto o custo (menos minutos consumidos) quanto o tempo de espera do desenvolvedor (feedback mais rápido no PR), enquanto garante que alterações significativas ainda recebam validação completa."
+    explanation: "A filtragem baseada em caminhos pula jobs que nÃ£o sÃ£o relevantes para os arquivos alterados. Uma alteraÃ§Ã£o apenas de documentaÃ§Ã£o nÃ£o deveria acionar uma suÃ­te de testes de integraÃ§Ã£o de 15 minutos. Isso reduz tanto o custo (menos minutos consumidos) quanto o tempo de espera do desenvolvedor (feedback mais rÃ¡pido no PR), enquanto garante que alteraÃ§Ãµes significativas ainda recebam validaÃ§Ã£o completa."
   }
 ]} />
 

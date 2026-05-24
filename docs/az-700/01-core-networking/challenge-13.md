@@ -502,7 +502,7 @@ az graph query -q "
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Public IP has no DDoS protection
 

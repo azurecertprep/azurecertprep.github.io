@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 02: Subnet Strategy for Azure Services"
+title: "Desafio 02: Estratégia de Sub-redes para Serviços Azure"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -465,60 +465,60 @@ az group delete --name $RG --yes --no-wait
 <KnowledgeCheck questions={[
   {
     id: "az700-02-q1",
-    question: "What is the minimum subnet prefix length for AzureBastionSubnet?",
+    question: "Qual é o comprimento mínimo do prefixo de subnet para a AzureBastionSubnet?",
     options: ["/28", "/27", "/26", "/24"],
     correctIndex: 2,
-    explanation: "Azure Bastion requires a minimum /26 subnet (64 addresses). A /28 or /27 will be rejected during creation."
+    explanation: "O Azure Bastion requer uma subnet mínima de /26 (64 endereços). Um /28 ou /27 será rejeitado durante a criação."
   },
   {
     id: "az700-02-q2",
-    question: "Which of the following subnets CANNOT have an NSG associated with it?",
+    question: "Qual das seguintes subnets NÃO pode ter um NSG associado a ela?",
     options: ["AzureBastionSubnet", "GatewaySubnet", "AzureFirewallSubnet", "PrivateEndpointSubnet"],
     correctIndex: 1,
-    explanation: "GatewaySubnet does not support NSG association. AzureBastionSubnet supports NSGs but requires specific rules. AzureFirewallSubnet and Private Endpoint subnets also support NSGs."
+    explanation: "A GatewaySubnet não suporta associação de NSG. A AzureBastionSubnet suporta NSGs, mas requer regras específicas. A AzureFirewallSubnet e subnets de Private Endpoint também suportam NSGs."
   },
   {
     id: "az700-02-q3",
-    question: "What is the correct delegation value for App Service VNet integration?",
+    question: "Qual é o valor correto de delegação para integração de VNet do App Service?",
     options: ["Microsoft.Web/sites", "Microsoft.Web/serverFarms", "Microsoft.AppService/environments", "Microsoft.Web/hostingEnvironments"],
     correctIndex: 1,
-    explanation: "App Service VNet integration requires delegation to Microsoft.Web/serverFarms, not Microsoft.Web/sites. The serverFarms resource provider represents the App Service Plan that hosts the app."
+    explanation: "A integração de VNet do App Service requer delegação para Microsoft.Web/serverFarms, não Microsoft.Web/sites. O provedor de recursos serverFarms representa o App Service Plan que hospeda o aplicativo."
   },
   {
     id: "az700-02-q4",
-    question: "A subnet delegated to Microsoft.ContainerInstance/containerGroups already exists. You need to also delegate it to Microsoft.Web/serverFarms. What should you do?",
+    question: "Uma subnet delegada para Microsoft.ContainerInstance/containerGroups já existe. Você precisa também delegá-la para Microsoft.Web/serverFarms. O que você deve fazer?",
     options: [
-      "Add the second delegation using az network vnet subnet update --delegations",
-      "Remove the existing delegation first, then add the new one",
-      "This is not possible — a subnet can only be delegated to one service",
-      "Create a new delegation using az network vnet subnet create --delegations"
+      "Adicionar a segunda delegação usando az network vnet subnet update --delegations",
+      "Remover a delegação existente primeiro e depois adicionar a nova",
+      "Isso não é possível — uma subnet só pode ser delegada a um serviço",
+      "Criar uma nova delegação usando az network vnet subnet create --delegations"
     ],
     correctIndex: 2,
-    explanation: "A subnet can only be delegated to a single service at a time. To use a different delegation, you must remove all resources from the current delegated service, remove the delegation, and then apply the new one. Alternatively, create a separate subnet for the second service."
+    explanation: "Uma subnet só pode ser delegada a um único serviço por vez. Para usar uma delegação diferente, você deve remover todos os recursos do serviço delegado atual, remover a delegação e então aplicar a nova. Alternativamente, crie uma subnet separada para o segundo serviço."
   },
   {
     id: "az700-02-q5",
-    question: "Which outbound NSG rule is required on the AzureBastionSubnet for Bastion to connect to target VMs?",
+    question: "Qual regra de saída do NSG é necessária na AzureBastionSubnet para que o Bastion se conecte às VMs de destino?",
     options: [
-      "Allow TCP 443 to VirtualNetwork",
-      "Allow TCP/UDP 22 and 3389 to VirtualNetwork",
-      "Allow TCP 443 to AzureCloud",
-      "Allow TCP 80 to Internet"
+      "Permitir TCP 443 para VirtualNetwork",
+      "Permitir TCP/UDP 22 e 3389 para VirtualNetwork",
+      "Permitir TCP 443 para AzureCloud",
+      "Permitir TCP 80 para Internet"
     ],
     correctIndex: 1,
-    explanation: "Azure Bastion connects to target VMs over SSH (port 22) and RDP (port 3389) within the VirtualNetwork. The AllowSshRdpOutbound rule must permit both ports to the VirtualNetwork service tag."
+    explanation: "O Azure Bastion se conecta às VMs de destino via SSH (porta 22) e RDP (porta 3389) dentro da VirtualNetwork. A regra AllowSshRdpOutbound deve permitir ambas as portas para a service tag VirtualNetwork."
   },
   {
     id: "az700-02-q6",
-    question: "You need to deploy Private Endpoints and a set of VMs in the same subnet. Is this supported?",
+    question: "Você precisa implantar Private Endpoints e um conjunto de VMs na mesma subnet. Isso é suportado?",
     options: [
-      "No — Private Endpoints require a dedicated subnet",
-      "Yes — Private Endpoints can share a subnet with other resources",
-      "Only if the subnet has no NSG associated",
-      "Only if the subnet is delegated to Microsoft.Network/privateEndpoints"
+      "Não — Private Endpoints requerem uma subnet dedicada",
+      "Sim — Private Endpoints podem compartilhar uma subnet com outros recursos",
+      "Somente se a subnet não tiver NSG associado",
+      "Somente se a subnet for delegada para Microsoft.Network/privateEndpoints"
     ],
     correctIndex: 1,
-    explanation: "Private Endpoints can coexist with other resources such as VMs in the same subnet. They do not require delegation or a dedicated subnet. NSG support for Private Endpoints was added in 2023."
+    explanation: "Private Endpoints podem coexistir com outros recursos como VMs na mesma subnet. Eles não requerem delegação ou uma subnet dedicada. O suporte a NSG para Private Endpoints foi adicionado em 2023."
   }
 ]} />
 

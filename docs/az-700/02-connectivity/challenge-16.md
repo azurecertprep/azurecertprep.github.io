@@ -417,7 +417,7 @@ The exam may present a scenario where you need to connect a route-based VPN gate
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Mismatched crypto parameters
 

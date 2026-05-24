@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-title: "Challenge 05: Azure DNS Private Resolver"
+title: "Desafio 05: Azure DNS Private Resolver"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -460,43 +460,43 @@ az group delete --name rg-dns-resolver-lab --yes --no-wait
 <KnowledgeCheck questions={[
   {
     id: "az700-05-q1",
-    question: "What is the minimum subnet size required for an Azure DNS Private Resolver endpoint?",
+    question: "Qual é o tamanho mínimo de subnet necessário para um endpoint do Azure DNS Private Resolver?",
     options: [
-      "/30 (4 addresses)",
-      "/29 (8 addresses)",
-      "/28 (16 addresses)",
-      "/27 (32 addresses)"
+      "/30 (4 endereços)",
+      "/29 (8 endereços)",
+      "/28 (16 endereços)",
+      "/27 (32 endereços)"
     ],
     correctIndex: 2,
-    explanation: "Both inbound and outbound endpoints require a dedicated subnet with a minimum size of /28 (16 addresses). The subnet must be delegated to Microsoft.Network/dnsResolvers and cannot contain any other resources."
+    explanation: "Tanto endpoints de entrada quanto de saída requerem uma subnet dedicada com tamanho mínimo de /28 (16 endereços). A subnet deve ser delegada para Microsoft.Network/dnsResolvers e não pode conter outros recursos."
   },
   {
     id: "az700-05-q2",
-    question: "On-premises clients need to resolve records in an Azure Private DNS zone. Which DNS Private Resolver component provides the IP address that on-prem conditional forwarders should target?",
+    question: "Clientes on-premises precisam resolver registros em uma zona Azure Private DNS. Qual componente do DNS Private Resolver fornece o endereço IP que os conditional forwarders on-prem devem apontar?",
     options: [
-      "The outbound endpoint IP address",
-      "The inbound endpoint IP address",
-      "The Azure recursive resolver (168.63.129.16)",
-      "The forwarding ruleset virtual IP"
+      "O endereço IP do endpoint de saída",
+      "O endereço IP do endpoint de entrada",
+      "O resolvedor recursivo do Azure (168.63.129.16)",
+      "O IP virtual do forwarding ruleset"
     ],
     correctIndex: 1,
-    explanation: "The inbound endpoint provides a private IP address within the hub VNet. On-premises DNS servers configure conditional forwarders pointing to this IP for Azure Private DNS zone resolution. The inbound endpoint then resolves the query using Azure DNS."
+    explanation: "O endpoint de entrada fornece um endereço IP privado dentro da VNet hub. Servidores DNS on-premises configuram conditional forwarders apontando para este IP para resolução de zonas Azure Private DNS. O endpoint de entrada então resolve a consulta usando o Azure DNS."
   },
   {
     id: "az700-05-q3",
-    question: "Azure VMs in a spoke VNet cannot resolve on-premises Active Directory domain names. The forwarding ruleset and rule are correctly configured. What is the most likely missing step?",
+    question: "VMs do Azure em uma VNet spoke não conseguem resolver nomes de domínio do Active Directory on-premises. O forwarding ruleset e a regra estão configurados corretamente. Qual é o passo mais provavelmente ausente?",
     options: [
-      "The inbound endpoint is not configured",
-      "The spoke VNet is not linked to the forwarding ruleset",
-      "The Azure Private DNS zone needs a VNet link to the spoke",
-      "The on-premises DNS servers need a conditional forwarder to Azure"
+      "O endpoint de entrada não está configurado",
+      "A VNet spoke não está vinculada ao forwarding ruleset",
+      "A zona Azure Private DNS precisa de um link de VNet para o spoke",
+      "Os servidores DNS on-premises precisam de um conditional forwarder para o Azure"
     ],
     correctIndex: 1,
-    explanation: "A forwarding ruleset must be linked to each VNet that needs to use its rules. Without the VNet link, DNS queries from the spoke VNet bypass the forwarding rules and are handled by default Azure DNS resolution, which cannot resolve on-premises domains."
+    explanation: "Um forwarding ruleset deve ser vinculado a cada VNet que precisa usar suas regras. Sem o link de VNet, consultas DNS da VNet spoke ignoram as regras de encaminhamento e são tratadas pela resolução padrão do Azure DNS, que não consegue resolver domínios on-premises."
   },
   {
     id: "az700-05-q4",
-    question: "Which parameter format is correct for specifying target DNS servers in an 'az dns-resolver forwarding-rule create' command?",
+    question: "Qual formato de parâmetro é correto para especificar servidores DNS de destino em um comando 'az dns-resolver forwarding-rule create'?",
     options: [
       "--target-dns-servers 10.1.0.4:53,10.1.0.5:53",
       "--target-dns-servers [{ip-address:10.1.0.4,port:53},{ip-address:10.1.0.5,port:53}]",
@@ -504,11 +504,11 @@ az group delete --name rg-dns-resolver-lab --yes --no-wait
       "--forwarders [{address:10.1.0.4},{address:10.1.0.5}]"
     ],
     correctIndex: 1,
-    explanation: "The --target-dns-servers parameter accepts a JSON array of objects, each with 'ip-address' and 'port' properties. The shorthand syntax uses square brackets and curly braces to define the array of server entries."
+    explanation: "O parâmetro --target-dns-servers aceita um array JSON de objetos, cada um com as propriedades 'ip-address' e 'port'. A sintaxe abreviada usa colchetes e chaves para definir o array de entradas de servidor."
   },
   {
     id: "az700-05-q5",
-    question: "What is the maximum number of DNS forwarding rulesets that can be linked to a single virtual network?",
+    question: "Qual é o número máximo de DNS forwarding rulesets que podem ser vinculados a uma única rede virtual?",
     options: [
       "1",
       "2",
@@ -516,19 +516,19 @@ az group delete --name rg-dns-resolver-lab --yes --no-wait
       "10"
     ],
     correctIndex: 1,
-    explanation: "A virtual network can be linked to a maximum of two DNS forwarding rulesets. If more rules are needed, they should be consolidated into fewer rulesets. A single ruleset, however, can be linked to up to 500 virtual networks."
+    explanation: "Uma rede virtual pode ser vinculada a no máximo dois DNS forwarding rulesets. Se mais regras forem necessárias, elas devem ser consolidadas em menos rulesets. Um único ruleset, no entanto, pode ser vinculado a até 500 redes virtuais."
   },
   {
     id: "az700-05-q6",
-    question: "Contoso wants to replace their IaaS DNS forwarder VMs in Azure with a managed solution. After deploying the DNS Private Resolver with an inbound endpoint, what must be updated on the on-premises DNS infrastructure?",
+    question: "A Contoso quer substituir suas VMs de forwarder DNS IaaS no Azure por uma solução gerenciada. Após implantar o DNS Private Resolver com um endpoint de entrada, o que deve ser atualizado na infraestrutura DNS on-premises?",
     options: [
-      "Add a new zone for Azure Private DNS on the on-prem DNS server",
-      "Update conditional forwarders to point to the inbound endpoint IP instead of the old VM IPs",
-      "Configure the on-prem DNS servers as secondary for the Azure Private DNS zones",
-      "Create a DNS delegation from the on-prem domain to the resolver outbound endpoint"
+      "Adicionar uma nova zona para Azure Private DNS no servidor DNS on-prem",
+      "Atualizar os conditional forwarders para apontar para o IP do endpoint de entrada em vez dos IPs antigos das VMs",
+      "Configurar os servidores DNS on-prem como secundários para as zonas Azure Private DNS",
+      "Criar uma delegação DNS do domínio on-prem para o endpoint de saída do resolver"
     ],
     correctIndex: 1,
-    explanation: "The inbound endpoint replaces the IaaS forwarder VMs. On-premises conditional forwarders that previously pointed to the VM IPs must be updated to the inbound endpoint IP. No zone transfers or delegations are needed; the resolver handles query resolution against Azure Private DNS zones natively."
+    explanation: "O endpoint de entrada substitui as VMs de forwarder IaaS. Os conditional forwarders on-premises que anteriormente apontavam para os IPs das VMs devem ser atualizados para o IP do endpoint de entrada. Nenhuma transferência de zona ou delegação é necessária; o resolver trata a resolução de consultas contra zonas Azure Private DNS nativamente."
   }
 ]} />
 

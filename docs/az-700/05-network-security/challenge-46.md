@@ -475,7 +475,7 @@ AzureDiagnostics
 | order by count_ desc
 ```
 
-## Break and fix
+## Break & fix
 
 These exercises simulate common Front Door WAF misconfigurations.
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 04 | Storage Accounts & Access"
+title: "Desafio 04: Contas de Armazenamento & Acesso"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
@@ -344,7 +344,7 @@ azcopy copy "upload-test/*" "https://$STORAGE_NAME.blob.core.windows.net/testcon
 - [Começar com AzCopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10)
 - [Gerenciar chaves de storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage)
 
-## Quebre & conserte
+## Quebra & conserta
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 

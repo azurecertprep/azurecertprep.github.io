@@ -300,7 +300,7 @@ az webapp config access-restriction show \
     "Access restrictions configured on the web app"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: deploying to the wrong slot
 ```bash

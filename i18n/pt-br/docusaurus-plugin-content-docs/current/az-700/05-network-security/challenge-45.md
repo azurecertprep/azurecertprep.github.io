@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: "Challenge 45: WAF on Application Gateway"
+title: "Desafio 45: WAF no Application Gateway"
 sidebar_label: "Challenge 45"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -564,7 +564,7 @@ New-AzDiagnosticSetting `
   -Metric (New-AzDiagnosticSettingMetricSettingsObject -Category "AllMetrics" -Enabled $true)
 ```
 
-## Quebra e correção
+## Quebra & conserta
 
 Estes exercícios simulam configurações incorretas comuns do WAF.
 
@@ -634,31 +634,31 @@ az network application-gateway waf-policy policy-setting update \
 <KnowledgeCheck questions={[
   {
     id: "az700-45-q1",
-    question: "In what order are WAF rules evaluated on Application Gateway?",
+    question: "Em que ordem as regras do WAF são avaliadas no Application Gateway?",
     options: [
-      "Custom rules first (by priority), then managed rules ✅",
-      "Managed rules first, then custom rules",
-      "All rules evaluated simultaneously with the most specific match winning",
-      "Alphabetically by rule name"
+      "Regras personalizadas primeiro (por prioridade), depois regras gerenciadas ✅",
+      "Regras gerenciadas primeiro, depois regras personalizadas",
+      "Todas as regras são avaliadas simultaneamente, vencendo a correspondência mais específica",
+      "Em ordem alfabética pelo nome da regra"
     ],
     correctIndex: 0,
-    explanation: "Custom rules are always evaluated before managed rules. Within custom rules, lower priority numbers are evaluated first. If a custom rule matches and the action is Block or Allow, processing stops. Only if no custom rule matches does evaluation proceed to managed rules."
+    explanation: "As regras personalizadas são sempre avaliadas antes das regras gerenciadas. Dentro das regras personalizadas, números de prioridade mais baixos são avaliados primeiro. Se uma regra personalizada corresponder e a ação for Block ou Allow, o processamento para. Somente se nenhuma regra personalizada corresponder, a avaliação prossegue para as regras gerenciadas."
   },
   {
     id: "az700-45-q2",
-    question: "What is the difference between Detection and Prevention mode in a WAF policy?",
+    question: "Qual é a diferença entre o modo Detection e Prevention em uma política WAF?",
     options: [
-      "Detection only logs matches; Prevention logs and actively blocks matching requests ✅",
-      "Detection blocks requests silently; Prevention blocks and logs",
-      "Detection applies to custom rules only; Prevention applies to managed rules",
-      "Detection mode has a lower cost than Prevention mode"
+      "Detection apenas registra correspondências; Prevention registra e bloqueia ativamente as requisições correspondentes ✅",
+      "Detection bloqueia requisições silenciosamente; Prevention bloqueia e registra",
+      "Detection se aplica apenas a regras personalizadas; Prevention se aplica a regras gerenciadas",
+      "O modo Detection tem custo menor que o modo Prevention"
     ],
     correctIndex: 0,
-    explanation: "Detection mode monitors and logs all rule matches but allows all traffic through to the backend. Prevention mode actively blocks requests that match rules, returning a 403 response. Detection mode is recommended during initial WAF deployment to identify false positives before switching to Prevention."
+    explanation: "O modo Detection monitora e registra todas as correspondências de regras, mas permite que todo o tráfego passe para o backend. O modo Prevention bloqueia ativamente as requisições que correspondem às regras, retornando uma resposta 403. O modo Detection é recomendado durante a implantação inicial do WAF para identificar falsos positivos antes de mudar para Prevention."
   },
   {
     id: "az700-45-q3",
-    question: "Which managed rule set type represents the latest Microsoft-maintained ruleset for Application Gateway WAF?",
+    question: "Qual tipo de conjunto de regras gerenciadas representa o ruleset mais recente mantido pela Microsoft para o WAF do Application Gateway?",
     options: [
       "Microsoft_DefaultRuleSet (DRS) ✅",
       "OWASP",
@@ -666,23 +666,23 @@ az network application-gateway waf-policy policy-setting update \
       "Microsoft_HTTPDDoSRuleSet"
     ],
     correctIndex: 0,
-    explanation: "Microsoft_DefaultRuleSet (DRS) is the latest Microsoft-maintained ruleset with versions like 2.1. It supersedes the OWASP CRS rulesets (3.0, 3.1, 3.2) with better detection and fewer false positives. OWASP rulesets are still supported but DRS is recommended for new deployments."
+    explanation: "Microsoft_DefaultRuleSet (DRS) é o ruleset mais recente mantido pela Microsoft com versões como 2.1. Ele substitui os rulesets OWASP CRS (3.0, 3.1, 3.2) com melhor detecção e menos falsos positivos. Os rulesets OWASP ainda são suportados, mas o DRS é recomendado para novas implantações."
   },
   {
     id: "az700-45-q4",
-    question: "A custom rule has priority 100 and another has priority 50. Which evaluates first?",
+    question: "Uma regra personalizada tem prioridade 100 e outra tem prioridade 50. Qual é avaliada primeiro?",
     options: [
-      "Priority 50 evaluates first (lower number = higher precedence) ✅",
-      "Priority 100 evaluates first (higher number = higher precedence)",
-      "Both evaluate simultaneously",
-      "Evaluation order depends on the rule type, not priority"
+      "Prioridade 50 é avaliada primeiro (menor número = maior precedência) ✅",
+      "Prioridade 100 é avaliada primeiro (maior número = maior precedência)",
+      "Ambas são avaliadas simultaneamente",
+      "A ordem de avaliação depende do tipo de regra, não da prioridade"
     ],
     correctIndex: 0,
-    explanation: "Lower priority numbers are evaluated first. Priority 1 is the highest priority (evaluated first) and priority 100 is evaluated after priority 50. This is consistent across both Application Gateway WAF and Front Door WAF custom rules."
+    explanation: "Números de prioridade mais baixos são avaliados primeiro. Prioridade 1 é a mais alta (avaliada primeiro) e prioridade 100 é avaliada após a prioridade 50. Isso é consistente tanto para regras personalizadas do WAF do Application Gateway quanto do Front Door."
   },
   {
     id: "az700-45-q5",
-    question: "Which WAF exclusion match variable would you use to exempt a specific query string parameter from rule inspection?",
+    question: "Qual variável de correspondência de exclusão do WAF você usaria para isentar um parâmetro específico de query string da inspeção de regras?",
     options: [
       "RequestArgNames ✅",
       "RequestHeaderNames",
@@ -690,19 +690,19 @@ az network application-gateway waf-policy policy-setting update \
       "RequestBodyArgNames"
     ],
     correctIndex: 0,
-    explanation: "RequestArgNames is used to exclude specific query string parameter names from WAF rule inspection. RequestHeaderNames excludes HTTP headers, and RequestCookieNames excludes cookies. There is no RequestBodyArgNames; for POST body parameters, use RequestArgNames which covers both query string and body parameters."
+    explanation: "RequestArgNames é usado para excluir nomes específicos de parâmetros de query string da inspeção de regras do WAF. RequestHeaderNames exclui cabeçalhos HTTP e RequestCookieNames exclui cookies. Não existe RequestBodyArgNames; para parâmetros do corpo POST, use RequestArgNames que cobre tanto parâmetros de query string quanto de corpo."
   },
   {
     id: "az700-45-q6",
-    question: "You associate a WAF policy at the Application Gateway level and a different policy at a specific listener. Which policy applies to requests on that listener?",
+    question: "Você associa uma política WAF no nível do Application Gateway e uma política diferente em um listener específico. Qual política se aplica às requisições nesse listener?",
     options: [
-      "The listener-level policy overrides the gateway-level policy ✅",
-      "The gateway-level policy always takes precedence",
-      "Both policies are evaluated and the most restrictive action wins",
-      "The configuration is invalid and the gateway will not start"
+      "A política no nível do listener substitui a política no nível do gateway ✅",
+      "A política no nível do gateway sempre tem precedência",
+      "Ambas as políticas são avaliadas e a ação mais restritiva vence",
+      "A configuração é inválida e o gateway não iniciará"
     ],
     correctIndex: 0,
-    explanation: "WAF policies follow a specificity hierarchy: per-path-rule overrides per-listener, which overrides per-gateway. When a more specific policy is associated, it completely replaces the broader policy for that scope. This enables per-site WAF tuning on multi-tenant Application Gateways."
+    explanation: "As políticas WAF seguem uma hierarquia de especificidade: por regra de caminho substitui por listener, que substitui por gateway. Quando uma política mais específica é associada, ela substitui completamente a política mais ampla para aquele escopo. Isso permite ajuste fino do WAF por site em Application Gateways multi-tenant."
   }
 ]} />
 

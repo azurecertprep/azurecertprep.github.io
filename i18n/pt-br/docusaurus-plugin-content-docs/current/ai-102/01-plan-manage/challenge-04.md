@@ -1,48 +1,48 @@
 ---
 sidebar_position: 5
-title: "Desafio 04: SDKs, REST APIs e Autenticação"
+title: "Desafio 04: SDKs, REST APIs e AutenticaÃ§Ã£o"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 04: SDKs, REST APIs e Autenticação
+# Desafio 04: SDKs, REST APIs e AutenticaÃ§Ã£o
 
 :::info Tempo Estimado
-**45 min** | **Custo**: ~$0.25 | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
+**45 min** | **Custo**: ~$0.25 | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
 - Instalar SDKs e APIs para Azure AI services
-- Determinar o endpoint padrão de um serviço
-- Gerenciar autenticação usando chaves e Microsoft Entra ID
-- Implementar DefaultAzureCredential para cargas de trabalho em produção
+- Determinar o endpoint padrÃ£o de um serviÃ§o
+- Gerenciar autenticaÃ§Ã£o usando chaves e Microsoft Entra ID
+- Implementar DefaultAzureCredential para cargas de trabalho em produÃ§Ã£o
 - Entender versionamento de API e compatibilidade de SDK
 
-## Visão Geral
+## VisÃ£o Geral
 
-Os Azure AI services podem ser consumidos via SDKs específicos de linguagem ou chamadas diretas à REST API. O exame AI-102 testa sua capacidade de escolher o método de autenticação correto, entender a construção de endpoints e lidar com versionamento de API corretamente.
+Os Azure AI services podem ser consumidos via SDKs especÃ­ficos de linguagem ou chamadas diretas Ã  REST API. O exame AI-102 testa sua capacidade de escolher o mÃ©todo de autenticaÃ§Ã£o correto, entender a construÃ§Ã£o de endpoints e lidar com versionamento de API corretamente.
 
-Existem dois padrões principais de autenticação: **baseado em chave** (usando `AzureKeyCredential` ou o cabeçalho `Ocp-Apim-Subscription-Key`) e **Microsoft Entra ID** (usando `DefaultAzureCredential` com tokens bearer OAuth2). A autenticação baseada em chave é mais simples, porém menos segura—chaves podem ser vazadas e não fornecem trilhas de auditoria baseadas em identidade. A autenticação via Entra ID requer um subdomínio personalizado e atribuições de role RBAC adequadas, mas oferece suporte a managed identity, acesso condicional e auditoria granular.
+Existem dois padrÃµes principais de autenticaÃ§Ã£o: **baseado em chave** (usando `AzureKeyCredential` ou o cabeÃ§alho `Ocp-Apim-Subscription-Key`) e **Microsoft Entra ID** (usando `DefaultAzureCredential` com tokens bearer OAuth2). A autenticaÃ§Ã£o baseada em chave Ã© mais simples, porÃ©m menos seguraâ€”chaves podem ser vazadas e nÃ£o fornecem trilhas de auditoria baseadas em identidade. A autenticaÃ§Ã£o via Entra ID requer um subdomÃ­nio personalizado e atribuiÃ§Ãµes de role RBAC adequadas, mas oferece suporte a managed identity, acesso condicional e auditoria granular.
 
-Este desafio guia você por ambos os métodos de autenticação usando o SDK Azure AI Text Analytics, demonstra chamadas REST API com cabeçalhos adequados e mostra como o `DefaultAzureCredential` percorre múltiplos tipos de credencial para um desenvolvimento local-para-nuvem transparente.
+Este desafio guia vocÃª por ambos os mÃ©todos de autenticaÃ§Ã£o usando o SDK Azure AI Text Analytics, demonstra chamadas REST API com cabeÃ§alhos adequados e mostra como o `DefaultAzureCredential` percorre mÃºltiplos tipos de credencial para um desenvolvimento local-para-nuvem transparente.
 
 ## Arquitetura
 
-Você irá autenticar no Azure AI Language usando ambos os métodos (baseado em chave e Entra ID), fazer a mesma chamada de API com cada um e comparar os padrões de requisição.
+VocÃª irÃ¡ autenticar no Azure AI Language usando ambos os mÃ©todos (baseado em chave e Entra ID), fazer a mesma chamada de API com cada um e comparar os padrÃµes de requisiÃ§Ã£o.
 
 ![Challenge 04 topology](/img/ai-102/challenge-04-topology.svg)
 
-## Pré-requisitos
-- Assinatura Azure com um recurso Azure AI Language (com subdomínio personalizado)
+## PrÃ©-requisitos
+- Assinatura Azure com um recurso Azure AI Language (com subdomÃ­nio personalizado)
 - Azure CLI 2.50+ instalado e autenticado
 - Python 3.9+ com `pip` ou .NET 8 SDK
-- Atribuição de role: "Cognitive Services User" no recurso para autenticação via Entra ID
+- AtribuiÃ§Ã£o de role: "Cognitive Services User" no recurso para autenticaÃ§Ã£o via Entra ID
 
-## Implementação
+## ImplementaÃ§Ã£o
 
-### Tarefa 1: Autenticação Baseada em Chave com Azure AI Text Analytics
+### Tarefa 1: AutenticaÃ§Ã£o Baseada em Chave com Azure AI Text Analytics
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -62,7 +62,7 @@ client = TextAnalyticsClient(endpoint=endpoint, credential=credential)
 # Detect language
 documents = [
     "This is a document written in English.",
-    "Este es un documento escrito en español.",
+    "Este es un documento escrito en espaÃ±ol.",
     "Dies ist ein auf Deutsch verfasstes Dokument."
 ]
 
@@ -92,7 +92,7 @@ var client = new TextAnalyticsClient(endpoint, key);
 var documents = new[]
 {
     "This is a document written in English.",
-    "Este es un documento escrito en español.",
+    "Este es un documento escrito en espaÃ±ol.",
     "Dies ist ein auf Deutsch verfasstes Dokument."
 };
 
@@ -129,7 +129,7 @@ curl -s "${ENDPOINT}language/:analyze-text?api-version=2023-04-01" \
     "analysisInput": {
       "documents": [
         {"id": "1", "text": "This is a document written in English."},
-        {"id": "2", "text": "Este es un documento escrito en español."},
+        {"id": "2", "text": "Este es un documento escrito en espaÃ±ol."},
         {"id": "3", "text": "Dies ist ein auf Deutsch verfasstes Dokument."}
       ]
     }
@@ -139,7 +139,7 @@ curl -s "${ENDPOINT}language/:analyze-text?api-version=2023-04-01" \
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Autenticação Microsoft Entra ID com DefaultAzureCredential
+### Tarefa 2: AutenticaÃ§Ã£o Microsoft Entra ID com DefaultAzureCredential
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -152,7 +152,7 @@ from azure.ai.textanalytics import TextAnalyticsClient
 # Entra ID authentication (requires custom subdomain on resource)
 endpoint = os.environ["AZURE_AI_ENDPOINT"]  # Must be custom: https://<name>.cognitiveservices.azure.com/
 
-# DefaultAzureCredential tries: Environment → Managed Identity → Azure CLI → etc.
+# DefaultAzureCredential tries: Environment â†’ Managed Identity â†’ Azure CLI â†’ etc.
 credential = DefaultAzureCredential()
 client = TextAnalyticsClient(endpoint=endpoint, credential=credential)
 
@@ -302,7 +302,7 @@ using Azure.Identity;
 using Azure.AI.TextAnalytics;
 
 // DefaultAzureCredential tries multiple sources automatically
-// Order: Environment → Workload Identity → Managed Identity → Azure CLI → etc.
+// Order: Environment â†’ Workload Identity â†’ Managed Identity â†’ Azure CLI â†’ etc.
 
 // For production with managed identity
 var productionCredential = new ManagedIdentityCredential();
@@ -386,9 +386,9 @@ curl -s "${ENDPOINT}language/:analyze-text?api-version=2023-04-01" \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 'English' (confidence: 1.00)
 'Spanish' (confidence: 1.00)
 'German' (confidence: 1.00)
@@ -402,21 +402,21 @@ Key phrases: Azure AI services, multiple authentication methods
 Auth successful! Detected: English
 ```
 
-## Quebrar e Consertar
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Autenticação Entra 401 | `AuthenticationFailed` | Atribuição de role RBAC ausente | Atribuir a role "Cognitive Services User" à identidade |
-| Domínio personalizado ausente | `InvalidAuthentication` com bearer token | Recurso usa endpoint regional (sem subdomínio personalizado) | Recriar recurso com o parâmetro `--custom-domain` |
+| AutenticaÃ§Ã£o Entra 401 | `AuthenticationFailed` | AtribuiÃ§Ã£o de role RBAC ausente | Atribuir a role "Cognitive Services User" Ã  identidade |
+| DomÃ­nio personalizado ausente | `InvalidAuthentication` com bearer token | Recurso usa endpoint regional (sem subdomÃ­nio personalizado) | Recriar recurso com o parÃ¢metro `--custom-domain` |
 | Audience do token incorreta | `401 Unauthorized` | Token solicitado para recurso errado | Usar `https://cognitiveservices.azure.com` como resource/scope |
-| Incompatibilidade de versão do SDK | `ApiVersionNotSupported` | Versão do SDK espera versão de API mais recente | Fixar versão da API ou atualizar pacote do SDK |
-| Chave no cabeçalho errado | `401` na chamada REST | Usando `api-key` em vez de `Ocp-Apim-Subscription-Key` | Azure AI services usam `Ocp-Apim-Subscription-Key`; Azure OpenAI usa `api-key` |
+| Incompatibilidade de versÃ£o do SDK | `ApiVersionNotSupported` | VersÃ£o do SDK espera versÃ£o de API mais recente | Fixar versÃ£o da API ou atualizar pacote do SDK |
+| Chave no cabeÃ§alho errado | `401` na chamada REST | Usando `api-key` em vez de `Ocp-Apim-Subscription-Key` | Azure AI services usam `Ocp-Apim-Subscription-Key`; Azure OpenAI usa `api-key` |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual role RBAC é o mínimo necessário para uma aplicação fazer chamadas de inferência aos Azure AI services usando autenticação Microsoft Entra?",
+    question: "Qual role RBAC Ã© o mÃ­nimo necessÃ¡rio para uma aplicaÃ§Ã£o fazer chamadas de inferÃªncia aos Azure AI services usando autenticaÃ§Ã£o Microsoft Entra?",
     options: [
       "Contributor",
       "Cognitive Services Contributor",
@@ -424,21 +424,21 @@ Auth successful! Detected: English
       "Reader"
     ],
     correctAnswer: 2,
-    explanation: "Cognitive Services User é a role RBAC mínima necessária para inferência (leitura/chamadas de APIs). Cognitive Services Contributor permite gerenciar o recurso em si. Contributor é muito ampla, e Reader não pode fazer chamadas de API."
+    explanation: "Cognitive Services User Ã© a role RBAC mÃ­nima necessÃ¡ria para inferÃªncia (leitura/chamadas de APIs). Cognitive Services Contributor permite gerenciar o recurso em si. Contributor Ã© muito ampla, e Reader nÃ£o pode fazer chamadas de API."
   },
   {
-    question: "Sua aplicação roda no Azure App Service e precisa autenticar no Azure AI Language sem armazenar credenciais. O que você deve usar?",
+    question: "Sua aplicaÃ§Ã£o roda no Azure App Service e precisa autenticar no Azure AI Language sem armazenar credenciais. O que vocÃª deve usar?",
     options: [
-      "Armazenar a chave de API nas configurações de aplicação do App Service",
-      "Usar uma managed identity atribuída pelo sistema com DefaultAzureCredential",
-      "Armazenar a chave de API no Azure Key Vault e recuperá-la na inicialização",
-      "Usar um certificado armazenado no repositório de certificados do App Service"
+      "Armazenar a chave de API nas configuraÃ§Ãµes de aplicaÃ§Ã£o do App Service",
+      "Usar uma managed identity atribuÃ­da pelo sistema com DefaultAzureCredential",
+      "Armazenar a chave de API no Azure Key Vault e recuperÃ¡-la na inicializaÃ§Ã£o",
+      "Usar um certificado armazenado no repositÃ³rio de certificados do App Service"
     ],
     correctAnswer: 1,
-    explanation: "Uma managed identity atribuída pelo sistema com DefaultAzureCredential elimina completamente o gerenciamento de credenciais. A identidade é provisionada, rotacionada e removida automaticamente pelo Azure. Nenhum segredo para armazenar ou gerenciar."
+    explanation: "Uma managed identity atribuÃ­da pelo sistema com DefaultAzureCredential elimina completamente o gerenciamento de credenciais. A identidade Ã© provisionada, rotacionada e removida automaticamente pelo Azure. Nenhum segredo para armazenar ou gerenciar."
   },
   {
-    question: "Qual é o nome correto do cabeçalho HTTP para autenticação por chave de API ao chamar Azure AI services (não-OpenAI) via REST?",
+    question: "Qual Ã© o nome correto do cabeÃ§alho HTTP para autenticaÃ§Ã£o por chave de API ao chamar Azure AI services (nÃ£o-OpenAI) via REST?",
     options: [
       "api-key",
       "Authorization: Bearer <key>",
@@ -446,29 +446,29 @@ Auth successful! Detected: English
       "x-api-key"
     ],
     correctAnswer: 2,
-    explanation: "Os Azure AI services (Language, Vision, Speech, etc.) usam o cabeçalho 'Ocp-Apim-Subscription-Key' para autenticação baseada em chave. Nota: Azure OpenAI usa 'api-key' em vez disso—eles têm convenções de cabeçalho diferentes."
+    explanation: "Os Azure AI services (Language, Vision, Speech, etc.) usam o cabeÃ§alho 'Ocp-Apim-Subscription-Key' para autenticaÃ§Ã£o baseada em chave. Nota: Azure OpenAI usa 'api-key' em vez dissoâ€”eles tÃªm convenÃ§Ãµes de cabeÃ§alho diferentes."
   },
   {
-    question: "DefaultAzureCredential falha localmente com 'No credential in this chain provided a token'. Qual é a correção mais provável?",
+    question: "DefaultAzureCredential falha localmente com 'No credential in this chain provided a token'. Qual Ã© a correÃ§Ã£o mais provÃ¡vel?",
     options: [
       "Instalar o pacote azure-identity novamente",
       "Executar 'az login' para autenticar o Azure CLI",
-      "Definir a variável de ambiente AZURE_AI_KEY",
-      "Reiniciar a aplicação com privilégios de administrador"
+      "Definir a variÃ¡vel de ambiente AZURE_AI_KEY",
+      "Reiniciar a aplicaÃ§Ã£o com privilÃ©gios de administrador"
     ],
     correctAnswer: 1,
-    explanation: "DefaultAzureCredential tenta múltiplas fontes de credencial em ordem. Localmente, ele geralmente depende do AzureCliCredential—se você não executou 'az login' ou sua sessão expirou, nenhuma credencial na cadeia pode fornecer um token."
+    explanation: "DefaultAzureCredential tenta mÃºltiplas fontes de credencial em ordem. Localmente, ele geralmente depende do AzureCliCredentialâ€”se vocÃª nÃ£o executou 'az login' ou sua sessÃ£o expirou, nenhuma credencial na cadeia pode fornecer um token."
   },
   {
-    question: "Você precisa chamar o Azure AI Language com a versão de API '2023-04-01', mas o SDK mais recente usa '2024-04-01' como padrão. Como você deve lidar com isso?",
+    question: "VocÃª precisa chamar o Azure AI Language com a versÃ£o de API '2023-04-01', mas o SDK mais recente usa '2024-04-01' como padrÃ£o. Como vocÃª deve lidar com isso?",
     options: [
-      "Fazer downgrade do pacote SDK para uma versão mais antiga",
+      "Fazer downgrade do pacote SDK para uma versÃ£o mais antiga",
       "Usar chamadas REST API em vez do SDK",
-      "Definir o parâmetro api_version ao construir o cliente, se suportado",
-      "Versões de API são sempre compatíveis com versões anteriores, então nenhuma ação é necessária"
+      "Definir o parÃ¢metro api_version ao construir o cliente, se suportado",
+      "VersÃµes de API sÃ£o sempre compatÃ­veis com versÃµes anteriores, entÃ£o nenhuma aÃ§Ã£o Ã© necessÃ¡ria"
     ],
     correctAnswer: 2,
-    explanation: "A maioria dos SDKs do Azure AI permite especificar a versão da API via parâmetro ou opções do cliente. Isso permite fixar uma versão específica sem fazer downgrade do pacote inteiro, que é a abordagem recomendada para controle de versão."
+    explanation: "A maioria dos SDKs do Azure AI permite especificar a versÃ£o da API via parÃ¢metro ou opÃ§Ãµes do cliente. Isso permite fixar uma versÃ£o especÃ­fica sem fazer downgrade do pacote inteiro, que Ã© a abordagem recomendada para controle de versÃ£o."
   }
 ]} />
 

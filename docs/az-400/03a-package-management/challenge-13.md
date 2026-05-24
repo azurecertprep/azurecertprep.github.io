@@ -64,7 +64,7 @@ Create a `.npmrc` file in the project root to point to GitHub Packages:
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-Retrieve your current GitHub authentication token (note: `gh auth token` prints the token already stored by the GitHub CLI — it does not generate a new one). For GitHub Packages access, you may need to create a PAT with the `packages:read` scope via **GitHub Settings > Developer settings > Personal access tokens**:
+Retrieve your current GitHub authentication token (note: `gh auth token` prints the token already stored by the GitHub CLI â€” it does not generate a new one). For GitHub Packages access, you may need to create a PAT with the `packages:read` scope via **GitHub Settings > Developer settings > Personal access tokens**:
 
 ```bash
 gh auth token
@@ -325,13 +325,13 @@ az rest --method get \
   --uri "https://feeds.dev.azure.com/contoso/ContosoServices/_apis/packaging/feeds/contoso-packages/npm/packages?api-version=7.1-preview.1"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario: Package publishing fails with 403
 
 A developer reports they cannot publish to the GitHub Package Registry. The error is:
 
-```
+```bash
 npm ERR! 403 Forbidden - PUT https://npm.pkg.github.com/@contoso/auth-sdk
 ```
 

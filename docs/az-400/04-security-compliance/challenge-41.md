@@ -353,7 +353,7 @@ steps:
         }
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Pipeline fails with resource authorization error
 

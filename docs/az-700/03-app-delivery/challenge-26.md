@@ -709,7 +709,7 @@ New-AzLoadBalancer `
 3. Add load-balancing rule: Protocol **All**, Frontend port **0**, Backend port **0** (this enables HA ports).
 4. HA ports is only available on internal Standard Load Balancers.
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: SNAT port exhaustion
 

@@ -462,7 +462,7 @@ echo 'AzureActivity
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Não é possível implantar atualizações em um recurso com lock ReadOnly
 

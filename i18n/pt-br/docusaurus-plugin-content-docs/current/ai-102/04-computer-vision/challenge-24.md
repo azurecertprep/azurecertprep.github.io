@@ -1,47 +1,47 @@
 ---
 sidebar_position: 2
-title: "Desafio 24: Azure AI Vision - Análise de Imagens"
+title: "Desafio 24: Azure AI Vision - AnÃ¡lise de Imagens"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 24: Azure AI Vision - Análise de Imagens
+# Desafio 24: Azure AI Vision - AnÃ¡lise de Imagens
 
 :::info Tempo Estimado
-**45 min** | **Custo**: $1-2 (estimado) | **Domínio**: Implementar Soluções de Visão Computacional (10-15%)
+**45 min** | **Custo**: $1-2 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de VisÃ£o Computacional (10-15%)
 :::
 
 ## Habilidades do exame abordadas
 - Selecionar recursos visuais para atender requisitos
 - Detectar objetos e gerar tags em imagens
-- Incluir ou excluir recursos visuais na requisição de análise
-- Interpretar respostas de análise de imagem incluindo scores de confiança
+- Incluir ou excluir recursos visuais na requisiÃ§Ã£o de anÃ¡lise
+- Interpretar respostas de anÃ¡lise de imagem incluindo scores de confianÃ§a
 
-## Visão Geral
+## VisÃ£o Geral
 
-O Azure AI Vision Image Analysis 4.0 fornece uma API unificada para extrair informações visuais. Recursos disponíveis:
+O Azure AI Vision Image Analysis 4.0 fornece uma API unificada para extrair informaÃ§Ãµes visuais. Recursos disponÃ­veis:
 
-| Recurso | Descrição |
+| Recurso | DescriÃ§Ã£o |
 |---------|-----------|
-| `caption` | Descrição em linguagem natural da imagem |
-| `denseCaptions` | Legendas para múltiplas regiões |
-| `tags` | Tags de conteúdo com scores de confiança |
-| `objects` | Detecção de objetos com bounding boxes |
-| `people` | Detecção de pessoas com bounding boxes |
-| `read` | Extração de texto via OCR |
-| `smartCrops` | Regiões de corte ideais para miniaturas |
+| `caption` | DescriÃ§Ã£o em linguagem natural da imagem |
+| `denseCaptions` | Legendas para mÃºltiplas regiÃµes |
+| `tags` | Tags de conteÃºdo com scores de confianÃ§a |
+| `objects` | DetecÃ§Ã£o de objetos com bounding boxes |
+| `people` | DetecÃ§Ã£o de pessoas com bounding boxes |
+| `read` | ExtraÃ§Ã£o de texto via OCR |
+| `smartCrops` | RegiÃµes de corte ideais para miniaturas |
 
-A API retorna JSON estruturado com scores de confiança (0.0–1.0) para cada elemento detectado.
+A API retorna JSON estruturado com scores de confianÃ§a (0.0â€“1.0) para cada elemento detectado.
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura Azure
-- Recurso multi-serviço Azure AI Services ou recurso Computer Vision
+- Recurso multi-serviÃ§o Azure AI Services ou recurso Computer Vision
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-ai-vision-imageanalysis` (v1.0+)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Criar Recurso Azure AI Vision
 
@@ -51,7 +51,7 @@ az group create --name rg-ai102-vision --location eastus2
 az cognitiveservices account create \
   --name ai-vision-ai102 \
   --resource-group rg-ai102-vision \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location eastus2
 
@@ -63,7 +63,7 @@ echo "AZURE_AI_ENDPOINT=$ENDPOINT"
 echo "AZURE_AI_KEY=$KEY"
 ```
 
-### Tarefa 2: Analisar Imagem com Múltiplos Recursos
+### Tarefa 2: Analisar Imagem com MÃºltiplos Recursos
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -242,9 +242,9 @@ curl -s "${ENDPOINT}/computervision/imageanalysis:analyze?features=smartCrops,de
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Caption: 'a person standing in front of a whiteboard giving a presentation' (confidence: 0.8523)
 
 Tags (8 found):
@@ -273,21 +273,21 @@ Text (OCR):
   'Image Analysis'
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| 415 Unsupported Media Type | Erro em arquivo local | Header Content-Type incorreto | Use `application/octet-stream` para binário, `application/json` para URL |
-| Tags/objetos vazios | Nenhum resultado retornado | Imagem muito pequena ou desfocada | Mínimo 50x50 pixels; máximo 20MB |
-| Erro `InvalidImageUrl` | 400 Bad Request | URL não acessível publicamente | Certifique-se de que a URL da imagem é acessível publicamente; use upload de arquivo local |
-| Scores de confiança baixos | Resultados não confiáveis | Qualidade ou ambiguidade da imagem | Filtre resultados por limiar de confiança (ex: > 0.7) |
-| Recurso não disponível | `FeatureNotSupported` | Região não suporta o recurso | Use regiões suportadas (East US, West Europe, etc.) |
+| 415 Unsupported Media Type | Erro em arquivo local | Header Content-Type incorreto | Use `application/octet-stream` para binÃ¡rio, `application/json` para URL |
+| Tags/objetos vazios | Nenhum resultado retornado | Imagem muito pequena ou desfocada | MÃ­nimo 50x50 pixels; mÃ¡ximo 20MB |
+| Erro `InvalidImageUrl` | 400 Bad Request | URL nÃ£o acessÃ­vel publicamente | Certifique-se de que a URL da imagem Ã© acessÃ­vel publicamente; use upload de arquivo local |
+| Scores de confianÃ§a baixos | Resultados nÃ£o confiÃ¡veis | Qualidade ou ambiguidade da imagem | Filtre resultados por limiar de confianÃ§a (ex: > 0.7) |
+| Recurso nÃ£o disponÃ­vel | `FeatureNotSupported` | RegiÃ£o nÃ£o suporta o recurso | Use regiÃµes suportadas (East US, West Europe, etc.) |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual recurso visual fornece descrições em linguagem natural para múltiplas regiões dentro de uma imagem?",
+    question: "Qual recurso visual fornece descriÃ§Ãµes em linguagem natural para mÃºltiplas regiÃµes dentro de uma imagem?",
     options: [
       "caption",
       "tags",
@@ -295,32 +295,32 @@ Text (OCR):
       "objects"
     ],
     correctAnswer: 2,
-    explanation: "denseCaptions gera legendas para múltiplas regiões dentro de uma imagem, enquanto caption fornece uma única descrição para a imagem inteira."
+    explanation: "denseCaptions gera legendas para mÃºltiplas regiÃµes dentro de uma imagem, enquanto caption fornece uma Ãºnica descriÃ§Ã£o para a imagem inteira."
   },
   {
     question: "O que o recurso smartCrops retorna?",
     options: [
-      "Coordenadas de bounding box para regiões de corte ideais nas proporções especificadas",
-      "Arquivos de imagem cortados nas resoluções especificadas",
-      "Uma lista de objetos que devem ser excluídos do corte",
-      "Versões redimensionadas automaticamente da imagem"
+      "Coordenadas de bounding box para regiÃµes de corte ideais nas proporÃ§Ãµes especificadas",
+      "Arquivos de imagem cortados nas resoluÃ§Ãµes especificadas",
+      "Uma lista de objetos que devem ser excluÃ­dos do corte",
+      "VersÃµes redimensionadas automaticamente da imagem"
     ],
     correctAnswer: 0,
-    explanation: "smartCrops retorna coordenadas de bounding box para as regiões de corte ideais nas proporções especificadas, garantindo que conteúdo importante seja preservado nas miniaturas."
+    explanation: "smartCrops retorna coordenadas de bounding box para as regiÃµes de corte ideais nas proporÃ§Ãµes especificadas, garantindo que conteÃºdo importante seja preservado nas miniaturas."
   },
   {
-    question: "Como os scores de confiança são expressos nas respostas do Image Analysis 4.0?",
+    question: "Como os scores de confianÃ§a sÃ£o expressos nas respostas do Image Analysis 4.0?",
     options: [
       "Como porcentagens de 0% a 100%",
       "Como valores inteiros de 1 a 10",
-      "Como rótulos categóricos (baixo, médio, alto)",
+      "Como rÃ³tulos categÃ³ricos (baixo, mÃ©dio, alto)",
       "Como valores de ponto flutuante de 0.0 a 1.0"
     ],
     correctAnswer: 3,
-    explanation: "Os scores de confiança são valores de ponto flutuante entre 0.0 e 1.0, onde valores mais altos indicam maior confiança na detecção ou classificação."
+    explanation: "Os scores de confianÃ§a sÃ£o valores de ponto flutuante entre 0.0 e 1.0, onde valores mais altos indicam maior confianÃ§a na detecÃ§Ã£o ou classificaÃ§Ã£o."
   },
   {
-    question: "Qual é o formato correto do endpoint da API para o Image Analysis 4.0?",
+    question: "Qual Ã© o formato correto do endpoint da API para o Image Analysis 4.0?",
     options: [
       "POST /vision/v3.2/analyze",
       "POST /computervision/imageanalysis:analyze?api-version=2024-02-01",
@@ -328,18 +328,18 @@ Text (OCR):
       "GET /computervision/analyze?features=caption"
     ],
     correctAnswer: 1,
-    explanation: "O Image Analysis 4.0 usa o formato de endpoint: POST /computervision/imageanalysis:analyze com features e api-version como parâmetros de query."
+    explanation: "O Image Analysis 4.0 usa o formato de endpoint: POST /computervision/imageanalysis:analyze com features e api-version como parÃ¢metros de query."
   },
   {
-    question: "Qual parâmetro especifica quais informações extrair da imagem?",
+    question: "Qual parÃ¢metro especifica quais informaÃ§Ãµes extrair da imagem?",
     options: [
       "capabilities",
       "analysis_type",
       "extract_mode",
-      "visual_features (SDK) / features (parâmetro de query REST)"
+      "visual_features (SDK) / features (parÃ¢metro de query REST)"
     ],
     correctAnswer: 3,
-    explanation: "No SDK Python/C# você passa visual_features (uma lista de valores enum VisualFeatures); no REST você passa o parâmetro de query 'features' com nomes de recursos separados por vírgula."
+    explanation: "No SDK Python/C# vocÃª passa visual_features (uma lista de valores enum VisualFeatures); no REST vocÃª passa o parÃ¢metro de query 'features' com nomes de recursos separados por vÃ­rgula."
   }
 ]} />
 
@@ -351,6 +351,6 @@ az group delete --name rg-ai102-vision --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral do Image Analysis](https://learn.microsoft.com/azure/ai-services/computer-vision/overview-image-analysis)
-- [Início rápido do SDK Image Analysis](https://learn.microsoft.com/azure/ai-services/computer-vision/quickstarts-sdk/image-analysis-client-library-40)
-- [Referência de recursos visuais](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40)
+- [VisÃ£o geral do Image Analysis](https://learn.microsoft.com/azure/ai-services/computer-vision/overview-image-analysis)
+- [InÃ­cio rÃ¡pido do SDK Image Analysis](https://learn.microsoft.com/azure/ai-services/computer-vision/quickstarts-sdk/image-analysis-client-library-40)
+- [ReferÃªncia de recursos visuais](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40)

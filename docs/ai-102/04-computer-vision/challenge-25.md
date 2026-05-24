@@ -30,7 +30,7 @@ Custom Vision enables training domain-specific image classification models witho
 | **Classification - Multilabel** | Image can have MULTIPLE categories | Multiple tags per image |
 | **Object Detection** | Locate objects with bounding boxes | Tags + coordinates |
 
-Training produces iterations with metrics: **Precision** (of predicted positives, how many are correct), **Recall** (of actual positives, how many were found), and **AP** (Average Precision — area under precision-recall curve).
+Training produces iterations with metrics: **Precision** (of predicted positives, how many are correct), **Recall** (of actual positives, how many were found), and **AP** (Average Precision â€” area under precision-recall curve).
 
 ## Prerequisites
 - Azure subscription
@@ -215,7 +215,7 @@ curl -s "${PREDICTION_ENDPOINT}/customvision/v3.0/prediction/${PROJECT_ID}/class
 
 ## Expected Output
 
-```
+```text
 Created project: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 Tags created: apple=..., banana=..., orange=...
 Apple images uploaded: True
@@ -242,7 +242,7 @@ Prediction results:
   orange: 0.0079 (0.8%)
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

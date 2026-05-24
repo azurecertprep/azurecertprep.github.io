@@ -241,7 +241,7 @@ az containerapp show -g rg-az104-challenge09 -n ca-dashboard \
     "Can articulate when to use ACI vs Container Apps vs AKS"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: wrong image name
 ```bash

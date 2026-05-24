@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 01: Identificar Cargas de Trabalho de IA"
+title: "Desafio 01: Identificar Cargas de Trabalho de IA"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

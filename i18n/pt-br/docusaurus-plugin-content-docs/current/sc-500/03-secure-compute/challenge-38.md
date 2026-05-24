@@ -480,7 +480,7 @@ az monitor diagnostic-settings create \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: WAF bloqueando requisições legítimas de API com falsos positivos de SQL injection
 

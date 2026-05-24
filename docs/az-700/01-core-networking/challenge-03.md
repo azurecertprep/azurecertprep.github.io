@@ -437,7 +437,7 @@ After changing VNet DNS settings, VMs must be restarted (or their DHCP lease ren
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Conflicting record types
 

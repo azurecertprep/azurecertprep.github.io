@@ -619,7 +619,7 @@ Test-AzNetworkWatcherIPFlow `
 3. Review the combined list of rules from subnet NSG and any NIC-level NSG
 4. Use the **Connection troubleshoot** tab to test connectivity between VMs
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Rule priority conflict (deny evaluated before allow)
 

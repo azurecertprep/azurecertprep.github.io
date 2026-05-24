@@ -659,13 +659,13 @@ stages:
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### The problem
 
 After implementing coverage reporting, the team observes that coverage reports show 0% across all metrics in the pipeline, even though tests clearly execute and pass. The test output shows "42 tests passed" but coverage shows:
 
-```
+```text
 Lines:       0%
 Branches:    0%
 Functions:   0%

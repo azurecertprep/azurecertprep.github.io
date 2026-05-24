@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 16: Capstone | Day in the Life of an Azure Admin"
+title: "Desafio 16: Capstone | Um Dia na Vida de um Administrador Azure"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

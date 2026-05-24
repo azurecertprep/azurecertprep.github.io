@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-title: "Challenge 35: Private Endpoints for Multiple Services"
+title: "Desafio 35: Private Endpoints para Múltiplos Serviços"
 sidebar_label: "Challenge 35"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 35: Pontos de extremidade privados para múltiplos serviços
+# Desafio 35: Pontos de extremidade privados para mÃºltiplos serviÃ§os
 
 :::info Tempo e custo estimados
 
@@ -13,63 +13,63 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Enterprise está padronizando o acesso privado para todos os serviços PaaS consumidos por suas aplicações de linha de negócios. A equipe de segurança exige que todos os serviços Azure utilizados por cargas de trabalho de produção sejam acessíveis exclusivamente por pontos de extremidade privados, com o acesso público desabilitado. Você deve configurar pontos de extremidade privados para seis serviços diferentes, cada um com seu sub-recurso (group-id) e nome de zona DNS privatelink corretos.
+A Contoso Enterprise estÃ¡ padronizando o acesso privado para todos os serviÃ§os PaaS consumidos por suas aplicaÃ§Ãµes de linha de negÃ³cios. A equipe de seguranÃ§a exige que todos os serviÃ§os Azure utilizados por cargas de trabalho de produÃ§Ã£o sejam acessÃ­veis exclusivamente por pontos de extremidade privados, com o acesso pÃºblico desabilitado. VocÃª deve configurar pontos de extremidade privados para seis serviÃ§os diferentes, cada um com seu sub-recurso (group-id) e nome de zona DNS privatelink corretos.
 
 **Arquitetura:**
 
-```
+```text
                          Azure VNet: vnet-enterprise (10.0.0.0/16)
-                         ┌─────────────────────────────────────────────┐
-                         │  snet-app (10.0.1.0/24)                     │
-                         │  ┌────────────────┐                         │
-                         │  │  App VMs/AKS   │                         │
-                         │  └────────────────┘                         │
-                         │                                             │
-                         │  snet-pe (10.0.2.0/24)                      │
-                         │  ┌──────────┬──────────┬──────────┐         │
-                         │  │ PE-Blob  │ PE-File  │ PE-SQL   │         │
-                         │  │ .2.4     │ .2.5     │ .2.6     │         │
-                         │  ├──────────┼──────────┼──────────┤         │
-                         │  │ PE-KV    │ PE-Web   │ PE-Cosmos│         │
-                         │  │ .2.7     │ .2.8     │ .2.9     │         │
-                         │  └──────────┴──────────┴──────────┘         │
-                         └─────────────────────────────────────────────┘
+                         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                         â”‚  snet-app (10.0.1.0/24)                     â”‚
+                         â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                         â”‚
+                         â”‚  â”‚  App VMs/AKS   â”‚                         â”‚
+                         â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                         â”‚
+                         â”‚                                             â”‚
+                         â”‚  snet-pe (10.0.2.0/24)                      â”‚
+                         â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”‚
+                         â”‚  â”‚ PE-Blob  â”‚ PE-File  â”‚ PE-SQL   â”‚         â”‚
+                         â”‚  â”‚ .2.4     â”‚ .2.5     â”‚ .2.6     â”‚         â”‚
+                         â”‚  â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤         â”‚
+                         â”‚  â”‚ PE-KV    â”‚ PE-Web   â”‚ PE-Cosmosâ”‚         â”‚
+                         â”‚  â”‚ .2.7     â”‚ .2.8     â”‚ .2.9     â”‚         â”‚
+                         â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜         â”‚
+                         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
     Private DNS Zones:
-    ├── privatelink.blob.core.windows.net
-    ├── privatelink.file.core.windows.net
-    ├── privatelink.database.windows.net
-    ├── privatelink.vaultcore.azure.net
-    ├── privatelink.azurewebsites.net
-    └── privatelink.documents.azure.com
+    â”œâ”€â”€ privatelink.blob.core.windows.net
+    â”œâ”€â”€ privatelink.file.core.windows.net
+    â”œâ”€â”€ privatelink.database.windows.net
+    â”œâ”€â”€ privatelink.vaultcore.azure.net
+    â”œâ”€â”€ privatelink.azurewebsites.net
+    â””â”€â”€ privatelink.documents.azure.com
 ```
 
 ## Objetivos de aprendizagem
 
-Após concluir este desafio, você será capaz de:
+ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
 
-- Mapear serviços Azure para seus group-ids de sub-recurso corretos
-- Identificar o nome correto da zona DNS privatelink para cada tipo de serviço
+- Mapear serviÃ§os Azure para seus group-ids de sub-recurso corretos
+- Identificar o nome correto da zona DNS privatelink para cada tipo de serviÃ§o
 - Criar pontos de extremidade privados para Storage (blob/file), SQL Database, Key Vault, Web App e Cosmos DB
-- Verificar a resolução DNS para cada ponto de extremidade privado
-- Desabilitar o acesso público nos serviços após confirmar que os pontos de extremidade privados estão funcionando
+- Verificar a resoluÃ§Ã£o DNS para cada ponto de extremidade privado
+- Desabilitar o acesso pÃºblico nos serviÃ§os apÃ³s confirmar que os pontos de extremidade privados estÃ£o funcionando
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
 - Uma assinatura Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com módulo Az instalado (`Install-Module Az -Force`)
-- Conclusão do Challenge 34 (familiaridade com conceitos de PE e DNS)
+- PowerShell com mÃ³dulo Az instalado (`Install-Module Az -Force`)
+- ConclusÃ£o do Challenge 34 (familiaridade com conceitos de PE e DNS)
 
 ## Conceitos-chave para o AZ-700
 
-### Mapeamento de serviço para group-id e zona DNS
+### Mapeamento de serviÃ§o para group-id e zona DNS
 
-Esta é a tabela de referência crítica para o exame. Cada serviço possui um group-id específico e requer uma zona DNS privatelink específica:
+Esta Ã© a tabela de referÃªncia crÃ­tica para o exame. Cada serviÃ§o possui um group-id especÃ­fico e requer uma zona DNS privatelink especÃ­fica:
 
-| Serviço | Tipo de recurso | group-id | Nome da zona DNS privada |
+| ServiÃ§o | Tipo de recurso | group-id | Nome da zona DNS privada |
 |---------|----------------|----------|--------------------------|
 | Storage (Blob) | Microsoft.Storage/storageAccounts | `blob` | `privatelink.blob.core.windows.net` |
 | Storage (File) | Microsoft.Storage/storageAccounts | `file` | `privatelink.file.core.windows.net` |
@@ -82,11 +82,11 @@ Esta é a tabela de referência crítica para o exame. Cada serviço possui um g
 
 :::warning Armadilhas comuns no exame
 
-- SQL Database usa o group-id `sqlServer` (não `sql` ou `database`)
-- A zona DNS do SQL Database é `privatelink.database.windows.net` (não `privatelink.sql.database.windows.net`)
-- A zona DNS do Key Vault é `privatelink.vaultcore.azure.net` (não `privatelink.keyvault.azure.net`)
-- O group-id da SQL API do Cosmos DB é `Sql` (S maiúsculo) (não `sql` ou `cosmosdb`)
-- O group-id do Web App é `sites` (não `webapp` ou `app`)
+- SQL Database usa o group-id `sqlServer` (nÃ£o `sql` ou `database`)
+- A zona DNS do SQL Database Ã© `privatelink.database.windows.net` (nÃ£o `privatelink.sql.database.windows.net`)
+- A zona DNS do Key Vault Ã© `privatelink.vaultcore.azure.net` (nÃ£o `privatelink.keyvault.azure.net`)
+- O group-id da SQL API do Cosmos DB Ã© `Sql` (S maiÃºsculo) (nÃ£o `sql` ou `cosmosdb`)
+- O group-id do Web App Ã© `sites` (nÃ£o `webapp` ou `app`)
 - Storage requer PEs separados para cada sub-recurso (blob, file, table, queue)
 
 :::
@@ -140,7 +140,7 @@ New-AzVirtualNetwork `
 
 ---
 
-## Tarefa 2: Criar os serviços de destino
+## Tarefa 2: Criar os serviÃ§os de destino
 
 ### Azure CLI
 
@@ -238,7 +238,7 @@ New-AzCosmosDBAccount `
 
 ---
 
-## Tarefa 3: Criar pontos de extremidade privados para cada serviço
+## Tarefa 3: Criar pontos de extremidade privados para cada serviÃ§o
 
 ### Azure CLI
 
@@ -361,7 +361,7 @@ New-AzPrivateEndpoint `
 
 ---
 
-## Tarefa 4: Criar todas as zonas DNS privadas necessárias e vinculá-las
+## Tarefa 4: Criar todas as zonas DNS privadas necessÃ¡rias e vinculÃ¡-las
 
 ### Azure CLI
 
@@ -435,41 +435,41 @@ az network private-endpoint dns-zone-group create \
 
 ---
 
-## Tarefa 5: Verificar a resolução DNS para cada serviço
+## Tarefa 5: Verificar a resoluÃ§Ã£o DNS para cada serviÃ§o
 
 ```bash
 # From a VM inside vnet-enterprise, verify each service resolves to a private IP
 
 # Storage Blob
 nslookup stcontosope01.blob.core.windows.net
-# Expected: stcontosope01.privatelink.blob.core.windows.net → 10.0.2.x
+# Expected: stcontosope01.privatelink.blob.core.windows.net â†’ 10.0.2.x
 
 # Storage File
 nslookup stcontosope01.file.core.windows.net
-# Expected: stcontosope01.privatelink.file.core.windows.net → 10.0.2.x
+# Expected: stcontosope01.privatelink.file.core.windows.net â†’ 10.0.2.x
 
 # SQL Database
 nslookup sql-contoso-pe01.database.windows.net
-# Expected: sql-contoso-pe01.privatelink.database.windows.net → 10.0.2.x
+# Expected: sql-contoso-pe01.privatelink.database.windows.net â†’ 10.0.2.x
 
 # Key Vault
 nslookup kv-contoso-pe01.vault.azure.net
-# Expected: kv-contoso-pe01.privatelink.vaultcore.azure.net → 10.0.2.x
+# Expected: kv-contoso-pe01.privatelink.vaultcore.azure.net â†’ 10.0.2.x
 
 # Web App
 nslookup webapp-contoso-pe01.azurewebsites.net
-# Expected: webapp-contoso-pe01.privatelink.azurewebsites.net → 10.0.2.x
+# Expected: webapp-contoso-pe01.privatelink.azurewebsites.net â†’ 10.0.2.x
 
 # Cosmos DB
 nslookup cosmos-contoso-pe01.documents.azure.com
-# Expected: cosmos-contoso-pe01.privatelink.documents.azure.com → 10.0.2.x
+# Expected: cosmos-contoso-pe01.privatelink.documents.azure.com â†’ 10.0.2.x
 ```
 
 ---
 
-## Tarefa 6: Desabilitar o acesso público após verificação do PE
+## Tarefa 6: Desabilitar o acesso pÃºblico apÃ³s verificaÃ§Ã£o do PE
 
-Somente desabilite o acesso público após confirmar que os pontos de extremidade privados estão funcionando corretamente.
+Somente desabilite o acesso pÃºblico apÃ³s confirmar que os pontos de extremidade privados estÃ£o funcionando corretamente.
 
 ### Azure CLI
 
@@ -505,21 +505,21 @@ az webapp update \
     --set publicNetworkAccess=Disabled
 ```
 
-:::warning Ordem das operações
+:::warning Ordem das operaÃ§Ãµes
 
-Sempre verifique se a resolução DNS do ponto de extremidade privado está funcionando antes de desabilitar o acesso público. Se você desabilitar o acesso público primeiro e o PE/DNS estiver mal configurado, você perderá toda a conectividade com o serviço (incluindo o plano de gerenciamento em alguns casos). Este é um dos incidentes de produção mais comuns com pontos de extremidade privados.
+Sempre verifique se a resoluÃ§Ã£o DNS do ponto de extremidade privado estÃ¡ funcionando antes de desabilitar o acesso pÃºblico. Se vocÃª desabilitar o acesso pÃºblico primeiro e o PE/DNS estiver mal configurado, vocÃª perderÃ¡ toda a conectividade com o serviÃ§o (incluindo o plano de gerenciamento em alguns casos). Este Ã© um dos incidentes de produÃ§Ã£o mais comuns com pontos de extremidade privados.
 
 :::
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: group-id incorreto utilizado
+### CenÃ¡rio 1: group-id incorreto utilizado
 
-**Sintoma:** O ponto de extremidade privado do Cosmos DB aparece como conectado, mas a aplicação não consegue alcançar o endpoint da SQL API.
+**Sintoma:** O ponto de extremidade privado do Cosmos DB aparece como conectado, mas a aplicaÃ§Ã£o nÃ£o consegue alcanÃ§ar o endpoint da SQL API.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 az network private-endpoint show \
@@ -529,9 +529,9 @@ az network private-endpoint show \
     --output tsv
 ```
 
-**Causa raiz:** O group-id foi definido como `sql` (minúsculo) em vez de `Sql` (S maiúsculo), ou um group-id diferente como `MongoDB` foi usado para uma conta com SQL API.
+**Causa raiz:** O group-id foi definido como `sql` (minÃºsculo) em vez de `Sql` (S maiÃºsculo), ou um group-id diferente como `MongoDB` foi usado para uma conta com SQL API.
 
-**Correção:** Exclua e recrie o PE com o group-id correto:
+**CorreÃ§Ã£o:** Exclua e recrie o PE com o group-id correto:
 
 ```bash
 az network private-endpoint delete \
@@ -550,11 +550,11 @@ az network private-endpoint create \
 
 ---
 
-### Cenário 2: Nome de zona DNS incorreto para SQL
+### CenÃ¡rio 2: Nome de zona DNS incorreto para SQL
 
-**Sintoma:** `nslookup sql-contoso-pe01.database.windows.net` retorna o IP público mesmo com o PE existente e a zona DNS criada.
+**Sintoma:** `nslookup sql-contoso-pe01.database.windows.net` retorna o IP pÃºblico mesmo com o PE existente e a zona DNS criada.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 # List DNS zones and check for typo
@@ -566,7 +566,7 @@ az network private-dns zone list \
 
 **Causa raiz:** A zona DNS foi criada como `privatelink.sql.database.windows.net` (incorreto) em vez de `privatelink.database.windows.net` (correto).
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
 ```bash
 # Delete the incorrect zone
@@ -598,11 +598,11 @@ az network private-endpoint dns-zone-group create \
 
 ---
 
-### Cenário 3: Desabilitar acesso público antes do PE estar pronto
+### CenÃ¡rio 3: Desabilitar acesso pÃºblico antes do PE estar pronto
 
-**Sintoma:** Após desabilitar o acesso público na conta de armazenamento, todas as aplicações (incluindo as na VNet) perdem a conectividade.
+**Sintoma:** ApÃ³s desabilitar o acesso pÃºblico na conta de armazenamento, todas as aplicaÃ§Ãµes (incluindo as na VNet) perdem a conectividade.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 # Verify PE connection status
@@ -619,9 +619,9 @@ az network private-endpoint dns-zone-group list \
     --output table
 ```
 
-**Causa raiz:** O acesso público foi desabilitado antes que o grupo de zona DNS fosse configurado, então o DNS ainda resolve para um IP público (que agora está bloqueado).
+**Causa raiz:** O acesso pÃºblico foi desabilitado antes que o grupo de zona DNS fosse configurado, entÃ£o o DNS ainda resolve para um IP pÃºblico (que agora estÃ¡ bloqueado).
 
-**Correção:** Reabilite o acesso público temporariamente, corrija o DNS e depois desabilite novamente:
+**CorreÃ§Ã£o:** Reabilite o acesso pÃºblico temporariamente, corrija o DNS e depois desabilite novamente:
 
 ```bash
 # Re-enable public access
@@ -647,12 +647,12 @@ az storage account update \
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-35-q1",
-    question: "What is the correct group-id value when creating a private endpoint for Azure SQL Database?",
+    question: "Qual é o valor correto de group-id ao criar um private endpoint para o Azure SQL Database?",
     options: [
       "sql",
       "database",
@@ -660,11 +660,11 @@ az storage account update \
       "Microsoft.Sql"
     ],
     correctIndex: 2,
-    explanation: "Azure SQL Database uses the group-id 'sqlServer'. This is the sub-resource identifier for the SQL logical server. Common mistakes include using 'sql', 'database', or 'SqlServer' (case matters in some contexts)."
+    explanation: "O Azure SQL Database usa o group-id 'sqlServer'. Este é o identificador de sub-recurso para o servidor lógico SQL. Erros comuns incluem usar 'sql', 'database' ou 'SqlServer' (maiúsculas/minúsculas importam em alguns contextos)."
   },
   {
     id: "az700-35-q2",
-    question: "Which private DNS zone name is correct for Azure Key Vault private endpoints?",
+    question: "Qual nome de zona de Private DNS está correto para private endpoints do Azure Key Vault?",
     options: [
       "privatelink.keyvault.azure.net",
       "privatelink.vault.azure.net",
@@ -672,23 +672,23 @@ az storage account update \
       "privatelink.keyvault.core.windows.net"
     ],
     correctIndex: 2,
-    explanation: "The correct DNS zone for Key Vault is privatelink.vaultcore.azure.net. This is a common exam trap because the public FQDN uses vault.azure.net, but the privatelink zone uses vaultcore.azure.net."
+    explanation: "A zona DNS correta para o Key Vault é privatelink.vaultcore.azure.net. Esta é uma pegadinha comum no exame porque o FQDN público usa vault.azure.net, mas a zona privatelink usa vaultcore.azure.net."
   },
   {
     id: "az700-35-q3",
-    question: "A storage account needs private access for both blob and file shares. How many private endpoints are required?",
+    question: "Uma conta de armazenamento precisa de acesso privado tanto para blob quanto para file shares. Quantos private endpoints são necessários?",
     options: [
-      "One PE with both group-ids specified",
-      "Two separate PEs, one with group-id 'blob' and one with group-id 'file' ✅",
-      "One PE with group-id 'storage' covers all sub-resources",
-      "Two PEs are optional; one PE with group-id 'blob' automatically includes file"
+      "Um PE com ambos os group-ids especificados",
+      "Dois PEs separados, um com group-id 'blob' e outro com group-id 'file' ✅",
+      "Um PE com group-id 'storage' cobre todos os sub-recursos",
+      "Dois PEs são opcionais; um PE com group-id 'blob' inclui automaticamente file"
     ],
     correctIndex: 1,
-    explanation: "Each storage sub-resource (blob, file, table, queue, web, dfs) requires its own private endpoint. A single PE can only connect to one sub-resource. You cannot combine multiple group-ids in a single private endpoint."
+    explanation: "Cada sub-recurso de armazenamento (blob, file, table, queue, web, dfs) requer seu próprio private endpoint. Um único PE só pode se conectar a um sub-recurso. Você não pode combinar múltiplos group-ids em um único private endpoint."
   },
   {
     id: "az700-35-q4",
-    question: "What is the correct private DNS zone for Azure Cosmos DB with SQL API?",
+    question: "Qual é a zona de Private DNS correta para o Azure Cosmos DB com API SQL?",
     options: [
       "privatelink.cosmosdb.azure.com",
       "privatelink.documents.azure.com ✅",
@@ -696,23 +696,23 @@ az storage account update \
       "privatelink.sql.cosmos.azure.com"
     ],
     correctIndex: 1,
-    explanation: "Cosmos DB SQL API uses the DNS zone privatelink.documents.azure.com. Different Cosmos DB APIs use different zones: MongoDB uses privatelink.mongo.cosmos.azure.com, Cassandra uses privatelink.cassandra.cosmos.azure.com, etc."
+    explanation: "O Cosmos DB com API SQL usa a zona DNS privatelink.documents.azure.com. Diferentes APIs do Cosmos DB usam zonas diferentes: MongoDB usa privatelink.mongo.cosmos.azure.com, Cassandra usa privatelink.cassandra.cosmos.azure.com, etc."
   },
   {
     id: "az700-35-q5",
-    question: "You disabled public network access on a SQL server but applications in the VNet cannot connect. DNS resolution shows the public IP. What should you check first?",
+    question: "Você desabilitou o acesso à rede pública em um servidor SQL, mas as aplicações na VNet não conseguem se conectar. A resolução DNS mostra o IP público. O que você deve verificar primeiro?",
     options: [
-      "Whether the SQL firewall allows the VNet subnet",
-      "Whether the private DNS zone is linked to the VNet ✅",
-      "Whether the SQL server supports private endpoints",
-      "Whether the VNet has a service endpoint for SQL"
+      "Se o firewall do SQL permite a sub-rede da VNet",
+      "Se a zona de Private DNS está vinculada à VNet ✅",
+      "Se o servidor SQL suporta private endpoints",
+      "Se a VNet possui um service endpoint para SQL"
     ],
     correctIndex: 1,
-    explanation: "If DNS still resolves to the public IP after creating a PE, the most likely cause is that the privatelink DNS zone is not linked to the client's VNet. Without the link, the CNAME chain resolves through public DNS to the (now blocked) public IP."
+    explanation: "Se o DNS ainda resolve para o IP público após criar um PE, a causa mais provável é que a zona de DNS privatelink não está vinculada à VNet do cliente. Sem o vínculo, a cadeia CNAME resolve através do DNS público para o IP público (agora bloqueado)."
   },
   {
     id: "az700-35-q6",
-    question: "What is the group-id for creating a private endpoint to an Azure Web App?",
+    question: "Qual é o group-id para criar um private endpoint para um Azure Web App?",
     options: [
       "webapp",
       "app",
@@ -720,7 +720,7 @@ az storage account update \
       "Microsoft.Web"
     ],
     correctIndex: 2,
-    explanation: "Azure Web Apps (App Service) uses the group-id 'sites'. This corresponds to the Microsoft.Web/sites resource type. The Web App must be on a PremiumV2 or higher App Service plan to support private endpoints."
+    explanation: "O Azure Web Apps (App Service) usa o group-id 'sites'. Isso corresponde ao tipo de recurso Microsoft.Web/sites. O Web App deve estar em um plano App Service PremiumV2 ou superior para suportar private endpoints."
   }
 ]} />
 
@@ -728,7 +728,7 @@ az storage account update \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para interromper a cobrança:
+Remova todos os recursos criados neste desafio para interromper a cobranÃ§a:
 
 ```bash
 az group delete --name rg-multiservice-pe --yes --no-wait
@@ -740,16 +740,16 @@ Remove-AzResourceGroup -Name "rg-multiservice-pe" -Force -AsJob
 
 :::danger Aviso de custo
 
-Este desafio cria múltiplos recursos cobráveis: pontos de extremidade privados (~$0.01/h cada), um App Service Plan (P1V2 ~$0.035/h), um SQL Database (S0 ~$0.02/h), uma conta Cosmos DB (~$0.008/h mínimo) e um Key Vault. O custo total estimado é de aproximadamente $0.05/h. Exclua o grupo de recursos imediatamente após concluir o laboratório.
+Este desafio cria mÃºltiplos recursos cobrÃ¡veis: pontos de extremidade privados (~$0.01/h cada), um App Service Plan (P1V2 ~$0.035/h), um SQL Database (S0 ~$0.02/h), uma conta Cosmos DB (~$0.008/h mÃ­nimo) e um Key Vault. O custo total estimado Ã© de aproximadamente $0.05/h. Exclua o grupo de recursos imediatamente apÃ³s concluir o laboratÃ³rio.
 
 :::
 
 ---
 
-## Referências adicionais
+## ReferÃªncias adicionais
 
 - [Valores de zona DNS do Azure Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns)
-- [Referência de sub-recurso (group-id) do Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview#private-link-resource)
+- [ReferÃªncia de sub-recurso (group-id) do Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview#private-link-resource)
 - [Usar pontos de extremidade privados para Azure Storage](https://learn.microsoft.com/en-us/azure/storage/common/storage-private-endpoints)
 - [Private endpoint do Azure SQL](https://learn.microsoft.com/en-us/azure/azure-sql/database/private-endpoint-overview)
 - [Private link do Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/private-link-service)

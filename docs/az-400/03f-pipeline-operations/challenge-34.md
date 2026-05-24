@@ -634,7 +634,7 @@ jobs:
           git push
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the misleading test results
 

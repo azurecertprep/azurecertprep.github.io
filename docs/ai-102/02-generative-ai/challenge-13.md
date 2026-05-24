@@ -761,7 +761,7 @@ After completing all tasks, you should have:
 3. **Variant flow** demonstrating A/B testing of prompt styles
 4. **Deployed endpoint** serving the standard flow with key-based auth
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

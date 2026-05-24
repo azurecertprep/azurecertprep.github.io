@@ -470,7 +470,7 @@ union
 | project window, errorRate = round(errorRate, 3), burnRate = round(burnRate, 2), threshold, alert
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Distributed tracing shows missing spans
 

@@ -395,7 +395,7 @@ echo "
     "Differences between service endpoints and private endpoints understood"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: DNS not resolving to private IP
 

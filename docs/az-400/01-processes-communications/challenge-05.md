@@ -794,7 +794,7 @@ git push origin main
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Mermaid diagrams do not render in Azure DevOps Wiki
 

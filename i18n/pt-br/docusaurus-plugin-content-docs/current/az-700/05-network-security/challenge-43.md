@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Challenge 43: Azure Firewall Manager and policy hierarchy"
+title: "Desafio 43: Azure Firewall Manager e Hierarquia de Políticas"
 sidebar_label: "Challenge 43"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -622,7 +622,7 @@ New-AzFirewallPolicyRuleCollectionGroup `
   -RuleCollection @($urlCollection, $webCatCollection)
 ```
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Colisão de prioridade da política filha com a pai
 
@@ -700,75 +700,75 @@ Em produção, investigue cada falso positivo, verifique se é realmente benigno
 <KnowledgeCheck questions={[
   {
     id: "az700-43-q1",
-    question: "A parent firewall policy has a rule collection group at priority 200. A child policy attempts to create a rule collection group at the same priority. What happens?",
+    question: "Uma política de firewall pai tem um grupo de coleção de regras com prioridade 200. Uma política filha tenta criar um grupo de coleção de regras com a mesma prioridade. O que acontece?",
     options: [
-      "The operation fails because priorities must be unique across the entire parent-child hierarchy ✅",
-      "The child rule collection group overrides the parent's",
-      "Both coexist and the child rule is evaluated first",
-      "The parent rule is automatically re-prioritized"
+      "A operação falha porque as prioridades devem ser únicas em toda a hierarquia pai-filha ✅",
+      "O grupo de coleção de regras da filha substitui o do pai",
+      "Ambos coexistem e a regra da filha é avaliada primeiro",
+      "A regra do pai é automaticamente repriorizada"
     ],
     correctIndex: 0,
-    explanation: "Rule collection group priorities must be globally unique across the combined parent and child policy. The child cannot reuse any priority number already claimed by the parent. This prevents ambiguity in rule evaluation order."
+    explanation: "As prioridades dos grupos de coleção de regras devem ser globalmente únicas em toda a política pai e filha combinadas. A filha não pode reutilizar nenhum número de prioridade já reivindicado pelo pai. Isso evita ambiguidade na ordem de avaliação de regras."
   },
   {
     id: "az700-43-q2",
-    question: "Which Azure Firewall feature requires the Premium SKU but is NOT available in Standard?",
+    question: "Qual recurso do Azure Firewall requer o SKU Premium, mas NÃO está disponível no Standard?",
     options: [
-      "TLS inspection and IDPS (Intrusion Detection and Prevention System) ✅",
-      "FQDN-based application rules",
-      "Threat intelligence in Deny mode",
-      "DNAT rules for inbound translation"
+      "Inspeção TLS e IDPS (Sistema de Detecção e Prevenção de Intrusão) ✅",
+      "Regras de aplicação baseadas em FQDN",
+      "Inteligência contra ameaças no modo Deny",
+      "Regras DNAT para tradução de entrada"
     ],
     correctIndex: 0,
-    explanation: "TLS inspection and IDPS are exclusive to Azure Firewall Premium. Standard supports threat intelligence (Alert and Deny), FQDN filtering, network rules, and DNAT, but cannot decrypt TLS traffic or perform signature-based intrusion detection."
+    explanation: "A inspeção TLS e o IDPS são exclusivos do Azure Firewall Premium. O Standard suporta inteligência contra ameaças (Alert e Deny), filtragem por FQDN, regras de rede e DNAT, mas não pode descriptografar tráfego TLS nem realizar detecção de intrusão baseada em assinaturas."
   },
   {
     id: "az700-43-q3",
-    question: "What is required for Azure Firewall TLS inspection to function?",
+    question: "O que é necessário para a inspeção TLS do Azure Firewall funcionar?",
     options: [
-      "An intermediate CA certificate stored in Azure Key Vault with firewall managed identity access ✅",
-      "A self-signed leaf certificate imported directly into the firewall",
-      "A public SSL certificate from a trusted CA like DigiCert",
-      "Only the Premium SKU is needed; TLS inspection works without certificates"
+      "Um certificado CA intermediário armazenado no Azure Key Vault com acesso de identidade gerenciada do firewall ✅",
+      "Um certificado leaf autoassinado importado diretamente no firewall",
+      "Um certificado SSL público de uma CA confiável como DigiCert",
+      "Apenas o SKU Premium é necessário; a inspeção TLS funciona sem certificados"
     ],
     correctIndex: 0,
-    explanation: "TLS inspection requires an intermediate CA certificate stored in Key Vault. The firewall's managed identity must have Get access to the certificate. The firewall uses this CA to re-sign decrypted traffic. Client machines must trust this intermediate CA in their root store."
+    explanation: "A inspeção TLS requer um certificado CA intermediário armazenado no Key Vault. A identidade gerenciada do firewall deve ter acesso Get ao certificado. O firewall usa essa CA para reassinar o tráfego descriptografado. As máquinas clientes devem confiar nessa CA intermediária em seu repositório raiz."
   },
   {
     id: "az700-43-q4",
-    question: "What are the available IDPS modes on Azure Firewall Premium?",
+    question: "Quais são os modos de IDPS disponíveis no Azure Firewall Premium?",
     options: [
-      "Off, Alert (detect and log only), and Deny (detect, log, and block) ✅",
-      "Passive, Active, and Inline",
-      "Monitor, Detect, and Prevent",
-      "Off, Log, and Quarantine"
+      "Off, Alert (apenas detectar e registrar) e Deny (detectar, registrar e bloquear) ✅",
+      "Passive, Active e Inline",
+      "Monitor, Detect e Prevent",
+      "Off, Log e Quarantine"
     ],
     correctIndex: 0,
-    explanation: "Azure Firewall Premium IDPS supports three modes: Off (disabled), Alert (detects and logs intrusion patterns without blocking), and Deny (actively blocks traffic matching intrusion signatures while logging the event)."
+    explanation: "O IDPS do Azure Firewall Premium suporta três modos: Off (desabilitado), Alert (detecta e registra padrões de intrusão sem bloquear) e Deny (bloqueia ativamente o tráfego que corresponde a assinaturas de intrusão enquanto registra o evento)."
   },
   {
     id: "az700-43-q5",
-    question: "A child policy inherits rules from a parent policy. Can the child delete or modify the inherited rules?",
+    question: "Uma política filha herda regras de uma política pai. A filha pode excluir ou modificar as regras herdadas?",
     options: [
-      "No, child policies cannot modify or delete inherited parent rules; they can only add new rules ✅",
-      "Yes, child rules always override parent rules with matching names",
-      "Yes, but only if the child has a higher SKU than the parent",
-      "No, but the parent can grant override permissions to specific children"
+      "Não, políticas filhas não podem modificar ou excluir regras herdadas do pai; elas podem apenas adicionar novas regras ✅",
+      "Sim, regras filhas sempre substituem regras do pai com nomes correspondentes",
+      "Sim, mas apenas se a filha tiver um SKU superior ao do pai",
+      "Não, mas o pai pode conceder permissões de substituição para filhas específicas"
     ],
     correctIndex: 0,
-    explanation: "Policy inheritance is strictly additive. Child policies inherit all parent rule collection groups as read-only. Children can add new rule collection groups at different priorities but cannot modify, delete, or override any inherited content."
+    explanation: "A herança de políticas é estritamente aditiva. Políticas filhas herdam todos os grupos de coleção de regras do pai como somente leitura. As filhas podem adicionar novos grupos de coleção de regras com prioridades diferentes, mas não podem modificar, excluir ou substituir nenhum conteúdo herdado."
   },
   {
     id: "az700-43-q6",
-    question: "What is the key difference between URL filtering (Premium) and FQDN filtering (Standard)?",
+    question: "Qual é a principal diferença entre a filtragem de URL (Premium) e a filtragem de FQDN (Standard)?",
     options: [
-      "URL filtering matches the full URL path (e.g., contoso.com/api/v2); FQDN filtering only matches the domain name ✅",
-      "URL filtering is faster because it caches results",
-      "FQDN filtering can match wildcards but URL filtering cannot",
-      "There is no difference; they are different names for the same feature"
+      "A filtragem de URL corresponde ao caminho completo da URL (ex: contoso.com/api/v2); a filtragem de FQDN corresponde apenas ao nome de domínio ✅",
+      "A filtragem de URL é mais rápida porque armazena resultados em cache",
+      "A filtragem de FQDN pode corresponder curingas, mas a filtragem de URL não",
+      "Não há diferença; são nomes diferentes para o mesmo recurso"
     ],
     correctIndex: 0,
-    explanation: "Standard FQDN filtering matches only the domain portion (e.g., *.contoso.com). Premium URL filtering inspects the entire URL path after TLS decryption (e.g., contoso.com/api/v2/*), enabling granular path-based access control. URL filtering requires TLS inspection to see the full URL in HTTPS traffic."
+    explanation: "A filtragem de FQDN do Standard corresponde apenas à porção do domínio (ex: *.contoso.com). A filtragem de URL do Premium inspeciona todo o caminho da URL após a descriptografia TLS (ex: contoso.com/api/v2/*), permitindo controle de acesso granular baseado em caminho. A filtragem de URL requer inspeção TLS para ver a URL completa em tráfego HTTPS."
   }
 ]} />
 

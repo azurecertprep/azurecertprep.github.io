@@ -346,7 +346,7 @@ gh api repos/contoso/platform-api --method PATCH \
   -f security_and_analysis='{"secret_scanning":{"status":"enabled"},"secret_scanning_push_protection":{"status":"enabled"}}'
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Rebase conflict during interactive rebase
 

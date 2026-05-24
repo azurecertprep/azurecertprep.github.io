@@ -477,7 +477,7 @@ Após a re-indexação, os documentos devem conter os enriquecimentos da skill c
 }
 ```
 
-## Quebra e Correção
+## Quebra & conserta
 
 | # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|

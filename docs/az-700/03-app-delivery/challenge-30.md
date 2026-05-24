@@ -30,7 +30,7 @@ Your tasks are to:
 
 ## Architecture overview
 
-```
+```json
 [Traffic Spike]
       |
       v
@@ -552,7 +552,7 @@ The highest of these three dimensions determines the actual capacity units consu
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Issue 1: Health probe returning non-matching body
 

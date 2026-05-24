@@ -761,7 +761,7 @@ Após completar todas as tarefas, você deve ter:
 3. **Variant flow** demonstrando teste A/B de estilos de prompt
 4. **Endpoint implantado** servindo o standard flow com autenticação por chave
 
-## Break and Fix
+## Quebra & conserta
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|

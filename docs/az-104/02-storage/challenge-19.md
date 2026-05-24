@@ -305,7 +305,7 @@ Set the `AZCOPY_CONCURRENCY_VALUE` environment variable to increase parallel con
 
 </details>
 
-## Break and fix
+## Break & fix
 
 ### Scenario a: SAS token expired
 

@@ -323,7 +323,7 @@ A proteção contra purge deve estar habilitada no Key Vault usado para CMK. Sem
 
 </details>
 
-## Quebrar & consertar
+## Quebra & conserta
 
 ### Cenário a: chave CMK desabilitada
 

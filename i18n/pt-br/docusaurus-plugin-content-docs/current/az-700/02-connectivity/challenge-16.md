@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
-title: "Challenge 16: VPN Gateway SKU Selection & Custom IPsec Policies"
+title: "Desafio 16: Seleção de SKU do VPN Gateway & Políticas IPsec Personalizadas"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 16: Seleção de SKU do VPN Gateway e políticas IPsec personalizadas
+# Challenge 16: SeleÃ§Ã£o de SKU do VPN Gateway e polÃ­ticas IPsec personalizadas
 
 :::info Tempo e custo estimados
 
@@ -12,76 +12,76 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso precisa se conectar a um parceiro de serviços financeiros (Woodgrove Bank) cujos requisitos de conformidade exigem algoritmos criptográficos específicos para o túnel VPN: AES256 para criptografia IKE, SHA384 para integridade IKE, DHGroup14 para troca de chaves e GCMAES256 para criptografia de dados IPsec. As políticas padrão do Azure VPN usam algoritmos diferentes que não atendem a esses requisitos. Além disso, a equipe precisa dimensionar corretamente o SKU do VPN Gateway para lidar com o throughput esperado de 2 Gbps com suporte a BGP e 50 túneis S2S simultâneos.
+A Contoso precisa se conectar a um parceiro de serviÃ§os financeiros (Woodgrove Bank) cujos requisitos de conformidade exigem algoritmos criptogrÃ¡ficos especÃ­ficos para o tÃºnel VPN: AES256 para criptografia IKE, SHA384 para integridade IKE, DHGroup14 para troca de chaves e GCMAES256 para criptografia de dados IPsec. As polÃ­ticas padrÃ£o do Azure VPN usam algoritmos diferentes que nÃ£o atendem a esses requisitos. AlÃ©m disso, a equipe precisa dimensionar corretamente o SKU do VPN Gateway para lidar com o throughput esperado de 2 Gbps com suporte a BGP e 50 tÃºneis S2S simultÃ¢neos.
 
 **Arquitetura:**
 
-```
+```text
 Contoso Azure (10.1.0.0/16)              Woodgrove Bank (172.16.0.0/12)
                                          Compliance requirement:
 [VPN Gateway: VpnGw3]                      - IKE: AES256 / SHA384 / DHGroup14
      |                                     - IPsec: GCMAES256 / GCMAES256
-     |──── Custom IPsec Policy ────────── [Partner VPN Device]
+     |â”€â”€â”€â”€ Custom IPsec Policy â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ [Partner VPN Device]
      |                                       198.51.100.100
   vnet-hub
-    └── GatewaySubnet (10.1.255.0/27)
+    â””â”€â”€ GatewaySubnet (10.1.255.0/27)
 ```
 
 ## Objetivos de aprendizagem
 
-Após concluir este desafio, você será capaz de:
+ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
 
-- Selecionar um SKU de VPN Gateway apropriado com base em throughput, contagem de túneis e requisitos de recursos
-- Criar e configurar uma política IPsec/IKE personalizada em uma conexão VPN
-- Configurar parâmetros do IKE Fase 1 (Main Mode)
-- Configurar parâmetros do IKE Fase 2 / IPsec (Quick Mode)
-- Diferenciar entre o comportamento de VPN Gateway baseado em política e baseado em rota com políticas personalizadas
-- Solucionar problemas de falhas na negociação IPsec causadas por parâmetros incompatíveis
+- Selecionar um SKU de VPN Gateway apropriado com base em throughput, contagem de tÃºneis e requisitos de recursos
+- Criar e configurar uma polÃ­tica IPsec/IKE personalizada em uma conexÃ£o VPN
+- Configurar parÃ¢metros do IKE Fase 1 (Main Mode)
+- Configurar parÃ¢metros do IKE Fase 2 / IPsec (Quick Mode)
+- Diferenciar entre o comportamento de VPN Gateway baseado em polÃ­tica e baseado em rota com polÃ­ticas personalizadas
+- Solucionar problemas de falhas na negociaÃ§Ã£o IPsec causadas por parÃ¢metros incompatÃ­veis
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Conclusão do Challenge 14 (compreensão básica de VPN S2S)
+- ConclusÃ£o do Challenge 14 (compreensÃ£o bÃ¡sica de VPN S2S)
 - Uma assinatura do Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com módulo Az instalado
+- PowerShell com mÃ³dulo Az instalado
 
 ## Conceitos-chave para o AZ-700
 
-### Comparação de SKUs do VPN Gateway
+### ComparaÃ§Ã£o de SKUs do VPN Gateway
 
-| SKU | Máx. túneis S2S | Máx. P2S (IKEv2/OpenVPN) | Throughput agregado | BGP | Geração |
+| SKU | MÃ¡x. tÃºneis S2S | MÃ¡x. P2S (IKEv2/OpenVPN) | Throughput agregado | BGP | GeraÃ§Ã£o |
 |-----|----------------|-------------------------|---------------------|-----|-----------|
-| Basic | 10 | Não suportado | 100 Mbps | Não | Gen1 |
+| Basic | 10 | NÃ£o suportado | 100 Mbps | NÃ£o | Gen1 |
 | VpnGw1 | 30 | 250 | 650 Mbps | Sim | Gen1/Gen2 |
 | VpnGw2 | 30 | 500 | 1 Gbps (Gen1) / 1,25 Gbps (Gen2) | Sim | Gen1/Gen2 |
 | VpnGw3 | 30 | 1000 | 1,25 Gbps (Gen1) / 2,5 Gbps (Gen2) | Sim | Gen1/Gen2 |
 | VpnGw4 | 100 | 5000 | 5 Gbps | Sim | Gen2 |
 | VpnGw5 | 100 | 10000 | 10 Gbps | Sim | Gen2 |
 
-As variantes com redundância de zona (VpnGw1AZ até VpnGw5AZ) possuem desempenho idêntico, mas são implantadas em zonas de disponibilidade.
+As variantes com redundÃ¢ncia de zona (VpnGw1AZ atÃ© VpnGw5AZ) possuem desempenho idÃªntico, mas sÃ£o implantadas em zonas de disponibilidade.
 
-### Parâmetros do IKE Fase 1 (Main Mode)
+### ParÃ¢metros do IKE Fase 1 (Main Mode)
 
-| Parâmetro | Finalidade | Valores comuns |
+| ParÃ¢metro | Finalidade | Valores comuns |
 |-----------|---------|---------------|
-| IKE Encryption | Criptografa mensagens de negociação IKE | AES256, AES128, GCMAES256, GCMAES128 |
+| IKE Encryption | Criptografa mensagens de negociaÃ§Ã£o IKE | AES256, AES128, GCMAES256, GCMAES128 |
 | IKE Integrity | Autentica mensagens IKE | SHA384, SHA256, SHA1, GCMAES256, GCMAES128 |
-| DH Group | Força do algoritmo de troca de chaves | DHGroup14, DHGroup24, ECP256, ECP384 |
-| SA Lifetime | Tempo antes da renegociação da Fase 1 | Segundos (padrão: 28800 = 8 horas) |
+| DH Group | ForÃ§a do algoritmo de troca de chaves | DHGroup14, DHGroup24, ECP256, ECP384 |
+| SA Lifetime | Tempo antes da renegociaÃ§Ã£o da Fase 1 | Segundos (padrÃ£o: 28800 = 8 horas) |
 
-### Parâmetros do IKE Fase 2 / IPsec (Quick Mode)
+### ParÃ¢metros do IKE Fase 2 / IPsec (Quick Mode)
 
-| Parâmetro | Finalidade | Valores comuns |
+| ParÃ¢metro | Finalidade | Valores comuns |
 |-----------|---------|---------------|
-| IPsec Encryption | Criptografa tráfego de dados | GCMAES256, GCMAES128, AES256, AES128 |
+| IPsec Encryption | Criptografa trÃ¡fego de dados | GCMAES256, GCMAES128, AES256, AES128 |
 | IPsec Integrity | Autentica pacotes de dados | GCMAES256, GCMAES128, SHA256, SHA1 |
 | PFS Group | Grupo de Perfect Forward Secrecy | PFS24, PFS14, ECP256, ECP384, None |
-| SA Lifetime | Tempo antes da renegociação da Fase 2 | Segundos (padrão: 3600 = 1 hora) |
-| SA Data Size | Volume de dados antes da renegociação | Kilobytes (padrão: 102400000 KB) |
+| SA Lifetime | Tempo antes da renegociaÃ§Ã£o da Fase 2 | Segundos (padrÃ£o: 3600 = 1 hora) |
+| SA Data Size | Volume de dados antes da renegociaÃ§Ã£o | Kilobytes (padrÃ£o: 102400000 KB) |
 
-### Referência de valores de parâmetros válidos
+### ReferÃªncia de valores de parÃ¢metros vÃ¡lidos
 
 **IKE Encryption (`--ike-encryption`):**
 DES, DES3, AES128, AES192, AES256, GCMAES128, GCMAES256
@@ -101,12 +101,12 @@ MD5, SHA1, SHA256, GCMAES128, GCMAES256
 **PFS Group (`--pfs-group`):**
 None, PFS1, PFS2, PFS2048, PFS14, PFS24, ECP256, ECP384, PFSMM
 
-:::warning Restrições importantes
+:::warning RestriÃ§Ãµes importantes
 
-- Ao usar GCMAES para criptografia IKE, você **deve** usar o valor GCMAES correspondente para integridade IKE (ex.: criptografia GCMAES256 requer integridade GCMAES256)
-- Ao usar GCMAES para criptografia IPsec, você **deve** usar o valor GCMAES correspondente para integridade IPsec
-- DES e MD5 estão obsoletos e devem ser usados apenas para testes de compatibilidade retroativa
-- Ambos os lados do túnel VPN devem usar parâmetros IPsec/IKE idênticos
+- Ao usar GCMAES para criptografia IKE, vocÃª **deve** usar o valor GCMAES correspondente para integridade IKE (ex.: criptografia GCMAES256 requer integridade GCMAES256)
+- Ao usar GCMAES para criptografia IPsec, vocÃª **deve** usar o valor GCMAES correspondente para integridade IPsec
+- DES e MD5 estÃ£o obsoletos e devem ser usados apenas para testes de compatibilidade retroativa
+- Ambos os lados do tÃºnel VPN devem usar parÃ¢metros IPsec/IKE idÃªnticos
 
 :::
 
@@ -114,15 +114,15 @@ None, PFS1, PFS2, PFS2048, PFS14, PFS24, ECP256, ECP384, PFSMM
 
 ## Tarefa 1: Selecionar o SKU de VPN Gateway apropriado
 
-Com base nos requisitos da Contoso (throughput de 2 Gbps, suporte a BGP, 50 túneis S2S), avalie as opções de SKU:
+Com base nos requisitos da Contoso (throughput de 2 Gbps, suporte a BGP, 50 tÃºneis S2S), avalie as opÃ§Ãµes de SKU:
 
-| Requisito | VpnGw1 | VpnGw2 | VpnGw3 (Gen2) | VpnGw4 | Decisão |
+| Requisito | VpnGw1 | VpnGw2 | VpnGw3 (Gen2) | VpnGw4 | DecisÃ£o |
 |-------------|---------|---------|---------------|---------|----------|
-| Throughput de 2 Gbps | 650 Mbps (insuficiente) | 1,25 Gbps (insuficiente) | 2,5 Gbps (atende) | 5 Gbps (excede) | VpnGw3 mínimo |
+| Throughput de 2 Gbps | 650 Mbps (insuficiente) | 1,25 Gbps (insuficiente) | 2,5 Gbps (atende) | 5 Gbps (excede) | VpnGw3 mÃ­nimo |
 | Suporte a BGP | Sim | Sim | Sim | Sim | Todos qualificam |
-| 50 túneis S2S | 30 (insuficiente) | 30 (insuficiente) | 30 (insuficiente) | 100 (atende) | VpnGw4 mínimo |
+| 50 tÃºneis S2S | 30 (insuficiente) | 30 (insuficiente) | 30 (insuficiente) | 100 (atende) | VpnGw4 mÃ­nimo |
 
-**Conclusão:** VpnGw4 (Generation 2) é o SKU mínimo que satisfaz todos os requisitos (throughput de 5 Gbps, 100 túneis S2S, suporte a BGP).
+**ConclusÃ£o:** VpnGw4 (Generation 2) Ã© o SKU mÃ­nimo que satisfaz todos os requisitos (throughput de 5 Gbps, 100 tÃºneis S2S, suporte a BGP).
 
 ### Implantar o gateway com dimensionamento correto
 
@@ -164,21 +164,21 @@ az network vnet-gateway create \
     --no-wait
 ```
 
-:::tip Orientação de seleção de SKU para o exame
+:::tip OrientaÃ§Ã£o de seleÃ§Ã£o de SKU para o exame
 
-- **Basic:** Apenas legado, sem BGP, sem IPsec personalizado, máx. 10 túneis
-- **VpnGw1:** Cargas de trabalho pequenas, até 30 túneis, 650 Mbps
-- **VpnGw2:** Cargas de trabalho médias, até 30 túneis, 1-1,25 Gbps
-- **VpnGw3:** Cargas de trabalho grandes, até 30 túneis, 1,25-2,5 Gbps
-- **VpnGw4:** Empresarial com muitos sites, até 100 túneis, 5 Gbps
-- **VpnGw5:** Desempenho máximo, até 100 túneis, 10 Gbps
-- Adicione o sufixo "AZ" para redundância de zona (mesmo desempenho, maior disponibilidade)
+- **Basic:** Apenas legado, sem BGP, sem IPsec personalizado, mÃ¡x. 10 tÃºneis
+- **VpnGw1:** Cargas de trabalho pequenas, atÃ© 30 tÃºneis, 650 Mbps
+- **VpnGw2:** Cargas de trabalho mÃ©dias, atÃ© 30 tÃºneis, 1-1,25 Gbps
+- **VpnGw3:** Cargas de trabalho grandes, atÃ© 30 tÃºneis, 1,25-2,5 Gbps
+- **VpnGw4:** Empresarial com muitos sites, atÃ© 100 tÃºneis, 5 Gbps
+- **VpnGw5:** Desempenho mÃ¡ximo, atÃ© 100 tÃºneis, 10 Gbps
+- Adicione o sufixo "AZ" para redundÃ¢ncia de zona (mesmo desempenho, maior disponibilidade)
 
 :::
 
 ---
 
-## Tarefa 2: Criar uma política IPsec/IKE personalizada
+## Tarefa 2: Criar uma polÃ­tica IPsec/IKE personalizada
 
 ### Etapa 1: Criar o gateway de rede local para o parceiro
 
@@ -191,7 +191,7 @@ az network local-gateway create \
     --location eastus
 ```
 
-### Etapa 2: Criar a conexão VPN (aguardar o provisionamento do gateway)
+### Etapa 2: Criar a conexÃ£o VPN (aguardar o provisionamento do gateway)
 
 ```bash
 az network vpn-connection create \
@@ -202,7 +202,7 @@ az network vpn-connection create \
     --shared-key "W00dgrove!Secure#2024"
 ```
 
-### Etapa 3: Adicionar a política IPsec/IKE personalizada
+### Etapa 3: Adicionar a polÃ­tica IPsec/IKE personalizada
 
 ```bash
 az network vpn-connection ipsec-policy add \
@@ -259,55 +259,55 @@ New-AzVirtualNetworkGatewayConnection `
 
 ---
 
-## Tarefa 3: Entender os parâmetros do IKE Fase 1
+## Tarefa 3: Entender os parÃ¢metros do IKE Fase 1
 
-O IKE Fase 1 (Main Mode) estabelece o canal seguro usado para negociar o túnel IPsec. Ambos os lados devem concordar com os mesmos parâmetros.
+O IKE Fase 1 (Main Mode) estabelece o canal seguro usado para negociar o tÃºnel IPsec. Ambos os lados devem concordar com os mesmos parÃ¢metros.
 
-### Detalhamento dos parâmetros para o exame
+### Detalhamento dos parÃ¢metros para o exame
 
-| Parâmetro | Valor da Contoso | Finalidade |
+| ParÃ¢metro | Valor da Contoso | Finalidade |
 |-----------|---------------|---------|
-| `--ike-encryption AES256` | AES256 | Criptografa mensagens de controle IKE durante a negociação |
-| `--ike-integrity SHA384` | SHA384 | HMAC para autenticação de mensagens IKE (previne adulteração) |
+| `--ike-encryption AES256` | AES256 | Criptografa mensagens de controle IKE durante a negociaÃ§Ã£o |
+| `--ike-integrity SHA384` | SHA384 | HMAC para autenticaÃ§Ã£o de mensagens IKE (previne adulteraÃ§Ã£o) |
 | `--dh-group DHGroup14` | DHGroup14 (2048-bit MODP) | Grupo Diffie-Hellman para troca segura de chaves |
 | `--sa-lifetime 3600` | 3600 segundos (1 hora) | Tempo antes que a SA da Fase 1 expire e precise ser renegociada |
 
-### Comparação de força dos grupos DH
+### ComparaÃ§Ã£o de forÃ§a dos grupos DH
 
-| Grupo DH | Tamanho da chave | Nível de segurança | Recomendação |
+| Grupo DH | Tamanho da chave | NÃ­vel de seguranÃ§a | RecomendaÃ§Ã£o |
 |----------|----------|----------------|----------------|
-| DHGroup1 | 768-bit | Fraco | Não usar |
-| DHGroup2 | 1024-bit | Fraco | Não usar |
-| DHGroup14 | 2048-bit | Aceitável | Mínimo recomendado |
+| DHGroup1 | 768-bit | Fraco | NÃ£o usar |
+| DHGroup2 | 1024-bit | Fraco | NÃ£o usar |
+| DHGroup14 | 2048-bit | AceitÃ¡vel | MÃ­nimo recomendado |
 | DHGroup24 | 2048-bit MODP | Forte | Bom para a maioria dos casos |
-| ECP256 | 256-bit EC | Forte | Curva elíptica, moderno |
-| ECP384 | 384-bit EC | Muito forte | Requisitos de alta segurança |
+| ECP256 | 256-bit EC | Forte | Curva elÃ­ptica, moderno |
+| ECP384 | 384-bit EC | Muito forte | Requisitos de alta seguranÃ§a |
 
 ---
 
-## Tarefa 4: Entender os parâmetros do IKE Fase 2 / IPsec
+## Tarefa 4: Entender os parÃ¢metros do IKE Fase 2 / IPsec
 
-O IKE Fase 2 (Quick Mode) negocia as Security Associations IPsec que protegem o tráfego real de dados.
+O IKE Fase 2 (Quick Mode) negocia as Security Associations IPsec que protegem o trÃ¡fego real de dados.
 
-### Detalhamento dos parâmetros
+### Detalhamento dos parÃ¢metros
 
-| Parâmetro | Valor da Contoso | Finalidade |
+| ParÃ¢metro | Valor da Contoso | Finalidade |
 |-----------|---------------|---------|
-| `--ipsec-encryption GCMAES256` | GCMAES256 | Criptografa pacotes de dados no túnel |
+| `--ipsec-encryption GCMAES256` | GCMAES256 | Criptografa pacotes de dados no tÃºnel |
 | `--ipsec-integrity GCMAES256` | GCMAES256 | Autentica pacotes de dados (GCM fornece ambos) |
 | `--pfs-group PFS14` | PFS14 (2048-bit) | Perfect Forward Secrecy para cada nova SA |
-| `--sa-lifetime 3600` | 3600 segundos | Tempo antes da renegociação da SA IPsec |
-| `--sa-data-size 102400000` | ~100 GB | Volume de dados antes da renegociação da SA |
+| `--sa-lifetime 3600` | 3600 segundos | Tempo antes da renegociaÃ§Ã£o da SA IPsec |
+| `--sa-data-size 102400000` | ~100 GB | Volume de dados antes da renegociaÃ§Ã£o da SA |
 
 :::note Modo GCM
 
-Ao usar GCMAES (Galois/Counter Mode com AES) para criptografia IPsec, ele fornece tanto criptografia quanto autenticação em uma única operação (cifra AEAD). O valor de `--ipsec-integrity` deve corresponder ao valor de criptografia (criptografia GCMAES256 requer integridade GCMAES256). Isso é mais eficiente do que abordagens separadas de criptografar-e-então-MAC.
+Ao usar GCMAES (Galois/Counter Mode com AES) para criptografia IPsec, ele fornece tanto criptografia quanto autenticaÃ§Ã£o em uma Ãºnica operaÃ§Ã£o (cifra AEAD). O valor de `--ipsec-integrity` deve corresponder ao valor de criptografia (criptografia GCMAES256 requer integridade GCMAES256). Isso Ã© mais eficiente do que abordagens separadas de criptografar-e-entÃ£o-MAC.
 
 :::
 
 ---
 
-## Tarefa 5: Verificar e listar políticas IPsec
+## Tarefa 5: Verificar e listar polÃ­ticas IPsec
 
 ### Azure CLI
 
@@ -336,7 +336,7 @@ $conn = Get-AzVirtualNetworkGatewayConnection `
 $conn.IpsecPolicies | Format-List
 ```
 
-### Limpar/remover políticas IPsec (reverter para padrão)
+### Limpar/remover polÃ­ticas IPsec (reverter para padrÃ£o)
 
 ```bash
 az network vpn-connection ipsec-policy clear \
@@ -346,13 +346,13 @@ az network vpn-connection ipsec-policy clear \
 
 ---
 
-## Tarefa 6: Baseado em política vs baseado em rota com IPsec personalizado
+## Tarefa 6: Baseado em polÃ­tica vs baseado em rota com IPsec personalizado
 
-Entender quando um gateway baseado em rota pode se comportar como baseado em política é importante para o exame.
+Entender quando um gateway baseado em rota pode se comportar como baseado em polÃ­tica Ã© importante para o exame.
 
-### Gateway baseado em rota com seletores de tráfego baseados em política
+### Gateway baseado em rota com seletores de trÃ¡fego baseados em polÃ­tica
 
-Para conexões com dispositivos locais baseados em política, um gateway baseado em rota pode usar seletores de tráfego baseados em política por conexão:
+Para conexÃµes com dispositivos locais baseados em polÃ­tica, um gateway baseado em rota pode usar seletores de trÃ¡fego baseados em polÃ­tica por conexÃ£o:
 
 ```bash
 az network vpn-connection create \
@@ -378,30 +378,30 @@ New-AzVirtualNetworkGatewayConnection `
 
 ### Quando usar cada abordagem
 
-| Cenário | Solução |
+| CenÃ¡rio | SoluÃ§Ã£o |
 |----------|----------|
-| Dispositivos modernos, múltiplos túneis necessários | Gateway baseado em rota, roteamento padrão |
-| Parceiro requer algoritmos criptográficos específicos | Gateway baseado em rota + política IPsec personalizada |
-| Dispositivo legado precisa de IKEv1 + seletores de política | Gateway baseado em rota + `--use-policy-based-traffic-selectors true` |
-| Túnel único para dispositivo muito antigo somente IKEv1 | Gateway baseado em política (Basic SKU) como último recurso |
+| Dispositivos modernos, mÃºltiplos tÃºneis necessÃ¡rios | Gateway baseado em rota, roteamento padrÃ£o |
+| Parceiro requer algoritmos criptogrÃ¡ficos especÃ­ficos | Gateway baseado em rota + polÃ­tica IPsec personalizada |
+| Dispositivo legado precisa de IKEv1 + seletores de polÃ­tica | Gateway baseado em rota + `--use-policy-based-traffic-selectors true` |
+| TÃºnel Ãºnico para dispositivo muito antigo somente IKEv1 | Gateway baseado em polÃ­tica (Basic SKU) como Ãºltimo recurso |
 
 :::tip Nota de exame
 
-O exame pode apresentar um cenário onde você precisa conectar um VPN Gateway baseado em rota ao dispositivo baseado em política de um parceiro. A resposta correta é habilitar `usePolicyBasedTrafficSelectors` na conexão específica, e não alterar o tipo do gateway para baseado em política. Isso permite manter os benefícios do baseado em rota (múltiplos túneis, BGP, P2S) enquanto acomoda um peer legado.
+O exame pode apresentar um cenÃ¡rio onde vocÃª precisa conectar um VPN Gateway baseado em rota ao dispositivo baseado em polÃ­tica de um parceiro. A resposta correta Ã© habilitar `usePolicyBasedTrafficSelectors` na conexÃ£o especÃ­fica, e nÃ£o alterar o tipo do gateway para baseado em polÃ­tica. Isso permite manter os benefÃ­cios do baseado em rota (mÃºltiplos tÃºneis, BGP, P2S) enquanto acomoda um peer legado.
 
 :::
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Parâmetros criptográficos incompatíveis
+### CenÃ¡rio 1: ParÃ¢metros criptogrÃ¡ficos incompatÃ­veis
 
-**Sintoma:** O status da conexão é `Connecting`. A negociação IKE falha porque o parceiro usa AES128 enquanto o Azure está configurado para AES256.
+**Sintoma:** O status da conexÃ£o Ã© `Connecting`. A negociaÃ§Ã£o IKE falha porque o parceiro usa AES128 enquanto o Azure estÃ¡ configurado para AES256.
 
-**Causa raiz:** A política IPsec personalizada no lado do Azure especifica algoritmos diferentes dos configurados no dispositivo do parceiro.
+**Causa raiz:** A polÃ­tica IPsec personalizada no lado do Azure especifica algoritmos diferentes dos configurados no dispositivo do parceiro.
 
-**Comando de diagnóstico:**
+**Comando de diagnÃ³stico:**
 
 ```bash
 az network vpn-connection ipsec-policy list \
@@ -410,7 +410,7 @@ az network vpn-connection ipsec-policy list \
     --output table
 ```
 
-**Correção:** Atualize a política para corresponder à configuração do parceiro:
+**CorreÃ§Ã£o:** Atualize a polÃ­tica para corresponder Ã  configuraÃ§Ã£o do parceiro:
 
 ```bash
 # Clear existing policy
@@ -432,13 +432,13 @@ az network vpn-connection ipsec-policy add \
     --sa-data-size 102400000
 ```
 
-### Cenário 2: Tempo de vida da SA muito curto
+### CenÃ¡rio 2: Tempo de vida da SA muito curto
 
-**Sintoma:** O túnel é estabelecido mas cai a cada poucos minutos. Renegociação frequente causa perda de pacotes.
+**Sintoma:** O tÃºnel Ã© estabelecido mas cai a cada poucos minutos. RenegociaÃ§Ã£o frequente causa perda de pacotes.
 
 **Causa raiz:** `--sa-lifetime` foi definido como 60 segundos em vez de 3600 segundos.
 
-**Correção:** Limpe e adicione novamente com o tempo de vida correto:
+**CorreÃ§Ã£o:** Limpe e adicione novamente com o tempo de vida correto:
 
 ```bash
 az network vpn-connection ipsec-policy clear \
@@ -458,13 +458,13 @@ az network vpn-connection ipsec-policy add \
     --sa-data-size 102400000
 ```
 
-### Cenário 3: Parceiro rejeita DES (cifra fraca)
+### CenÃ¡rio 3: Parceiro rejeita DES (cifra fraca)
 
-**Sintoma:** A conexão falha durante o IKE Fase 1 porque o lado Azure usa criptografia DES, que a política de conformidade do parceiro rejeita.
+**Sintoma:** A conexÃ£o falha durante o IKE Fase 1 porque o lado Azure usa criptografia DES, que a polÃ­tica de conformidade do parceiro rejeita.
 
-**Causa raiz:** DES foi especificado acidentalmente como criptografia IKE. Frameworks modernos de conformidade (PCI-DSS, HIPAA) proíbem DES.
+**Causa raiz:** DES foi especificado acidentalmente como criptografia IKE. Frameworks modernos de conformidade (PCI-DSS, HIPAA) proÃ­bem DES.
 
-**Comando de diagnóstico:**
+**Comando de diagnÃ³stico:**
 
 ```bash
 az network vpn-connection ipsec-policy list \
@@ -475,7 +475,7 @@ az network vpn-connection ipsec-policy list \
 # Returns: DES
 ```
 
-**Correção:** Substitua por uma cifra forte:
+**CorreÃ§Ã£o:** Substitua por uma cifra forte:
 
 ```bash
 az network vpn-connection ipsec-policy clear \
@@ -497,12 +497,12 @@ az network vpn-connection ipsec-policy add \
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-16-q1",
-    question: "A company needs a VPN gateway that supports 50 S2S tunnels and 5 Gbps throughput. What is the minimum SKU that meets both requirements?",
+    question: "Uma empresa precisa de um VPN Gateway que suporte 50 túneis S2S e 5 Gbps de throughput. Qual é o SKU mínimo que atende a ambos os requisitos?",
     options: [
       "VpnGw3",
       "VpnGw4",
@@ -510,55 +510,55 @@ az network vpn-connection ipsec-policy add \
       "VpnGw5"
     ],
     correctIndex: 1,
-    explanation: "VpnGw3 supports only 30 S2S tunnels (insufficient for 50). VpnGw4 supports up to 100 tunnels and provides 5 Gbps throughput, making it the minimum SKU that meets both requirements. VpnGw5 would also work but is not the minimum."
+    explanation: "O VpnGw3 suporta apenas 30 túneis S2S (insuficiente para 50). O VpnGw4 suporta até 100 túneis e fornece 5 Gbps de throughput, tornando-o o SKU mínimo que atende a ambos os requisitos. O VpnGw5 também funcionaria, mas não é o mínimo."
   },
   {
     id: "az700-16-q2",
-    question: "When configuring GCMAES256 as the IPsec encryption algorithm, what must be set for the IPsec integrity parameter?",
+    question: "Ao configurar GCMAES256 como algoritmo de criptografia IPsec, o que deve ser definido para o parâmetro de integridade IPsec?",
     options: [
       "SHA256",
       "SHA384",
       "GCMAES256",
-      "Any integrity algorithm is valid"
+      "Qualquer algoritmo de integridade é válido"
     ],
     correctIndex: 2,
-    explanation: "When using GCMAES (Galois/Counter Mode) for IPsec encryption, the integrity parameter must be set to the same GCMAES value. GCM is an authenticated encryption (AEAD) mode that provides both confidentiality and integrity in a single operation, so GCMAES256 encryption requires GCMAES256 integrity."
+    explanation: "Ao usar GCMAES (Galois/Counter Mode) para criptografia IPsec, o parâmetro de integridade deve ser definido com o mesmo valor GCMAES. GCM é um modo de criptografia autenticada (AEAD) que fornece tanto confidencialidade quanto integridade em uma única operação, portanto a criptografia GCMAES256 requer integridade GCMAES256."
   },
   {
     id: "az700-16-q3",
-    question: "You have a route-based VPN gateway with multiple S2S connections. One partner requires policy-based traffic selectors. What should you do?",
+    question: "Você tem um VPN Gateway route-based com múltiplas conexões S2S. Um parceiro requer seletores de tráfego policy-based. O que você deve fazer?",
     options: [
-      "Change the gateway to policy-based type",
-      "Create a separate policy-based gateway for that partner",
-      "Enable usePolicyBasedTrafficSelectors on that specific connection",
-      "Ask the partner to change to route-based"
+      "Alterar o gateway para o tipo policy-based",
+      "Criar um gateway policy-based separado para esse parceiro",
+      "Habilitar usePolicyBasedTrafficSelectors nessa conexão específica",
+      "Pedir ao parceiro para mudar para route-based"
     ],
     correctIndex: 2,
-    explanation: "On a route-based gateway, you can enable policy-based traffic selectors on a per-connection basis using --use-policy-based-traffic-selectors true. This accommodates the partner's requirement without affecting other connections or losing route-based benefits (multiple tunnels, BGP, P2S)."
+    explanation: "Em um gateway route-based, você pode habilitar seletores de tráfego policy-based por conexão usando --use-policy-based-traffic-selectors true. Isso acomoda o requisito do parceiro sem afetar outras conexões ou perder os benefícios do route-based (múltiplos túneis, BGP, P2S)."
   },
   {
     id: "az700-16-q4",
-    question: "What is the purpose of the --sa-lifetime parameter in a custom IPsec policy?",
+    question: "Qual é a finalidade do parâmetro --sa-lifetime em uma política IPsec personalizada?",
     options: [
-      "Maximum time the VPN gateway stays powered on",
-      "Time before the security association expires and must be renegotiated",
-      "Timeout before the connection is declared dead",
-      "Maximum duration of a single TCP session through the tunnel"
+      "Tempo máximo que o VPN Gateway permanece ligado",
+      "Tempo antes que a associação de segurança expire e precise ser renegociada",
+      "Timeout antes que a conexão seja declarada como inativa",
+      "Duração máxima de uma única sessão TCP através do túnel"
     ],
     correctIndex: 1,
-    explanation: "The SA (Security Association) lifetime defines how long the negotiated encryption keys are valid before they expire and a new IKE/IPsec negotiation must occur. This limits the window of exposure if keys are compromised and ensures fresh cryptographic material is regularly established."
+    explanation: "O SA (Security Association) lifetime define por quanto tempo as chaves de criptografia negociadas são válidas antes de expirarem e uma nova negociação IKE/IPsec precisar ocorrer. Isso limita a janela de exposição caso as chaves sejam comprometidas e garante que material criptográfico novo seja estabelecido regularmente."
   },
   {
     id: "az700-16-q5",
-    question: "Which DH Group should NOT be used in production due to insufficient key strength?",
+    question: "Qual DH Group NÃO deve ser usado em produção devido à força de chave insuficiente?",
     options: [
       "DHGroup14 (2048-bit)",
-      "ECP256 (256-bit elliptic curve)",
+      "ECP256 (curva elíptica de 256-bit)",
       "DHGroup2 (1024-bit)",
       "DHGroup24 (2048-bit MODP)"
     ],
     correctIndex: 2,
-    explanation: "DHGroup2 uses a 1024-bit key which is considered cryptographically weak by modern standards and should not be used in production. NIST deprecated 1024-bit Diffie-Hellman in 2013. DHGroup14 (2048-bit) is the minimum recommended, and ECP256/ECP384 provide equivalent or better security with shorter key sizes."
+    explanation: "O DHGroup2 usa uma chave de 1024 bits que é considerada criptograficamente fraca pelos padrões modernos e não deve ser usado em produção. O NIST descontinuou o Diffie-Hellman de 1024 bits em 2013. O DHGroup14 (2048-bit) é o mínimo recomendado, e ECP256/ECP384 fornecem segurança equivalente ou superior com tamanhos de chave menores."
   }
 ]} />
 
@@ -566,7 +566,7 @@ az network vpn-connection ipsec-policy add \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para interromper a cobrança:
+Remova todos os recursos criados neste desafio para interromper a cobranÃ§a:
 
 ```bash
 az group delete --name rg-vpn-ipsec-lab --yes --no-wait
@@ -578,7 +578,7 @@ Remove-AzResourceGroup -Name "rg-vpn-ipsec-lab" -Force -AsJob
 
 ---
 
-## Referências adicionais
+## ReferÃªncias adicionais
 
 - [About VPN Gateway SKUs](https://learn.microsoft.com/en-us/azure/vpn-gateway/about-gateway-skus)
 - [Custom IPsec/IKE policy for S2S VPN](https://learn.microsoft.com/en-us/azure/vpn-gateway/ipsec-ike-policy-howto)

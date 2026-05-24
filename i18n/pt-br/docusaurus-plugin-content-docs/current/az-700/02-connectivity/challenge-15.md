@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
-title: "Challenge 15: S2S VPN High Availability & Multi-Site"
+title: "Desafio 15: VPN S2S Alta Disponibilidade & Multi-Site"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 15: Alta disponibilidade de VPN S2S e vários sites
+# Challenge 15: Alta disponibilidade de VPN S2S e vÃ¡rios sites
 
 :::info Tempo e custo estimados
 
@@ -12,26 +12,26 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-:::warning Tempo de implantação
+:::warning Tempo de implantaÃ§Ã£o
 
-O provisionamento do VPN Gateway active-active leva **30-45 minutos**. Use `--no-wait` e continue com o aprendizado conceitual enquanto o gateway é implantado.
+O provisionamento do VPN Gateway active-active leva **30-45 minutos**. Use `--no-wait` e continue com o aprendizado conceitual enquanto o gateway Ã© implantado.
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A VPN site a site da Contoso estabelecida no Challenge 14 usa uma única instância de VPN gateway, criando um ponto único de falha. Durante um evento recente de manutenção do Azure, o túnel VPN ficou inativo por 15 minutos, causando uma interrupção nos negócios. A equipe de rede deve implementar alta disponibilidade para o VPN gateway usando configuração active-active com SKUs com redundância de zona, conectar-se a vários sites locais e configurar BGP para troca dinâmica de rotas. Além disso, a equipe precisa entender o Azure Extended Network para um projeto futuro de migração Layer 2.
+A VPN site a site da Contoso estabelecida no Challenge 14 usa uma Ãºnica instÃ¢ncia de VPN gateway, criando um ponto Ãºnico de falha. Durante um evento recente de manutenÃ§Ã£o do Azure, o tÃºnel VPN ficou inativo por 15 minutos, causando uma interrupÃ§Ã£o nos negÃ³cios. A equipe de rede deve implementar alta disponibilidade para o VPN gateway usando configuraÃ§Ã£o active-active com SKUs com redundÃ¢ncia de zona, conectar-se a vÃ¡rios sites locais e configurar BGP para troca dinÃ¢mica de rotas. AlÃ©m disso, a equipe precisa entender o Azure Extended Network para um projeto futuro de migraÃ§Ã£o Layer 2.
 
 **Arquitetura:**
 
-```
+```text
 On-prem Site A (Dallas)           Azure (East US)              On-prem Site B (Chicago)
 (10.10.0.0/16)                   (10.1.0.0/16)               (10.20.0.0/16)
                                        |
-[VPN Device A]  ─── Tunnel 1 ──► [pip-vgw-1]                [VPN Device B]
+[VPN Device A]  â”€â”€â”€ Tunnel 1 â”€â”€â–º [pip-vgw-1]                [VPN Device B]
   203.0.113.10                        |                        198.51.100.25
                                   [VPN Gateway]
-[VPN Device A]  ─── Tunnel 2 ──► [pip-vgw-2]                [VPN Device B]
+[VPN Device A]  â”€â”€â”€ Tunnel 2 â”€â”€â–º [pip-vgw-2]                [VPN Device B]
   203.0.113.10                        |                        198.51.100.25
                                   Active-Active
                                (VpnGw2AZ, Zone 1+2)
@@ -40,46 +40,46 @@ On-prem Site A (Dallas)           Azure (East US)              On-prem Site B (C
 
 ## Objetivos de aprendizagem
 
-Após concluir este desafio, você será capaz de:
+ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
 
-- Projetar e implementar uma conexão VPN site a site com alta disponibilidade
-- Implantar um VPN gateway active-active com SKUs com redundância de zona
-- Configurar BGP em VPN gateways para roteamento dinâmico
-- Conectar vários sites locais a um único VPN gateway (vários sites)
+- Projetar e implementar uma conexÃ£o VPN site a site com alta disponibilidade
+- Implantar um VPN gateway active-active com SKUs com redundÃ¢ncia de zona
+- Configurar BGP em VPN gateways para roteamento dinÃ¢mico
+- Conectar vÃ¡rios sites locais a um Ãºnico VPN gateway (vÃ¡rios sites)
 - Explicar a finalidade e o caso de uso do Azure Extended Network
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Conclusão do Challenge 14 (ou compreensão dos conceitos básicos de VPN S2S)
+- ConclusÃ£o do Challenge 14 (ou compreensÃ£o dos conceitos bÃ¡sicos de VPN S2S)
 - Uma assinatura do Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com o módulo Az instalado
+- PowerShell com o mÃ³dulo Az instalado
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
-| Gateway active-active | Duas instâncias de gateway, cada uma com seu próprio IP público; ambos os túneis ativos simultaneamente |
-| Gateway com redundância de zona | SKUs terminados em "AZ" (ex.: VpnGw2AZ) implantam instâncias em zonas de disponibilidade |
-| BGP (Border Gateway Protocol) | Protocolo de roteamento dinâmico; anuncia rotas automaticamente em vez de local-address-prefixes estáticos |
-| ASN (Autonomous System Number) | Identificador único para um speaker BGP; o padrão do Azure é 65515 |
-| VPN de vários sites | Vários gateways de rede local conectados a um único VPN gateway (uma conexão por site) |
-| Azure Extended Network | Overlay Layer 2 que estende uma sub-rede local para o Azure para migração ao vivo sem re-IP |
+| Gateway active-active | Duas instÃ¢ncias de gateway, cada uma com seu prÃ³prio IP pÃºblico; ambos os tÃºneis ativos simultaneamente |
+| Gateway com redundÃ¢ncia de zona | SKUs terminados em "AZ" (ex.: VpnGw2AZ) implantam instÃ¢ncias em zonas de disponibilidade |
+| BGP (Border Gateway Protocol) | Protocolo de roteamento dinÃ¢mico; anuncia rotas automaticamente em vez de local-address-prefixes estÃ¡ticos |
+| ASN (Autonomous System Number) | Identificador Ãºnico para um speaker BGP; o padrÃ£o do Azure Ã© 65515 |
+| VPN de vÃ¡rios sites | VÃ¡rios gateways de rede local conectados a um Ãºnico VPN gateway (uma conexÃ£o por site) |
+| Azure Extended Network | Overlay Layer 2 que estende uma sub-rede local para o Azure para migraÃ§Ã£o ao vivo sem re-IP |
 
 ### Active-active vs active-standby
 
-| Recurso | Active-standby (padrão) | Active-active |
+| Recurso | Active-standby (padrÃ£o) | Active-active |
 |---------|-------------------------|---------------|
-| Instâncias do gateway | 2 (uma ativa, uma em standby) | 2 (ambas ativas) |
-| IPs públicos | 1 | 2 (um por instância) |
-| Tempo de failover | 60-90 segundos | Quase instantâneo (outro túnel já ativo) |
-| Túneis por site | 1 | 2 (um para cada instância) |
-| Configuração on-premises | Túnel único para um IP | Dois túneis para dois IPs |
-| Throughput | Largura de banda de instância única | Largura de banda agregada de ambas as instâncias |
+| InstÃ¢ncias do gateway | 2 (uma ativa, uma em standby) | 2 (ambas ativas) |
+| IPs pÃºblicos | 1 | 2 (um por instÃ¢ncia) |
+| Tempo de failover | 60-90 segundos | Quase instantÃ¢neo (outro tÃºnel jÃ¡ ativo) |
+| TÃºneis por site | 1 | 2 (um para cada instÃ¢ncia) |
+| ConfiguraÃ§Ã£o on-premises | TÃºnel Ãºnico para um IP | Dois tÃºneis para dois IPs |
+| Throughput | Largura de banda de instÃ¢ncia Ãºnica | Largura de banda agregada de ambas as instÃ¢ncias |
 
-### Nomenclatura de SKU com redundância de zona
+### Nomenclatura de SKU com redundÃ¢ncia de zona
 
-| SKU padrão | Equivalente com redundância de zona |
+| SKU padrÃ£o | Equivalente com redundÃ¢ncia de zona |
 |------------|-------------------------------------|
 | VpnGw1 | VpnGw1AZ |
 | VpnGw2 | VpnGw2AZ |
@@ -87,11 +87,11 @@ Após concluir este desafio, você será capaz de:
 | VpnGw4 | VpnGw4AZ |
 | VpnGw5 | VpnGw5AZ |
 
-SKUs com redundância de zona exigem **IPs públicos de SKU Standard** (não Basic) com alocação **com redundância de zona**.
+SKUs com redundÃ¢ncia de zona exigem **IPs pÃºblicos de SKU Standard** (nÃ£o Basic) com alocaÃ§Ã£o **com redundÃ¢ncia de zona**.
 
 ---
 
-## Tarefa 1: Implantar um VPN gateway active-active com redundância de zona
+## Tarefa 1: Implantar um VPN gateway active-active com redundÃ¢ncia de zona
 
 ### Etapa 1: Criar o grupo de recursos e a VNet
 
@@ -115,7 +115,7 @@ az network vnet subnet create \
     --address-prefixes 10.1.255.0/27
 ```
 
-### Etapa 2: Criar dois IPs públicos com redundância de zona (necessário para active-active)
+### Etapa 2: Criar dois IPs pÃºblicos com redundÃ¢ncia de zona (necessÃ¡rio para active-active)
 
 ```bash
 az network public-ip create \
@@ -135,9 +135,9 @@ az network public-ip create \
     --zone 1 2 3
 ```
 
-:::note IPs públicos com redundância de zona
+:::note IPs pÃºblicos com redundÃ¢ncia de zona
 
-Ao usar SKUs de gateway com redundância de zona (terminados em AZ), os IPs públicos devem ser de SKU Standard. Especificar `--zone 1 2 3` torna o IP com redundância de zona, o que significa que ele sobrevive à falha de qualquer zona de disponibilidade individual.
+Ao usar SKUs de gateway com redundÃ¢ncia de zona (terminados em AZ), os IPs pÃºblicos devem ser de SKU Standard. Especificar `--zone 1 2 3` torna o IP com redundÃ¢ncia de zona, o que significa que ele sobrevive Ã  falha de qualquer zona de disponibilidade individual.
 
 :::
 
@@ -206,7 +206,7 @@ New-AzVirtualNetworkGateway `
 
 ---
 
-## Tarefa 2: Conectar vários sites locais (VPN de vários sites)
+## Tarefa 2: Conectar vÃ¡rios sites locais (VPN de vÃ¡rios sites)
 
 ### Etapa 1: Criar gateways de rede local para cada site
 
@@ -228,7 +228,7 @@ az network local-gateway create \
     --location eastus
 ```
 
-### Etapa 2: Criar conexões VPN para cada site
+### Etapa 2: Criar conexÃµes VPN para cada site
 
 ```bash
 # Connection to Dallas
@@ -288,12 +288,12 @@ New-AzVirtualNetworkGatewayConnection `
     -SharedKey "ChicagoKey!2024Secure"
 ```
 
-:::tip Considerações sobre vários sites
+:::tip ConsideraÃ§Ãµes sobre vÃ¡rios sites
 
-- Cada site local requer seu próprio gateway de rede local e recurso de conexão VPN
-- VPN gateways baseados em rota suportam até 30 túneis S2S (VpnGw1) ou 100 (VpnGw4/5)
-- Os espaços de endereço em todos os gateways de rede local não devem se sobrepor
-- Cada conexão pode ter uma chave compartilhada diferente
+- Cada site local requer seu prÃ³prio gateway de rede local e recurso de conexÃ£o VPN
+- VPN gateways baseados em rota suportam atÃ© 30 tÃºneis S2S (VpnGw1) ou 100 (VpnGw4/5)
+- Os espaÃ§os de endereÃ§o em todos os gateways de rede local nÃ£o devem se sobrepor
+- Cada conexÃ£o pode ter uma chave compartilhada diferente
 
 :::
 
@@ -301,7 +301,7 @@ New-AzVirtualNetworkGatewayConnection `
 
 ## Tarefa 3: Configurar BGP no VPN gateway
 
-O BGP permite a troca dinâmica de rotas, eliminando a necessidade de manter manualmente `--local-address-prefixes` nos gateways de rede local quando as redes locais mudam.
+O BGP permite a troca dinÃ¢mica de rotas, eliminando a necessidade de manter manualmente `--local-address-prefixes` nos gateways de rede local quando as redes locais mudam.
 
 ### Etapa 1: Habilitar BGP no VPN gateway
 
@@ -328,7 +328,7 @@ az network local-gateway create \
     --location eastus
 ```
 
-### Etapa 3: Criar uma conexão com BGP habilitado
+### Etapa 3: Criar uma conexÃ£o com BGP habilitado
 
 ```bash
 az network vpn-connection create \
@@ -371,7 +371,7 @@ New-AzVirtualNetworkGatewayConnection `
     -EnableBgp $true
 ```
 
-### Etapa 4: Verificar a configuração do BGP
+### Etapa 4: Verificar a configuraÃ§Ã£o do BGP
 
 ```bash
 # Show gateway BGP settings
@@ -397,17 +397,17 @@ az network vnet-gateway list-advertised-routes \
 
 :::note Regras de ASN do BGP
 
-- ASN reservado do Azure: 65515 (padrão para VPN gateways do Azure se não especificado)
-- Não use 65515 para dispositivos on-premises
+- ASN reservado do Azure: 65515 (padrÃ£o para VPN gateways do Azure se nÃ£o especificado)
+- NÃ£o use 65515 para dispositivos on-premises
 - Faixa de ASN privado: 64512-65534 e 4200000000-4294967294
-- Cada peer BGP (gateway do Azure e dispositivo on-premises) deve ter um ASN único
-- O `--bgp-peering-address` no gateway de rede local é o IP interno do peer BGP do dispositivo on-premises (não seu IP público)
+- Cada peer BGP (gateway do Azure e dispositivo on-premises) deve ter um ASN Ãºnico
+- O `--bgp-peering-address` no gateway de rede local Ã© o IP interno do peer BGP do dispositivo on-premises (nÃ£o seu IP pÃºblico)
 
 :::
 
 ---
 
-## Tarefa 4: Verificar as instâncias do gateway active-active
+## Tarefa 4: Verificar as instÃ¢ncias do gateway active-active
 
 ### Azure CLI
 
@@ -446,9 +446,9 @@ $vgw.IpConfigurations | Format-Table Name, PublicIpAddress
 
 ## Tarefa 5: Simular failover
 
-Em uma configuração active-active, se uma instância do gateway ficar indisponível, o dispositivo on-premises detecta o peer inativo (via IKE Dead Peer Detection) e faz failover para o túnel ativo restante. Nenhuma ação do lado do Azure é necessária.
+Em uma configuraÃ§Ã£o active-active, se uma instÃ¢ncia do gateway ficar indisponÃ­vel, o dispositivo on-premises detecta o peer inativo (via IKE Dead Peer Detection) e faz failover para o tÃºnel ativo restante. Nenhuma aÃ§Ã£o do lado do Azure Ã© necessÃ¡ria.
 
-### Etapas de verificação
+### Etapas de verificaÃ§Ã£o
 
 ```bash
 # Monitor connection status for both tunnels
@@ -461,71 +461,71 @@ az network vpn-connection show \
 
 ### Compreendendo o comportamento de failover
 
-| Cenário | Comportamento active-standby | Comportamento active-active |
+| CenÃ¡rio | Comportamento active-standby | Comportamento active-active |
 |---------|------------------------------|----------------------------|
-| Manutenção planejada | 60-90 segundos de inatividade | Quase zero inatividade (outro túnel permanece) |
-| Falha de zona | Gateway indisponível se na zona afetada | Sobrevive se usar SKU AZ entre zonas |
-| Falha de instância única | 60-90 segundos de failover para standby | Uso imediato do outro túnel ativo |
-| Falha do dispositivo on-premises | Túnel inativo até o dispositivo recuperar | Túnel inativo até o dispositivo recuperar (igual) |
+| ManutenÃ§Ã£o planejada | 60-90 segundos de inatividade | Quase zero inatividade (outro tÃºnel permanece) |
+| Falha de zona | Gateway indisponÃ­vel se na zona afetada | Sobrevive se usar SKU AZ entre zonas |
+| Falha de instÃ¢ncia Ãºnica | 60-90 segundos de failover para standby | Uso imediato do outro tÃºnel ativo |
+| Falha do dispositivo on-premises | TÃºnel inativo atÃ© o dispositivo recuperar | TÃºnel inativo atÃ© o dispositivo recuperar (igual) |
 
 ---
 
 ## Tarefa 6: Azure Extended Network (conceitual)
 
-O Azure Extended Network é uma tecnologia de overlay Layer 2 que estende uma sub-rede on-premises para uma VNet do Azure, permitindo que VMs mantenham seus endereços IP on-premises quando migradas para o Azure.
+O Azure Extended Network Ã© uma tecnologia de overlay Layer 2 que estende uma sub-rede on-premises para uma VNet do Azure, permitindo que VMs mantenham seus endereÃ§os IP on-premises quando migradas para o Azure.
 
 ### Caso de uso
 
-- Migração ao vivo de VMs do on-premises para o Azure sem alterar endereços IP
-- Evitar re-IP durante projetos de migração em fases
-- Manter dependências de rede (IPs codificados, aplicativos legados) durante a transição
+- MigraÃ§Ã£o ao vivo de VMs do on-premises para o Azure sem alterar endereÃ§os IP
+- Evitar re-IP durante projetos de migraÃ§Ã£o em fases
+- Manter dependÃªncias de rede (IPs codificados, aplicativos legados) durante a transiÃ§Ã£o
 
-### Requisitos e limitações
+### Requisitos e limitaÃ§Ãµes
 
 | Requisito | Detalhe |
 |-----------|---------|
 | On-premises | Windows Server 2019+ com Hyper-V |
 | Azure | VMs com Windows Server 2019+ no Azure |
 | Rede | VPN site a site ou ExpressRoute entre on-premises e Azure |
-| Sub-rede | Máximo de /24 para a sub-rede estendida |
-| Escopo | Destinado apenas para migração, não para uso em produção a longo prazo |
+| Sub-rede | MÃ¡ximo de /24 para a sub-rede estendida |
+| Escopo | Destinado apenas para migraÃ§Ã£o, nÃ£o para uso em produÃ§Ã£o a longo prazo |
 
 ### Como funciona
 
-1. Um par de VMs appliance (uma on-premises, uma no Azure) cria um túnel VXLAN sobre a VPN S2S
-2. O tráfego ARP e broadcast é intermediado entre os dois lados
+1. Um par de VMs appliance (uma on-premises, uma no Azure) cria um tÃºnel VXLAN sobre a VPN S2S
+2. O trÃ¡fego ARP e broadcast Ã© intermediado entre os dois lados
 3. VMs em ambos os lados da sub-rede estendida podem se comunicar na Layer 2
-4. Após a conclusão da migração, o lado on-premises é descomissionado
+4. ApÃ³s a conclusÃ£o da migraÃ§Ã£o, o lado on-premises Ã© descomissionado
 
 :::tip Nota de exame
 
-O Azure Extended Network é um tópico de nicho no exame. Pontos-chave a lembrar: requer Windows Server 2019+, funciona sobre VPN S2S ou ExpressRoute existente, é limitado a sub-redes /24 e é projetado como um auxílio temporário de migração (não uma arquitetura permanente). Se o exame perguntar sobre estender Layer 2 para o Azure, esta é a resposta.
+O Azure Extended Network Ã© um tÃ³pico de nicho no exame. Pontos-chave a lembrar: requer Windows Server 2019+, funciona sobre VPN S2S ou ExpressRoute existente, Ã© limitado a sub-redes /24 e Ã© projetado como um auxÃ­lio temporÃ¡rio de migraÃ§Ã£o (nÃ£o uma arquitetura permanente). Se o exame perguntar sobre estender Layer 2 para o Azure, esta Ã© a resposta.
 
 :::
 
-### Comandos de referência (apenas conceitual)
+### Comandos de referÃªncia (apenas conceitual)
 
-O Azure Extended Network é configurado através do Windows Admin Center, não via Azure CLI ou PowerShell diretamente:
+O Azure Extended Network Ã© configurado atravÃ©s do Windows Admin Center, nÃ£o via Azure CLI ou PowerShell diretamente:
 
-1. Instale a extensão Azure Extended Network no Windows Admin Center
+1. Instale a extensÃ£o Azure Extended Network no Windows Admin Center
 2. Conecte-se ao host on-premises
 3. Selecione a sub-rede a ser estendida
 4. Especifique a VNet e a sub-rede do Azure para estender
 5. Implante a VM appliance do Azure
 
-Para detalhes, consulte a [documentação do Azure Extended Network](https://learn.microsoft.com/en-us/windows-server/manage/windows-admin-center/azure/azure-extended-network).
+Para detalhes, consulte a [documentaÃ§Ã£o do Azure Extended Network](https://learn.microsoft.com/en-us/windows-server/manage/windows-admin-center/azure/azure-extended-network).
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Conflito de ASN do BGP
+### CenÃ¡rio 1: Conflito de ASN do BGP
 
-**Sintoma:** O peering BGP falha ao estabelecer. A conexão mostra `Connected`, mas nenhuma rota é aprendida.
+**Sintoma:** O peering BGP falha ao estabelecer. A conexÃ£o mostra `Connected`, mas nenhuma rota Ã© aprendida.
 
-**Causa raiz:** Tanto o VPN gateway do Azure quanto o dispositivo on-premises estão configurados com o mesmo ASN (ex.: ambos usando 65515).
+**Causa raiz:** Tanto o VPN gateway do Azure quanto o dispositivo on-premises estÃ£o configurados com o mesmo ASN (ex.: ambos usando 65515).
 
-**Comando de diagnóstico:**
+**Comando de diagnÃ³stico:**
 
 ```bash
 az network vnet-gateway show \
@@ -541,7 +541,7 @@ az network local-gateway show \
     --output tsv
 ```
 
-**Correção:** Altere um dos lados para um ASN único:
+**CorreÃ§Ã£o:** Altere um dos lados para um ASN Ãºnico:
 
 ```bash
 az network vnet-gateway update \
@@ -550,13 +550,13 @@ az network vnet-gateway update \
     --asn 65010
 ```
 
-### Cenário 2: Active-active com apenas um IP público
+### CenÃ¡rio 2: Active-active com apenas um IP pÃºblico
 
-**Sintoma:** A criação do gateway falha ou volta para o modo active-standby.
+**Sintoma:** A criaÃ§Ã£o do gateway falha ou volta para o modo active-standby.
 
-**Causa raiz:** Apenas um IP público foi especificado em `--public-ip-addresses` ao criar o gateway. O modo active-active requer exatamente dois IPs públicos.
+**Causa raiz:** Apenas um IP pÃºblico foi especificado em `--public-ip-addresses` ao criar o gateway. O modo active-active requer exatamente dois IPs pÃºblicos.
 
-**Correção:** Recrie o gateway com dois IPs públicos (não é possível adicionar um segundo IP após a criação):
+**CorreÃ§Ã£o:** Recrie o gateway com dois IPs pÃºblicos (nÃ£o Ã© possÃ­vel adicionar um segundo IP apÃ³s a criaÃ§Ã£o):
 
 ```bash
 # Delete and recreate (gateway update cannot add active-active after creation)
@@ -578,13 +578,13 @@ az network vnet-gateway create \
     --no-wait
 ```
 
-### Cenário 3: SKU não-AZ em configuração com redundância de zona
+### CenÃ¡rio 3: SKU nÃ£o-AZ em configuraÃ§Ã£o com redundÃ¢ncia de zona
 
-**Sintoma:** O gateway é implantado, mas não sobrevive à falha de zona de disponibilidade. A inspeção mostra instâncias em uma única zona.
+**Sintoma:** O gateway Ã© implantado, mas nÃ£o sobrevive Ã  falha de zona de disponibilidade. A inspeÃ§Ã£o mostra instÃ¢ncias em uma Ãºnica zona.
 
-**Causa raiz:** Um SKU não-AZ (ex.: VpnGw2 em vez de VpnGw2AZ) foi usado. SKUs não-AZ implantam ambas as instâncias na mesma zona ou sem zona específica.
+**Causa raiz:** Um SKU nÃ£o-AZ (ex.: VpnGw2 em vez de VpnGw2AZ) foi usado. SKUs nÃ£o-AZ implantam ambas as instÃ¢ncias na mesma zona ou sem zona especÃ­fica.
 
-**Comando de diagnóstico:**
+**Comando de diagnÃ³stico:**
 
 ```bash
 az network vnet-gateway show \
@@ -595,7 +595,7 @@ az network vnet-gateway show \
 # Returns: VpnGw2 (should be VpnGw2AZ)
 ```
 
-**Correção:** Recrie o gateway com um SKU AZ (a alteração de SKU requer exclusão e recriação):
+**CorreÃ§Ã£o:** Recrie o gateway com um SKU AZ (a alteraÃ§Ã£o de SKU requer exclusÃ£o e recriaÃ§Ã£o):
 
 ```bash
 az network vnet-gateway delete \
@@ -617,24 +617,24 @@ az network vnet-gateway create \
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-15-q1",
-    question: "How many public IP addresses are required for an active-active VPN gateway?",
+    question: "Quantos endereços IP públicos são necessários para um VPN Gateway ativo-ativo?",
     options: [
       "1",
       "2",
       "3",
-      "None (uses private IPs only)"
+      "Nenhum (usa apenas IPs privados)"
     ],
     correctIndex: 1,
-    explanation: "An active-active VPN gateway requires exactly two public IP addresses, one for each gateway instance. Each on-premises device must establish tunnels to both public IPs for full redundancy."
+    explanation: "Um VPN Gateway ativo-ativo requer exatamente dois endereços IP públicos, um para cada instância do gateway. Cada dispositivo local deve estabelecer túneis para ambos os IPs públicos para redundância completa."
   },
   {
     id: "az700-15-q2",
-    question: "Which VPN Gateway SKU provides zone-redundant deployment across availability zones?",
+    question: "Qual SKU de VPN Gateway fornece implantação com redundância de zona entre zonas de disponibilidade?",
     options: [
       "VpnGw2",
       "VpnGw2AZ",
@@ -642,11 +642,11 @@ az network vnet-gateway create \
       "VpnGw2Zone"
     ],
     correctIndex: 1,
-    explanation: "Zone-redundant VPN Gateway SKUs have the 'AZ' suffix (VpnGw1AZ through VpnGw5AZ). These SKUs deploy gateway instances across multiple availability zones, surviving single-zone failures. Standard (non-AZ) SKUs do not guarantee zone distribution."
+    explanation: "Os SKUs de VPN Gateway com redundância de zona possuem o sufixo 'AZ' (VpnGw1AZ até VpnGw5AZ). Esses SKUs implantam instâncias do gateway em múltiplas zonas de disponibilidade, sobrevivendo a falhas de uma única zona. SKUs Standard (sem AZ) não garantem distribuição entre zonas."
   },
   {
     id: "az700-15-q3",
-    question: "What is the default ASN assigned to Azure VPN gateways if no custom ASN is specified?",
+    question: "Qual é o ASN padrão atribuído aos Azure VPN Gateways se nenhum ASN personalizado for especificado?",
     options: [
       "64512",
       "65000",
@@ -654,31 +654,31 @@ az network vnet-gateway create \
       "65535"
     ],
     correctIndex: 2,
-    explanation: "Azure VPN gateways use ASN 65515 by default. On-premises devices must use a different ASN to establish BGP peering. Common choices for on-prem are in the private ASN range (64512-65534), excluding 65515."
+    explanation: "Os Azure VPN Gateways usam o ASN 65515 por padrão. Os dispositivos locais devem usar um ASN diferente para estabelecer o peering BGP. Escolhas comuns para on-premises estão na faixa de ASN privado (64512-65534), excluindo 65515."
   },
   {
     id: "az700-15-q4",
-    question: "What is the primary use case for Azure Extended Network?",
+    question: "Qual é o principal caso de uso do Azure Extended Network?",
     options: [
-      "Permanent Layer 2 connectivity between on-premises and Azure",
-      "Temporary Layer 2 stretch to allow VM migration without re-IP",
-      "High-speed Layer 2 data transfer for backup purposes",
-      "Replacing ExpressRoute with a software-defined overlay"
+      "Conectividade permanente de Camada 2 entre on-premises e Azure",
+      "Extensão temporária de Camada 2 para permitir migração de VMs sem alteração de IP",
+      "Transferência de dados de Camada 2 de alta velocidade para fins de backup",
+      "Substituição do ExpressRoute por um overlay definido por software"
     ],
     correctIndex: 1,
-    explanation: "Azure Extended Network provides a temporary Layer 2 stretch between on-premises and Azure, allowing VMs to be migrated without changing their IP addresses. It is designed as a migration aid, not a permanent architecture. It requires Windows Server 2019+ and is limited to /24 subnets."
+    explanation: "O Azure Extended Network fornece uma extensão temporária de Camada 2 entre on-premises e Azure, permitindo que VMs sejam migradas sem alterar seus endereços IP. Ele é projetado como auxílio à migração, não como uma arquitetura permanente. Requer Windows Server 2019+ e é limitado a sub-redes /24."
   },
   {
     id: "az700-15-q5",
-    question: "What happens during planned Azure maintenance on an active-active VPN gateway?",
+    question: "O que acontece durante a manutenção planejada do Azure em um VPN Gateway ativo-ativo?",
     options: [
-      "Both tunnels go down simultaneously for 60-90 seconds",
-      "One instance is maintained at a time; the other continues handling traffic with near-zero downtime",
-      "Traffic is paused and queued until maintenance completes",
-      "The gateway automatically fails over to a standby instance in another region"
+      "Ambos os túneis caem simultaneamente por 60-90 segundos",
+      "Uma instância é mantida por vez; a outra continua tratando o tráfego com tempo de inatividade próximo de zero",
+      "O tráfego é pausado e enfileirado até a manutenção ser concluída",
+      "O gateway faz failover automaticamente para uma instância standby em outra região"
     ],
     correctIndex: 1,
-    explanation: "In active-active mode, Azure performs rolling maintenance on one instance at a time. While one instance is being maintained, the other instance continues to handle VPN traffic through its active tunnel, providing near-zero downtime for the VPN connection."
+    explanation: "No modo ativo-ativo, o Azure realiza manutenção rotativa em uma instância por vez. Enquanto uma instância está em manutenção, a outra instância continua tratando o tráfego VPN através de seu túnel ativo, proporcionando tempo de inatividade próximo de zero para a conexão VPN."
   }
 ]} />
 
@@ -686,7 +686,7 @@ az network vnet-gateway create \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para interromper a cobrança:
+Remova todos os recursos criados neste desafio para interromper a cobranÃ§a:
 
 ```bash
 az group delete --name rg-vpn-ha-lab --yes --no-wait
@@ -698,10 +698,10 @@ Remove-AzResourceGroup -Name "rg-vpn-ha-lab" -Force -AsJob
 
 ---
 
-## Referências adicionais
+## ReferÃªncias adicionais
 
 - [Conectividade entre locais com alta disponibilidade](https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-highlyavailable)
 - [VPN gateways active-active](https://learn.microsoft.com/en-us/azure/vpn-gateway/active-active-portal)
 - [Configurar BGP para VPN gateways](https://learn.microsoft.com/en-us/azure/vpn-gateway/bgp-howto)
-- [VPN gateways com redundância de zona](https://learn.microsoft.com/en-us/azure/vpn-gateway/about-zone-redundant-vnet-gateways)
+- [VPN gateways com redundÃ¢ncia de zona](https://learn.microsoft.com/en-us/azure/vpn-gateway/about-zone-redundant-vnet-gateways)
 - [Azure Extended Network](https://learn.microsoft.com/en-us/windows-server/manage/windows-admin-center/azure/azure-extended-network)

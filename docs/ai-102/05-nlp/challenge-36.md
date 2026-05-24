@@ -22,14 +22,14 @@ import TabItem from '@theme/TabItem';
 
 Azure Speech Translation combines speech recognition and text translation in a single pipeline:
 
-```
-Audio Input → Speech Recognition → Translation → Text/Speech Output
+```text
+Audio Input â†’ Speech Recognition â†’ Translation â†’ Text/Speech Output
 ```
 
 Key differences from separate STT + Translator:
-- **Single API call** — lower latency
-- **Streaming** — real-time partial results
-- **Speech-to-speech** — direct translated audio output
+- **Single API call** â€” lower latency
+- **Streaming** â€” real-time partial results
+- **Speech-to-speech** â€” direct translated audio output
 - Supports 70+ languages for speech-to-text translation
 
 Classes: `SpeechTranslationConfig`, `TranslationRecognizer`
@@ -236,15 +236,15 @@ if result.reason == speechsdk.ResultReason.TranslatedSpeech:
 
 ## Expected Output
 
-```
+```text
 Translating speech...
 Recognized (en): The quarterly results exceeded expectations with a fifteen percent increase.
 
 Translations:
   [es] Los resultados trimestrales superaron las expectativas con un aumento del quince por ciento.
-  [fr] Les résultats trimestriels ont dépassé les attentes avec une augmentation de quinze pour cent.
-  [de] Die Quartalsergebnisse übertrafen die Erwartungen mit einem Anstieg von fünfzehn Prozent.
-  [ja] 四半期の結果は15パーセントの増加で期待を上回りました。
+  [fr] Les rÃ©sultats trimestriels ont dÃ©passÃ© les attentes avec une augmentation de quinze pour cent.
+  [de] Die Quartalsergebnisse Ã¼bertrafen die Erwartungen mit einem Anstieg von fÃ¼nfzehn Prozent.
+  [ja] å››åŠæœŸã®çµæžœã¯15ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆã®å¢—åŠ ã§æœŸå¾…ã‚’ä¸Šå›žã‚Šã¾ã—ãŸã€‚
 
 Starting continuous translation...
   [Partial] The quarterly
@@ -252,12 +252,12 @@ Starting continuous translation...
 
 [Final] EN: The quarterly results exceeded expectations.
         ES: Los resultados trimestrales superaron las expectativas.
-        FR: Les résultats trimestriels ont dépassé les attentes.
+        FR: Les rÃ©sultats trimestriels ont dÃ©passÃ© les attentes.
 
 Translated 3 segments
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -301,7 +301,7 @@ Translated 3 segments
       "'recognizing' is for translation; 'recognized' is for the source text only"
     ],
     correctAnswer: 0,
-    explanation: "'recognizing' fires with interim (partial) results as speech is being processed — useful for live captions. 'recognized' fires with the final, complete result for each utterance."
+    explanation: "'recognizing' fires with interim (partial) results as speech is being processed â€” useful for live captions. 'recognized' fires with the final, complete result for each utterance."
   },
   {
     question: "How do you enable speech-to-speech translation (synthesized output)?",
@@ -323,7 +323,7 @@ Translated 3 segments
       "Lower latency with streaming partial results in a single pipeline"
     ],
     correctAnswer: 3,
-    explanation: "Speech translation combines recognition and translation in one streaming pipeline, providing lower latency and real-time partial results — critical for live translation scenarios."
+    explanation: "Speech translation combines recognition and translation in one streaming pipeline, providing lower latency and real-time partial results â€” critical for live translation scenarios."
   }
 ]} />
 

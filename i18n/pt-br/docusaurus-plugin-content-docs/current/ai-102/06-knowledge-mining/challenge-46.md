@@ -10,31 +10,31 @@ import TabItem from '@theme/TabItem';
 # Desafio 46: Modelos Customizados do Document Intelligence
 
 :::info Tempo Estimado
-**60-90 min** | **Custo**: ~$2.00 (Document Intelligence S0 + treinamento de modelo customizado) | **Domínio**: Knowledge Mining & Extraction (15-20%)
+**60-90 min** | **Custo**: ~$2.00 (Document Intelligence S0 + treinamento de modelo customizado) | **DomÃ­nio**: Knowledge Mining & Extraction (15-20%)
 :::
 
 ## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |-------|--------|
-| Treinar um modelo de extração customizado | Alto |
+| Treinar um modelo de extraÃ§Ã£o customizado | Alto |
 | Rotular dados de treinamento para modelos customizados | Alto |
-| Avaliar a precisão do modelo customizado | Médio |
-| Criar um modelo composto a partir de múltiplos modelos customizados | Alto |
-| Usar modelos customizados para inferência | Médio |
+| Avaliar a precisÃ£o do modelo customizado | MÃ©dio |
+| Criar um modelo composto a partir de mÃºltiplos modelos customizados | Alto |
+| Usar modelos customizados para inferÃªncia | MÃ©dio |
 
-## Visão Geral
+## VisÃ£o Geral
 
-Quando os modelos pré-construídos não correspondem aos seus formatos de documento, os modelos customizados permitem que você treine a extração nos SEUS documentos específicos. O Azure Document Intelligence suporta duas abordagens de modelo customizado:
+Quando os modelos prÃ©-construÃ­dos nÃ£o correspondem aos seus formatos de documento, os modelos customizados permitem que vocÃª treine a extraÃ§Ã£o nos SEUS documentos especÃ­ficos. O Azure Document Intelligence suporta duas abordagens de modelo customizado:
 
 | Tipo de modelo | Abordagem de treinamento | Quando usar |
 |-----------|-----------------|-------------|
-| **Custom template** | Layout fixo, campos rotulados | Formulários com estrutura consistente (mesmo layout toda vez) |
-| **Custom neural** | Layout variável, machine learning | Documentos com layouts variados (diferentes formatos de fatura de fornecedor) |
+| **Custom template** | Layout fixo, campos rotulados | FormulÃ¡rios com estrutura consistente (mesmo layout toda vez) |
+| **Custom neural** | Layout variÃ¡vel, machine learning | Documentos com layouts variados (diferentes formatos de fatura de fornecedor) |
 
 ### Modelos compostos
 
-Um **modelo composto** roteia documentos recebidos para o sub-modelo correto automaticamente. Por exemplo, você pode compor:
+Um **modelo composto** roteia documentos recebidos para o sub-modelo correto automaticamente. Por exemplo, vocÃª pode compor:
 - Modelo de Fatura A (para o layout do Fornecedor X)
 - Modelo de Fatura B (para o layout do Fornecedor Y)
 - Modelo de Fatura C (para o layout do Fornecedor Z)
@@ -42,21 +42,21 @@ Um **modelo composto** roteia documentos recebidos para o sub-modelo correto aut
 O modelo composto classifica o documento e roteia para o sub-modelo apropriado.
 
 ### Fluxo de treinamento
-1. **Coletar** 5+ documentos de amostra (mínimo 5 para template, 10+ para neural)
+1. **Coletar** 5+ documentos de amostra (mÃ­nimo 5 para template, 10+ para neural)
 2. **Rotular** campos no Document Intelligence Studio
 3. **Treinar** o modelo
 4. **Testar** com novos documentos
 5. **Implantar** ou compor com outros modelos
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Desafio 45 concluído (recurso Document Intelligence)
+- Desafio 45 concluÃ­do (recurso Document Intelligence)
 - Azure Storage Account com documentos de treinamento de amostra
 - Acesso ao Document Intelligence Studio
 - Python 3.9+ com `azure-ai-documentintelligence>=1.0.0`
 - .NET 8 com `Azure.AI.DocumentIntelligence`
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Preparar dados de treinamento no Azure Storage
 
@@ -122,7 +122,7 @@ echo "Training data URL: https://${STORAGE_ACCOUNT}.blob.core.windows.net/${CONT
 ### Tarefa 2: Construir e treinar um modelo customizado
 
 :::tip Studio vs API
-O treinamento com dados rotulados é feito mais facilmente no [Document Intelligence Studio](https://documentintelligence.ai.azure.com). O Studio fornece uma interface visual de rotulagem. A API abaixo mostra a construção programática do modelo para automação.
+O treinamento com dados rotulados Ã© feito mais facilmente no [Document Intelligence Studio](https://documentintelligence.ai.azure.com). O Studio fornece uma interface visual de rotulagem. A API abaixo mostra a construÃ§Ã£o programÃ¡tica do modelo para automaÃ§Ã£o.
 :::
 
 <Tabs>
@@ -333,7 +333,7 @@ print(f"Component models: {len(composed_model.doc_types)} document types")
 for doc_type in composed_model.doc_types:
     print(f"  - {doc_type}")
 
-# Use the composed model — it auto-classifies the document
+# Use the composed model â€” it auto-classifies the document
 poller = client.begin_analyze_document(
     "composed-documents-model",
     AnalyzeDocumentRequest(url_source=test_url)
@@ -387,7 +387,7 @@ curl -s -i -X POST \
 </TabItem>
 </Tabs>
 
-### Tarefa 5: Gerenciamento de modelos — listar, obter, excluir
+### Tarefa 5: Gerenciamento de modelos â€” listar, obter, excluir
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -445,9 +445,9 @@ curl -s -X DELETE \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Model ID: purchase-order-model
 Status: ready
 Created: 2024-03-15T10:30:00Z
@@ -463,34 +463,34 @@ Document type: purchase-order-model
   Total: number (confidence: 0.93)
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| # | Cenário | Sintoma | Causa Raiz | Correção |
+| # | CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---|----------|---------|------------|-----|
-| 1 | Treinamento falha com "Not enough documents" | Operação de build falha | Modelos template precisam de 5+ documentos rotulados; neural precisa de 10+ | Adicione mais amostras de treinamento com rotulagem consistente |
-| 2 | Classificação errada no modelo composto | Documento roteado para o sub-modelo errado | Dados de treinamento entre sub-modelos são muito similares ou rótulos se sobrepõem | Garanta layouts de documentos distintos; adicione mais amostras de treinamento diversas |
-| 3 | Modelo customizado não retorna campos | Análise bem-sucedida mas `fields` está vazio | Layout do documento de teste difere significativamente dos dados de treinamento | Use o modo de build neural para layouts variáveis, ou adicione layouts de documentos similares ao conjunto de treinamento |
-| 4 | Erro de CORS no Document Intelligence Studio | Não é possível acessar dados de treinamento pelo Studio | CORS não configurado na conta de armazenamento para o domínio do Studio | Adicione regra CORS para `https://documentintelligence.ai.azure.com` |
-| 5 | Token SAS expirado | Erro 403 ao construir modelo | URL SAS usada para o container expirou | Gere um novo token SAS com tempo de expiração suficiente |
+| 1 | Treinamento falha com "Not enough documents" | OperaÃ§Ã£o de build falha | Modelos template precisam de 5+ documentos rotulados; neural precisa de 10+ | Adicione mais amostras de treinamento com rotulagem consistente |
+| 2 | ClassificaÃ§Ã£o errada no modelo composto | Documento roteado para o sub-modelo errado | Dados de treinamento entre sub-modelos sÃ£o muito similares ou rÃ³tulos se sobrepÃµem | Garanta layouts de documentos distintos; adicione mais amostras de treinamento diversas |
+| 3 | Modelo customizado nÃ£o retorna campos | AnÃ¡lise bem-sucedida mas `fields` estÃ¡ vazio | Layout do documento de teste difere significativamente dos dados de treinamento | Use o modo de build neural para layouts variÃ¡veis, ou adicione layouts de documentos similares ao conjunto de treinamento |
+| 4 | Erro de CORS no Document Intelligence Studio | NÃ£o Ã© possÃ­vel acessar dados de treinamento pelo Studio | CORS nÃ£o configurado na conta de armazenamento para o domÃ­nio do Studio | Adicione regra CORS para `https://documentintelligence.ai.azure.com` |
+| 5 | Token SAS expirado | Erro 403 ao construir modelo | URL SAS usada para o container expirou | Gere um novo token SAS com tempo de expiraÃ§Ã£o suficiente |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ai102-46-q1",
-    question: "Você recebe faturas de 5 fornecedores diferentes, cada um com um layout completamente diferente. Qual modo de build de modelo customizado é mais apropriado?",
+    question: "VocÃª recebe faturas de 5 fornecedores diferentes, cada um com um layout completamente diferente. Qual modo de build de modelo customizado Ã© mais apropriado?",
     options: [
       "Template (modelo custom template)",
       "Modelo composto com 5 modelos template",
-      "Modelo pré-construído de fatura",
+      "Modelo prÃ©-construÃ­do de fatura",
       "Neural (modelo custom neural)"
     ],
     correctIndex: 3,
-    explanation: "Modelos custom neural lidam com layouts variáveis e podem aprender extração de campos em diferentes estruturas de documento. Modelos template requerem layouts fixos. Embora um modelo composto com 5 modelos template funcionasse, o neural é mais simples e lida com variação entre layouts nativamente."
+    explanation: "Modelos custom neural lidam com layouts variÃ¡veis e podem aprender extraÃ§Ã£o de campos em diferentes estruturas de documento. Modelos template requerem layouts fixos. Embora um modelo composto com 5 modelos template funcionasse, o neural Ã© mais simples e lida com variaÃ§Ã£o entre layouts nativamente."
   },
   {
     id: "ai102-46-q2",
-    question: "Qual é o número mínimo de documentos de treinamento necessários para um modelo custom template?",
+    question: "Qual Ã© o nÃºmero mÃ­nimo de documentos de treinamento necessÃ¡rios para um modelo custom template?",
     options: [
       "1 documento",
       "5 documentos",
@@ -498,23 +498,23 @@ Document type: purchase-order-model
       "50 documentos"
     ],
     correctIndex: 1,
-    explanation: "Modelos custom template requerem um mínimo de 5 documentos de treinamento rotulados. Na prática, mais documentos (especialmente representando variações de layout) melhoram a precisão. Modelos neural precisam de pelo menos 10 documentos."
+    explanation: "Modelos custom template requerem um mÃ­nimo de 5 documentos de treinamento rotulados. Na prÃ¡tica, mais documentos (especialmente representando variaÃ§Ãµes de layout) melhoram a precisÃ£o. Modelos neural precisam de pelo menos 10 documentos."
   },
   {
     id: "ai102-46-q3",
-    question: "Você tem modelos customizados separados para ordens de compra, faturas e recibos. Você quer um único endpoint que classifique automaticamente e extraia. O que você deve criar?",
+    question: "VocÃª tem modelos customizados separados para ordens de compra, faturas e recibos. VocÃª quer um Ãºnico endpoint que classifique automaticamente e extraia. O que vocÃª deve criar?",
     options: [
       "Um novo modelo neural treinado em todos os tipos de documento",
-      "Três endpoints separados com um classificador customizado na frente",
-      "Um modelo composto combinando todos os três modelos customizados",
-      "Um único modelo template com todos os rótulos de campo de todos os tipos"
+      "TrÃªs endpoints separados com um classificador customizado na frente",
+      "Um modelo composto combinando todos os trÃªs modelos customizados",
+      "Um Ãºnico modelo template com todos os rÃ³tulos de campo de todos os tipos"
     ],
     correctIndex: 2,
-    explanation: "Um modelo composto combina múltiplos modelos customizados em um. Ele classifica automaticamente o documento recebido e o roteia para o sub-modelo correto para extração. Isso fornece um único endpoint de API para múltiplos tipos de documento."
+    explanation: "Um modelo composto combina mÃºltiplos modelos customizados em um. Ele classifica automaticamente o documento recebido e o roteia para o sub-modelo correto para extraÃ§Ã£o. Isso fornece um Ãºnico endpoint de API para mÃºltiplos tipos de documento."
   },
   {
     id: "ai102-46-q4",
-    question: "Durante o treinamento do modelo customizado, onde você realiza a rotulagem de campos?",
+    question: "Durante o treinamento do modelo customizado, onde vocÃª realiza a rotulagem de campos?",
     options: [
       "Document Intelligence Studio (interface web)",
       "Azure CLI com comando az cognitiveservices label",
@@ -522,11 +522,11 @@ Document type: purchase-order-model
       "Blade do Document Intelligence no Portal Azure"
     ],
     correctIndex: 0,
-    explanation: "O Document Intelligence Studio (documentintelligence.ai.azure.com) fornece uma interface visual de rotulagem onde você desenha caixas delimitadoras e atribui nomes de campos às regiões nos seus documentos. Os rótulos são armazenados como arquivos JSON junto aos seus dados de treinamento."
+    explanation: "O Document Intelligence Studio (documentintelligence.ai.azure.com) fornece uma interface visual de rotulagem onde vocÃª desenha caixas delimitadoras e atribui nomes de campos Ã s regiÃµes nos seus documentos. Os rÃ³tulos sÃ£o armazenados como arquivos JSON junto aos seus dados de treinamento."
   },
   {
     id: "ai102-46-q5",
-    question: "Qual é o número máximo de modelos customizados que podem ser compostos em um único modelo composto?",
+    question: "Qual Ã© o nÃºmero mÃ¡ximo de modelos customizados que podem ser compostos em um Ãºnico modelo composto?",
     options: [
       "10 modelos",
       "50 modelos",
@@ -534,7 +534,7 @@ Document type: purchase-order-model
       "200 modelos"
     ],
     correctIndex: 3,
-    explanation: "Um único modelo composto pode conter até 200 modelos componentes. Isso permite pipelines abrangentes de processamento de documentos que roteiam muitos tipos diferentes de documentos através de uma única chamada de API."
+    explanation: "Um Ãºnico modelo composto pode conter atÃ© 200 modelos componentes. Isso permite pipelines abrangentes de processamento de documentos que roteiam muitos tipos diferentes de documentos atravÃ©s de uma Ãºnica chamada de API."
   }
 ]} />
 

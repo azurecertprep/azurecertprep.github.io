@@ -75,7 +75,6 @@ Todos os desafios neste guia custam $0. Utilizamos apenas o Portal Azure, Azure 
 ## Trilha de certificação
 
 ![Trilha de Certificação](/img/certification-path.svg)
-```
 
 ## O que é diferente no AZ-900?
 

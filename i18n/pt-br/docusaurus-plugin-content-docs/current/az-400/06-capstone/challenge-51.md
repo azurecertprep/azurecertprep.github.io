@@ -1,45 +1,45 @@
 ---
 sidebar_position: 1
-title: "Desafio 51: Capstone entre domínios"
-sidebar_label: "Desafio 51: Capstone entre domínios"
+title: "Desafio 51: Capstone entre domÃ­nios"
+sidebar_label: "Desafio 51: Capstone entre domÃ­nios"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
 # Desafio 51: Ciclo de vida DevOps de ponta a ponta
 
-:::info Plataforma: comparação
-Este capstone integra GitHub e Azure DevOps em todos os domínios do exame.
+:::info Plataforma: comparaÃ§Ã£o
+Este capstone integra GitHub e Azure DevOps em todos os domÃ­nios do exame.
 :::
 
 ## Habilidades do exame abordadas
 
-Este desafio testa habilidades de todos os cinco domínios do exame AZ-400:
-- Domínio 1: Processos e comunicações
-- Domínio 2: Estratégia de controle de código-fonte
-- Domínio 3: Pipelines de build e release
-- Domínio 4: Segurança e conformidade
-- Domínio 5: Estratégia de instrumentação
+Este desafio testa habilidades de todos os cinco domÃ­nios do exame AZ-400:
+- DomÃ­nio 1: Processos e comunicaÃ§Ãµes
+- DomÃ­nio 2: EstratÃ©gia de controle de cÃ³digo-fonte
+- DomÃ­nio 3: Pipelines de build e release
+- DomÃ­nio 4: SeguranÃ§a e conformidade
+- DomÃ­nio 5: EstratÃ©gia de instrumentaÃ§Ã£o
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso está lançando o "Contoso Payments" -- um novo microsserviço de processamento de pagamentos que lida com transações de cartão de crédito. O serviço deve processar pagamentos via uma REST API, integrar-se com gateways de pagamento externos e armazenar registros de transações no Azure SQL Database.
+A Contoso estÃ¡ lanÃ§ando o "Contoso Payments" -- um novo microsserviÃ§o de processamento de pagamentos que lida com transaÃ§Ãµes de cartÃ£o de crÃ©dito. O serviÃ§o deve processar pagamentos via uma REST API, integrar-se com gateways de pagamento externos e armazenar registros de transaÃ§Ãµes no Azure SQL Database.
 
-Devido aos requisitos de conformidade PCI-DSS, cada aspecto do ciclo de vida DevOps deve ser adequadamente protegido, monitorado e auditável. Nenhum segredo pode existir no controle de código-fonte, todos os deployments devem ser rastreáveis até work items aprovados, e o ambiente de produção deve ter monitoramento contínuo com alertas automatizados.
+Devido aos requisitos de conformidade PCI-DSS, cada aspecto do ciclo de vida DevOps deve ser adequadamente protegido, monitorado e auditÃ¡vel. Nenhum segredo pode existir no controle de cÃ³digo-fonte, todos os deployments devem ser rastreÃ¡veis atÃ© work items aprovados, e o ambiente de produÃ§Ã£o deve ter monitoramento contÃ­nuo com alertas automatizados.
 
-Sua equipe consiste em quatro desenvolvedores, um engenheiro de QA e um SRE. Você é o engenheiro DevOps responsável por projetar e implementar todo o pipeline de entrega, desde a criação do repositório até o monitoramento em produção.
+Sua equipe consiste em quatro desenvolvedores, um engenheiro de QA e um SRE. VocÃª Ã© o engenheiro DevOps responsÃ¡vel por projetar e implementar todo o pipeline de entrega, desde a criaÃ§Ã£o do repositÃ³rio atÃ© o monitoramento em produÃ§Ã£o.
 
 **Tempo estimado:** 60-90 minutos
 
 ---
 
-## Parte 1: Configuração do controle de código-fonte
+## Parte 1: ConfiguraÃ§Ã£o do controle de cÃ³digo-fonte
 
-### 1.1 Estrutura do repositório
+### 1.1 Estrutura do repositÃ³rio
 
-Crie um repositório GitHub `contoso-payments` com a seguinte estrutura:
+Crie um repositÃ³rio GitHub `contoso-payments` com a seguinte estrutura:
 
-```
+```text
 contoso-payments/
   src/
     Contoso.Payments.Api/
@@ -62,20 +62,20 @@ contoso-payments/
   docs/
 ```
 
-### 1.2 Estratégia de branches
+### 1.2 EstratÃ©gia de branches
 
-Implemente um modelo de desenvolvimento trunk-based com feature branches de curta duração:
+Implemente um modelo de desenvolvimento trunk-based com feature branches de curta duraÃ§Ã£o:
 
-| Branch | Propósito | Proteção |
+| Branch | PropÃ³sito | ProteÃ§Ã£o |
 |--------|-----------|----------|
-| `main` | Código pronto para produção | Requer PR, 2 revisores, CI aprovado, sem force push |
-| `release/*` | Estabilização de release | Requer PR, 1 revisor, CI aprovado |
+| `main` | CÃ³digo pronto para produÃ§Ã£o | Requer PR, 2 revisores, CI aprovado, sem force push |
+| `release/*` | EstabilizaÃ§Ã£o de release | Requer PR, 1 revisor, CI aprovado |
 | `feature/*` | Trabalho de desenvolvimento | Sem push direto para main |
-| `hotfix/*` | Correções de emergência | Requer 1 revisor, CI acelerado |
+| `hotfix/*` | CorreÃ§Ãµes de emergÃªncia | Requer 1 revisor, CI acelerado |
 
-### 1.3 Configuração do CODEOWNERS
+### 1.3 ConfiguraÃ§Ã£o do CODEOWNERS
 
-```
+```text
 # Default owners
 * @contoso/payments-team
 
@@ -90,18 +90,18 @@ Implemente um modelo de desenvolvimento trunk-based com feature branches de curt
 /src/Contoso.Payments.Sdk/ @contoso/api-governance
 ```
 
-### 1.4 Regras de proteção de branch
+### 1.4 Regras de proteÃ§Ã£o de branch
 
 Configure o seguinte para `main`:
 
-- Exigir revisões de pull request (mínimo 2)
-- Descartar revisões obsoletas em novos pushes
-- Exigir revisão dos CODEOWNERS
-- Exigir verificações de status: `build`, `test`, `security-scan`, `lint`
+- Exigir revisÃµes de pull request (mÃ­nimo 2)
+- Descartar revisÃµes obsoletas em novos pushes
+- Exigir revisÃ£o dos CODEOWNERS
+- Exigir verificaÃ§Ãµes de status: `build`, `test`, `security-scan`, `lint`
 - Exigir que branches estejam atualizados antes do merge
 - Exigir commits assinados
-- Restringir quem pode fazer push (apenas líderes de equipe)
-- Exigir histórico linear (apenas squash merge)
+- Restringir quem pode fazer push (apenas lÃ­deres de equipe)
+- Exigir histÃ³rico linear (apenas squash merge)
 
 ---
 
@@ -111,27 +111,27 @@ Configure o seguinte para `main`:
 
 Crie um quadro do GitHub Projects com as seguintes colunas:
 
-| Coluna | Automação |
+| Coluna | AutomaÃ§Ã£o |
 |--------|-----------|
 | Backlog | Novas issues chegam aqui |
 | Sprint Ready | Triados e estimados manualmente |
 | In Progress | Move automaticamente quando branch criada ou PR aberto |
-| In Review | Move automaticamente quando PR pronto para revisão |
-| Done | Move automaticamente quando PR é feito merge |
+| In Review | Move automaticamente quando PR pronto para revisÃ£o |
+| Done | Move automaticamente quando PR Ã© feito merge |
 
 ### 2.2 Templates de issues
 
 Crie templates de issues para:
 
-- **Feature request** -- inclui campos para critérios de aceitação, serviços afetados e avaliação de impacto PCI-DSS
-- **Bug report** -- inclui passos de reprodução, classificação de severidade e ambiente afetado
-- **Security finding** -- visibilidade restrita, inclui pontuação CVSS e prazo de remediação
+- **Feature request** -- inclui campos para critÃ©rios de aceitaÃ§Ã£o, serviÃ§os afetados e avaliaÃ§Ã£o de impacto PCI-DSS
+- **Bug report** -- inclui passos de reproduÃ§Ã£o, classificaÃ§Ã£o de severidade e ambiente afetado
+- **Security finding** -- visibilidade restrita, inclui pontuaÃ§Ã£o CVSS e prazo de remediaÃ§Ã£o
 
 ### 2.3 Rastreabilidade de commits
 
-Aplique padrões de mensagem de commit usando uma verificação de commit-lint no CI:
+Aplique padrÃµes de mensagem de commit usando uma verificaÃ§Ã£o de commit-lint no CI:
 
-```
+```text
 <type>(<scope>): <description>
 
 [optional body]
@@ -139,9 +139,9 @@ Aplique padrões de mensagem de commit usando uma verificação de commit-lint n
 Refs: #<issue-number>
 ```
 
-Tipos válidos: `feat`, `fix`, `docs`, `refactor`, `test`, `ci`, `security`
+Tipos vÃ¡lidos: `feat`, `fix`, `docs`, `refactor`, `test`, `ci`, `security`
 
-Cada commit para `main` (via squash merge) deve referenciar um work item. Configure uma GitHub Action que valide se a descrição do PR contém uma issue vinculada antes que o merge seja permitido.
+Cada commit para `main` (via squash merge) deve referenciar um work item. Configure uma GitHub Action que valide se a descriÃ§Ã£o do PR contÃ©m uma issue vinculada antes que o merge seja permitido.
 
 ---
 
@@ -231,7 +231,7 @@ jobs:
           category: "/language:csharp"
 ```
 
-### 3.2 Configuração do Dependabot
+### 3.2 ConfiguraÃ§Ã£o do Dependabot
 
 Crie `.github/dependabot.yml`:
 
@@ -262,23 +262,23 @@ updates:
       - "automated"
 ```
 
-### 3.3 Verificações de status obrigatórias
+### 3.3 VerificaÃ§Ãµes de status obrigatÃ³rias
 
-Todas as seguintes verificações devem passar antes que um PR possa ser feito merge:
+Todas as seguintes verificaÃ§Ãµes devem passar antes que um PR possa ser feito merge:
 
-- `build` -- compilação bem-sucedida
-- `lint` -- sem violações de formatação
-- `security-scan` -- sem findings de alta/crítica severidade
-- `coverage-gate` -- mínimo de 80% de cobertura de linhas
+- `build` -- compilaÃ§Ã£o bem-sucedida
+- `lint` -- sem violaÃ§Ãµes de formataÃ§Ã£o
+- `security-scan` -- sem findings de alta/crÃ­tica severidade
+- `coverage-gate` -- mÃ­nimo de 80% de cobertura de linhas
 - `commit-lint` -- formato da mensagem de commit validado
 
 ---
 
 ## Parte 4: Gerenciamento de pacotes
 
-### 4.1 Publicação do SDK compartilhado
+### 4.1 PublicaÃ§Ã£o do SDK compartilhado
 
-O projeto `Contoso.Payments.Sdk` é um pacote NuGet compartilhado consumido por outros serviços da Contoso. Publique-o no GitHub Packages a cada merge para `main`.
+O projeto `Contoso.Payments.Sdk` Ã© um pacote NuGet compartilhado consumido por outros serviÃ§os da Contoso. Publique-o no GitHub Packages a cada merge para `main`.
 
 Crie `.github/workflows/publish-sdk.yml`:
 
@@ -325,15 +325,15 @@ jobs:
             --api-key ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### 4.2 Estratégia de versionamento de pacotes
+### 4.2 EstratÃ©gia de versionamento de pacotes
 
-- Feature branches: versões pré-release (ex.: `1.0.42-feature-payments.1`)
-- Branch main: versões estáveis (ex.: `1.0.42`)
+- Feature branches: versÃµes prÃ©-release (ex.: `1.0.42-feature-payments.1`)
+- Branch main: versÃµes estÃ¡veis (ex.: `1.0.42`)
 - Release branches: release candidates (ex.: `1.0.42-rc.1`)
 
 ### 4.3 Consumo de pacotes
 
-Configure serviços downstream para consumir o SDK do GitHub Packages adicionando um `nuget.config`:
+Configure serviÃ§os downstream para consumir o SDK do GitHub Packages adicionando um `nuget.config`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -357,10 +357,10 @@ Configure serviços downstream para consumir o SDK do GitHub Packages adicionand
 
 ### 5.1 Deployment multi-stage
 
-Crie `.github/workflows/deploy.yml` implementando os seguintes estágios:
+Crie `.github/workflows/deploy.yml` implementando os seguintes estÃ¡gios:
 
-```
-Build --> Staging (auto) --> Integration Tests --> Production (aprovação manual, blue-green)
+```text
+Build --> Staging (auto) --> Integration Tests --> Production (aprovaÃ§Ã£o manual, blue-green)
 ```
 
 ```yaml
@@ -498,29 +498,29 @@ jobs:
               ca-payments-api--green-${{ github.run_number }}=100
 ```
 
-### 5.2 Regras de proteção de ambiente
+### 5.2 Regras de proteÃ§Ã£o de ambiente
 
 | Ambiente | Regras |
 |----------|--------|
-| staging | Sem aprovações, deploy a cada push para main |
-| production | Requer 2 aprovações (de `@contoso/release-managers`), temporizador de espera de 5 minutos, restrito à branch `main` |
+| staging | Sem aprovaÃ§Ãµes, deploy a cada push para main |
+| production | Requer 2 aprovaÃ§Ãµes (de `@contoso/release-managers`), temporizador de espera de 5 minutos, restrito Ã  branch `main` |
 
 ### 5.3 Procedimento de rollback
 
-Se o deployment em produção falhar na validação canary:
+Se o deployment em produÃ§Ã£o falhar na validaÃ§Ã£o canary:
 
-1. O tráfego é automaticamente roteado de volta para a revisão ativa anterior (100%)
-2. A revisão green que falhou é desativada
-3. Uma issue de incidente é automaticamente criada com detalhes do deployment
-4. A equipe é notificada via webhook do Microsoft Teams
+1. O trÃ¡fego Ã© automaticamente roteado de volta para a revisÃ£o ativa anterior (100%)
+2. A revisÃ£o green que falhou Ã© desativada
+3. Uma issue de incidente Ã© automaticamente criada com detalhes do deployment
+4. A equipe Ã© notificada via webhook do Microsoft Teams
 
 ---
 
-## Parte 6: Segurança
+## Parte 6: SeguranÃ§a
 
 ### 6.1 Workload identity federation (OIDC)
 
-Configure credenciais federadas para eliminar segredos armazenados para autenticação no Azure:
+Configure credenciais federadas para eliminar segredos armazenados para autenticaÃ§Ã£o no Azure:
 
 ```bash
 # Create app registration for each environment
@@ -538,9 +538,9 @@ az ad app federated-credential create \
   }'
 ```
 
-### 6.2 Integração com Key Vault
+### 6.2 IntegraÃ§Ã£o com Key Vault
 
-Todos os segredos da aplicação devem vir do Azure Key Vault. Nenhum segredo em variáveis de ambiente, configurações de aplicação ou variáveis de pipeline.
+Todos os segredos da aplicaÃ§Ã£o devem vir do Azure Key Vault. Nenhum segredo em variÃ¡veis de ambiente, configuraÃ§Ãµes de aplicaÃ§Ã£o ou variÃ¡veis de pipeline.
 
 ```bicep
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
@@ -566,27 +566,27 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
 
 Segredos armazenados no Key Vault:
 - `payment-gateway-api-key` -- credencial do processador de pagamentos externo
-- `sql-connection-string` -- conexão com o banco de dados (managed identity preferida, connection string como fallback)
-- `encryption-key` -- chave de criptografia de dados de cartão (rotação automática a cada 90 dias)
+- `sql-connection-string` -- conexÃ£o com o banco de dados (managed identity preferida, connection string como fallback)
+- `encryption-key` -- chave de criptografia de dados de cartÃ£o (rotaÃ§Ã£o automÃ¡tica a cada 90 dias)
 
-### 6.3 Varredura e prevenção de segredos
+### 6.3 Varredura e prevenÃ§Ã£o de segredos
 
 - Habilitar GitHub secret scanning com push protection
-- Configurar padrões de segredos personalizados para tokens específicos da Contoso (formato: `ctp_[a-zA-Z0-9]{32}`)
+- Configurar padrÃµes de segredos personalizados para tokens especÃ­ficos da Contoso (formato: `ctp_[a-zA-Z0-9]{32}`)
 - Hook de pre-commit usando `gitleaks` para capturar segredos antes de chegarem ao remoto
 
-### 6.4 Hardening de segurança do pipeline
+### 6.4 Hardening de seguranÃ§a do pipeline
 
-- Fixar todas as GitHub Actions por SHA (não por tags): `uses: actions/checkout@<full-sha>`
-- Usar `permissions` no nível do job com menor privilégio
-- Sem self-hosted runners para deployments em produção
-- Encaminhamento de log de auditoria para SIEM para todas as execuções de workflow
+- Fixar todas as GitHub Actions por SHA (nÃ£o por tags): `uses: actions/checkout@<full-sha>`
+- Usar `permissions` no nÃ­vel do job com menor privilÃ©gio
+- Sem self-hosted runners para deployments em produÃ§Ã£o
+- Encaminhamento de log de auditoria para SIEM para todas as execuÃ§Ãµes de workflow
 
 ---
 
 ## Parte 7: Monitoramento e observabilidade
 
-### 7.1 Integração com Application Insights
+### 7.1 IntegraÃ§Ã£o com Application Insights
 
 Configure o Application Insights com o seguinte:
 
@@ -620,9 +620,9 @@ public class PciDataScrubber : ITelemetryProcessor
 }
 ```
 
-### 7.2 Anotações de deployment
+### 7.2 AnotaÃ§Ãµes de deployment
 
-Adicione marcadores de deployment ao Application Insights após cada deployment em produção:
+Adicione marcadores de deployment ao Application Insights apÃ³s cada deployment em produÃ§Ã£o:
 
 ```yaml
       - name: Create deployment annotation
@@ -668,31 +668,31 @@ requests
     and current_errors > 10
 ```
 
-Configuração do alerta:
-- Severidade: 1 (Crítica)
-- Frequência de avaliação: 5 minutos
-- Grupo de ação: acionar SRE de plantão via PagerDuty, criar incidente no GitHub Issues, postar no canal do Teams
+ConfiguraÃ§Ã£o do alerta:
+- Severidade: 1 (CrÃ­tica)
+- FrequÃªncia de avaliaÃ§Ã£o: 5 minutos
+- Grupo de aÃ§Ã£o: acionar SRE de plantÃ£o via PagerDuty, criar incidente no GitHub Issues, postar no canal do Teams
 
 ### 7.4 Dashboard
 
 Crie um Azure Dashboard com os seguintes tiles:
 
-| Tile | Métrica | Visualização |
+| Tile | MÃ©trica | VisualizaÃ§Ã£o |
 |------|---------|--------------|
-| Taxa de requisições | requisições por segundo | Gráfico temporal |
-| Taxa de erros | 5xx / total de requisições | Gráfico temporal com linha de threshold |
-| Tempo de resposta P95 | percentil de duração | Gráfico temporal |
-| Saúde de dependências | latência do gateway de pagamento externo | Gráfico temporal |
-| Revisões ativas | divisão de tráfego por revisão do container app | Gráfico de pizza |
-| Frequência de deployment | deployments por semana | Gráfico de barras (DORA) |
+| Taxa de requisiÃ§Ãµes | requisiÃ§Ãµes por segundo | GrÃ¡fico temporal |
+| Taxa de erros | 5xx / total de requisiÃ§Ãµes | GrÃ¡fico temporal com linha de threshold |
+| Tempo de resposta P95 | percentil de duraÃ§Ã£o | GrÃ¡fico temporal |
+| SaÃºde de dependÃªncias | latÃªncia do gateway de pagamento externo | GrÃ¡fico temporal |
+| RevisÃµes ativas | divisÃ£o de trÃ¡fego por revisÃ£o do container app | GrÃ¡fico de pizza |
+| FrequÃªncia de deployment | deployments por semana | GrÃ¡fico de barras (DORA) |
 
 ---
 
-## Parte 8: Operações de pipeline
+## Parte 8: OperaÃ§Ãµes de pipeline
 
 ### 8.1 Cache do pipeline
 
-Otimize o tempo de execução do pipeline de CI com caching:
+Otimize o tempo de execuÃ§Ã£o do pipeline de CI com caching:
 
 ```yaml
       - name: Cache NuGet packages
@@ -712,20 +712,20 @@ Otimize o tempo de execução do pipeline de CI com caching:
             docker-${{ runner.os }}-
 ```
 
-Meta: pipeline de CI completa em menos de 5 minutos para verificações de PR.
+Meta: pipeline de CI completa em menos de 5 minutos para verificaÃ§Ãµes de PR.
 
-### 8.2 Política de retenção
+### 8.2 PolÃ­tica de retenÃ§Ã£o
 
-| Artefato | Retenção |
+| Artefato | RetenÃ§Ã£o |
 |----------|----------|
 | Logs de build do CI | 30 dias |
-| Imagens de container (não-produção) | 14 dias |
-| Imagens de container (produção) | 1 ano |
+| Imagens de container (nÃ£o-produÃ§Ã£o) | 14 dias |
+| Imagens de container (produÃ§Ã£o) | 1 ano |
 | Resultados de testes | 90 dias |
-| Relatórios de varredura de segurança | 2 anos (requisito PCI-DSS) |
+| RelatÃ³rios de varredura de seguranÃ§a | 2 anos (requisito PCI-DSS) |
 | Logs de deployment | 1 ano |
 
-Configure a retenção do Azure Container Registry:
+Configure a retenÃ§Ã£o do Azure Container Registry:
 
 ```bash
 az acr config retention update \
@@ -741,18 +741,18 @@ az acr repository update \
   --write-enabled false
 ```
 
-### 8.3 Rastreamento de métricas DORA
+### 8.3 Rastreamento de mÃ©tricas DORA
 
-Rastreie as quatro métricas DORA usando dados de workflows do GitHub Actions e Application Insights:
+Rastreie as quatro mÃ©tricas DORA usando dados de workflows do GitHub Actions e Application Insights:
 
-| Métrica | Meta | Medição |
+| MÃ©trica | Meta | MediÃ§Ã£o |
 |---------|------|---------|
-| Frequência de deployment | Diária | Contagem de deployments em produção por dia |
-| Lead time para mudanças | Menos de 1 dia | Tempo do primeiro commit até o deployment em produção |
-| Tempo médio de recuperação (MTTR) | Menos de 1 hora | Tempo da criação do incidente até a resolução |
-| Taxa de falha de mudanças | Menos de 5% | Deployments em produção causando incidentes / total de deployments |
+| FrequÃªncia de deployment | DiÃ¡ria | Contagem de deployments em produÃ§Ã£o por dia |
+| Lead time para mudanÃ§as | Menos de 1 dia | Tempo do primeiro commit atÃ© o deployment em produÃ§Ã£o |
+| Tempo mÃ©dio de recuperaÃ§Ã£o (MTTR) | Menos de 1 hora | Tempo da criaÃ§Ã£o do incidente atÃ© a resoluÃ§Ã£o |
+| Taxa de falha de mudanÃ§as | Menos de 5% | Deployments em produÃ§Ã£o causando incidentes / total de deployments |
 
-Implemente um workflow agendado que calcula e reporta essas métricas semanalmente:
+Implemente um workflow agendado que calcula e reporta essas mÃ©tricas semanalmente:
 
 ```yaml
 name: DORA Metrics Report
@@ -781,29 +781,29 @@ jobs:
 
 ---
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Cenário 1: Erros 500 em produção após deployment
+### CenÃ¡rio 1: Erros 500 em produÃ§Ã£o apÃ³s deployment
 
-**Situação:** O pipeline de deploy foi concluído com sucesso. Todos os testes de integração passaram no staging. No entanto, dentro de 10 minutos do deployment em produção, o Application Insights mostra um pico de erros 500 no endpoint `POST /api/payments`.
+**SituaÃ§Ã£o:** O pipeline de deploy foi concluÃ­do com sucesso. Todos os testes de integraÃ§Ã£o passaram no staging. No entanto, dentro de 10 minutos do deployment em produÃ§Ã£o, o Application Insights mostra um pico de erros 500 no endpoint `POST /api/payments`.
 
-**Passos de investigação:**
+**Passos de investigaÃ§Ã£o:**
 
 1. Verificar o alerta de pico de erros do Application Insights que disparou
-2. Examinar a telemetria de exceções -- você encontra: `SqlException: Invalid column name 'PaymentMethodToken'`
-3. Revisar o diff do deployment -- uma nova coluna foi adicionada à tabela `Payments` no código, mas a migration do Entity Framework nunca foi aplicada ao banco de dados de produção
-4. O ambiente de staging tinha a migration aplicada manualmente durante o desenvolvimento, mas não existe um passo automatizado de migration no pipeline de CD
+2. Examinar a telemetria de exceÃ§Ãµes -- vocÃª encontra: `SqlException: Invalid column name 'PaymentMethodToken'`
+3. Revisar o diff do deployment -- uma nova coluna foi adicionada Ã  tabela `Payments` no cÃ³digo, mas a migration do Entity Framework nunca foi aplicada ao banco de dados de produÃ§Ã£o
+4. O ambiente de staging tinha a migration aplicada manualmente durante o desenvolvimento, mas nÃ£o existe um passo automatizado de migration no pipeline de CD
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Causa raiz:** O pipeline de CD faz deploy do código da aplicação, mas não executa migrations de banco de dados. O ambiente de staging tinha a migration aplicada fora do processo, então os testes de integração passaram.
+**Causa raiz:** O pipeline de CD faz deploy do cÃ³digo da aplicaÃ§Ã£o, mas nÃ£o executa migrations de banco de dados. O ambiente de staging tinha a migration aplicada fora do processo, entÃ£o os testes de integraÃ§Ã£o passaram.
 
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
-Adicione um passo de migration ao pipeline de deployment que executa antes da atualização da aplicação:
+Adicione um passo de migration ao pipeline de deployment que executa antes da atualizaÃ§Ã£o da aplicaÃ§Ã£o:
 
 ```yaml
       - name: Run database migrations
@@ -815,16 +815,16 @@ Adicione um passo de migration ao pipeline de deployment que executa antes da at
             --connection "${{ secrets.SQL_CONNECTION_STRING }}"
 ```
 
-**Prevenção:** Adicione uma verificação no CI que compara migrations pendentes contra o schema do banco de dados alvo e falha se as migrations não estiverem incluídas no deployment.
+**PrevenÃ§Ã£o:** Adicione uma verificaÃ§Ã£o no CI que compara migrations pendentes contra o schema do banco de dados alvo e falha se as migrations nÃ£o estiverem incluÃ­das no deployment.
 
 
 </details>
 
-### Cenário 2: Falso positivo de varredura de segurança bloqueando deployment
+### CenÃ¡rio 2: Falso positivo de varredura de seguranÃ§a bloqueando deployment
 
-**Situação:** Um desenvolvedor submete um PR que adiciona validação de entrada para números de cartão de crédito. O CodeQL sinaliza o código como um possível finding de "Cleartext storage of sensitive information" porque o método de validação aceita um parâmetro de número de cartão.
+**SituaÃ§Ã£o:** Um desenvolvedor submete um PR que adiciona validaÃ§Ã£o de entrada para nÃºmeros de cartÃ£o de crÃ©dito. O CodeQL sinaliza o cÃ³digo como um possÃ­vel finding de "Cleartext storage of sensitive information" porque o mÃ©todo de validaÃ§Ã£o aceita um parÃ¢metro de nÃºmero de cartÃ£o.
 
-**O código sinalizado:**
+**O cÃ³digo sinalizado:**
 
 ```csharp
 public static bool IsValidCardNumber(string cardNumber)
@@ -844,19 +844,19 @@ public static bool IsValidCardNumber(string cardNumber)
 }
 ```
 
-**Passos de investigação:**
+**Passos de investigaÃ§Ã£o:**
 
 1. Revisar o alerta do CodeQL na aba Security
-2. Confirmar que o método realiza apenas validação -- sem logging, sem persistência, sem chamadas de rede
-3. O nome da variável `cardNumber` dispara o pattern match, mas os dados nunca são armazenados
+2. Confirmar que o mÃ©todo realiza apenas validaÃ§Ã£o -- sem logging, sem persistÃªncia, sem chamadas de rede
+3. O nome da variÃ¡vel `cardNumber` dispara o pattern match, mas os dados nunca sÃ£o armazenados
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
-Crie uma configuração do CodeQL para suprimir este falso positivo específico:
+Crie uma configuraÃ§Ã£o do CodeQL para suprimir este falso positivo especÃ­fico:
 
 ```yaml
 # .github/codeql/codeql-config.yml
@@ -873,7 +873,7 @@ query-filters:
       tags: contains security
 ```
 
-Para o método específico, adicione um comentário de supressão:
+Para o mÃ©todo especÃ­fico, adicione um comentÃ¡rio de supressÃ£o:
 
 ```csharp
 [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -882,21 +882,21 @@ Para o método específico, adicione um comentário de supressão:
 public static bool IsValidCardNumber(string cardNumber)
 ```
 
-**Processo:** Documente todas as exceções de varredura de segurança em um arquivo `SECURITY_EXCEPTIONS.md` que é revisado trimestralmente pela equipe de segurança. Cada exceção deve incluir a justificativa, o revisor e a data de expiração.
+**Processo:** Documente todas as exceÃ§Ãµes de varredura de seguranÃ§a em um arquivo `SECURITY_EXCEPTIONS.md` que Ã© revisado trimestralmente pela equipe de seguranÃ§a. Cada exceÃ§Ã£o deve incluir a justificativa, o revisor e a data de expiraÃ§Ã£o.
 
 
 </details>
 
-### Cenário 3: Hotfix de emergência para falhas de pagamento em produção
+### CenÃ¡rio 3: Hotfix de emergÃªncia para falhas de pagamento em produÃ§Ã£o
 
-**Situação:** Às 2:00 da manhã, o SRE de plantão recebe um alerta do PagerDuty: o processamento de pagamentos está falhando para todas as transações. O Application Insights mostra que o gateway de pagamento externo está retornando `401 Unauthorized`. A investigação revela que a chave da API do gateway foi rotacionada pelo provedor, mas o segredo no Key Vault não foi atualizado.
+**SituaÃ§Ã£o:** Ã€s 2:00 da manhÃ£, o SRE de plantÃ£o recebe um alerta do PagerDuty: o processamento de pagamentos estÃ¡ falhando para todas as transaÃ§Ãµes. O Application Insights mostra que o gateway de pagamento externo estÃ¡ retornando `401 Unauthorized`. A investigaÃ§Ã£o revela que a chave da API do gateway foi rotacionada pelo provedor, mas o segredo no Key Vault nÃ£o foi atualizado.
 
-**Resposta necessária:**
+**Resposta necessÃ¡ria:**
 
 1. **Triagem imediata (5 minutos)**
-   - Confirmar o problema via rastreamento de dependências do Application Insights
-   - Verificar se o erro é `401` do gateway de pagamento, não um problema interno
-   - Verificar logs de auditoria do Key Vault para confirmar que não houve acesso não autorizado
+   - Confirmar o problema via rastreamento de dependÃªncias do Application Insights
+   - Verificar se o erro Ã© `401` do gateway de pagamento, nÃ£o um problema interno
+   - Verificar logs de auditoria do Key Vault para confirmar que nÃ£o houve acesso nÃ£o autorizado
 
 2. **Criar branch de hotfix (2 minutos)**
    ```bash
@@ -913,7 +913,7 @@ public static bool IsValidCardNumber(string cardNumber)
      --value "<new-key-from-provider>"
    ```
 
-4. **Reiniciar aplicação para buscar o novo segredo (3 minutos)**
+4. **Reiniciar aplicaÃ§Ã£o para buscar o novo segredo (3 minutos)**
    ```bash
    az containerapp revision restart \
      --name ca-payments-api \
@@ -921,18 +921,18 @@ public static bool IsValidCardNumber(string cardNumber)
      --revision ca-payments-api--active
    ```
 
-5. **Pipeline acelerado para validação**
-   - O PR de hotfix dispara um pipeline de CI acelerado (pular testes de integração, executar apenas testes unitários e varredura de segurança)
-   - Aprovador único necessário (líder de plantão)
-   - Deploy direto para produção (pular staging para mudanças somente no Key Vault)
+5. **Pipeline acelerado para validaÃ§Ã£o**
+   - O PR de hotfix dispara um pipeline de CI acelerado (pular testes de integraÃ§Ã£o, executar apenas testes unitÃ¡rios e varredura de seguranÃ§a)
+   - Aprovador Ãºnico necessÃ¡rio (lÃ­der de plantÃ£o)
+   - Deploy direto para produÃ§Ã£o (pular staging para mudanÃ§as somente no Key Vault)
 
-6. **Pós-incidente (próximo dia útil)**
-   - Criar issue de revisão pós-incidente
-   - Implementar monitoramento automatizado de expiração de segredos do Key Vault
-   - Adicionar alerta para segredo do Key Vault próximo da expiração (aviso de 30 dias)
-   - Configurar webhook do gateway de pagamento para notificar sobre rotação de chave
+6. **PÃ³s-incidente (prÃ³ximo dia Ãºtil)**
+   - Criar issue de revisÃ£o pÃ³s-incidente
+   - Implementar monitoramento automatizado de expiraÃ§Ã£o de segredos do Key Vault
+   - Adicionar alerta para segredo do Key Vault prÃ³ximo da expiraÃ§Ã£o (aviso de 30 dias)
+   - Configurar webhook do gateway de pagamento para notificar sobre rotaÃ§Ã£o de chave
 
-**Configuração do pipeline para branches de hotfix:**
+**ConfiguraÃ§Ã£o do pipeline para branches de hotfix:**
 
 ```yaml
 on:
@@ -967,75 +967,75 @@ jobs:
 
 ---
 
-## Lista de verificação de validação
+## Lista de verificaÃ§Ã£o de validaÃ§Ã£o
 
 Antes de considerar este desafio completo, verifique:
 
-- [ ] Repositório tem regras de proteção de branch corretas aplicadas
-- [ ] Arquivo CODEOWNERS encaminha revisões para as equipes apropriadas
-- [ ] Pipeline de CI aplica 80% de cobertura, lint e varredura de segurança
-- [ ] SDK é publicado no GitHub Packages com versionamento adequado
-- [ ] Pipeline de CD faz deploy no staging automaticamente e na produção com aprovação
-- [ ] Deployment blue-green está configurado com validação canary
-- [ ] Nenhum segredo existe no repositório ou variáveis de pipeline (somente OIDC + Key Vault)
-- [ ] Application Insights está configurado com scrubbing de dados PCI
-- [ ] Anotações de deployment aparecem na timeline do Application Insights
-- [ ] Alerta de pico de erros está configurado e testado
+- [ ] RepositÃ³rio tem regras de proteÃ§Ã£o de branch corretas aplicadas
+- [ ] Arquivo CODEOWNERS encaminha revisÃµes para as equipes apropriadas
+- [ ] Pipeline de CI aplica 80% de cobertura, lint e varredura de seguranÃ§a
+- [ ] SDK Ã© publicado no GitHub Packages com versionamento adequado
+- [ ] Pipeline de CD faz deploy no staging automaticamente e na produÃ§Ã£o com aprovaÃ§Ã£o
+- [ ] Deployment blue-green estÃ¡ configurado com validaÃ§Ã£o canary
+- [ ] Nenhum segredo existe no repositÃ³rio ou variÃ¡veis de pipeline (somente OIDC + Key Vault)
+- [ ] Application Insights estÃ¡ configurado com scrubbing de dados PCI
+- [ ] AnotaÃ§Ãµes de deployment aparecem na timeline do Application Insights
+- [ ] Alerta de pico de erros estÃ¡ configurado e testado
 - [ ] Cache do pipeline reduz o tempo de CI para menos de 5 minutos
-- [ ] Métricas DORA são calculadas e reportadas semanalmente
-- [ ] Caminho de hotfix está disponível com CI acelerado
+- [ ] MÃ©tricas DORA sÃ£o calculadas e reportadas semanalmente
+- [ ] Caminho de hotfix estÃ¡ disponÃ­vel com CI acelerado
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "A equipe quer garantir que todo deployment em produção possa ser rastreado até um work item aprovado. Qual combinação de configurações alcança isso?",
+    question: "A equipe quer garantir que todo deployment em produÃ§Ã£o possa ser rastreado atÃ© um work item aprovado. Qual combinaÃ§Ã£o de configuraÃ§Ãµes alcanÃ§a isso?",
     options: [
-      "Exigir commits assinados e regras de proteção de branch",
-      "Exigir issues vinculadas em PRs, política de squash merge e linting de mensagem de commit",
-      "Habilitar log de auditoria do GitHub e exigir revisões de PR",
+      "Exigir commits assinados e regras de proteÃ§Ã£o de branch",
+      "Exigir issues vinculadas em PRs, polÃ­tica de squash merge e linting de mensagem de commit",
+      "Habilitar log de auditoria do GitHub e exigir revisÃµes de PR",
       "Configurar gates de deployment com consulta de work item"
     ],
     correctIndex: 1,
-    explanation: "Exigir issues vinculadas garante rastreabilidade até work items. Squash merge cria um mapeamento limpo 1:1 entre PRs e commits. Linting de mensagem de commit aplica o formato Refs: #issue."
+    explanation: "Exigir issues vinculadas garante rastreabilidade atÃ© work items. Squash merge cria um mapeamento limpo 1:1 entre PRs e commits. Linting de mensagem de commit aplica o formato Refs: #issue."
   },
   {
-    question: "Um desenvolvedor acidentalmente faz push de um commit contendo uma chave de API de teste para uma feature branch. A chave é detectada pelo GitHub secret scanning push protection. O que acontece?",
+    question: "Um desenvolvedor acidentalmente faz push de um commit contendo uma chave de API de teste para uma feature branch. A chave Ã© detectada pelo GitHub secret scanning push protection. O que acontece?",
     options: [
-      "O push é bloqueado e o desenvolvedor deve remover o segredo antes de fazer push novamente",
-      "O push é bem-sucedido mas um alerta é criado para a equipe de segurança",
-      "O push é bloqueado e o repositório é automaticamente arquivado",
-      "O push é bem-sucedido e o segredo é automaticamente rotacionado"
+      "O push Ã© bloqueado e o desenvolvedor deve remover o segredo antes de fazer push novamente",
+      "O push Ã© bem-sucedido mas um alerta Ã© criado para a equipe de seguranÃ§a",
+      "O push Ã© bloqueado e o repositÃ³rio Ã© automaticamente arquivado",
+      "O push Ã© bem-sucedido e o segredo Ã© automaticamente rotacionado"
     ],
     correctIndex: 0,
-    explanation: "Push protection bloqueia o push no nível do git. O desenvolvedor deve remover o segredo do histórico de commits (usando git filter-branch ou git rebase) antes que o push seja bem-sucedido. Ele também pode solicitar um bypass com justificativa."
+    explanation: "Push protection bloqueia o push no nÃ­vel do git. O desenvolvedor deve remover o segredo do histÃ³rico de commits (usando git filter-branch ou git rebase) antes que o push seja bem-sucedido. Ele tambÃ©m pode solicitar um bypass com justificativa."
   },
   {
-    question: "O pipeline de CD usa deployment blue-green com validação canary. Durante a fase canary, a nova revisão recebe 10% do tráfego. A taxa de erros na nova revisão excede o threshold. O que deve acontecer automaticamente?",
+    question: "O pipeline de CD usa deployment blue-green com validaÃ§Ã£o canary. Durante a fase canary, a nova revisÃ£o recebe 10% do trÃ¡fego. A taxa de erros na nova revisÃ£o excede o threshold. O que deve acontecer automaticamente?",
     options: [
-      "Reverter todo o deployment e acionar o engenheiro de plantão",
-      "Rotear todo o tráfego de volta para a revisão anterior, desativar a revisão que falhou e criar uma issue de incidente",
+      "Reverter todo o deployment e acionar o engenheiro de plantÃ£o",
+      "Rotear todo o trÃ¡fego de volta para a revisÃ£o anterior, desativar a revisÃ£o que falhou e criar uma issue de incidente",
       "Aumentar a porcentagem canary para 50% para mais dados antes de decidir",
-      "Parar o pipeline e aguardar intervenção manual"
+      "Parar o pipeline e aguardar intervenÃ§Ã£o manual"
     ],
     correctIndex: 1,
-    explanation: "Rollback automatizado roteia o tráfego para a revisão conhecida como boa, prevenindo impacto ao usuário. Desativar a revisão que falhou previne roteamento acidental de tráfego. Criar uma issue de incidente garante que a equipe investigue a falha."
+    explanation: "Rollback automatizado roteia o trÃ¡fego para a revisÃ£o conhecida como boa, prevenindo impacto ao usuÃ¡rio. Desativar a revisÃ£o que falhou previne roteamento acidental de trÃ¡fego. Criar uma issue de incidente garante que a equipe investigue a falha."
   },
   {
-    question: "O pipeline autentica no Azure usando workload identity federation (OIDC). Qual é a principal vantagem de segurança sobre usar um segredo de service principal armazenado no GitHub Secrets?",
+    question: "O pipeline autentica no Azure usando workload identity federation (OIDC). Qual Ã© a principal vantagem de seguranÃ§a sobre usar um segredo de service principal armazenado no GitHub Secrets?",
     options: [
-      "OIDC é mais rápido que autenticação baseada em segredo",
-      "Não existem credenciais de longa duração que possam ser vazadas ou que precisem de rotação",
-      "OIDC fornece permissões mais granulares que service principals",
+      "OIDC Ã© mais rÃ¡pido que autenticaÃ§Ã£o baseada em segredo",
+      "NÃ£o existem credenciais de longa duraÃ§Ã£o que possam ser vazadas ou que precisem de rotaÃ§Ã£o",
+      "OIDC fornece permissÃµes mais granulares que service principals",
       "OIDC elimina a necessidade de Azure RBAC"
     ],
     correctIndex: 1,
-    explanation: "Workload identity federation usa tokens de curta duração emitidos pelo provedor OIDC do GitHub. Não há segredo armazenado para vazar, rotacionar ou expirar. A credencial federada é limitada a um repositório, branch e ambiente específicos."
+    explanation: "Workload identity federation usa tokens de curta duraÃ§Ã£o emitidos pelo provedor OIDC do GitHub. NÃ£o hÃ¡ segredo armazenado para vazar, rotacionar ou expirar. A credencial federada Ã© limitada a um repositÃ³rio, branch e ambiente especÃ­ficos."
   },
   {
-    question: "O Application Insights mostra um pico de erros 500 após um deployment. A anotação de deployment é visível na timeline. Qual consulta KQL ajuda a identificar a causa raiz?",
+    question: "O Application Insights mostra um pico de erros 500 apÃ³s um deployment. A anotaÃ§Ã£o de deployment Ã© visÃ­vel na timeline. Qual consulta KQL ajuda a identificar a causa raiz?",
     options: [
       "'traces | where timestamp > ago(1h) | summarize count() by message'",
       "'exceptions | where timestamp > deploymentTime | summarize count() by type, outerMessage | top 10 by count_'",
@@ -1043,17 +1043,17 @@ Antes de considerar este desafio completo, verifique:
       "'dependencies | where success == false | summarize count() by target'"
     ],
     correctIndex: 1,
-    explanation: "Consultar exceções agrupadas por tipo e mensagem imediatamente após o timestamp do deployment revela os tipos de erro específicos introduzidos pelo novo código. Isso identifica a causa raiz ao invés de apenas mostrar sintomas."
+    explanation: "Consultar exceÃ§Ãµes agrupadas por tipo e mensagem imediatamente apÃ³s o timestamp do deployment revela os tipos de erro especÃ­ficos introduzidos pelo novo cÃ³digo. Isso identifica a causa raiz ao invÃ©s de apenas mostrar sintomas."
   },
   {
-    question: "Um auditor PCI-DSS pede evidências de que todas as mudanças em produção são autorizadas, testadas e rastreáveis. Qual combinação de artefatos satisfaz esse requisito?",
+    question: "Um auditor PCI-DSS pede evidÃªncias de que todas as mudanÃ§as em produÃ§Ã£o sÃ£o autorizadas, testadas e rastreÃ¡veis. Qual combinaÃ§Ã£o de artefatos satisfaz esse requisito?",
     options: [
-      "Histórico de commits do Git e logs de pipeline",
-      "Log de auditoria de proteção de branch, registros de aprovação de PR, resultados de testes de CI, logs de deployment com work items vinculados e auditoria de acesso ao Key Vault",
-      "Logs de requisições do Application Insights e Azure Activity Log",
-      "Histórico de execução de workflows do GitHub Actions e alertas do Dependabot"
+      "HistÃ³rico de commits do Git e logs de pipeline",
+      "Log de auditoria de proteÃ§Ã£o de branch, registros de aprovaÃ§Ã£o de PR, resultados de testes de CI, logs de deployment com work items vinculados e auditoria de acesso ao Key Vault",
+      "Logs de requisiÃ§Ãµes do Application Insights e Azure Activity Log",
+      "HistÃ³rico de execuÃ§Ã£o de workflows do GitHub Actions e alertas do Dependabot"
     ],
     correctIndex: 1,
-    explanation: "PCI-DSS requer evidências de controle de mudanças (proteção de branch + aprovações de PR), testes (resultados de CI), autorização (work items vinculados), trilha de auditoria de deployment (logs de deployment) e controle de acesso (auditoria do Key Vault). Esta combinação fornece rastreabilidade de ponta a ponta do requisito à produção."
+    explanation: "PCI-DSS requer evidÃªncias de controle de mudanÃ§as (proteÃ§Ã£o de branch + aprovaÃ§Ãµes de PR), testes (resultados de CI), autorizaÃ§Ã£o (work items vinculados), trilha de auditoria de deployment (logs de deployment) e controle de acesso (auditoria do Key Vault). Esta combinaÃ§Ã£o fornece rastreabilidade de ponta a ponta do requisito Ã  produÃ§Ã£o."
   }
 ]} />

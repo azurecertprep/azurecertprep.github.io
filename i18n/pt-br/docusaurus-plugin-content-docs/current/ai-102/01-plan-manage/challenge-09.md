@@ -10,38 +10,38 @@ import TabItem from '@theme/TabItem';
 # Desafio 09: Proteger Recursos do Azure AI
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$1.00 (Key Vault, Private Endpoint) | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
+**45-60 min** | **Custo**: ~$1.00 (Key Vault, Private Endpoint) | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
 - Gerenciar e proteger chaves de conta
-- Gerenciar autenticação para Azure AI Services
-- Configurar segurança de rede para recursos do Azure AI
+- Gerenciar autenticaÃ§Ã£o para Azure AI Services
+- Configurar seguranÃ§a de rede para recursos do Azure AI
 - Implementar identidade gerenciada para acesso seguro
 
-## Visão Geral
+## VisÃ£o Geral
 
-Proteger recursos do Azure AI envolve múltiplas camadas: proteger chaves de acesso, implementar isolamento de rede, usar identidades gerenciadas para autenticação sem chave e aplicar controle de acesso baseado em função. Um comprometimento das chaves de serviços de IA pode levar a uso não autorizado, exfiltração de dados e impacto financeiro significativo.
+Proteger recursos do Azure AI envolve mÃºltiplas camadas: proteger chaves de acesso, implementar isolamento de rede, usar identidades gerenciadas para autenticaÃ§Ã£o sem chave e aplicar controle de acesso baseado em funÃ§Ã£o. Um comprometimento das chaves de serviÃ§os de IA pode levar a uso nÃ£o autorizado, exfiltraÃ§Ã£o de dados e impacto financeiro significativo.
 
-Neste desafio, você implementará uma postura de segurança abrangente para Azure AI Services. Você armazenará chaves no Azure Key Vault, implementará rotação de chaves sem tempo de inatividade, configurará regras de rede com private endpoints e fará a transição de autenticação baseada em chave para identidade gerenciada — a abordagem recomendada para cargas de trabalho em produção.
+Neste desafio, vocÃª implementarÃ¡ uma postura de seguranÃ§a abrangente para Azure AI Services. VocÃª armazenarÃ¡ chaves no Azure Key Vault, implementarÃ¡ rotaÃ§Ã£o de chaves sem tempo de inatividade, configurarÃ¡ regras de rede com private endpoints e farÃ¡ a transiÃ§Ã£o de autenticaÃ§Ã£o baseada em chave para identidade gerenciada â€” a abordagem recomendada para cargas de trabalho em produÃ§Ã£o.
 
-A abordagem de defesa em profundidade combina identidade (identidade gerenciada + RBAC), rede (private endpoints + regras de IP) e gerenciamento de segredos (Key Vault + rotação) para criar um limite de segurança robusto em torno dos seus serviços de IA.
+A abordagem de defesa em profundidade combina identidade (identidade gerenciada + RBAC), rede (private endpoints + regras de IP) e gerenciamento de segredos (Key Vault + rotaÃ§Ã£o) para criar um limite de seguranÃ§a robusto em torno dos seus serviÃ§os de IA.
 
 ## Arquitetura
 
-A arquitetura segura usa Key Vault para gerenciamento de segredos, identidade gerenciada para autenticação e private endpoints para isolamento de rede.
+A arquitetura segura usa Key Vault para gerenciamento de segredos, identidade gerenciada para autenticaÃ§Ã£o e private endpoints para isolamento de rede.
 
 ![Challenge 09 topology](/img/ai-102/challenge-09-topology.svg)
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Assinatura do Azure com função Contributor
+- Assinatura do Azure com funÃ§Ã£o Contributor
 - Azure CLI instalado
-- Um recurso Azure AI Services (ou criará um)
-- Permissões para criar Key Vault e Private Endpoints
-- Uma rede virtual (ou criará uma)
+- Um recurso Azure AI Services (ou criarÃ¡ um)
+- PermissÃµes para criar Key Vault e Private Endpoints
+- Uma rede virtual (ou criarÃ¡ uma)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Armazenar Chave do AI Service no Azure Key Vault
 
@@ -172,7 +172,7 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 az cognitiveservices account create \
   --name $AI_ACCOUNT \
   --resource-group $RESOURCE_GROUP \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location $LOCATION
 
@@ -218,7 +218,7 @@ echo "Secrets stored in Key Vault: $KEY_VAULT"
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Implementar Rotação de Chaves Sem Tempo de Inatividade
+### Tarefa 2: Implementar RotaÃ§Ã£o de Chaves Sem Tempo de Inatividade
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -245,9 +245,9 @@ def rotate_key_zero_downtime(key_to_rotate: str = "Key1"):
     """
     Zero-downtime key rotation strategy:
     1. Applications use Key1 (active)
-    2. Regenerate Key2 (inactive) → new Key2
+    2. Regenerate Key2 (inactive) â†’ new Key2
     3. Update applications to use Key2
-    4. Regenerate Key1 → new Key1
+    4. Regenerate Key1 â†’ new Key1
     5. Applications now use Key2, Key1 is fresh backup
     """
     print(f"=== Starting Zero-Downtime Key Rotation ===")
@@ -291,7 +291,7 @@ def rotate_key_zero_downtime(key_to_rotate: str = "Key1"):
         parameters={"keyName": active_key_name.capitalize()}
     )
     
-    print(f"\n✓ Rotation complete. Active key: {inactive_key_name}")
+    print(f"\nâœ“ Rotation complete. Active key: {inactive_key_name}")
 
 # Initialize active key tracking
 secret_client.set_secret("ai-services-active-key", "key1")
@@ -359,7 +359,7 @@ async Task RotateKeyZeroDowntime()
         : ServiceAccountKeyName.Key2;
     await account.Value.RegenerateKeyAsync(new ServiceAccountRegenerateKeyContent(oldKeyNameEnum));
     
-    Console.WriteLine($"\n✓ Rotation complete. Active key: {inactiveKeyName}");
+    Console.WriteLine($"\nâœ“ Rotation complete. Active key: {inactiveKeyName}");
 }
 
 await RotateKeyZeroDowntime();
@@ -432,13 +432,13 @@ else
     --name $AI_ACCOUNT --resource-group $RESOURCE_GROUP --key-name Key2
 fi
 
-echo "✓ Rotation complete. Active key: $INACTIVE_KEY"
+echo "âœ“ Rotation complete. Active key: $INACTIVE_KEY"
 ```
 
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Configurar Segurança de Rede e Private Endpoint
+### Tarefa 3: Configurar SeguranÃ§a de Rede e Private Endpoint
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -678,7 +678,7 @@ echo "Private endpoint configured with DNS resolution"
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Atribuir Funções RBAC e Configurar Identidade Gerenciada
+### Tarefa 4: Atribuir FunÃ§Ãµes RBAC e Configurar Identidade Gerenciada
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -748,7 +748,7 @@ response = client.detect_language(documents=documents)
 for doc in response:
     if not doc.is_error:
         print(f"\nLanguage detected: {doc.primary_language.name}")
-        print("  ✓ Authenticated via Managed Identity (keyless)")
+        print("  âœ“ Authenticated via Managed Identity (keyless)")
 ```
 
 </TabItem>
@@ -803,7 +803,7 @@ foreach (var result in response)
     if (!result.HasError)
     {
         Console.WriteLine($"\nLanguage: {result.PrimaryLanguage.Name}");
-        Console.WriteLine("  ✓ Authenticated via Managed Identity (keyless)");
+        Console.WriteLine("  âœ“ Authenticated via Managed Identity (keyless)");
     }
 }
 ```
@@ -873,9 +873,9 @@ curl -X POST "$ENDPOINT/text/analytics/v3.1/languages" \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Secrets stored in Key Vault:
   ai-services-key1: ****a1b2
   ai-services-key2: ****c3d4
@@ -889,7 +889,7 @@ Step 3: Updating Key Vault with new key2...
 Step 4: Switching active key to key2...
 Step 5: Waiting for cache expiry...
 Step 6: Regenerating old key1...
-✓ Rotation complete. Active key: key2
+âœ“ Rotation complete. Active key: key2
 
 Managed Identity created: id-ai-services-reader
   Client ID: 12345678-abcd-efgh-ijkl-123456789012
@@ -897,24 +897,24 @@ Managed Identity created: id-ai-services-reader
 Role assigned: Cognitive Services User
 
 Language detected: English
-  ✓ Authenticated via Managed Identity (keyless)
+  âœ“ Authenticated via Managed Identity (keyless)
 ```
 
-## Quebrar e Consertar
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Acesso negado ao Key Vault | 403 Forbidden ao ler segredos | Função RBAC ou política de acesso do Key Vault ausente | Atribua a função `Key Vault Secrets User` à identidade chamadora |
-| Private endpoint não resolve | Resolução DNS retorna IP público | Zona DNS Privada ou link de VNet ausente | Crie a zona DNS `privatelink.cognitiveservices.azure.com` e vincule à VNet |
-| Autenticação de identidade gerenciada falha | 401 "InvalidAuthenticationToken" | Atribuição de função RBAC não propagada (até 5 min) | Aguarde 5 minutos para propagação da atribuição de função; verifique o principalId correto |
-| Rotação de chave causa tempo de inatividade | Requisições falham com 401 durante a rotação | Aplicação armazena chaves em cache e não atualiza | Implemente cache de chaves com TTL; rotacione a chave inativa primeiro (estratégia de duas chaves) |
-| Regra de rede bloqueia tráfego legítimo | 403 de endereço IP permitido | IP está atrás de NAT/proxy com IP de saída diferente | Adicione o IP de saída real à lista de permissões; use `curl ifconfig.me` para encontrá-lo |
+| Acesso negado ao Key Vault | 403 Forbidden ao ler segredos | FunÃ§Ã£o RBAC ou polÃ­tica de acesso do Key Vault ausente | Atribua a funÃ§Ã£o `Key Vault Secrets User` Ã  identidade chamadora |
+| Private endpoint nÃ£o resolve | ResoluÃ§Ã£o DNS retorna IP pÃºblico | Zona DNS Privada ou link de VNet ausente | Crie a zona DNS `privatelink.cognitiveservices.azure.com` e vincule Ã  VNet |
+| AutenticaÃ§Ã£o de identidade gerenciada falha | 401 "InvalidAuthenticationToken" | AtribuiÃ§Ã£o de funÃ§Ã£o RBAC nÃ£o propagada (atÃ© 5 min) | Aguarde 5 minutos para propagaÃ§Ã£o da atribuiÃ§Ã£o de funÃ§Ã£o; verifique o principalId correto |
+| RotaÃ§Ã£o de chave causa tempo de inatividade | RequisiÃ§Ãµes falham com 401 durante a rotaÃ§Ã£o | AplicaÃ§Ã£o armazena chaves em cache e nÃ£o atualiza | Implemente cache de chaves com TTL; rotacione a chave inativa primeiro (estratÃ©gia de duas chaves) |
+| Regra de rede bloqueia trÃ¡fego legÃ­timo | 403 de endereÃ§o IP permitido | IP estÃ¡ atrÃ¡s de NAT/proxy com IP de saÃ­da diferente | Adicione o IP de saÃ­da real Ã  lista de permissÃµes; use `curl ifconfig.me` para encontrÃ¡-lo |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual função RBAC do Azure permite que uma identidade chame APIs do Azure AI Service sem exigir uma chave de API?",
+    question: "Qual funÃ§Ã£o RBAC do Azure permite que uma identidade chame APIs do Azure AI Service sem exigir uma chave de API?",
     options: [
       "Reader",
       "Contributor",
@@ -922,21 +922,21 @@ Language detected: English
       "Key Vault Secrets User"
     ],
     correctAnswer: 2,
-    explanation: "A função 'Cognitive Services User' (a97b65f3-24c7-4388-baec-2e87135dc908) concede permissão para chamar APIs do Azure AI Service usando autenticação baseada em token do Azure AD, eliminando a necessidade de chaves de API."
+    explanation: "A funÃ§Ã£o 'Cognitive Services User' (a97b65f3-24c7-4388-baec-2e87135dc908) concede permissÃ£o para chamar APIs do Azure AI Service usando autenticaÃ§Ã£o baseada em token do Azure AD, eliminando a necessidade de chaves de API."
   },
   {
-    question: "Durante a rotação de chaves sem tempo de inatividade, qual chave você deve regenerar PRIMEIRO?",
+    question: "Durante a rotaÃ§Ã£o de chaves sem tempo de inatividade, qual chave vocÃª deve regenerar PRIMEIRO?",
     options: [
-      "A chave atualmente usada pelas aplicações (chave ativa)",
-      "A chave que NÃO está em uso pelas aplicações (chave inativa)",
+      "A chave atualmente usada pelas aplicaÃ§Ãµes (chave ativa)",
+      "A chave que NÃƒO estÃ¡ em uso pelas aplicaÃ§Ãµes (chave inativa)",
       "Ambas as chaves simultaneamente",
-      "Não importa — qualquer chave pode ser regenerada primeiro"
+      "NÃ£o importa â€” qualquer chave pode ser regenerada primeiro"
     ],
     correctAnswer: 1,
-    explanation: "Sempre regenere a chave inativa primeiro. Isso garante que as aplicações continuem funcionando com a chave ativa enquanto a chave inativa é regenerada com segurança. Após atualizar as aplicações para usar a nova chave, você pode então regenerar a chave ativa antiga."
+    explanation: "Sempre regenere a chave inativa primeiro. Isso garante que as aplicaÃ§Ãµes continuem funcionando com a chave ativa enquanto a chave inativa Ã© regenerada com seguranÃ§a. ApÃ³s atualizar as aplicaÃ§Ãµes para usar a nova chave, vocÃª pode entÃ£o regenerar a chave ativa antiga."
   },
   {
-    question: "Qual nome de zona DNS é necessário para resolução de private endpoint do Azure Cognitive Services?",
+    question: "Qual nome de zona DNS Ã© necessÃ¡rio para resoluÃ§Ã£o de private endpoint do Azure Cognitive Services?",
     options: [
       "privatelink.azure.com",
       "privatelink.cognitiveservices.azure.com",
@@ -944,29 +944,29 @@ Language detected: English
       "internal.ai.azure.com"
     ],
     correctAnswer: 1,
-    explanation: "Private endpoints do Azure Cognitive Services requerem a zona DNS 'privatelink.cognitiveservices.azure.com' para resolução de nomes adequada. Esta zona deve ser vinculada à VNet onde o private endpoint reside."
+    explanation: "Private endpoints do Azure Cognitive Services requerem a zona DNS 'privatelink.cognitiveservices.azure.com' para resoluÃ§Ã£o de nomes adequada. Esta zona deve ser vinculada Ã  VNet onde o private endpoint reside."
   },
   {
-    question: "Qual é o método de autenticação recomendado para cargas de trabalho de produção do Azure AI executando no Azure?",
+    question: "Qual Ã© o mÃ©todo de autenticaÃ§Ã£o recomendado para cargas de trabalho de produÃ§Ã£o do Azure AI executando no Azure?",
     options: [
-      "Incorporar chaves de API em arquivos de configuração da aplicação",
-      "Usar variáveis de ambiente para chaves de API em cada servidor",
-      "Identidade gerenciada com funções RBAC do Azure",
+      "Incorporar chaves de API em arquivos de configuraÃ§Ã£o da aplicaÃ§Ã£o",
+      "Usar variÃ¡veis de ambiente para chaves de API em cada servidor",
+      "Identidade gerenciada com funÃ§Ãµes RBAC do Azure",
       "Assinaturas de acesso compartilhado (tokens SAS)"
     ],
     correctAnswer: 2,
-    explanation: "Identidade gerenciada com RBAC é a abordagem recomendada para cargas de trabalho de produção no Azure. Ela elimina a necessidade de gerenciar, rotacionar ou arriscar a exposição de chaves de API. A identidade é gerenciada automaticamente pelo Azure e os tokens são obtidos de forma transparente."
+    explanation: "Identidade gerenciada com RBAC Ã© a abordagem recomendada para cargas de trabalho de produÃ§Ã£o no Azure. Ela elimina a necessidade de gerenciar, rotacionar ou arriscar a exposiÃ§Ã£o de chaves de API. A identidade Ã© gerenciada automaticamente pelo Azure e os tokens sÃ£o obtidos de forma transparente."
   },
   {
-    question: "Quando você define 'publicNetworkAccess' como 'Disabled' em um recurso do Azure AI, o que acontece com as requisições existentes baseadas em chave de API vindas da internet?",
+    question: "Quando vocÃª define 'publicNetworkAccess' como 'Disabled' em um recurso do Azure AI, o que acontece com as requisiÃ§Ãµes existentes baseadas em chave de API vindas da internet?",
     options: [
-      "Elas continuam funcionando porque a chave ainda é válida",
-      "Elas são bloqueadas — apenas tráfego via private endpoint é permitido",
-      "Elas são limitadas a 1 requisição por minuto",
-      "Elas são redirecionadas automaticamente para o private endpoint"
+      "Elas continuam funcionando porque a chave ainda Ã© vÃ¡lida",
+      "Elas sÃ£o bloqueadas â€” apenas trÃ¡fego via private endpoint Ã© permitido",
+      "Elas sÃ£o limitadas a 1 requisiÃ§Ã£o por minuto",
+      "Elas sÃ£o redirecionadas automaticamente para o private endpoint"
     ],
     correctAnswer: 1,
-    explanation: "Desabilitar o acesso à rede pública bloqueia TODO o tráfego da internet pública, independentemente de chaves de API válidas serem apresentadas. Apenas tráfego através de private endpoints configurados ou faixas de IP aprovadas (se existirem regras) é permitido."
+    explanation: "Desabilitar o acesso Ã  rede pÃºblica bloqueia TODO o trÃ¡fego da internet pÃºblica, independentemente de chaves de API vÃ¡lidas serem apresentadas. Apenas trÃ¡fego atravÃ©s de private endpoints configurados ou faixas de IP aprovadas (se existirem regras) Ã© permitido."
   }
 ]} />
 

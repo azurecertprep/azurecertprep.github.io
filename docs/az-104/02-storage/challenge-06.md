@@ -29,7 +29,7 @@ Your mission: implement lifecycle management policies to control costs, configur
 - Configure lifecycle management policies
 - Configure object replication between storage accounts
 
-## Sysadmin ↔ Azure reference
+## Sysadmin â†” Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -216,18 +216,18 @@ az storage account management-policy create \
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Go to your **Storage account** → **Data management** → **Lifecycle management**
+1. Go to your **Storage account** â†’ **Data management** â†’ **Lifecycle management**
 2. Click **+ Add a rule**
 3. **Rule 1**: Name: `MoveToCoolAfter30Days`
-   - Scope: Limit blobs with filters → Prefix: `app-logs/`
-   - Base blobs: Move to Cool storage → 30 days after last modification
+   - Scope: Limit blobs with filters â†’ Prefix: `app-logs/`
+   - Base blobs: Move to Cool storage â†’ 30 days after last modification
 4. **Rule 2**: Name: `MoveToArchiveAfter90Days`
-   - Same filter → Move to Archive storage → 90 days after last modification
+   - Same filter â†’ Move to Archive storage â†’ 90 days after last modification
 5. **Rule 3**: Name: `DeleteAfter365Days`
-   - Same filter → Delete the blob → 365 days after last modification
+   - Same filter â†’ Delete the blob â†’ 365 days after last modification
 6. **Rule 4**: Name: `CleanupSnapshots`
-   - No prefix filter → Delete snapshots → 90 days after creation
-   - Delete versions → 90 days after creation
+   - No prefix filter â†’ Delete snapshots â†’ 90 days after creation
+   - Delete versions â†’ 90 days after creation
 
 </TabItem>
 </Tabs>
@@ -279,7 +279,7 @@ Full Entra ID Kerberos authentication for Azure Files requires additional setup 
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Go to your **Storage account** → **File shares** → **Active Directory**
+1. Go to your **Storage account** â†’ **File shares** â†’ **Active Directory**
 2. Under **Identity-based access**, click **Set up** next to **Microsoft Entra Kerberos**
 3. Follow the wizard to enable Entra ID authentication
 
@@ -343,10 +343,10 @@ az storage account or-policy create \
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Go to the **destination** storage account → **Data management** → **Object replication**
+1. Go to the **destination** storage account â†’ **Data management** â†’ **Object replication**
 2. Click **Set up replication rules**
 3. Select the **source** storage account
-4. Pair the containers: `replicated-data` (source) → `replicated-data` (destination)
+4. Pair the containers: `replicated-data` (source) â†’ `replicated-data` (destination)
 5. Optionally filter by creation time or prefix
 6. Click **Save**
 
@@ -499,7 +499,7 @@ Object replication does **not** support:
 | Storage File Data SMB Share Elevated Contributor | Read, write, delete, modify NTFS ACLs |
 
 Assign these roles at the **file share scope** (not the storage account scope):
-```
+```text
 /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Storage/storageAccounts/{account}/fileServices/default/fileshares/{share}
 ```
 

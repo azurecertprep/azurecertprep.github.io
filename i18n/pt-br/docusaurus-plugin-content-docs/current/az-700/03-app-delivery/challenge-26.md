@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: "Challenge 26"
-title: "Challenge 26: Load Balancer advanced scenarios"
+title: "Desafio 26: Cenários Avançados de Load Balancer"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -709,7 +709,7 @@ New-AzLoadBalancer `
 3. Adicione regra de balanceamento de carga: Protocolo **All**, Porta de front-end **0**, Porta de back-end **0** (isso habilita portas HA).
 4. Portas HA está disponível apenas em Standard Load Balancers internos.
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Exaustão de portas SNAT
 
@@ -798,43 +798,43 @@ az network lb frontend-ip show \
 <KnowledgeCheck questions={[
   {
     id: "az700-26-q1",
-    question: "What types of resources can be added to a cross-region (Global tier) Load Balancer backend pool?",
+    question: "Quais tipos de recursos podem ser adicionados ao backend pool de um Load Balancer entre regiões (camada Global)?",
     options: [
-      "Frontend IP configurations of regional Standard Load Balancers ✅",
-      "Individual VM network interfaces from any region",
-      "Public IP addresses of VMs directly",
-      "Virtual machine scale set instances across regions"
+      "Configurações de IP de frontend de Standard Load Balancers regionais ✅",
+      "Interfaces de rede de VMs individuais de qualquer região",
+      "Endereços IP públicos de VMs diretamente",
+      "Instâncias de scale set de máquinas virtuais entre regiões"
     ],
     correctIndex: 0,
-    explanation: "Cross-region Load Balancer backend pools can only contain frontend IP configurations of regional Standard Load Balancers. You cannot add individual VMs, NICs, or public IPs directly. The regional LBs handle local distribution while the global LB routes between regions."
+    explanation: "Os backend pools do Load Balancer entre regiões podem conter apenas configurações de IP de frontend de Standard Load Balancers regionais. Você não pode adicionar VMs individuais, NICs ou IPs públicos diretamente. Os LBs regionais lidam com a distribuição local enquanto o LB global roteia entre regiões."
   },
   {
     id: "az700-26-q2",
-    question: "A Standard Load Balancer has one public IP for outbound and 10,000 allocated ports per backend instance. What is the maximum number of backend VMs this configuration can support?",
+    question: "Um Standard Load Balancer possui um IP público para saída e 10.000 portas alocadas por instância de backend. Qual é o número máximo de VMs de backend que essa configuração pode suportar?",
     options: [
-      "6 VMs (64,512 total ports / 10,000 per VM) ✅",
-      "10 VMs (100,000 / 10,000)",
-      "64 VMs (64,512 / 1,000)",
-      "Unlimited VMs with port sharing"
+      "6 VMs (64.512 portas totais / 10.000 por VM) ✅",
+      "10 VMs (100.000 / 10.000)",
+      "64 VMs (64.512 / 1.000)",
+      "VMs ilimitadas com compartilhamento de portas"
     ],
     correctIndex: 0,
-    explanation: "Each Standard public IP provides 64,512 SNAT ports. With 10,000 ports allocated per instance: 64,512 / 10,000 = 6.4, rounded down to 6 VMs. To support more VMs, either reduce per-instance allocation or add more frontend public IPs."
+    explanation: "Cada IP público Standard fornece 64.512 portas SNAT. Com 10.000 portas alocadas por instância: 64.512 / 10.000 = 6,4, arredondado para baixo para 6 VMs. Para suportar mais VMs, reduza a alocação por instância ou adicione mais IPs públicos de frontend."
   },
   {
     id: "az700-26-q3",
-    question: "What is the primary use case for Gateway Load Balancer?",
+    question: "Qual é o principal caso de uso do Gateway Load Balancer?",
     options: [
-      "Transparently insert network virtual appliances (NVAs) into the traffic path for inspection ✅",
-      "Load balance traffic across multiple regions for disaster recovery",
-      "Provide a gateway between on-premises networks and Azure",
-      "Enable HTTPS termination and SSL offloading at the load balancer"
+      "Inserir de forma transparente appliances virtuais de rede (NVAs) no caminho do tráfego para inspeção ✅",
+      "Balancear carga de tráfego entre múltiplas regiões para recuperação de desastres",
+      "Fornecer um gateway entre redes locais e o Azure",
+      "Habilitar terminação HTTPS e offloading SSL no balanceador de carga"
     ],
     correctIndex: 0,
-    explanation: "Gateway Load Balancer enables transparent NVA chaining by inserting appliances (firewalls, DPI, IDS/IPS) into the traffic path. Traffic is tunneled via VXLAN to NVA instances and back without modifying the consumer application or client routing."
+    explanation: "O Gateway Load Balancer permite encadeamento transparente de NVAs inserindo appliances (firewalls, DPI, IDS/IPS) no caminho do tráfego. O tráfego é tunelado via VXLAN para instâncias de NVA e de volta sem modificar a aplicação do consumidor ou o roteamento do cliente."
   },
   {
     id: "az700-26-q4",
-    question: "An HA ports rule is configured on an internal Standard Load Balancer. Which protocol and port values define this rule?",
+    question: "Uma regra de portas HA está configurada em um Standard Load Balancer interno. Quais valores de protocolo e porta definem essa regra?",
     options: [
       "Protocol: All, Frontend port: 0, Backend port: 0 ✅",
       "Protocol: TCP, Frontend port: 0-65535, Backend port: 0-65535",
@@ -842,31 +842,31 @@ az network lb frontend-ip show \
       "Protocol: All, Frontend port: 80, Backend port: 80"
     ],
     correctIndex: 0,
-    explanation: "HA ports is a special rule configuration using Protocol=All with Port=0 for both frontend and backend. This combination instructs the LB to balance all TCP and UDP flows on all ports simultaneously. It is only supported on internal Standard Load Balancers."
+    explanation: "Portas HA é uma configuração especial de regra usando Protocol=All com Port=0 para frontend e backend. Essa combinação instrui o LB a balancear todos os fluxos TCP e UDP em todas as portas simultaneamente. É suportado apenas em Standard Load Balancers internos."
   },
   {
     id: "az700-26-q5",
-    question: "Why should you use a separate frontend IP for outbound rules rather than sharing the inbound frontend?",
+    question: "Por que você deve usar um IP de frontend separado para regras de saída em vez de compartilhar o frontend de entrada?",
     options: [
-      "Separating frontends avoids SNAT port conflicts between inbound connections and outbound flows ✅",
-      "Azure requires separate IPs for inbound and outbound by design",
-      "Shared frontends double the cost of the Load Balancer",
-      "Outbound rules are not supported on frontends with inbound rules"
+      "Separar os frontends evita conflitos de portas SNAT entre conexões de entrada e fluxos de saída ✅",
+      "O Azure exige IPs separados para entrada e saída por design",
+      "Frontends compartilhados dobram o custo do Load Balancer",
+      "Regras de saída não são suportadas em frontends com regras de entrada"
     ],
     correctIndex: 0,
-    explanation: "Using a separate frontend IP for outbound prevents SNAT port conflicts. When inbound and outbound share a frontend, inbound connections consume pre-allocated SNAT ports, reducing availability for outbound. A dedicated outbound frontend provides a clean pool of 64,512 ports exclusively for outbound SNAT."
+    explanation: "Usar um IP de frontend separado para saída evita conflitos de portas SNAT. Quando entrada e saída compartilham um frontend, as conexões de entrada consomem portas SNAT pré-alocadas, reduzindo a disponibilidade para saída. Um frontend de saída dedicado fornece um pool limpo de 64.512 portas exclusivamente para SNAT de saída."
   },
   {
     id: "az700-26-q6",
-    question: "The cross-region Load Balancer detects that all backends in East US are unhealthy. What happens to traffic?",
+    question: "O Load Balancer entre regiões detecta que todos os backends em East US estão não íntegros. O que acontece com o tráfego?",
     options: [
-      "Traffic is automatically redirected to the next closest healthy region (West Europe) ✅",
-      "All traffic is dropped until East US recovers",
-      "The global LB enters a degraded state and returns 503 errors",
-      "Traffic is evenly split across all regions regardless of health"
+      "O tráfego é automaticamente redirecionado para a região saudável mais próxima (West Europe) ✅",
+      "Todo o tráfego é descartado até que East US se recupere",
+      "O LB global entra em estado degradado e retorna erros 503",
+      "O tráfego é dividido igualmente entre todas as regiões independentemente da integridade"
     ],
     correctIndex: 0,
-    explanation: "Cross-region Load Balancer uses the health status of regional backends for routing decisions. When a regional LB has no healthy backend instances, the global LB routes all traffic to the nearest remaining healthy region, providing automatic geo-failover."
+    explanation: "O Load Balancer entre regiões usa o status de integridade dos backends regionais para decisões de roteamento. Quando um LB regional não tem instâncias de backend íntegras, o LB global roteia todo o tráfego para a região saudável mais próxima restante, fornecendo failover geográfico automático."
   }
 ]} />
 

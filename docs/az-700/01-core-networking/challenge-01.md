@@ -427,7 +427,7 @@ az network public-ip list \
 | vnet-spoke-dev-eastus2 | 10.2.0.0/16 | Dev/Test | No overlap |
 | On-premises | 192.168.0.0/16 | Corporate DC | No overlap |
 
-## Break and fix
+## Break & fix
 
 These exercises simulate common misconfigurations. Try to diagnose and fix each one.
 

@@ -23,11 +23,11 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Azure AI services provide a broad portfolio of cognitive capabilities through pre-built APIs and customizable models. Choosing the right service is critical—using Azure OpenAI for simple text extraction when Document Intelligence exists, or using Computer Vision for tasks better suited to GPT-4o multimodal, leads to unnecessary cost and complexity.
+Azure AI services provide a broad portfolio of cognitive capabilities through pre-built APIs and customizable models. Choosing the right service is criticalâ€”using Azure OpenAI for simple text extraction when Document Intelligence exists, or using Computer Vision for tasks better suited to GPT-4o multimodal, leads to unnecessary cost and complexity.
 
 This challenge walks you through the Azure AI service taxonomy, helps you build a mental decision tree, and verifies your ability to programmatically discover and validate available services in a subscription. You'll compare multi-service resources (which provide a single endpoint for multiple capabilities) against single-service resources (which offer service-specific features and isolation).
 
-Understanding the tradeoffs between service types—pricing tiers, regional availability, feature sets, and SLA differences—is essential for the AI-102 exam and real-world architecture decisions.
+Understanding the tradeoffs between service typesâ€”pricing tiers, regional availability, feature sets, and SLA differencesâ€”is essential for the AI-102 exam and real-world architecture decisions.
 
 ## Architecture
 
@@ -63,7 +63,7 @@ account = client.accounts.begin_create(
     account_name="ai-multiservice-01",
     account=Account(
         sku=Sku(name="S0"),
-        kind="CognitiveServices",
+        kind="AIServices",
         location="eastus",
         properties=AccountProperties()
     )
@@ -114,7 +114,7 @@ Console.WriteLine($"Endpoint: {result.Value.Data.Properties.Endpoint}");
 az cognitiveservices account create \
   --name ai-multiservice-01 \
   --resource-group rg-ai102-challenge01 \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location eastus \
   --yes
@@ -193,7 +193,7 @@ az cognitiveservices account list \
 
 # List available kinds in a region
 az cognitiveservices account list-skus \
-  --kind CognitiveServices \
+  --kind AIServices \
   --location eastus \
   -o table
 
@@ -301,7 +301,7 @@ az cognitiveservices account show --name ai-vision-01 \
 
 ## Expected Output
 
-```
+```text
 Created: ai-multiservice-01
 Endpoint: https://eastus.api.cognitive.microsoft.com/
 Kind: CognitiveServices
@@ -324,7 +324,7 @@ Multi-service endpoint: https://eastus.api.cognitive.microsoft.com/
 Supports: Vision, Language, Speech, Decision (single key)
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -345,7 +345,7 @@ Supports: Vision, Language, Speech, Decision (single key)
       "AIServices with combined SKU"
     ],
     correctAnswer: 1,
-    explanation: "A multi-service resource (kind: CognitiveServices) provides a single endpoint and key for multiple Azure AI services including Vision, Language, and Speech."
+    explanation: "A multi-service resource (kind: AIServices) provides a single endpoint and key for multiple Azure AI services including Vision, Language, and Speech."
   },
   {
     question: "Which Azure AI service should you use to extract structured data from invoices and receipts?",

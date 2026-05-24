@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 sidebar_label: "Challenge 27"
-title: "Challenge 27: Traffic Manager profiles and routing"
+title: "Desafio 27: Perfis e Roteamento do Traffic Manager"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -810,7 +810,7 @@ New-AzTrafficManagerEndpoint `
 3. Adicione o ponto de extremidade `ep-partner` com sub-rede `172.16.0.0/16`.
 4. Adicione o ponto de extremidade padrão `ep-public-default` sem mapeamento de sub-rede (captura o tráfego não correspondido).
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Roteamento geográfico sem atribuição de região
 
@@ -895,75 +895,75 @@ Lembre-se de que o cache de TTL do DNS significa que as alterações podem levar
 <KnowledgeCheck questions={[
   {
     id: "az700-27-q1",
-    question: "Woodgrove Bank needs EU users to always reach EU endpoints and never be routed elsewhere, even during regional failures. Which routing method enforces this geographic constraint?",
+    question: "O Woodgrove Bank precisa que usuários da UE sempre alcancem endpoints da UE e nunca sejam roteados para outro lugar, mesmo durante falhas regionais. Qual método de roteamento impõe essa restrição geográfica?",
     options: [
-      "Geographic routing - it hard-pins geographic regions to specific endpoints ✅",
-      "Performance routing - it uses latency tables to find the nearest endpoint",
-      "Priority routing - it routes to the highest priority healthy endpoint",
-      "Weighted routing - it distributes based on configured weights"
+      "Roteamento geográfico - ele fixa regiões geográficas a endpoints específicos ✅",
+      "Roteamento por desempenho - ele usa tabelas de latência para encontrar o endpoint mais próximo",
+      "Roteamento por prioridade - ele roteia para o endpoint saudável de maior prioridade",
+      "Roteamento ponderado - ele distribui com base nos pesos configurados"
     ],
     correctIndex: 0,
-    explanation: "Geographic routing ensures traffic from a mapped region is only ever sent to the assigned endpoint. Even if that endpoint fails, traffic is NOT rerouted to another region's endpoint (it returns no answer instead). This guarantees data sovereignty compliance."
+    explanation: "O roteamento geográfico garante que o tráfego de uma região mapeada seja enviado apenas para o endpoint atribuído. Mesmo que esse endpoint falhe, o tráfego NÃO é reroteado para o endpoint de outra região (ele retorna sem resposta). Isso garante conformidade com soberania de dados."
   },
   {
     id: "az700-27-q2",
-    question: "A Traffic Manager profile has TTL set to 300 seconds. The primary endpoint fails and the probe detects it in 25 seconds. What is the maximum total failover time experienced by clients?",
+    question: "Um perfil do Traffic Manager tem TTL definido como 300 segundos. O endpoint primário falha e a probe detecta isso em 25 segundos. Qual é o tempo máximo total de failover experimentado pelos clientes?",
     options: [
-      "Up to 325 seconds (TTL 300s + detection 25s) because clients cache the old DNS answer ✅",
-      "Exactly 25 seconds because Traffic Manager immediately notifies all DNS resolvers",
-      "300 seconds because the TTL must expire before any failover begins",
-      "Instantaneous because Traffic Manager uses anycast DNS"
+      "Até 325 segundos (TTL 300s + detecção 25s) porque os clientes armazenam em cache a resposta DNS antiga ✅",
+      "Exatamente 25 segundos porque o Traffic Manager notifica imediatamente todos os resolvedores DNS",
+      "300 segundos porque o TTL deve expirar antes de qualquer failover começar",
+      "Instantâneo porque o Traffic Manager usa DNS anycast"
     ],
     correctIndex: 0,
-    explanation: "Total failover time = probe detection time + DNS TTL. Clients and recursive resolvers cache DNS answers for the TTL duration. After detection (25s), Traffic Manager updates its DNS response, but existing cached entries must expire (up to 300s) before clients query again and receive the new endpoint."
+    explanation: "Tempo total de failover = tempo de detecção da probe + TTL do DNS. Clientes e resolvedores recursivos armazenam em cache as respostas DNS pela duração do TTL. Após a detecção (25s), o Traffic Manager atualiza sua resposta DNS, mas as entradas em cache existentes devem expirar (até 300s) antes que os clientes consultem novamente e recebam o novo endpoint."
   },
   {
     id: "az700-27-q3",
-    question: "What happens when a nested endpoint's min-child-endpoints threshold is not met?",
+    question: "O que acontece quando o limite de min-child-endpoints de um endpoint aninhado não é atingido?",
     options: [
-      "The nested endpoint is marked as Degraded and excluded from routing in the parent profile ✅",
-      "Traffic Manager automatically scales up child endpoints to meet the threshold",
-      "The parent profile enters a failed state and stops responding to all queries",
-      "Traffic is evenly distributed across all remaining healthy child endpoints"
+      "O endpoint aninhado é marcado como Degradado e excluído do roteamento no perfil pai ✅",
+      "O Traffic Manager escala automaticamente os endpoints filhos para atingir o limite",
+      "O perfil pai entra em estado de falha e para de responder a todas as consultas",
+      "O tráfego é distribuído igualmente entre todos os endpoints filhos saudáveis restantes"
     ],
     correctIndex: 0,
-    explanation: "When the number of healthy child endpoints falls below min-child-endpoints, the nested endpoint is considered degraded by the parent profile. The parent then routes traffic to other endpoints based on its routing method, effectively treating the entire nested branch as unavailable."
+    explanation: "Quando o número de endpoints filhos saudáveis cai abaixo de min-child-endpoints, o endpoint aninhado é considerado degradado pelo perfil pai. O pai então roteia o tráfego para outros endpoints com base em seu método de roteamento, tratando efetivamente toda a ramificação aninhada como indisponível."
   },
   {
     id: "az700-27-q4",
-    question: "Which Traffic Manager endpoint types are supported?",
+    question: "Quais tipos de endpoint do Traffic Manager são suportados?",
     options: [
-      "Azure endpoints, External endpoints, and Nested endpoints ✅",
-      "Azure endpoints, On-premises endpoints, and Hybrid endpoints",
-      "Public IP endpoints, DNS endpoints, and Private endpoints",
-      "Azure endpoints, External endpoints, and Gateway endpoints"
+      "Endpoints do Azure, endpoints externos e endpoints aninhados ✅",
+      "Endpoints do Azure, endpoints locais e endpoints híbridos",
+      "Endpoints de IP público, endpoints DNS e endpoints privados",
+      "Endpoints do Azure, endpoints externos e endpoints de gateway"
     ],
     correctIndex: 0,
-    explanation: "Traffic Manager supports three endpoint types: Azure endpoints (Azure-hosted resources like Web Apps, Public IPs, Cloud Services), External endpoints (external FQDNs or IPv4 addresses), and Nested endpoints (other Traffic Manager profiles for hierarchical routing)."
+    explanation: "O Traffic Manager suporta três tipos de endpoint: endpoints do Azure (recursos hospedados no Azure como Web Apps, IPs públicos, Cloud Services), endpoints externos (FQDNs externos ou endereços IPv4) e endpoints aninhados (outros perfis do Traffic Manager para roteamento hierárquico)."
   },
   {
     id: "az700-27-q5",
-    question: "A Performance routing profile has endpoints in East US and West Europe. A user in Brazil resolves the Traffic Manager FQDN. How does Traffic Manager decide which endpoint to return?",
+    question: "Um perfil de roteamento por desempenho tem endpoints em East US e West Europe. Um usuário no Brasil resolve o FQDN do Traffic Manager. Como o Traffic Manager decide qual endpoint retornar?",
     options: [
-      "It uses an internal Internet latency table to determine which Azure region has the lowest latency from the user's DNS resolver IP ✅",
-      "It pings both endpoints from the user's location and picks the fastest response",
-      "It always returns the geographically closest endpoint based on GPS coordinates",
-      "It randomly selects an endpoint and monitors real-time network conditions"
+      "Ele usa uma tabela interna de latência da Internet para determinar qual região do Azure tem a menor latência a partir do IP do resolvedor DNS do usuário ✅",
+      "Ele faz ping em ambos os endpoints a partir da localização do usuário e escolhe a resposta mais rápida",
+      "Ele sempre retorna o endpoint geograficamente mais próximo com base em coordenadas GPS",
+      "Ele seleciona aleatoriamente um endpoint e monitora condições de rede em tempo real"
     ],
     correctIndex: 0,
-    explanation: "Performance routing uses Microsoft's Internet latency measurement table, which maps DNS resolver IP ranges to Azure region latency. It does not perform real-time probes or use GPS. The table is periodically updated based on aggregate network measurements."
+    explanation: "O roteamento por desempenho usa a tabela de medição de latência da Internet da Microsoft, que mapeia faixas de IP de resolvedores DNS para a latência das regiões do Azure. Ele não realiza probes em tempo real nem usa GPS. A tabela é atualizada periodicamente com base em medições agregadas de rede."
   },
   {
     id: "az700-27-q6",
-    question: "You configure a MultiValue profile with max-return set to 3 and 5 healthy endpoints. How many IP addresses does a single DNS query return?",
+    question: "Você configura um perfil MultiValue com max-return definido como 3 e 5 endpoints saudáveis. Quantos endereços IP uma única consulta DNS retorna?",
     options: [
-      "3 (the max-return value limits how many healthy IPs are returned per query) ✅",
-      "5 (all healthy endpoints are always returned)",
-      "1 (DNS only ever returns a single record)",
-      "2 (max-return minus 1 for redundancy)"
+      "3 (o valor de max-return limita quantos IPs saudáveis são retornados por consulta) ✅",
+      "5 (todos os endpoints saudáveis são sempre retornados)",
+      "1 (o DNS sempre retorna apenas um único registro)",
+      "2 (max-return menos 1 para redundância)"
     ],
     correctIndex: 0,
-    explanation: "MultiValue routing returns multiple healthy endpoint IPs in a single DNS response, up to the max-return limit. With max-return=3 and 5 healthy endpoints, exactly 3 IPs are returned. The client application can then try them in order, providing client-side failover."
+    explanation: "O roteamento MultiValue retorna múltiplos IPs de endpoints saudáveis em uma única resposta DNS, até o limite de max-return. Com max-return=3 e 5 endpoints saudáveis, exatamente 3 IPs são retornados. A aplicação cliente pode então tentá-los em ordem, fornecendo failover do lado do cliente."
   }
 ]} />
 

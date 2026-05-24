@@ -510,7 +510,7 @@ az network firewall show \
   -o json
 ```
 
-## Break and fix
+## Break & fix
 
 These exercises simulate common misconfigurations in secured virtual hub deployments.
 

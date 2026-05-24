@@ -38,7 +38,7 @@ Your team consists of four developers, one QA engineer, and one SRE. You are the
 
 Create a GitHub repository `contoso-payments` with the following structure:
 
-```
+```text
 contoso-payments/
   src/
     Contoso.Payments.Api/
@@ -74,7 +74,7 @@ Implement a trunk-based development model with short-lived feature branches:
 
 ### 1.3 CODEOWNERS configuration
 
-```
+```text
 # Default owners
 * @contoso/payments-team
 
@@ -130,7 +130,7 @@ Create issue templates for:
 
 Enforce commit message standards using a commit-lint check in CI:
 
-```
+```text
 <type>(<scope>): <description>
 
 [optional body]
@@ -358,7 +358,7 @@ Configure downstream services to consume the SDK from GitHub Packages by adding 
 
 Create `.github/workflows/deploy.yml` implementing the following stages:
 
-```
+```text
 Build --> Staging (auto) --> Integration Tests --> Production (manual approval, blue-green)
 ```
 
@@ -780,7 +780,7 @@ jobs:
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Production 500 errors after deployment
 

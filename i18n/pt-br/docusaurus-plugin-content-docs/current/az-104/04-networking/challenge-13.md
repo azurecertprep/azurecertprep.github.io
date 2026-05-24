@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 13: DNS & Load Balancing"
+title: "Desafio 13: DNS & Balanceamento de Carga"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
@@ -231,7 +231,7 @@ az vm get-instance-view \
   --query instanceView.statuses
 ```
 
-## Quebre & conserte
+## Quebra & conserta
 
 ### Quebre
 1. **Configuração errada do health probe** | Altere o probe para verificar a porta 8080 em vez da 80 (ou use o caminho `/healthz` quando o servidor web não tem esse endpoint). Observe que todas as instâncias do backend aparecem como não saudáveis.

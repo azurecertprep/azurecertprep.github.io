@@ -418,7 +418,7 @@ The Basic SKU only supports SSTP tunnel type (Windows only). It does not support
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Address pool overlap
 

@@ -266,7 +266,7 @@ az network nic show-effective-route-table \
     "Network Watcher IP flow verify and next hop return expected results"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: overlapping address spaces
 ```bash

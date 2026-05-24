@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Creating and configuring Azure AI resources correctly is foundational to every AI-102 scenario. This challenge goes beyond clicking "Create" in the portal—you'll provision resources programmatically, configure network restrictions, retrieve and rotate keys, and validate endpoint connectivity.
+Creating and configuring Azure AI resources correctly is foundational to every AI-102 scenario. This challenge goes beyond clicking "Create" in the portalâ€”you'll provision resources programmatically, configure network restrictions, retrieve and rotate keys, and validate endpoint connectivity.
 
 Understanding the relationship between resource kinds, SKUs, endpoints, and keys is critical. A multi-service resource exposes a single endpoint like `https://<region>.api.cognitive.microsoft.com/` while single-service resources may have service-specific endpoint patterns. You need to know which endpoint format each service uses and how to configure virtual network rules and private endpoints for production workloads.
 
@@ -30,7 +30,7 @@ This challenge also covers the configuration of diagnostic settings, custom subd
 
 ## Architecture
 
-You'll create resources with custom subdomains, configure network rules, validate connectivity, and set up diagnostic logging—simulating a production-ready AI services deployment.
+You'll create resources with custom subdomains, configure network rules, validate connectivity, and set up diagnostic loggingâ€”simulating a production-ready AI services deployment.
 
 ![Challenge 02 topology](/img/ai-102/challenge-02-topology.svg)
 
@@ -64,7 +64,7 @@ account = client.accounts.begin_create(
     account_name="ai102-mycompany-ai",
     account=Account(
         sku=Sku(name="S0"),
-        kind="CognitiveServices",
+        kind="AIServices",
         location="eastus",
         properties=AccountProperties(
             custom_sub_domain_name="ai102-mycompany-ai",
@@ -127,7 +127,7 @@ az group create --name rg-ai102-challenge02 --location eastus
 az cognitiveservices account create \
   --name ai102-mycompany-ai \
   --resource-group rg-ai102-challenge02 \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location eastus \
   --custom-domain ai102-mycompany-ai \
@@ -167,7 +167,7 @@ new_keys = client.accounts.regenerate_key(
     parameters=RegenerateKeyParameters(key_name=KeyName.KEY1)
 )
 print(f"New Key 1: {new_keys.key1[:8]}...")
-print("Key 2 unchanged—zero-downtime rotation complete")
+print("Key 2 unchangedâ€”zero-downtime rotation complete")
 ```
 
 </TabItem>
@@ -186,7 +186,7 @@ Console.WriteLine($"Key 2: {keys.Value.Key2[..8]}...");
 var regenerated = await resource.RegenerateKeyAsync(
     new RegenerateKeyContent(CognitiveServicesKeyName.Key1));
 Console.WriteLine($"New Key 1: {regenerated.Value.Key1[..8]}...");
-Console.WriteLine("Key 2 unchanged—zero-downtime rotation complete");
+Console.WriteLine("Key 2 unchangedâ€”zero-downtime rotation complete");
 ```
 
 </TabItem>
@@ -241,7 +241,7 @@ account = client.accounts.begin_create(
     account_name="ai102-mycompany-ai",
     account=Account(
         sku=Sku(name="S0"),
-        kind="CognitiveServices",
+        kind="AIServices",
         location="eastus",
         properties=AccountProperties(
             custom_sub_domain_name="ai102-mycompany-ai",
@@ -334,7 +334,7 @@ az cognitiveservices account update \
 
 ## Expected Output
 
-```
+```text
 Resource: ai102-mycompany-ai
 Endpoint: https://ai102-mycompany-ai.cognitiveservices.azure.com/
 Custom domain: https://ai102-mycompany-ai.cognitiveservices.azure.com/
@@ -342,14 +342,14 @@ Custom domain: https://ai102-mycompany-ai.cognitiveservices.azure.com/
 Key 1: a3f8b2c1...
 Key 2: 7d9e4f6a...
 New Key 1: x1y2z3w4...
-Key 2 unchanged—zero-downtime rotation complete
+Key 2 unchangedâ€”zero-downtime rotation complete
 
 Network rules applied: default action = Deny
 Allowed IPs: 203.0.113.0/24, 198.51.100.42
 Public access: Enabled
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -377,7 +377,7 @@ Public access: Enabled
     question: "You need to rotate API keys for a production Azure AI resource without any downtime. What is the correct procedure?",
     options: [
       "Regenerate both keys simultaneously, then update all applications",
-      "Use managed identity instead—key rotation always causes downtime",
+      "Use managed identity insteadâ€”key rotation always causes downtime",
       "Create a new resource, migrate traffic, then delete the old resource",
       "Update all apps to use Key 2, regenerate Key 1, update apps to Key 1, regenerate Key 2"
     ],
@@ -415,7 +415,7 @@ Public access: Enabled
       "P1 (Premium) for all API access"
     ],
     correctAnswer: 2,
-    explanation: "Multi-service resources (kind: CognitiveServices) use the S0 SKU. There is no F0 free tier for multi-service resources—free tiers are only available for individual single-service resources. S0 is the standard and only available SKU for multi-service."
+    explanation: "Multi-service resources (kind: AIServices) use the S0 SKU. There is no F0 free tier for multi-service resourcesâ€”free tiers are only available for individual single-service resources. S0 is the standard and only available SKU for multi-service."
   }
 ]} />
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 41: VNet flow logs and traffic analytics"
+title: "Desafio 41: Logs de Fluxo de VNet e Análise de Tráfego"
 sidebar_label: "Challenge 41"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -557,7 +557,7 @@ Campos na tupla de fluxo: `timestamp,sourceIP,destIP,sourcePort,destPort,protoco
 | Decisão | A=Permitido, D=Negado |
 | Estado do fluxo | B=Início, C=Continuando, E=Fim |
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Logs de fluxo não aparecem (conta de armazenamento na região errada)
 
@@ -673,67 +673,67 @@ az network nsg rule create \
 <KnowledgeCheck questions={[
   {
     id: "az700-41-q1",
-    question: "What is the key difference between VNet flow logs and NSG flow logs?",
+    question: "Qual é a principal diferença entre os logs de fluxo da VNet e os logs de fluxo do NSG?",
     options: [
-      "VNet flow logs capture all flows at the VNet level; NSG flow logs only capture traffic evaluated by a specific NSG ✅",
-      "VNet flow logs are free; NSG flow logs are paid",
-      "NSG flow logs support version 2 format; VNet flow logs only support version 1",
-      "VNet flow logs require Premium tier Network Watcher"
+      "Os logs de fluxo da VNet capturam todos os fluxos no nível da VNet; os logs de fluxo do NSG capturam apenas o tráfego avaliado por um NSG específico ✅",
+      "Os logs de fluxo da VNet são gratuitos; os logs de fluxo do NSG são pagos",
+      "Os logs de fluxo do NSG suportam formato versão 2; os logs de fluxo da VNet suportam apenas versão 1",
+      "Os logs de fluxo da VNet requerem Network Watcher de nível Premium"
     ],
     correctIndex: 0,
-    explanation: "VNet flow logs target the entire virtual network and capture all traffic traversing it, regardless of NSG associations. NSG flow logs only capture traffic evaluated by the specific NSG they are attached to. VNet flow logs are the newer, recommended approach."
+    explanation: "Os logs de fluxo da VNet têm como alvo toda a rede virtual e capturam todo o tráfego que a atravessa, independentemente das associações de NSG. Os logs de fluxo do NSG capturam apenas o tráfego avaliado pelo NSG específico ao qual estão anexados. Os logs de fluxo da VNet são a abordagem mais recente e recomendada."
   },
   {
     id: "az700-41-q2",
-    question: "What are the available processing intervals for Traffic Analytics?",
+    question: "Quais são os intervalos de processamento disponíveis para o Traffic Analytics?",
     options: [
-      "10 minutes or 60 minutes ✅",
-      "1 minute or 5 minutes",
-      "5 minutes or 30 minutes",
-      "15 minutes or 60 minutes"
+      "10 minutos ou 60 minutos ✅",
+      "1 minuto ou 5 minutos",
+      "5 minutos ou 30 minutos",
+      "15 minutos ou 60 minutos"
     ],
     correctIndex: 0,
-    explanation: "Traffic Analytics supports two processing intervals: 10 minutes (for near-real-time analysis at higher cost) and 60 minutes (default, more cost-effective). The 10-minute interval processes flow logs more frequently, providing faster insights."
+    explanation: "O Traffic Analytics suporta dois intervalos de processamento: 10 minutos (para análise quase em tempo real com custo mais alto) e 60 minutos (padrão, mais econômico). O intervalo de 10 minutos processa logs de fluxo com mais frequência, fornecendo insights mais rápidos."
   },
   {
     id: "az700-41-q3",
-    question: "Which NSG inbound rule is REQUIRED for Azure Bastion to function on the AzureBastionSubnet?",
+    question: "Qual regra de entrada do NSG é OBRIGATÓRIA para o Azure Bastion funcionar na AzureBastionSubnet?",
     options: [
-      "Allow TCP 443 from GatewayManager service tag ✅",
-      "Allow TCP 22 from Internet",
-      "Allow TCP 3389 from VirtualNetwork",
-      "Allow UDP 443 from AzureCloud"
+      "Permitir TCP 443 da service tag GatewayManager ✅",
+      "Permitir TCP 22 da Internet",
+      "Permitir TCP 3389 da VirtualNetwork",
+      "Permitir UDP 443 do AzureCloud"
     ],
     correctIndex: 0,
-    explanation: "The GatewayManager service tag inbound rule on TCP port 443 is mandatory for Bastion control plane communication. Without it, Bastion cannot manage its host instances, causing all connection attempts to fail."
+    explanation: "A regra de entrada da service tag GatewayManager na porta TCP 443 é obrigatória para a comunicação do plano de controle do Bastion. Sem ela, o Bastion não pode gerenciar suas instâncias de host, fazendo com que todas as tentativas de conexão falhem."
   },
   {
     id: "az700-41-q4",
-    question: "A flow log is configured but no data appears in the storage account. The VNet is in East US 2 and the storage account is in West US 2. What is the issue?",
+    question: "Um log de fluxo está configurado, mas nenhum dado aparece na conta de armazenamento. A VNet está em East US 2 e a conta de armazenamento está em West US 2. Qual é o problema?",
     options: [
-      "The storage account must be in the same region as the monitored resource ✅",
-      "Flow logs require a Premium storage account",
-      "The storage account needs a private endpoint to the VNet",
-      "Cross-region flow logs require Network Watcher Premium tier"
+      "A conta de armazenamento deve estar na mesma região que o recurso monitorado ✅",
+      "Os logs de fluxo requerem uma conta de armazenamento Premium",
+      "A conta de armazenamento precisa de um private endpoint para a VNet",
+      "Logs de fluxo entre regiões requerem Network Watcher de nível Premium"
     ],
     correctIndex: 0,
-    explanation: "Flow log storage accounts must be in the same Azure region as the target resource (VNet or NSG). Cross-region storage is not supported for flow log data writes."
+    explanation: "As contas de armazenamento de logs de fluxo devem estar na mesma região do Azure que o recurso de destino (VNet ou NSG). O armazenamento entre regiões não é suportado para gravações de dados de logs de fluxo."
   },
   {
     id: "az700-41-q5",
-    question: "In a version 2 flow log tuple, what does the flow state 'B' indicate?",
+    question: "Em uma tupla de log de fluxo versão 2, o que o estado de fluxo 'B' indica?",
     options: [
-      "Begin - this is the first packet observed for this flow ✅",
-      "Blocked - the flow was denied by an NSG rule",
-      "Bidirectional - traffic flows in both directions",
-      "Bytes - the tuple contains byte count data"
+      "Begin - este é o primeiro pacote observado para este fluxo ✅",
+      "Blocked - o fluxo foi negado por uma regra de NSG",
+      "Bidirectional - o tráfego flui em ambas as direções",
+      "Bytes - a tupla contém dados de contagem de bytes"
     ],
     correctIndex: 0,
-    explanation: "Version 2 flow logs include flow state tracking. 'B' means Begin (first packet), 'C' means Continuing (ongoing flow), and 'E' means End (flow terminated). This enables analysis of flow duration and connection patterns."
+    explanation: "Os logs de fluxo versão 2 incluem rastreamento de estado de fluxo. 'B' significa Begin (primeiro pacote), 'C' significa Continuing (fluxo em andamento) e 'E' significa End (fluxo encerrado). Isso permite a análise da duração do fluxo e dos padrões de conexão."
   },
   {
     id: "az700-41-q6",
-    question: "Which command tests whether a specific packet would be allowed or denied by NSG rules applied to a VM?",
+    question: "Qual comando testa se um pacote específico seria permitido ou negado pelas regras de NSG aplicadas a uma VM?",
     options: [
       "az network watcher test-ip-flow ✅",
       "az network watcher show-topology",
@@ -741,7 +741,7 @@ az network nsg rule create \
       "az network watcher flow-log show"
     ],
     correctIndex: 0,
-    explanation: "The 'az network watcher test-ip-flow' command evaluates NSG rules to determine if a packet with specific source/destination IP, port, and protocol would be allowed or denied. It requires direction (Inbound/Outbound), local and remote addresses with ports, protocol, and the target VM."
+    explanation: "O comando 'az network watcher test-ip-flow' avalia as regras de NSG para determinar se um pacote com IP de origem/destino, porta e protocolo específicos seria permitido ou negado. Ele requer direção (Inbound/Outbound), endereços locais e remotos com portas, protocolo e a VM de destino."
   }
 ]} />
 

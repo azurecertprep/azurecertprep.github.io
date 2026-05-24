@@ -384,7 +384,7 @@ echo "  Syslog: 90d interactive + 90d archive (180 days total)"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Analytics rule dispara mas nenhum Incident é criado
 

@@ -431,7 +431,7 @@ az acr task create \
 
 Calculate savings from implementing retention:
 
-```
+```text
 Storage cost analysis:
 - Current total: 500 GB at ~$0.30/GB/month = $150/month
 - After retention policies:
@@ -545,7 +545,7 @@ jobs:
           delete-only-pre-release-versions: true
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the retention leak
 

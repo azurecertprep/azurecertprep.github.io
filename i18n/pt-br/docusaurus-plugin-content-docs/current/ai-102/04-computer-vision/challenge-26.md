@@ -1,42 +1,42 @@
 ---
 sidebar_position: 4
-title: "Desafio 26: Custom Vision - Detecção de Objetos"
+title: "Desafio 26: Custom Vision - DetecÃ§Ã£o de Objetos"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 26: Custom Vision - Detecção de Objetos
+# Desafio 26: Custom Vision - DetecÃ§Ã£o de Objetos
 
 :::info Tempo Estimado
-**60 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de Visão Computacional (10-15%)
+**60 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de VisÃ£o Computacional (10-15%)
 :::
 
 ## Habilidades do exame abordadas
-- Treinar modelo de imagem personalizado para detecção de objetos
-- Rotular imagens com regiões de bounding box
-- Avaliar métricas de detecção (mAP)
-- Publicar e consumir modelo de detecção de objetos
+- Treinar modelo de imagem personalizado para detecÃ§Ã£o de objetos
+- Rotular imagens com regiÃµes de bounding box
+- Avaliar mÃ©tricas de detecÃ§Ã£o (mAP)
+- Publicar e consumir modelo de detecÃ§Ã£o de objetos
 
-## Visão Geral
+## VisÃ£o Geral
 
-A detecção de objetos localiza e classifica múltiplos objetos dentro de uma imagem usando bounding boxes. Diferente da classificação (que responde "o que é esta imagem?"), a detecção responde "quais objetos estão aqui e onde?"
+A detecÃ§Ã£o de objetos localiza e classifica mÃºltiplos objetos dentro de uma imagem usando bounding boxes. Diferente da classificaÃ§Ã£o (que responde "o que Ã© esta imagem?"), a detecÃ§Ã£o responde "quais objetos estÃ£o aqui e onde?"
 
 Conceitos-chave:
-- **Bounding box**: Retângulo definido por (left, top, width, height) como coordenadas normalizadas (0.0–1.0)
-- **IoU (Intersection over Union)**: Mede a sobreposição entre bounding boxes preditas e reais
-- **mAP (mean Average Precision)**: Métrica principal que calcula a média do AP em todas as classes de objetos
+- **Bounding box**: RetÃ¢ngulo definido por (left, top, width, height) como coordenadas normalizadas (0.0â€“1.0)
+- **IoU (Intersection over Union)**: Mede a sobreposiÃ§Ã£o entre bounding boxes preditas e reais
+- **mAP (mean Average Precision)**: MÃ©trica principal que calcula a mÃ©dia do AP em todas as classes de objetos
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura Azure
 - Recursos Custom Vision Training + Prediction
 - Python 3.9+
 - Pacote: `azure-cognitiveservices-vision-customvision`
 
-## Implementação
+## ImplementaÃ§Ã£o
 
-### Tarefa 1: Criar Projeto de Detecção de Objetos
+### Tarefa 1: Criar Projeto de DetecÃ§Ã£o de Objetos
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -79,7 +79,7 @@ print(f"Tags: car={car_tag.id}, truck={truck_tag.id}, bicycle={bicycle_tag.id}")
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Enviar Imagens com Regiões de Bounding Box
+### Tarefa 2: Enviar Imagens com RegiÃµes de Bounding Box
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -127,7 +127,7 @@ for image in upload_result.images:
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Treinar e Avaliar Modelo de Detecção de Objetos
+### Tarefa 3: Treinar e Avaliar Modelo de DetecÃ§Ã£o de Objetos
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -165,7 +165,7 @@ print(f"\nPublished as: {publish_name}")
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Executar Predições de Detecção de Objetos
+### Tarefa 4: Executar PrediÃ§Ãµes de DetecÃ§Ã£o de Objetos
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -221,9 +221,9 @@ curl -s "${PREDICTION_ENDPOINT}/customvision/v3.0/prediction/${PROJECT_ID}/detec
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Domain: General (Object Detection)
 Created project: Vehicle-Detector
 Tags: car=..., truck=..., bicycle=...
@@ -254,73 +254,73 @@ Objects found: 4
     Box: left=0.720, top=0.180, width=0.260, height=0.310
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Regiões rejeitadas | Coordenadas de região inválidas | Coordenadas fora do intervalo 0.0–1.0 | Normalize: left+width ≤ 1.0, top+height ≤ 1.0 |
-| mAP baixo | Precisão de detecção ruim | Rotulagem inconsistente de bounding boxes | Re-rotule com boxes ajustados e consistentes; mais dados de treinamento |
-| Detecções sobrepostas | Predições duplicadas | Sem limiar de NMS configurado | Aplique limiar de confiança; use Non-Maximum Suppression |
-| Treinamento falha | `BadRequestImageRegions` | Regiões muito pequenas ou ausentes | Tamanho mínimo da região ~5% da área da imagem |
-| Endpoint errado | 404 na detecção | Usando endpoint de classificação para detecção | Use `/detect/` e não `/classify/` na URL de predição |
+| RegiÃµes rejeitadas | Coordenadas de regiÃ£o invÃ¡lidas | Coordenadas fora do intervalo 0.0â€“1.0 | Normalize: left+width â‰¤ 1.0, top+height â‰¤ 1.0 |
+| mAP baixo | PrecisÃ£o de detecÃ§Ã£o ruim | Rotulagem inconsistente de bounding boxes | Re-rotule com boxes ajustados e consistentes; mais dados de treinamento |
+| DetecÃ§Ãµes sobrepostas | PrediÃ§Ãµes duplicadas | Sem limiar de NMS configurado | Aplique limiar de confianÃ§a; use Non-Maximum Suppression |
+| Treinamento falha | `BadRequestImageRegions` | RegiÃµes muito pequenas ou ausentes | Tamanho mÃ­nimo da regiÃ£o ~5% da Ã¡rea da imagem |
+| Endpoint errado | 404 na detecÃ§Ã£o | Usando endpoint de classificaÃ§Ã£o para detecÃ§Ã£o | Use `/detect/` e nÃ£o `/classify/` na URL de prediÃ§Ã£o |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Como as coordenadas de bounding box são representadas na detecção de objetos do Custom Vision?",
+    question: "Como as coordenadas de bounding box sÃ£o representadas na detecÃ§Ã£o de objetos do Custom Vision?",
     options: [
-      "Coordenadas normalizadas de 0.0 a 1.0 relativas às dimensões da imagem (left, top, width, height)",
+      "Coordenadas normalizadas de 0.0 a 1.0 relativas Ã s dimensÃµes da imagem (left, top, width, height)",
       "Coordenadas absolutas em pixels (x, y, width, height)",
       "Valores percentuais de 0% a 100%",
       "Ponto central mais raio"
     ],
     correctAnswer: 0,
-    explanation: "O Custom Vision usa coordenadas normalizadas (0.0 a 1.0) para bounding boxes: left, top, width, height — todos relativos às dimensões da imagem. Isso os torna independentes de resolução."
+    explanation: "O Custom Vision usa coordenadas normalizadas (0.0 a 1.0) para bounding boxes: left, top, width, height â€” todos relativos Ã s dimensÃµes da imagem. Isso os torna independentes de resoluÃ§Ã£o."
   },
   {
-    question: "O que o mAP (mean Average Precision) mede na detecção de objetos?",
+    question: "O que o mAP (mean Average Precision) mede na detecÃ§Ã£o de objetos?",
     options: [
-      "O score médio de confiança em todas as detecções",
-      "O número máximo de objetos detectados por imagem",
-      "O tempo médio de processamento por imagem",
-      "A média do Average Precision calculado independentemente para cada classe de objeto"
+      "O score mÃ©dio de confianÃ§a em todas as detecÃ§Ãµes",
+      "O nÃºmero mÃ¡ximo de objetos detectados por imagem",
+      "O tempo mÃ©dio de processamento por imagem",
+      "A mÃ©dia do Average Precision calculado independentemente para cada classe de objeto"
     ],
     correctAnswer: 3,
-    explanation: "mAP é a média dos valores de AP calculados separadamente para cada classe, fornecendo uma métrica única que resume o desempenho de detecção em todas as categorias."
+    explanation: "mAP Ã© a mÃ©dia dos valores de AP calculados separadamente para cada classe, fornecendo uma mÃ©trica Ãºnica que resume o desempenho de detecÃ§Ã£o em todas as categorias."
   },
   {
-    question: "Qual é a diferença principal entre os endpoints de predição classify e detect?",
+    question: "Qual Ã© a diferenÃ§a principal entre os endpoints de prediÃ§Ã£o classify e detect?",
     options: [
-      "Classify é mais rápido que detect",
+      "Classify Ã© mais rÃ¡pido que detect",
       "Detect requer mais imagens de treinamento",
-      "Classify retorna uma única tag; detect retorna múltiplas tags com coordenadas de bounding box",
-      "Classify funciona com URLs; detect só funciona com arquivos locais"
+      "Classify retorna uma Ãºnica tag; detect retorna mÃºltiplas tags com coordenadas de bounding box",
+      "Classify funciona com URLs; detect sÃ³ funciona com arquivos locais"
     ],
     correctAnswer: 2,
-    explanation: "O endpoint classify retorna tags para a imagem inteira. O endpoint detect retorna múltiplas predições de objetos, cada uma com uma tag E coordenadas de bounding box."
+    explanation: "O endpoint classify retorna tags para a imagem inteira. O endpoint detect retorna mÃºltiplas prediÃ§Ãµes de objetos, cada uma com uma tag E coordenadas de bounding box."
   },
   {
-    question: "Para que é usado o IoU (Intersection over Union)?",
+    question: "Para que Ã© usado o IoU (Intersection over Union)?",
     options: [
-      "Medir quanto dos dados de treinamento se sobrepõe entre classes",
-      "Medir a sobreposição entre um bounding box predito e o box real para determinar se uma detecção está correta",
-      "Calcular a proporção de imagens de entrada para saída",
-      "Determinar quantos usuários estão acessando o modelo simultaneamente"
+      "Medir quanto dos dados de treinamento se sobrepÃµe entre classes",
+      "Medir a sobreposiÃ§Ã£o entre um bounding box predito e o box real para determinar se uma detecÃ§Ã£o estÃ¡ correta",
+      "Calcular a proporÃ§Ã£o de imagens de entrada para saÃ­da",
+      "Determinar quantos usuÃ¡rios estÃ£o acessando o modelo simultaneamente"
     ],
     correctAnswer: 1,
-    explanation: "IoU mede a sobreposição entre bounding boxes preditos e reais. Uma detecção é tipicamente considerada correta se IoU > 0.5 (50% de sobreposição com o objeto real)."
+    explanation: "IoU mede a sobreposiÃ§Ã£o entre bounding boxes preditos e reais. Uma detecÃ§Ã£o Ã© tipicamente considerada correta se IoU > 0.5 (50% de sobreposiÃ§Ã£o com o objeto real)."
   },
   {
-    question: "Ao rotular imagens de treinamento para detecção de objetos, quais coordenadas são necessárias para cada objeto?",
+    question: "Ao rotular imagens de treinamento para detecÃ§Ã£o de objetos, quais coordenadas sÃ£o necessÃ¡rias para cada objeto?",
     options: [
       "Apenas o ponto central do objeto",
       "As coordenadas em pixels dos quatro cantos",
       "Um contorno poligonal da forma do objeto",
-      "Left, top, width e height do bounding box (normalizado 0.0–1.0) mais o tag ID"
+      "Left, top, width e height do bounding box (normalizado 0.0â€“1.0) mais o tag ID"
     ],
     correctAnswer: 3,
-    explanation: "Cada região requer: tag_id (qual classe de objeto), left, top, width, height — todos como valores normalizados entre 0.0 e 1.0 relativos às dimensões da imagem."
+    explanation: "Cada regiÃ£o requer: tag_id (qual classe de objeto), left, top, width, height â€” todos como valores normalizados entre 0.0 e 1.0 relativos Ã s dimensÃµes da imagem."
   }
 ]} />
 
@@ -332,6 +332,6 @@ az group delete --name rg-ai102-customvision --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral da detecção de objetos](https://learn.microsoft.com/azure/ai-services/custom-vision-service/get-started-build-detector)
+- [VisÃ£o geral da detecÃ§Ã£o de objetos](https://learn.microsoft.com/azure/ai-services/custom-vision-service/get-started-build-detector)
 - [Como rotular imagens](https://learn.microsoft.com/azure/ai-services/custom-vision-service/getting-started-build-a-classifier)
-- [Referência da API de Prediction](https://learn.microsoft.com/rest/api/customvision/prediction)
+- [ReferÃªncia da API de Prediction](https://learn.microsoft.com/rest/api/customvision/prediction)

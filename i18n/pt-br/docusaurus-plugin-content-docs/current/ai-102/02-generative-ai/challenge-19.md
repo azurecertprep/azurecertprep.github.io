@@ -1,32 +1,32 @@
 ---
 sidebar_position: 10
-title: "Desafio 19: Otimizar Soluções de IA Generativa"
+title: "Desafio 19: Otimizar SoluÃ§Ãµes de IA Generativa"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 19: Otimizar Soluções de IA Generativa
+# Desafio 19: Otimizar SoluÃ§Ãµes de IA Generativa
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$5.00 (estimado, fine-tuning) | **Domínio**: Soluções de IA Generativa (15-20%)
+**45-60 min** | **Custo**: ~$5.00 (estimado, fine-tuning) | **DomÃ­nio**: SoluÃ§Ãµes de IA Generativa (15-20%)
 :::
 
 ## Habilidades do exame cobertas
-- Configurar parâmetros para otimizar a saída de IA generativa
-- Implementar monitoramento e observabilidade para soluções de IA generativa
+- Configurar parÃ¢metros para otimizar a saÃ­da de IA generativa
+- Implementar monitoramento e observabilidade para soluÃ§Ãµes de IA generativa
 - Otimizar escalabilidade e desempenho
 - Implementar rastreamento com Application Insights e OpenTelemetry
 - Preparar e enviar jobs de fine-tuning
 
-## Visão Geral
+## VisÃ£o Geral
 
-Otimizar soluções de IA generativa requer atenção à latência, custo, qualidade e observabilidade. Respostas com **streaming** melhoram a latência percebida entregando tokens de forma incremental em vez de esperar pela geração completa. **Otimização de tokens** usando bibliotecas como `tiktoken` permite estimativa precisa de custos e compressão de prompts. Juntas, essas técnicas reduzem tanto o tempo de resposta real quanto o percebido.
+Otimizar soluÃ§Ãµes de IA generativa requer atenÃ§Ã£o Ã  latÃªncia, custo, qualidade e observabilidade. Respostas com **streaming** melhoram a latÃªncia percebida entregando tokens de forma incremental em vez de esperar pela geraÃ§Ã£o completa. **OtimizaÃ§Ã£o de tokens** usando bibliotecas como `tiktoken` permite estimativa precisa de custos e compressÃ£o de prompts. Juntas, essas tÃ©cnicas reduzem tanto o tempo de resposta real quanto o percebido.
 
-**Observabilidade** é crítica para sistemas de IA em produção. O Azure OpenAI integra-se com o Application Insights através do OpenTelemetry, fornecendo rastreamento de ponta a ponta de requisições, uso de tokens, distribuições de latência e taxas de erro. Spans e atributos customizados permitem rastrear métricas específicas do negócio, como uso de templates de prompt e scores de qualidade de resposta.
+**Observabilidade** Ã© crÃ­tica para sistemas de IA em produÃ§Ã£o. O Azure OpenAI integra-se com o Application Insights atravÃ©s do OpenTelemetry, fornecendo rastreamento de ponta a ponta de requisiÃ§Ãµes, uso de tokens, distribuiÃ§Ãµes de latÃªncia e taxas de erro. Spans e atributos customizados permitem rastrear mÃ©tricas especÃ­ficas do negÃ³cio, como uso de templates de prompt e scores de qualidade de resposta.
 
-**Fine-tuning** permite a personalização de modelos base com dados específicos do domínio. O fluxo de trabalho envolve preparar dados de treinamento em formato JSONL (com pares de mensagens system/user/assistant), fazer upload dos arquivos, criar um job de fine-tuning e implantar o modelo customizado resultante. Modelos com fine-tuning podem alcançar melhor desempenho em tarefas específicas com prompts mais curtos, reduzindo tanto a latência quanto o custo por requisição.
+**Fine-tuning** permite a personalizaÃ§Ã£o de modelos base com dados especÃ­ficos do domÃ­nio. O fluxo de trabalho envolve preparar dados de treinamento em formato JSONL (com pares de mensagens system/user/assistant), fazer upload dos arquivos, criar um job de fine-tuning e implantar o modelo customizado resultante. Modelos com fine-tuning podem alcanÃ§ar melhor desempenho em tarefas especÃ­ficas com prompts mais curtos, reduzindo tanto a latÃªncia quanto o custo por requisiÃ§Ã£o.
 
 ## Arquitetura
 
@@ -34,14 +34,14 @@ Este desafio implementa respostas com streaming, configura rastreamento OpenTele
 
 ![Challenge 19 topology](/img/ai-102/challenge-19-topology.svg)
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Recurso Azure OpenAI com GPT-4o implantado
 - Recurso Application Insights (connection string)
 - Python 3.9+ com pacotes `openai`, `tiktoken`, `azure-monitor-opentelemetry`
 - .NET 8 SDK com pacotes NuGet `Azure.AI.OpenAI`, `Azure.Monitor.OpenTelemetry.AspNetCore`
 - Dados de treinamento em formato JSONL (para a tarefa de fine-tuning)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Implementar Respostas com Streaming
 
@@ -709,9 +709,9 @@ az cognitiveservices account deployment create \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Non-streaming: 3.45s total wait
 Response length: 892 chars
 
@@ -735,34 +735,34 @@ Status: succeeded
 Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Streaming retorna chunks vazios | Sem conteúdo no delta | Normal — alguns chunks contêm apenas role/metadata | Filtrar chunks onde `delta.content` não é None/null |
-| Contagem de tokens divergente | Contagem local difere da API | Versão do tokenizer incompatível ou overhead de mensagem | Usar `tiktoken` com o modelo correto; considerar overhead de 3 tokens por mensagem |
-| Job de fine-tuning falha | Status: `failed` | Formato de dados de treinamento inválido ou menos de 10 exemplos | Validar formato JSONL; garantir mínimo de 10 exemplos de treinamento |
-| Traces não aparecem | Sem dados no Application Insights | Connection string mal configurada ou atraso na ingestão | Verificar connection string; aguardar 2-5 minutos para ingestão |
-| Modelo com fine-tuning com alta latência | Mais lento que o modelo base | Modelo customizado não otimizado para deployment | Aumentar capacidade do SKU; considerar se fine-tuning é necessário vs. few-shot |
+| Streaming retorna chunks vazios | Sem conteÃºdo no delta | Normal â€” alguns chunks contÃªm apenas role/metadata | Filtrar chunks onde `delta.content` nÃ£o Ã© None/null |
+| Contagem de tokens divergente | Contagem local difere da API | VersÃ£o do tokenizer incompatÃ­vel ou overhead de mensagem | Usar `tiktoken` com o modelo correto; considerar overhead de 3 tokens por mensagem |
+| Job de fine-tuning falha | Status: `failed` | Formato de dados de treinamento invÃ¡lido ou menos de 10 exemplos | Validar formato JSONL; garantir mÃ­nimo de 10 exemplos de treinamento |
+| Traces nÃ£o aparecem | Sem dados no Application Insights | Connection string mal configurada ou atraso na ingestÃ£o | Verificar connection string; aguardar 2-5 minutos para ingestÃ£o |
+| Modelo com fine-tuning com alta latÃªncia | Mais lento que o modelo base | Modelo customizado nÃ£o otimizado para deployment | Aumentar capacidade do SKU; considerar se fine-tuning Ã© necessÃ¡rio vs. few-shot |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ch19-q1",
-    question: "Qual é o principal benefício de respostas com streaming no Azure OpenAI?",
+    question: "Qual Ã© o principal benefÃ­cio de respostas com streaming no Azure OpenAI?",
     options: [
-      "Reduz o time-to-first-token, melhorando a latência percebida",
+      "Reduz o time-to-first-token, melhorando a latÃªncia percebida",
       "Reduz o consumo total de tokens",
-      "Melhora a qualidade e precisão da resposta",
-      "Permite limites maiores de tokens máximos"
+      "Melhora a qualidade e precisÃ£o da resposta",
+      "Permite limites maiores de tokens mÃ¡ximos"
     ],
     correctAnswer: 0,
-    explanation: "O streaming entrega tokens de forma incremental via Server-Sent Events (SSE), reduzindo o time-to-first-token de segundos para tipicamente menos de 500ms. O tempo total de geração permanece similar, mas os usuários percebem respostas mais rápidas porque o conteúdo aparece imediatamente."
+    explanation: "O streaming entrega tokens de forma incremental via Server-Sent Events (SSE), reduzindo o time-to-first-token de segundos para tipicamente menos de 500ms. O tempo total de geraÃ§Ã£o permanece similar, mas os usuÃ¡rios percebem respostas mais rÃ¡pidas porque o conteÃºdo aparece imediatamente."
   },
   {
     id: "ch19-q2",
-    question: "Qual é o número mínimo de exemplos de treinamento necessários para fine-tuning no Azure OpenAI?",
+    question: "Qual Ã© o nÃºmero mÃ­nimo de exemplos de treinamento necessÃ¡rios para fine-tuning no Azure OpenAI?",
     options: [
       "3 exemplos",
       "10 exemplos",
@@ -770,11 +770,11 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
       "100 exemplos"
     ],
     correctAnswer: 1,
-    explanation: "O Azure OpenAI requer um mínimo de 10 exemplos de treinamento para fine-tuning. No entanto, a Microsoft recomenda 50-100 exemplos bem elaborados para melhorias significativas. Os dados de treinamento devem estar em formato JSONL com arrays de mensagens system/user/assistant."
+    explanation: "O Azure OpenAI requer um mÃ­nimo de 10 exemplos de treinamento para fine-tuning. No entanto, a Microsoft recomenda 50-100 exemplos bem elaborados para melhorias significativas. Os dados de treinamento devem estar em formato JSONL com arrays de mensagens system/user/assistant."
   },
   {
     id: "ch19-q3",
-    question: "Qual biblioteca é usada para contar tokens localmente para GPT-4o antes de fazer chamadas à API?",
+    question: "Qual biblioteca Ã© usada para contar tokens localmente para GPT-4o antes de fazer chamadas Ã  API?",
     options: [
       "transformers",
       "sentencepiece",
@@ -782,31 +782,31 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
       "tiktoken"
     ],
     correctAnswer: 3,
-    explanation: "tiktoken é a biblioteca oficial de tokenização da OpenAI para Python. O GPT-4o usa o encoding o200k_base. A contagem local de tokens com tiktoken permite estimativa de custos, otimização de prompts e gerenciamento da janela de contexto antes de fazer chamadas à API."
+    explanation: "tiktoken Ã© a biblioteca oficial de tokenizaÃ§Ã£o da OpenAI para Python. O GPT-4o usa o encoding o200k_base. A contagem local de tokens com tiktoken permite estimativa de custos, otimizaÃ§Ã£o de prompts e gerenciamento da janela de contexto antes de fazer chamadas Ã  API."
   },
   {
     id: "ch19-q4",
-    question: "Ao configurar rastreamento OpenTelemetry para Azure OpenAI, qual métrica é mais importante para monitoramento de custos?",
+    question: "Ao configurar rastreamento OpenTelemetry para Azure OpenAI, qual mÃ©trica Ã© mais importante para monitoramento de custos?",
     options: [
-      "Latência da requisição (ms)",
-      "Códigos de status HTTP",
+      "LatÃªncia da requisiÃ§Ã£o (ms)",
+      "CÃ³digos de status HTTP",
       "Uso de tokens (prompt_tokens + completion_tokens)",
-      "Tamanho do pool de conexões"
+      "Tamanho do pool de conexÃµes"
     ],
     correctAnswer: 2,
-    explanation: "O uso de tokens determina diretamente o custo, já que o Azure OpenAI cobra por token. Rastrear prompt_tokens e completion_tokens por requisição permite atribuição de custos, monitoramento de orçamento e otimização. Latência e códigos de status são importantes para confiabilidade, mas não se correlacionam diretamente com custo."
+    explanation: "O uso de tokens determina diretamente o custo, jÃ¡ que o Azure OpenAI cobra por token. Rastrear prompt_tokens e completion_tokens por requisiÃ§Ã£o permite atribuiÃ§Ã£o de custos, monitoramento de orÃ§amento e otimizaÃ§Ã£o. LatÃªncia e cÃ³digos de status sÃ£o importantes para confiabilidade, mas nÃ£o se correlacionam diretamente com custo."
   },
   {
     id: "ch19-q5",
     question: "Qual formato os dados de treinamento devem usar para fine-tuning no Azure OpenAI?",
     options: [
-      "CSV com colunas para entrada e saída",
+      "CSV com colunas para entrada e saÃ­da",
       "Array JSON de pares prompt-completion",
       "JSONL com arrays de messages contendo roles system/user/assistant",
       "Texto plano com prompt e completion separados por ###"
     ],
     correctAnswer: 2,
-    explanation: "O fine-tuning para modelos de chat requer formato JSONL (um objeto JSON por linha) onde cada objeto contém um array 'messages' com entradas baseadas em roles (system, user, assistant). Isso corresponde ao formato da API de chat completions, garantindo que o modelo com fine-tuning funcione com a mesma interface."
+    explanation: "O fine-tuning para modelos de chat requer formato JSONL (um objeto JSON por linha) onde cada objeto contÃ©m um array 'messages' com entradas baseadas em roles (system, user, assistant). Isso corresponde ao formato da API de chat completions, garantindo que o modelo com fine-tuning funcione com a mesma interface."
   }
 ]} />
 

@@ -24,7 +24,7 @@ import TabItem from '@theme/TabItem';
 
 Azure AI services can be consumed via language-specific SDKs or direct REST API calls. The AI-102 exam tests your ability to choose the right authentication method, understand endpoint construction, and handle API versioning correctly.
 
-There are two primary authentication patterns: **key-based** (using `AzureKeyCredential` or the `Ocp-Apim-Subscription-Key` header) and **Microsoft Entra ID** (using `DefaultAzureCredential` with OAuth2 bearer tokens). Key-based auth is simpler but less secure—keys can be leaked and don't provide identity-based audit trails. Entra ID auth requires a custom subdomain and proper RBAC role assignments but provides managed identity support, conditional access, and fine-grained auditing.
+There are two primary authentication patterns: **key-based** (using `AzureKeyCredential` or the `Ocp-Apim-Subscription-Key` header) and **Microsoft Entra ID** (using `DefaultAzureCredential` with OAuth2 bearer tokens). Key-based auth is simpler but less secureâ€”keys can be leaked and don't provide identity-based audit trails. Entra ID auth requires a custom subdomain and proper RBAC role assignments but provides managed identity support, conditional access, and fine-grained auditing.
 
 This challenge walks you through both authentication methods using the Azure AI Text Analytics SDK, demonstrates REST API calls with proper headers, and shows how `DefaultAzureCredential` cascades through multiple credential types for seamless local-to-cloud development.
 
@@ -62,7 +62,7 @@ client = TextAnalyticsClient(endpoint=endpoint, credential=credential)
 # Detect language
 documents = [
     "This is a document written in English.",
-    "Este es un documento escrito en español.",
+    "Este es un documento escrito en espaÃ±ol.",
     "Dies ist ein auf Deutsch verfasstes Dokument."
 ]
 
@@ -92,7 +92,7 @@ var client = new TextAnalyticsClient(endpoint, key);
 var documents = new[]
 {
     "This is a document written in English.",
-    "Este es un documento escrito en español.",
+    "Este es un documento escrito en espaÃ±ol.",
     "Dies ist ein auf Deutsch verfasstes Dokument."
 };
 
@@ -129,7 +129,7 @@ curl -s "${ENDPOINT}language/:analyze-text?api-version=2023-04-01" \
     "analysisInput": {
       "documents": [
         {"id": "1", "text": "This is a document written in English."},
-        {"id": "2", "text": "Este es un documento escrito en español."},
+        {"id": "2", "text": "Este es un documento escrito en espaÃ±ol."},
         {"id": "3", "text": "Dies ist ein auf Deutsch verfasstes Dokument."}
       ]
     }
@@ -152,7 +152,7 @@ from azure.ai.textanalytics import TextAnalyticsClient
 # Entra ID authentication (requires custom subdomain on resource)
 endpoint = os.environ["AZURE_AI_ENDPOINT"]  # Must be custom: https://<name>.cognitiveservices.azure.com/
 
-# DefaultAzureCredential tries: Environment → Managed Identity → Azure CLI → etc.
+# DefaultAzureCredential tries: Environment â†’ Managed Identity â†’ Azure CLI â†’ etc.
 credential = DefaultAzureCredential()
 client = TextAnalyticsClient(endpoint=endpoint, credential=credential)
 
@@ -302,7 +302,7 @@ using Azure.Identity;
 using Azure.AI.TextAnalytics;
 
 // DefaultAzureCredential tries multiple sources automatically
-// Order: Environment → Workload Identity → Managed Identity → Azure CLI → etc.
+// Order: Environment â†’ Workload Identity â†’ Managed Identity â†’ Azure CLI â†’ etc.
 
 // For production with managed identity
 var productionCredential = new ManagedIdentityCredential();
@@ -388,7 +388,7 @@ curl -s "${ENDPOINT}language/:analyze-text?api-version=2023-04-01" \
 
 ## Expected Output
 
-```
+```text
 'English' (confidence: 1.00)
 'Spanish' (confidence: 1.00)
 'German' (confidence: 1.00)
@@ -402,7 +402,7 @@ Key phrases: Azure AI services, multiple authentication methods
 Auth successful! Detected: English
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -446,7 +446,7 @@ Auth successful! Detected: English
       "x-api-key"
     ],
     correctAnswer: 2,
-    explanation: "Azure AI services (Language, Vision, Speech, etc.) use the 'Ocp-Apim-Subscription-Key' header for key-based auth. Note: Azure OpenAI uses 'api-key' instead—they have different header conventions."
+    explanation: "Azure AI services (Language, Vision, Speech, etc.) use the 'Ocp-Apim-Subscription-Key' header for key-based auth. Note: Azure OpenAI uses 'api-key' insteadâ€”they have different header conventions."
   },
   {
     question: "DefaultAzureCredential fails locally with 'No credential in this chain provided a token'. What is the most likely fix?",
@@ -457,7 +457,7 @@ Auth successful! Detected: English
       "Restart the application with administrator privileges"
     ],
     correctAnswer: 1,
-    explanation: "DefaultAzureCredential attempts multiple credential sources in order. Locally, it typically relies on AzureCliCredential—if you haven't run 'az login' or your session expired, no credential in the chain can provide a token."
+    explanation: "DefaultAzureCredential attempts multiple credential sources in order. Locally, it typically relies on AzureCliCredentialâ€”if you haven't run 'az login' or your session expired, no credential in the chain can provide a token."
   },
   {
     question: "You need to call Azure AI Language with API version '2023-04-01' but the latest SDK defaults to '2024-04-01'. How should you handle this?",

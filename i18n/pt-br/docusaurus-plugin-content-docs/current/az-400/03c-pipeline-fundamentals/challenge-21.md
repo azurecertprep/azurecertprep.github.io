@@ -7,48 +7,48 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 # Desafio 21: Infraestrutura de runners e agentes
 
-:::info Plataforma: comparação
+:::info Plataforma: comparaÃ§Ã£o
 Este desafio compara runners do GitHub Actions e agentes do Azure DevOps lado a lado.
 :::
 
 ## Habilidades do exame
 
-- Projetar e implementar uma infraestrutura de runner do GitHub ou agente do Azure DevOps, incluindo custo, seleção de ferramentas, licenças, conectividade e manutenibilidade
+- Projetar e implementar uma infraestrutura de runner do GitHub ou agente do Azure DevOps, incluindo custo, seleÃ§Ã£o de ferramentas, licenÃ§as, conectividade e manutenibilidade
 
-## Cenário
+## CenÃ¡rio
 
 A Contoso Ltd possui requisitos de build diversificados em suas equipes de engenharia:
 
 - A equipe mobile faz build de apps iOS que requerem macOS com Xcode
-- A equipe de engenharia de dados executa testes de integração contra um SQL Server on-premises atrás de um firewall
+- A equipe de engenharia de dados executa testes de integraÃ§Ã£o contra um SQL Server on-premises atrÃ¡s de um firewall
 - A equipe de plataforma faz build de imagens Docker que precisam de acesso privilegiado
-- Todas as equipes precisam de builds rápidos com dependências em cache
+- Todas as equipes precisam de builds rÃ¡pidos com dependÃªncias em cache
 
-A configuração atual usa runners hospedados pelo GitHub para tudo, resultando em builds lentos (sem cache persistente), incapacidade de alcançar recursos on-premises e custos altos para runners macOS. A Contoso precisa de uma estratégia híbrida de runners/agentes que equilibre custo, segurança e capacidade.
+A configuraÃ§Ã£o atual usa runners hospedados pelo GitHub para tudo, resultando em builds lentos (sem cache persistente), incapacidade de alcanÃ§ar recursos on-premises e custos altos para runners macOS. A Contoso precisa de uma estratÃ©gia hÃ­brida de runners/agentes que equilibre custo, seguranÃ§a e capacidade.
 
 ## Tarefa 1: Comparar runners hospedados versus self-hosted
 
 | Fator | Runners hospedados pelo GitHub | Runners self-hosted |
 |-------|-------------------------------|---------------------|
-| Custo | Minutos incluídos (2.000 para Team, 3.000 para Enterprise), depois cobrança por minuto | Apenas custo de infraestrutura (VM, manutenção) |
-| Taxa macOS | Multiplicador de 10x sobre minutos Linux | Hardware próprio a custo fixo |
-| Manutenção | Gerenciado pelo GitHub (atualizado automaticamente) | Autogerenciado (patches de SO, atualizações de ferramentas) |
-| Ambiente limpo | VM nova a cada job | Persistente (necessário gerenciar limpeza) |
-| Acesso à rede | Apenas internet pública | Pode acessar redes privadas |
-| Tempo de inicialização | 15-45 segundos (fila + provisionamento) | Quase instantâneo (já em execução) |
-| Personalização | Limitado a ferramentas pré-instaladas | Controle total sobre software instalado |
-| Cache | actions/cache (round-trip de rede) | Cache em filesystem local (mais rápido) |
-| Segurança | Isolado por design | Risco de runner compartilhado se não for efêmero |
+| Custo | Minutos incluÃ­dos (2.000 para Team, 3.000 para Enterprise), depois cobranÃ§a por minuto | Apenas custo de infraestrutura (VM, manutenÃ§Ã£o) |
+| Taxa macOS | Multiplicador de 10x sobre minutos Linux | Hardware prÃ³prio a custo fixo |
+| ManutenÃ§Ã£o | Gerenciado pelo GitHub (atualizado automaticamente) | Autogerenciado (patches de SO, atualizaÃ§Ãµes de ferramentas) |
+| Ambiente limpo | VM nova a cada job | Persistente (necessÃ¡rio gerenciar limpeza) |
+| Acesso Ã  rede | Apenas internet pÃºblica | Pode acessar redes privadas |
+| Tempo de inicializaÃ§Ã£o | 15-45 segundos (fila + provisionamento) | Quase instantÃ¢neo (jÃ¡ em execuÃ§Ã£o) |
+| PersonalizaÃ§Ã£o | Limitado a ferramentas prÃ©-instaladas | Controle total sobre software instalado |
+| Cache | actions/cache (round-trip de rede) | Cache em filesystem local (mais rÃ¡pido) |
+| SeguranÃ§a | Isolado por design | Risco de runner compartilhado se nÃ£o for efÃªmero |
 
-Comparação com Azure DevOps:
+ComparaÃ§Ã£o com Azure DevOps:
 
 | Fator | Agentes hospedados pela Microsoft | Agentes self-hosted |
 |-------|----------------------------------|---------------------|
-| Custo | 1 job paralelo gratuito, depois $40/job paralelo/mês | $15/job paralelo/mês (licenciamento) + infra |
-| Manutenção | Gerenciado pela Microsoft | Autogerenciado |
+| Custo | 1 job paralelo gratuito, depois $40/job paralelo/mÃªs | $15/job paralelo/mÃªs (licenciamento) + infra |
+| ManutenÃ§Ã£o | Gerenciado pela Microsoft | Autogerenciado |
 | Ambiente limpo | VM nova a cada job | Persistente |
-| Acesso à rede | Apenas internet pública | Acesso a rede privada |
-| Tempo de inicialização | Pode ser lento devido ao provisionamento | Rápido (pré-provisionado) |
+| Acesso Ã  rede | Apenas internet pÃºblica | Acesso a rede privada |
+| Tempo de inicializaÃ§Ã£o | Pode ser lento devido ao provisionamento | RÃ¡pido (prÃ©-provisionado) |
 
 ## Tarefa 2: Configurar um runner self-hosted do GitHub no Linux
 
@@ -93,7 +93,7 @@ sudo ./svc.sh start
 sudo ./svc.sh status
 ```
 
-Instale as ferramentas de build necessárias:
+Instale as ferramentas de build necessÃ¡rias:
 
 ```bash
 # Install Docker
@@ -213,7 +213,7 @@ pool:
 
 ## Tarefa 5: Configurar agentes de scale set para auto-scaling
 
-Use Azure Virtual Machine Scale Sets (VMSS) para pools de agentes elásticos:
+Use Azure Virtual Machine Scale Sets (VMSS) para pools de agentes elÃ¡sticos:
 
 ```bash
 # Create a VMSS for Azure DevOps agents
@@ -241,7 +241,7 @@ az vmss create \
 #   - Desired idle agents: 2
 ```
 
-Configuração cloud-init para provisionamento automático do agente (`cloud-init-agent.yaml`):
+ConfiguraÃ§Ã£o cloud-init para provisionamento automÃ¡tico do agente (`cloud-init-agent.yaml`):
 
 ```yaml
 #cloud-config
@@ -299,9 +299,9 @@ jobs:
       - run: npm ci && npm test
 ```
 
-## Tarefa 6: Considerações de segurança de runners e agentes
+## Tarefa 6: ConsideraÃ§Ãµes de seguranÃ§a de runners e agentes
 
-### Runners efêmeros versus persistentes
+### Runners efÃªmeros versus persistentes
 
 ```yaml
 # GitHub: Ephemeral runner (recommended for public repos)
@@ -315,7 +315,7 @@ jobs:
 # In pool settings: "Automatically tear down virtual machines after every use" = Yes
 ```
 
-### Checklist de hardening de segurança
+### Checklist de hardening de seguranÃ§a
 
 ```bash
 # 1. Run agent as non-root user with minimal permissions
@@ -359,11 +359,11 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 ```
 
-## Tarefa 7: Análise de custos
+## Tarefa 7: AnÃ¡lise de custos
 
-### Cálculo de ponto de equilíbrio
+### CÃ¡lculo de ponto de equilÃ­brio
 
-```
+```text
 GitHub-hosted runner costs (per minute):
   Linux:   $0.008/min
   Windows: $0.016/min
@@ -390,19 +390,19 @@ Break-even analysis:
     d) You need custom hardware or persistent caches
 ```
 
-### Matriz de decisão
+### Matriz de decisÃ£o
 
-| Requisito | Recomendação | Justificativa |
+| Requisito | RecomendaÃ§Ã£o | Justificativa |
 |-----------|-------------|---------------|
 | Builds iOS (macOS) | Mac Mini self-hosted ou Orka | Multiplicador de custo 10x para macOS hospedado |
-| Acesso a SQL on-premises | Self-hosted na rede corporativa | Runners hospedados não podem alcançar redes privadas |
+| Acesso a SQL on-premises | Self-hosted na rede corporativa | Runners hospedados nÃ£o podem alcanÃ§ar redes privadas |
 | Builds Docker com cache | Self-hosted com cache Docker local | Evita baixar imagens base novamente a cada build |
-| CI simples (lint, teste unitário) | Hospedado pelo GitHub | Baixo custo, zero manutenção |
-| Compliance (residência de dados) | Self-hosted na região exigida | Controle sobre onde código e artefatos residem |
+| CI simples (lint, teste unitÃ¡rio) | Hospedado pelo GitHub | Baixo custo, zero manutenÃ§Ã£o |
+| Compliance (residÃªncia de dados) | Self-hosted na regiÃ£o exigida | Controle sobre onde cÃ³digo e artefatos residem |
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Falha de conectividade do runner
+### ExercÃ­cio 1: Falha de conectividade do runner
 
 Um runner self-hosted aparece como "Offline" no GitHub. Diagnostique:
 
@@ -427,7 +427,7 @@ cat _diag/Runner_*.log | tail -50
 sudo ./svc.sh start
 ```
 
-### Exercício 2: Incompatibilidade de capacidade do agente
+### ExercÃ­cio 2: Incompatibilidade de capacidade do agente
 
 Um pipeline do Azure DevOps falha com "No agent found in pool matching demands":
 
@@ -440,13 +440,13 @@ pool:
     - Agent.OS -equals Linux
 ```
 
-**Diagnóstico:** O agente não anuncia a capacidade `dotnet8`.
+**DiagnÃ³stico:** O agente nÃ£o anuncia a capacidade `dotnet8`.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Adicione a capacidade ao agente ou defina-a como variável de ambiente:
+**CorreÃ§Ã£o:** Adicione a capacidade ao agente ou defina-a como variÃ¡vel de ambiente:
 
 ```bash
 # On the agent machine, add the capability
@@ -463,52 +463,52 @@ sudo ./svc.sh start
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Quando uma organização deve usar runners self-hosted em vez de runners hospedados pelo GitHub?",
+    question: "Quando uma organizaÃ§Ã£o deve usar runners self-hosted em vez de runners hospedados pelo GitHub?",
     options: [
       "Quando querem evitar manter a infraestrutura de runners",
       "Quando builds precisam acessar recursos em uma rede privada",
-      "Quando querem patching automático de segurança do SO do runner",
-      "Quando precisam da configuração mais simples possível"
+      "Quando querem patching automÃ¡tico de seguranÃ§a do SO do runner",
+      "Quando precisam da configuraÃ§Ã£o mais simples possÃ­vel"
     ],
     correctIndex: 1,
-    explanation: "Runners self-hosted são necessários quando workflows precisam acessar recursos que não são alcançáveis pela internet pública, como bancos de dados on-premises, APIs internas ou recursos de rede privada. Este é o principal motivador técnico para runners self-hosted além da otimização de custos em escala."
+    explanation: "Runners self-hosted sÃ£o necessÃ¡rios quando workflows precisam acessar recursos que nÃ£o sÃ£o alcanÃ§Ã¡veis pela internet pÃºblica, como bancos de dados on-premises, APIs internas ou recursos de rede privada. Este Ã© o principal motivador tÃ©cnico para runners self-hosted alÃ©m da otimizaÃ§Ã£o de custos em escala."
   },
   {
-    question: "Qual é o propósito da flag '--ephemeral' ao configurar um runner self-hosted do GitHub Actions?",
+    question: "Qual Ã© o propÃ³sito da flag '--ephemeral' ao configurar um runner self-hosted do GitHub Actions?",
     options: [
-      "O runner exclui seu registro após um timeout configurável",
+      "O runner exclui seu registro apÃ³s um timeout configurÃ¡vel",
       "O runner aceita apenas um job e depois se desregistra automaticamente",
-      "O runner usa armazenamento temporário que é limpo entre jobs",
-      "O runner não persiste logs em disco"
+      "O runner usa armazenamento temporÃ¡rio que Ã© limpo entre jobs",
+      "O runner nÃ£o persiste logs em disco"
     ],
     correctIndex: 1,
-    explanation: "Um runner efêmero é projetado para executar exatamente um job e depois se desregistrar automaticamente. Isso fornece a mesma garantia de ambiente limpo dos runners hospedados pelo GitHub enquanto permite infraestrutura self-hosted. Ele previne vazamento de credenciais ou contaminação do workspace entre jobs de diferentes workflows."
+    explanation: "Um runner efÃªmero Ã© projetado para executar exatamente um job e depois se desregistrar automaticamente. Isso fornece a mesma garantia de ambiente limpo dos runners hospedados pelo GitHub enquanto permite infraestrutura self-hosted. Ele previne vazamento de credenciais ou contaminaÃ§Ã£o do workspace entre jobs de diferentes workflows."
   },
   {
-    question: "No Azure DevOps, o que determina se um agente self-hosted pode executar um pipeline específico?",
+    question: "No Azure DevOps, o que determina se um agente self-hosted pode executar um pipeline especÃ­fico?",
     options: [
-      "O nome do agente deve corresponder à configuração do pipeline",
+      "O nome do agente deve corresponder Ã  configuraÃ§Ã£o do pipeline",
       "O agente deve estar no pool correto e satisfazer todas as 'demands' especificadas no pipeline",
       "O agente deve ter a mesma assinatura Azure que o pipeline",
       "O SO do agente deve corresponder ao 'vmImage' especificado no pipeline"
     ],
     correctIndex: 1,
-    explanation: "O Azure DevOps usa um sistema de capabilities/demands. Agentes anunciam suas capabilities (ferramentas instaladas, SO, capabilities customizadas) e pipelines declaram demands. O orquestrador só atribui um job a um agente quando todas as demands são satisfeitas pelas capabilities do agente dentro do pool especificado."
+    explanation: "O Azure DevOps usa um sistema de capabilities/demands. Agentes anunciam suas capabilities (ferramentas instaladas, SO, capabilities customizadas) e pipelines declaram demands. O orquestrador sÃ³ atribui um job a um agente quando todas as demands sÃ£o satisfeitas pelas capabilities do agente dentro do pool especificado."
   },
   {
-    question: "Qual é a principal vantagem de usar Azure Virtual Machine Scale Sets (VMSS) para pools de agentes do Azure DevOps?",
+    question: "Qual Ã© a principal vantagem de usar Azure Virtual Machine Scale Sets (VMSS) para pools de agentes do Azure DevOps?",
     options: [
-      "Agentes VMSS são mais baratos que agentes hospedados pela Microsoft",
+      "Agentes VMSS sÃ£o mais baratos que agentes hospedados pela Microsoft",
       "VMSS escala automaticamente a contagem de agentes com base na demanda da fila e pode escalar a zero quando ocioso",
-      "Agentes VMSS têm conectividade de rede mais rápida que agentes hospedados",
+      "Agentes VMSS tÃªm conectividade de rede mais rÃ¡pida que agentes hospedados",
       "VMSS fornece gerenciamento de secrets embutido para agentes"
     ],
     correctIndex: 1,
-    explanation: "Pools de agentes baseados em VMSS habilitam escalabilidade elástica. O Azure DevOps solicita automaticamente mais instâncias de VM quando jobs estão na fila e reduz a escala durante períodos ociosos. Isso evita pagar por infraestrutura sempre ativa enquanto fornece builds mais rápidos do que esperar por agentes hospedados serem provisionados. A capacidade de escalar a zero significa sem custo quando nenhum build está em execução."
+    explanation: "Pools de agentes baseados em VMSS habilitam escalabilidade elÃ¡stica. O Azure DevOps solicita automaticamente mais instÃ¢ncias de VM quando jobs estÃ£o na fila e reduz a escala durante perÃ­odos ociosos. Isso evita pagar por infraestrutura sempre ativa enquanto fornece builds mais rÃ¡pidos do que esperar por agentes hospedados serem provisionados. A capacidade de escalar a zero significa sem custo quando nenhum build estÃ¡ em execuÃ§Ã£o."
   }
 ]} />
 

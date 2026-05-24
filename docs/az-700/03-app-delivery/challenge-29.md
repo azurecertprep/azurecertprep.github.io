@@ -31,7 +31,7 @@ Your task is to configure TLS policies, upload certificates, enable mTLS, create
 
 ## Architecture overview
 
-```
+```text
 Internet
    |
    v
@@ -526,7 +526,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Issue 1: Certificate chain incomplete (missing intermediate)
 

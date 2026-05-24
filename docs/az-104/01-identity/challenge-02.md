@@ -30,7 +30,7 @@ RBAC is the gatekeeper of Azure. Every action | creating a VM, reading a storage
 - Create and assign custom roles
 - Manage Microsoft Entra role assignments
 
-## Sysadmin ↔ Azure reference
+## Sysadmin â†” Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -143,10 +143,10 @@ Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Go to your **Subscription** → **Access control (IAM)**
+1. Go to your **Subscription** â†’ **Access control (IAM)**
 2. Click the **Roles** tab
 3. Search for "Owner", "Contributor", "Reader"
-4. Click any role → **View** to see its permissions
+4. Click any role â†’ **View** to see its permissions
 
 </TabItem>
 </Tabs>
@@ -275,7 +275,7 @@ The **Owner** role can do everything the **Contributor** can, plus it can **mana
 
 **NotActions** simply subtract permissions from the `Actions` list within a role definition. They don't explicitly deny anything | if another role grants the permission, the user still has it.
 
-**Precedence order**: Explicit Deny → NotActions → Allow
+**Precedence order**: Explicit Deny â†’ NotActions â†’ Allow
 
 </details>
 
@@ -284,8 +284,8 @@ The **Owner** role can do everything the **Contributor** can, plus it can **mana
 
 RBAC uses a **hierarchy of scopes**:
 
-```
-Management Group → Subscription → Resource Group → Resource
+```text
+Management Group â†’ Subscription â†’ Resource Group â†’ Resource
 ```
 
 A role assigned at a **higher scope** is inherited by all **lower scopes**. For example:

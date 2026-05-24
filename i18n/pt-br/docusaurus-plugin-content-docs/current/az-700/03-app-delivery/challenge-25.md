@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: "Challenge 25"
-title: "Challenge 25: Azure Load Balancer (Standard)"
+title: "Desafio 25: Azure Load Balancer (Standard)"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -596,7 +596,7 @@ New-AzLoadBalancer `
 6. Adicione a investigação de integridade `probe-tcp-postgres` (TCP, porta 5432, intervalo 10s).
 7. Adicione a regra `rule-postgres` (TCP 5432/5432, tempo limite de ociosidade 30 min).
 
-## Quebra e correção
+## Quebra & conserta
 
 Estes exercícios simulam configurações incorretas comuns. Diagnostique e corrija cada um.
 
@@ -709,75 +709,75 @@ Você pode usar a tag de serviço `AzureLoadBalancer` como alternativa ao IP lit
 <KnowledgeCheck questions={[
   {
     id: "az700-25-q1",
-    question: "NorthWind Traders has a Basic SKU Load Balancer and wants to add VMs from multiple availability zones to the backend pool. What must they do first?",
+    question: "A NorthWind Traders possui um Load Balancer com SKU Basic e deseja adicionar VMs de múltiplas zonas de disponibilidade ao backend pool. O que eles devem fazer primeiro?",
     options: [
-      "Upgrade the Load Balancer to Standard SKU ✅",
-      "Add all VMs to the same availability set",
-      "Create a new public IP with Basic SKU",
-      "Enable cross-zone load balancing in the Basic LB settings"
+      "Atualizar o Load Balancer para o SKU Standard ✅",
+      "Adicionar todas as VMs ao mesmo conjunto de disponibilidade",
+      "Criar um novo IP público com SKU Basic",
+      "Habilitar balanceamento de carga entre zonas nas configurações do LB Basic"
     ],
     correctIndex: 0,
-    explanation: "Basic SKU Load Balancer only supports backends within a single availability set or a single VM scale set. Standard SKU is required for zone-redundant backends and mixing VMs from different availability zones."
+    explanation: "O Load Balancer com SKU Basic suporta apenas backends dentro de um único conjunto de disponibilidade ou um único scale set de VMs. O SKU Standard é necessário para backends com redundância de zona e para combinar VMs de diferentes zonas de disponibilidade."
   },
   {
     id: "az700-25-q2",
-    question: "A health probe is configured with protocol HTTP, port 80, path '/health', interval 5 seconds, and unhealthy threshold 2. When does the Load Balancer mark a VM as unhealthy?",
+    question: "Uma health probe está configurada com protocolo HTTP, porta 80, caminho '/health', intervalo de 5 segundos e limite de não íntegro igual a 2. Quando o Load Balancer marca uma VM como não íntegra?",
     options: [
-      "After 2 consecutive failed probes (approximately 10 seconds) ✅",
-      "After 1 failed probe (5 seconds)",
-      "After 5 consecutive failed probes (25 seconds)",
-      "After 2 failed probes within any 30-second window"
+      "Após 2 falhas consecutivas de probe (aproximadamente 10 segundos) ✅",
+      "Após 1 falha de probe (5 segundos)",
+      "Após 5 falhas consecutivas de probe (25 segundos)",
+      "Após 2 falhas de probe dentro de qualquer janela de 30 segundos"
     ],
     correctIndex: 0,
-    explanation: "The unhealthy threshold (probe-threshold) defines consecutive probe failures needed to mark an instance unhealthy. With threshold 2 and interval 5s, a VM is removed from rotation after 2 consecutive failures, taking approximately 10 seconds."
+    explanation: "O limite de não íntegro (probe-threshold) define o número de falhas consecutivas necessárias para marcar uma instância como não íntegra. Com limite 2 e intervalo de 5s, uma VM é removida da rotação após 2 falhas consecutivas, levando aproximadamente 10 segundos."
   },
   {
     id: "az700-25-q3",
-    question: "Backend VMs behind a Standard Load Balancer cannot reach the internet for OS updates. There is no NAT Gateway, no outbound rule, and no instance-level public IP. What is the root cause?",
+    question: "VMs de backend atrás de um Standard Load Balancer não conseguem acessar a internet para atualizações do SO. Não há NAT Gateway, nenhuma regra de saída e nenhum IP público no nível da instância. Qual é a causa raiz?",
     options: [
-      "Standard LB does not provide default outbound SNAT; explicit outbound connectivity must be configured ✅",
-      "The health probe is failing which blocks all outbound traffic",
-      "The NSG is missing an outbound allow rule for internet",
-      "Standard LB requires a separate outbound LB rule for port 443"
+      "O Standard LB não fornece SNAT de saída padrão; conectividade de saída explícita deve ser configurada ✅",
+      "A health probe está falhando, o que bloqueia todo o tráfego de saída",
+      "O NSG está sem uma regra de permissão de saída para internet",
+      "O Standard LB requer uma regra de LB de saída separada para a porta 443"
     ],
     correctIndex: 0,
-    explanation: "Unlike Basic LB, Standard Load Balancer does not provide default outbound connectivity (implicit SNAT). Backend VMs require one of: an outbound rule on the LB, a NAT Gateway on the subnet, or an instance-level public IP."
+    explanation: "Diferentemente do Basic LB, o Standard Load Balancer não fornece conectividade de saída padrão (SNAT implícito). As VMs de backend requerem uma das seguintes opções: uma regra de saída no LB, um NAT Gateway na sub-rede ou um IP público no nível da instância."
   },
   {
     id: "az700-25-q4",
-    question: "You configure session persistence as 'Source IP and protocol' on a load-balancing rule. Which hash tuple pins client sessions to a backend?",
+    question: "Você configura a persistência de sessão como 'Source IP and protocol' em uma regra de balanceamento de carga. Qual tupla de hash fixa as sessões do cliente a um backend?",
     options: [
-      "Source IP + Protocol (2-tuple) ✅",
-      "Source IP only (1-tuple)",
-      "Source IP + Source Port + Destination IP (3-tuple)",
-      "Source IP + Destination IP + Source Port + Destination Port + Protocol (5-tuple)"
+      "IP de origem + Protocolo (2-tupla) ✅",
+      "Apenas IP de origem (1-tupla)",
+      "IP de origem + Porta de origem + IP de destino (3-tupla)",
+      "IP de origem + IP de destino + Porta de origem + Porta de destino + Protocolo (5-tupla)"
     ],
     correctIndex: 0,
-    explanation: "Session persistence 'Source IP and protocol' uses a 2-tuple hash (client IP + protocol). 'Source IP' uses client IP alone. 'None' uses the default 5-tuple hash. The 2-tuple ensures all TCP connections from the same client reach the same backend VM."
+    explanation: "A persistência de sessão 'Source IP and protocol' usa um hash de 2-tupla (IP do cliente + protocolo). 'Source IP' usa apenas o IP do cliente. 'None' usa o hash padrão de 5-tupla. A 2-tupla garante que todas as conexões TCP do mesmo cliente alcancem a mesma VM de backend."
   },
   {
     id: "az700-25-q5",
-    question: "What is the purpose of enabling Floating IP (Direct Server Return) on a load-balancing rule?",
+    question: "Qual é o propósito de habilitar Floating IP (Direct Server Return) em uma regra de balanceamento de carga?",
     options: [
-      "The frontend IP is delivered to the VM without DNAT, enabling SQL AlwaysOn listener scenarios ✅",
-      "The backend VM responds directly to the client without routing through the LB return path",
-      "It allows multiple frontend IPs to share a single backend pool simultaneously",
-      "It disables SNAT and uses the VM's private IP for all outbound traffic"
+      "O IP do frontend é entregue à VM sem DNAT, habilitando cenários de listener do SQL AlwaysOn ✅",
+      "A VM de backend responde diretamente ao cliente sem rotear pelo caminho de retorno do LB",
+      "Permite que múltiplos IPs de frontend compartilhem um único backend pool simultaneamente",
+      "Desabilita o SNAT e usa o IP privado da VM para todo o tráfego de saída"
     ],
     correctIndex: 0,
-    explanation: "Floating IP delivers packets to the backend VM with the LB frontend IP preserved as the destination (no destination NAT). This is required for SQL Server AlwaysOn listeners and cluster configurations where the application must bind to and respond on the virtual IP."
+    explanation: "O Floating IP entrega pacotes à VM de backend com o IP do frontend do LB preservado como destino (sem NAT de destino). Isso é necessário para listeners do SQL Server AlwaysOn e configurações de cluster onde a aplicação deve se vincular e responder no IP virtual."
   },
   {
     id: "az700-25-q6",
-    question: "An HTTP health probe returns status code 503 from a backend VM. How does the Load Balancer treat this response?",
+    question: "Uma health probe HTTP retorna o código de status 503 de uma VM de backend. Como o Load Balancer trata essa resposta?",
     options: [
-      "The probe fails because only HTTP 200-399 responses indicate a healthy endpoint ✅",
-      "The probe passes because any HTTP response means the server is reachable",
-      "The LB falls back to a TCP probe automatically",
-      "The 503 is ignored and the instance stays in rotation for 30 more seconds"
+      "A probe falha porque apenas respostas HTTP 200-399 indicam um endpoint íntegro ✅",
+      "A probe passa porque qualquer resposta HTTP significa que o servidor está acessível",
+      "O LB recorre automaticamente a uma probe TCP",
+      "O 503 é ignorado e a instância permanece em rotação por mais 30 segundos"
     ],
     correctIndex: 0,
-    explanation: "Azure Load Balancer HTTP health probes only consider HTTP status codes 200 through 399 as healthy. Any other code (including 503 Service Unavailable) counts as a probe failure. After reaching the unhealthy threshold, the instance is removed from rotation."
+    explanation: "As health probes HTTP do Azure Load Balancer consideram apenas códigos de status HTTP de 200 a 399 como íntegros. Qualquer outro código (incluindo 503 Service Unavailable) conta como falha de probe. Após atingir o limite de não íntegro, a instância é removida da rotação."
   }
 ]} />
 

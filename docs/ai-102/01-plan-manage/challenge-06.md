@@ -61,7 +61,7 @@ account = client.accounts.begin_create(
     account_name="ai-containers-billing",
     account=Account(
         sku=Sku(name="S0"),
-        kind="CognitiveServices",
+        kind="AIServices",
         location="eastus",
         properties={}
     )
@@ -129,7 +129,7 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 az cognitiveservices account create \
   --name $ACCOUNT_NAME \
   --resource-group $RESOURCE_GROUP \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location $LOCATION
 
@@ -712,7 +712,7 @@ curl -s http://localhost:5000/status | jq .
 }
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

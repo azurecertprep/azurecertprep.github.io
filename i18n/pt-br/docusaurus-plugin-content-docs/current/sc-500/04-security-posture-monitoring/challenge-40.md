@@ -202,7 +202,7 @@ echo "Continuous export configured - compliance failures will stream to Log Anal
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Padrão de conformidade mostra "Não avaliado" para todos os controles
 

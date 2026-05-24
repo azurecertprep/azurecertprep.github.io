@@ -386,7 +386,7 @@ Defina guardrails e políticas que governam como os agentes operam.
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Agente de phishing colocando em quarentena e-mails legítimos em excesso
 

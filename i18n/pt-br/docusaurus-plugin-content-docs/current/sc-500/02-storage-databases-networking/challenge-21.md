@@ -392,7 +392,7 @@ echo "ACR: $(az acr show --name $ACR_NAME --resource-group $RG --query publicNet
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: DNS do private endpoint não resolve para IP privado
 

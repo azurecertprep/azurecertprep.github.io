@@ -317,7 +317,7 @@ az rest --method GET \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Registro de chave FIDO2 falha para os usuários
 

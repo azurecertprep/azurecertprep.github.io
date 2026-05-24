@@ -516,7 +516,7 @@ Add Microsoft Security DevOps scanning to the GitHub workflow:
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### The problem
 

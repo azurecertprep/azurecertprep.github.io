@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Azure AI Agent Service provides a managed platform for building AI agents. It handles thread management, tool execution (file search, code interpreter, custom functions), run lifecycle, and file management.
 
-The architecture: create an agent → create a thread → add messages → create a run → poll until complete → read responses.
+The architecture: create an agent â†’ create a thread â†’ add messages â†’ create a run â†’ poll until complete â†’ read responses.
 
 ## Prerequisites
 - Azure subscription
@@ -201,7 +201,7 @@ project_client.agents.delete_agent(code_agent.id)
 
 ## Expected Output
 
-```
+```text
 Created agent: asst_ABC123
 Assistant: Based on the pricing document, Azure OpenAI GPT-4o costs $2.50 per 1 million input tokens.
 
@@ -213,7 +213,7 @@ Monthly Cost Breakdown:
 | Total        |                | $67.50       |
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -229,10 +229,10 @@ Monthly Cost Breakdown:
   {
     question: "What is the correct sequence for using Azure AI Agent Service?",
     options: [
-      "Create agent → Create thread → Add message → Create run",
-      "Create thread → Create agent → Add message → Create run",
-      "Create run → Create agent → Create thread → Add message",
-      "Create agent → Create run → Create thread → Add message"
+      "Create agent â†’ Create thread â†’ Add message â†’ Create run",
+      "Create thread â†’ Create agent â†’ Add message â†’ Create run",
+      "Create run â†’ Create agent â†’ Create thread â†’ Add message",
+      "Create agent â†’ Create run â†’ Create thread â†’ Add message"
     ],
     correctAnswer: 0,
     explanation: "The correct flow: create an agent (defines behavior and tools), create a thread (conversation container), add messages to the thread, then create a run (triggers agent processing)."
@@ -265,7 +265,7 @@ Monthly Cost Breakdown:
       "Cancel and retry the run",
       "Create a new run with different parameters",
       "Submit tool outputs for the requested function calls",
-      "Wait — it resolves automatically"
+      "Wait â€” it resolves automatically"
     ],
     correctAnswer: 2,
     explanation: "When status is 'requires_action', the agent needs function results. Execute the requested functions and submit outputs via submit_tool_outputs."
@@ -273,7 +273,7 @@ Monthly Cost Breakdown:
   {
     question: "What is the relationship between agents and threads?",
     options: [
-      "Agents and threads are independent — any agent can run on any thread",
+      "Agents and threads are independent â€” any agent can run on any thread",
       "Each agent can only process one thread",
       "Each thread is permanently bound to one agent",
       "Threads are auto-created when agents are created"

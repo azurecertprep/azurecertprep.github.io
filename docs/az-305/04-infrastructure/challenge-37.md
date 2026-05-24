@@ -75,7 +75,7 @@ The engineering team wants to minimize infrastructure management and pay only fo
    - Step 5: Release seat reservation (only if payment fails - compensation)
 
 8. Identify the Durable Functions patterns needed:
-   - **Function chaining**: Sequential steps (reserve → pay → confirm)
+   - **Function chaining**: Sequential steps (reserve â†’ pay â†’ confirm)
    - **Fan-out/fan-in**: Parallel add-on processing
    - **Human interaction**: Timeout if user does not complete within 15 minutes
    - **Monitor**: Poll payment status until confirmed or failed
@@ -99,9 +99,9 @@ The engineering team wants to minimize infrastructure management and pay only fo
     - Compare total cost across Consumption, Flex Consumption, and Premium plans
 
 12. Design the architecture diagram showing how all components connect:
-    - HTTP trigger (ticket sales) → Queue → PDF generation → Blob → Notification
-    - Timer trigger (batch) → Refund processing → Payment API
-    - HTTP trigger (VIP) → Durable orchestration → multiple backend APIs
+    - HTTP trigger (ticket sales) â†’ Queue â†’ PDF generation â†’ Blob â†’ Notification
+    - Timer trigger (batch) â†’ Refund processing â†’ Payment API
+    - HTTP trigger (VIP) â†’ Durable orchestration â†’ multiple backend APIs
 
 ## Success criteria
 
@@ -124,9 +124,9 @@ The engineering team wants to minimize infrastructure management and pay only fo
 
 For 100,000 requests/second:
 - At ~100 requests/second per instance, you need ~1,000 concurrent instances
-- **Consumption plan** maxes out at 200 instances → insufficient
+- **Consumption plan** maxes out at 200 instances â†’ insufficient
 - **Flex Consumption plan** supports up to 1,000 instances with faster scaling and always-ready instances
-- **Premium plan** maxes out at 100 instances by default (can request increase) → likely insufficient
+- **Premium plan** maxes out at 100 instances by default (can request increase) â†’ likely insufficient
 
 The Flex Consumption plan is the best fit: it supports the scale required, offers always-ready instances to eliminate cold starts for the first N instances, and provides per-execution billing for the burst instances beyond the always-ready minimum.
 
@@ -156,7 +156,7 @@ For sending emails/SMS after PDF generation: Logic Apps if using standard connec
 
 The Saga pattern in Durable Functions uses compensating transactions:
 
-```
+```text
 try:
     seat_reservation = await reserve_seats(seats)
     addons = await process_addons_parallel(addon_list)

@@ -369,7 +369,7 @@ dig @10.0.0.4 db.contoso.internal
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Inbound endpoint subnet without proper delegation
 

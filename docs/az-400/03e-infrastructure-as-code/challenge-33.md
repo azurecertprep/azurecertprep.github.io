@@ -119,7 +119,7 @@ az devcenter admin project-environment-type create \
 
 Create Bicep templates that define what an environment looks like:
 
-```
+```text
 contoso-environment-catalog/
   environments/
     WebApp/
@@ -606,13 +606,13 @@ jobs:
             --yes 2>/dev/null || echo "Environment not found (may already be deleted)"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the failing environment creation
 
 A developer reports this error when creating an environment:
 
-```
+```text
 ERROR: The environment definition 'WebApp' was not found in catalog 'contoso-environments'.
 ```
 
@@ -671,7 +671,7 @@ az devcenter admin catalog sync \
 
 A developer with "Deployment Environments User" role gets:
 
-```
+```text
 ERROR: AuthorizationFailed - The client does not have authorization to perform action
 'Microsoft.Resources/deployments/write' over scope '/subscriptions/{dev-sub-id}/...'
 ```

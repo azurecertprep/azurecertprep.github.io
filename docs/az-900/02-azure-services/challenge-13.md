@@ -20,7 +20,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 Azure Storage is a cloud storage solution for modern data storage scenarios. A **storage account** is the top-level container that provides a unique namespace for your data. Within a storage account, you can use four different storage services: Blob, File, Queue, and Table.
 
-Each service addresses a different storage need — from unstructured binary data (blobs) to semi-structured NoSQL data (tables).
+Each service addresses a different storage need â€” from unstructured binary data (blobs) to semi-structured NoSQL data (tables).
 
 ## Explore
 
@@ -41,7 +41,7 @@ Each service addresses a different storage need — from unstructured binary dat
    - **Performance**: Standard (HDD) or Premium (SSD)
    - **Redundancy**: LRS, ZRS, GRS, RA-GRS (covered in Challenge 14)
    - **Account kind**: StorageV2 (recommended)
-4. Click **Cancel** — don't create
+4. Click **Cancel** â€” don't create
 
 ### Task 3: Understand Blob Storage types
 
@@ -54,15 +54,15 @@ Blob Storage has three types of blobs:
 | **Page blobs** | Random read/write (up to 8 TiB) | VM disks (VHDs) |
 
 **Blob containers** organize blobs within a storage account:
-```
+```text
 Storage Account: mystorageaccount
-├── Container: images
-│   ├── photo1.jpg
-│   └── photo2.png
-├── Container: backups
-│   └── db-backup-2024.bak
-└── Container: logs
-    └── app-log-01.txt
+â”œâ”€â”€ Container: images
+â”‚   â”œâ”€â”€ photo1.jpg
+â”‚   â””â”€â”€ photo2.png
+â”œâ”€â”€ Container: backups
+â”‚   â””â”€â”€ db-backup-2024.bak
+â””â”€â”€ Container: logs
+    â””â”€â”€ app-log-01.txt
 ```
 
 ### Task 4: Understand Azure Files
@@ -73,7 +73,7 @@ Azure Files provides fully managed file shares:
 - Compatible with on-premises file share workflows
 - Supports Azure File Sync (cache frequently accessed files on-premises)
 
-**Key scenario**: Replace an on-premises file server with Azure Files — same user experience, less hardware.
+**Key scenario**: Replace an on-premises file server with Azure Files â€” same user experience, less hardware.
 
 ### Task 5: Storage account naming
 
@@ -124,7 +124,7 @@ az storage account list --query "[].{Name:name, Location:location, Kind:kind}" -
       question: 'A company wants to replace their on-premises file server with a cloud solution that users can mount as a network drive. Which service should they use?',
       options: ['Azure Blob Storage', 'Azure Files', 'Azure Queue Storage', 'Azure Cosmos DB'],
       correctAnswer: 1,
-      explanation: 'Azure Files provides fully managed SMB and NFS file shares that can be mounted as network drives on Windows, Linux, and macOS — just like a traditional file server.'
+      explanation: 'Azure Files provides fully managed SMB and NFS file shares that can be mounted as network drives on Windows, Linux, and macOS â€” just like a traditional file server.'
     },
     {
       id: 'az900-13-q3',
@@ -145,13 +145,13 @@ az storage account list --query "[].{Name:name, Location:location, Kind:kind}" -
       question: 'What is the relationship between a storage account and blob containers?',
       options: ['A blob container can span multiple storage accounts', 'A storage account can contain multiple blob containers', 'They are the same thing', 'A blob container is a type of storage account'],
       correctAnswer: 1,
-      explanation: 'A storage account is the top-level resource. Within it, you can create multiple blob containers, each holding multiple blobs. The hierarchy is: Storage Account → Containers → Blobs.'
+      explanation: 'A storage account is the top-level resource. Within it, you can create multiple blob containers, each holding multiple blobs. The hierarchy is: Storage Account â†’ Containers â†’ Blobs.'
     }
   ]}
 />
 
 ## Learn More
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
 - [Microsoft Learn: Describe Azure storage services](https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/)
 - [Azure Storage documentation](https://learn.microsoft.com/en-us/azure/storage/)

@@ -174,7 +174,7 @@ jobs:
 
 ### Flyway project structure
 
-```
+```text
 db/
   flyway.toml
   sql/
@@ -266,7 +266,7 @@ CREATE INDEX IX_CustomerPreferences_CustomerId
 
 ### Deployment sequence diagram
 
-```
+```text
 1. Run database migrations (additive/non-breaking)
 2. Verify migrations applied successfully
 3. Deploy new application version to staging slot
@@ -670,7 +670,7 @@ stages:
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Exercise 1: Migration fails due to permission error
 

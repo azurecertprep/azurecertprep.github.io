@@ -811,7 +811,7 @@ gh api repos/{owner}/contoso-webapp/hooks/$HOOK_ID \
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: GitHub webhook deliveries return 401
 

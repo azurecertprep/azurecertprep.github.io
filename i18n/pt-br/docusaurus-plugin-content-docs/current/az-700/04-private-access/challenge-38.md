@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-title: "Challenge 38: Service Endpoints & Policies"
+title: "Desafio 38: Service Endpoints & Políticas"
 sidebar_label: "Challenge 38"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -421,19 +421,19 @@ az webapp config access-restriction add \
 <KnowledgeCheck questions={[
   {
     id: "az700-38-q1",
-    question: "What is the primary advantage of service endpoint policies over service endpoints alone?",
+    question: "Qual é a principal vantagem das políticas de service endpoint em relação aos service endpoints sozinhos?",
     options: [
-      "They reduce network latency to Azure services",
-      "They prevent data exfiltration by restricting access to specific Azure resource instances ✅",
-      "They enable private IP-based access to PaaS services",
-      "They provide DNS resolution for Azure services"
+      "Elas reduzem a latência de rede para serviços Azure",
+      "Elas previnem exfiltração de dados restringindo o acesso a instâncias específicas de recursos Azure ✅",
+      "Elas habilitam acesso baseado em IP privado a serviços PaaS",
+      "Elas fornecem resolução DNS para serviços Azure"
     ],
     correctIndex: 1,
-    explanation: "Service endpoint policies add data exfiltration protection by restricting which specific Azure resource instances (e.g., specific storage accounts) can be accessed from a subnet. Without policies, a service endpoint allows access to ALL storage accounts via the optimized route."
+    explanation: "As políticas de service endpoint adicionam proteção contra exfiltração de dados restringindo quais instâncias específicas de recursos Azure (ex.: contas de armazenamento específicas) podem ser acessadas a partir de uma sub-rede. Sem políticas, um service endpoint permite acesso a TODAS as contas de armazenamento pela rota otimizada."
   },
   {
     id: "az700-38-q2",
-    question: "Which Azure service currently supports service endpoint policies for data exfiltration protection?",
+    question: "Qual serviço Azure atualmente suporta políticas de service endpoint para proteção contra exfiltração de dados?",
     options: [
       "Azure SQL Database",
       "Azure Key Vault",
@@ -441,55 +441,55 @@ az webapp config access-restriction add \
       "Azure Cosmos DB"
     ],
     correctIndex: 2,
-    explanation: "As of the current Azure platform, service endpoint policies are only supported for Azure Storage. For other services, Private Endpoints provide inherent data exfiltration protection."
+    explanation: "Na plataforma Azure atual, as políticas de service endpoint são suportadas apenas para o Azure Storage. Para outros serviços, os Private Endpoints fornecem proteção inerente contra exfiltração de dados."
   },
   {
     id: "az700-38-q3",
-    question: "How does traffic routing change when a service endpoint is enabled on a subnet?",
+    question: "Como o roteamento de tráfego muda quando um service endpoint é habilitado em uma sub-rede?",
     options: [
-      "Traffic is routed through the internet with encryption",
-      "A system route is added directing service traffic over the Azure backbone, with the source IP changing to the VNet private IP ✅",
-      "Traffic is routed through a private IP endpoint in the VNet",
-      "No routing change occurs; only firewall rules are applied"
+      "O tráfego é roteado pela internet com criptografia",
+      "Uma rota de sistema é adicionada direcionando o tráfego do serviço pelo backbone do Azure, com o IP de origem mudando para o IP privado da VNet ✅",
+      "O tráfego é roteado por um endpoint de IP privado na VNet",
+      "Nenhuma mudança de roteamento ocorre; apenas regras de firewall são aplicadas"
     ],
     correctIndex: 1,
-    explanation: "When a service endpoint is enabled, Azure adds an optimized system route that directs traffic to the service over the Microsoft backbone network. The source IP of traffic as seen by the PaaS service changes from a public IP to the VNet private IP of the VM."
+    explanation: "Quando um service endpoint é habilitado, o Azure adiciona uma rota de sistema otimizada que direciona o tráfego para o serviço pelo backbone da Microsoft. O IP de origem do tráfego visto pelo serviço PaaS muda de um IP público para o IP privado da VNet da VM."
   },
   {
     id: "az700-38-q4",
-    question: "A company needs on-premises clients to access Azure Storage privately. Which approach should they use?",
+    question: "Uma empresa precisa que clientes locais acessem o Azure Storage de forma privada. Qual abordagem devem usar?",
     options: [
-      "Service Endpoints (they extend to on-premises via VPN)",
-      "Private Endpoints with DNS forwarding configuration ✅",
-      "Service endpoint policies with conditional forwarders",
-      "VNet peering with service endpoints"
+      "Service Endpoints (eles se estendem ao ambiente local via VPN)",
+      "Private Endpoints com configuração de encaminhamento DNS ✅",
+      "Políticas de service endpoint com encaminhadores condicionais",
+      "Emparelhamento de VNet com service endpoints"
     ],
     correctIndex: 1,
-    explanation: "Service endpoints only apply to traffic originating from within Azure VNet subnets. They do not extend to on-premises networks. For on-premises access to Azure PaaS services over private connectivity, Private Endpoints with proper DNS configuration are required."
+    explanation: "Os service endpoints se aplicam apenas ao tráfego originado de sub-redes da VNet do Azure. Eles não se estendem a redes locais. Para acesso local a serviços PaaS do Azure por conectividade privada, Private Endpoints com configuração DNS adequada são necessários."
   },
   {
     id: "az700-38-q5",
-    question: "What happens if you associate a service endpoint policy with a subnet but forget to include a required storage account in the policy?",
+    question: "O que acontece se você associar uma política de service endpoint a uma sub-rede, mas esquecer de incluir uma conta de armazenamento necessária na política?",
     options: [
-      "The policy gracefully allows all storage access until updated",
-      "Only the storage accounts listed in the policy are accessible; all others are blocked immediately ✅",
-      "The policy generates a warning but does not block access",
-      "The policy only applies after a 24-hour propagation period"
+      "A política permite graciosamente todo o acesso ao armazenamento até ser atualizada",
+      "Apenas as contas de armazenamento listadas na política são acessíveis; todas as outras são bloqueadas imediatamente ✅",
+      "A política gera um aviso, mas não bloqueia o acesso",
+      "A política só se aplica após um período de propagação de 24 horas"
     ],
     correctIndex: 1,
-    explanation: "Service endpoint policies are deny-by-default once applied. Only storage accounts explicitly listed in the policy definitions are accessible from the subnet via the service endpoint. All other storage accounts are immediately blocked. This is why you must ensure all required accounts are included before associating the policy."
+    explanation: "As políticas de service endpoint são negar-por-padrão uma vez aplicadas. Apenas as contas de armazenamento explicitamente listadas nas definições da política são acessíveis a partir da sub-rede via service endpoint. Todas as outras contas são bloqueadas imediatamente. Por isso você deve garantir que todas as contas necessárias estejam incluídas antes de associar a política."
   },
   {
     id: "az700-38-q6",
-    question: "Which statement about service endpoints and Private Endpoints is correct?",
+    question: "Qual afirmação sobre service endpoints e Private Endpoints está correta?",
     options: [
-      "Service endpoints are more expensive than Private Endpoints",
-      "Private Endpoints require no DNS changes and work automatically",
-      "Service endpoints expose a private IP in the VNet for the PaaS service",
-      "Private Endpoints provide a private IP in the VNet and work with on-premises clients via DNS forwarding ✅"
+      "Service endpoints são mais caros que Private Endpoints",
+      "Private Endpoints não requerem alterações de DNS e funcionam automaticamente",
+      "Service endpoints expõem um IP privado na VNet para o serviço PaaS",
+      "Private Endpoints fornecem um IP privado na VNet e funcionam com clientes locais via encaminhamento DNS ✅"
     ],
     correctIndex: 3,
-    explanation: "Private Endpoints create a network interface with a private IP address in your VNet, enabling access from on-premises via VPN/ExpressRoute with DNS forwarding. Service endpoints do not create a private IP -- they optimize the route but the PaaS service still uses its public endpoint."
+    explanation: "Private Endpoints criam uma interface de rede com um endereço IP privado na sua VNet, habilitando o acesso do ambiente local via VPN/ExpressRoute com encaminhamento DNS. Service endpoints não criam um IP privado -- eles otimizam a rota, mas o serviço PaaS ainda usa seu endpoint público."
   }
 ]} />
 

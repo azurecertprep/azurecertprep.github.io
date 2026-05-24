@@ -538,7 +538,7 @@ Após completar todas as tarefas, você deve ter:
 2. **Cota consumida**: 30K TPM da cota do GPT-4o, 50K TPM da cota do GPT-4o-mini
 3. **Respostas de teste bem-sucedidas** de ambas as implantações mostrando estilos de resposta diferentes
 
-## Quebra e Correção
+## Quebra & conserta
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|

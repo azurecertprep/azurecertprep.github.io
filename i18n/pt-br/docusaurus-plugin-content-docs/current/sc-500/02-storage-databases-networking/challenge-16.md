@@ -320,7 +320,7 @@ az security pricing list \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Varredura de Vulnerability Assessment mostra erro "Storage not configured"
 

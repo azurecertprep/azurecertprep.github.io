@@ -8,7 +8,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 11: Fundamentos de Rede Azure
 
 :::info Tempo Estimado
-**25-35 min** | **Custo**: Gratuito | **Domínio**: Arquitetura e Serviços Azure (35-40%)
+**25-35 min** | **Custo**: Gratuito | **DomÃ­nio**: Arquitetura e ServiÃ§os Azure (35-40%)
 :::
 
 ## Habilidades do exame cobertas
@@ -16,69 +16,69 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 - Descrever redes virtuais (VNets, subnets, peering)
 - Definir public e private endpoints
 
-## Visão Geral
+## VisÃ£o Geral
 
-Azure Virtual Networks (VNets) são o bloco fundamental de construção para redes no Azure. Elas permitem que recursos Azure se comuniquem de forma segura entre si, com a internet e com redes on-premises.
+Azure Virtual Networks (VNets) sÃ£o o bloco fundamental de construÃ§Ã£o para redes no Azure. Elas permitem que recursos Azure se comuniquem de forma segura entre si, com a internet e com redes on-premises.
 
-Pense em uma VNet como sua própria rede privada na nuvem — similar a uma rede tradicional que você operaria no seu próprio datacenter, mas com os benefícios de escala, disponibilidade e isolamento do Azure.
+Pense em uma VNet como sua prÃ³pria rede privada na nuvem â€” similar a uma rede tradicional que vocÃª operaria no seu prÃ³prio datacenter, mas com os benefÃ­cios de escala, disponibilidade e isolamento do Azure.
 
 ## Explorar
 
 ### Tarefa 1: Entender conceitos de VNet
 
-| Conceito | Descrição | Equivalente on-premises |
+| Conceito | DescriÃ§Ã£o | Equivalente on-premises |
 |----------|-----------|------------------------|
 | **Virtual Network (VNet)** | Rede isolada no Azure | LAN/WAN |
 | **Subnet** | Segmento dentro de uma VNet | VLAN |
-| **Network Security Group (NSG)** | Regras de firewall para tráfego | ACL / Regras de firewall |
-| **Public IP** | Endereço IP voltado para internet | IP público |
-| **Private IP** | Endereço IP apenas interno | Endereço RFC 1918 |
-| **VNet Peering** | Conecta duas VNets | Link WAN entre escritórios |
+| **Network Security Group (NSG)** | Regras de firewall para trÃ¡fego | ACL / Regras de firewall |
+| **Public IP** | EndereÃ§o IP voltado para internet | IP pÃºblico |
+| **Private IP** | EndereÃ§o IP apenas interno | EndereÃ§o RFC 1918 |
+| **VNet Peering** | Conecta duas VNets | Link WAN entre escritÃ³rios |
 
-### Tarefa 2: Explorar criação de VNet (não crie)
+### Tarefa 2: Explorar criaÃ§Ã£o de VNet (nÃ£o crie)
 
 1. No Portal Azure, pesquise por **Virtual networks**
 2. Clique em **+ Create**
-3. Explore o formulário:
+3. Explore o formulÃ¡rio:
    - **Address space**: Defina o intervalo de IP (ex: 10.0.0.0/16)
    - **Subnets**: Divida a VNet (ex: 10.0.1.0/24 para web, 10.0.2.0/24 para banco de dados)
-4. Observe que VNets são **gratuitas** — você só paga por transferência de dados
+4. Observe que VNets sÃ£o **gratuitas** â€” vocÃª sÃ³ paga por transferÃªncia de dados
 5. Clique em **Cancel**
 
-### Tarefa 3: Entender endereçamento IP
+### Tarefa 3: Entender endereÃ§amento IP
 
-```
-VNet: 10.0.0.0/16 (65.536 endereços)
-├── Subnet: web-subnet      10.0.1.0/24 (251 endereços utilizáveis)
-├── Subnet: app-subnet      10.0.2.0/24 (251 endereços utilizáveis)
-└── Subnet: db-subnet       10.0.3.0/24 (251 endereços utilizáveis)
+```text
+VNet: 10.0.0.0/16 (65.536 endereÃ§os)
+â”œâ”€â”€ Subnet: web-subnet      10.0.1.0/24 (251 endereÃ§os utilizÃ¡veis)
+â”œâ”€â”€ Subnet: app-subnet      10.0.2.0/24 (251 endereÃ§os utilizÃ¡veis)
+â””â”€â”€ Subnet: db-subnet       10.0.3.0/24 (251 endereÃ§os utilizÃ¡veis)
 ```
 
-**Nota**: O Azure reserva 5 IPs em cada subnet (primeiros 4 + último 1), então um /24 tem 251 endereços utilizáveis.
+**Nota**: O Azure reserva 5 IPs em cada subnet (primeiros 4 + Ãºltimo 1), entÃ£o um /24 tem 251 endereÃ§os utilizÃ¡veis.
 
 ### Tarefa 4: Entender public vs private endpoints
 
-| Tipo de endpoint | Acessível de | Caso de uso |
+| Tipo de endpoint | AcessÃ­vel de | Caso de uso |
 |-----------------|-------------|-------------|
-| **Public endpoint** | Internet + interno | Servidores web, APIs públicas |
-| **Private endpoint** | Apenas VNet interna | Bancos de dados, serviços internos |
-| **Service endpoint** | VNet para serviço Azure (rota otimizada) | Storage, SQL de dentro da VNet |
+| **Public endpoint** | Internet + interno | Servidores web, APIs pÃºblicas |
+| **Private endpoint** | Apenas VNet interna | Bancos de dados, serviÃ§os internos |
+| **Service endpoint** | VNet para serviÃ§o Azure (rota otimizada) | Storage, SQL de dentro da VNet |
 
-**Private endpoints** mantêm o tráfego na rede backbone da Microsoft — nunca tocando a internet pública.
+**Private endpoints** mantÃªm o trÃ¡fego na rede backbone da Microsoft â€” nunca tocando a internet pÃºblica.
 
 ### Tarefa 5: Entender VNet Peering
 
 VNet Peering conecta duas VNets para que os recursos possam se comunicar:
 
-| Tipo de peering | Escopo | Latência |
+| Tipo de peering | Escopo | LatÃªncia |
 |----------------|--------|----------|
-| **Regional peering** | Mesma região | Muito baixa |
-| **Global peering** | Regiões diferentes | Baixa (via backbone Microsoft) |
+| **Regional peering** | Mesma regiÃ£o | Muito baixa |
+| **Global peering** | RegiÃµes diferentes | Baixa (via backbone Microsoft) |
 
 Regras importantes:
-- VNets pareadas não podem ter intervalos de IP sobrepostos
-- Peering NÃO é transitivo (A↔B + B↔C ≠ A↔C)
-- Tráfego entre VNets pareadas permanece na rede da Microsoft
+- VNets pareadas nÃ£o podem ter intervalos de IP sobrepostos
+- Peering NÃƒO Ã© transitivo (Aâ†”B + Bâ†”C â‰  Aâ†”C)
+- TrÃ¡fego entre VNets pareadas permanece na rede da Microsoft
 
 :::tip Alternativa Azure CLI
 ```bash
@@ -92,60 +92,60 @@ az network vnet show --name myVnet --resource-group rg-az900-learning --query "a
 
 ## Conceitos-Chave
 
-| Conceito | Descrição |
+| Conceito | DescriÃ§Ã£o |
 |----------|-----------|
-| **VNet** | Rede privada no Azure; recursos se comunicam com segurança |
-| **Subnet** | Segmento de uma VNet com seu próprio intervalo de endereços e NSG |
-| **NSG** | Regras de firewall com estado (permite/nega tráfego por porta, IP, protocolo) |
-| **Public endpoint** | Serviço acessível pela internet |
-| **Private endpoint** | Serviço acessível apenas de dentro de uma VNet |
-| **VNet Peering** | Conecta duas VNets para comunicação privada |
-| **Não-transitivo** | Se A↔B e B↔C, A não pode alcançar C sem peering direto |
+| **VNet** | Rede privada no Azure; recursos se comunicam com seguranÃ§a |
+| **Subnet** | Segmento de uma VNet com seu prÃ³prio intervalo de endereÃ§os e NSG |
+| **NSG** | Regras de firewall com estado (permite/nega trÃ¡fego por porta, IP, protocolo) |
+| **Public endpoint** | ServiÃ§o acessÃ­vel pela internet |
+| **Private endpoint** | ServiÃ§o acessÃ­vel apenas de dentro de uma VNet |
+| **VNet Peering** | Conecta duas VNets para comunicaÃ§Ã£o privada |
+| **NÃ£o-transitivo** | Se Aâ†”B e Bâ†”C, A nÃ£o pode alcanÃ§ar C sem peering direto |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck
   questions={[
     {
       id: 'az900-11-q1',
-      question: 'Qual é a finalidade de uma Azure Virtual Network (VNet)?',
-      options: ['Armazenar arquivos na nuvem', 'Permitir que recursos Azure se comuniquem de forma segura entre si', 'Gerenciar identidades de usuários', 'Monitorar a saúde de recursos'],
+      question: 'Qual Ã© a finalidade de uma Azure Virtual Network (VNet)?',
+      options: ['Armazenar arquivos na nuvem', 'Permitir que recursos Azure se comuniquem de forma segura entre si', 'Gerenciar identidades de usuÃ¡rios', 'Monitorar a saÃºde de recursos'],
       correctAnswer: 1,
-      explanation: 'Uma Azure Virtual Network permite que recursos Azure se comuniquem de forma segura entre si, com a internet e com redes on-premises. Ela fornece isolamento e segmentação.'
+      explanation: 'Uma Azure Virtual Network permite que recursos Azure se comuniquem de forma segura entre si, com a internet e com redes on-premises. Ela fornece isolamento e segmentaÃ§Ã£o.'
     },
     {
       id: 'az900-11-q2',
-      question: 'Uma empresa quer garantir que seu Azure SQL Database seja acessível apenas de sua VNet e nunca da internet. O que devem usar?',
+      question: 'Uma empresa quer garantir que seu Azure SQL Database seja acessÃ­vel apenas de sua VNet e nunca da internet. O que devem usar?',
       options: ['Public endpoint', 'Private endpoint', 'VNet Peering', 'Load balancer'],
       correctAnswer: 1,
-      explanation: 'Um private endpoint atribui um endereço IP privado da sua VNet ao serviço Azure, tornando-o acessível apenas de dentro da VNet. O tráfego nunca atravessa a internet pública.'
+      explanation: 'Um private endpoint atribui um endereÃ§o IP privado da sua VNet ao serviÃ§o Azure, tornando-o acessÃ­vel apenas de dentro da VNet. O trÃ¡fego nunca atravessa a internet pÃºblica.'
     },
     {
       id: 'az900-11-q3',
-      question: 'VNet A está pareada com VNet B, e VNet B está pareada com VNet C. Recursos na VNet A podem se comunicar diretamente com recursos na VNet C?',
-      options: ['Sim, peering é sempre transitivo', 'Não, peering é não-transitivo — peering direto entre A e C é necessário', 'Apenas se estiverem na mesma região', 'Apenas se usarem global peering'],
+      question: 'VNet A estÃ¡ pareada com VNet B, e VNet B estÃ¡ pareada com VNet C. Recursos na VNet A podem se comunicar diretamente com recursos na VNet C?',
+      options: ['Sim, peering Ã© sempre transitivo', 'NÃ£o, peering Ã© nÃ£o-transitivo â€” peering direto entre A e C Ã© necessÃ¡rio', 'Apenas se estiverem na mesma regiÃ£o', 'Apenas se usarem global peering'],
       correctAnswer: 1,
-      explanation: 'VNet Peering é não-transitivo. Cada par de VNets que precisa se comunicar deve ter peering direto estabelecido entre elas.'
+      explanation: 'VNet Peering Ã© nÃ£o-transitivo. Cada par de VNets que precisa se comunicar deve ter peering direto estabelecido entre elas.'
     },
     {
       id: 'az900-11-q4',
-      question: 'O que é uma subnet na rede Azure?',
-      options: ['Uma subscription Azure separada', 'Um intervalo de endereços IP dentro de uma VNet', 'Uma conexão entre duas VNets', 'Um tipo de máquina virtual'],
+      question: 'O que Ã© uma subnet na rede Azure?',
+      options: ['Uma subscription Azure separada', 'Um intervalo de endereÃ§os IP dentro de uma VNet', 'Uma conexÃ£o entre duas VNets', 'Um tipo de mÃ¡quina virtual'],
       correctAnswer: 1,
-      explanation: 'Uma subnet é um intervalo de endereços IP dentro de uma VNet. Subnets permitem segmentar sua VNet e aplicar diferentes regras de segurança (NSGs) a diferentes grupos de recursos.'
+      explanation: 'Uma subnet Ã© um intervalo de endereÃ§os IP dentro de uma VNet. Subnets permitem segmentar sua VNet e aplicar diferentes regras de seguranÃ§a (NSGs) a diferentes grupos de recursos.'
     },
     {
       id: 'az900-11-q5',
-      question: 'Qual recurso age como um firewall para controlar tráfego de entrada e saída para recursos Azure?',
+      question: 'Qual recurso age como um firewall para controlar trÃ¡fego de entrada e saÃ­da para recursos Azure?',
       options: ['Virtual Network', 'Subnet', 'Network Security Group (NSG)', 'VNet Peering'],
       correctAnswer: 2,
-      explanation: 'Network Security Groups (NSGs) contêm regras de segurança que permitem ou negam tráfego de rede de entrada/saída. Podem ser associados a subnets ou interfaces de rede individuais.'
+      explanation: 'Network Security Groups (NSGs) contÃªm regras de seguranÃ§a que permitem ou negam trÃ¡fego de rede de entrada/saÃ­da. Podem ser associados a subnets ou interfaces de rede individuais.'
     }
   ]}
 />
 
 ## Saiba Mais
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
 - [Microsoft Learn: Describe Azure compute and networking](https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/)
 - [Azure Virtual Network documentation](https://learn.microsoft.com/en-us/azure/virtual-network/)

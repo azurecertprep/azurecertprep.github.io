@@ -538,7 +538,7 @@ After completing all tasks, you should have:
 2. **Quota consumed**: 30K TPM from GPT-4o quota, 50K TPM from GPT-4o-mini quota
 3. **Successful test responses** from both deployments showing different response styles
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

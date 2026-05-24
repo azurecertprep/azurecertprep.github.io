@@ -33,7 +33,7 @@ Azure AI Vision Image Analysis 4.0 provides a unified API for extracting visual 
 | `read` | OCR text extraction |
 | `smartCrops` | Optimal crop regions for thumbnails |
 
-The API returns structured JSON with confidence scores (0.0–1.0) for each detected element.
+The API returns structured JSON with confidence scores (0.0â€“1.0) for each detected element.
 
 ## Prerequisites
 - Azure subscription
@@ -51,7 +51,7 @@ az group create --name rg-ai102-vision --location eastus2
 az cognitiveservices account create \
   --name ai-vision-ai102 \
   --resource-group rg-ai102-vision \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location eastus2
 
@@ -244,7 +244,7 @@ curl -s "${ENDPOINT}/computervision/imageanalysis:analyze?features=smartCrops,de
 
 ## Expected Output
 
-```
+```text
 Caption: 'a person standing in front of a whiteboard giving a presentation' (confidence: 0.8523)
 
 Tags (8 found):
@@ -273,7 +273,7 @@ Text (OCR):
   'Image Analysis'
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

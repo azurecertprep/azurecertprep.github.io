@@ -30,7 +30,7 @@ The CTO has mandated a move to Infrastructure as Code with automated testing, pe
 
 The target architecture includes:
 
-```
+```text
 contoso-infrastructure/
   modules/
     networking/
@@ -798,7 +798,7 @@ stages:
             displayName: "Evaluate drift status"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the broken Bicep deployment
 
@@ -897,7 +897,7 @@ jobs:
 
 A developer reports this error when running `terraform apply`:
 
-```
+```yaml
 Error: Error acquiring the state lock
 Lock Info:
   ID:        a1b2c3d4-e5f6-7890-abcd-ef1234567890

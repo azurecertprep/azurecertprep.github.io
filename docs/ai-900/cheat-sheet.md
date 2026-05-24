@@ -7,18 +7,18 @@ title: "Azure AI Services Cheat Sheet"
 
 ## Azure AI services hierarchy
 
-```
+```text
 Azure AI services (umbrella)
-├── Azure AI Vision
-├── Azure AI Language
-├── Azure AI Speech
-├── Azure AI Document Intelligence
-├── Azure AI Translator
-├── Azure AI Content Safety
-└── Azure OpenAI Service (separate resource)
+â”œâ”€â”€ Azure AI Vision
+â”œâ”€â”€ Azure AI Language
+â”œâ”€â”€ Azure AI Speech
+â”œâ”€â”€ Azure AI Document Intelligence
+â”œâ”€â”€ Azure AI Translator
+â”œâ”€â”€ Azure AI Content Safety
+â””â”€â”€ Azure OpenAI Service (separate resource)
 
 Azure Machine Learning (separate platform)
-└── Workspace → Compute → Pipelines → AutoML → Models
+â””â”€â”€ Workspace â†’ Compute â†’ Pipelines â†’ AutoML â†’ Models
 ```
 
 ## Vision services
@@ -30,9 +30,9 @@ Azure Machine Learning (separate platform)
 | **Custom Vision** | Train custom image models | Image classification, object detection with your own data |
 
 **When to use which:**
-- Need general image analysis? → **Azure AI Vision**
-- Need to train on your own images? → **Custom Vision**
-- Need to detect/verify faces? → **Face API**
+- Need general image analysis? â†’ **Azure AI Vision**
+- Need to train on your own images? â†’ **Custom Vision**
+- Need to detect/verify faces? â†’ **Face API**
 
 ## Language services
 
@@ -58,7 +58,7 @@ Azure Machine Learning (separate platform)
 |---|---|---|
 | **Azure AI Document Intelligence** | Extract structured data from documents | Pre-built models (invoices, receipts, ID), custom models, layout analysis |
 
-> ⚠️ Formerly called "Form Recognizer" — exam may reference either name.
+> âš ï¸ Formerly called "Form Recognizer" â€” exam may reference either name.
 
 ## Azure OpenAI Service
 
@@ -82,7 +82,7 @@ Azure Machine Learning (separate platform)
 | **Model Registry** | Version and manage trained models |
 | **Endpoints** | Deploy models as REST APIs (real-time or batch) |
 
-## Responsible AI — 6 principles
+## Responsible AI â€” 6 principles
 
 | Principle | Definition | Example |
 |---|---|---|

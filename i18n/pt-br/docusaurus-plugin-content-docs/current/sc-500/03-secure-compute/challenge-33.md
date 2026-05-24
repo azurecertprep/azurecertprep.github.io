@@ -320,7 +320,7 @@ az policy assignment create \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Conexão do Bastion expira — "Unable to connect to target VM"
 

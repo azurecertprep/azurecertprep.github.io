@@ -21,7 +21,7 @@ Contoso Ltd manages 15 microservices, all following the same build-test-deploy p
 
 Services follow a standard structure:
 
-```
+```text
 contoso-{service-name}/
   src/
   tests/
@@ -751,7 +751,7 @@ steps:
 
 ### GitHub: Template repository pattern
 
-```
+```text
 # Organization template repository structure:
 contoso/.github/
   .github/
@@ -798,7 +798,7 @@ stages:
 
 Template repository structure:
 
-```
+```text
 pipeline-templates/
   README.md
   stages/
@@ -815,7 +815,7 @@ pipeline-templates/
     common.yml
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Reusable workflow secret inheritance
 

@@ -277,7 +277,7 @@ az policy state trigger-scan \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Azure Disk Encryption falha com erro "KeyVault access denied"
 

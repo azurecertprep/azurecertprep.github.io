@@ -403,7 +403,7 @@ You can only increase the size of a managed disk, never decrease it. If you need
 
 </details>
 
-## Break and fix
+## Break & fix
 
 ### Scenario a: disk encryption failure
 

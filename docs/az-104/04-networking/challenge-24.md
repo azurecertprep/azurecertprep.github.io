@@ -346,7 +346,7 @@ az network nic show-effective-route-table \
     "All next-hop types understood and demonstrated"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: NVA IP forwarding missing
 

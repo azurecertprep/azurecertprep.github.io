@@ -394,7 +394,7 @@ az network private-endpoint show \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Rotação da chave TDE falha com "Access Denied"
 

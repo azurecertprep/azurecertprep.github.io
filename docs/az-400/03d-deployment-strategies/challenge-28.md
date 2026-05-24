@@ -601,7 +601,7 @@ docker manifest inspect acrcontosoprod.azurecr.io/product-catalog-api:latest
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Exercise 1: ACR authentication failure in pipeline
 
@@ -688,7 +688,7 @@ az containerapp ingress update \
 
 
 **Fix:** Create a `.trivyignore` file in the project root:
-```
+```text
 # No fix available - tracked in issue #1234
 CVE-2024-XXXXX
 ```

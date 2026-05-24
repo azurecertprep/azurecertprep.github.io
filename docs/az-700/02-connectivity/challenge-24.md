@@ -463,7 +463,7 @@ Stop-AzVirtualNetworkGatewayPacketCapture `
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: VPN connection flapping (DPD timeout)
 

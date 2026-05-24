@@ -337,7 +337,7 @@ az monitor metrics alert create \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Agentless scanning não descobre vulnerabilidades em VMs específicas
 

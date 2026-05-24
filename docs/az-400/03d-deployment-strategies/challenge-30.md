@@ -233,7 +233,7 @@ jobs:
 
 ### Service dependency graph
 
-```
+```text
 Contoso.Payments.Core (shared library)
     |
     +--- PaymentService API (depends on Core v2.4.x)
@@ -689,7 +689,7 @@ jobs:
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Exercise 1: Hotfix deploys but fix is not active
 

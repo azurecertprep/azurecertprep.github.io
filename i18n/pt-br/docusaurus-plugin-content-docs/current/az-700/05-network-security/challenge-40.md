@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 40: NSG rules and application security groups"
+title: "Desafio 40: Regras de NSG e Application Security Groups"
 sidebar_label: "Challenge 40"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -619,7 +619,7 @@ Test-AzNetworkWatcherIPFlow `
 3. Revise a lista combinada de regras do NSG da sub-rede e de qualquer NSG no nível da NIC
 4. Use a aba **Connection troubleshoot** para testar a conectividade entre VMs
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Conflito de prioridade de regra (negação avaliada antes da permissão)
 
@@ -749,43 +749,43 @@ az network nsg rule create \
 <KnowledgeCheck questions={[
   {
     id: "az700-40-q1",
-    question: "NSG rules are evaluated in order of priority. Which statement is correct about rule evaluation?",
+    question: "As regras de NSG são avaliadas em ordem de prioridade. Qual afirmação está correta sobre a avaliação de regras?",
     options: [
-      "Lower priority number = evaluated first; once matched, evaluation stops ✅",
-      "Higher priority number = evaluated first; all rules are always evaluated",
-      "Rules are evaluated alphabetically by name",
-      "Inbound and outbound rules are evaluated simultaneously"
+      "Menor número de prioridade = avaliado primeiro; uma vez correspondido, a avaliação para ✅",
+      "Maior número de prioridade = avaliado primeiro; todas as regras são sempre avaliadas",
+      "As regras são avaliadas em ordem alfabética pelo nome",
+      "Regras de entrada e saída são avaliadas simultaneamente"
     ],
     correctIndex: 0,
-    explanation: "NSG rules are processed in priority order from lowest number (100) to highest (4096). The first matching rule determines the action (Allow or Deny), and no further rules are evaluated for that traffic flow."
+    explanation: "As regras de NSG são processadas em ordem de prioridade do menor número (100) ao maior (4096). A primeira regra correspondente determina a ação (Permitir ou Negar), e nenhuma outra regra é avaliada para esse fluxo de tráfego."
   },
   {
     id: "az700-40-q2",
-    question: "You create an ASG named 'asg-web' in VNet-A. A colleague tries to assign a NIC in VNet-B to this ASG. What happens?",
+    question: "Você cria um ASG chamado 'asg-web' na VNet-A. Um colega tenta atribuir uma NIC na VNet-B a esse ASG. O que acontece?",
     options: [
-      "The operation fails because ASG members must be in the same VNet ✅",
-      "It succeeds but the ASG rules are not enforced cross-VNet",
-      "It succeeds and rules are enforced via VNet peering",
-      "The operation requires enabling ASG global peering first"
+      "A operação falha porque os membros do ASG devem estar na mesma VNet ✅",
+      "Funciona, mas as regras do ASG não são aplicadas entre VNets",
+      "Funciona e as regras são aplicadas via peering de VNet",
+      "A operação requer habilitar o peering global de ASG primeiro"
     ],
     correctIndex: 0,
-    explanation: "Application Security Groups are VNet-scoped. All NICs assigned to an ASG must reside in the same virtual network. This is a hard platform constraint that cannot be overridden."
+    explanation: "Os Application Security Groups têm escopo de VNet. Todas as NICs atribuídas a um ASG devem residir na mesma rede virtual. Essa é uma restrição rígida da plataforma que não pode ser substituída."
   },
   {
     id: "az700-40-q3",
-    question: "A VM has an NSG on its subnet that allows TCP/443 inbound and an NSG on its NIC that denies all inbound. What is the result for HTTPS traffic?",
+    question: "Uma VM tem um NSG em sua sub-rede que permite TCP/443 de entrada e um NSG em sua NIC que nega toda entrada. Qual é o resultado para tráfego HTTPS?",
     options: [
-      "Traffic is denied because both the subnet NSG and NIC NSG must allow it ✅",
-      "Traffic is allowed because the subnet NSG allow rule takes precedence",
-      "Traffic is allowed because the NIC NSG is evaluated before the subnet NSG",
-      "Traffic is denied but only if the VM has no public IP"
+      "O tráfego é negado porque tanto o NSG da sub-rede quanto o NSG da NIC devem permitir ✅",
+      "O tráfego é permitido porque a regra de permissão do NSG da sub-rede tem precedência",
+      "O tráfego é permitido porque o NSG da NIC é avaliado antes do NSG da sub-rede",
+      "O tráfego é negado, mas apenas se a VM não tiver IP público"
     ],
     correctIndex: 0,
-    explanation: "For inbound traffic, the subnet-level NSG is evaluated first, then the NIC-level NSG. Traffic must be allowed by BOTH NSGs to reach the VM. If either NSG denies the traffic, it is dropped."
+    explanation: "Para tráfego de entrada, o NSG no nível da sub-rede é avaliado primeiro, depois o NSG no nível da NIC. O tráfego deve ser permitido por AMBOS os NSGs para alcançar a VM. Se qualquer um dos NSGs negar o tráfego, ele é descartado."
   },
   {
     id: "az700-40-q4",
-    question: "Which of the following are default NSG rules that cannot be deleted?",
+    question: "Quais das seguintes são regras padrão de NSG que não podem ser excluídas?",
     options: [
       "AllowVNetInBound, AllowAzureLoadBalancerInBound, DenyAllInBound ✅",
       "AllowInternetInBound, AllowVNetOutBound, DenyAllOutBound",
@@ -793,31 +793,31 @@ az network nsg rule create \
       "AllowVNetInBound, AllowInternetOutBound, AllowAzureLoadBalancerInBound"
     ],
     correctIndex: 0,
-    explanation: "Every NSG includes three default inbound rules (AllowVNetInBound at 65000, AllowAzureLoadBalancerInBound at 65001, DenyAllInBound at 65500) and three default outbound rules (AllowVNetOutBound at 65000, AllowInternetOutBound at 65001, DenyAllOutBound at 65500). These cannot be deleted but can be overridden by higher-priority custom rules."
+    explanation: "Todo NSG inclui três regras padrão de entrada (AllowVNetInBound em 65000, AllowAzureLoadBalancerInBound em 65001, DenyAllInBound em 65500) e três regras padrão de saída (AllowVNetOutBound em 65000, AllowInternetOutBound em 65001, DenyAllOutBound em 65500). Elas não podem ser excluídas, mas podem ser substituídas por regras personalizadas de maior prioridade."
   },
   {
     id: "az700-40-q5",
-    question: "An inbound allow rule permits TCP/1433 from the app tier to the database tier. Do you need a separate outbound rule on the database NSG for return traffic?",
+    question: "Uma regra de permissão de entrada permite TCP/1433 da camada de aplicação para a camada de banco de dados. Você precisa de uma regra de saída separada no NSG do banco de dados para o tráfego de retorno?",
     options: [
-      "No, NSGs are stateful and return traffic is automatically allowed ✅",
-      "Yes, you must create an explicit outbound allow for port 1433",
-      "Yes, but only if the source port is ephemeral",
-      "No, but only because default outbound rules already allow VNet traffic"
+      "Não, os NSGs são stateful e o tráfego de retorno é permitido automaticamente ✅",
+      "Sim, você deve criar uma regra explícita de permissão de saída para a porta 1433",
+      "Sim, mas apenas se a porta de origem for efêmera",
+      "Não, mas apenas porque as regras padrão de saída já permitem tráfego da VNet"
     ],
     correctIndex: 0,
-    explanation: "NSGs are stateful. When an inbound connection is permitted, the return traffic for that established session is automatically allowed without needing a separate outbound rule. This applies regardless of any outbound deny rules."
+    explanation: "Os NSGs são stateful. Quando uma conexão de entrada é permitida, o tráfego de retorno para essa sessão estabelecida é automaticamente permitido sem a necessidade de uma regra de saída separada. Isso se aplica independentemente de quaisquer regras de negação de saída."
   },
   {
     id: "az700-40-q6",
-    question: "With augmented security rules, what is the maximum number of rules per NSG?",
+    question: "Com regras de segurança aumentadas, qual é o número máximo de regras por NSG?",
     options: [
-      "1,000 (up from 200 with standard rules) ✅",
+      "1.000 (acima de 200 com regras padrão) ✅",
       "500",
-      "5,000",
-      "200 (same as standard)"
+      "5.000",
+      "200 (igual ao padrão)"
     ],
     correctIndex: 0,
-    explanation: "Augmented security rules allow combining service tags and ASGs in the same rule and support up to 1,000 rules per NSG (versus the default 200). You can request an increase up to 1,000 through Azure support or subscription limits."
+    explanation: "As regras de segurança aumentadas permitem combinar service tags e ASGs na mesma regra e suportam até 1.000 regras por NSG (versus o padrão de 200). Você pode solicitar um aumento até 1.000 através do suporte do Azure ou limites de assinatura."
   }
 ]} />
 

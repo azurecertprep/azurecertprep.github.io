@@ -290,7 +290,7 @@ az rest --method GET \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Aplicação recebe "Insufficient privileges" ao chamar a Graph API
 

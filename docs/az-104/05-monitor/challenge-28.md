@@ -361,7 +361,7 @@ az advisor recommendation list --category Cost -o table
     "At least one Advisor recommendation implemented or acknowledged"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: alert not firing
 

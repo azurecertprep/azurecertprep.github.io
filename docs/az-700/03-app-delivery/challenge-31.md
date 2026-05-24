@@ -402,7 +402,7 @@ Key response headers to verify:
 - **X-Azure-Ref**: Unique reference for the Front Door transaction (useful for support tickets)
 - **Age**: Seconds since the object was stored in the edge cache
 
-## Break and fix
+## Break & fix
 
 These exercises simulate common Front Door misconfigurations.
 

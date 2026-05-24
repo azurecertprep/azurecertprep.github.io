@@ -31,7 +31,7 @@ This matrix maps every official AI-900 exam skill to the challenge(s) that cover
 | Describe transparency considerations | Ch 02 |
 | Describe accountability considerations | Ch 02 |
 
-## Domain 2: Describe fundamental principles of machine learning on Azure (20–25%)
+## Domain 2: Describe fundamental principles of machine learning on Azure (15–20%)
 
 ### Describe fundamental principles of machine learning
 
@@ -97,7 +97,7 @@ This matrix maps every official AI-900 exam skill to the challenge(s) that cover
 | Describe capabilities of Azure AI Language | Ch 18 |
 | Describe capabilities of Azure AI Speech | Ch 16, Ch 18 |
 
-## Domain 5: Describe features of generative AI workloads on Azure (15–20%)
+## Domain 5: Describe features of generative AI workloads on Azure (20–25%)
 
 ### Describe generative AI concepts
 
@@ -117,6 +117,7 @@ This matrix maps every official AI-900 exam skill to the challenge(s) that cover
 | Ch 01 | Domain 1 | AI workloads overview |
 | Ch 02 | Domain 1 | Responsible AI principles |
 | Ch 03 | Domain 1 | AI workloads deep-dive |
+| Ch 04 | Domain 1 | Azure AI Services Overview |
 | Ch 05 | Domain 2 | ML fundamentals, regression |
 | Ch 06 | Domain 2 | Classification |
 | Ch 07 | Domain 2 | Clustering |

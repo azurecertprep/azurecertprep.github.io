@@ -270,7 +270,7 @@ echo "Workspace health monitoring enabled - check SentinelHealth table for conne
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Analista não consegue visualizar incidentes apesar de ter a função Log Analytics Reader
 

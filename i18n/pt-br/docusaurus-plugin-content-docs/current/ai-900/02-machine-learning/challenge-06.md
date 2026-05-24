@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 06: Classificação em Machine Learning"
+title: "Desafio 06: Classificação em Machine Learning"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

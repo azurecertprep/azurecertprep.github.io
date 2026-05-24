@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 15: Backup & Recovery"
+title: "Desafio 15: Backup & Recuperação"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
@@ -228,7 +228,7 @@ Configure alertas para jobs de backup com falha:
 2. Crie uma regra de alerta para **Falha de backup**
 3. Anexe um grupo de ação para notificação por email
 
-## Quebre & conserte
+## Quebra & conserta
 
 ### Quebre
 1. **Excluir um vault com itens protegidos** | Tente excluir o Recovery Services vault enquanto ele ainda tem itens de backup. Observe o erro: *"O vault não pode ser excluído pois existem recursos dentro do vault."*

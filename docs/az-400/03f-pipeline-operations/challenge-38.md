@@ -39,7 +39,7 @@ Contoso Ltd is launching a new microservice: the **Notification Service**. This 
 
 **Repository structure:**
 
-```
+```text
 contoso-notification-service/
   src/
     index.ts
@@ -815,7 +815,7 @@ Confirm the operational aspects are in place:
             console.log(`Deployment status: ${{ needs['deploy-production'].result }}`);
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the failing coverage gate
 

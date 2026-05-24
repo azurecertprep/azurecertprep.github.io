@@ -413,7 +413,7 @@ echo "From vm-db, run: nslookup $STORAGE_NAME.blob.core.windows.net"
     "DNS zone resolves storage FQDN to private IP within the VNet"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: conflicting NSG rules
 ```bash

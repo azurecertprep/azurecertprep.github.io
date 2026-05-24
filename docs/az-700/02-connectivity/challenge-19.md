@@ -59,7 +59,7 @@ az network express-route list-service-providers --output table
 
 **Expected output:**
 
-```
+```text
 Name                  PeeringLocations                          BandwidthsOffered
 --------------------  ----------------------------------------  ---------------------------
 Equinix               Silicon Valley, Washington DC, Chicago    50Mbps, 100Mbps, 200Mbps,
@@ -152,7 +152,7 @@ az network express-route show \
 
 **Expected output (after provider provisions):**
 
-```
+```text
 Name                    Bandwidth  ProviderState  CircuitState  SKU
 ----------------------  ---------  -------------  ------------  --------------------
 er-circuit-contoso-sv   200        Provisioned    Enabled       Standard_MeteredData
@@ -302,7 +302,7 @@ az network express-route peering show \
 
 **Expected output:**
 
-```
+```text
 Name                  PeeringType           PeerAsn  VlanId  State    ProvisioningState
 --------------------  --------------------  -------  ------  -------  -----------------
 AzurePrivatePeering   AzurePrivatePeering   65020    200     Enabled  Succeeded
@@ -353,7 +353,7 @@ az network vpn-connection show \
 
 **Expected output:**
 
-```
+```text
 Name          Status     Type
 ------------  ---------  ------------
 conn-er-hub   Connected  ExpressRoute
@@ -426,7 +426,7 @@ This shows that the on-premises network (10.0.0.0/16 and 192.168.1.0/24) is bein
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario A: Circuit stuck in NotProvisioned
 
@@ -476,7 +476,7 @@ az network express-route peering update \
 
 ## Architecture summary
 
-```
+```text
 On-Premises DC            Equinix Colo          Microsoft Edge         Azure VNet
 +-----------+          +-------------+        +-------------+       +------------+
 |  Router   |---fiber--|  Exchange   |--xconn-|    MSEE     |--BGP--|  ER Gateway |

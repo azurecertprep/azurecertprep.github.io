@@ -22,7 +22,7 @@ Contoso Ltd maintains a monorepo containing their frontend (React), backend (Nod
 
 Repository structure:
 
-```
+```text
 contoso-monorepo/
   frontend/
     src/
@@ -765,7 +765,7 @@ stages:
                       displayName: "Dry run"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Trigger never fires
 

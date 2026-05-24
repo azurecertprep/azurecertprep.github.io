@@ -22,15 +22,15 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Production AI solutions require the same CI/CD rigor as any other software system—automated testing, infrastructure as code, environment promotion, and rollback capabilities. The AI-102 exam tests your understanding of how to automate the deployment of Azure AI resources and models through pipelines.
+Production AI solutions require the same CI/CD rigor as any other software systemâ€”automated testing, infrastructure as code, environment promotion, and rollback capabilities. The AI-102 exam tests your understanding of how to automate the deployment of Azure AI resources and models through pipelines.
 
-This challenge covers the complete CI/CD lifecycle for Azure AI solutions: defining infrastructure with Bicep templates, deploying Azure OpenAI models through GitHub Actions, implementing smoke tests that validate AI endpoint availability, and managing environment-specific configurations. You'll build a pipeline that follows the pattern: **lint → deploy infrastructure → deploy model → smoke test**.
+This challenge covers the complete CI/CD lifecycle for Azure AI solutions: defining infrastructure with Bicep templates, deploying Azure OpenAI models through GitHub Actions, implementing smoke tests that validate AI endpoint availability, and managing environment-specific configurations. You'll build a pipeline that follows the pattern: **lint â†’ deploy infrastructure â†’ deploy model â†’ smoke test**.
 
 Key exam concepts include using service principals for pipeline authentication, managing secrets in GitHub Actions or Azure DevOps, understanding deployment slots and blue-green strategies for AI endpoints, and implementing health checks that verify model availability without consuming excessive tokens.
 
 ## Architecture
 
-You'll create a complete CI/CD pipeline that provisions Azure AI infrastructure, deploys models, and validates the deployment—all triggered by code changes.
+You'll create a complete CI/CD pipeline that provisions Azure AI infrastructure, deploys models, and validates the deploymentâ€”all triggered by code changes.
 
 ![Challenge 05 topology](/img/ai-102/challenge-05-topology.svg)
 
@@ -122,9 +122,9 @@ result = subprocess.run(
 )
 
 if result.returncode == 0:
-    print("✓ Bicep template is valid")
+    print("âœ“ Bicep template is valid")
 else:
-    print(f"✗ Validation failed: {result.stderr}")
+    print(f"âœ— Validation failed: {result.stderr}")
 
 # Run what-if deployment
 result = subprocess.run(
@@ -216,9 +216,9 @@ var process = Process.Start(new ProcessStartInfo
 await process!.WaitForExitAsync();
 
 if (process.ExitCode == 0)
-    Console.WriteLine("✓ Bicep template is valid");
+    Console.WriteLine("âœ“ Bicep template is valid");
 else
-    Console.WriteLine($"✗ Validation failed: {await process.StandardError.ReadToEndAsync()}");
+    Console.WriteLine($"âœ— Validation failed: {await process.StandardError.ReadToEndAsync()}");
 ```
 
 </TabItem>
@@ -405,7 +405,7 @@ os.makedirs(".github/workflows", exist_ok=True)
 with open(".github/workflows/deploy-ai.yml", "w") as f:
     yaml.dump(workflow, f, default_flow_style=False, sort_keys=False)
 
-print("✓ Generated .github/workflows/deploy-ai.yml")
+print("âœ“ Generated .github/workflows/deploy-ai.yml")
 ```
 
 </TabItem>
@@ -490,7 +490,7 @@ Directory.CreateDirectory(Path.Combine(".github", "workflows"));
 await File.WriteAllTextAsync(
     Path.Combine(".github", "workflows", "deploy-ai.yml"), workflowYaml);
 
-Console.WriteLine("✓ Generated .github/workflows/deploy-ai.yml");
+Console.WriteLine("âœ“ Generated .github/workflows/deploy-ai.yml");
 ```
 
 </TabItem>
@@ -616,9 +616,9 @@ def test_endpoint_reachable():
 
     assert response.choices[0].message.content is not None
     assert response.usage.total_tokens > 0
-    print(f"✓ Endpoint healthy: {endpoint}")
-    print(f"✓ Model responded: {response.choices[0].message.content}")
-    print(f"✓ Tokens used: {response.usage.total_tokens}")
+    print(f"âœ“ Endpoint healthy: {endpoint}")
+    print(f"âœ“ Model responded: {response.choices[0].message.content}")
+    print(f"âœ“ Tokens used: {response.usage.total_tokens}")
 
 def test_model_version():
     """Verify the expected model version is deployed."""
@@ -644,16 +644,16 @@ def test_model_version():
 
     # Verify model identifier matches expected deployment
     assert "gpt-4o" in response.model
-    print(f"✓ Model version verified: {response.model}")
+    print(f"âœ“ Model version verified: {response.model}")
 
 if __name__ == "__main__":
     try:
         test_endpoint_reachable()
         test_model_version()
-        print("\n✓ All smoke tests passed!")
+        print("\nâœ“ All smoke tests passed!")
         sys.exit(0)
     except Exception as e:
-        print(f"\n✗ Smoke test failed: {e}")
+        print(f"\nâœ— Smoke test failed: {e}")
         sys.exit(1)
 ```
 
@@ -685,16 +685,16 @@ try
     var content = response.Value.Content[0].Text;
     var tokens = response.Value.Usage.TotalTokenCount;
 
-    Console.WriteLine($"✓ Endpoint healthy: {endpoint}");
-    Console.WriteLine($"✓ Model responded: {content}");
-    Console.WriteLine($"✓ Tokens used: {tokens}");
+    Console.WriteLine($"âœ“ Endpoint healthy: {endpoint}");
+    Console.WriteLine($"âœ“ Model responded: {content}");
+    Console.WriteLine($"âœ“ Tokens used: {tokens}");
 
     if (string.IsNullOrEmpty(content))
         throw new Exception("Empty response from model");
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"✗ Smoke test failed: {ex.Message}");
+    Console.WriteLine($"âœ— Smoke test failed: {ex.Message}");
     Environment.Exit(1);
 }
 
@@ -707,18 +707,18 @@ try
     );
 
     var model = response.Value.Model;
-    Console.WriteLine($"✓ Model version verified: {model}");
+    Console.WriteLine($"âœ“ Model version verified: {model}");
 
     if (!model.Contains("gpt-4o"))
         throw new Exception($"Unexpected model: {model}");
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"✗ Model version test failed: {ex.Message}");
+    Console.WriteLine($"âœ— Model version test failed: {ex.Message}");
     Environment.Exit(1);
 }
 
-Console.WriteLine("\n✓ All smoke tests passed!");
+Console.WriteLine("\nâœ“ All smoke tests passed!");
 ```
 
 </TabItem>
@@ -750,10 +750,10 @@ HTTP_CODE=$(echo "$RESPONSE" | tail -1)
 BODY=$(echo "$RESPONSE" | head -n -1)
 
 if [ "$HTTP_CODE" -eq 200 ]; then
-  echo "✓ Endpoint healthy (HTTP 200)"
-  echo "✓ Response: $(echo $BODY | python -c 'import json,sys; print(json.load(sys.stdin)["choices"][0]["message"]["content"])')"
+  echo "âœ“ Endpoint healthy (HTTP 200)"
+  echo "âœ“ Response: $(echo $BODY | python -c 'import json,sys; print(json.load(sys.stdin)["choices"][0]["message"]["content"])')"
 else
-  echo "✗ Endpoint unhealthy (HTTP ${HTTP_CODE})"
+  echo "âœ— Endpoint unhealthy (HTTP ${HTTP_CODE})"
   echo "$BODY"
   exit 1
 fi
@@ -761,14 +761,14 @@ fi
 # Test 2: Verify model name
 MODEL=$(echo $BODY | python -c 'import json,sys; print(json.load(sys.stdin)["model"])')
 if [[ "$MODEL" == *"gpt-4o"* ]]; then
-  echo "✓ Model version verified: ${MODEL}"
+  echo "âœ“ Model version verified: ${MODEL}"
 else
-  echo "✗ Unexpected model: ${MODEL}"
+  echo "âœ— Unexpected model: ${MODEL}"
   exit 1
 fi
 
 echo ""
-echo "✓ All smoke tests passed!"
+echo "âœ“ All smoke tests passed!"
 ```
 
 </TabItem>
@@ -776,31 +776,31 @@ echo "✓ All smoke tests passed!"
 
 ## Expected Output
 
-```
-✓ Bicep template is valid
-✓ Generated .github/workflows/deploy-ai.yml
+```text
+âœ“ Bicep template is valid
+âœ“ Generated .github/workflows/deploy-ai.yml
 
 --- Pipeline Execution ---
-Job: lint ✓
-Job: deploy-infra ✓
+Job: lint âœ“
+Job: deploy-infra âœ“
   Output: endpoint = https://ai102-prod-openai.openai.azure.com/
   Output: deploymentName = gpt-4o-deploy
-Job: smoke-test ✓
-  ✓ Endpoint healthy: https://ai102-prod-openai.openai.azure.com/
-  ✓ Model responded: OK
-  ✓ Tokens used: 12
-  ✓ Model version verified: gpt-4o-2024-08-06
-  ✓ All smoke tests passed!
+Job: smoke-test âœ“
+  âœ“ Endpoint healthy: https://ai102-prod-openai.openai.azure.com/
+  âœ“ Model responded: OK
+  âœ“ Tokens used: 12
+  âœ“ Model version verified: gpt-4o-2024-08-06
+  âœ“ All smoke tests passed!
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
 | Federated identity fails | `AADSTS70021` in login step | Federated credential not configured for the repo/branch | Configure federated credential with correct subject (`repo:org/repo:ref:refs/heads/main`) |
 | Deployment race condition | `Conflict` error on model deployment | Bicep deploying model before OpenAI resource is ready | Use `dependsOn` in Bicep (implicit via `parent` property) |
 | Smoke test timeout | Test hangs after deploy | Model deployment still provisioning | Add wait/retry loop in smoke test with exponential backoff |
-| Secret not available | `Login failed` in pipeline | GitHub secret name mismatch or not set | Verify secret names in repo Settings → Secrets match workflow references |
+| Secret not available | `Login failed` in pipeline | GitHub secret name mismatch or not set | Verify secret names in repo Settings â†’ Secrets match workflow references |
 | Bicep lint warning | Pipeline fails on lint | Using deprecated API version in Bicep | Update `@2024-10-01` to latest stable API version |
 
 ## Knowledge Check
@@ -815,7 +815,7 @@ Job: smoke-test ✓
       "Use a personal access token with Azure permissions"
     ],
     correctAnswer: 2,
-    explanation: "OpenID Connect (OIDC) with federated credentials is the recommended approach—it eliminates secret storage entirely. GitHub issues a short-lived token that Azure trusts via the federated identity credential, requiring no stored secrets to rotate."
+    explanation: "OpenID Connect (OIDC) with federated credentials is the recommended approachâ€”it eliminates secret storage entirely. GitHub issues a short-lived token that Azure trusts via the federated identity credential, requiring no stored secrets to rotate."
   },
   {
     question: "In a CI/CD pipeline deploying Azure OpenAI models, what should the smoke test validate?",
@@ -826,18 +826,18 @@ Job: smoke-test ✓
       "That the model produces identical outputs to the previous version"
     ],
     correctAnswer: 1,
-    explanation: "Smoke tests verify basic functionality—endpoint reachability, valid responses, and correct model version. They should be fast and use minimal tokens. Load testing and accuracy benchmarks belong in separate, dedicated test stages."
+    explanation: "Smoke tests verify basic functionalityâ€”endpoint reachability, valid responses, and correct model version. They should be fast and use minimal tokens. Load testing and accuracy benchmarks belong in separate, dedicated test stages."
   },
   {
     question: "How should you manage environment-specific configurations (dev/staging/prod) for Azure AI deployments in a pipeline?",
     options: [
       "Use separate Bicep templates for each environment",
-      "Use Git branches—one branch per environment with different templates",
+      "Use Git branchesâ€”one branch per environment with different templates",
       "Hard-code environment values in the workflow YAML",
       "Use parameter files (e.g., params.dev.json, params.prod.json) with the same template"
     ],
     correctAnswer: 3,
-    explanation: "Parameter files keep infrastructure DRY—one template with environment-specific parameter files. This ensures consistency across environments while allowing different capacities, SKUs, and configurations per stage."
+    explanation: "Parameter files keep infrastructure DRYâ€”one template with environment-specific parameter files. This ensures consistency across environments while allowing different capacities, SKUs, and configurations per stage."
   },
   {
     question: "What Bicep resource property ensures a model deployment waits for its parent Azure OpenAI account to be created first?",
@@ -859,7 +859,7 @@ Job: smoke-test ✓
       "Retry the smoke test 10 times before failing"
     ],
     correctAnswer: 2,
-    explanation: "A well-designed pipeline should automatically rollback on smoke test failure—redeploying the previous known-good model version. This can be achieved with a conditional rollback job triggered on smoke-test failure, using the previous Bicep parameters."
+    explanation: "A well-designed pipeline should automatically rollback on smoke test failureâ€”redeploying the previous known-good model version. This can be achieved with a conditional rollback job triggered on smoke-test failure, using the previous Bicep parameters."
   }
 ]} />
 

@@ -561,7 +561,7 @@ stages:
                   displayName: "Use production configuration"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Environment approval bypassed
 

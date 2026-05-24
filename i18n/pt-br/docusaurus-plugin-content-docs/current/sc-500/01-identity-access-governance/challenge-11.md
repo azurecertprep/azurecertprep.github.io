@@ -336,7 +336,7 @@ echo "5. Remove orphaned assignments from deleted principals"
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Atribuição de função personalizada falha com "Role definition not found"
 

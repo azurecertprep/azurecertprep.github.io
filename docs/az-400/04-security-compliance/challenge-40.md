@@ -293,7 +293,7 @@ gh api orgs/contoso/teams/release-team/repos/contoso/webapp -X PUT \
   --field permission="maintain"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: GITHUB_TOKEN cannot push to protected branch
 

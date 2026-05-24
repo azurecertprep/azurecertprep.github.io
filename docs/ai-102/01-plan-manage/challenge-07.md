@@ -24,7 +24,7 @@ Monitoring Azure AI resources is essential for maintaining reliability, tracking
 
 In this challenge, you'll configure diagnostic settings to route logs and metrics to a Log Analytics workspace, write KQL queries to analyze service behavior, and set up alert rules for critical thresholds. You'll work with key metrics like `TotalCalls`, `TotalErrors`, `Latency`, and `TokenTransaction`.
 
-Understanding the monitoring pipeline — from diagnostic settings through Log Analytics to alerts — is a core skill for managing production AI deployments at scale.
+Understanding the monitoring pipeline â€” from diagnostic settings through Log Analytics to alerts â€” is a core skill for managing production AI deployments at scale.
 
 ## Architecture
 
@@ -178,7 +178,7 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 az cognitiveservices account create \
   --name $AI_ACCOUNT \
   --resource-group $RESOURCE_GROUP \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location $LOCATION
 
@@ -738,7 +738,7 @@ az monitor metrics alert list \
 
 ## Expected Output
 
-```
+```text
 === Operations Summary ===
   TextAnalytics.Analyze: 1247 calls, Avg: 342ms, P95: 890ms, Errors: 3
   OpenAI.ChatCompletions: 856 calls, Avg: 1205ms, P95: 3400ms, Errors: 12
@@ -756,7 +756,7 @@ high-error-rate-alert   1         True     total TotalErrors > 10
 token-spike-alert       3         True     total TokenTransaction > 100000
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

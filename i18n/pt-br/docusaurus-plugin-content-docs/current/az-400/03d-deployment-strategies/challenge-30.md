@@ -1,39 +1,39 @@
 ---
 sidebar_position: 6
-title: "Desafio 30: Caminhos de hotfix e resiliência"
+title: "Desafio 30: Caminhos de hotfix e resiliÃªncia"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 30: Caminhos de hotfix e resiliência
+# Desafio 30: Caminhos de hotfix e resiliÃªncia
 
 ## Habilidades do exame mapeadas
 
-- Projetar um plano de caminho de hotfix para responder a correções de código de alta prioridade
-- Projetar e implementar uma estratégia de resiliência para deploy
-- Projetar um pipeline para garantir que deploys de dependências sejam ordenados de forma confiável
+- Projetar um plano de caminho de hotfix para responder a correÃ§Ãµes de cÃ³digo de alta prioridade
+- Projetar e implementar uma estratÃ©gia de resiliÃªncia para deploy
+- Projetar um pipeline para garantir que deploys de dependÃªncias sejam ordenados de forma confiÃ¡vel
 
-## Cenário
+## CenÃ¡rio
 
-A produção está fora do ar. Um bug crítico no serviço de processamento de pagamentos da Contoso está silenciosamente descartando transações quando o total do pedido excede $10.000. O problema foi introduzido na versão de ontem (v2.4.0). O pipeline normal de release leva 2 horas devido a testes de integração completos, varreduras de segurança, gates de aprovação manual e rollout progressivo por rings. O impacto ao cliente está crescendo a cada minuto.
+A produÃ§Ã£o estÃ¡ fora do ar. Um bug crÃ­tico no serviÃ§o de processamento de pagamentos da Contoso estÃ¡ silenciosamente descartando transaÃ§Ãµes quando o total do pedido excede $10.000. O problema foi introduzido na versÃ£o de ontem (v2.4.0). O pipeline normal de release leva 2 horas devido a testes de integraÃ§Ã£o completos, varreduras de seguranÃ§a, gates de aprovaÃ§Ã£o manual e rollout progressivo por rings. O impacto ao cliente estÃ¡ crescendo a cada minuto.
 
-A equipe de engenharia precisa de um caminho de hotfix que possa implantar uma correção verificada em produção em menos de 15 minutos, mantendo verificações de segurança essenciais. Eles também precisam projetar pipelines de deploy resilientes que lidem com ordenação de dependências e incluam circuit breakers para prevenir falhas em cascata.
+A equipe de engenharia precisa de um caminho de hotfix que possa implantar uma correÃ§Ã£o verificada em produÃ§Ã£o em menos de 15 minutos, mantendo verificaÃ§Ãµes de seguranÃ§a essenciais. Eles tambÃ©m precisam projetar pipelines de deploy resilientes que lidem com ordenaÃ§Ã£o de dependÃªncias e incluam circuit breakers para prevenir falhas em cascata.
 
 **Detalhes do ambiente:**
 - Payment Service: Azure App Service `app-contoso-payments`
 - Shared Library: pacote NuGet `Contoso.Payments.Core`
 - Frontend: Azure Static Web Apps `swa-contoso-store`
 - Resource group: `rg-contoso-prod`
-- Versão atual com problema: `v2.4.0` (tag: `release/2.4.0`)
-- Última versão estável conhecida: `v2.3.1` (tag: `release/2.3.1`)
+- VersÃ£o atual com problema: `v2.4.0` (tag: `release/2.4.0`)
+- Ãšltima versÃ£o estÃ¡vel conhecida: `v2.3.1` (tag: `release/2.3.1`)
 
 ---
 
-## Tarefa 1: Projetar estratégia de branching para hotfix
+## Tarefa 1: Projetar estratÃ©gia de branching para hotfix
 
 ### Modelo de branching para hotfixes
 
-O branch de hotfix é criado a partir da tag de release (não de `main`) para evitar incluir alterações não publicadas.
+O branch de hotfix Ã© criado a partir da tag de release (nÃ£o de `main`) para evitar incluir alteraÃ§Ãµes nÃ£o publicadas.
 
 ```bash
 # Step 1: Create hotfix branch from the broken release tag
@@ -58,7 +58,7 @@ git push origin hotfix/payment-over-10k
 git push origin release/2.4.1
 ```
 
-### Pós-hotfix: cherry-pick de volta para main
+### PÃ³s-hotfix: cherry-pick de volta para main
 
 ```bash
 # After hotfix is deployed and verified, merge fix back to main
@@ -84,7 +84,7 @@ git push origin --delete hotfix/payment-over-10k
 
 ---
 
-## Tarefa 2: Pipeline expedido (pular gates não-críticos, manter varredura de segurança)
+## Tarefa 2: Pipeline expedido (pular gates nÃ£o-crÃ­ticos, manter varredura de seguranÃ§a)
 
 ### Pipeline de hotfix (GitHub Actions)
 
@@ -215,25 +215,25 @@ jobs:
           fi
 ```
 
-### Comparação: Pipeline normal vs pipeline de hotfix
+### ComparaÃ§Ã£o: Pipeline normal vs pipeline de hotfix
 
 | Gate | Pipeline normal | Pipeline de hotfix |
 |------|----------------|-------------------|
-| Testes unitários | Suite completa (~15 min) | Apenas testes críticos (~2 min) |
-| Testes de integração | Suite completa (~30 min) | Ignorados |
-| Varredura de segurança | SAST + DAST completos | Apenas SAST (CodeQL) |
-| Aprovação manual | Obrigatória (2 revisores) | Aprovador único (líder de plantão) |
-| Rollout progressivo | Ring 0, 1, 2, 3 (48 hrs) | Direto para produção |
-| Smoke tests | Regressão completa | Apenas health check |
+| Testes unitÃ¡rios | Suite completa (~15 min) | Apenas testes crÃ­ticos (~2 min) |
+| Testes de integraÃ§Ã£o | Suite completa (~30 min) | Ignorados |
+| Varredura de seguranÃ§a | SAST + DAST completos | Apenas SAST (CodeQL) |
+| AprovaÃ§Ã£o manual | ObrigatÃ³ria (2 revisores) | Aprovador Ãºnico (lÃ­der de plantÃ£o) |
+| Rollout progressivo | Ring 0, 1, 2, 3 (48 hrs) | Direto para produÃ§Ã£o |
+| Smoke tests | RegressÃ£o completa | Apenas health check |
 | Tempo total | ~2 horas | ~10-15 minutos |
 
 ---
 
-## Tarefa 3: Ordenação de dependências de deploy
+## Tarefa 3: OrdenaÃ§Ã£o de dependÃªncias de deploy
 
-### Grafo de dependências de serviços
+### Grafo de dependÃªncias de serviÃ§os
 
-```
+```text
 Contoso.Payments.Core (shared library)
     |
     +--- PaymentService API (depends on Core v2.4.x)
@@ -243,7 +243,7 @@ Contoso.Payments.Core (shared library)
     +--- NotificationService (depends on Core v2.4.x)
 ```
 
-### Azure Pipelines com ordenação de dependências
+### Azure Pipelines com ordenaÃ§Ã£o de dependÃªncias
 
 Crie `azure-pipelines-ordered-deploy.yml`:
 
@@ -392,7 +392,7 @@ stages:
 
 ---
 
-## Tarefa 4: Automação de rollback (reversão automática em caso de falha)
+## Tarefa 4: AutomaÃ§Ã£o de rollback (reversÃ£o automÃ¡tica em caso de falha)
 
 ### Rollback imediato via slot swap
 
@@ -428,7 +428,7 @@ else
 fi
 ```
 
-### Workflow reutilizável do GitHub Actions para rollback
+### Workflow reutilizÃ¡vel do GitHub Actions para rollback
 
 Crie `.github/workflows/rollback.yml`:
 
@@ -506,13 +506,13 @@ jobs:
 
 ---
 
-## Tarefa 5: Padrão circuit breaker em deploy
+## Tarefa 5: PadrÃ£o circuit breaker em deploy
 
 ### Conceito de circuit breaker em deploy
 
-Um circuit breaker de deploy interrompe o rollout progressivo quando os limites de falha são excedidos, prevenindo que deploys com problemas alcancem mais usuários.
+Um circuit breaker de deploy interrompe o rollout progressivo quando os limites de falha sÃ£o excedidos, prevenindo que deploys com problemas alcancem mais usuÃ¡rios.
 
-### Implementação no GitHub Actions
+### ImplementaÃ§Ã£o no GitHub Actions
 
 ```yaml
   progressive-deploy-with-circuit-breaker:
@@ -601,7 +601,7 @@ Um circuit breaker de deploy interrompe o rollout progressivo quando os limites 
             --target-slot production
 ```
 
-### Circuit breaker baseado em revisão do Azure Container Apps
+### Circuit breaker baseado em revisÃ£o do Azure Container Apps
 
 ```bash
 # Deploy new revision with 0% traffic initially
@@ -627,7 +627,7 @@ az containerapp ingress traffic set \
 
 ---
 
-## Tarefa 6: Cherry-pick pós-hotfix de volta para main
+## Tarefa 6: Cherry-pick pÃ³s-hotfix de volta para main
 
 ### Workflow automatizado de cherry-pick
 
@@ -689,9 +689,9 @@ jobs:
 
 ---
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Hotfix implantado mas correção não está ativa
+### ExercÃ­cio 1: Hotfix implantado mas correÃ§Ã£o nÃ£o estÃ¡ ativa
 
 **Sintoma:** O hotfix foi implantado e o slot swap foi bem-sucedido, mas os clientes ainda experienciam o bug de pagamento.
 
@@ -713,11 +713,11 @@ az webapp traffic-routing show \
 ```
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Causa raiz:** O roteamento de tráfego ainda estava configurado para enviar 10% ao slot de staging de um teste canary anterior. Após o swap, o slot "staging" agora contém o código ANTIGO (com problema) de produção, e 10% do tráfego vai para lá.
+**Causa raiz:** O roteamento de trÃ¡fego ainda estava configurado para enviar 10% ao slot de staging de um teste canary anterior. ApÃ³s o swap, o slot "staging" agora contÃ©m o cÃ³digo ANTIGO (com problema) de produÃ§Ã£o, e 10% do trÃ¡fego vai para lÃ¡.
 
-**Correção:**
+**CorreÃ§Ã£o:**
 ```bash
 # Clear all traffic routing rules
 az webapp traffic-routing clear \
@@ -727,16 +727,16 @@ az webapp traffic-routing clear \
 
 </details>
 
-### Exercício 2: Falha na ordenação de dependências
+### ExercÃ­cio 2: Falha na ordenaÃ§Ã£o de dependÃªncias
 
-**Sintoma:** O deploy do frontend é concluído antes da API do Payment Service estar pronta, causando erros na UI por 2 minutos.
+**Sintoma:** O deploy do frontend Ã© concluÃ­do antes da API do Payment Service estar pronta, causando erros na UI por 2 minutos.
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Causa raiz:** Os estágios do pipeline não tinham `dependsOn` configurado entre os deploys do frontend e do backend.
+**Causa raiz:** Os estÃ¡gios do pipeline nÃ£o tinham `dependsOn` configurado entre os deploys do frontend e do backend.
 
-**Correção:**
+**CorreÃ§Ã£o:**
 ```yaml
 # Ensure frontend waits for backend
 - stage: DeployFrontend
@@ -746,16 +746,16 @@ az webapp traffic-routing clear \
 
 </details>
 
-### Exercício 3: Conflitos de cherry-pick bloqueiam main
+### ExercÃ­cio 3: Conflitos de cherry-pick bloqueiam main
 
-**Sintoma:** Após implantar o hotfix de `release/2.4.0`, o cherry-pick para `main` falha com conflitos de merge porque `main` divergiu significativamente.
+**Sintoma:** ApÃ³s implantar o hotfix de `release/2.4.0`, o cherry-pick para `main` falha com conflitos de merge porque `main` divergiu significativamente.
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Causa raiz:** A estrutura de arquivos em `main` mudou (refatoração moveu o código afetado), então o cherry-pick não pode ser aplicado de forma limpa.
+**Causa raiz:** A estrutura de arquivos em `main` mudou (refatoraÃ§Ã£o moveu o cÃ³digo afetado), entÃ£o o cherry-pick nÃ£o pode ser aplicado de forma limpa.
 
-**Correção:** Em vez de um cherry-pick automatizado, crie um pull request com a correção lógica aplicada à nova estrutura de arquivos:
+**CorreÃ§Ã£o:** Em vez de um cherry-pick automatizado, crie um pull request com a correÃ§Ã£o lÃ³gica aplicada Ã  nova estrutura de arquivos:
 ```bash
 # Create a branch from main and manually apply the fix
 git checkout main
@@ -774,52 +774,52 @@ gh pr create \
 
 </details>
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "O serviço de pagamentos em produção da Contoso está fora do ar. O pipeline normal de release leva 2 horas. Um branch de hotfix é criado a partir da tag de release. Quais gates devem ser IGNORADOS no pipeline de hotfix para reduzir o tempo de deploy mantendo a segurança?",
+    question: "O serviÃ§o de pagamentos em produÃ§Ã£o da Contoso estÃ¡ fora do ar. O pipeline normal de release leva 2 horas. Um branch de hotfix Ã© criado a partir da tag de release. Quais gates devem ser IGNORADOS no pipeline de hotfix para reduzir o tempo de deploy mantendo a seguranÃ§a?",
     options: [
-      "Varredura de segurança, testes unitários e aprovação manual",
-      "Testes de integração, rings de rollout progressivo e suite completa de regressão",
-      "Todos os gates devem ser mantidos independentemente da urgência",
-      "Varredura de segurança e testes unitários (apenas aprovação manual permanece)"
+      "Varredura de seguranÃ§a, testes unitÃ¡rios e aprovaÃ§Ã£o manual",
+      "Testes de integraÃ§Ã£o, rings de rollout progressivo e suite completa de regressÃ£o",
+      "Todos os gates devem ser mantidos independentemente da urgÃªncia",
+      "Varredura de seguranÃ§a e testes unitÃ¡rios (apenas aprovaÃ§Ã£o manual permanece)"
     ],
     correctIndex: 1,
-    explanation: "Para hotfixes, o pipeline deve pular gates demorados mas não-críticos: testes de integração, testes end-to-end, rollout progressivo (rings) e regressão completa. No entanto, varreduras de segurança e testes unitários críticos NUNCA devem ser pulados, pois detectam vulnerabilidades e verificam que a correção funciona. A aprovação manual pode ser reduzida a um único aprovador de plantão."
+    explanation: "Para hotfixes, o pipeline deve pular gates demorados mas nÃ£o-crÃ­ticos: testes de integraÃ§Ã£o, testes end-to-end, rollout progressivo (rings) e regressÃ£o completa. No entanto, varreduras de seguranÃ§a e testes unitÃ¡rios crÃ­ticos NUNCA devem ser pulados, pois detectam vulnerabilidades e verificam que a correÃ§Ã£o funciona. A aprovaÃ§Ã£o manual pode ser reduzida a um Ãºnico aprovador de plantÃ£o."
   },
   {
-    question: "Um branch de hotfix deve ser criado a partir de qual fonte para garantir que contenha apenas a correção mínima sem alterações não publicadas?",
+    question: "Um branch de hotfix deve ser criado a partir de qual fonte para garantir que contenha apenas a correÃ§Ã£o mÃ­nima sem alteraÃ§Ãµes nÃ£o publicadas?",
     options: [
-      "O branch 'main' (código de desenvolvimento mais recente)",
+      "O branch 'main' (cÃ³digo de desenvolvimento mais recente)",
       "A tag de release que introduziu o bug (ex: 'release/2.4.0')",
-      "O branch 'develop' (próximo candidato a release)",
+      "O branch 'develop' (prÃ³ximo candidato a release)",
       "A tag de release anterior (ex: 'release/2.3.1')"
     ],
     correctIndex: 1,
-    explanation: "O branch de hotfix deve ser criado a partir da tag da release atual em produção. Isso garante que a correção seja aplicada exatamente ao código em execução em produção sem incluir funcionalidades não publicadas de main ou develop. Criar a partir da release anterior (v2.3.1) reverteria todas as alterações da v2.4.0, não apenas corrigiria o bug."
+    explanation: "O branch de hotfix deve ser criado a partir da tag da release atual em produÃ§Ã£o. Isso garante que a correÃ§Ã£o seja aplicada exatamente ao cÃ³digo em execuÃ§Ã£o em produÃ§Ã£o sem incluir funcionalidades nÃ£o publicadas de main ou develop. Criar a partir da release anterior (v2.3.1) reverteria todas as alteraÃ§Ãµes da v2.4.0, nÃ£o apenas corrigiria o bug."
   },
   {
-    question: "A Contoso tem três serviços com dependências: Shared Library leva à API que leva ao Frontend. O pipeline implanta os três. O que garante que o Frontend não seja implantado antes da API estar pronta?",
+    question: "A Contoso tem trÃªs serviÃ§os com dependÃªncias: Shared Library leva Ã  API que leva ao Frontend. O pipeline implanta os trÃªs. O que garante que o Frontend nÃ£o seja implantado antes da API estar pronta?",
     options: [
       "Configurar todos os deploys para executar em paralelo para velocidade",
-      "Usar 'dependsOn' no pipeline para criar ordenação explícita de estágios",
-      "Implantar todos os serviços no mesmo App Service Plan",
-      "Usar Azure Traffic Manager para reter o tráfego do frontend"
+      "Usar 'dependsOn' no pipeline para criar ordenaÃ§Ã£o explÃ­cita de estÃ¡gios",
+      "Implantar todos os serviÃ§os no mesmo App Service Plan",
+      "Usar Azure Traffic Manager para reter o trÃ¡fego do frontend"
     ],
     correctIndex: 1,
-    explanation: "A propriedade dependsOn no Azure Pipelines (ou needs no GitHub Actions) cria ordenação explícita de execução entre estágios ou jobs. O estágio de deploy do Frontend deve depender do estágio de deploy do Backend, que depende do estágio da Shared Library. Isso garante que cada camada seja implantada e esteja saudável antes que a próxima camada comece."
+    explanation: "A propriedade dependsOn no Azure Pipelines (ou needs no GitHub Actions) cria ordenaÃ§Ã£o explÃ­cita de execuÃ§Ã£o entre estÃ¡gios ou jobs. O estÃ¡gio de deploy do Frontend deve depender do estÃ¡gio de deploy do Backend, que depende do estÃ¡gio da Shared Library. Isso garante que cada camada seja implantada e esteja saudÃ¡vel antes que a prÃ³xima camada comece."
   },
   {
     question: "Um circuit breaker de deploy monitora o deploy canary e detecta que a taxa de erro excede 5%. O que o circuit breaker deve fazer?",
     options: [
-      "Aumentar a porcentagem de tráfego canary para obter mais dados",
-      "Alertar a equipe e aguardar intervenção manual",
-      "Interromper imediatamente a promoção e rotear todo o tráfego de volta para a versão estável",
-      "Reiniciar as instâncias canary para limpar erros transitórios"
+      "Aumentar a porcentagem de trÃ¡fego canary para obter mais dados",
+      "Alertar a equipe e aguardar intervenÃ§Ã£o manual",
+      "Interromper imediatamente a promoÃ§Ã£o e rotear todo o trÃ¡fego de volta para a versÃ£o estÃ¡vel",
+      "Reiniciar as instÃ¢ncias canary para limpar erros transitÃ³rios"
     ],
     correctIndex: 2,
-    explanation: "Um circuit breaker de deploy deve automaticamente interromper o rollout e reverter para o estado estável conhecido quando os limites de falha são excedidos. Isso minimiza o impacto ao cliente ao interromper imediatamente o deploy sem esperar intervenção humana. A equipe pode então investigar o problema offline e tentar novamente o deploy após corrigi-lo."
+    explanation: "Um circuit breaker de deploy deve automaticamente interromper o rollout e reverter para o estado estÃ¡vel conhecido quando os limites de falha sÃ£o excedidos. Isso minimiza o impacto ao cliente ao interromper imediatamente o deploy sem esperar intervenÃ§Ã£o humana. A equipe pode entÃ£o investigar o problema offline e tentar novamente o deploy apÃ³s corrigi-lo."
   }
 ]} />
 

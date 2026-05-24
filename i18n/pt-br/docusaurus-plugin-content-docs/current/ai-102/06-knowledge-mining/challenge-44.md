@@ -1,57 +1,57 @@
 ---
 sidebar_position: 6
-title: "Desafio 44: Pesquisa Semântica e Vetorial"
+title: "Desafio 44: Pesquisa SemÃ¢ntica e Vetorial"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 44: Pesquisa Semântica e Vetorial
+# Desafio 44: Pesquisa SemÃ¢ntica e Vetorial
 
 :::info Tempo Estimado
-**60-75 min** | **Custo**: ~$1.50 (Search tier Basic + OpenAI embeddings) | **Domínio**: Knowledge Mining & Extraction (15-20%)
+**60-75 min** | **Custo**: ~$1.50 (Search tier Basic + OpenAI embeddings) | **DomÃ­nio**: Knowledge Mining & Extraction (15-20%)
 :::
 
 :::warning Requisito de Tier
-O ranking semântico requer **tier Basic ou superior** para o Azure AI Search. A pesquisa vetorial requer **tier Basic ou superior**. O tier Free não suporta esses recursos.
+O ranking semÃ¢ntico requer **tier Basic ou superior** para o Azure AI Search. A pesquisa vetorial requer **tier Basic ou superior**. O tier Free nÃ£o suporta esses recursos.
 :::
 
 ## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |-------|--------|
-| Configurar ranking semântico em um índice | Alto |
+| Configurar ranking semÃ¢ntico em um Ã­ndice | Alto |
 | Implementar pesquisa vetorial com embeddings | Alto |
-| Executar consultas de pesquisa híbrida (keyword + vetor) | Alto |
+| Executar consultas de pesquisa hÃ­brida (keyword + vetor) | Alto |
 | Gerar embeddings com Azure OpenAI | Alto |
-| Configurar perfis e algoritmos de pesquisa vetorial | Médio |
+| Configurar perfis e algoritmos de pesquisa vetorial | MÃ©dio |
 
-## Visão Geral
+## VisÃ£o Geral
 
-### Ranking semântico
-O ranking semântico reclassifica os resultados iniciais de pesquisa por palavras-chave usando modelos de deep learning que entendem o significado e o contexto das consultas e documentos. Ele não altera quais documentos correspondem — ele reordena os principais resultados para melhor relevância.
+### Ranking semÃ¢ntico
+O ranking semÃ¢ntico reclassifica os resultados iniciais de pesquisa por palavras-chave usando modelos de deep learning que entendem o significado e o contexto das consultas e documentos. Ele nÃ£o altera quais documentos correspondem â€” ele reordena os principais resultados para melhor relevÃ¢ncia.
 
 ### Pesquisa vetorial
-A pesquisa vetorial encontra documentos com base na similaridade matemática entre embeddings vetoriais (representações numéricas densas). Diferente da pesquisa por palavras-chave, ela encontra conteúdo semanticamente similar mesmo sem termos compartilhados.
+A pesquisa vetorial encontra documentos com base na similaridade matemÃ¡tica entre embeddings vetoriais (representaÃ§Ãµes numÃ©ricas densas). Diferente da pesquisa por palavras-chave, ela encontra conteÃºdo semanticamente similar mesmo sem termos compartilhados.
 
-### Pesquisa híbrida
-Combina a pontuação por palavras-chave (BM25) com a similaridade vetorial, produzindo o melhor de ambas as abordagens. Um algoritmo de **Reciprocal Rank Fusion (RRF)** mescla as listas classificadas.
+### Pesquisa hÃ­brida
+Combina a pontuaÃ§Ã£o por palavras-chave (BM25) com a similaridade vetorial, produzindo o melhor de ambas as abordagens. Um algoritmo de **Reciprocal Rank Fusion (RRF)** mescla as listas classificadas.
 
-| Abordagem | Encontra "carro" quando a consulta é "automóvel" | Correspondência exata de frase | Melhor para |
+| Abordagem | Encontra "carro" quando a consulta Ã© "automÃ³vel" | CorrespondÃªncia exata de frase | Melhor para |
 |----------|--------|--------|---------|
-| Somente keyword | ❌ | ✅ | Busca de item conhecido |
-| Somente vetor | ✅ | ❌ | Similaridade semântica |
-| Híbrida | ✅ | ✅ | Cenários RAG em produção |
+| Somente keyword | âŒ | âœ… | Busca de item conhecido |
+| Somente vetor | âœ… | âŒ | Similaridade semÃ¢ntica |
+| HÃ­brida | âœ… | âœ… | CenÃ¡rios RAG em produÃ§Ã£o |
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
 - Azure AI Search (tier Basic ou superior)
 - Azure OpenAI com `text-embedding-ada-002` ou `text-embedding-3-small` implantado
 - Python 3.9+ com `azure-search-documents>=11.4.0`, `openai>=1.0.0`
 - .NET 8 com `Azure.Search.Documents`, `Azure.AI.OpenAI`
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Implantar um embedding model
 
@@ -86,7 +86,7 @@ AOAI_KEY=$(az cognitiveservices account keys list \
   --query "key1" -o tsv)
 ```
 
-### Tarefa 2: Criar um índice habilitado para vetores
+### Tarefa 2: Criar um Ã­ndice habilitado para vetores
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -359,7 +359,7 @@ curl -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-index/
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Executar consultas vetoriais, semânticas e híbridas
+### Tarefa 4: Executar consultas vetoriais, semÃ¢nticas e hÃ­bridas
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -480,9 +480,9 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 === Hybrid + Semantic Results ===
   Score: 0.0322 | Reranker: 3.42 | RAG Pattern Architecture
     Caption: Retrieval Augmented Generation combines search retrieval with LLM generation...
@@ -491,58 +491,58 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
   Score: 0.0189 | Reranker: 1.12 | Natural Language Processing
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| # | Cenário | Sintoma | Causa Raiz | Correção |
+| # | CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---|----------|---------|------------|-----|
-| 1 | Incompatibilidade de dimensões vetoriais | Upload falha: "Vector field dimension mismatch" | O vetor do documento tem 768 dimensões mas o índice espera 1536 | Use o mesmo modelo para indexação e consulta; combine `dimensions` no índice com a saída do modelo (ada-002=1536, 3-small padrão=1536) |
-| 2 | Ranking semântico não retorna captions | Resultados não possuem `@search.captions` | `queryAnswer` ou `queryCaption` não foi solicitado | Adicione `query_caption="extractive"` às opções de pesquisa |
-| 3 | Pesquisa híbrida ignora o vetor | Resultados idênticos à pesquisa somente por keyword | O array `vectorQueries` está vazio ou a propriedade `fields` não corresponde ao nome do campo no índice | Garanta que `fields` corresponda ao nome do campo vetorial no índice (`contentVector`) |
-| 4 | Erro "Semantic search not available" | HTTP 400 mencionando configuração semântica | O serviço de pesquisa é tier Free — semântico requer Basic+ | Faça upgrade para o tier Basic ou superior |
-| 5 | Relevância ruim na pesquisa vetorial | Resultados irrelevantes retornados | O texto da consulta foi embeddado com modelo diferente dos documentos | Use o mesmo embedding model tanto para indexação quanto para consultas |
+| 1 | Incompatibilidade de dimensÃµes vetoriais | Upload falha: "Vector field dimension mismatch" | O vetor do documento tem 768 dimensÃµes mas o Ã­ndice espera 1536 | Use o mesmo modelo para indexaÃ§Ã£o e consulta; combine `dimensions` no Ã­ndice com a saÃ­da do modelo (ada-002=1536, 3-small padrÃ£o=1536) |
+| 2 | Ranking semÃ¢ntico nÃ£o retorna captions | Resultados nÃ£o possuem `@search.captions` | `queryAnswer` ou `queryCaption` nÃ£o foi solicitado | Adicione `query_caption="extractive"` Ã s opÃ§Ãµes de pesquisa |
+| 3 | Pesquisa hÃ­brida ignora o vetor | Resultados idÃªnticos Ã  pesquisa somente por keyword | O array `vectorQueries` estÃ¡ vazio ou a propriedade `fields` nÃ£o corresponde ao nome do campo no Ã­ndice | Garanta que `fields` corresponda ao nome do campo vetorial no Ã­ndice (`contentVector`) |
+| 4 | Erro "Semantic search not available" | HTTP 400 mencionando configuraÃ§Ã£o semÃ¢ntica | O serviÃ§o de pesquisa Ã© tier Free â€” semÃ¢ntico requer Basic+ | FaÃ§a upgrade para o tier Basic ou superior |
+| 5 | RelevÃ¢ncia ruim na pesquisa vetorial | Resultados irrelevantes retornados | O texto da consulta foi embeddado com modelo diferente dos documentos | Use o mesmo embedding model tanto para indexaÃ§Ã£o quanto para consultas |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ai102-44-q1",
-    question: "Você implementa pesquisa híbrida combinando consultas por keyword e vetor. Como os dois conjuntos de resultados são mesclados em uma única lista classificada?",
+    question: "VocÃª implementa pesquisa hÃ­brida combinando consultas por keyword e vetor. Como os dois conjuntos de resultados sÃ£o mesclados em uma Ãºnica lista classificada?",
     options: [
-      "Soma simples de pontuações",
-      "Seleção da pontuação máxima",
+      "Soma simples de pontuaÃ§Ãµes",
+      "SeleÃ§Ã£o da pontuaÃ§Ã£o mÃ¡xima",
       "Reciprocal Rank Fusion (RRF)",
-      "Média ponderada de BM25 e similaridade de cosseno"
+      "MÃ©dia ponderada de BM25 e similaridade de cosseno"
     ],
     correctIndex: 2,
-    explanation: "O Azure AI Search usa Reciprocal Rank Fusion (RRF) para mesclar resultados de keyword (BM25) e similaridade vetorial. O RRF combina classificações em vez de pontuações brutas, tornando-o robusto a diferenças de escala de pontuação entre as duas abordagens."
+    explanation: "O Azure AI Search usa Reciprocal Rank Fusion (RRF) para mesclar resultados de keyword (BM25) e similaridade vetorial. O RRF combina classificaÃ§Ãµes em vez de pontuaÃ§Ãµes brutas, tornando-o robusto a diferenÃ§as de escala de pontuaÃ§Ã£o entre as duas abordagens."
   },
   {
     id: "ai102-44-q2",
-    question: "Você configura um campo vetorial com dimensions: 1536 e vectorSearchProfile: 'my-profile'. O perfil usa o algoritmo HNSW. O que significa HNSW e o que ele otimiza?",
+    question: "VocÃª configura um campo vetorial com dimensions: 1536 e vectorSearchProfile: 'my-profile'. O perfil usa o algoritmo HNSW. O que significa HNSW e o que ele otimiza?",
     options: [
-      "Hierarchical Navigable Small World — otimiza a velocidade de busca aproximada de vizinhos mais próximos",
-      "High-dimensional Nearest Scalar Weighted — otimiza o cálculo exato de distância",
-      "Hybrid Neural Search Weight — otimiza a pontuação de relevância semântica",
-      "Hierarchical Normalized Similarity Weighting — otimiza a precisão da distância de cosseno"
+      "Hierarchical Navigable Small World â€” otimiza a velocidade de busca aproximada de vizinhos mais prÃ³ximos",
+      "High-dimensional Nearest Scalar Weighted â€” otimiza o cÃ¡lculo exato de distÃ¢ncia",
+      "Hybrid Neural Search Weight â€” otimiza a pontuaÃ§Ã£o de relevÃ¢ncia semÃ¢ntica",
+      "Hierarchical Normalized Similarity Weighting â€” otimiza a precisÃ£o da distÃ¢ncia de cosseno"
     ],
     correctIndex: 0,
-    explanation: "HNSW (Hierarchical Navigable Small World) é um algoritmo baseado em grafo para busca aproximada de vizinhos mais próximos (ANN). Ele constrói um grafo multicamadas permitindo buscas rápidas de similaridade vetorial com complexidade O(log n), trocando uma pequena quantidade de recall por melhoria significativa de velocidade."
+    explanation: "HNSW (Hierarchical Navigable Small World) Ã© um algoritmo baseado em grafo para busca aproximada de vizinhos mais prÃ³ximos (ANN). Ele constrÃ³i um grafo multicamadas permitindo buscas rÃ¡pidas de similaridade vetorial com complexidade O(log n), trocando uma pequena quantidade de recall por melhoria significativa de velocidade."
   },
   {
     id: "ai102-44-q3",
-    question: "Qual é a diferença principal entre ranking semântico e pesquisa vetorial?",
+    question: "Qual Ã© a diferenÃ§a principal entre ranking semÃ¢ntico e pesquisa vetorial?",
     options: [
-      "O ranking semântico usa embeddings; a pesquisa vetorial usa keywords",
-      "O ranking semântico reclassifica resultados existentes de keyword; a pesquisa vetorial recupera documentos com base na similaridade de embeddings",
-      "O ranking semântico cria novo conteúdo; a pesquisa vetorial apenas recupera",
-      "São o mesmo recurso com nomes diferentes"
+      "O ranking semÃ¢ntico usa embeddings; a pesquisa vetorial usa keywords",
+      "O ranking semÃ¢ntico reclassifica resultados existentes de keyword; a pesquisa vetorial recupera documentos com base na similaridade de embeddings",
+      "O ranking semÃ¢ntico cria novo conteÃºdo; a pesquisa vetorial apenas recupera",
+      "SÃ£o o mesmo recurso com nomes diferentes"
     ],
     correctIndex: 1,
-    explanation: "O ranking semântico é um RERANKER — ele pega os resultados iniciais de keyword e os reordena usando compreensão de linguagem. A pesquisa vetorial é um RETRIEVER — ela encontra documentos com base na distância de embeddings. Eles podem ser combinados: a pesquisa vetorial recupera candidatos, depois o ranking semântico os reordena."
+    explanation: "O ranking semÃ¢ntico Ã© um RERANKER â€” ele pega os resultados iniciais de keyword e os reordena usando compreensÃ£o de linguagem. A pesquisa vetorial Ã© um RETRIEVER â€” ela encontra documentos com base na distÃ¢ncia de embeddings. Eles podem ser combinados: a pesquisa vetorial recupera candidatos, depois o ranking semÃ¢ntico os reordena."
   },
   {
     id: "ai102-44-q4",
-    question: "Você precisa gerar embeddings para um índice de pesquisa vetorial. Qual modelo do Azure OpenAI é construído especificamente para isso?",
+    question: "VocÃª precisa gerar embeddings para um Ã­ndice de pesquisa vetorial. Qual modelo do Azure OpenAI Ã© construÃ­do especificamente para isso?",
     options: [
       "gpt-4o",
       "dall-e-3",
@@ -550,19 +550,19 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
       "text-embedding-3-small"
     ],
     correctIndex: 3,
-    explanation: "text-embedding-3-small (e text-embedding-3-large, text-embedding-ada-002) são modelos de embedding construídos especificamente para converter texto em vetores densos. Modelos GPT são para geração, DALL-E para imagens e Whisper para fala. Apenas modelos de embedding produzem o formato vetorial necessário para pesquisa."
+    explanation: "text-embedding-3-small (e text-embedding-3-large, text-embedding-ada-002) sÃ£o modelos de embedding construÃ­dos especificamente para converter texto em vetores densos. Modelos GPT sÃ£o para geraÃ§Ã£o, DALL-E para imagens e Whisper para fala. Apenas modelos de embedding produzem o formato vetorial necessÃ¡rio para pesquisa."
   },
   {
     id: "ai102-44-q5",
-    question: "Você executa uma consulta vetorial com k=5 e também define top=3 nas opções de pesquisa. Quantos resultados são retornados?",
+    question: "VocÃª executa uma consulta vetorial com k=5 e tambÃ©m define top=3 nas opÃ§Ãµes de pesquisa. Quantos resultados sÃ£o retornados?",
     options: [
       "5 (k sobrescreve top)",
       "8 (k + top combinados)",
       "3 (top limita a resposta final)",
-      "Erro — k e top não podem ser usados juntos"
+      "Erro â€” k e top nÃ£o podem ser usados juntos"
     ],
     correctIndex: 2,
-    explanation: "O parâmetro 'k' controla quantos vizinhos mais próximos a pesquisa vetorial recupera internamente, enquanto 'top' limita o número final de resultados retornados ao cliente. Com k=5 e top=3, a pesquisa vetorial recupera 5 candidatos mas apenas os 3 melhores (após pontuação/classificação) são retornados."
+    explanation: "O parÃ¢metro 'k' controla quantos vizinhos mais prÃ³ximos a pesquisa vetorial recupera internamente, enquanto 'top' limita o nÃºmero final de resultados retornados ao cliente. Com k=5 e top=3, a pesquisa vetorial recupera 5 candidatos mas apenas os 3 melhores (apÃ³s pontuaÃ§Ã£o/classificaÃ§Ã£o) sÃ£o retornados."
   }
 ]} />
 

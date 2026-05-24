@@ -906,7 +906,7 @@ Após completar todas as tarefas, você deve ter:
 4. **Respostas RAG** usando o tipo de consulta `vector_semantic_hybrid`
 5. **Scores de avaliação** para groundedness, relevância e coerência (alvo ≥ 4/5)
 
-## Break and Fix
+## Quebra & conserta
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|

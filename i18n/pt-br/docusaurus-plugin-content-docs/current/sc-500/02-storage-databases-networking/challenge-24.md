@@ -433,7 +433,7 @@ az network watcher show-topology \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Flow logs não mostram dados após 24 horas
 

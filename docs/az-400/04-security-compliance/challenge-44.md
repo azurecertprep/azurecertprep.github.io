@@ -420,7 +420,7 @@ jobs:
           severity: 'CRITICAL'
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: CodeQL analysis fails with "no source code found"
 

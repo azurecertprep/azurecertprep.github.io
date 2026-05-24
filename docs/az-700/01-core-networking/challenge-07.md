@@ -432,7 +432,7 @@ AVNM-managed peerings display a `managedBy` property. You cannot delete or modif
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Configuration created but not deployed
 

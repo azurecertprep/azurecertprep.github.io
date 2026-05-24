@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 07 | ARM Templates & Bicep"
+title: "Desafio 07: ARM Templates & Bicep"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

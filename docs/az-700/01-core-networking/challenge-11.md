@@ -564,7 +564,7 @@ NSG diagnostics (`run-configuration-diagnostic`) differs from IP flow verify. IP
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 These scenarios represent common diagnostic failures you will encounter in production and on the exam.
 

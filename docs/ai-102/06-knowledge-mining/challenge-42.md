@@ -508,7 +508,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/documents-
 }
 ```
 
-## Break and Fix
+## Break & fix
 
 | # | Scenario | Symptom | Root Cause | Fix |
 |---|----------|---------|------------|-----|

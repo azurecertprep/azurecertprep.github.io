@@ -22,7 +22,7 @@ Contoso Ltd is migrating their CI/CD pipelines from Jenkins to GitHub Actions. T
 
 The repository structure:
 
-```
+```text
 contoso-api/
   src/
     index.js
@@ -354,7 +354,7 @@ gh variable set APP_SERVICE_PLAN --env staging --body "contoso-plan-staging"
 gh variable set APP_SERVICE_PLAN --env production --body "contoso-plan-prod"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the failing workflow
 

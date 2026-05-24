@@ -28,7 +28,7 @@ The migration must be performed with zero downtime. Both service endpoints and P
 
 ### Migration order (critical)
 
-```
+```json
 [Current State]
   Subnet -> Service Endpoint -> Storage (public IP, VNet rule)
 
@@ -461,7 +461,7 @@ curl -s -o /dev/null -w "%{http_code}" \
 
 ---
 
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario 1: Removing service endpoint before PE DNS is working
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 03: Azure DNS Public Zones & Delegation"
+title: "Desafio 03: Azure DNS Zonas Públicas & Delegação"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -506,7 +506,7 @@ az group delete --name rg-dns-lab --yes --no-wait
 <KnowledgeCheck questions={[
   {
     id: "az700-03-q1",
-    question: "You need to create a DNS record that maps portal.contoso.com to contoso.azurewebsites.net. Which command should you use?",
+    question: "Você precisa criar um registro DNS que mapeia portal.contoso.com para contoso.azurewebsites.net. Qual comando você deve usar?",
     options: [
       "az network dns record-set cname set-record",
       "az network dns record-set cname add-record",
@@ -514,59 +514,59 @@ az group delete --name rg-dns-lab --yes --no-wait
       "az network dns record-set alias create"
     ],
     correctIndex: 0,
-    explanation: "CNAME records use 'set-record' (not 'add-record') because the DNS standard permits only one CNAME value per record set name. The 'set-record' verb enforces this single-value constraint."
+    explanation: "Registros CNAME usam 'set-record' (não 'add-record') porque o padrão DNS permite apenas um valor CNAME por nome de record set. O verbo 'set-record' impõe essa restrição de valor único."
   },
   {
     id: "az700-03-q2",
-    question: "You create a public DNS zone for contoso.com in Azure DNS. What must you do at your domain registrar to complete the setup?",
+    question: "Você cria uma zona DNS pública para contoso.com no Azure DNS. O que você deve fazer no seu registrador de domínio para concluir a configuração?",
     options: [
-      "Create an A record pointing to the Azure DNS IP address",
-      "Configure all four Azure DNS name servers as the NS records for the domain",
-      "Create a CNAME record pointing to the Azure DNS zone FQDN",
-      "Add a TXT verification record with the zone ID"
+      "Criar um registro A apontando para o endereço IP do Azure DNS",
+      "Configurar todos os quatro servidores de nomes do Azure DNS como registros NS para o domínio",
+      "Criar um registro CNAME apontando para o FQDN da zona do Azure DNS",
+      "Adicionar um registro TXT de verificação com o ID da zona"
     ],
     correctIndex: 1,
-    explanation: "To delegate a domain to Azure DNS, you must update the NS records at your registrar to point to all four Azure DNS name servers assigned to your zone. Using fewer than four reduces redundancy."
+    explanation: "Para delegar um domínio ao Azure DNS, você deve atualizar os registros NS no seu registrador para apontar para todos os quatro servidores de nomes do Azure DNS atribuídos à sua zona. Usar menos de quatro reduz a redundância."
   },
   {
     id: "az700-03-q3",
-    question: "You need to point the zone apex (contoso.com) to an Azure Traffic Manager profile. A CNAME record is not an option. What should you create?",
+    question: "Você precisa apontar o ápice da zona (contoso.com) para um perfil do Azure Traffic Manager. Um registro CNAME não é uma opção. O que você deve criar?",
     options: [
-      "An MX record pointing to the Traffic Manager FQDN",
-      "An A alias record with --target-resource set to the Traffic Manager profile resource ID",
-      "A TXT record containing the Traffic Manager endpoint",
-      "An NS record delegating to Traffic Manager name servers"
+      "Um registro MX apontando para o FQDN do Traffic Manager",
+      "Um registro A alias com --target-resource definido para o resource ID do perfil do Traffic Manager",
+      "Um registro TXT contendo o endpoint do Traffic Manager",
+      "Um registro NS delegando para os servidores de nomes do Traffic Manager"
     ],
     correctIndex: 1,
-    explanation: "CNAME records cannot be created at the zone apex per DNS standards. An alias A record (using --target-resource) can point to a Traffic Manager profile at the apex, dynamically resolving to the correct endpoint IP."
+    explanation: "Registros CNAME não podem ser criados no ápice da zona conforme os padrões DNS. Um registro A alias (usando --target-resource) pode apontar para um perfil do Traffic Manager no ápice, resolvendo dinamicamente para o IP correto do endpoint."
   },
   {
     id: "az700-03-q4",
-    question: "A team creates a child zone dev.contoso.com in Azure DNS but external clients cannot resolve app1.dev.contoso.com. The record exists in the child zone. What is the most likely cause?",
+    question: "Uma equipe cria uma zona filha dev.contoso.com no Azure DNS, mas clientes externos não conseguem resolver app1.dev.contoso.com. O registro existe na zona filha. Qual é a causa mais provável?",
     options: [
-      "The child zone needs a SOA record manually created",
-      "NS delegation records are missing in the parent contoso.com zone",
-      "The child zone must be in the same resource group as the parent",
-      "Alias records are required for child zone delegation"
+      "A zona filha precisa de um registro SOA criado manualmente",
+      "Registros de delegação NS estão faltando na zona pai contoso.com",
+      "A zona filha deve estar no mesmo resource group que a pai",
+      "Registros alias são necessários para delegação de zona filha"
     ],
     correctIndex: 1,
-    explanation: "For a child zone to be reachable, the parent zone must contain NS records (at the 'dev' record set name) pointing to the child zone's name servers. Without this delegation, recursive resolvers cannot discover the child zone."
+    explanation: "Para que uma zona filha seja alcançável, a zona pai deve conter registros NS (no nome do record set 'dev') apontando para os servidores de nomes da zona filha. Sem essa delegação, resolvedores recursivos não conseguem descobrir a zona filha."
   },
   {
     id: "az700-03-q5",
-    question: "After changing a VNet's DNS servers using 'az network vnet update --dns-servers', existing VMs continue to use the old DNS settings. What is the required action?",
+    question: "Após alterar os servidores DNS de uma VNet usando 'az network vnet update --dns-servers', as VMs existentes continuam usando as configurações DNS antigas. Qual é a ação necessária?",
     options: [
-      "Delete and recreate the VNet",
-      "Run 'az network vnet apply' to push settings",
-      "Restart the VMs or renew their DHCP lease",
-      "Update the NSG to allow DNS traffic on port 53"
+      "Excluir e recriar a VNet",
+      "Executar 'az network vnet apply' para aplicar as configurações",
+      "Reiniciar as VMs ou renovar a concessão DHCP delas",
+      "Atualizar o NSG para permitir tráfego DNS na porta 53"
     ],
     correctIndex: 2,
-    explanation: "VNet DNS settings are delivered to VMs via DHCP. Existing VMs will not pick up the new DNS server addresses until they restart or renew their DHCP lease. New VMs deployed after the change will receive the updated settings immediately."
+    explanation: "As configurações DNS da VNet são entregues às VMs via DHCP. VMs existentes não receberão os novos endereços de servidor DNS até que sejam reiniciadas ou renovem sua concessão DHCP. Novas VMs implantadas após a alteração receberão as configurações atualizadas imediatamente."
   },
   {
     id: "az700-03-q6",
-    question: "Which parameter on 'az network dns record-set a create' converts a standard A record into an alias record?",
+    question: "Qual parâmetro em 'az network dns record-set a create' converte um registro A padrão em um registro alias?",
     options: [
       "--alias-target",
       "--target-resource",
@@ -574,7 +574,7 @@ az group delete --name rg-dns-lab --yes --no-wait
       "--resource-reference"
     ],
     correctIndex: 1,
-    explanation: "The --target-resource parameter accepts the resource ID of an Azure resource (such as a public IP or Traffic Manager profile) and converts the record set into an alias record that dynamically tracks the resource's IP address."
+    explanation: "O parâmetro --target-resource aceita o resource ID de um recurso Azure (como um IP público ou perfil do Traffic Manager) e converte o record set em um registro alias que rastreia dinamicamente o endereço IP do recurso."
   }
 ]} />
 

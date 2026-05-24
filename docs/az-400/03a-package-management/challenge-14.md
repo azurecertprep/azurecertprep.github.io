@@ -40,7 +40,7 @@ Semantic versioning follows the format `MAJOR.MINOR.PATCH` where:
 
 Pre-release versions append a hyphen and identifiers after the patch number:
 
-```
+```text
 1.0.0-alpha.1
 1.0.0-beta.3
 1.0.0-rc.1
@@ -52,7 +52,7 @@ Precedence order: `1.0.0-alpha.1 < 1.0.0-beta.1 < 1.0.0-rc.1 < 1.0.0`
 
 Build metadata is appended with a plus sign and does not affect version precedence:
 
-```
+```text
 1.0.0+20240615
 1.0.0-beta.1+build.42
 ```
@@ -361,13 +361,13 @@ echo "Artifact version: $VERSION"
 # Output: 1.2.0+build.42.sha.a1b2c3d
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario: Version conflict when two PRs merge simultaneously
 
 Two developers merge PRs to main within seconds of each other. Both pipelines calculate the next version as `1.3.0` because they read the same latest tag. The second `npm publish` fails:
 
-```
+```bash
 npm ERR! 403 Forbidden - PUT https://npm.pkg.github.com/@contoso/data-models
 npm ERR! You cannot publish over the previously published versions: 1.3.0
 ```
@@ -424,7 +424,7 @@ Add retry logic that detects the 403 and increments:
 
 GitVersion in ContinuousDeployment mode appends the commit count since last tag, ensuring uniqueness:
 
-```
+```text
 v1.3.0 tag on main
   -> commit A: 1.3.1-ci.1
   -> commit B: 1.3.1-ci.2  (always unique)

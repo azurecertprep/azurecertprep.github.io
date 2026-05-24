@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Prompt engineering is the practice of designing and optimizing inputs to language models to elicit desired outputs. Azure OpenAI's chat completions API uses a structured message format with three roles: **system** (sets behavior and constraints), **user** (provides the request), and **assistant** (models prior responses for context). Understanding how to configure these messages effectively is fundamental to building reliable AI applications.
 
-Key parameters control response generation: **temperature** (0-2, controls randomness), **top_p** (nucleus sampling threshold), **max_tokens** (output length limit), **frequency_penalty** (-2 to 2, reduces repetition), and **presence_penalty** (-2 to 2, encourages topic diversity). These parameters interact—for example, temperature and top_p both affect randomness, so Microsoft recommends adjusting one at a time.
+Key parameters control response generation: **temperature** (0-2, controls randomness), **top_p** (nucleus sampling threshold), **max_tokens** (output length limit), **frequency_penalty** (-2 to 2, reduces repetition), and **presence_penalty** (-2 to 2, encourages topic diversity). These parameters interactâ€”for example, temperature and top_p both affect randomness, so Microsoft recommends adjusting one at a time.
 
 Advanced techniques include **few-shot prompting** (providing examples in the prompt), **chain-of-thought** (requesting step-by-step reasoning), and **structured outputs** (using JSON mode or response_format to ensure parseable output). Prompt templates allow reusable prompt patterns with variable substitution, enabling consistent behavior across application scenarios.
 
@@ -669,13 +669,13 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/co
 
 ## Expected Output
 
-```
+```python
 Classification: Account Management
 
 Chain-of-thought:
 Step 1: Calculate total items
-- 3 shelves × 4 boxes = 12 boxes
-- 12 boxes × 6 items = 72 items total
+- 3 shelves Ã— 4 boxes = 12 boxes
+- 12 boxes Ã— 6 items = 72 items total
 
 Step 2: Subtract sold items
 - 72 items - 15 sold = 57 items remaining
@@ -695,7 +695,7 @@ Rating: 5/5
 Summary: The reviewer finds Azure AI Studio excellent for its ease of use and power.
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|-----------|-----|

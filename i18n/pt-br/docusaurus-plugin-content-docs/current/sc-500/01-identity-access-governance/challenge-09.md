@@ -337,7 +337,7 @@ az keyvault secret list-versions --vault-name $KV_NAME --name "test-secret-1" \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Defender for Key Vault mostrando status "Não coberto"
 

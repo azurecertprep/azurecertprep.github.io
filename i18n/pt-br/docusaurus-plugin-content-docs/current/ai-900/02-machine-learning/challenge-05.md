@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 05: Regressão em Machine Learning"
+title: "Desafio 05: Regressão em Machine Learning"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

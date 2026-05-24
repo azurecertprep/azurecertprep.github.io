@@ -530,7 +530,7 @@ Always verify that private endpoint DNS resolution is working before disabling p
 
 ---
 
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario 1: Wrong group-id used
 

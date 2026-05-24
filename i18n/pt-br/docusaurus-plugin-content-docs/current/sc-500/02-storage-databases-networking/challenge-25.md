@@ -507,7 +507,7 @@ echo "  - Implement WAF and DDoS Protection to achieve full compliance"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Arquitetura completa — recursos de staging conseguem acessar o banco de dados de produção
 

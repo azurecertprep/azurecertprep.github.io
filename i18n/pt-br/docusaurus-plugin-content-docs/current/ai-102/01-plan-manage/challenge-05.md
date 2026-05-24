@@ -1,48 +1,48 @@
 ---
 sidebar_position: 6
-title: "CI/CD para Soluções de IA"
+title: "CI/CD para SoluÃ§Ãµes de IA"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 05: CI/CD para Soluções de IA
+# Desafio 05: CI/CD para SoluÃ§Ãµes de IA
 
 :::info Tempo Estimado
-**60 min** | **Custo**: ~$0 (apenas definição de pipeline) | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
+**60 min** | **Custo**: ~$0 (apenas definiÃ§Ã£o de pipeline) | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
 - Integrar Azure AI services em um pipeline de CI/CD
-- Automatizar a implantação de modelos com infraestrutura como código
+- Automatizar a implantaÃ§Ã£o de modelos com infraestrutura como cÃ³digo
 - Implementar testes automatizados para endpoints de IA
-- Gerenciar versionamento de modelos e estratégias de implantação
-- Configurar implantações específicas por ambiente (dev/staging/prod)
+- Gerenciar versionamento de modelos e estratÃ©gias de implantaÃ§Ã£o
+- Configurar implantaÃ§Ãµes especÃ­ficas por ambiente (dev/staging/prod)
 
-## Visão Geral
+## VisÃ£o Geral
 
-Soluções de IA em produção requerem o mesmo rigor de CI/CD que qualquer outro sistema de software—testes automatizados, infraestrutura como código, promoção entre ambientes e capacidades de rollback. O exame AI-102 testa seu entendimento sobre como automatizar a implantação de recursos e modelos Azure AI através de pipelines.
+SoluÃ§Ãµes de IA em produÃ§Ã£o requerem o mesmo rigor de CI/CD que qualquer outro sistema de softwareâ€”testes automatizados, infraestrutura como cÃ³digo, promoÃ§Ã£o entre ambientes e capacidades de rollback. O exame AI-102 testa seu entendimento sobre como automatizar a implantaÃ§Ã£o de recursos e modelos Azure AI atravÃ©s de pipelines.
 
-Este desafio cobre o ciclo de vida completo de CI/CD para soluções Azure AI: definir infraestrutura com templates Bicep, implantar modelos Azure OpenAI através de GitHub Actions, implementar smoke tests que validam a disponibilidade do endpoint de IA e gerenciar configurações específicas por ambiente. Você construirá um pipeline que segue o padrão: **lint → implantar infraestrutura → implantar modelo → smoke test**.
+Este desafio cobre o ciclo de vida completo de CI/CD para soluÃ§Ãµes Azure AI: definir infraestrutura com templates Bicep, implantar modelos Azure OpenAI atravÃ©s de GitHub Actions, implementar smoke tests que validam a disponibilidade do endpoint de IA e gerenciar configuraÃ§Ãµes especÃ­ficas por ambiente. VocÃª construirÃ¡ um pipeline que segue o padrÃ£o: **lint â†’ implantar infraestrutura â†’ implantar modelo â†’ smoke test**.
 
-Conceitos-chave do exame incluem o uso de service principals para autenticação de pipelines, gerenciamento de segredos no GitHub Actions ou Azure DevOps, entendimento de deployment slots e estratégias blue-green para endpoints de IA, e implementação de health checks que verificam a disponibilidade do modelo sem consumir tokens excessivos.
+Conceitos-chave do exame incluem o uso de service principals para autenticaÃ§Ã£o de pipelines, gerenciamento de segredos no GitHub Actions ou Azure DevOps, entendimento de deployment slots e estratÃ©gias blue-green para endpoints de IA, e implementaÃ§Ã£o de health checks que verificam a disponibilidade do modelo sem consumir tokens excessivos.
 
 ## Arquitetura
 
-Você criará um pipeline de CI/CD completo que provisiona infraestrutura Azure AI, implanta modelos e valida a implantação—tudo acionado por mudanças no código.
+VocÃª criarÃ¡ um pipeline de CI/CD completo que provisiona infraestrutura Azure AI, implanta modelos e valida a implantaÃ§Ã£oâ€”tudo acionado por mudanÃ§as no cÃ³digo.
 
 ![Challenge 05 topology](/img/ai-102/challenge-05-topology.svg)
 
-## Pré-requisitos
-- Repositório GitHub com Actions habilitado
+## PrÃ©-requisitos
+- RepositÃ³rio GitHub com Actions habilitado
 - Assinatura Azure com um service principal (role Contributor)
 - Azure CLI 2.50+ instalado
 - Familiaridade com sintaxe YAML de pipelines e Bicep
 
-## Implementação
+## ImplementaÃ§Ã£o
 
-### Tarefa 1: Definir Infraestrutura como Código com Bicep
+### Tarefa 1: Definir Infraestrutura como CÃ³digo com Bicep
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -122,9 +122,9 @@ result = subprocess.run(
 )
 
 if result.returncode == 0:
-    print("✓ Bicep template is valid")
+    print("âœ“ Bicep template is valid")
 else:
-    print(f"✗ Validation failed: {result.stderr}")
+    print(f"âœ— Validation failed: {result.stderr}")
 
 # Run what-if deployment
 result = subprocess.run(
@@ -216,9 +216,9 @@ var process = Process.Start(new ProcessStartInfo
 await process!.WaitForExitAsync();
 
 if (process.ExitCode == 0)
-    Console.WriteLine("✓ Bicep template is valid");
+    Console.WriteLine("âœ“ Bicep template is valid");
 else
-    Console.WriteLine($"✗ Validation failed: {await process.StandardError.ReadToEndAsync()}");
+    Console.WriteLine($"âœ— Validation failed: {await process.StandardError.ReadToEndAsync()}");
 ```
 
 </TabItem>
@@ -302,7 +302,7 @@ az deployment group create \
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Workflow do GitHub Actions para Implantação de IA
+### Tarefa 2: Workflow do GitHub Actions para ImplantaÃ§Ã£o de IA
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -405,7 +405,7 @@ os.makedirs(".github/workflows", exist_ok=True)
 with open(".github/workflows/deploy-ai.yml", "w") as f:
     yaml.dump(workflow, f, default_flow_style=False, sort_keys=False)
 
-print("✓ Generated .github/workflows/deploy-ai.yml")
+print("âœ“ Generated .github/workflows/deploy-ai.yml")
 ```
 
 </TabItem>
@@ -490,7 +490,7 @@ Directory.CreateDirectory(Path.Combine(".github", "workflows"));
 await File.WriteAllTextAsync(
     Path.Combine(".github", "workflows", "deploy-ai.yml"), workflowYaml);
 
-Console.WriteLine("✓ Generated .github/workflows/deploy-ai.yml");
+Console.WriteLine("âœ“ Generated .github/workflows/deploy-ai.yml");
 ```
 
 </TabItem>
@@ -616,9 +616,9 @@ def test_endpoint_reachable():
 
     assert response.choices[0].message.content is not None
     assert response.usage.total_tokens > 0
-    print(f"✓ Endpoint healthy: {endpoint}")
-    print(f"✓ Model responded: {response.choices[0].message.content}")
-    print(f"✓ Tokens used: {response.usage.total_tokens}")
+    print(f"âœ“ Endpoint healthy: {endpoint}")
+    print(f"âœ“ Model responded: {response.choices[0].message.content}")
+    print(f"âœ“ Tokens used: {response.usage.total_tokens}")
 
 def test_model_version():
     """Verify the expected model version is deployed."""
@@ -644,16 +644,16 @@ def test_model_version():
 
     # Verify model identifier matches expected deployment
     assert "gpt-4o" in response.model
-    print(f"✓ Model version verified: {response.model}")
+    print(f"âœ“ Model version verified: {response.model}")
 
 if __name__ == "__main__":
     try:
         test_endpoint_reachable()
         test_model_version()
-        print("\n✓ All smoke tests passed!")
+        print("\nâœ“ All smoke tests passed!")
         sys.exit(0)
     except Exception as e:
-        print(f"\n✗ Smoke test failed: {e}")
+        print(f"\nâœ— Smoke test failed: {e}")
         sys.exit(1)
 ```
 
@@ -685,16 +685,16 @@ try
     var content = response.Value.Content[0].Text;
     var tokens = response.Value.Usage.TotalTokenCount;
 
-    Console.WriteLine($"✓ Endpoint healthy: {endpoint}");
-    Console.WriteLine($"✓ Model responded: {content}");
-    Console.WriteLine($"✓ Tokens used: {tokens}");
+    Console.WriteLine($"âœ“ Endpoint healthy: {endpoint}");
+    Console.WriteLine($"âœ“ Model responded: {content}");
+    Console.WriteLine($"âœ“ Tokens used: {tokens}");
 
     if (string.IsNullOrEmpty(content))
         throw new Exception("Empty response from model");
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"✗ Smoke test failed: {ex.Message}");
+    Console.WriteLine($"âœ— Smoke test failed: {ex.Message}");
     Environment.Exit(1);
 }
 
@@ -707,18 +707,18 @@ try
     );
 
     var model = response.Value.Model;
-    Console.WriteLine($"✓ Model version verified: {model}");
+    Console.WriteLine($"âœ“ Model version verified: {model}");
 
     if (!model.Contains("gpt-4o"))
         throw new Exception($"Unexpected model: {model}");
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"✗ Model version test failed: {ex.Message}");
+    Console.WriteLine($"âœ— Model version test failed: {ex.Message}");
     Environment.Exit(1);
 }
 
-Console.WriteLine("\n✓ All smoke tests passed!");
+Console.WriteLine("\nâœ“ All smoke tests passed!");
 ```
 
 </TabItem>
@@ -750,10 +750,10 @@ HTTP_CODE=$(echo "$RESPONSE" | tail -1)
 BODY=$(echo "$RESPONSE" | head -n -1)
 
 if [ "$HTTP_CODE" -eq 200 ]; then
-  echo "✓ Endpoint healthy (HTTP 200)"
-  echo "✓ Response: $(echo $BODY | python -c 'import json,sys; print(json.load(sys.stdin)["choices"][0]["message"]["content"])')"
+  echo "âœ“ Endpoint healthy (HTTP 200)"
+  echo "âœ“ Response: $(echo $BODY | python -c 'import json,sys; print(json.load(sys.stdin)["choices"][0]["message"]["content"])')"
 else
-  echo "✗ Endpoint unhealthy (HTTP ${HTTP_CODE})"
+  echo "âœ— Endpoint unhealthy (HTTP ${HTTP_CODE})"
   echo "$BODY"
   exit 1
 fi
@@ -761,105 +761,105 @@ fi
 # Test 2: Verify model name
 MODEL=$(echo $BODY | python -c 'import json,sys; print(json.load(sys.stdin)["model"])')
 if [[ "$MODEL" == *"gpt-4o"* ]]; then
-  echo "✓ Model version verified: ${MODEL}"
+  echo "âœ“ Model version verified: ${MODEL}"
 else
-  echo "✗ Unexpected model: ${MODEL}"
+  echo "âœ— Unexpected model: ${MODEL}"
   exit 1
 fi
 
 echo ""
-echo "✓ All smoke tests passed!"
+echo "âœ“ All smoke tests passed!"
 ```
 
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
-✓ Bicep template is valid
-✓ Generated .github/workflows/deploy-ai.yml
+```text
+âœ“ Bicep template is valid
+âœ“ Generated .github/workflows/deploy-ai.yml
 
 --- Pipeline Execution ---
-Job: lint ✓
-Job: deploy-infra ✓
+Job: lint âœ“
+Job: deploy-infra âœ“
   Output: endpoint = https://ai102-prod-openai.openai.azure.com/
   Output: deploymentName = gpt-4o-deploy
-Job: smoke-test ✓
-  ✓ Endpoint healthy: https://ai102-prod-openai.openai.azure.com/
-  ✓ Model responded: OK
-  ✓ Tokens used: 12
-  ✓ Model version verified: gpt-4o-2024-08-06
-  ✓ All smoke tests passed!
+Job: smoke-test âœ“
+  âœ“ Endpoint healthy: https://ai102-prod-openai.openai.azure.com/
+  âœ“ Model responded: OK
+  âœ“ Tokens used: 12
+  âœ“ Model version verified: gpt-4o-2024-08-06
+  âœ“ All smoke tests passed!
 ```
 
-## Quebrar e Consertar
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Identidade federada falha | `AADSTS70021` no passo de login | Credencial federada não configurada para o repo/branch | Configure a credencial federada com o subject correto (`repo:org/repo:ref:refs/heads/main`) |
-| Condição de corrida na implantação | Erro `Conflict` na implantação do modelo | Bicep implantando modelo antes do recurso Azure OpenAI estar pronto | Use `dependsOn` no Bicep (implícito via propriedade `parent`) |
-| Timeout no smoke test | Teste trava após deploy | Implantação do modelo ainda provisionando | Adicione loop de espera/retry no smoke test com backoff exponencial |
-| Segredo não disponível | `Login failed` no pipeline | Nome do segredo no GitHub não corresponde ou não está configurado | Verifique se os nomes dos segredos em Settings → Secrets do repo correspondem às referências no workflow |
-| Aviso de lint no Bicep | Pipeline falha no lint | Usando versão de API obsoleta no Bicep | Atualize `@2024-10-01` para a versão estável mais recente da API |
+| Identidade federada falha | `AADSTS70021` no passo de login | Credencial federada nÃ£o configurada para o repo/branch | Configure a credencial federada com o subject correto (`repo:org/repo:ref:refs/heads/main`) |
+| CondiÃ§Ã£o de corrida na implantaÃ§Ã£o | Erro `Conflict` na implantaÃ§Ã£o do modelo | Bicep implantando modelo antes do recurso Azure OpenAI estar pronto | Use `dependsOn` no Bicep (implÃ­cito via propriedade `parent`) |
+| Timeout no smoke test | Teste trava apÃ³s deploy | ImplantaÃ§Ã£o do modelo ainda provisionando | Adicione loop de espera/retry no smoke test com backoff exponencial |
+| Segredo nÃ£o disponÃ­vel | `Login failed` no pipeline | Nome do segredo no GitHub nÃ£o corresponde ou nÃ£o estÃ¡ configurado | Verifique se os nomes dos segredos em Settings â†’ Secrets do repo correspondem Ã s referÃªncias no workflow |
+| Aviso de lint no Bicep | Pipeline falha no lint | Usando versÃ£o de API obsoleta no Bicep | Atualize `@2024-10-01` para a versÃ£o estÃ¡vel mais recente da API |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é o método de autenticação recomendado para GitHub Actions implantar recursos Azure AI?",
+    question: "Qual Ã© o mÃ©todo de autenticaÃ§Ã£o recomendado para GitHub Actions implantar recursos Azure AI?",
     options: [
       "Armazenar credenciais do Azure CLI como segredo do GitHub",
       "Usar um service principal com client secret armazenado em secrets",
       "Usar OpenID Connect (OIDC) com credenciais federadas e managed identity",
-      "Usar um personal access token com permissões Azure"
+      "Usar um personal access token com permissÃµes Azure"
     ],
     correctAnswer: 2,
-    explanation: "OpenID Connect (OIDC) com credenciais federadas é a abordagem recomendada—elimina completamente o armazenamento de segredos. O GitHub emite um token de curta duração que o Azure confia via credencial de identidade federada, sem necessidade de segredos armazenados para rotacionar."
+    explanation: "OpenID Connect (OIDC) com credenciais federadas Ã© a abordagem recomendadaâ€”elimina completamente o armazenamento de segredos. O GitHub emite um token de curta duraÃ§Ã£o que o Azure confia via credencial de identidade federada, sem necessidade de segredos armazenados para rotacionar."
   },
   {
     question: "Em um pipeline de CI/CD que implanta modelos Azure OpenAI, o que o smoke test deve validar?",
     options: [
-      "Que o modelo atinge pelo menos 90% de acurácia em um dataset de teste",
-      "Que o endpoint está acessível e retorna uma resposta válida com a versão esperada do modelo",
-      "Que o modelo pode lidar com 1000 requisições simultâneas sem erros",
-      "Que o modelo produz saídas idênticas à versão anterior"
+      "Que o modelo atinge pelo menos 90% de acurÃ¡cia em um dataset de teste",
+      "Que o endpoint estÃ¡ acessÃ­vel e retorna uma resposta vÃ¡lida com a versÃ£o esperada do modelo",
+      "Que o modelo pode lidar com 1000 requisiÃ§Ãµes simultÃ¢neas sem erros",
+      "Que o modelo produz saÃ­das idÃªnticas Ã  versÃ£o anterior"
     ],
     correctAnswer: 1,
-    explanation: "Smoke tests verificam funcionalidade básica—acessibilidade do endpoint, respostas válidas e versão correta do modelo. Devem ser rápidos e usar o mínimo de tokens. Testes de carga e benchmarks de acurácia pertencem a estágios de teste separados e dedicados."
+    explanation: "Smoke tests verificam funcionalidade bÃ¡sicaâ€”acessibilidade do endpoint, respostas vÃ¡lidas e versÃ£o correta do modelo. Devem ser rÃ¡pidos e usar o mÃ­nimo de tokens. Testes de carga e benchmarks de acurÃ¡cia pertencem a estÃ¡gios de teste separados e dedicados."
   },
   {
-    question: "Como você deve gerenciar configurações específicas por ambiente (dev/staging/prod) para implantações Azure AI em um pipeline?",
+    question: "Como vocÃª deve gerenciar configuraÃ§Ãµes especÃ­ficas por ambiente (dev/staging/prod) para implantaÃ§Ãµes Azure AI em um pipeline?",
     options: [
       "Usar templates Bicep separados para cada ambiente",
-      "Usar branches Git—um branch por ambiente com templates diferentes",
+      "Usar branches Gitâ€”um branch por ambiente com templates diferentes",
       "Codificar valores de ambiente diretamente no YAML do workflow",
-      "Usar arquivos de parâmetros (ex: params.dev.json, params.prod.json) com o mesmo template"
+      "Usar arquivos de parÃ¢metros (ex: params.dev.json, params.prod.json) com o mesmo template"
     ],
     correctAnswer: 3,
-    explanation: "Arquivos de parâmetros mantêm a infraestrutura DRY—um template com arquivos de parâmetros específicos por ambiente. Isso garante consistência entre ambientes enquanto permite diferentes capacidades, SKUs e configurações por estágio."
+    explanation: "Arquivos de parÃ¢metros mantÃªm a infraestrutura DRYâ€”um template com arquivos de parÃ¢metros especÃ­ficos por ambiente. Isso garante consistÃªncia entre ambientes enquanto permite diferentes capacidades, SKUs e configuraÃ§Ãµes por estÃ¡gio."
   },
   {
-    question: "Qual propriedade de recurso Bicep garante que uma implantação de modelo espere a criação da conta Azure OpenAI pai primeiro?",
+    question: "Qual propriedade de recurso Bicep garante que uma implantaÃ§Ã£o de modelo espere a criaÃ§Ã£o da conta Azure OpenAI pai primeiro?",
     options: [
-      "A propriedade parent no recurso de implantação que referencia a conta",
-      "Um array dependsOn explícito referenciando o recurso da conta",
-      "Um deployment script que verifica a existência da conta antes de implantar",
-      "Colocar a implantação em um módulo Bicep separado com uma dependência"
+      "A propriedade parent no recurso de implantaÃ§Ã£o que referencia a conta",
+      "Um array dependsOn explÃ­cito referenciando o recurso da conta",
+      "Um deployment script que verifica a existÃªncia da conta antes de implantar",
+      "Colocar a implantaÃ§Ã£o em um mÃ³dulo Bicep separado com uma dependÃªncia"
     ],
     correctAnswer: 0,
-    explanation: "No Bicep, usar a propriedade 'parent' (ex: parent: openai) em um recurso filho cria automaticamente uma dependência implícita. A implantação não começará até que a conta pai seja provisionada com sucesso. O dependsOn explícito é desnecessário quando parent é usado."
+    explanation: "No Bicep, usar a propriedade 'parent' (ex: parent: openai) em um recurso filho cria automaticamente uma dependÃªncia implÃ­cita. A implantaÃ§Ã£o nÃ£o comeÃ§arÃ¡ atÃ© que a conta pai seja provisionada com sucesso. O dependsOn explÃ­cito Ã© desnecessÃ¡rio quando parent Ã© usado."
   },
   {
-    question: "Seu pipeline implanta uma nova versão do modelo mas o smoke test falha. O que o pipeline deve fazer?",
+    question: "Seu pipeline implanta uma nova versÃ£o do modelo mas o smoke test falha. O que o pipeline deve fazer?",
     options: [
       "Deletar imediatamente o resource group e alertar a equipe",
-      "Continuar o pipeline e marcar a implantação como degradada",
-      "Fazer rollback automaticamente para a versão anterior do modelo usando um passo de rollback no pipeline",
+      "Continuar o pipeline e marcar a implantaÃ§Ã£o como degradada",
+      "Fazer rollback automaticamente para a versÃ£o anterior do modelo usando um passo de rollback no pipeline",
       "Tentar o smoke test novamente 10 vezes antes de falhar"
     ],
     correctAnswer: 2,
-    explanation: "Um pipeline bem projetado deve fazer rollback automaticamente em caso de falha no smoke test—reimplantando a versão anterior conhecida e funcional do modelo. Isso pode ser alcançado com um job de rollback condicional acionado na falha do smoke-test, usando os parâmetros Bicep anteriores."
+    explanation: "Um pipeline bem projetado deve fazer rollback automaticamente em caso de falha no smoke testâ€”reimplantando a versÃ£o anterior conhecida e funcional do modelo. Isso pode ser alcanÃ§ado com um job de rollback condicional acionado na falha do smoke-test, usando os parÃ¢metros Bicep anteriores."
   }
 ]} />
 

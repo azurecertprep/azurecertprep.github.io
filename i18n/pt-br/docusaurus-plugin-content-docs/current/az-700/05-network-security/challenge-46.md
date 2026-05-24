@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-title: "Challenge 46: WAF on Azure Front Door"
+title: "Desafio 46: WAF no Azure Front Door"
 sidebar_label: "Challenge 46"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -475,7 +475,7 @@ AzureDiagnostics
 | order by count_ desc
 ```
 
-## Quebra e correção
+## Quebra & conserta
 
 Estes exercícios simulam configurações incorretas comuns do WAF do Front Door.
 
@@ -572,75 +572,75 @@ az network front-door waf-policy rule create \
 <KnowledgeCheck questions={[
   {
     id: "az700-46-q1",
-    question: "What is the key difference between Front Door WAF and Application Gateway WAF?",
+    question: "Qual é a principal diferença entre o WAF do Front Door e o WAF do Application Gateway?",
     options: [
-      "Front Door WAF operates at the global edge (POP locations); Application Gateway WAF operates at the regional level within a VNet ✅",
-      "Front Door WAF only supports custom rules; Application Gateway WAF supports both custom and managed rules",
-      "Application Gateway WAF supports rate limiting; Front Door WAF does not",
-      "Front Door WAF requires Standard tier; Application Gateway WAF requires Premium tier"
+      "O WAF do Front Door opera na borda global (locais POP); o WAF do Application Gateway opera no nível regional dentro de uma VNet ✅",
+      "O WAF do Front Door suporta apenas regras personalizadas; o WAF do Application Gateway suporta regras personalizadas e gerenciadas",
+      "O WAF do Application Gateway suporta limitação de taxa; o WAF do Front Door não",
+      "O WAF do Front Door requer tier Standard; o WAF do Application Gateway requer tier Premium"
     ],
     correctIndex: 0,
-    explanation: "Front Door WAF inspects traffic at Microsoft's global edge POP locations before it reaches your origin, providing protection close to the attacker. Application Gateway WAF operates within an Azure region, inside your VNet. Both support custom and managed rules, and both support rate limiting."
+    explanation: "O WAF do Front Door inspeciona o tráfego nos locais POP de borda global da Microsoft antes de alcançar sua origem, fornecendo proteção próxima ao atacante. O WAF do Application Gateway opera dentro de uma região do Azure, dentro da sua VNet. Ambos suportam regras personalizadas e gerenciadas, e ambos suportam limitação de taxa."
   },
   {
     id: "az700-46-q2",
-    question: "You configure a Front Door WAF rate limit with threshold 100 and duration 1 minute. A single IP sends 150 requests in 60 seconds. How many requests are blocked?",
+    question: "Você configura um limite de taxa no WAF do Front Door com threshold 100 e duração de 1 minuto. Um único IP envia 150 requisições em 60 segundos. Quantas requisições são bloqueadas?",
     options: [
-      "Approximately 50 (requests exceeding the 100 threshold are blocked for the remainder of the window) ✅",
-      "All 150 requests are blocked because the limit was exceeded",
-      "None, because the count resets every second",
-      "Exactly 100 requests are allowed and exactly 50 are blocked"
+      "Aproximadamente 50 (requisições que excedem o threshold de 100 são bloqueadas pelo restante da janela) ✅",
+      "Todas as 150 requisições são bloqueadas porque o limite foi excedido",
+      "Nenhuma, porque a contagem reinicia a cada segundo",
+      "Exatamente 100 requisições são permitidas e exatamente 50 são bloqueadas"
     ],
     correctIndex: 0,
-    explanation: "Rate limiting blocks requests that arrive after the threshold is exceeded within the time window. The first 100 requests pass through, and subsequent requests (approximately 50) in that 1-minute window are blocked. The exact number blocked depends on when the threshold is crossed relative to the window boundary."
+    explanation: "A limitação de taxa bloqueia requisições que chegam após o threshold ser excedido dentro da janela de tempo. As primeiras 100 requisições passam e as requisições subsequentes (aproximadamente 50) nessa janela de 1 minuto são bloqueadas. O número exato bloqueado depende de quando o threshold é ultrapassado em relação ao limite da janela."
   },
   {
     id: "az700-46-q3",
-    question: "Which Front Door SKU is required to use managed rule sets including bot protection?",
+    question: "Qual SKU do Front Door é necessário para usar conjuntos de regras gerenciadas incluindo proteção contra bots?",
     options: [
       "Premium_AzureFrontDoor ✅",
       "Standard_AzureFrontDoor",
       "Classic",
-      "Any SKU supports managed rules"
+      "Qualquer SKU suporta regras gerenciadas"
     ],
     correctIndex: 0,
-    explanation: "Managed rule sets (Microsoft_DefaultRuleSet, Microsoft_BotManagerRuleSet) require the Premium_AzureFrontDoor SKU. The Standard tier only supports custom rules (geo-filtering, rate limiting, match rules). The Classic Front Door tier is the legacy SKU with different WAF capabilities."
+    explanation: "Os conjuntos de regras gerenciadas (Microsoft_DefaultRuleSet, Microsoft_BotManagerRuleSet) requerem o SKU Premium_AzureFrontDoor. O tier Standard suporta apenas regras personalizadas (geo-filtragem, limitação de taxa, regras de correspondência). O tier Classic do Front Door é o SKU legado com diferentes capacidades de WAF."
   },
   {
     id: "az700-46-q4",
-    question: "In a Front Door WAF custom rule with multiple match conditions, what is the logical relationship between conditions?",
+    question: "Em uma regra personalizada do WAF do Front Door com múltiplas condições de correspondência, qual é a relação lógica entre as condições?",
     options: [
-      "All conditions must be true (logical AND) for the rule to trigger ✅",
-      "Any condition being true (logical OR) triggers the rule",
-      "Conditions are evaluated in order and the first match triggers the rule",
-      "The relationship depends on the rule type (MatchRule vs RateLimitRule)"
+      "Todas as condições devem ser verdadeiras (AND lógico) para a regra disparar ✅",
+      "Qualquer condição verdadeira (OR lógico) dispara a regra",
+      "As condições são avaliadas em ordem e a primeira correspondência dispara a regra",
+      "A relação depende do tipo de regra (MatchRule vs RateLimitRule)"
     ],
     correctIndex: 0,
-    explanation: "Multiple match conditions within a single custom rule are combined with logical AND. ALL conditions must be true for the rule action to execute. To achieve OR logic, create separate rules with the same action. This applies to both MatchRule and RateLimitRule types."
+    explanation: "Múltiplas condições de correspondência dentro de uma única regra personalizada são combinadas com AND lógico. TODAS as condições devem ser verdadeiras para que a ação da regra seja executada. Para alcançar lógica OR, crie regras separadas com a mesma ação. Isso se aplica tanto a tipos MatchRule quanto RateLimitRule."
   },
   {
     id: "az700-46-q5",
-    question: "Which ISO country code format does Front Door WAF geo-filtering use?",
+    question: "Qual formato de código de país ISO a geo-filtragem do WAF do Front Door usa?",
     options: [
-      "ISO 3166-1 alpha-2 (two-letter codes like US, DE, JP) ✅",
-      "ISO 3166-1 alpha-3 (three-letter codes like USA, DEU, JPN)",
-      "ISO 3166-1 numeric (three-digit codes like 840, 276, 392)",
-      "IANA country TLDs (.us, .de, .jp)"
+      "ISO 3166-1 alpha-2 (códigos de duas letras como US, DE, JP) ✅",
+      "ISO 3166-1 alpha-3 (códigos de três letras como USA, DEU, JPN)",
+      "ISO 3166-1 numérico (códigos de três dígitos como 840, 276, 392)",
+      "TLDs de país IANA (.us, .de, .jp)"
     ],
     correctIndex: 0,
-    explanation: "Front Door WAF uses ISO 3166-1 alpha-2 two-letter country codes for geo-filtering. Examples: US (United States), DE (Germany), KP (North Korea), IR (Iran). These are the same codes used by most Azure services for geographic classification."
+    explanation: "O WAF do Front Door usa códigos de país de duas letras ISO 3166-1 alpha-2 para geo-filtragem. Exemplos: US (Estados Unidos), DE (Alemanha), KP (Coreia do Norte), IR (Irã). Esses são os mesmos códigos usados pela maioria dos serviços do Azure para classificação geográfica."
   },
   {
     id: "az700-46-q6",
-    question: "You need to allow Googlebot while blocking other bots. Custom rules evaluate before managed rules. What is the correct approach?",
+    question: "Você precisa permitir o Googlebot enquanto bloqueia outros bots. Regras personalizadas são avaliadas antes das regras gerenciadas. Qual é a abordagem correta?",
     options: [
-      "Create a custom Allow rule with low priority number matching Googlebot User-Agent, so it triggers before bot protection rules ✅",
-      "Disable the entire Bot Manager Rule Set and rely only on custom rules",
-      "Set the Bot Manager Rule Set action to Allow for all bots",
-      "Move the bot protection rules to a higher priority than custom rules"
+      "Criar uma regra personalizada Allow com número de prioridade baixo correspondendo ao User-Agent do Googlebot, para que ela dispare antes das regras de proteção contra bots ✅",
+      "Desabilitar todo o Bot Manager Rule Set e depender apenas de regras personalizadas",
+      "Definir a ação do Bot Manager Rule Set como Allow para todos os bots",
+      "Mover as regras de proteção contra bots para uma prioridade mais alta que as regras personalizadas"
     ],
     correctIndex: 0,
-    explanation: "Since custom rules evaluate before managed rules, a custom Allow rule with a low priority number (e.g., 5) matching Googlebot's User-Agent will allow the request before the Bot Manager Rule Set evaluates it. This preserves bot protection for all other bots while exempting known good crawlers."
+    explanation: "Como as regras personalizadas são avaliadas antes das regras gerenciadas, uma regra personalizada Allow com um número de prioridade baixo (ex: 5) correspondendo ao User-Agent do Googlebot permitirá a requisição antes que o Bot Manager Rule Set a avalie. Isso preserva a proteção contra bots para todos os outros bots enquanto isenta crawlers legítimos conhecidos."
   }
 ]} />
 

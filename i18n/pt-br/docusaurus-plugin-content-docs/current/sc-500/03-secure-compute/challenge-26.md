@@ -237,7 +237,7 @@ Get-SPOSite -Limit All | Where-Object {
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Copilot expõe documentos confidenciais de M&A para todos os funcionários
 

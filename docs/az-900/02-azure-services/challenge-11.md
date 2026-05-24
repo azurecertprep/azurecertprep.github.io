@@ -20,7 +20,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 Azure Virtual Networks (VNets) are the fundamental building block for networking in Azure. They enable Azure resources to securely communicate with each other, the internet, and on-premises networks.
 
-Think of a VNet like your own private network in the cloud — similar to a traditional network you'd operate in your own datacenter, but with the benefits of Azure's scale, availability, and isolation.
+Think of a VNet like your own private network in the cloud â€” similar to a traditional network you'd operate in your own datacenter, but with the benefits of Azure's scale, availability, and isolation.
 
 ## Explore
 
@@ -42,16 +42,16 @@ Think of a VNet like your own private network in the cloud — similar to a trad
 3. Explore the form:
    - **Address space**: Define the IP range (e.g., 10.0.0.0/16)
    - **Subnets**: Divide the VNet (e.g., 10.0.1.0/24 for web, 10.0.2.0/24 for database)
-4. Notice that VNets are **free** — you only pay for data transfer
+4. Notice that VNets are **free** â€” you only pay for data transfer
 5. Click **Cancel**
 
 ### Task 3: Understand IP addressing
 
-```
+```text
 VNet: 10.0.0.0/16 (65,536 addresses)
-├── Subnet: web-subnet      10.0.1.0/24 (251 usable addresses)
-├── Subnet: app-subnet      10.0.2.0/24 (251 usable addresses)
-└── Subnet: db-subnet       10.0.3.0/24 (251 usable addresses)
+â”œâ”€â”€ Subnet: web-subnet      10.0.1.0/24 (251 usable addresses)
+â”œâ”€â”€ Subnet: app-subnet      10.0.2.0/24 (251 usable addresses)
+â””â”€â”€ Subnet: db-subnet       10.0.3.0/24 (251 usable addresses)
 ```
 
 **Note**: Azure reserves 5 IPs in each subnet (first 4 + last 1), so a /24 has 251 usable addresses.
@@ -64,7 +64,7 @@ VNet: 10.0.0.0/16 (65,536 addresses)
 | **Private endpoint** | Internal VNet only | Databases, internal services |
 | **Service endpoint** | VNet to Azure service (optimized route) | Storage, SQL from within VNet |
 
-**Private endpoints** keep traffic on Microsoft's backbone network — never touching the public internet.
+**Private endpoints** keep traffic on Microsoft's backbone network â€” never touching the public internet.
 
 ### Task 5: Understand VNet peering
 
@@ -77,7 +77,7 @@ VNet peering connects two VNets so resources can communicate:
 
 Key rules:
 - Peered VNets can't have overlapping IP ranges
-- Peering is NOT transitive (A↔B + B↔C ≠ A↔C)
+- Peering is NOT transitive (Aâ†”B + Bâ†”C â‰  Aâ†”C)
 - Traffic between peered VNets stays on Microsoft's network
 
 :::tip Azure CLI Alternative
@@ -100,7 +100,7 @@ az network vnet show --name myVnet --resource-group rg-az900-learning --query "a
 | **Public endpoint** | Service accessible from the internet |
 | **Private endpoint** | Service accessible only from within a VNet |
 | **VNet peering** | Connects two VNets for private communication |
-| **Non-transitive** | If A↔B and B↔C, A cannot reach C without direct peering |
+| **Non-transitive** | If Aâ†”B and Bâ†”C, A cannot reach C without direct peering |
 
 ## Knowledge Check
 
@@ -123,7 +123,7 @@ az network vnet show --name myVnet --resource-group rg-az900-learning --query "a
     {
       id: 'az900-11-q3',
       question: 'VNet A is peered with VNet B, and VNet B is peered with VNet C. Can resources in VNet A communicate directly with resources in VNet C?',
-      options: ['Yes, peering is always transitive', 'No, peering is non-transitive — direct peering between A and C is required', 'Only if they are in the same region', 'Only if they use global peering'],
+      options: ['Yes, peering is always transitive', 'No, peering is non-transitive â€” direct peering between A and C is required', 'Only if they are in the same region', 'Only if they use global peering'],
       correctAnswer: 1,
       explanation: 'VNet peering is non-transitive. Each pair of VNets that needs to communicate must have direct peering established between them.'
     },
@@ -146,6 +146,6 @@ az network vnet show --name myVnet --resource-group rg-az900-learning --query "a
 
 ## Learn More
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
 - [Microsoft Learn: Describe Azure compute and networking](https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/)
 - [Azure Virtual Network documentation](https://learn.microsoft.com/en-us/azure/virtual-network/)

@@ -401,7 +401,7 @@ For the runbook to manage Azure resources, the Automation Account needs a manage
 
 </details>
 
-## Break and fix
+## Break & fix
 
 ### Scenario a: extension fails to install
 

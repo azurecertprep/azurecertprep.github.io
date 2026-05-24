@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 05 | Blob Storage & Azure Files"
+title: "Desafio 05: Blob Storage & Azure Files"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
@@ -403,7 +403,7 @@ Se a porta 445 estiver bloqueada, as alternativas incluem:
 - [Visão geral do Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction)
 - [Guia de planejamento do Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-planning)
 
-## Quebre & conserte
+## Quebra & conserta
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 

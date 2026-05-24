@@ -1,43 +1,43 @@
 ---
 sidebar_position: 3
-title: "Desafio 03: Rastreabilidade de código-fonte, bugs e qualidade"
+title: "Desafio 03: Rastreabilidade de cÃ³digo-fonte, bugs e qualidade"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 03: Rastreabilidade de código-fonte, bugs e qualidade
+# Desafio 03: Rastreabilidade de cÃ³digo-fonte, bugs e qualidade
 
 ## Habilidades do exame cobertas
 
-- Projetar e implementar rastreabilidade de código-fonte, bugs e qualidade
+- Projetar e implementar rastreabilidade de cÃ³digo-fonte, bugs e qualidade
 
 ## Foco da plataforma
 
-Comparação (GitHub e Azure DevOps)
+ComparaÃ§Ã£o (GitHub e Azure DevOps)
 
-## Cenário
+## CenÃ¡rio
 
-Na última quinta-feira às 2:47 da manhã, o serviço de pagamentos em produção da Contoso Ltd começou a retornar erros 500 para 12% das transações. O engenheiro de plantão identificou o sintoma em minutos, mas a equipe levou quatro horas para rastrear o erro até um commit específico, entender por que ele foi aprovado e determinar qual work item autorizou a mudança. A causa raiz era uma migração de banco de dados que passou em todos os testes isoladamente, mas entrou em conflito com uma alteração de schema concorrente de outra equipe. O CTO determinou rastreabilidade completa de ponta a ponta: do relatório de bug passando por work item, pull request, commit, artefato de build e deployment, sem lacunas na cadeia de auditoria.
+Na Ãºltima quinta-feira Ã s 2:47 da manhÃ£, o serviÃ§o de pagamentos em produÃ§Ã£o da Contoso Ltd comeÃ§ou a retornar erros 500 para 12% das transaÃ§Ãµes. O engenheiro de plantÃ£o identificou o sintoma em minutos, mas a equipe levou quatro horas para rastrear o erro atÃ© um commit especÃ­fico, entender por que ele foi aprovado e determinar qual work item autorizou a mudanÃ§a. A causa raiz era uma migraÃ§Ã£o de banco de dados que passou em todos os testes isoladamente, mas entrou em conflito com uma alteraÃ§Ã£o de schema concorrente de outra equipe. O CTO determinou rastreabilidade completa de ponta a ponta: do relatÃ³rio de bug passando por work item, pull request, commit, artefato de build e deployment, sem lacunas na cadeia de auditoria.
 
 ---
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Um repositório GitHub (`contoso-payments`) com pelo menos 10 commits
-- Projeto Azure DevOps conectado ao repositório GitHub
+- Um repositÃ³rio GitHub (`contoso-payments`) com pelo menos 10 commits
+- Projeto Azure DevOps conectado ao repositÃ³rio GitHub
 - GitHub CLI e Azure DevOps CLI instalados
 - Node.js instalado (para ferramentas de linting de commits)
-- Entendimento básico de conventional commits
+- Entendimento bÃ¡sico de conventional commits
 
 ---
 
-## Tarefa 1: Implementar convenções de mensagens de commit (Conventional Commits)
+## Tarefa 1: Implementar convenÃ§Ãµes de mensagens de commit (Conventional Commits)
 
-Conventional Commits fornecem um formato estruturado que possibilita ferramentas automatizadas: changelogs, versionamento automático e rastreabilidade.
+Conventional Commits fornecem um formato estruturado que possibilita ferramentas automatizadas: changelogs, versionamento automÃ¡tico e rastreabilidade.
 
-### Especificação do formato
+### EspecificaÃ§Ã£o do formato
 
-```
+```text
 <type>[optional scope]: <description>
 
 [optional body]
@@ -45,24 +45,24 @@ Conventional Commits fornecem um formato estruturado que possibilita ferramentas
 [optional footer(s)]
 ```
 
-### Tipos válidos e seus significados
+### Tipos vÃ¡lidos e seus significados
 
 | Tipo | Finalidade | Dispara |
 |------|-----------|---------|
-| `feat` | Nova funcionalidade | Incremento de versão minor |
-| `fix` | Correção de bug | Incremento de versão patch |
-| `docs` | Apenas documentação | Sem incremento de versão |
-| `style` | Formatação, sem mudança de lógica | Sem incremento de versão |
-| `refactor` | Mudança de código, sem feature/fix | Sem incremento de versão |
-| `perf` | Melhoria de desempenho | Incremento de versão patch |
-| `test` | Adição/correção de testes | Sem incremento de versão |
-| `build` | Mudanças no sistema de build | Sem incremento de versão |
-| `ci` | Mudanças de configuração de CI | Sem incremento de versão |
-| `chore` | Tarefas de manutenção | Sem incremento de versão |
+| `feat` | Nova funcionalidade | Incremento de versÃ£o minor |
+| `fix` | CorreÃ§Ã£o de bug | Incremento de versÃ£o patch |
+| `docs` | Apenas documentaÃ§Ã£o | Sem incremento de versÃ£o |
+| `style` | FormataÃ§Ã£o, sem mudanÃ§a de lÃ³gica | Sem incremento de versÃ£o |
+| `refactor` | MudanÃ§a de cÃ³digo, sem feature/fix | Sem incremento de versÃ£o |
+| `perf` | Melhoria de desempenho | Incremento de versÃ£o patch |
+| `test` | AdiÃ§Ã£o/correÃ§Ã£o de testes | Sem incremento de versÃ£o |
+| `build` | MudanÃ§as no sistema de build | Sem incremento de versÃ£o |
+| `ci` | MudanÃ§as de configuraÃ§Ã£o de CI | Sem incremento de versÃ£o |
+| `chore` | Tarefas de manutenÃ§Ã£o | Sem incremento de versÃ£o |
 
 ### Breaking changes
 
-```
+```text
 feat(api)!: change authentication endpoint response format
 
 BREAKING CHANGE: The /auth/token endpoint now returns a JSON object
@@ -127,7 +127,7 @@ git commit -m "added a test file"
 
 ## Tarefa 2: Vincular commits a work items do Azure Boards
 
-### Configurar a integração Azure Boards com GitHub
+### Configurar a integraÃ§Ã£o Azure Boards com GitHub
 
 ```bash
 # Verify the Azure Boards app is installed on the repository
@@ -138,7 +138,7 @@ gh api repos/{owner}/contoso-payments/installations \
 # https://github.com/marketplace/azure-boards
 ```
 
-### Padrões corretos de vinculação de commits
+### PadrÃµes corretos de vinculaÃ§Ã£o de commits
 
 ```bash
 # Simple reference (creates link, no state change)
@@ -190,15 +190,15 @@ az boards work-item show --id 2045 \
 
 ### Palavras-chave de fechamento do GitHub
 
-Essas palavras-chave na descrição de um PR automaticamente fecham a issue referenciada quando o PR é mergeado na branch padrão:
+Essas palavras-chave na descriÃ§Ã£o de um PR automaticamente fecham a issue referenciada quando o PR Ã© mergeado na branch padrÃ£o:
 
 - `closes #123`
 - `fixes #123`
 - `resolves #123`
 
-Variações sem distinção de maiúsculas/minúsculas funcionam: `Close`, `FIXES`, `Resolves`.
+VariaÃ§Ãµes sem distinÃ§Ã£o de maiÃºsculas/minÃºsculas funcionam: `Close`, `FIXES`, `Resolves`.
 
-### Implementar vinculação correta de PR para issue
+### Implementar vinculaÃ§Ã£o correta de PR para issue
 
 ```bash
 # Create an issue first
@@ -281,7 +281,7 @@ AB#2100" \
 
 ## Tarefa 4: Construir a cadeia completa de rastreabilidade
 
-O objetivo é uma cadeia ininterrupta: Relatório de Bug -> Work Item -> PR -> Commit -> Build -> Deployment.
+O objetivo Ã© uma cadeia ininterrupta: RelatÃ³rio de Bug -> Work Item -> PR -> Commit -> Build -> Deployment.
 
 ### Exemplo de rastreamento de ponta a ponta
 
@@ -306,7 +306,7 @@ gh api repos/{owner}/{repo}/deployments \
   --jq '.[] | select(.sha == "MERGE_COMMIT_SHA") | {id, environment, created_at}'
 ```
 
-### Automatizar verificação de rastreabilidade
+### Automatizar verificaÃ§Ã£o de rastreabilidade
 
 Crie um workflow que valida a cadeia de rastreamento em cada PR:
 
@@ -371,7 +371,7 @@ EOF
 
 ---
 
-## Tarefa 5: Configurar logs de auditoria e rastreamento de alterações
+## Tarefa 5: Configurar logs de auditoria e rastreamento de alteraÃ§Ãµes
 
 ### Consultas ao log de auditoria do GitHub
 
@@ -431,7 +431,7 @@ EOF
 
 ## Tarefa 6: Aplicar formato de mensagem de commit via GitHub Actions
 
-Crie um linter de mensagens de commit robusto como verificação obrigatória:
+Crie um linter de mensagens de commit robusto como verificaÃ§Ã£o obrigatÃ³ria:
 
 ```bash
 cat > .github/workflows/commit-lint.yml << 'EOF'
@@ -509,13 +509,13 @@ git push origin main
 
 ---
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Cenário 1: Commits não estão vinculando a work items do Azure Boards
+### CenÃ¡rio 1: Commits nÃ£o estÃ£o vinculando a work items do Azure Boards
 
-Desenvolvedores relatam que `AB#1234` nas mensagens de commit não está criando links no Azure Boards.
+Desenvolvedores relatam que `AB#1234` nas mensagens de commit nÃ£o estÃ¡ criando links no Azure Boards.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 # Check if the Azure Boards GitHub connection is active
@@ -533,21 +533,21 @@ gh api repos/{owner}/{repo}/commits/{sha} --jq '.commit.message'
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** O Azure Boards GitHub App deve estar instalado no repositório, e o repositório deve estar vinculado nas configurações do projeto Azure DevOps em Boards > GitHub connections. A sintaxe `AB#` funciona apenas para repositórios que estão explicitamente conectados.
+**CorreÃ§Ã£o:** O Azure Boards GitHub App deve estar instalado no repositÃ³rio, e o repositÃ³rio deve estar vinculado nas configuraÃ§Ãµes do projeto Azure DevOps em Boards > GitHub connections. A sintaxe `AB#` funciona apenas para repositÃ³rios que estÃ£o explicitamente conectados.
 
 </details>
 
-### Cenário 2: Commitlint bloqueia um merge commit válido
+### CenÃ¡rio 2: Commitlint bloqueia um merge commit vÃ¡lido
 
 Um desenvolvedor fez rebase e obteve um merge commit com a mensagem "Merge branch 'main' into feature/xyz" que falha no commitlint.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Atualize o commitlint.config.js para ignorar merge commits:
+**CorreÃ§Ã£o:** Atualize o commitlint.config.js para ignorar merge commits:
 
 ```javascript
 module.exports = {
@@ -561,15 +561,15 @@ module.exports = {
 
 </details>
 
-### Cenário 3: Verificação de rastreabilidade falha em PRs do Dependabot
+### CenÃ¡rio 3: VerificaÃ§Ã£o de rastreabilidade falha em PRs do Dependabot
 
-PRs automatizados do Dependabot não contêm referências a issues.
+PRs automatizados do Dependabot nÃ£o contÃªm referÃªncias a issues.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Adicione uma condição para pular a verificação para contas de bot:
+**CorreÃ§Ã£o:** Adicione uma condiÃ§Ã£o para pular a verificaÃ§Ã£o para contas de bot:
 
 ```yaml
       - name: Check PR links to issue or work item
@@ -578,52 +578,52 @@ PRs automatizados do Dependabot não contêm referências a issues.
 
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a principal diferença entre 'AB#1234' e 'Fixes AB#1234' em uma mensagem de commit?",
+    question: "Qual Ã© a principal diferenÃ§a entre 'AB#1234' e 'Fixes AB#1234' em uma mensagem de commit?",
     options: [
-      "'AB#1234' funciona apenas em descrições de PR; 'Fixes AB#1234' funciona em commits",
+      "'AB#1234' funciona apenas em descriÃ§Ãµes de PR; 'Fixes AB#1234' funciona em commits",
       "'AB#1234' cria um link para o work item; 'Fixes AB#1234' cria um link e transiciona o estado do work item",
-      "Eles têm comportamento idêntico",
+      "Eles tÃªm comportamento idÃªntico",
       "'AB#1234' vincula ao Azure Boards; 'Fixes AB#1234' vincula ao GitHub Issues"
     ],
     correctIndex: 1,
-    explanation: "AB#1234 cria um link de associação entre o commit e o work item sem alterar seu estado. Fixes AB#1234 adicionalmente transiciona o work item para o estado Resolved ou Done quando o commit chega à branch padrão."
+    explanation: "AB#1234 cria um link de associaÃ§Ã£o entre o commit e o work item sem alterar seu estado. Fixes AB#1234 adicionalmente transiciona o work item para o estado Resolved ou Done quando o commit chega Ã  branch padrÃ£o."
   },
   {
     question: "Qual componente do Conventional Commits indica uma breaking change?",
     options: [
       "Usar o prefixo de tipo 'breaking'",
-      "Um ponto de exclamação após o type/scope e/ou um footer 'BREAKING CHANGE:'",
-      "Escrever toda a linha do subject em maiúsculas",
+      "Um ponto de exclamaÃ§Ã£o apÃ³s o type/scope e/ou um footer 'BREAKING CHANGE:'",
+      "Escrever toda a linha do subject em maiÃºsculas",
       "Adicionar '[BREAKING]' em qualquer lugar do corpo do commit"
     ],
     correctIndex: 1,
-    explanation: "Breaking changes são sinalizadas adicionando ! após o type/scope (ex: feat(api)!:) ou incluindo um footer BREAKING CHANGE: na mensagem do commit. Ambos disparam um incremento de versão major no versionamento semântico."
+    explanation: "Breaking changes sÃ£o sinalizadas adicionando ! apÃ³s o type/scope (ex: feat(api)!:) ou incluindo um footer BREAKING CHANGE: na mensagem do commit. Ambos disparam um incremento de versÃ£o major no versionamento semÃ¢ntico."
   },
   {
     question: "Em uma cadeia completa de rastreabilidade, o que conecta um PR mergeado ao seu artefato implantado?",
     options: [
       "O SHA do merge commit corresponde ao commit que disparou o build, e o build produz um artefato versionado implantado no ambiente",
-      "O desenvolvedor marca manualmente o deployment com o número do PR",
+      "O desenvolvedor marca manualmente o deployment com o nÃºmero do PR",
       "O Azure Boards rastreia deployments automaticamente",
       "O arquivo CODEOWNERS mapeia PRs a deployments"
     ],
     correctIndex: 0,
-    explanation: "O SHA do merge commit é o identificador comum. O sistema de CI faz o build a partir desse SHA, produz um artefato tagueado com o hash do commit, e o sistema de deployment registra qual SHA foi implantado em cada ambiente."
+    explanation: "O SHA do merge commit Ã© o identificador comum. O sistema de CI faz o build a partir desse SHA, produz um artefato tagueado com o hash do commit, e o sistema de deployment registra qual SHA foi implantado em cada ambiente."
   },
   {
-    question: "Qual é o propósito de 'fetch-depth: 0' em um step de checkout do GitHub Actions ao executar commitlint?",
+    question: "Qual Ã© o propÃ³sito de 'fetch-depth: 0' em um step de checkout do GitHub Actions ao executar commitlint?",
     options: [
-      "Baixa todas as branches para comparação",
-      "Busca o histórico completo do Git para que o commitlint possa acessar todos os commits no intervalo do PR",
-      "Habilita clone superficial para builds mais rápidos",
-      "Configura o checkout para incluir submódulos"
+      "Baixa todas as branches para comparaÃ§Ã£o",
+      "Busca o histÃ³rico completo do Git para que o commitlint possa acessar todos os commits no intervalo do PR",
+      "Habilita clone superficial para builds mais rÃ¡pidos",
+      "Configura o checkout para incluir submÃ³dulos"
     ],
     correctIndex: 1,
-    explanation: "Por padrão, actions/checkout realiza um clone superficial (depth 1). O commitlint precisa acessar todos os commits no PR (de base até head) para validar cada mensagem, o que requer o histórico completo dentro desse intervalo."
+    explanation: "Por padrÃ£o, actions/checkout realiza um clone superficial (depth 1). O commitlint precisa acessar todos os commits no PR (de base atÃ© head) para validar cada mensagem, o que requer o histÃ³rico completo dentro desse intervalo."
   }
 ]} />
 

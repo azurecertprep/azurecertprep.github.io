@@ -564,7 +564,7 @@ New-AzDiagnosticSetting `
   -Metric (New-AzDiagnosticSettingMetricSettingsObject -Category "AllMetrics" -Enabled $true)
 ```
 
-## Break and fix
+## Break & fix
 
 These exercises simulate common WAF misconfigurations.
 

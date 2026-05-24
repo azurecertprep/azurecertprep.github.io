@@ -1,48 +1,48 @@
 ---
 sidebar_position: 7
-title: "Desafio 36: Tradução de Fala"
+title: "Desafio 36: TraduÃ§Ã£o de Fala"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 36: Tradução de Fala
+# Desafio 36: TraduÃ§Ã£o de Fala
 
 :::info Tempo Estimado
-**45 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
+**45 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Traduzir speech-to-text em múltiplos idiomas
-- Implementar tradução speech-to-speech
-- Configurar sessões de tradução contínua
+- Traduzir speech-to-text em mÃºltiplos idiomas
+- Implementar traduÃ§Ã£o speech-to-speech
+- Configurar sessÃµes de traduÃ§Ã£o contÃ­nua
 
-## Visão Geral
+## VisÃ£o Geral
 
-O Azure Speech Translation combina reconhecimento de fala e tradução de texto em um único pipeline:
+O Azure Speech Translation combina reconhecimento de fala e traduÃ§Ã£o de texto em um Ãºnico pipeline:
 
+```text
+Audio Input â†’ Speech Recognition â†’ Translation â†’ Text/Speech Output
 ```
-Audio Input → Speech Recognition → Translation → Text/Speech Output
-```
 
-Principais diferenças em relação ao uso separado de STT + Translator:
-- **Chamada de API única** — menor latência
-- **Streaming** — resultados parciais em tempo real
-- **Speech-to-speech** — saída de áudio traduzido diretamente
-- Suporta 70+ idiomas para tradução speech-to-text
+Principais diferenÃ§as em relaÃ§Ã£o ao uso separado de STT + Translator:
+- **Chamada de API Ãºnica** â€” menor latÃªncia
+- **Streaming** â€” resultados parciais em tempo real
+- **Speech-to-speech** â€” saÃ­da de Ã¡udio traduzido diretamente
+- Suporta 70+ idiomas para traduÃ§Ã£o speech-to-text
 
 Classes: `SpeechTranslationConfig`, `TranslationRecognizer`
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura do Azure
 - Recurso Azure Speech
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-cognitiveservices-speech` (v1.38+)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
-### Tarefa 1: Tradução de Fala em Disparo Único
+### Tarefa 1: TraduÃ§Ã£o de Fala em Disparo Ãšnico
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -121,7 +121,7 @@ if (result.Reason == ResultReason.TranslatedSpeech)
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Tradução Contínua de Fala
+### Tarefa 2: TraduÃ§Ã£o ContÃ­nua de Fala
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -187,7 +187,7 @@ print(f"Translated {len(translations_log)} segments")
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Tradução Speech-to-Speech (com síntese de voz)
+### Tarefa 3: TraduÃ§Ã£o Speech-to-Speech (com sÃ­ntese de voz)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -234,17 +234,17 @@ if result.reason == speechsdk.ResultReason.TranslatedSpeech:
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Translating speech...
 Recognized (en): The quarterly results exceeded expectations with a fifteen percent increase.
 
 Translations:
   [es] Los resultados trimestrales superaron las expectativas con un aumento del quince por ciento.
-  [fr] Les résultats trimestriels ont dépassé les attentes avec une augmentation de quinze pour cent.
-  [de] Die Quartalsergebnisse übertrafen die Erwartungen mit einem Anstieg von fünfzehn Prozent.
-  [ja] 四半期の結果は15パーセントの増加で期待を上回りました。
+  [fr] Les rÃ©sultats trimestriels ont dÃ©passÃ© les attentes avec une augmentation de quinze pour cent.
+  [de] Die Quartalsergebnisse Ã¼bertrafen die Erwartungen mit einem Anstieg von fÃ¼nfzehn Prozent.
+  [ja] å››åŠæœŸã®çµæžœã¯15ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆã®å¢—åŠ ã§æœŸå¾…ã‚’ä¸Šå›žã‚Šã¾ã—ãŸã€‚
 
 Starting continuous translation...
   [Partial] The quarterly
@@ -252,78 +252,78 @@ Starting continuous translation...
 
 [Final] EN: The quarterly results exceeded expectations.
         ES: Los resultados trimestrales superaron las expectativas.
-        FR: Les résultats trimestriels ont dépassé les attentes.
+        FR: Les rÃ©sultats trimestriels ont dÃ©passÃ© les attentes.
 
 Translated 3 segments
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Nenhuma tradução retornada | Dicionário de traduções vazio | Idioma de destino não adicionado à configuração | Chame `add_target_language()` antes de criar o reconhecedor |
-| Idioma de origem errado | Reconhecimento ilegível | Idioma de origem incompatível | Defina o `speech_recognition_language` correto |
-| Síntese não funciona | Sem saída de áudio | Nome da voz não definido ou idioma incompatível | Defina `voice_name` correspondendo ao idioma de destino |
-| Resultados parciais ausentes | Sem feedback intermediário | Evento `recognizing` não conectado | Conecte ao evento `recognizing` para resultados em streaming |
-| Erro de código de idioma | Idioma inválido | Usando formato de código errado | Use códigos BCP-47: "es" não "spanish", "zh-Hans" não "zh" |
+| Nenhuma traduÃ§Ã£o retornada | DicionÃ¡rio de traduÃ§Ãµes vazio | Idioma de destino nÃ£o adicionado Ã  configuraÃ§Ã£o | Chame `add_target_language()` antes de criar o reconhecedor |
+| Idioma de origem errado | Reconhecimento ilegÃ­vel | Idioma de origem incompatÃ­vel | Defina o `speech_recognition_language` correto |
+| SÃ­ntese nÃ£o funciona | Sem saÃ­da de Ã¡udio | Nome da voz nÃ£o definido ou idioma incompatÃ­vel | Defina `voice_name` correspondendo ao idioma de destino |
+| Resultados parciais ausentes | Sem feedback intermediÃ¡rio | Evento `recognizing` nÃ£o conectado | Conecte ao evento `recognizing` para resultados em streaming |
+| Erro de cÃ³digo de idioma | Idioma invÃ¡lido | Usando formato de cÃ³digo errado | Use cÃ³digos BCP-47: "es" nÃ£o "spanish", "zh-Hans" nÃ£o "zh" |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual classe é usada para tradução de fala em vez de SpeechConfig?",
+    question: "Qual classe Ã© usada para traduÃ§Ã£o de fala em vez de SpeechConfig?",
     options: [
       "TranslatorConfig",
       "TranslationSpeechConfig",
-      "SpeechConfig com parâmetros de tradução",
+      "SpeechConfig com parÃ¢metros de traduÃ§Ã£o",
       "SpeechTranslationConfig"
     ],
     correctAnswer: 3,
-    explanation: "SpeechTranslationConfig é a classe de configuração dedicada para tradução de fala. Ela estende a configuração de fala com configurações de idioma de destino e voz."
+    explanation: "SpeechTranslationConfig Ã© a classe de configuraÃ§Ã£o dedicada para traduÃ§Ã£o de fala. Ela estende a configuraÃ§Ã£o de fala com configuraÃ§Ãµes de idioma de destino e voz."
   },
   {
-    question: "Como você especifica múltiplos idiomas de destino para tradução de fala?",
+    question: "Como vocÃª especifica mÃºltiplos idiomas de destino para traduÃ§Ã£o de fala?",
     options: [
       "Passe uma lista para o construtor",
-      "Chame add_target_language() múltiplas vezes, uma para cada idioma",
-      "Defina uma string separada por vírgulas na propriedade target_languages",
-      "Crie múltiplos reconhecedores, um por idioma"
+      "Chame add_target_language() mÃºltiplas vezes, uma para cada idioma",
+      "Defina uma string separada por vÃ­rgulas na propriedade target_languages",
+      "Crie mÃºltiplos reconhecedores, um por idioma"
     ],
     correctAnswer: 1,
-    explanation: "Chame add_target_language() para cada idioma de saída desejado. O reconhecedor traduz para todos os idiomas especificados simultaneamente em uma única passagem."
+    explanation: "Chame add_target_language() para cada idioma de saÃ­da desejado. O reconhecedor traduz para todos os idiomas especificados simultaneamente em uma Ãºnica passagem."
   },
   {
-    question: "Qual é a diferença entre os eventos 'recognizing' e 'recognized'?",
+    question: "Qual Ã© a diferenÃ§a entre os eventos 'recognizing' e 'recognized'?",
     options: [
-      "'recognizing' fornece resultados parciais/intermediários durante a fala; 'recognized' fornece resultados finais após a elocução ser completada",
-      "São o mesmo evento com nomes diferentes",
-      "'recognizing' é para a primeira elocução; 'recognized' é para as subsequentes",
-      "'recognizing' é para tradução; 'recognized' é apenas para o texto de origem"
+      "'recognizing' fornece resultados parciais/intermediÃ¡rios durante a fala; 'recognized' fornece resultados finais apÃ³s a elocuÃ§Ã£o ser completada",
+      "SÃ£o o mesmo evento com nomes diferentes",
+      "'recognizing' Ã© para a primeira elocuÃ§Ã£o; 'recognized' Ã© para as subsequentes",
+      "'recognizing' Ã© para traduÃ§Ã£o; 'recognized' Ã© apenas para o texto de origem"
     ],
     correctAnswer: 0,
-    explanation: "'recognizing' dispara com resultados intermediários (parciais) enquanto a fala está sendo processada — útil para legendas ao vivo. 'recognized' dispara com o resultado final e completo para cada elocução."
+    explanation: "'recognizing' dispara com resultados intermediÃ¡rios (parciais) enquanto a fala estÃ¡ sendo processada â€” Ãºtil para legendas ao vivo. 'recognized' dispara com o resultado final e completo para cada elocuÃ§Ã£o."
   },
   {
-    question: "Como você habilita a tradução speech-to-speech (saída sintetizada)?",
+    question: "Como vocÃª habilita a traduÃ§Ã£o speech-to-speech (saÃ­da sintetizada)?",
     options: [
-      "Use um SpeechSynthesizer separado após a tradução",
-      "Habilite um flag 'synthesize' na configuração",
+      "Use um SpeechSynthesizer separado apÃ³s a traduÃ§Ã£o",
+      "Habilite um flag 'synthesize' na configuraÃ§Ã£o",
       "Defina a propriedade voice_name no SpeechTranslationConfig e trate o evento synthesizing",
-      "Chame synthesize_translation() após o reconhecimento"
+      "Chame synthesize_translation() apÃ³s o reconhecimento"
     ],
     correctAnswer: 2,
-    explanation: "Defina voice_name na configuração para uma voz correspondente ao idioma de destino. O reconhecedor então emite eventos synthesizing com dados de áudio da fala traduzida."
+    explanation: "Defina voice_name na configuraÃ§Ã£o para uma voz correspondente ao idioma de destino. O reconhecedor entÃ£o emite eventos synthesizing com dados de Ã¡udio da fala traduzida."
   },
   {
-    question: "Qual vantagem a tradução de fala tem sobre o uso separado de STT + Translator API?",
+    question: "Qual vantagem a traduÃ§Ã£o de fala tem sobre o uso separado de STT + Translator API?",
     options: [
       "Suporta mais idiomas",
-      "É mais barato por caractere",
-      "Melhor precisão de tradução",
-      "Menor latência com resultados parciais em streaming em um único pipeline"
+      "Ã‰ mais barato por caractere",
+      "Melhor precisÃ£o de traduÃ§Ã£o",
+      "Menor latÃªncia com resultados parciais em streaming em um Ãºnico pipeline"
     ],
     correctAnswer: 3,
-    explanation: "A tradução de fala combina reconhecimento e tradução em um pipeline de streaming único, fornecendo menor latência e resultados parciais em tempo real — crítico para cenários de tradução ao vivo."
+    explanation: "A traduÃ§Ã£o de fala combina reconhecimento e traduÃ§Ã£o em um pipeline de streaming Ãºnico, fornecendo menor latÃªncia e resultados parciais em tempo real â€” crÃ­tico para cenÃ¡rios de traduÃ§Ã£o ao vivo."
   }
 ]} />
 
@@ -335,6 +335,6 @@ az group delete --name rg-ai102-speech --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral da tradução de fala](https://learn.microsoft.com/azure/ai-services/speech-service/speech-translation)
-- [Referência do TranslationRecognizer](https://learn.microsoft.com/python/api/azure-cognitiveservices-speech/azure.cognitiveservices.speech.translation)
-- [Idiomas suportados para tradução](https://learn.microsoft.com/azure/ai-services/speech-service/language-support#speech-translation)
+- [VisÃ£o geral da traduÃ§Ã£o de fala](https://learn.microsoft.com/azure/ai-services/speech-service/speech-translation)
+- [ReferÃªncia do TranslationRecognizer](https://learn.microsoft.com/python/api/azure-cognitiveservices-speech/azure.cognitiveservices.speech.translation)
+- [Idiomas suportados para traduÃ§Ã£o](https://learn.microsoft.com/azure/ai-services/speech-service/language-support#speech-translation)

@@ -552,7 +552,7 @@ Route Server does not require manual intervention when an NVA fails or recovers.
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 These scenarios represent common misconfigurations encountered in production and on the exam.
 

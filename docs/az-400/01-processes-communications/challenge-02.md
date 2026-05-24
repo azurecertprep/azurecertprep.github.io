@@ -611,7 +611,7 @@ git push origin main
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Issues are not appearing on the project board
 

@@ -392,7 +392,7 @@ az monitor diagnostic-settings create \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: VMs dos spokes não conseguem acessar a internet apesar das regras de permissão do firewall
 

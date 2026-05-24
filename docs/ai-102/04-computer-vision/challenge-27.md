@@ -22,8 +22,8 @@ import TabItem from '@theme/TabItem';
 
 Azure AI Vision's **Read** feature (part of Image Analysis 4.0) extracts printed and handwritten text from images and documents. The text hierarchy:
 
-```
-Image → Blocks → Lines → Words (with bounding polygons and confidence)
+```text
+Image â†’ Blocks â†’ Lines â†’ Words (with bounding polygons and confidence)
 ```
 
 Key characteristics:
@@ -146,7 +146,7 @@ if result.read:
         for line in block.lines:
             # Check confidence - handwriting often has lower confidence
             avg_confidence = sum(w.confidence for w in line.words) / len(line.words)
-            confidence_indicator = "✓" if avg_confidence > 0.8 else "?"
+            confidence_indicator = "âœ“" if avg_confidence > 0.8 else "?"
             print(f"  [{confidence_indicator}] '{line.text}' (avg conf: {avg_confidence:.3f})")
 ```
 
@@ -225,7 +225,7 @@ curl -s "${OPERATION_URL}" \
 
 ## Expected Output
 
-```
+```text
 Extracted Text:
 ----------------------------------------
   Line: 'Azure AI Services'
@@ -238,9 +238,9 @@ Extracted Text:
       Word: 'Vision' (confidence: 0.9910)
 
 Handwritten Text Extracted:
-  [✓] 'Meeting notes - January 2024' (avg conf: 0.892)
+  [âœ“] 'Meeting notes - January 2024' (avg conf: 0.892)
   [?] 'discuss quarterly goals' (avg conf: 0.734)
-  [✓] 'Action items below' (avg conf: 0.856)
+  [âœ“] 'Action items below' (avg conf: 0.856)
 
 Document contains 3 pages
 --- Page 1 (8.5x11.0 inch) ---
@@ -248,7 +248,7 @@ Document contains 3 pages
   'Executive Summary'
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -264,13 +264,13 @@ Document contains 3 pages
   {
     question: "What is the text hierarchy returned by the Azure AI Vision Read feature?",
     options: [
-      "Document → Paragraphs → Sentences → Words",
-      "Pages → Columns → Rows → Characters",
-      "Blocks → Lines → Words (each with bounding polygons and confidence)",
-      "Regions → Paragraphs → Lines → Characters"
+      "Document â†’ Paragraphs â†’ Sentences â†’ Words",
+      "Pages â†’ Columns â†’ Rows â†’ Characters",
+      "Blocks â†’ Lines â†’ Words (each with bounding polygons and confidence)",
+      "Regions â†’ Paragraphs â†’ Lines â†’ Characters"
     ],
     correctAnswer: 2,
-    explanation: "The Read feature returns: Blocks (text regions) → Lines (text lines) → Words (individual words with bounding polygons and confidence scores)."
+    explanation: "The Read feature returns: Blocks (text regions) â†’ Lines (text lines) â†’ Words (individual words with bounding polygons and confidence scores)."
   },
   {
     question: "What is the maximum image size supported by the Image Analysis Read feature?",

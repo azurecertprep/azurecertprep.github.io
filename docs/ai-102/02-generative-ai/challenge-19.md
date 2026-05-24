@@ -711,7 +711,7 @@ az cognitiveservices account deployment create \
 
 ## Expected Output
 
-```
+```text
 Non-streaming: 3.45s total wait
 Response length: 892 chars
 
@@ -735,11 +735,11 @@ Status: succeeded
 Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|-----------|-----|
-| Streaming returns empty chunks | No content in delta | Normal—some chunks contain only role/metadata | Filter chunks where `delta.content` is not None/null |
+| Streaming returns empty chunks | No content in delta | Normalâ€”some chunks contain only role/metadata | Filter chunks where `delta.content` is not None/null |
 | Token count mismatch | Local count differs from API | Tokenizer version mismatch or message overhead | Use `tiktoken` with correct model; account for 3-token message overhead |
 | Fine-tuning job fails | Status: `failed` | Training data format invalid or fewer than 10 examples | Validate JSONL format; ensure minimum 10 training examples |
 | Traces not appearing | No data in Application Insights | Connection string misconfigured or ingestion delay | Verify connection string; wait 2-5 minutes for ingestion |

@@ -446,7 +446,7 @@ jobs:
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Workflow insights show 0% success rate but pipelines are passing
 

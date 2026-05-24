@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Production AI systems rarely rely on a single model. **Multi-model orchestration** routes requests to different models based on task complexity, cost constraints, or capability requirements. For example, a router might send simple classification tasks to GPT-4o-mini (fast, cheap) while directing complex reasoning to GPT-4o (slower, more capable). This pattern optimizes the cost-quality tradeoff across an application portfolio.
 
-**Semantic Kernel** is Microsoft's open-source orchestration SDK that provides abstractions for AI services, plugins (functions the model can call), and planners that decompose complex tasks into steps. It supports both Python and C#, integrating natively with Azure OpenAI. Function calling (tool use) enables models to invoke external tools—APIs, databases, or custom code—by describing available functions and letting the model decide when and how to call them.
+**Semantic Kernel** is Microsoft's open-source orchestration SDK that provides abstractions for AI services, plugins (functions the model can call), and planners that decompose complex tasks into steps. It supports both Python and C#, integrating natively with Azure OpenAI. Function calling (tool use) enables models to invoke external toolsâ€”APIs, databases, or custom codeâ€”by describing available functions and letting the model decide when and how to call them.
 
 For edge deployment scenarios, Azure AI containers package models for offline or low-latency operation. Containerized models run independently of cloud connectivity, suitable for manufacturing floors, vehicles, or restricted networks where cloud access is limited or prohibited.
 
@@ -107,7 +107,7 @@ class ModelRouter:
 # Test the router
 router = ModelRouter()
 
-# Simple request → routes to GPT-4o-mini
+# Simple request â†’ routes to GPT-4o-mini
 result1 = router.route(
     [{"role": "user", "content": "What is Azure?"}],
     max_tokens=100
@@ -116,7 +116,7 @@ print(f"Simple: model={result1['model_used']}, "
       f"latency={result1['latency_ms']:.0f}ms")
 print(f"  Response: {result1['response'].choices[0].message.content[:80]}...\n")
 
-# Complex request → routes to GPT-4o
+# Complex request â†’ routes to GPT-4o
 result2 = router.route(
     [{"role": "user", "content": "Analyze the trade-offs between using Azure Functions Consumption plan vs Premium plan. Compare cost implications, cold start behavior, and scaling characteristics for a multi-step data processing pipeline."}],
     max_tokens=300
@@ -199,7 +199,7 @@ Console.WriteLine($"  Response: {result2.Content[0].Text[..Math.Min(80, result2.
 <TabItem value="rest" label="REST API">
 
 ```bash
-# Simple request → route to gpt-4o-mini
+# Simple request â†’ route to gpt-4o-mini
 echo "=== Simple Request (gpt-4o-mini) ==="
 time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-10-21" \
   -H "Content-Type: application/json" \
@@ -209,7 +209,7 @@ time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o
     "max_tokens": 100
   }' | jq -r '.choices[0].message.content'
 
-# Complex request → route to gpt-4o
+# Complex request â†’ route to gpt-4o
 echo ""
 echo "=== Complex Request (gpt-4o) ==="
 time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21" \
@@ -893,7 +893,7 @@ az container create \
 
 ## Expected Output
 
-```
+```yaml
 Simple: model=gpt-4o-mini, latency=285ms
   Response: Azure is Microsoft's cloud computing platform that provides a wide range of...
 
@@ -903,15 +903,15 @@ Complex: model=gpt-4o, latency=1250ms
 Calling: get_weather({"location": "Seattle", "unit": "celsius"})
 Calling: search_documents({"query": "Azure Functions"})
 
-Final answer: The weather in Seattle is currently 18°C and partly cloudy. I also found
+Final answer: The weather in Seattle is currently 18Â°C and partly cloudy. I also found
 documentation about Azure Functions in our knowledge base...
 
 === Multi-Step Analysis Pipeline ===
 Step 1: Summarizing...
 Summary:
-• Migration to Azure Data Factory planned for end of January
-• Excellent Q4 performance with 99.9% uptime
-• Rising compute costs need investigation (spot instances)
+â€¢ Migration to Azure Data Factory planned for end of January
+â€¢ Excellent Q4 performance with 99.9% uptime
+â€¢ Rising compute costs need investigation (spot instances)
 
 Step 2: Extracting actions...
 Actions:
@@ -922,7 +922,7 @@ Step 3: Analyzing sentiment...
 Sentiment: positive
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|-----------|-----|

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-title: "Challenge 09: Workspace do Azure Machine Learning"
+title: "Desafio 09: Workspace do Azure Machine Learning"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

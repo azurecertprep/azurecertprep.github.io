@@ -33,7 +33,7 @@ Azure Policy is your enforcement engine. Think of it as Group Policy for the clo
 - Configure and manage Azure Advisor recommendations
 - Configure and manage budgets and cost alerts
 
-## Sysadmin ↔ Azure reference
+## Sysadmin â†” Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -154,13 +154,13 @@ az consumption budget create \
 
 :::note
 
-Budget alerts via CLI require additional configuration for notification thresholds. It's easier to set these up in the Portal under **Cost Management + Billing** → **Budgets**.
+Budget alerts via CLI require additional configuration for notification thresholds. It's easier to set these up in the Portal under **Cost Management + Billing** â†’ **Budgets**.
 
 :::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Go to **Cost Management + Billing** → **Budgets**
+1. Go to **Cost Management + Billing** â†’ **Budgets**
 2. Click **+ Add**
 3. Set **Amount** to $50, **Time grain** to Monthly
 4. Add an alert condition at **80%** of the budget
@@ -363,15 +363,15 @@ A **policy initiative** (also called a **policy set**) is a collection of policy
 <details>
 <summary>3. How does the management group hierarchy work?</summary>
 
-```
+```text
 Root Management Group (Tenant Root)
-├── MG-Production
-│   ├── Sub-Prod-01
-│   └── Sub-Prod-02
-├── MG-Development
-│   └── Sub-Dev-01
-└── MG-Sandbox
-    └── Sub-Sandbox-01
+â”œâ”€â”€ MG-Production
+â”‚   â”œâ”€â”€ Sub-Prod-01
+â”‚   â””â”€â”€ Sub-Prod-02
+â”œâ”€â”€ MG-Development
+â”‚   â””â”€â”€ Sub-Dev-01
+â””â”€â”€ MG-Sandbox
+    â””â”€â”€ Sub-Sandbox-01
 ```
 
 - Every subscription belongs to **exactly one** management group

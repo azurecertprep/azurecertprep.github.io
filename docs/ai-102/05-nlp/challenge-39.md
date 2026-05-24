@@ -58,22 +58,22 @@ import os
 
 # Example: Medical domain English-to-Spanish parallel data
 training_data_tsv = """The patient presents with acute bronchitis.\tEl paciente presenta bronquitis aguda.
-Administer 500mg amoxicillin three times daily.\tAdministrar 500mg de amoxicilina tres veces al día.
-Blood pressure reading is 120 over 80.\tLa lectura de presión arterial es 120 sobre 80.
-The MRI shows no abnormalities.\tLa resonancia magnética no muestra anomalías.
+Administer 500mg amoxicillin three times daily.\tAdministrar 500mg de amoxicilina tres veces al dÃ­a.
+Blood pressure reading is 120 over 80.\tLa lectura de presiÃ³n arterial es 120 sobre 80.
+The MRI shows no abnormalities.\tLa resonancia magnÃ©tica no muestra anomalÃ­as.
 Schedule a follow-up appointment in two weeks.\tProgramar una cita de seguimiento en dos semanas.
 Patient reports chest pain and shortness of breath.\tEl paciente reporta dolor en el pecho y dificultad para respirar.
-Prescribe ibuprofen 400mg as needed for pain.\tRecetar ibuprofeno 400mg según sea necesario para el dolor.
+Prescribe ibuprofen 400mg as needed for pain.\tRecetar ibuprofeno 400mg segÃºn sea necesario para el dolor.
 The biopsy results are benign.\tLos resultados de la biopsia son benignos.
-Apply topical antibiotic ointment twice daily.\tAplicar ungüento antibiótico tópico dos veces al día.
-Refer patient to cardiology for further evaluation.\tReferir al paciente a cardiología para evaluación adicional."""
+Apply topical antibiotic ointment twice daily.\tAplicar ungÃ¼ento antibiÃ³tico tÃ³pico dos veces al dÃ­a.
+Refer patient to cardiology for further evaluation.\tReferir al paciente a cardiologÃ­a para evaluaciÃ³n adicional."""
 
 # Save training file
 with open("medical-training-en-es.tsv", "w", encoding="utf-8") as f:
     f.write(training_data_tsv)
 
 # Tuning data (separate set for validation)
-tuning_data = """Patient exhibits symptoms of type 2 diabetes.\tEl paciente exhibe síntomas de diabetes tipo 2.
+tuning_data = """Patient exhibits symptoms of type 2 diabetes.\tEl paciente exhibe sÃ­ntomas de diabetes tipo 2.
 Recommend physical therapy twice a week.\tRecomendar fisioterapia dos veces por semana.
 Lab results indicate elevated cholesterol.\tLos resultados del laboratorio indican colesterol elevado."""
 
@@ -81,8 +81,8 @@ with open("medical-tuning-en-es.tsv", "w", encoding="utf-8") as f:
     f.write(tuning_data)
 
 # Testing data (for BLEU evaluation)
-test_data = """Administer insulin injection before meals.\tAdministrar inyección de insulina antes de las comidas.
-The X-ray reveals a hairline fracture.\tLa radiografía revela una fractura capilar."""
+test_data = """Administer insulin injection before meals.\tAdministrar inyecciÃ³n de insulina antes de las comidas.
+The X-ray reveals a hairline fracture.\tLa radiografÃ­a revela una fractura capilar."""
 
 with open("medical-test-en-es.tsv", "w", encoding="utf-8") as f:
     f.write(test_data)
@@ -108,7 +108,7 @@ import uuid
 
 # Custom Translator portal workflow:
 # 1. Create a workspace at https://portal.customtranslator.azure.ai
-# 2. Create a project (specify language pair: en → es)
+# 2. Create a project (specify language pair: en â†’ es)
 # 3. Upload parallel documents (training, tuning, testing)
 # 4. Train the model
 # 5. Publish the model (get Category ID)
@@ -123,7 +123,7 @@ print("""
 Custom Translation Training Results (example):
 ================================================
 Model: Medical-EN-ES-v1
-Language pair: English → Spanish
+Language pair: English â†’ Spanish
 Training sentences: 10,000
 BLEU Score (baseline): 42.5
 BLEU Score (custom):   58.3 (+15.8 improvement)
@@ -247,8 +247,8 @@ qa_client = QuestionAnsweringClient(
 # Query in different languages against the same knowledge base
 multilingual_queries = [
     ("What is Azure AI?", "en"),
-    ("¿Qué es Azure AI?", "es"),
-    ("Azure AIとは何ですか？", "ja"),
+    ("Â¿QuÃ© es Azure AI?", "es"),
+    ("Azure AIã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ", "ja"),
     ("Qu'est-ce qu'Azure AI?", "fr")
 ]
 
@@ -277,7 +277,7 @@ curl -s "${ENDPOINT}/language/:query-knowledgebases?projectName=faq-knowledge-ba
   -H "Ocp-Apim-Subscription-Key: ${KEY}" \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "¿Qué es Azure AI?",
+    "question": "Â¿QuÃ© es Azure AI?",
     "top": 1,
     "language": "es"
   }' | jq '.answers[0] | {answer: .answer[0:100], confidence: .confidenceScore}'
@@ -288,7 +288,7 @@ curl -s "${ENDPOINT}/language/:query-knowledgebases?projectName=faq-knowledge-ba
 
 ## Expected Output
 
-```
+```text
 Training data files created:
   medical-training-en-es.tsv (10 sentence pairs)
   medical-tuning-en-es.tsv (3 sentence pairs)
@@ -312,15 +312,15 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
 [en] Q: What is Azure AI?
      A: Azure AI Services is a collection of cloud-based AI APIs that help developers...
      Confidence: 0.953
-[es] Q: ¿Qué es Azure AI?
+[es] Q: Â¿QuÃ© es Azure AI?
      A: Azure AI Services is a collection of cloud-based AI APIs...
      Confidence: 0.891
-[ja] Q: Azure AIとは何ですか？
+[ja] Q: Azure AIã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ
      A: Azure AI Services is a collection of cloud-based AI APIs...
      Confidence: 0.845
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -358,13 +358,13 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
   {
     question: "What type of training data does Custom Translator require?",
     options: [
-      "Only source language text — the model learns target language automatically",
+      "Only source language text â€” the model learns target language automatically",
       "A dictionary of terminology",
       "Example translations from Google Translate",
       "Parallel data: aligned sentence pairs in both source and target languages"
     ],
     correctAnswer: 3,
-    explanation: "Custom Translator requires parallel data — sentence-aligned pairs in both languages. The model learns domain patterns from these aligned examples."
+    explanation: "Custom Translator requires parallel data â€” sentence-aligned pairs in both languages. The model learns domain patterns from these aligned examples."
   },
   {
     question: "How does multi-language Question Answering work?",

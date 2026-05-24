@@ -331,7 +331,7 @@ az policy state summarize \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Política bloqueia implantação legítima de recurso
 

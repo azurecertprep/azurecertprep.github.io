@@ -34,12 +34,12 @@ Azure Storage keeps multiple copies of your data to protect against failures. Th
 | **RA-GZRS** | 6 | Same as GZRS + read from secondary | Maximum protection |
 
 **Visual representation:**
-```
-LRS:    [Copy1][Copy2][Copy3]  ← All in ONE datacenter
+```yaml
+LRS:    [Copy1][Copy2][Copy3]  â† All in ONE datacenter
 
-ZRS:    [Zone1]  [Zone2]  [Zone3]  ← Each in a DIFFERENT datacenter
+ZRS:    [Zone1]  [Zone2]  [Zone3]  â† Each in a DIFFERENT datacenter
 
-GRS:    [Primary: 3 copies] ←→ [Secondary region: 3 copies]
+GRS:    [Primary: 3 copies] â†â†’ [Secondary region: 3 copies]
 
 RA-GRS: Same as GRS, but secondary is READABLE
 ```
@@ -58,11 +58,11 @@ RA-GRS: Same as GRS, but secondary is READABLE
 | Tier | Access frequency | Storage cost | Access cost | Min duration |
 |------|-----------------|-------------|-------------|-------------|
 | **Hot** | Frequently accessed | Higher | Lower | None |
-| **Cool** | Infrequently (≥30 days) | Lower | Higher | 30 days |
-| **Cold** | Rarely (≥90 days) | Lower still | Higher still | 90 days |
-| **Archive** | Almost never (≥180 days) | Lowest | Highest + rehydration time | 180 days |
+| **Cool** | Infrequently (â‰¥30 days) | Lower | Higher | 30 days |
+| **Cold** | Rarely (â‰¥90 days) | Lower still | Higher still | 90 days |
+| **Archive** | Almost never (â‰¥180 days) | Lowest | Highest + rehydration time | 180 days |
 
-**Cost trade-off**: Cheaper to store ↔ More expensive to access
+**Cost trade-off**: Cheaper to store â†” More expensive to access
 
 ### Task 4: Access tier scenarios
 
@@ -77,11 +77,11 @@ RA-GRS: Same as GRS, but secondary is READABLE
 - Data is stored offline
 - Rehydration can take hours (up to 15 hours for standard)
 - Priority rehydration available (under 1 hour, costs more)
-- Cannot read data directly — must rehydrate first
+- Cannot read data directly â€” must rehydrate first
 
 ### Task 5: Explore in the Portal
 
-1. In Azure Portal, search for **Storage accounts** → **+ Create**
+1. In Azure Portal, search for **Storage accounts** â†’ **+ Create**
 2. On the **Basics** tab, observe:
    - **Redundancy** dropdown: LRS, ZRS, GRS, RA-GRS, GZRS, RA-GZRS
 3. On the **Advanced** tab, observe:
@@ -119,7 +119,7 @@ az storage account list --query "[].{Name:name, Redundancy:sku.name}" --output t
     {
       id: 'az900-14-q1',
       question: 'A company needs to ensure their data survives a complete regional outage. Which minimum redundancy option should they choose?',
-      options: ['LRS', 'ZRS', 'GRS', 'None — Azure always protects against regional outages'],
+      options: ['LRS', 'ZRS', 'GRS', 'None â€” Azure always protects against regional outages'],
       correctAnswer: 2,
       explanation: 'GRS (Geo-Redundant Storage) replicates data to a secondary region hundreds of miles away. This protects against complete regional outages. LRS and ZRS only protect within a single region.'
     },
@@ -156,6 +156,6 @@ az storage account list --query "[].{Name:name, Redundancy:sku.name}" --output t
 
 ## Learn More
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
 - [Microsoft Learn: Describe Azure storage services](https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/)
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)

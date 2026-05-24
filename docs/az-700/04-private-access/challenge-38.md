@@ -313,7 +313,7 @@ curl -s -o /dev/null -w "%{http_code}" \
 
 ---
 
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario 1: Service endpoint policy blocking all storage access
 

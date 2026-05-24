@@ -264,7 +264,7 @@ New-RetentionComplianceRule -Policy "Copilot Studio Retention - 7 Years" `
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Agente do Copilot Studio vazando PII de clientes nas respostas
 

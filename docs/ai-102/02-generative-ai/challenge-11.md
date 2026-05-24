@@ -530,7 +530,7 @@ After completing all tasks, you should have:
    - `search-connection` → Azure AI Search endpoint
 3. **Project** inherits all hub connections automatically
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

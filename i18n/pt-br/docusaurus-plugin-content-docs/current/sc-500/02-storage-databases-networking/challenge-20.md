@@ -332,7 +332,7 @@ echo "   - Check tunnel status, DNS resolution, routing"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Usuários não conseguem acessar aplicações privadas — conector offline
 

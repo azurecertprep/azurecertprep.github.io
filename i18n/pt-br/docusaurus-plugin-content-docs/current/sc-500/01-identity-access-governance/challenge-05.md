@@ -294,7 +294,7 @@ az rest --method GET \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Ataque de concessão de consentimento ilícito detectado
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 01: Enterprise VNet Design & IP Planning"
+title: "Desafio 01: Design de VNet Corporativa & Planejamento de IP"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -427,7 +427,7 @@ az network public-ip list \
 | vnet-spoke-dev-eastus2 | 10.2.0.0/16 | Dev/Test | Sem sobreposição |
 | Local | 192.168.0.0/16 | DC corporativo | Sem sobreposição |
 
-## Quebra e correção
+## Quebra & conserta
 
 Estes exercícios simulam configurações incorretas comuns. Tente diagnosticar e corrigir cada uma.
 
@@ -535,55 +535,55 @@ az network public-ip create \
 <KnowledgeCheck questions={[
   {
     id: "az700-01-q1",
-    question: "Contoso plans to deploy a VPN Gateway with SKU VpnGw2. What is the minimum size for the GatewaySubnet?",
+    question: "A Contoso planeja implantar um VPN Gateway com SKU VpnGw2. Qual é o tamanho mínimo para a GatewaySubnet?",
     options: [
-      "/27 (32 addresses)",
-      "/28 (16 addresses)",
-      "/29 (8 addresses)",
-      "/26 (64 addresses)"
+      "/27 (32 endereços)",
+      "/28 (16 endereços)",
+      "/29 (8 endereços)",
+      "/26 (64 endereços)"
     ],
     correctIndex: 0,
-    explanation: "All VPN Gateway SKUs except Basic require a GatewaySubnet of /27 or larger. While /29 works for the Basic SKU only, Microsoft recommends /27 as minimum for all production deployments. A /28 is not sufficient for VpnGw2."
+    explanation: "Todos os SKUs de VPN Gateway exceto Basic exigem uma GatewaySubnet de /27 ou maior. Embora /29 funcione apenas para o SKU Basic, a Microsoft recomenda /27 como mínimo para todas as implantações em produção. Um /28 não é suficiente para VpnGw2."
   },
   {
     id: "az700-01-q2",
-    question: "You need to allocate a public IP address from a public IP prefix. Which SKU and allocation method combination is valid?",
+    question: "Você precisa alocar um endereço IP público a partir de um prefixo de IP público. Qual combinação de SKU e método de alocação é válida?",
     options: [
-      "Standard SKU with Static allocation",
-      "Basic SKU with Dynamic allocation",
-      "Standard SKU with Dynamic allocation",
-      "Basic SKU with Static allocation"
+      "SKU Standard com alocação Estática",
+      "SKU Basic com alocação Dinâmica",
+      "SKU Standard com alocação Dinâmica",
+      "SKU Basic com alocação Estática"
     ],
     correctIndex: 0,
-    explanation: "Public IP prefixes are Standard SKU only. IPs derived from a prefix must also be Standard SKU with Static allocation method. Basic SKU and Dynamic allocation are not supported with prefixes."
+    explanation: "Prefixos de IP público são apenas SKU Standard. IPs derivados de um prefixo também devem ser SKU Standard com método de alocação Estática. SKU Basic e alocação Dinâmica não são suportados com prefixos."
   },
   {
     id: "az700-01-q3",
-    question: "Two VNets need to be peered. VNet-A uses 10.0.0.0/16 and VNet-B uses 10.0.128.0/17. Can you create the peering?",
+    question: "Duas VNets precisam ser emparelhadas (peered). VNet-A usa 10.0.0.0/16 e VNet-B usa 10.0.128.0/17. Você pode criar o peering?",
     options: [
-      "No, because 10.0.128.0/17 falls within the 10.0.0.0/16 range and they overlap",
-      "Yes, because /17 is a more specific route than /16",
-      "Yes, if you enable gateway transit",
-      "No, but only because they are in the same resource group"
+      "Não, porque 10.0.128.0/17 está dentro do intervalo 10.0.0.0/16 e eles se sobrepõem",
+      "Sim, porque /17 é uma rota mais específica que /16",
+      "Sim, se você habilitar gateway transit",
+      "Não, mas apenas porque estão no mesmo resource group"
     ],
     correctIndex: 0,
-    explanation: "Azure VNet peering requires non-overlapping address spaces. The range 10.0.128.0/17 is a subset of 10.0.0.0/16, so these VNets overlap and cannot be peered. The specificity of the route is irrelevant for peering validation."
+    explanation: "O peering de VNet no Azure exige espaços de endereço não sobrepostos. O intervalo 10.0.128.0/17 é um subconjunto de 10.0.0.0/16, portanto essas VNets se sobrepõem e não podem ser emparelhadas. A especificidade da rota é irrelevante para a validação de peering."
   },
   {
     id: "az700-01-q4",
-    question: "What is the correct subnet name for deploying Azure Bastion into a VNet?",
+    question: "Qual é o nome correto da subnet para implantar o Azure Bastion em uma VNet?",
     options: [
       "AzureBastionSubnet",
       "BastionSubnet",
       "bastion-subnet",
-      "Any name, as long as you select it during Bastion deployment"
+      "Qualquer nome, desde que você o selecione durante a implantação do Bastion"
     ],
     correctIndex: 0,
-    explanation: "Azure Bastion requires a subnet named exactly 'AzureBastionSubnet'. This is a reserved name enforced by the platform. The subnet must also be at least /26 in size."
+    explanation: "O Azure Bastion requer uma subnet com o nome exato 'AzureBastionSubnet'. Este é um nome reservado imposto pela plataforma. A subnet também deve ter no mínimo tamanho /26."
   },
   {
     id: "az700-01-q5",
-    question: "Contoso owns registered IP range 198.51.100.0/24 and wants to use it in Azure. Which command creates the custom IP prefix resource?",
+    question: "A Contoso possui o intervalo de IP registrado 198.51.100.0/24 e deseja usá-lo no Azure. Qual comando cria o recurso de prefixo de IP personalizado?",
     options: [
       "az network custom-ip prefix create",
       "az network public-ip prefix create --byoip",
@@ -591,11 +591,11 @@ az network public-ip create \
       "az network public-ip create --bring-your-own-ip"
     ],
     correctIndex: 0,
-    explanation: "The 'az network custom-ip prefix create' command is used to provision a customer-owned IP range (BYOIP) in Azure. After provisioning and commissioning, you derive public IP prefixes from it using --custom-ip-prefix-name on 'az network public-ip prefix create'."
+    explanation: "O comando 'az network custom-ip prefix create' é usado para provisionar um intervalo de IP de propriedade do cliente (BYOIP) no Azure. Após o provisionamento e comissionamento, você deriva prefixos de IP público dele usando --custom-ip-prefix-name em 'az network public-ip prefix create'."
   },
   {
     id: "az700-01-q6",
-    question: "You create a public IP prefix with --length 28. How many public IP addresses can you allocate from it?",
+    question: "Você cria um prefixo de IP público com --length 28. Quantos endereços IP públicos você pode alocar dele?",
     options: [
       "16",
       "14",
@@ -603,7 +603,7 @@ az network public-ip create \
       "28"
     ],
     correctIndex: 0,
-    explanation: "A /28 prefix provides 16 IP addresses. Unlike subnets, public IP prefixes do not reserve addresses for network/broadcast. All 16 addresses in a /28 public IP prefix are usable and can be allocated as individual public IPs."
+    explanation: "Um prefixo /28 fornece 16 endereços IP. Diferentemente de subnets, prefixos de IP público não reservam endereços para rede/broadcast. Todos os 16 endereços em um prefixo de IP público /28 são utilizáveis e podem ser alocados como IPs públicos individuais."
   }
 ]} />
 

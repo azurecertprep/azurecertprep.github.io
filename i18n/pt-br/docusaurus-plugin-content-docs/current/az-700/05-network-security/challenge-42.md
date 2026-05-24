@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 42: Azure Firewall deployment and rules"
+title: "Desafio 42: Implantação e Regras do Azure Firewall"
 sidebar_label: "Challenge 42"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -614,7 +614,7 @@ $workloadSubnet.RouteTable = $rt
 $spokeVnet | Set-AzVirtualNetwork
 ```
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Regras de FQDN não correspondem (proxy DNS não habilitado)
 
@@ -688,75 +688,75 @@ A saída deve mostrar 0.0.0.0/0 com Next Hop Type = VirtualAppliance e o IP priv
 <KnowledgeCheck questions={[
   {
     id: "az700-42-q1",
-    question: "In what order does Azure Firewall process rule types?",
+    question: "Em que ordem o Azure Firewall processa os tipos de regras?",
     options: [
-      "DNAT rules, then Network rules, then Application rules ✅",
-      "Application rules, then Network rules, then DNAT rules",
-      "Network rules, then Application rules, then DNAT rules",
-      "All rule types are evaluated simultaneously with lowest priority winning"
+      "Regras DNAT, depois regras de Rede, depois regras de Aplicação ✅",
+      "Regras de Aplicação, depois regras de Rede, depois regras DNAT",
+      "Regras de Rede, depois regras de Aplicação, depois regras DNAT",
+      "Todos os tipos de regras são avaliados simultaneamente, vencendo a menor prioridade"
     ],
     correctIndex: 0,
-    explanation: "Azure Firewall processes rules in this fixed order: DNAT (inbound translations first), Network (IP/port L3/L4 rules second), Application (FQDN L7 rules last). Within each type, rules are processed by priority in their rule collection groups and collections."
+    explanation: "O Azure Firewall processa regras nesta ordem fixa: DNAT (traduções de entrada primeiro), Rede (regras de IP/porta L3/L4 em segundo) e Aplicação (regras de FQDN L7 por último). Dentro de cada tipo, as regras são processadas por prioridade em seus grupos de coleção de regras e coleções."
   },
   {
     id: "az700-42-q2",
-    question: "What is the minimum subnet size for AzureFirewallSubnet?",
+    question: "Qual é o tamanho mínimo de sub-rede para a AzureFirewallSubnet?",
     options: [
-      "/26 (64 addresses) ✅",
-      "/27 (32 addresses)",
-      "/24 (256 addresses)",
-      "/28 (16 addresses)"
+      "/26 (64 endereços) ✅",
+      "/27 (32 endereços)",
+      "/24 (256 endereços)",
+      "/28 (16 endereços)"
     ],
     correctIndex: 0,
-    explanation: "AzureFirewallSubnet requires a minimum of /26 to accommodate firewall instances during scale-out operations. This provides 64 IP addresses. Microsoft recommends /26 for all deployments."
+    explanation: "A AzureFirewallSubnet requer no mínimo /26 para acomodar instâncias de firewall durante operações de expansão. Isso fornece 64 endereços IP. A Microsoft recomenda /26 para todas as implantações."
   },
   {
     id: "az700-42-q3",
-    question: "Why must DNS proxy be enabled for FQDN-based application rules to work?",
+    question: "Por que o proxy DNS deve ser habilitado para que as regras de aplicação baseadas em FQDN funcionem?",
     options: [
-      "The firewall needs to resolve FQDNs to IPs for rule matching; DNS proxy intercepts client DNS queries to do this ✅",
-      "DNS proxy is only needed for performance optimization, not functionality",
-      "FQDN rules require DNSSEC validation which only the proxy supports",
-      "DNS proxy encrypts DNS queries to prevent DNS spoofing"
+      "O firewall precisa resolver FQDNs para IPs para correspondência de regras; o proxy DNS intercepta consultas DNS dos clientes para fazer isso ✅",
+      "O proxy DNS é necessário apenas para otimização de desempenho, não para funcionalidade",
+      "Regras de FQDN requerem validação DNSSEC que apenas o proxy suporta",
+      "O proxy DNS criptografa consultas DNS para prevenir spoofing de DNS"
     ],
     correctIndex: 0,
-    explanation: "Azure Firewall matches application rules by resolving FQDNs to IP addresses. DNS proxy ensures client DNS queries pass through the firewall, allowing it to see the FQDN-to-IP mapping and correctly match traffic against FQDN rules. Without it, the firewall sees only IP addresses and cannot match FQDN patterns."
+    explanation: "O Azure Firewall corresponde regras de aplicação resolvendo FQDNs para endereços IP. O proxy DNS garante que as consultas DNS dos clientes passem pelo firewall, permitindo que ele veja o mapeamento FQDN-para-IP e corresponda corretamente o tráfego com as regras de FQDN. Sem ele, o firewall vê apenas endereços IP e não pode corresponder padrões de FQDN."
   },
   {
     id: "az700-42-q4",
-    question: "A DNAT rule translates traffic from the firewall public IP to an internal web server. What additional configuration is needed?",
+    question: "Uma regra DNAT traduz o tráfego do IP público do firewall para um servidor web interno. Qual configuração adicional é necessária?",
     options: [
-      "A network rule must allow the translated traffic (same source, translated destination IP and port) ✅",
-      "No additional configuration; DNAT rules implicitly allow the traffic",
-      "An application rule must also match the FQDN of the internal server",
-      "A UDR on the AzureFirewallSubnet pointing back to the client"
+      "Uma regra de rede deve permitir o tráfego traduzido (mesma origem, IP e porta de destino traduzidos) ✅",
+      "Nenhuma configuração adicional; regras DNAT permitem implicitamente o tráfego",
+      "Uma regra de aplicação também deve corresponder ao FQDN do servidor interno",
+      "Uma UDR na AzureFirewallSubnet apontando de volta para o cliente"
     ],
     correctIndex: 0,
-    explanation: "After DNAT translation, Azure Firewall applies network rules to the translated packet. A network rule must explicitly allow traffic from the original source to the translated destination IP and port. Without this rule, the translated traffic is dropped."
+    explanation: "Após a tradução DNAT, o Azure Firewall aplica regras de rede ao pacote traduzido. Uma regra de rede deve permitir explicitamente o tráfego da origem original para o IP e porta de destino traduzidos. Sem essa regra, o tráfego traduzido é descartado."
   },
   {
     id: "az700-42-q5",
-    question: "What are the three threat intelligence modes available on Azure Firewall?",
+    question: "Quais são os três modos de inteligência contra ameaças disponíveis no Azure Firewall?",
     options: [
-      "Off, Alert (log only), and Deny (block and log) ✅",
-      "Disabled, Monitor, and Block",
-      "Off, Detect, and Prevent",
-      "None, Warn, and Reject"
+      "Off, Alert (apenas registrar) e Deny (bloquear e registrar) ✅",
+      "Disabled, Monitor e Block",
+      "Off, Detect e Prevent",
+      "None, Warn e Reject"
     ],
     correctIndex: 0,
-    explanation: "Azure Firewall threat intelligence supports three modes: Off (disabled), Alert (logs traffic to/from known malicious IPs but allows it), and Deny (blocks and logs traffic to/from known malicious IPs and domains)."
+    explanation: "A inteligência contra ameaças do Azure Firewall suporta três modos: Off (desabilitado), Alert (registra tráfego de/para IPs maliciosos conhecidos, mas permite) e Deny (bloqueia e registra tráfego de/para IPs e domínios maliciosos conhecidos)."
   },
   {
     id: "az700-42-q6",
-    question: "Spoke VMs can reach the internet directly, bypassing the Azure Firewall. What is the most likely cause?",
+    question: "VMs spoke conseguem alcançar a internet diretamente, ignorando o Azure Firewall. Qual é a causa mais provável?",
     options: [
-      "The spoke subnet does not have a UDR with 0.0.0.0/0 pointing to the firewall private IP ✅",
-      "The firewall is not in the same region as the spoke VNet",
-      "VNet peering does not support traffic forwarding",
-      "The firewall public IP has not been allocated yet"
+      "A sub-rede spoke não tem uma UDR com 0.0.0.0/0 apontando para o IP privado do firewall ✅",
+      "O firewall não está na mesma região que a VNet spoke",
+      "O peering de VNet não suporta encaminhamento de tráfego",
+      "O IP público do firewall ainda não foi alocado"
     ],
     correctIndex: 0,
-    explanation: "Without a User-Defined Route (UDR) on the spoke subnet directing 0.0.0.0/0 to the firewall's private IP as a Virtual Appliance next hop, spoke VMs use the default system route which goes directly to the internet. The UDR is essential to force traffic through the firewall."
+    explanation: "Sem uma User-Defined Route (UDR) na sub-rede spoke direcionando 0.0.0.0/0 para o IP privado do firewall como próximo salto de Virtual Appliance, as VMs spoke usam a rota padrão do sistema que vai diretamente para a internet. A UDR é essencial para forçar o tráfego pelo firewall."
   }
 ]} />
 

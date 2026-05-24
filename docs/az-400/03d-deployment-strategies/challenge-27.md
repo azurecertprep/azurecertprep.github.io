@@ -658,7 +658,7 @@ customEvents
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Exercise 1: Feature flag not refreshing
 

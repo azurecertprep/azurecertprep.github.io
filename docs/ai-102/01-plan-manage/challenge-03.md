@@ -21,11 +21,11 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Azure OpenAI Service requires explicit model deployment before you can make inference calls. Unlike traditional Azure AI services (where you create a resource and immediately get an endpoint), Azure OpenAI separates the resource creation from model deployment—giving you control over which models are available, their capacity, and their version lifecycle.
+Azure OpenAI Service requires explicit model deployment before you can make inference calls. Unlike traditional Azure AI services (where you create a resource and immediately get an endpoint), Azure OpenAI separates the resource creation from model deploymentâ€”giving you control over which models are available, their capacity, and their version lifecycle.
 
 This challenge covers the three deployment types that appear on the AI-102 exam: **Standard** (pay-per-token, regional), **Global Standard** (pay-per-token, global routing), and **Provisioned Throughput** (reserved capacity, predictable latency). You'll deploy models programmatically, configure capacity in Tokens Per Minute (TPM), manage model versions, and understand the upgrade policies that control automatic version transitions.
 
-Capacity planning is a key exam topic—you need to understand how TPM translates to real-world throughput, how to monitor utilization, and when to choose provisioned throughput over standard deployments.
+Capacity planning is a key exam topicâ€”you need to understand how TPM translates to real-world throughput, how to monitor utilization, and when to choose provisioned throughput over standard deployments.
 
 ## Architecture
 
@@ -398,7 +398,7 @@ curl -v "${ENDPOINT}/openai/deployments/gpt-4o-standard/chat/completions?api-ver
 
 ## Expected Output
 
-```
+```text
 OpenAI resource: https://ai102-openai-03.openai.azure.com/
 Deployed: gpt-4o-standard
 Model: gpt-4o v2024-08-06
@@ -423,7 +423,7 @@ Tokens used: 156
 Response: Azure OpenAI supports three deployment types...
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -467,7 +467,7 @@ Response: Azure OpenAI supports three deployment types...
       "ManualUpgradeOnly"
     ],
     correctAnswer: 0,
-    explanation: "NoAutoUpgrade means the deployment will never automatically upgrade to a newer model version—you must manually update it, giving you complete control over timing. OnceCurrentVersionExpired still auto-upgrades when the version is retired. OnceNewDefaultVersionAvailable upgrades when a new default is designated. ManualUpgradeOnly is not a valid option."
+    explanation: "NoAutoUpgrade means the deployment will never automatically upgrade to a newer model versionâ€”you must manually update it, giving you complete control over timing. OnceCurrentVersionExpired still auto-upgrades when the version is retired. OnceNewDefaultVersionAvailable upgrades when a new default is designated. ManualUpgradeOnly is not a valid option."
   },
   {
     question: "When making an API call to Azure OpenAI, what value should you pass as the 'model' parameter in the SDK?",

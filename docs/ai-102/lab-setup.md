@@ -84,7 +84,7 @@ az group create --name rg-ai102-labs --location $LOCATION
 az cognitiveservices account create \
   --name ai102-ai-services \
   --resource-group rg-ai102-labs \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location $LOCATION \
   --yes
@@ -144,7 +144,9 @@ az consumption budget create \
   --amount 30 \
   --resource-group rg-ai102-labs \
   --time-grain Monthly \
-  --category Cost
+  --category Cost \
+  --start-date 2025-01-01 \
+  --end-date 2025-12-31
 ```
 
 ## Troubleshooting

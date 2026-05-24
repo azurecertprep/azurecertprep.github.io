@@ -1,47 +1,47 @@
 ---
 sidebar_position: 3
-title: "Desafio 18: Análise de cobertura de código"
+title: "Desafio 18: AnÃ¡lise de cobertura de cÃ³digo"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 18: Análise de cobertura de código
+# Desafio 18: AnÃ¡lise de cobertura de cÃ³digo
 
-:::info Plataforma: GitHub Actions como padrão
-O passo a passo principal utiliza GitHub Actions. O equivalente em Azure Pipelines é indicado onde aplicável.
+:::info Plataforma: GitHub Actions como padrÃ£o
+O passo a passo principal utiliza GitHub Actions. O equivalente em Azure Pipelines Ã© indicado onde aplicÃ¡vel.
 :::
 
 ## Habilidades do exame
 
-- Implementar análise de cobertura de código
-- Configurar e integrar ferramentas de cobertura de código com pipelines de CI/CD
-- Projetar gates de qualidade baseados em métricas de cobertura
+- Implementar anÃ¡lise de cobertura de cÃ³digo
+- Configurar e integrar ferramentas de cobertura de cÃ³digo com pipelines de CI/CD
+- Projetar gates de qualidade baseados em mÃ©tricas de cobertura
 
 ---
 
-## Cenário
+## CenÃ¡rio
 
-O diretor de engenharia da Contoso Ltd observou um padrão: serviços com baixa cobertura de testes sofrem três vezes mais incidentes em produção. Uma nova política está agora em vigor:
+O diretor de engenharia da Contoso Ltd observou um padrÃ£o: serviÃ§os com baixa cobertura de testes sofrem trÃªs vezes mais incidentes em produÃ§Ã£o. Uma nova polÃ­tica estÃ¡ agora em vigor:
 
-1. Nenhum pull request é mergeado se a cobertura geral de linhas cair abaixo de 80%
-2. A cobertura não deve diminuir em comparação com a branch base (política de ratchet)
-3. Código novo em um PR deve ter pelo menos 90% de cobertura (diff coverage)
-4. Tendências de cobertura devem ser visíveis para a equipe ao longo dos sprints
+1. Nenhum pull request Ã© mergeado se a cobertura geral de linhas cair abaixo de 80%
+2. A cobertura nÃ£o deve diminuir em comparaÃ§Ã£o com a branch base (polÃ­tica de ratchet)
+3. CÃ³digo novo em um PR deve ter pelo menos 90% de cobertura (diff coverage)
+4. TendÃªncias de cobertura devem ser visÃ­veis para a equipe ao longo dos sprints
 
-A equipe de plataforma gerencia três serviços em linguagens diferentes:
+A equipe de plataforma gerencia trÃªs serviÃ§os em linguagens diferentes:
 - **Checkout API** (Node.js, Jest)
 - **Inventory service** (Python, pytest)
 - **Payment gateway** (.NET, xUnit)
 
-Você deve implementar coleta, enforcement e relatórios de cobertura em todos os três stacks.
+VocÃª deve implementar coleta, enforcement e relatÃ³rios de cobertura em todos os trÃªs stacks.
 
 ---
 
 ## Tarefas
 
-### Tarefa 1: Configurar cobertura Jest para o serviço Node.js
+### Tarefa 1: Configurar cobertura Jest para o serviÃ§o Node.js
 
-Crie `jest.config.js` com configurações de cobertura:
+Crie `jest.config.js` com configuraÃ§Ãµes de cobertura:
 
 ```javascript
 /** @type {import('jest').Config} */
@@ -140,9 +140,9 @@ jobs:
             });
 ```
 
-### Tarefa 2: Configurar cobertura pytest para o serviço Python
+### Tarefa 2: Configurar cobertura pytest para o serviÃ§o Python
 
-Crie a configuração de cobertura em `services/inventory-service/pyproject.toml`:
+Crie a configuraÃ§Ã£o de cobertura em `services/inventory-service/pyproject.toml`:
 
 ```toml
 [tool.pytest.ini_options]
@@ -217,7 +217,7 @@ Adicione o job de cobertura Python ao workflow:
 
 ### Tarefa 3: Configurar cobertura .NET para o payment gateway
 
-Crie a configuração do projeto de testes em `services/payment-gateway/tests/PaymentGateway.Tests.csproj`:
+Crie a configuraÃ§Ã£o do projeto de testes em `services/payment-gateway/tests/PaymentGateway.Tests.csproj`:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -291,7 +291,7 @@ Adicione o job de cobertura .NET:
 
 ### Tarefa 4: Criar um gate de cobertura que falha PRs abaixo do threshold
 
-Crie `.github/workflows/coverage-gate.yml` como verificação de status obrigatória:
+Crie `.github/workflows/coverage-gate.yml` como verificaÃ§Ã£o de status obrigatÃ³ria:
 
 ```yaml
 name: Coverage Gate
@@ -388,7 +388,7 @@ jobs:
             });
 ```
 
-### Tarefa 5: Rastrear tendências de cobertura ao longo do tempo
+### Tarefa 5: Rastrear tendÃªncias de cobertura ao longo do tempo
 
 Crie um workflow que armazena dados de cobertura em cada merge para `main`:
 
@@ -467,9 +467,9 @@ Crie um workflow que armazena dados de cobertura em cada merge para `main`:
           fi
 ```
 
-### Tarefa 6: Configurar diff coverage (comparação em nível de branch)
+### Tarefa 6: Configurar diff coverage (comparaÃ§Ã£o em nÃ­vel de branch)
 
-Instale e configure diff-cover para serviços Python:
+Instale e configure diff-cover para serviÃ§os Python:
 
 ```bash
 pip install diff-cover
@@ -506,7 +506,7 @@ Adicione diff coverage ao job Python:
             });
 ```
 
-Para Node.js, use um script de comparação de cobertura:
+Para Node.js, use um script de comparaÃ§Ã£o de cobertura:
 
 ```yaml
       - name: Generate diff coverage for Node.js
@@ -558,7 +558,7 @@ Para Node.js, use um script de comparação de cobertura:
 
 ### Tarefa 7: Publicar cobertura no Azure Pipelines
 
-Para o equivalente em Azure Pipelines, configure a publicação de cobertura em `azure-pipelines-coverage.yml`:
+Para o equivalente em Azure Pipelines, configure a publicaÃ§Ã£o de cobertura em `azure-pipelines-coverage.yml`:
 
 ```yaml
 trigger:
@@ -659,13 +659,13 @@ stages:
 
 ---
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
 ### O problema
 
-Após implementar o relatório de cobertura, a equipe observa que os relatórios de cobertura mostram 0% em todas as métricas no pipeline, mesmo que os testes claramente executem e passem. A saída dos testes mostra "42 tests passed" mas a cobertura mostra:
+ApÃ³s implementar o relatÃ³rio de cobertura, a equipe observa que os relatÃ³rios de cobertura mostram 0% em todas as mÃ©tricas no pipeline, mesmo que os testes claramente executem e passem. A saÃ­da dos testes mostra "42 tests passed" mas a cobertura mostra:
 
-```
+```text
 Lines:       0%
 Branches:    0%
 Functions:   0%
@@ -676,44 +676,44 @@ Statements:  0%
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-### Análise de causa raiz
+### AnÃ¡lise de causa raiz
 
 **Problema 1: Formato incorreto do reporter de cobertura**
 
-A configuração do Jest usa `coverageReporters: ['text']` mas o pipeline espera um arquivo `cobertura-coverage.xml`. O reporter text apenas exibe no console e não gera o arquivo XML que `PublishCodeCoverageResults@2` requer.
+A configuraÃ§Ã£o do Jest usa `coverageReporters: ['text']` mas o pipeline espera um arquivo `cobertura-coverage.xml`. O reporter text apenas exibe no console e nÃ£o gera o arquivo XML que `PublishCodeCoverageResults@2` requer.
 
-**Problema 2: Incompatibilidade de caminho de saída**
+**Problema 2: Incompatibilidade de caminho de saÃ­da**
 
-O comando de cobertura do pytest gera a saída em `coverage.xml` no diretório de trabalho atual, mas a task de publicação procura em `$(System.DefaultWorkingDirectory)/services/inventory-service/coverage/coverage.xml`. O arquivo existe mas no local errado.
+O comando de cobertura do pytest gera a saÃ­da em `coverage.xml` no diretÃ³rio de trabalho atual, mas a task de publicaÃ§Ã£o procura em `$(System.DefaultWorkingDirectory)/services/inventory-service/coverage/coverage.xml`. O arquivo existe mas no local errado.
 
-**Problema 3: Arquivo de cobertura .NET não gerado**
+**Problema 3: Arquivo de cobertura .NET nÃ£o gerado**
 
-O comando `dotnet test` usa `--collect:"XPlat Code Coverage"` mas o pacote Coverlet não está referenciado no projeto de testes. Sem `coverlet.collector` como dependência, o coletor de dados silenciosamente não produz saída.
+O comando `dotnet test` usa `--collect:"XPlat Code Coverage"` mas o pacote Coverlet nÃ£o estÃ¡ referenciado no projeto de testes. Sem `coverlet.collector` como dependÃªncia, o coletor de dados silenciosamente nÃ£o produz saÃ­da.
 
-**Problema 4: Cobertura coletada contra saída compilada, não o código-fonte**
+**Problema 4: Cobertura coletada contra saÃ­da compilada, nÃ£o o cÃ³digo-fonte**
 
-Para Node.js, se `babel` ou `ts-jest` transforma o código, a cobertura mapeia para arquivos transpilados a menos que source maps estejam configurados. A cobertura é executada contra código transformado em `node_modules/.cache` e reporta 0% para os arquivos-fonte originais.
+Para Node.js, se `babel` ou `ts-jest` transforma o cÃ³digo, a cobertura mapeia para arquivos transpilados a menos que source maps estejam configurados. A cobertura Ã© executada contra cÃ³digo transformado em `node_modules/.cache` e reporta 0% para os arquivos-fonte originais.
 
 
-### Correção
+### CorreÃ§Ã£o
 
-**Correção 1:** Garanta que todos os reporters necessários estejam listados na configuração do Jest:
+**CorreÃ§Ã£o 1:** Garanta que todos os reporters necessÃ¡rios estejam listados na configuraÃ§Ã£o do Jest:
 
 ```javascript
 // jest.config.js - must include both text and cobertura
 coverageReporters: ['text', 'text-summary', 'lcov', 'cobertura'],
 ```
 
-Verifique se o arquivo de saída existe após executar os testes:
+Verifique se o arquivo de saÃ­da existe apÃ³s executar os testes:
 
 ```bash
 npx jest --coverage
 ls -la coverage/cobertura-coverage.xml
 ```
 
-**Correção 2:** Corrija o caminho de saída na configuração do pytest ou na task do pipeline:
+**CorreÃ§Ã£o 2:** Corrija o caminho de saÃ­da na configuraÃ§Ã£o do pytest ou na task do pipeline:
 
 ```toml
 # pyproject.toml - explicit output path
@@ -721,7 +721,7 @@ ls -la coverage/cobertura-coverage.xml
 addopts = "--cov=src --cov-report=xml:coverage/coverage.xml"
 ```
 
-Ou corrija o pipeline para corresponder ao local real de saída:
+Ou corrija o pipeline para corresponder ao local real de saÃ­da:
 
 ```yaml
 - task: PublishCodeCoverageResults@2
@@ -729,7 +729,7 @@ Ou corrija o pipeline para corresponder ao local real de saída:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/services/inventory-service/coverage/coverage.xml'
 ```
 
-**Correção 3:** Adicione o pacote Coverlet collector ao projeto de testes:
+**CorreÃ§Ã£o 3:** Adicione o pacote Coverlet collector ao projeto de testes:
 
 ```bash
 cd services/payment-gateway/tests
@@ -745,7 +745,7 @@ Verifique se aparece no `.csproj`:
 </PackageReference>
 ```
 
-**Correção 4:** Configure suporte a source map para código transformado:
+**CorreÃ§Ã£o 4:** Configure suporte a source map para cÃ³digo transformado:
 
 ```javascript
 // jest.config.js
@@ -770,22 +770,22 @@ module.exports = {
 
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a diferença entre cobertura geral e diff coverage no contexto de um pull request?",
+    question: "Qual Ã© a diferenÃ§a entre cobertura geral e diff coverage no contexto de um pull request?",
     options: [
       "A cobertura geral mede apenas os arquivos alterados no PR; diff coverage mede todo o codebase",
       "A cobertura geral mede todo o codebase; diff coverage mede apenas as linhas novas ou modificadas no PR",
       "A cobertura geral inclui arquivos de teste; diff coverage os exclui",
-      "São métricas idênticas calculadas por ferramentas diferentes"
+      "SÃ£o mÃ©tricas idÃªnticas calculadas por ferramentas diferentes"
     ],
     correctIndex: 1,
-    explanation: "A cobertura geral (agregada) mede a porcentagem de todas as linhas de código-fonte cobertas por testes em todo o codebase. Diff coverage foca exclusivamente em linhas adicionadas ou modificadas no pull request, garantindo que código novo seja bem testado independentemente da dívida de cobertura legada."
+    explanation: "A cobertura geral (agregada) mede a porcentagem de todas as linhas de cÃ³digo-fonte cobertas por testes em todo o codebase. Diff coverage foca exclusivamente em linhas adicionadas ou modificadas no pull request, garantindo que cÃ³digo novo seja bem testado independentemente da dÃ­vida de cobertura legada."
   },
   {
-    question: "No Azure Pipelines, qual task e formato você deve usar para exibir resultados de cobertura de código no resumo do pipeline?",
+    question: "No Azure Pipelines, qual task e formato vocÃª deve usar para exibir resultados de cobertura de cÃ³digo no resumo do pipeline?",
     options: [
       "'PublishTestResults@2' com formato JUnit",
       "'PublishCodeCoverageResults@2' com formato Cobertura ou JaCoCo",
@@ -793,35 +793,35 @@ module.exports = {
       "'PublishBuildArtifacts@1' com formato HTML"
     ],
     correctIndex: 1,
-    explanation: "A task PublishCodeCoverageResults@2 aceita arquivos nos formatos XML Cobertura ou JaCoCo e renderiza dados de cobertura na aba Code Coverage do Azure Pipelines. Formatos LCOV e HTML não são suportados por esta task. PublishTestResults@2 trata resultados de aprovação/falha de testes, não cobertura."
+    explanation: "A task PublishCodeCoverageResults@2 aceita arquivos nos formatos XML Cobertura ou JaCoCo e renderiza dados de cobertura na aba Code Coverage do Azure Pipelines. Formatos LCOV e HTML nÃ£o sÃ£o suportados por esta task. PublishTestResults@2 trata resultados de aprovaÃ§Ã£o/falha de testes, nÃ£o cobertura."
   },
   {
-    question: "O que uma política de \"ratchet\" de cobertura impõe?",
+    question: "O que uma polÃ­tica de \"ratchet\" de cobertura impÃµe?",
     options: [
       "A cobertura deve aumentar pelo menos 5% a cada PR",
       "A cobertura nunca pode diminuir abaixo do baseline registrado anteriormente",
-      "Apenas caminhos críticos requerem cobertura",
-      "Thresholds de cobertura se aplicam apenas a repositórios novos"
+      "Apenas caminhos crÃ­ticos requerem cobertura",
+      "Thresholds de cobertura se aplicam apenas a repositÃ³rios novos"
     ],
     correctIndex: 1,
-    explanation: "Uma política de ratchet (também chamada de política \"nunca diminuir\") armazena a porcentagem de cobertura em cada merge para a branch main. PRs subsequentes devem manter ou melhorar esse nível. Isso previne erosão gradual de cobertura enquanto evita a carga de atingir imediatamente alta cobertura em código legado."
+    explanation: "Uma polÃ­tica de ratchet (tambÃ©m chamada de polÃ­tica \"nunca diminuir\") armazena a porcentagem de cobertura em cada merge para a branch main. PRs subsequentes devem manter ou melhorar esse nÃ­vel. Isso previne erosÃ£o gradual de cobertura enquanto evita a carga de atingir imediatamente alta cobertura em cÃ³digo legado."
   },
   {
-    question: "Por que um relatório de cobertura pode mostrar 0% mesmo que todos os testes passem com sucesso?",
+    question: "Por que um relatÃ³rio de cobertura pode mostrar 0% mesmo que todos os testes passem com sucesso?",
     options: [
       "O framework de testes tem um bug que impede a cobertura de funcionar",
-      "A ferramenta de cobertura não está instalada ou configurada para gerar o formato esperado, então nenhum arquivo de dados de cobertura é gerado",
-      "Testes que passam sempre têm 100% de cobertura, nunca 0%",
-      "O runner de CI não suporta instrumentação de cobertura de código"
+      "A ferramenta de cobertura nÃ£o estÃ¡ instalada ou configurada para gerar o formato esperado, entÃ£o nenhum arquivo de dados de cobertura Ã© gerado",
+      "Testes que passam sempre tÃªm 100% de cobertura, nunca 0%",
+      "O runner de CI nÃ£o suporta instrumentaÃ§Ã£o de cobertura de cÃ³digo"
     ],
     correctIndex: 1,
-    explanation: "O relatório de cobertura requer tanto a execução dos testes (que produz resultados de aprovação/falha) quanto a instrumentação do código (que produz dados de cobertura). Causas comuns de 0% de cobertura incluem: pacotes de cobertura ausentes, configuração errada de formato de reporter, incompatibilidade de caminhos de saída onde o pipeline procura arquivos no diretório errado, ou problemas de source map com código transpilado."
+    explanation: "O relatÃ³rio de cobertura requer tanto a execuÃ§Ã£o dos testes (que produz resultados de aprovaÃ§Ã£o/falha) quanto a instrumentaÃ§Ã£o do cÃ³digo (que produz dados de cobertura). Causas comuns de 0% de cobertura incluem: pacotes de cobertura ausentes, configuraÃ§Ã£o errada de formato de reporter, incompatibilidade de caminhos de saÃ­da onde o pipeline procura arquivos no diretÃ³rio errado, ou problemas de source map com cÃ³digo transpilado."
   }
 ]} />
 
 ## Limpeza
 
-Remova a infraestrutura de cobertura após completar o desafio:
+Remova a infraestrutura de cobertura apÃ³s completar o desafio:
 
 ```bash
 # Remove workflow files
@@ -854,6 +854,6 @@ rm -rf .coverage-history/
 pip uninstall diff-cover -y
 ```
 
-# Desafio 18: Análise de cobertura de código
+# Desafio 18: AnÃ¡lise de cobertura de cÃ³digo
 
-Este desafio está em desenvolvimento.
+Este desafio estÃ¡ em desenvolvimento.

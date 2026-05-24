@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 # Desafio 38: Custom Question Answering
 
 :::info Tempo Estimado
-**50 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
+**50 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
@@ -20,28 +20,28 @@ import TabItem from '@theme/TabItem';
 - Adicionar frases alternativas e chit-chat
 - Treinar, testar e publicar a base de conhecimento
 
-## Visão Geral
+## VisÃ£o Geral
 
-Custom Question Answering (substituto do QnA Maker) constrói bases de conhecimento que respondem perguntas a partir do seu conteúdo:
+Custom Question Answering (substituto do QnA Maker) constrÃ³i bases de conhecimento que respondem perguntas a partir do seu conteÃºdo:
 
-| Recurso | Descrição |
+| Recurso | DescriÃ§Ã£o |
 |---------|-----------|
-| **Pares de QA** | Pares pergunta-resposta (adicionados manualmente ou auto-extraídos) |
+| **Pares de QA** | Pares pergunta-resposta (adicionados manualmente ou auto-extraÃ­dos) |
 | **Fontes** | Importar de URLs, arquivos (PDF, DOCX, TSV) ou SharePoint |
-| **Multi-turno** | Prompts de acompanhamento criando árvores de diálogo |
-| **Perguntas alternativas** | Múltiplas formulações mapeando para a mesma resposta |
-| **Chit-chat** | Respostas de personalidade pré-construídas (profissional, amigável, etc.) |
+| **Multi-turno** | Prompts de acompanhamento criando Ã¡rvores de diÃ¡logo |
+| **Perguntas alternativas** | MÃºltiplas formulaÃ§Ãµes mapeando para a mesma resposta |
+| **Chit-chat** | Respostas de personalidade prÃ©-construÃ­das (profissional, amigÃ¡vel, etc.) |
 | **Resposta precisa** | Extrair span exato de resposta de respostas longas |
 
-O serviço faz parte do Azure AI Language: `https://{endpoint}.cognitiveservices.azure.com/language/`
+O serviÃ§o faz parte do Azure AI Language: `https://{endpoint}.cognitiveservices.azure.com/language/`
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura do Azure
 - Recurso Azure AI Language com Custom Question Answering habilitado
-- Recurso Azure AI Search (necessário para indexação)
+- Recurso Azure AI Search (necessÃ¡rio para indexaÃ§Ã£o)
 - Python 3.9+ com `azure-ai-language-questionanswering`
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Criar Recursos
 
@@ -290,9 +290,9 @@ curl -s "${ENDPOINT}/language/:query-knowledgebases?projectName=faq-knowledge-ba
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Project created: 201
 QA pairs submitted: 202
   Status: running
@@ -317,73 +317,73 @@ Q: What vision services are available?
      Confidence: 0.8234
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Nenhuma resposta retornada | Resposta vazia ou padrão | Confiança abaixo do threshold | Diminua `confidenceScoreThreshold` ou adicione mais frases alternativas |
-| Importação de URL falha | Fonte mostra erros | Página não acessível ou mal estruturada | Verifique se a URL é pública; use páginas FAQ bem estruturadas |
-| Multi-turno não funciona | Prompts de acompanhamento ausentes | Prompts de diálogo não configurados no par QA | Adicione `dialog.prompts` com referências `qnaId` corretas |
-| Respostas duplicadas | Mesma resposta repetida | Pares QA similares com perguntas sobrepostas | Mescle pares duplicados; use perguntas alternativas em um único par |
-| Deployment falha | Erro 400 | Sem dados de treinamento ou pares inválidos | Certifique-se de que pelo menos um par QA existe; valide todos os IDs de pares |
+| Nenhuma resposta retornada | Resposta vazia ou padrÃ£o | ConfianÃ§a abaixo do threshold | Diminua `confidenceScoreThreshold` ou adicione mais frases alternativas |
+| ImportaÃ§Ã£o de URL falha | Fonte mostra erros | PÃ¡gina nÃ£o acessÃ­vel ou mal estruturada | Verifique se a URL Ã© pÃºblica; use pÃ¡ginas FAQ bem estruturadas |
+| Multi-turno nÃ£o funciona | Prompts de acompanhamento ausentes | Prompts de diÃ¡logo nÃ£o configurados no par QA | Adicione `dialog.prompts` com referÃªncias `qnaId` corretas |
+| Respostas duplicadas | Mesma resposta repetida | Pares QA similares com perguntas sobrepostas | Mescle pares duplicados; use perguntas alternativas em um Ãºnico par |
+| Deployment falha | Erro 400 | Sem dados de treinamento ou pares invÃ¡lidos | Certifique-se de que pelo menos um par QA existe; valide todos os IDs de pares |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual recurso Azure é necessário além do recurso Language para Custom Question Answering?",
+    question: "Qual recurso Azure Ã© necessÃ¡rio alÃ©m do recurso Language para Custom Question Answering?",
     options: [
       "Azure Cosmos DB",
       "Azure Blob Storage",
-      "Azure AI Search (para indexar o conteúdo da base de conhecimento)",
+      "Azure AI Search (para indexar o conteÃºdo da base de conhecimento)",
       "Azure SQL Database"
     ],
     correctAnswer: 2,
-    explanation: "Custom Question Answering requer um recurso Azure AI Search para indexar o conteúdo da base de conhecimento e habilitar correspondência semântica de perguntas a respostas."
+    explanation: "Custom Question Answering requer um recurso Azure AI Search para indexar o conteÃºdo da base de conhecimento e habilitar correspondÃªncia semÃ¢ntica de perguntas a respostas."
   },
   {
-    question: "Como você cria conversas multi-turno no Custom QA?",
+    question: "Como vocÃª cria conversas multi-turno no Custom QA?",
     options: [
       "Adicione prompts de acompanhamento (dialog.prompts) a pares QA que referenciam outros IDs de pares QA",
       "Crie projetos separados para cada turno",
       "Escreva scripts de conversa em um arquivo separado",
-      "Multi-turno é automático — nenhuma configuração necessária"
+      "Multi-turno Ã© automÃ¡tico â€” nenhuma configuraÃ§Ã£o necessÃ¡ria"
     ],
     correctAnswer: 0,
-    explanation: "Multi-turno é criado adicionando dialog.prompts a pares QA. Cada prompt tem displayText (mostrado ao usuário) e qnaId (a resposta alvo), criando uma árvore de diálogo."
+    explanation: "Multi-turno Ã© criado adicionando dialog.prompts a pares QA. Cada prompt tem displayText (mostrado ao usuÃ¡rio) e qnaId (a resposta alvo), criando uma Ã¡rvore de diÃ¡logo."
   },
   {
-    question: "Qual é o propósito das perguntas alternativas em um par QA?",
+    question: "Qual Ã© o propÃ³sito das perguntas alternativas em um par QA?",
     options: [
-      "Fornecer múltiplas respostas corretas",
+      "Fornecer mÃºltiplas respostas corretas",
       "Criar pares QA separados automaticamente",
-      "Capturar diferentes formulações da mesma pergunta para que o modelo corresponda mais variações",
+      "Capturar diferentes formulaÃ§Ãµes da mesma pergunta para que o modelo corresponda mais variaÃ§Ãµes",
       "Traduzir a pergunta para outros idiomas"
     ],
     correctAnswer: 2,
-    explanation: "Perguntas alternativas ensinam o modelo a reconhecer diferentes formulações da mesma pergunta (ex.: 'Qual é o custo?', 'Quanto custa?', 'Info de preço?') todas mapeando para uma resposta."
+    explanation: "Perguntas alternativas ensinam o modelo a reconhecer diferentes formulaÃ§Ãµes da mesma pergunta (ex.: 'Qual Ã© o custo?', 'Quanto custa?', 'Info de preÃ§o?') todas mapeando para uma resposta."
   },
   {
-    question: "O que acontece quando nenhuma resposta atinge o threshold de confiança?",
+    question: "O que acontece quando nenhuma resposta atinge o threshold de confianÃ§a?",
     options: [
       "A API retorna um erro 404",
-      "A API retorna todas as respostas independente da confiança",
-      "A requisição expira",
-      "A API retorna a resposta padrão configurada"
+      "A API retorna todas as respostas independente da confianÃ§a",
+      "A requisiÃ§Ã£o expira",
+      "A API retorna a resposta padrÃ£o configurada"
     ],
     correctAnswer: 3,
-    explanation: "Quando nenhuma resposta excede o threshold de confiança, a API retorna o defaultAnswer configurado do projeto, fornecendo um fallback gracioso."
+    explanation: "Quando nenhuma resposta excede o threshold de confianÃ§a, a API retorna o defaultAnswer configurado do projeto, fornecendo um fallback gracioso."
   },
   {
-    question: "De quais fontes de conteúdo o Custom Question Answering pode importar?",
+    question: "De quais fontes de conteÃºdo o Custom Question Answering pode importar?",
     options: [
       "Apenas pares QA digitados manualmente",
-      "URLs (páginas web), arquivos (PDF, DOCX, TSV, Excel) e páginas SharePoint",
+      "URLs (pÃ¡ginas web), arquivos (PDF, DOCX, TSV, Excel) e pÃ¡ginas SharePoint",
       "Apenas arquivos JSON estruturados",
-      "Apenas páginas web formatadas como FAQ"
+      "Apenas pÃ¡ginas web formatadas como FAQ"
     ],
     correctAnswer: 1,
-    explanation: "Custom QA pode auto-extrair pares QA de URLs (páginas web, páginas FAQ), arquivos (PDF, DOCX, TSV, TXT, Excel) e sites SharePoint, além de entrada manual."
+    explanation: "Custom QA pode auto-extrair pares QA de URLs (pÃ¡ginas web, pÃ¡ginas FAQ), arquivos (PDF, DOCX, TSV, TXT, Excel) e sites SharePoint, alÃ©m de entrada manual."
   }
 ]} />
 
@@ -395,7 +395,7 @@ az group delete --name rg-ai102-qna --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral do Custom Question Answering](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview)
+- [VisÃ£o geral do Custom Question Answering](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview)
 - [Criar uma base de conhecimento](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/quickstart/sdk)
 - [Conversas multi-turno](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/tutorials/guided-conversations)
-- [Migração do QnA Maker](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/migrate-qnamaker)
+- [MigraÃ§Ã£o do QnA Maker](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/migrate-qnamaker)

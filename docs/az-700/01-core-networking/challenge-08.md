@@ -540,7 +540,7 @@ The `az network watcher show-next-hop` command requires the VM to be running. It
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 These scenarios represent common misconfigurations you will encounter in production and on the exam.
 

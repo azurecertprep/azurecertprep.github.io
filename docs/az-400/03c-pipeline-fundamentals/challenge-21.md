@@ -363,7 +363,7 @@ jobs:
 
 ### Break-even calculation
 
-```
+```text
 GitHub-hosted runner costs (per minute):
   Linux:   $0.008/min
   Windows: $0.016/min
@@ -400,7 +400,7 @@ Break-even analysis:
 | Simple CI (lint, unit test) | GitHub-hosted | Low cost, zero maintenance |
 | Compliance (data residency) | Self-hosted in required region | Control over where code and artifacts reside |
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Runner connectivity failure
 

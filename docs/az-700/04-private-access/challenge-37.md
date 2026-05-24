@@ -21,7 +21,7 @@ Your task is to deploy Azure DNS Private Resolver to enable bidirectional DNS re
 
 ### Architecture overview
 
-```
+```text
 On-Premises DNS Server
     |
     | Conditional forwarder: privatelink.blob.core.windows.net -> Inbound Endpoint IP
@@ -381,7 +381,7 @@ nslookup contosostorage.blob.core.windows.net
 
 ---
 
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario 1: On-premises DNS not forwarding correctly
 

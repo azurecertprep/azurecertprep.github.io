@@ -414,7 +414,7 @@ git push origin main
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Someone pushes directly to main
 

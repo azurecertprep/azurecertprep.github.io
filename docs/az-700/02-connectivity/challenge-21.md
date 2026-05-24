@@ -140,7 +140,7 @@ az network route-filter rule list-service-communities --output table
 
 **Expected output (truncated):**
 
-```
+```text
 Name                        BgpCommunities                   Prefixes
 --------------------------  -------------------------------- ----------------
 Exchange Online             12076:5010                       13.107.6.152/31...
@@ -507,7 +507,7 @@ az network express-route port link list \
 
 **Expected output:**
 
-```
+```text
 Name    AdminState  MACsecCipher  SCIState
 ------  ----------  ------------  --------
 link1   Enabled     GcmAes256     Disabled
@@ -516,7 +516,7 @@ link2   Enabled     GcmAes256     Disabled
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario A: Microsoft peering without route filter (no routes received)
 

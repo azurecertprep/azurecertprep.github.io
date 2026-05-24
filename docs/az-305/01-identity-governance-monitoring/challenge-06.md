@@ -36,7 +36,7 @@ The CTO has mandated a zero-trust authorization model: least privilege by defaul
 
 1. Design the RBAC scope hierarchy for Fabrikam:
 
-```
+```text
 Management Group (Fabrikam Root)
   |-- Subscription: Development
   |     |-- RG: team-alpha-compute-dev

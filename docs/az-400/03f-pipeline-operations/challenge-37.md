@@ -29,7 +29,7 @@ Microsoft recommends YAML pipelines for version control, code review, and templa
 
 Current classic pipeline structure:
 
-```
+```python
 Classic Build: "Contoso API - CI"
   - Agent pool: Azure Pipelines (ubuntu-latest)
   - Triggers: CI on main, PR validation
@@ -47,7 +47,7 @@ Classic Release: "Contoso API - CD"
 
 Use the built-in export functionality available in Azure DevOps:
 
-```
+```text
 Steps to export a classic build pipeline:
 1. Navigate to Pipelines > [Select classic pipeline]
 2. Click "Edit"
@@ -543,7 +543,7 @@ stages:
 
 Implement a safe, phased approach to migration:
 
-```
+```text
 Phase 1: Parallel run (Weeks 1-2)
 - Create YAML pipeline alongside classic
 - Both trigger on the same events
@@ -648,7 +648,7 @@ steps:
     displayName: "Compare YAML vs classic artifacts"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the broken artifact download in multi-pipeline trigger
 
@@ -723,7 +723,7 @@ After migration, deployments to production happen without any approval:
 
 **Fix:** Environment checks must be configured in the Azure DevOps UI (they cannot be set via YAML):
 
-```
+```text
 1. Navigate to: Pipelines > Environments > production
 2. Click three dots (...) > Approvals and checks
 3. Add check: "Approvals"

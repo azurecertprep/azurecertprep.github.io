@@ -625,7 +625,7 @@ az network watcher test-connectivity \
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Peering stuck in "Initiated" state
 
@@ -662,7 +662,7 @@ After both sides exist, the state transitions to `Connected` on both peerings.
 
 You attempt to enable `useRemoteGateways` on a spoke peering but receive an error:
 
-```
+```text
 "Cannot use remote gateways because the referenced virtual network has no gateways"
 ```
 

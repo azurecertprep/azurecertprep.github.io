@@ -1,28 +1,28 @@
 ---
 sidebar_position: 4
-title: "Desafio 22: Triggers e ordem de execução"
+title: "Desafio 22: Triggers e ordem de execuÃ§Ã£o"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 22: Triggers e ordem de execução
+# Desafio 22: Triggers e ordem de execuÃ§Ã£o
 
-:::info Plataforma: comparação
-Este desafio compara padrões de trigger e execução entre GitHub Actions e Azure Pipelines.
+:::info Plataforma: comparaÃ§Ã£o
+Este desafio compara padrÃµes de trigger e execuÃ§Ã£o entre GitHub Actions e Azure Pipelines.
 :::
 
 ## Habilidades do exame
 
 - Desenvolver e implementar regras de trigger de pipeline
-- Projetar e implementar uma estratégia para ordem de execução de jobs, incluindo paralelismo e pipelines multi-stage
+- Projetar e implementar uma estratÃ©gia para ordem de execuÃ§Ã£o de jobs, incluindo paralelismo e pipelines multi-stage
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Ltd mantém um monorepo contendo seu frontend (React), backend (Node.js API) e código de infraestrutura (Bicep). Eles querem pipelines eficientes. Quando um desenvolvedor altera apenas o código do frontend, apenas os stages do pipeline de frontend devem executar. Quando a infraestrutura muda, a validação do Bicep deve executar, mas os testes de aplicação devem ser ignorados. Eles também precisam de builds noturnos agendados, testes em matrix com múltiplas versões do Node.js e dependências adequadas entre jobs para garantir a ordem de execução.
+A Contoso Ltd mantÃ©m um monorepo contendo seu frontend (React), backend (Node.js API) e cÃ³digo de infraestrutura (Bicep). Eles querem pipelines eficientes. Quando um desenvolvedor altera apenas o cÃ³digo do frontend, apenas os stages do pipeline de frontend devem executar. Quando a infraestrutura muda, a validaÃ§Ã£o do Bicep deve executar, mas os testes de aplicaÃ§Ã£o devem ser ignorados. Eles tambÃ©m precisam de builds noturnos agendados, testes em matrix com mÃºltiplas versÃµes do Node.js e dependÃªncias adequadas entre jobs para garantir a ordem de execuÃ§Ã£o.
 
-Estrutura do repositório:
+Estrutura do repositÃ³rio:
 
-```
+```text
 contoso-monorepo/
   frontend/
     src/
@@ -237,7 +237,7 @@ steps:
 
 ## Tarefa 3: Triggers agendados
 
-Configure builds agendados para testes noturnos e varredura de dependências:
+Configure builds agendados para testes noturnos e varredura de dependÃªncias:
 
 ```yaml
 # GitHub Actions: Cron-based schedule
@@ -318,9 +318,9 @@ stages:
             displayName: "Run full regression suite"
 ```
 
-## Tarefa 4: Triggers de conclusão de pipeline e workflow
+## Tarefa 4: Triggers de conclusÃ£o de pipeline e workflow
 
-Dispare pipelines quando outro pipeline é concluído:
+Dispare pipelines quando outro pipeline Ã© concluÃ­do:
 
 ```yaml
 # GitHub Actions: Trigger on workflow completion
@@ -388,9 +388,9 @@ jobs:
         displayName: "Deploy"
 ```
 
-## Tarefa 5: Dependências de jobs e ordem de execução
+## Tarefa 5: DependÃªncias de jobs e ordem de execuÃ§Ã£o
 
-Defina grafos complexos de dependências entre jobs:
+Defina grafos complexos de dependÃªncias entre jobs:
 
 ```yaml
 # GitHub Actions: Job dependencies with 'needs'
@@ -515,9 +515,9 @@ stages:
                 - script: echo "Deploying to production"
 ```
 
-## Tarefa 6: Estratégias de matrix para execução paralela
+## Tarefa 6: EstratÃ©gias de matrix para execuÃ§Ã£o paralela
 
-Execute testes em múltiplas versões e plataformas simultaneamente:
+Execute testes em mÃºltiplas versÃµes e plataformas simultaneamente:
 
 ```yaml
 # GitHub Actions: Matrix strategy
@@ -581,9 +581,9 @@ jobs:
         displayName: "Test on $(vmImage) with Node $(nodeVersion)"
 ```
 
-## Tarefa 7: Execução condicional
+## Tarefa 7: ExecuÃ§Ã£o condicional
 
-Controle a execução de jobs e steps com condições:
+Controle a execuÃ§Ã£o de jobs e steps com condiÃ§Ãµes:
 
 ```yaml
 # GitHub Actions: Conditional execution with 'if'
@@ -678,7 +678,7 @@ stages:
 
 ## Tarefa 8: Triggers manuais
 
-Configure workflows com trigger manual e parâmetros:
+Configure workflows com trigger manual e parÃ¢metros:
 
 ```yaml
 # GitHub Actions: workflow_dispatch with inputs
@@ -766,11 +766,11 @@ stages:
                       displayName: "Dry run"
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Trigger nunca dispara
+### ExercÃ­cio 1: Trigger nunca dispara
 
-O seguinte workflow nunca dispara apesar de pushes para `main` que incluem alterações em `backend/`:
+O seguinte workflow nunca dispara apesar de pushes para `main` que incluem alteraÃ§Ãµes em `backend/`:
 
 ```yaml
 name: Backend CI
@@ -786,9 +786,9 @@ on:
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Use apenas `paths` com o padrão de exclusão removido, ou trate exclusões de forma diferente. `paths` e `paths-ignore` são mutuamente exclusivos:
+**CorreÃ§Ã£o:** Use apenas `paths` com o padrÃ£o de exclusÃ£o removido, ou trate exclusÃµes de forma diferente. `paths` e `paths-ignore` sÃ£o mutuamente exclusivos:
 
 ```yaml
 on:
@@ -799,7 +799,7 @@ on:
       - "!backend/docs/**"  # Negation pattern to exclude
 ```
 
-Nota: GitHub Actions não suporta negação em `paths`. A abordagem correta é usar apenas `paths-ignore` ou usar apenas `paths` e aceitar que alterações em docs vão disparar o workflow:
+Nota: GitHub Actions nÃ£o suporta negaÃ§Ã£o em `paths`. A abordagem correta Ã© usar apenas `paths-ignore` ou usar apenas `paths` e aceitar que alteraÃ§Ãµes em docs vÃ£o disparar o workflow:
 
 ```yaml
 on:
@@ -814,7 +814,7 @@ on:
 
 </details>
 
-### Exercício 2: Ciclo de dependência entre jobs
+### ExercÃ­cio 2: Ciclo de dependÃªncia entre jobs
 
 ```yaml
 jobs:
@@ -833,9 +833,9 @@ jobs:
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Remova o ciclo. O build deve vir antes do test:
+**CorreÃ§Ã£o:** Remova o ciclo. O build deve vir antes do test:
 
 ```yaml
 jobs:
@@ -857,7 +857,7 @@ jobs:
 
 </details>
 
-### Exercício 3: Agendamento nunca executa
+### ExercÃ­cio 3: Agendamento nunca executa
 
 Um Azure Pipeline com trigger agendado nunca executa:
 
@@ -878,9 +878,9 @@ schedules:
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Garanta que o branch do agendamento esteja incluído no trigger do pipeline, ou defina `always: true`:
+**CorreÃ§Ã£o:** Garanta que o branch do agendamento esteja incluÃ­do no trigger do pipeline, ou defina `always: true`:
 
 ```yaml
 trigger:
@@ -899,51 +899,51 @@ schedules:
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "No GitHub Actions, o que acontece quando tanto 'paths' quanto 'paths-ignore' são especificados em um trigger?",
+    question: "No GitHub Actions, o que acontece quando tanto 'paths' quanto 'paths-ignore' sÃ£o especificados em um trigger?",
     options: [
-      "'paths-ignore' tem precedência sobre 'paths'",
-      "'paths' é avaliado primeiro, depois 'paths-ignore' filtra os resultados",
-      "O workflow falha na validação porque eles são mutuamente exclusivos",
-      "Ambos são avaliados independentemente e combinados com lógica OR"
+      "'paths-ignore' tem precedÃªncia sobre 'paths'",
+      "'paths' Ã© avaliado primeiro, depois 'paths-ignore' filtra os resultados",
+      "O workflow falha na validaÃ§Ã£o porque eles sÃ£o mutuamente exclusivos",
+      "Ambos sÃ£o avaliados independentemente e combinados com lÃ³gica OR"
     ],
     correctIndex: 2,
-    explanation: "O GitHub Actions não permite tanto paths quanto paths-ignore no mesmo evento de trigger. Especificar ambos resulta em erro de validação. Você deve usar um ou outro. Use paths para incluir diretórios específicos, ou paths-ignore para excluir diretórios específicos do disparo."
+    explanation: "O GitHub Actions nÃ£o permite tanto paths quanto paths-ignore no mesmo evento de trigger. Especificar ambos resulta em erro de validaÃ§Ã£o. VocÃª deve usar um ou outro. Use paths para incluir diretÃ³rios especÃ­ficos, ou paths-ignore para excluir diretÃ³rios especÃ­ficos do disparo."
   },
   {
-    question: "Como o 'fail-fast' em uma estratégia de matrix afeta a execução dos jobs?",
+    question: "Como o 'fail-fast' em uma estratÃ©gia de matrix afeta a execuÃ§Ã£o dos jobs?",
     options: [
-      "Ele faz com que todos os jobs da matrix em execução sejam cancelados quando qualquer job falha",
-      "Ele impede que a matrix inicie se a primeira configuração falhar",
+      "Ele faz com que todos os jobs da matrix em execuÃ§Ã£o sejam cancelados quando qualquer job falha",
+      "Ele impede que a matrix inicie se a primeira configuraÃ§Ã£o falhar",
       "Ele executa todos os jobs sequencialmente e para na primeira falha",
-      "Ele afeta apenas quais resultados são reportados, não a execução"
+      "Ele afeta apenas quais resultados sÃ£o reportados, nÃ£o a execuÃ§Ã£o"
     ],
     correctIndex: 0,
-    explanation: "Quando fail-fast está definido como true (o padrão), o GitHub cancela todos os jobs da matrix em andamento e na fila assim que qualquer job na matrix falha. Definir fail-fast: false permite que todos os jobs da matrix sejam concluídos independentemente de falhas individuais, o que é útil quando você precisa de resultados de todas as configurações."
+    explanation: "Quando fail-fast estÃ¡ definido como true (o padrÃ£o), o GitHub cancela todos os jobs da matrix em andamento e na fila assim que qualquer job na matrix falha. Definir fail-fast: false permite que todos os jobs da matrix sejam concluÃ­dos independentemente de falhas individuais, o que Ã© Ãºtil quando vocÃª precisa de resultados de todas as configuraÃ§Ãµes."
   },
   {
-    question: "No Azure Pipelines, qual é a diferença entre 'condition: succeeded()' e 'condition: always()' em um stage?",
+    question: "No Azure Pipelines, qual Ã© a diferenÃ§a entre 'condition: succeeded()' e 'condition: always()' em um stage?",
     options: [
       "'succeeded()' executa se o stage anterior teve sucesso; 'always()' executa independentemente do resultado do stage anterior",
       "'succeeded()' verifica apenas o predecessor imediato; 'always()' verifica todos os predecessores",
-      "Eles são idênticos em comportamento para stages",
+      "Eles sÃ£o idÃªnticos em comportamento para stages",
       "'always()' ignora o requisito 'dependsOn'"
     ],
     correctIndex: 0,
-    explanation: "succeeded() (a condição padrão) significa que o stage executa somente se todas as suas dependências (definidas por dependsOn) foram concluídas com sucesso. always() significa que o stage executa independentemente de as dependências terem tido sucesso, falhado ou sido canceladas. Isso é útil para stages de notificação ou limpeza que devem executar mesmo após falhas."
+    explanation: "succeeded() (a condiÃ§Ã£o padrÃ£o) significa que o stage executa somente se todas as suas dependÃªncias (definidas por dependsOn) foram concluÃ­das com sucesso. always() significa que o stage executa independentemente de as dependÃªncias terem tido sucesso, falhado ou sido canceladas. Isso Ã© Ãºtil para stages de notificaÃ§Ã£o ou limpeza que devem executar mesmo apÃ³s falhas."
   },
   {
-    question: "Qual é a forma correta de disparar um workflow do GitHub Actions quando outro workflow é concluído?",
+    question: "Qual Ã© a forma correta de disparar um workflow do GitHub Actions quando outro workflow Ã© concluÃ­do?",
     options: [
       "Usar 'on: workflow_completed' com o nome do workflow",
-      "Usar 'on: workflow_run' com 'types: [completed]' e verificar a conclusão",
+      "Usar 'on: workflow_run' com 'types: [completed]' e verificar a conclusÃ£o",
       "Usar 'on: repository_dispatch' disparado pelo workflow upstream",
       "Encadear workflows usando 'needs' entre arquivos de workflow"
     ],
     correctIndex: 1,
-    explanation: "O evento workflow_run dispara quando uma execução de workflow referenciado é solicitada, está em andamento ou é concluída. Para agir apenas em conclusões bem-sucedidas, adicione uma condição verificando github.event.workflow_run.conclusion == 'success'. A palavra-chave needs funciona apenas entre jobs dentro de um único arquivo de workflow, não entre workflows."
+    explanation: "O evento workflow_run dispara quando uma execuÃ§Ã£o de workflow referenciado Ã© solicitada, estÃ¡ em andamento ou Ã© concluÃ­da. Para agir apenas em conclusÃµes bem-sucedidas, adicione uma condiÃ§Ã£o verificando github.event.workflow_run.conclusion == 'success'. A palavra-chave needs funciona apenas entre jobs dentro de um Ãºnico arquivo de workflow, nÃ£o entre workflows."
   }
 ]} />

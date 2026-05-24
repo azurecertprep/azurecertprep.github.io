@@ -288,7 +288,7 @@ az deployment group create \
 
 The workbook should contain these KQL queries:
 
-```
+```text
 // Query 1: Deployment annotations timeline
 let deployments = customEvents
 | where name == "Deployment"
@@ -374,7 +374,7 @@ jobs:
             }'
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Deployment annotations not appearing on charts
 

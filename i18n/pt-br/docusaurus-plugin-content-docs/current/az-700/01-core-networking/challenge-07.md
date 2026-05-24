@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-title: "Challenge 07: Azure Virtual Network Manager"
+title: "Desafio 07: Azure Virtual Network Manager"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -556,31 +556,31 @@ az policy definition delete --name "avnm-prod-vnets"
 <KnowledgeCheck questions={[
   {
     id: "az700-07-q1",
-    question: "You create a security admin rule with action 'Deny' for port 22 inbound. A VNet in the network group has an NSG rule that allows port 22 inbound. What happens to SSH traffic?",
+    question: "Você cria uma regra de administrador de segurança com ação 'Deny' para porta 22 de entrada. Uma VNet no network group tem uma regra NSG que permite porta 22 de entrada. O que acontece com o tráfego SSH?",
     options: [
-      "SSH traffic is blocked because security admin rules are evaluated before NSGs",
-      "SSH traffic is allowed because NSG rules take precedence over admin rules",
-      "The rules conflict and traffic is allowed by default",
-      "The deployment fails due to conflicting rules"
+      "O tráfego SSH é bloqueado porque regras de administrador de segurança são avaliadas antes dos NSGs",
+      "O tráfego SSH é permitido porque regras NSG têm precedência sobre regras de administrador",
+      "As regras conflitam e o tráfego é permitido por padrão",
+      "A implantação falha devido a regras conflitantes"
     ],
     correctIndex: 0,
-    explanation: "Security admin rules are evaluated before NSGs. A Deny action at the admin level blocks traffic regardless of what NSG rules permit. This is how organizations enforce non-negotiable security baselines."
+    explanation: "Regras de administrador de segurança são avaliadas antes dos NSGs. Uma ação Deny no nível de administrador bloqueia o tráfego independentemente do que as regras NSG permitam. É assim que as organizações impõem baselines de segurança não-negociáveis."
   },
   {
     id: "az700-07-q2",
-    question: "You created a connectivity configuration for hub-spoke topology and added VNets to the network group, but no peerings appear on the VNets. What is the most likely cause?",
+    question: "Você criou uma configuração de conectividade para topologia hub-spoke e adicionou VNets ao network group, mas nenhum peering aparece nas VNets. Qual é a causa mais provável?",
     options: [
-      "The VNets have overlapping address spaces",
-      "The configuration was not deployed (committed) to the target region",
-      "The network group has exceeded the maximum member count",
-      "Hub-spoke topology requires a VPN gateway in the hub"
+      "As VNets têm espaços de endereço sobrepostos",
+      "A configuração não foi implantada (committed) na região de destino",
+      "O network group excedeu a contagem máxima de membros",
+      "A topologia hub-spoke requer um VPN Gateway no hub"
     ],
     correctIndex: 1,
-    explanation: "Configurations must be explicitly deployed using 'az network manager post-commit' with the target region specified. Creating a configuration only defines the desired state; it does not apply it until committed."
+    explanation: "As configurações devem ser explicitamente implantadas usando 'az network manager post-commit' com a região de destino especificada. Criar uma configuração apenas define o estado desejado; não o aplica até que seja committed."
   },
   {
     id: "az700-07-q3",
-    question: "Which Azure Policy mode must be used when creating a policy for dynamic AVNM network group membership?",
+    question: "Qual modo de Azure Policy deve ser usado ao criar uma policy para associação dinâmica de network group do AVNM?",
     options: [
       "All",
       "Indexed",
@@ -588,23 +588,23 @@ az policy definition delete --name "avnm-prod-vnets"
       "Microsoft.Network.VirtualNetworks"
     ],
     correctIndex: 2,
-    explanation: "Dynamic membership policies for Azure Virtual Network Manager must use the 'Microsoft.Network.Data' mode. This mode enables the special 'addToNetworkGroup' effect that assigns matching VNets to a network group."
+    explanation: "Policies de associação dinâmica para o Azure Virtual Network Manager devem usar o modo 'Microsoft.Network.Data'. Este modo habilita o efeito especial 'addToNetworkGroup' que atribui VNets correspondentes a um network group."
   },
   {
     id: "az700-07-q4",
-    question: "In a hub-spoke connectivity configuration, what does setting 'groupConnectivity' to 'DirectlyConnected' achieve?",
+    question: "Em uma configuração de conectividade hub-spoke, o que definir 'groupConnectivity' como 'DirectlyConnected' alcança?",
     options: [
-      "It connects the hub to an ExpressRoute circuit",
-      "It enables spoke VNets to communicate with each other without routing through the hub",
-      "It creates a full mesh between all network groups",
-      "It allows the hub to route traffic to on-premises networks"
+      "Conecta o hub a um circuito ExpressRoute",
+      "Permite que VNets spoke se comuniquem entre si sem rotear pelo hub",
+      "Cria uma malha completa entre todos os network groups",
+      "Permite que o hub roteie tráfego para redes on-premises"
     ],
     correctIndex: 1,
-    explanation: "Setting groupConnectivity to DirectlyConnected enables direct spoke-to-spoke communication. Without this setting, spokes can only reach the hub VNet and must route through it (via NVA or Azure Firewall) to reach other spokes."
+    explanation: "Definir groupConnectivity como DirectlyConnected habilita a comunicação direta spoke-para-spoke. Sem essa configuração, spokes só podem alcançar a VNet hub e devem rotear através dele (via NVA ou Azure Firewall) para alcançar outros spokes."
   },
   {
     id: "az700-07-q5",
-    question: "What is the correct CLI command to deploy an AVNM configuration to a target region?",
+    question: "Qual é o comando CLI correto para implantar uma configuração AVNM em uma região de destino?",
     options: [
       "az network manager commit",
       "az network manager deploy",
@@ -612,18 +612,18 @@ az policy definition delete --name "avnm-prod-vnets"
       "az network manager configuration apply"
     ],
     correctIndex: 2,
-    explanation: "The correct command is 'az network manager post-commit'. It requires --commit-type (Connectivity or SecurityAdmin), --configuration-ids (full resource IDs), and --target-locations (Azure regions where the configuration should take effect)."
+    explanation: "O comando correto é 'az network manager post-commit'. Ele requer --commit-type (Connectivity ou SecurityAdmin), --configuration-ids (resource IDs completos) e --target-locations (regiões Azure onde a configuração deve entrar em vigor)."
   },
   {
     id: "az700-07-q6",
-    question: "A security admin rule has the action set to 'AlwaysAllow' for HTTPS inbound from 10.0.0.0/8. Another admin rule with higher priority number denies all inbound traffic on port 443. What happens to HTTPS traffic from 10.0.0.0/8?",
+    question: "Uma regra de administrador de segurança tem a ação definida como 'AlwaysAllow' para HTTPS de entrada a partir de 10.0.0.0/8. Outra regra de administrador com número de prioridade mais alto nega todo o tráfego de entrada na porta 443. O que acontece com o tráfego HTTPS de 10.0.0.0/8?",
     options: [
-      "Traffic is denied because the deny rule has a higher priority number",
-      "Traffic is allowed because AlwaysAllow cannot be overridden by other admin rules",
-      "Traffic is denied because deny takes precedence over allow",
-      "Traffic is allowed only if an NSG also permits it"
+      "O tráfego é negado porque a regra de negação tem um número de prioridade mais alto",
+      "O tráfego é permitido porque AlwaysAllow não pode ser substituído por outras regras de administrador",
+      "O tráfego é negado porque deny tem precedência sobre allow",
+      "O tráfego é permitido somente se um NSG também o permitir"
     ],
     correctIndex: 1,
-    explanation: "AlwaysAllow is the strongest action in security admin rules. It permits traffic regardless of any other admin rules or NSG rules. It is intended for critical traffic (such as monitoring) that must never be blocked by any network policy."
+    explanation: "AlwaysAllow é a ação mais forte nas regras de administrador de segurança. Ela permite o tráfego independentemente de quaisquer outras regras de administrador ou regras NSG. É destinada para tráfego crítico (como monitoramento) que nunca deve ser bloqueado por nenhuma política de rede."
   }
 ]} />

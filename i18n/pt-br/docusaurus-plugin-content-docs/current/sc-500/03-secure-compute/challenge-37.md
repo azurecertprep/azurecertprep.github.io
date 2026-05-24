@@ -350,7 +350,7 @@ az monitor scheduled-query create \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Container App não consegue puxar imagens do ACR após habilitar private endpoint
 

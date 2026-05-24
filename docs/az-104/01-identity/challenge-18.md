@@ -289,7 +289,7 @@ To view costs, you need at minimum the **Cost Management Reader** role or **Read
 
 </details>
 
-## Break and fix
+## Break & fix
 
 ### Scenario a: budget not alerting
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 02: Princípios de IA Responsável"
+title: "Desafio 02: Princípios de IA Responsável"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

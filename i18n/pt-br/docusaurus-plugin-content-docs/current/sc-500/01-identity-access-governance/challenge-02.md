@@ -397,7 +397,7 @@ az rest --method POST \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Usuários bloqueados após implantação de política
 

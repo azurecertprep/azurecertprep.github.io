@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Challenge 37: Private Link with On-Premises Clients"
+title: "Desafio 37: Private Link com Clientes On-Premises"
 sidebar_label: "Challenge 37"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -13,15 +13,15 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Ltd opera um ambiente híbrido com um datacenter local conectado ao Azure por meio de uma VPN site a site. A empresa implantou Private Endpoints para o Azure Storage e o Azure SQL Database. No entanto, os clientes locais não conseguem resolver os FQDNs dos Private Endpoints para endereços IP privados -- eles ainda resolvem para IPs públicos porque os servidores DNS locais não têm conhecimento das zonas do Azure Private DNS.
+A Contoso Ltd opera um ambiente hÃ­brido com um datacenter local conectado ao Azure por meio de uma VPN site a site. A empresa implantou Private Endpoints para o Azure Storage e o Azure SQL Database. No entanto, os clientes locais nÃ£o conseguem resolver os FQDNs dos Private Endpoints para endereÃ§os IP privados -- eles ainda resolvem para IPs pÃºblicos porque os servidores DNS locais nÃ£o tÃªm conhecimento das zonas do Azure Private DNS.
 
-Sua tarefa é implantar o Azure DNS Private Resolver para habilitar a resolução DNS bidirecional entre o ambiente local e o Azure. Os clientes locais devem resolver nomes de Private Endpoints do Azure para IPs privados (por meio do ponto de extremidade de entrada), e as cargas de trabalho do Azure devem resolver nomes de domínio locais (por meio do ponto de extremidade de saída com regras de encaminhamento).
+Sua tarefa Ã© implantar o Azure DNS Private Resolver para habilitar a resoluÃ§Ã£o DNS bidirecional entre o ambiente local e o Azure. Os clientes locais devem resolver nomes de Private Endpoints do Azure para IPs privados (por meio do ponto de extremidade de entrada), e as cargas de trabalho do Azure devem resolver nomes de domÃ­nio locais (por meio do ponto de extremidade de saÃ­da com regras de encaminhamento).
 
-### Visão geral da arquitetura
+### VisÃ£o geral da arquitetura
 
-```
+```text
 On-Premises DNS Server
     |
     | Conditional forwarder: privatelink.blob.core.windows.net -> Inbound Endpoint IP
@@ -40,10 +40,10 @@ On-Premises DNS Server
 
 ### Conceitos-chave
 
-- **Ponto de extremidade de entrada**: Recebe consultas DNS do ambiente local (ou de outras VNets) e as resolve usando o Azure DNS (incluindo zonas do Private DNS vinculadas à VNet).
-- **Ponto de extremidade de saída**: Envia consultas DNS do Azure para servidores DNS externos (como DNS local) com base em regras de encaminhamento.
-- **Conjunto de regras de encaminhamento**: Uma coleção de regras que mapeia nomes de domínio para servidores DNS de destino para encaminhamento condicional.
-- **Delegação de sub-rede**: Ambos os pontos de extremidade de entrada e saída requerem sub-redes dedicadas delegadas a `Microsoft.Network/dnsResolvers`. O tamanho mínimo é /28.
+- **Ponto de extremidade de entrada**: Recebe consultas DNS do ambiente local (ou de outras VNets) e as resolve usando o Azure DNS (incluindo zonas do Private DNS vinculadas Ã  VNet).
+- **Ponto de extremidade de saÃ­da**: Envia consultas DNS do Azure para servidores DNS externos (como DNS local) com base em regras de encaminhamento.
+- **Conjunto de regras de encaminhamento**: Uma coleÃ§Ã£o de regras que mapeia nomes de domÃ­nio para servidores DNS de destino para encaminhamento condicional.
+- **DelegaÃ§Ã£o de sub-rede**: Ambos os pontos de extremidade de entrada e saÃ­da requerem sub-redes dedicadas delegadas a `Microsoft.Network/dnsResolvers`. O tamanho mÃ­nimo Ã© /28.
 
 ---
 
@@ -131,12 +131,12 @@ New-AzVirtualNetwork `
 
 ### Portal
 
-1. Navegue até **Virtual networks** e selecione **+ Create**.
-2. Defina o grupo de recursos como `rg-challenge37`, o nome como `vnet-hub` e a região como **East US**.
-3. Em **IP addresses**, adicione o espaço de endereço `10.0.0.0/16`.
+1. Navegue atÃ© **Virtual networks** e selecione **+ Create**.
+2. Defina o grupo de recursos como `rg-challenge37`, o nome como `vnet-hub` e a regiÃ£o como **East US**.
+3. Em **IP addresses**, adicione o espaÃ§o de endereÃ§o `10.0.0.0/16`.
 4. Adicione a sub-rede `snet-inbound` com o prefixo `10.0.0.0/28`. Em **Subnet delegation**, selecione `Microsoft.Network/dnsResolvers`.
 5. Adicione a sub-rede `snet-outbound` com o prefixo `10.0.0.16/28`. Em **Subnet delegation**, selecione `Microsoft.Network/dnsResolvers`.
-6. Adicione a sub-rede `snet-workload` com o prefixo `10.0.1.0/24` (sem delegação).
+6. Adicione a sub-rede `snet-workload` com o prefixo `10.0.1.0/24` (sem delegaÃ§Ã£o).
 7. Selecione **Review + create** e, em seguida, **Create**.
 
 ---
@@ -227,18 +227,18 @@ New-AzDnsResolverOutboundEndpoint `
 ### Portal
 
 1. Pesquise por **DNS Private Resolvers** e selecione **+ Create**.
-2. Defina o grupo de recursos, o nome como `dnspr-contoso` e a região como **East US**.
+2. Defina o grupo de recursos, o nome como `dnspr-contoso` e a regiÃ£o como **East US**.
 3. Selecione a VNet `vnet-hub`.
 4. Em **Inbound Endpoints**, adicione um com o nome `inbound-ep` e selecione a sub-rede `snet-inbound`.
 5. Em **Outbound Endpoints**, adicione um com o nome `outbound-ep` e selecione a sub-rede `snet-outbound`.
 6. Selecione **Review + create** e, em seguida, **Create**.
-7. Após a implantação, anote o **IP do ponto de extremidade de entrada** na visão geral do recurso.
+7. ApÃ³s a implantaÃ§Ã£o, anote o **IP do ponto de extremidade de entrada** na visÃ£o geral do recurso.
 
 ---
 
 ## Tarefa 3: Criar um conjunto de regras de encaminhamento DNS (Azure para ambiente local)
 
-O ponto de extremidade de saída permite que VMs do Azure resolvam domínios locais encaminhando consultas para servidores DNS locais.
+O ponto de extremidade de saÃ­da permite que VMs do Azure resolvam domÃ­nios locais encaminhando consultas para servidores DNS locais.
 
 ### Azure CLI
 
@@ -305,11 +305,11 @@ New-AzDnsForwardingRulesetVirtualNetworkLink `
 
 ### Portal
 
-1. No recurso DNS Private Resolver, navegue até **Forwarding Rulesets** ou pesquise por **DNS forwarding rulesets**.
-2. Selecione **+ Create**, defina o nome como `fwrs-contoso`, selecione a região e escolha o ponto de extremidade de saída `outbound-ep`.
+1. No recurso DNS Private Resolver, navegue atÃ© **Forwarding Rulesets** ou pesquise por **DNS forwarding rulesets**.
+2. Selecione **+ Create**, defina o nome como `fwrs-contoso`, selecione a regiÃ£o e escolha o ponto de extremidade de saÃ­da `outbound-ep`.
 3. Adicione uma **Forwarding Rule**:
    - Nome da regra: `contoso-local`
-   - Nome do domínio: `contoso.local.` (ponto final obrigatório)
+   - Nome do domÃ­nio: `contoso.local.` (ponto final obrigatÃ³rio)
    - Servidores DNS de destino: `192.168.1.10:53`
    - Estado: Enabled
 4. Em **Virtual Network Links**, adicione um link para `vnet-hub`.
@@ -348,12 +348,12 @@ Get-DnsServerZone | Where-Object { $_.ZoneType -eq "Forwarder" }
 ```
 
 :::tip Importante
-O ponto final nos nomes de domínio é implícito no DNS Manager do Windows, mas obrigatório em alguns contextos. Ao adicionar encaminhadores condicionais na GUI do DNS Manager, não inclua o ponto final. Nas regras de encaminhamento do DNS Private Resolver, sempre inclua o ponto final (por exemplo, `contoso.local.`).
+O ponto final nos nomes de domÃ­nio Ã© implÃ­cito no DNS Manager do Windows, mas obrigatÃ³rio em alguns contextos. Ao adicionar encaminhadores condicionais na GUI do DNS Manager, nÃ£o inclua o ponto final. Nas regras de encaminhamento do DNS Private Resolver, sempre inclua o ponto final (por exemplo, `contoso.local.`).
 :::
 
 ---
 
-## Tarefa 5: Validar a resolução DNS de ponta a ponta
+## Tarefa 5: Validar a resoluÃ§Ã£o DNS de ponta a ponta
 
 ### A partir de um cliente local (simulado com uma VM)
 
@@ -367,7 +367,7 @@ nslookup contosostorage.privatelink.blob.core.windows.net
 # Expected: same private IP
 ```
 
-### A partir de uma VM do Azure (verificar encaminhamento de saída)
+### A partir de uma VM do Azure (verificar encaminhamento de saÃ­da)
 
 ```bash
 # Verify that on-premises domain resolves via outbound endpoint
@@ -381,15 +381,15 @@ nslookup contosostorage.blob.core.windows.net
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: DNS local não encaminha corretamente
+### CenÃ¡rio 1: DNS local nÃ£o encaminha corretamente
 
-**Sintoma**: Clientes locais resolvem `storageaccount.blob.core.windows.net` para um IP público em vez do IP privado do Private Endpoint.
+**Sintoma**: Clientes locais resolvem `storageaccount.blob.core.windows.net` para um IP pÃºblico em vez do IP privado do Private Endpoint.
 
-**Causa raiz**: O encaminhador condicional no servidor DNS local está apontando para o endereço IP incorreto (por exemplo, o IP do ponto de extremidade de saída em vez do IP do ponto de extremidade de entrada).
+**Causa raiz**: O encaminhador condicional no servidor DNS local estÃ¡ apontando para o endereÃ§o IP incorreto (por exemplo, o IP do ponto de extremidade de saÃ­da em vez do IP do ponto de extremidade de entrada).
 
-**Correção**:
+**CorreÃ§Ã£o**:
 
 ```powershell
 # Check current conditional forwarder configuration
@@ -404,17 +404,17 @@ Add-DnsServerConditionalForwarderZone `
   -MasterServers "10.0.0.4"
 ```
 
-**Insight principal**: O ponto de extremidade de entrada recebe consultas de fora do Azure (ambiente local). O ponto de extremidade de saída envia consultas do Azure para servidores externos. Confundir esses dois é a configuração incorreta mais comum.
+**Insight principal**: O ponto de extremidade de entrada recebe consultas de fora do Azure (ambiente local). O ponto de extremidade de saÃ­da envia consultas do Azure para servidores externos. Confundir esses dois Ã© a configuraÃ§Ã£o incorreta mais comum.
 
 ---
 
-### Cenário 2: Ponto de extremidade de entrada do Private Resolver na sub-rede errada
+### CenÃ¡rio 2: Ponto de extremidade de entrada do Private Resolver na sub-rede errada
 
-**Sintoma**: A implantação do ponto de extremidade de entrada falha com um erro sobre delegação de sub-rede.
+**Sintoma**: A implantaÃ§Ã£o do ponto de extremidade de entrada falha com um erro sobre delegaÃ§Ã£o de sub-rede.
 
-**Causa raiz**: O ponto de extremidade de entrada foi colocado em uma sub-rede que não possui a delegação `Microsoft.Network/dnsResolvers` ou é compartilhada com outros recursos.
+**Causa raiz**: O ponto de extremidade de entrada foi colocado em uma sub-rede que nÃ£o possui a delegaÃ§Ã£o `Microsoft.Network/dnsResolvers` ou Ã© compartilhada com outros recursos.
 
-**Correção**:
+**CorreÃ§Ã£o**:
 
 ```bash
 # Verify subnet delegation
@@ -432,17 +432,17 @@ az network vnet subnet update \
   --delegations "Microsoft.Network/dnsResolvers"
 ```
 
-**Insight principal**: As sub-redes do DNS Resolver devem ser dedicadas -- nenhum outro recurso pode ser implantado nelas. Cada sub-rede deve ter no mínimo /28 (16 endereços).
+**Insight principal**: As sub-redes do DNS Resolver devem ser dedicadas -- nenhum outro recurso pode ser implantado nelas. Cada sub-rede deve ter no mÃ­nimo /28 (16 endereÃ§os).
 
 ---
 
-### Cenário 3: Conjunto de regras de encaminhamento DNS sem servidor DNS de destino
+### CenÃ¡rio 3: Conjunto de regras de encaminhamento DNS sem servidor DNS de destino
 
-**Sintoma**: VMs do Azure não conseguem resolver nomes de host locais (por exemplo, `dc01.contoso.local` retorna NXDOMAIN).
+**Sintoma**: VMs do Azure nÃ£o conseguem resolver nomes de host locais (por exemplo, `dc01.contoso.local` retorna NXDOMAIN).
 
-**Causa raiz**: O conjunto de regras de encaminhamento não possui uma regra para o domínio local ou a regra tem um IP de servidor DNS de destino incorreto ou ausente.
+**Causa raiz**: O conjunto de regras de encaminhamento nÃ£o possui uma regra para o domÃ­nio local ou a regra tem um IP de servidor DNS de destino incorreto ou ausente.
 
-**Correção**:
+**CorreÃ§Ã£o**:
 
 ```bash
 # List existing forwarding rules
@@ -466,40 +466,40 @@ az dns-resolver vnet-link list \
   --resource-group $RG
 ```
 
-**Insight principal**: Um conjunto de regras de encaminhamento afeta apenas as VNets vinculadas a ele. Se o link da VNet estiver ausente, as VMs do Azure nessa VNet não usarão as regras de encaminhamento.
+**Insight principal**: Um conjunto de regras de encaminhamento afeta apenas as VNets vinculadas a ele. Se o link da VNet estiver ausente, as VMs do Azure nessa VNet nÃ£o usarÃ£o as regras de encaminhamento.
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-37-q1",
-    question: "What is the purpose of the Azure DNS Private Resolver inbound endpoint?",
+    question: "Qual é a finalidade do ponto de extremidade de entrada (inbound endpoint) do Azure DNS Private Resolver?",
     options: [
-      "Sends DNS queries from Azure to on-premises DNS servers",
-      "Receives DNS queries from on-premises or peered VNets and resolves them using Azure DNS ✅",
-      "Blocks DNS queries from reaching Azure Private DNS zones",
-      "Provides public DNS resolution for Azure resources"
+      "Envia consultas DNS do Azure para servidores DNS locais",
+      "Recebe consultas DNS do ambiente local ou VNets emparelhadas e as resolve usando o Azure DNS ✅",
+      "Bloqueia consultas DNS de alcançarem zonas de Azure Private DNS",
+      "Fornece resolução DNS pública para recursos do Azure"
     ],
     correctIndex: 1,
-    explanation: "The inbound endpoint receives DNS queries from outside Azure (on-premises networks, peered VNets) and resolves them using Azure DNS, including Private DNS zones linked to the resolver VNet."
+    explanation: "O ponto de extremidade de entrada recebe consultas DNS de fora do Azure (redes locais, VNets emparelhadas) e as resolve usando o Azure DNS, incluindo zonas de Private DNS vinculadas à VNet do resolver."
   },
   {
     id: "az700-37-q2",
-    question: "What is the minimum subnet size required for a DNS Private Resolver endpoint?",
+    question: "Qual é o tamanho mínimo de sub-rede necessário para um endpoint do DNS Private Resolver?",
     options: [
-      "/30 (4 addresses)",
-      "/29 (8 addresses)",
-      "/28 (16 addresses) ✅",
-      "/27 (32 addresses)"
+      "/30 (4 endereços)",
+      "/29 (8 endereços)",
+      "/28 (16 endereços) ✅",
+      "/27 (32 endereços)"
     ],
     correctIndex: 2,
-    explanation: "Both inbound and outbound endpoint subnets require a minimum of /28 (16 IP addresses). The subnets must be delegated to Microsoft.Network/dnsResolvers and cannot contain other resources."
+    explanation: "Ambas as sub-redes de endpoints de entrada e saída requerem no mínimo /28 (16 endereços IP). As sub-redes devem ser delegadas a Microsoft.Network/dnsResolvers e não podem conter outros recursos."
   },
   {
     id: "az700-37-q3",
-    question: "Which delegation must be applied to subnets used by DNS Private Resolver endpoints?",
+    question: "Qual delegação deve ser aplicada às sub-redes usadas pelos endpoints do DNS Private Resolver?",
     options: [
       "Microsoft.Network/virtualNetworks",
       "Microsoft.Network/dnsResolvers ✅",
@@ -507,43 +507,43 @@ az dns-resolver vnet-link list \
       "Microsoft.Network/dnsForwardingRulesets"
     ],
     correctIndex: 1,
-    explanation: "Subnets for both inbound and outbound endpoints must be delegated to Microsoft.Network/dnsResolvers. This ensures the subnet is exclusively used by the DNS Private Resolver service."
+    explanation: "As sub-redes para ambos os endpoints de entrada e saída devem ser delegadas a Microsoft.Network/dnsResolvers. Isso garante que a sub-rede seja usada exclusivamente pelo serviço DNS Private Resolver."
   },
   {
     id: "az700-37-q4",
-    question: "In a hybrid scenario, what should the on-premises DNS server conditional forwarder point to for resolving Azure Private Endpoint names?",
+    question: "Em um cenário híbrido, para onde o encaminhador condicional do servidor DNS local deve apontar para resolver nomes de Private Endpoint do Azure?",
     options: [
-      "The Azure public DNS servers (168.63.129.16)",
-      "The Private Resolver outbound endpoint IP",
-      "The Private Resolver inbound endpoint IP ✅",
-      "The Azure Private DNS zone IP address"
+      "Os servidores DNS públicos do Azure (168.63.129.16)",
+      "O IP do ponto de extremidade de saída do Private Resolver",
+      "O IP do ponto de extremidade de entrada do Private Resolver ✅",
+      "O endereço IP da zona de Azure Private DNS"
     ],
     correctIndex: 2,
-    explanation: "On-premises DNS conditional forwarders should point to the Private Resolver inbound endpoint IP. This IP receives DNS queries and resolves them against Azure DNS (including Private DNS zones linked to the resolver VNet)."
+    explanation: "Os encaminhadores condicionais do DNS local devem apontar para o IP do ponto de extremidade de entrada do Private Resolver. Este IP recebe consultas DNS e as resolve contra o Azure DNS (incluindo zonas de Private DNS vinculadas à VNet do resolver)."
   },
   {
     id: "az700-37-q5",
-    question: "What happens if a forwarding ruleset is created but not linked to a VNet?",
+    question: "O que acontece se um conjunto de regras de encaminhamento (forwarding ruleset) for criado, mas não vinculado a uma VNet?",
     options: [
-      "The ruleset automatically applies to all VNets in the subscription",
-      "The ruleset has no effect; VMs in the VNet will not use the forwarding rules ✅",
-      "The ruleset applies only to the VNet where the resolver is deployed",
-      "DNS resolution fails completely for all Azure VMs"
+      "O conjunto de regras se aplica automaticamente a todas as VNets na assinatura",
+      "O conjunto de regras não tem efeito; as VMs na VNet não usarão as regras de encaminhamento ✅",
+      "O conjunto de regras se aplica apenas à VNet onde o resolver está implantado",
+      "A resolução DNS falha completamente para todas as VMs do Azure"
     ],
     correctIndex: 1,
-    explanation: "A forwarding ruleset must be explicitly linked to each VNet where it should apply. Without a VNet link, the forwarding rules have no effect and DNS queries from VMs in that VNet will not be forwarded."
+    explanation: "Um conjunto de regras de encaminhamento deve ser explicitamente vinculado a cada VNet onde deve ser aplicado. Sem um vínculo de VNet, as regras de encaminhamento não têm efeito e as consultas DNS das VMs nessa VNet não serão encaminhadas."
   },
   {
     id: "az700-37-q6",
-    question: "Which trailing character is required in the domain-name field when creating a DNS forwarding rule?",
+    question: "Qual caractere final é necessário no campo domain-name ao criar uma regra de encaminhamento DNS?",
     options: [
-      "A semicolon (;)",
-      "A forward slash (/)",
-      "A trailing dot (.) ✅",
-      "No special character is required"
+      "Um ponto e vírgula (;)",
+      "Uma barra (/)",
+      "Um ponto final (.) ✅",
+      "Nenhum caractere especial é necessário"
     ],
     correctIndex: 2,
-    explanation: "The domain name in a DNS forwarding rule must end with a trailing dot (e.g., contoso.local.) to indicate it is a fully qualified domain name. This follows standard DNS naming conventions."
+    explanation: "O nome de domínio em uma regra de encaminhamento DNS deve terminar com um ponto final (ex.: contoso.local.) para indicar que é um nome de domínio totalmente qualificado. Isso segue as convenções padrão de nomenclatura DNS."
   }
 ]} />
 
@@ -562,11 +562,11 @@ Remove-AzResourceGroup -Name "rg-challenge37" -Force -AsJob
 ```
 
 :::warning Gerenciamento de custos
-O Azure DNS Private Resolver cobra aproximadamente **$0,20/hora** por instância do resolvedor (pontos de extremidade de entrada + saída). Executar por um mês inteiro custa aproximadamente **$146/mês**. Exclua o resolvedor imediatamente após concluir este desafio para evitar cobranças inesperadas.
+O Azure DNS Private Resolver cobra aproximadamente **$0,20/hora** por instÃ¢ncia do resolvedor (pontos de extremidade de entrada + saÃ­da). Executar por um mÃªs inteiro custa aproximadamente **$146/mÃªs**. Exclua o resolvedor imediatamente apÃ³s concluir este desafio para evitar cobranÃ§as inesperadas.
 :::
 
 ---
 
 ## Resumo
 
-Neste desafio, você implantou o Azure DNS Private Resolver para habilitar a resolução DNS bidirecional em um ambiente híbrido. Você configurou o ponto de extremidade de entrada para receber consultas do ambiente local, o ponto de extremidade de saída com regras de encaminhamento para resolução do Azure para o ambiente local, e validou a cadeia completa de resolução DNS. Compreender essa arquitetura é essencial para o exame AZ-700, pois o Private Resolver é a solução recomendada para DNS híbrido no Azure.
+Neste desafio, vocÃª implantou o Azure DNS Private Resolver para habilitar a resoluÃ§Ã£o DNS bidirecional em um ambiente hÃ­brido. VocÃª configurou o ponto de extremidade de entrada para receber consultas do ambiente local, o ponto de extremidade de saÃ­da com regras de encaminhamento para resoluÃ§Ã£o do Azure para o ambiente local, e validou a cadeia completa de resoluÃ§Ã£o DNS. Compreender essa arquitetura Ã© essencial para o exame AZ-700, pois o Private Resolver Ã© a soluÃ§Ã£o recomendada para DNS hÃ­brido no Azure.

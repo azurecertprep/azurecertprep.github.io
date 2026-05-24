@@ -523,7 +523,7 @@ Approve-AzPrivateEndpointConnection `
 
 ---
 
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario 1: PLS creation fails - Basic SKU load balancer
 

@@ -530,7 +530,7 @@ Após completar todas as tarefas, você deve ter:
    - `search-connection` → endpoint do Azure AI Search
 3. **Projeto** herda todas as conexões do hub automaticamente
 
-## Quebra e Correção
+## Quebra & conserta
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|

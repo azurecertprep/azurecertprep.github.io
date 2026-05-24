@@ -494,7 +494,7 @@ git push origin main
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Analytics OData queries return 401 Unauthorized
 

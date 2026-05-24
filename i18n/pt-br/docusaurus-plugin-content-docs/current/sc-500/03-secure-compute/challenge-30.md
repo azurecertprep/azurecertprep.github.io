@@ -301,7 +301,7 @@ You are Contoso's customer service assistant. Follow these rules STRICTLY:
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Modelo de IA contorna filtro de conteúdo com prompts codificados
 

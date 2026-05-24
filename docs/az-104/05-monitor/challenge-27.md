@@ -438,7 +438,7 @@ az monitor log-analytics workspace show \
     "Workspace daily cap and retention configured"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: no Data appearing in Log Analytics
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 9
-title: "Challenge 33: Multi-tier global load balancing"
+title: "Desafio 33: Balanceamento de Carga Global Multi-Camadas"
 sidebar_label: "Challenge 33"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -8,76 +8,76 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 33: Balanceamento de carga global multicamada
 
 :::info Tempo e custo estimados
-**90-120 minutos** | **~$0,50/h combinado** (todos os serviços de balanceamento de carga) | **Peso no exame: 15-20%**
+**90-120 minutos** | **~$0,50/h combinado** (todos os serviÃ§os de balanceamento de carga) | **Peso no exame: 15-20%**
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A Fabrikam Corporation está migrando uma aplicação de três camadas do ambiente local para o Azure. A arquitetura possui:
+A Fabrikam Corporation estÃ¡ migrando uma aplicaÃ§Ã£o de trÃªs camadas do ambiente local para o Azure. A arquitetura possui:
 
-- **Camada web** (voltada ao público): Tráfego HTTP global atendendo usuários na América do Norte, Europa e Ásia-Pacífico. Requer cache de conteúdo, offload de SSL e aceleração de tráfego.
-- **Camada API** (regional): APIs RESTful com regras de roteamento baseadas em caminho. Múltiplos microsserviços compartilham um único ponto de entrada por região. Requer roteamento por caminho de URL, backends com autoescala e proteção WAF.
-- **Camada de dados** (interna): Réplicas de banco de dados e clusters de cache acessíveis apenas de dentro da rede virtual. Requer alta disponibilidade com balanceamento L4 e sem exposição pública.
-- **Serviços não-HTTP**: Relay SMTP e serviços TCP personalizados que precisam de failover global baseado em DNS, mas não usam HTTP/HTTPS.
+- **Camada web** (voltada ao pÃºblico): TrÃ¡fego HTTP global atendendo usuÃ¡rios na AmÃ©rica do Norte, Europa e Ãsia-PacÃ­fico. Requer cache de conteÃºdo, offload de SSL e aceleraÃ§Ã£o de trÃ¡fego.
+- **Camada API** (regional): APIs RESTful com regras de roteamento baseadas em caminho. MÃºltiplos microsserviÃ§os compartilham um Ãºnico ponto de entrada por regiÃ£o. Requer roteamento por caminho de URL, backends com autoescala e proteÃ§Ã£o WAF.
+- **Camada de dados** (interna): RÃ©plicas de banco de dados e clusters de cache acessÃ­veis apenas de dentro da rede virtual. Requer alta disponibilidade com balanceamento L4 e sem exposiÃ§Ã£o pÃºblica.
+- **ServiÃ§os nÃ£o-HTTP**: Relay SMTP e serviÃ§os TCP personalizados que precisam de failover global baseado em DNS, mas nÃ£o usam HTTP/HTTPS.
 
-Este é um exercício de design que sintetiza todos os conceitos de balanceamento de carga do Domínio 3 em uma única arquitetura. Você selecionará o serviço de balanceamento de carga apropriado do Azure para cada camada, implementará a solução e verificará o fluxo de tráfego de ponta a ponta.
+Este Ã© um exercÃ­cio de design que sintetiza todos os conceitos de balanceamento de carga do DomÃ­nio 3 em uma Ãºnica arquitetura. VocÃª selecionarÃ¡ o serviÃ§o de balanceamento de carga apropriado do Azure para cada camada, implementarÃ¡ a soluÃ§Ã£o e verificarÃ¡ o fluxo de trÃ¡fego de ponta a ponta.
 
 ## Habilidades do exame abordadas
 
 | Habilidade | Peso |
 |------------|------|
-| Identificar e recomendar uma solução de balanceamento de carga (critérios de decisão) | Alto |
-| Combinar múltiplos serviços de balanceamento de carga em um design multicamada | Alto |
-| Configurar Azure Front Door para aceleração HTTP global | Alto |
+| Identificar e recomendar uma soluÃ§Ã£o de balanceamento de carga (critÃ©rios de decisÃ£o) | Alto |
+| Combinar mÃºltiplos serviÃ§os de balanceamento de carga em um design multicamada | Alto |
+| Configurar Azure Front Door para aceleraÃ§Ã£o HTTP global | Alto |
 | Configurar Application Gateway para roteamento L7 regional | Alto |
 | Configurar Internal Load Balancer para balanceamento L4 privado | Alto |
-| Configurar Traffic Manager para failover global não-HTTP | Médio |
+| Configurar Traffic Manager para failover global nÃ£o-HTTP | MÃ©dio |
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Assinatura do Azure com função de Colaborador
+- Assinatura do Azure com funÃ§Ã£o de Colaborador
 - Azure CLI 2.60+ ou Azure PowerShell Az 12.0+
-- Conclusão dos Desafios 25-32 (ou conhecimento equivalente de todos os serviços de LB)
-- Compreensão da topologia de rede hub-spoke
+- ConclusÃ£o dos Desafios 25-32 (ou conhecimento equivalente de todos os serviÃ§os de LB)
+- CompreensÃ£o da topologia de rede hub-spoke
 
-## O framework de decisão de balanceamento de carga
+## O framework de decisÃ£o de balanceamento de carga
 
-Antes de implementar, você deve selecionar o serviço correto para cada camada. O Azure fornece cinco serviços de balanceamento de carga, cada um otimizado para cenários diferentes.
+Antes de implementar, vocÃª deve selecionar o serviÃ§o correto para cada camada. O Azure fornece cinco serviÃ§os de balanceamento de carga, cada um otimizado para cenÃ¡rios diferentes.
 
-| Critério | Front Door | Traffic Manager | Application Gateway | Load Balancer | Gateway LB |
+| CritÃ©rio | Front Door | Traffic Manager | Application Gateway | Load Balancer | Gateway LB |
 |----------|-----------|----------------|--------------------|--------------|----|
 | Escopo | Global | Global | Regional | Regional | Regional |
 | Protocolo | HTTP/HTTPS (L7) | Baseado em DNS (qualquer) | HTTP/HTTPS (L7) | TCP/UDP (L4) | TCP/UDP (L4) |
-| Implantação | Edge (anycast) | Apenas DNS | Na VNet | Na VNet | NVA inline |
-| Cache | Sim | Não | Não | Não | Não |
-| WAF | Sim (Premium) | Não | Sim | Não | Não |
-| Roteamento por caminho | Via mecanismo de regras | Não | Sim (nativo) | Não | Não |
-| Backend privado | Premium PL | Não | Sim (nativo) | Sim (nativo) | Sim |
-| Offload SSL | Sim | Não | Sim | Não | Não |
-| Afinidade de sessão | Baseada em cookie | Não | Baseada em cookie | Baseada em tupla | N/A |
+| ImplantaÃ§Ã£o | Edge (anycast) | Apenas DNS | Na VNet | Na VNet | NVA inline |
+| Cache | Sim | NÃ£o | NÃ£o | NÃ£o | NÃ£o |
+| WAF | Sim (Premium) | NÃ£o | Sim | NÃ£o | NÃ£o |
+| Roteamento por caminho | Via mecanismo de regras | NÃ£o | Sim (nativo) | NÃ£o | NÃ£o |
+| Backend privado | Premium PL | NÃ£o | Sim (nativo) | Sim (nativo) | Sim |
+| Offload SSL | Sim | NÃ£o | Sim | NÃ£o | NÃ£o |
+| Afinidade de sessÃ£o | Baseada em cookie | NÃ£o | Baseada em cookie | Baseada em tupla | N/A |
 | Sondas de integridade | HTTP/HTTPS | HTTP/HTTPS/TCP | HTTP/HTTPS | TCP/HTTP/HTTPS | TCP/HTTP/HTTPS |
 
-### Matriz de decisão para a Fabrikam
+### Matriz de decisÃ£o para a Fabrikam
 
-| Camada | Requisito | Serviço selecionado | Justificativa |
+| Camada | Requisito | ServiÃ§o selecionado | Justificativa |
 |--------|-----------|--------------------|--------------| 
-| Web (HTTP global) | Aceleração HTTP global, cache, WAF na borda | **Azure Front Door** | Único serviço que fornece aceleração HTTP global baseada em anycast com cache na borda |
-| API (L7 regional) | Roteamento por caminho, WAF, autoescala | **Application Gateway v2** | Roteamento por caminho de URL nativo, WAF integrado e autoescala dentro de uma região |
-| Dados (L4 interno) | HA L4 privado, sem exposição pública | **Internal Load Balancer** | Balanceamento L4 dentro da VNet; sem necessidade de IP público |
-| Não-HTTP (global) | Failover DNS para serviços TCP/SMTP | **Traffic Manager** | Distribuição baseada em DNS funciona com qualquer protocolo; única opção global para não-HTTP |
-| Encadeamento de NVA | Inserção transparente de appliances de firewall | **Gateway Load Balancer** | Encadeia NVAs inline sem modificar o caminho do tráfego da aplicação |
+| Web (HTTP global) | AceleraÃ§Ã£o HTTP global, cache, WAF na borda | **Azure Front Door** | Ãšnico serviÃ§o que fornece aceleraÃ§Ã£o HTTP global baseada em anycast com cache na borda |
+| API (L7 regional) | Roteamento por caminho, WAF, autoescala | **Application Gateway v2** | Roteamento por caminho de URL nativo, WAF integrado e autoescala dentro de uma regiÃ£o |
+| Dados (L4 interno) | HA L4 privado, sem exposiÃ§Ã£o pÃºblica | **Internal Load Balancer** | Balanceamento L4 dentro da VNet; sem necessidade de IP pÃºblico |
+| NÃ£o-HTTP (global) | Failover DNS para serviÃ§os TCP/SMTP | **Traffic Manager** | DistribuiÃ§Ã£o baseada em DNS funciona com qualquer protocolo; Ãºnica opÃ§Ã£o global para nÃ£o-HTTP |
+| Encadeamento de NVA | InserÃ§Ã£o transparente de appliances de firewall | **Gateway Load Balancer** | Encadeia NVAs inline sem modificar o caminho do trÃ¡fego da aplicaÃ§Ã£o |
 
-:::tip Atalhos de decisão para o exame
+:::tip Atalhos de decisÃ£o para o exame
 - **Global + HTTP** = Front Door
-- **Global + não-HTTP** = Traffic Manager
+- **Global + nÃ£o-HTTP** = Traffic Manager
 - **Regional + HTTP + roteamento por caminho** = Application Gateway
-- **Regional + TCP/UDP** = Load Balancer (público ou interno)
-- **Inserção transparente de NVA** = Gateway Load Balancer
+- **Regional + TCP/UDP** = Load Balancer (pÃºblico ou interno)
+- **InserÃ§Ã£o transparente de NVA** = Gateway Load Balancer
 :::
 
 ## Tarefa 1: Implementar Azure Front Door para a camada web global
 
-O Front Door fornece o ponto de entrada global, acelerando o tráfego HTTP para usuários em todo o mundo e armazenando conteúdo estático em cache nos locais de borda.
+O Front Door fornece o ponto de entrada global, acelerando o trÃ¡fego HTTP para usuÃ¡rios em todo o mundo e armazenando conteÃºdo estÃ¡tico em cache nos locais de borda.
 
 ### Azure CLI
 
@@ -189,7 +189,7 @@ New-AzFrontDoorCdnEndpoint `
 
 ## Tarefa 2: Implementar Application Gateway para a camada API regional
 
-O Application Gateway fornece balanceamento de carga L7 dentro de cada região, com roteamento baseado em caminho de URL para direcionar o tráfego a diferentes backends de microsserviços.
+O Application Gateway fornece balanceamento de carga L7 dentro de cada regiÃ£o, com roteamento baseado em caminho de URL para direcionar o trÃ¡fego a diferentes backends de microsserviÃ§os.
 
 ### Azure CLI
 
@@ -314,7 +314,7 @@ $poolInventory = New-AzApplicationGatewayBackendAddressPool -Name "pool-inventor
 
 ## Tarefa 3: Implementar Internal Load Balancer para a camada de dados
 
-O balanceador de carga interno distribui o tráfego entre réplicas de banco de dados e nós de cache sem qualquer exposição à internet pública.
+O balanceador de carga interno distribui o trÃ¡fego entre rÃ©plicas de banco de dados e nÃ³s de cache sem qualquer exposiÃ§Ã£o Ã  internet pÃºblica.
 
 ### Azure CLI
 
@@ -433,9 +433,9 @@ New-AzLoadBalancer `
   -LoadBalancingRule $lbRule
 ```
 
-## Tarefa 4: Implementar Traffic Manager para failover global não-HTTP
+## Tarefa 4: Implementar Traffic Manager para failover global nÃ£o-HTTP
 
-O Traffic Manager fornece balanceamento de carga global baseado em DNS para o serviço de relay SMTP que não pode usar sondagem baseada em HTTP.
+O Traffic Manager fornece balanceamento de carga global baseado em DNS para o serviÃ§o de relay SMTP que nÃ£o pode usar sondagem baseada em HTTP.
 
 ### Azure CLI
 
@@ -520,15 +520,15 @@ New-AzTrafficManagerEndpoint `
 
 ### Portal
 
-1. Navegue até **Traffic Manager profiles** > **Create**.
-2. Defina o Nome como `tm-fabrikam-smtp`, Método de roteamento como **Priority**.
-3. Após a criação, vá para **Endpoints** > **Add**.
+1. Navegue atÃ© **Traffic Manager profiles** > **Create**.
+2. Defina o Nome como `tm-fabrikam-smtp`, MÃ©todo de roteamento como **Priority**.
+3. ApÃ³s a criaÃ§Ã£o, vÃ¡ para **Endpoints** > **Add**.
 4. Adicione endpoints externos para cada relay SMTP com os valores de prioridade apropriados.
 5. Em **Configuration**, defina o protocolo do monitor como **TCP**, porta como **25**.
 
 ## Tarefa 5: Configurar NSGs para permitir sondas de integridade do Front Door
 
-Um ponto de integração crítico: as sondas de integridade do Front Door originam-se da service tag `AzureFrontDoor.Backend`. Se os NSGs do Application Gateway bloquearem esse tráfego, as sondas falham e o Front Door marca a origem como não íntegra.
+Um ponto de integraÃ§Ã£o crÃ­tico: as sondas de integridade do Front Door originam-se da service tag `AzureFrontDoor.Backend`. Se os NSGs do Application Gateway bloquearem esse trÃ¡fego, as sondas falham e o Front Door marca a origem como nÃ£o Ã­ntegra.
 
 ### Azure CLI
 
@@ -625,7 +625,7 @@ $subnet.NetworkSecurityGroup = $nsg
 Set-AzVirtualNetwork -VirtualNetwork $vnet
 ```
 
-## Tarefa 6: Verificar fluxo de tráfego de ponta a ponta
+## Tarefa 6: Verificar fluxo de trÃ¡fego de ponta a ponta
 
 Valide a arquitetura verificando a integridade e conectividade de cada componente.
 
@@ -673,7 +673,7 @@ az network traffic-manager endpoint list \
 
 ## Resumo da arquitetura
 
-```
+```text
 Users (Global)
     |
     v
@@ -705,9 +705,9 @@ Users (Global)
     |--- smtp-westeurope.fabrikam.com (Priority 2)
 ```
 
-## Quebra e correção
+## Quebra & conserta
 
-### Cenário 1: Sondas de integridade do Front Door bloqueadas pelo NSG do AppGW
+### CenÃ¡rio 1: Sondas de integridade do Front Door bloqueadas pelo NSG do AppGW
 
 ```bash
 # Simulate: Remove the Front Door allow rule from the NSG
@@ -717,11 +717,11 @@ az network nsg rule delete \
   --name AllowFrontDoorProbes
 ```
 
-**Sintoma**: O Front Door marca a origem do Application Gateway como não íntegra. O endpoint retorna 503 para todos os usuários, mesmo que o Application Gateway esteja funcionando corretamente e acessível diretamente.
+**Sintoma**: O Front Door marca a origem do Application Gateway como nÃ£o Ã­ntegra. O endpoint retorna 503 para todos os usuÃ¡rios, mesmo que o Application Gateway esteja funcionando corretamente e acessÃ­vel diretamente.
 
-**Causa raiz**: As sondas de integridade do Front Door originam-se dos intervalos de IP da service tag `AzureFrontDoor.Backend`. Sem uma regra de NSG permitindo esse tráfego, as sondas são descartadas no nível da sub-rede e o Front Door não consegue verificar a integridade do backend.
+**Causa raiz**: As sondas de integridade do Front Door originam-se dos intervalos de IP da service tag `AzureFrontDoor.Backend`. Sem uma regra de NSG permitindo esse trÃ¡fego, as sondas sÃ£o descartadas no nÃ­vel da sub-rede e o Front Door nÃ£o consegue verificar a integridade do backend.
 
-**Correção**: Readicione a regra do NSG permitindo as sondas do Front Door:
+**CorreÃ§Ã£o**: Readicione a regra do NSG permitindo as sondas do Front Door:
 
 ```bash
 az network nsg rule create \
@@ -736,7 +736,7 @@ az network nsg rule create \
   --destination-port-ranges 443 80
 ```
 
-### Cenário 2: Sonda de integridade do Internal LB falhando (porta de sonda incorreta)
+### CenÃ¡rio 2: Sonda de integridade do Internal LB falhando (porta de sonda incorreta)
 
 ```bash
 # Misconfigure the SQL health probe to wrong port
@@ -747,11 +747,11 @@ az network lb probe update \
   --port 1434
 ```
 
-**Sintoma**: A camada API recebe timeouts de conexão ao consultar o banco de dados através do balanceador de carga interno. O balanceador de carga para de rotear tráfego para as instâncias SQL de backend.
+**Sintoma**: A camada API recebe timeouts de conexÃ£o ao consultar o banco de dados atravÃ©s do balanceador de carga interno. O balanceador de carga para de rotear trÃ¡fego para as instÃ¢ncias SQL de backend.
 
-**Causa raiz**: A sonda de integridade aponta para a porta 1434, mas o SQL Server escuta na porta 1433. Todas as tentativas de sonda falham, então o LB marca todos os backends como não íntegros e para de encaminhar tráfego.
+**Causa raiz**: A sonda de integridade aponta para a porta 1434, mas o SQL Server escuta na porta 1433. Todas as tentativas de sonda falham, entÃ£o o LB marca todos os backends como nÃ£o Ã­ntegros e para de encaminhar trÃ¡fego.
 
-**Correção**: Corrija a porta da sonda:
+**CorreÃ§Ã£o**: Corrija a porta da sonda:
 
 ```bash
 az network lb probe update \
@@ -761,11 +761,11 @@ az network lb probe update \
   --port 1433
 ```
 
-### Cenário 3: Traffic Manager retornando endpoint incorreto
+### CenÃ¡rio 3: Traffic Manager retornando endpoint incorreto
 
-**Sintoma**: O tráfego não-HTTP sempre roteia para o relay SMTP secundário, mesmo quando o primário está íntegro.
+**Sintoma**: O trÃ¡fego nÃ£o-HTTP sempre roteia para o relay SMTP secundÃ¡rio, mesmo quando o primÃ¡rio estÃ¡ Ã­ntegro.
 
-**Diagnóstico**:
+**DiagnÃ³stico**:
 
 ```bash
 # Check endpoint monitoring status
@@ -778,9 +778,9 @@ az network traffic-manager endpoint show \
   --output json
 ```
 
-**Causa raiz**: O endpoint primário tem `endpointMonitorStatus: Degraded` porque o monitor de integridade está configurado com a porta incorreta ou o serviço SMTP não está escutando.
+**Causa raiz**: O endpoint primÃ¡rio tem `endpointMonitorStatus: Degraded` porque o monitor de integridade estÃ¡ configurado com a porta incorreta ou o serviÃ§o SMTP nÃ£o estÃ¡ escutando.
 
-**Correção**: Verifique se a configuração do monitor corresponde ao serviço:
+**CorreÃ§Ã£o**: Verifique se a configuraÃ§Ã£o do monitor corresponde ao serviÃ§o:
 
 ```bash
 az network traffic-manager profile update \
@@ -790,80 +790,80 @@ az network traffic-manager profile update \
   --port 25
 ```
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-33-q1",
-    question: "Fabrikam needs global load balancing for a TCP-based service on port 5672 (AMQP). Which Azure service should they use?",
+    question: "A Fabrikam precisa de balanceamento de carga global para um serviço baseado em TCP na porta 5672 (AMQP). Qual serviço do Azure eles devem usar?",
     options: [
-      "Traffic Manager with TCP health probes ✅",
-      "Azure Front Door with TCP forwarding",
-      "Application Gateway with TCP listeners",
-      "Azure Load Balancer with global tier"
+      "Traffic Manager com health probes TCP ✅",
+      "Azure Front Door com encaminhamento TCP",
+      "Application Gateway com listeners TCP",
+      "Azure Load Balancer com camada global"
     ],
     correctIndex: 0,
-    explanation: "Traffic Manager is the only Azure global load balancing service that works with non-HTTP protocols. It operates at the DNS layer and uses TCP/HTTP/HTTPS health probes. Front Door only handles HTTP/HTTPS. Application Gateway and Load Balancer are regional services."
+    explanation: "O Traffic Manager é o único serviço de balanceamento de carga global do Azure que funciona com protocolos não-HTTP. Ele opera na camada DNS e usa health probes TCP/HTTP/HTTPS. O Front Door lida apenas com HTTP/HTTPS. Application Gateway e Load Balancer são serviços regionais."
   },
   {
     id: "az700-33-q2",
-    question: "In a multi-tier architecture, Front Door routes traffic to Application Gateway. Front Door probes show the AppGW origin as unhealthy, but AppGW responds correctly to direct browser requests. What is the most likely cause?",
+    question: "Em uma arquitetura multicamadas, o Front Door roteia tráfego para o Application Gateway. As probes do Front Door mostram a origem do AppGW como não íntegra, mas o AppGW responde corretamente a requisições diretas do navegador. Qual é a causa mais provável?",
     options: [
-      "An NSG on the Application Gateway subnet blocks the AzureFrontDoor.Backend service tag ✅",
-      "Application Gateway WAF is blocking the probes",
-      "Front Door and Application Gateway are in different subscriptions",
-      "The Application Gateway health probe path returns a redirect"
+      "Um NSG na sub-rede do Application Gateway bloqueia a service tag AzureFrontDoor.Backend ✅",
+      "O WAF do Application Gateway está bloqueando as probes",
+      "O Front Door e o Application Gateway estão em assinaturas diferentes",
+      "O caminho da health probe do Application Gateway retorna um redirecionamento"
     ],
     correctIndex: 0,
-    explanation: "Front Door health probes originate from the AzureFrontDoor.Backend service tag IP ranges. If an NSG on the AppGW subnet does not have an allow rule for this service tag, probes are silently dropped. Direct browser access works because it comes from a different IP range."
+    explanation: "As health probes do Front Door se originam das faixas de IP da service tag AzureFrontDoor.Backend. Se um NSG na sub-rede do AppGW não tiver uma regra de permissão para essa service tag, as probes são descartadas silenciosamente. O acesso direto pelo navegador funciona porque vem de uma faixa de IP diferente."
   },
   {
     id: "az700-33-q3",
-    question: "Which combination correctly matches each service to its load balancing layer?",
+    question: "Qual combinação associa corretamente cada serviço à sua camada de balanceamento de carga?",
     options: [
-      "Front Door = Global L7, Traffic Manager = Global DNS, Application Gateway = Regional L7, Load Balancer = Regional L4 ✅",
-      "Front Door = Regional L7, Traffic Manager = Global L7, Application Gateway = Global DNS, Load Balancer = Regional L4",
-      "Front Door = Global L4, Traffic Manager = Global DNS, Application Gateway = Regional L7, Load Balancer = Regional L7",
-      "Front Door = Global L7, Traffic Manager = Regional DNS, Application Gateway = Regional L4, Load Balancer = Regional L4"
+      "Front Door = L7 Global, Traffic Manager = DNS Global, Application Gateway = L7 Regional, Load Balancer = L4 Regional ✅",
+      "Front Door = L7 Regional, Traffic Manager = L7 Global, Application Gateway = DNS Global, Load Balancer = L4 Regional",
+      "Front Door = L4 Global, Traffic Manager = DNS Global, Application Gateway = L7 Regional, Load Balancer = L7 Regional",
+      "Front Door = L7 Global, Traffic Manager = DNS Regional, Application Gateway = L4 Regional, Load Balancer = L4 Regional"
     ],
     correctIndex: 0,
-    explanation: "Front Door operates at L7 globally (HTTP/HTTPS with anycast). Traffic Manager is DNS-based global distribution (works with any protocol). Application Gateway is a regional L7 load balancer (HTTP/HTTPS with path routing). Load Balancer is a regional L4 service (TCP/UDP)."
+    explanation: "O Front Door opera na L7 globalmente (HTTP/HTTPS com anycast). O Traffic Manager é distribuição global baseada em DNS (funciona com qualquer protocolo). O Application Gateway é um balanceador de carga L7 regional (HTTP/HTTPS com roteamento por caminho). O Load Balancer é um serviço L4 regional (TCP/UDP)."
   },
   {
     id: "az700-33-q4",
-    question: "An Internal Load Balancer health probe is configured on port 1434, but the SQL Server backend listens on port 1433. What happens?",
+    question: "Uma health probe de um Internal Load Balancer está configurada na porta 1434, mas o backend SQL Server escuta na porta 1433. O que acontece?",
     options: [
-      "All backends are marked unhealthy and the LB stops forwarding traffic on port 1433 ✅",
-      "Traffic is forwarded but connections time out at the backend",
-      "The LB automatically detects the correct port and adjusts",
-      "Only the health probe fails; traffic forwarding is unaffected"
+      "Todos os backends são marcados como não íntegros e o LB para de encaminhar tráfego na porta 1433 ✅",
+      "O tráfego é encaminhado, mas as conexões expiram no backend",
+      "O LB detecta automaticamente a porta correta e ajusta",
+      "Apenas a health probe falha; o encaminhamento de tráfego não é afetado"
     ],
     correctIndex: 0,
-    explanation: "Health probes and load balancing rules are independent configurations. If the probe port (1434) does not get a response, all backends are marked unhealthy. When all backends are unhealthy, the LB drops all new connections on the associated rule (port 1433), even though the backends are actually listening on 1433."
+    explanation: "Health probes e regras de balanceamento de carga são configurações independentes. Se a porta da probe (1434) não obtém resposta, todos os backends são marcados como não íntegros. Quando todos os backends estão não íntegros, o LB descarta todas as novas conexões na regra associada (porta 1433), mesmo que os backends estejam realmente escutando na 1433."
   },
   {
     id: "az700-33-q5",
-    question: "When should you use Gateway Load Balancer instead of a standard Load Balancer?",
+    question: "Quando você deve usar o Gateway Load Balancer em vez de um Load Balancer padrão?",
     options: [
-      "When you need to transparently insert network virtual appliances (NVAs) into the traffic path without changing application configuration ✅",
-      "When you need global load balancing across regions",
-      "When you need HTTP path-based routing",
-      "When you need to load balance traffic across multiple subscriptions"
+      "Quando você precisa inserir de forma transparente appliances virtuais de rede (NVAs) no caminho do tráfego sem alterar a configuração da aplicação ✅",
+      "Quando você precisa de balanceamento de carga global entre regiões",
+      "Quando você precisa de roteamento baseado em caminho HTTP",
+      "Quando você precisa balancear carga de tráfego entre múltiplas assinaturas"
     ],
     correctIndex: 0,
-    explanation: "Gateway Load Balancer enables transparent chaining of NVAs (firewalls, DDoS appliances, packet inspection) into the network path. Traffic is tunneled to the NVA pool and returned without the application or client knowing about the inspection layer."
+    explanation: "O Gateway Load Balancer permite encadeamento transparente de NVAs (firewalls, appliances DDoS, inspeção de pacotes) no caminho da rede. O tráfego é tunelado para o pool de NVAs e retornado sem que a aplicação ou o cliente saibam sobre a camada de inspeção."
   },
   {
     id: "az700-33-q6",
-    question: "Front Door uses priority-based routing to Application Gateways in two regions. What determines when traffic shifts from priority 1 to priority 2?",
+    question: "O Front Door usa roteamento baseado em prioridade para Application Gateways em duas regiões. O que determina quando o tráfego muda da prioridade 1 para a prioridade 2?",
     options: [
-      "When all origins at priority 1 fail their health probes based on the sample-size and successful-samples-required thresholds ✅",
-      "When latency to priority 1 exceeds a configured threshold",
-      "Immediately when any single health probe fails",
-      "Based on a configured traffic percentage split"
+      "Quando todas as origens na prioridade 1 falham suas health probes com base nos limites de sample-size e successful-samples-required ✅",
+      "Quando a latência para a prioridade 1 excede um limite configurado",
+      "Imediatamente quando qualquer health probe individual falha",
+      "Com base em uma divisão percentual de tráfego configurada"
     ],
     correctIndex: 0,
-    explanation: "Front Door failover is probe-driven. Traffic shifts to priority 2 only when ALL origins at priority 1 fail health probes. The failure threshold is determined by sample-size and successful-samples-required settings in the origin group. A single probe failure does not trigger failover."
+    explanation: "O failover do Front Door é orientado por probes. O tráfego muda para prioridade 2 apenas quando TODAS as origens na prioridade 1 falham as health probes. O limite de falha é determinado pelas configurações de sample-size e successful-samples-required no grupo de origem. Uma única falha de probe não aciona o failover."
   }
 ]} />
 
@@ -886,17 +886,17 @@ Remove-AzResourceGroup -Name "rg-fabrikam-multitier" -Force -AsJob
 ```
 
 :::danger Aviso de custo
-Este desafio implanta múltiplos serviços de balanceamento de carga. Custos combinados aproximados durante a execução:
-- Front Door Premium: ~$35/mês base
-- Application Gateway WAF v2 (2 instâncias): ~$0,36/h (~$260/mês)
+Este desafio implanta mÃºltiplos serviÃ§os de balanceamento de carga. Custos combinados aproximados durante a execuÃ§Ã£o:
+- Front Door Premium: ~$35/mÃªs base
+- Application Gateway WAF v2 (2 instÃ¢ncias): ~$0,36/h (~$260/mÃªs)
 - Internal Load Balancer (Standard): ~$0,025/h por regra
-- Traffic Manager: ~$0,75/milhão de consultas
+- Traffic Manager: ~$0,75/milhÃ£o de consultas
 
-Exclua todos os recursos imediatamente após concluir o desafio. A flag `--no-wait` retorna o controle imediatamente enquanto a exclusão prossegue em segundo plano.
+Exclua todos os recursos imediatamente apÃ³s concluir o desafio. A flag `--no-wait` retorna o controle imediatamente enquanto a exclusÃ£o prossegue em segundo plano.
 :::
 
 :::tip Verificar limpeza
-Após alguns minutos, confirme a exclusão:
+ApÃ³s alguns minutos, confirme a exclusÃ£o:
 ```bash
 az group show --name rg-fabrikam-multitier 2>&1 | grep -q "not found" && echo "Deleted" || echo "Still exists"
 ```

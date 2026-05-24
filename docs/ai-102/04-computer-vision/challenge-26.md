@@ -24,7 +24,7 @@ import TabItem from '@theme/TabItem';
 Object detection locates and classifies multiple objects within an image using bounding boxes. Unlike classification (which answers "what is this image?"), detection answers "what objects are here and where?"
 
 Key concepts:
-- **Bounding box**: Rectangle defined by (left, top, width, height) as normalized coordinates (0.0–1.0)
+- **Bounding box**: Rectangle defined by (left, top, width, height) as normalized coordinates (0.0â€“1.0)
 - **IoU (Intersection over Union)**: Measures overlap between predicted and actual bounding boxes
 - **mAP (mean Average Precision)**: Primary metric averaging AP across all object classes
 
@@ -223,7 +223,7 @@ curl -s "${PREDICTION_ENDPOINT}/customvision/v3.0/prediction/${PROJECT_ID}/detec
 
 ## Expected Output
 
-```
+```text
 Domain: General (Object Detection)
 Created project: Vehicle-Detector
 Tags: car=..., truck=..., bicycle=...
@@ -254,11 +254,11 @@ Objects found: 4
     Box: left=0.720, top=0.180, width=0.260, height=0.310
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
-| Regions rejected | Invalid region coordinates | Coordinates outside 0.0–1.0 range | Normalize: left+width ≤ 1.0, top+height ≤ 1.0 |
+| Regions rejected | Invalid region coordinates | Coordinates outside 0.0â€“1.0 range | Normalize: left+width â‰¤ 1.0, top+height â‰¤ 1.0 |
 | Low mAP | Poor detection accuracy | Inconsistent bounding box labeling | Re-label with tight, consistent boxes; more training data |
 | Overlapping detections | Duplicate predictions | No NMS threshold configured | Apply confidence threshold; use Non-Maximum Suppression |
 | Training fails | `BadRequestImageRegions` | Regions too small or missing | Minimum region size ~5% of image area |
@@ -276,7 +276,7 @@ Objects found: 4
       "Center point plus radius"
     ],
     correctAnswer: 0,
-    explanation: "Custom Vision uses normalized coordinates (0.0 to 1.0) for bounding boxes: left, top, width, height — all relative to image dimensions. This makes them resolution-independent."
+    explanation: "Custom Vision uses normalized coordinates (0.0 to 1.0) for bounding boxes: left, top, width, height â€” all relative to image dimensions. This makes them resolution-independent."
   },
   {
     question: "What does mAP (mean Average Precision) measure in object detection?",
@@ -317,10 +317,10 @@ Objects found: 4
       "Only the center point of the object",
       "The pixel coordinates of all four corners",
       "A polygon outline of the object shape",
-      "Left, top, width, and height of the bounding box (normalized 0.0–1.0) plus the tag ID"
+      "Left, top, width, and height of the bounding box (normalized 0.0â€“1.0) plus the tag ID"
     ],
     correctAnswer: 3,
-    explanation: "Each region requires: tag_id (which object class), left, top, width, height — all as normalized values between 0.0 and 1.0 relative to image dimensions."
+    explanation: "Each region requires: tag_id (which object class), left, top, width, height â€” all as normalized values between 0.0 and 1.0 relative to image dimensions."
   }
 ]} />
 

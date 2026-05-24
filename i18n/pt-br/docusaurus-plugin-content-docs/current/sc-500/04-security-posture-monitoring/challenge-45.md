@@ -264,7 +264,7 @@ echo "CEF data appears in the CommonSecurityLog table"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Azure Activity logs não aparecem no Sentinel após 1 hora
 

@@ -264,7 +264,7 @@ az deployment group what-if \
     "What-if shows expected changes without deploying"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: syntax error
 Deploy this broken template and fix the error:

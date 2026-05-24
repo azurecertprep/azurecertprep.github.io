@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 01 | Entra ID: Users & Groups"
+title: "Desafio 01: Entra ID: Usuários & Grupos"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
@@ -179,7 +179,7 @@ A configuração do SSPR é feita preferencialmente pelo Portal do Azure:
 - [Configurar SSPR](https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr)
 - [Regras de associação dinâmica](https://learn.microsoft.com/en-us/entra/identity/users/groups-dynamic-membership)
 
-## Quebre & conserte
+## Quebra & conserta
 
 Após completar o desafio, tente estes cenários de solução de problemas:
 

@@ -477,7 +477,7 @@ After re-indexing, documents should contain custom skill enrichments:
 }
 ```
 
-## Break and Fix
+## Break & fix
 
 | # | Scenario | Symptom | Root Cause | Fix |
 |---|----------|---------|------------|-----|

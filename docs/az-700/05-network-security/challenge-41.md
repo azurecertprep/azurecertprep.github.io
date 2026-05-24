@@ -557,7 +557,7 @@ Fields in flow tuple: `timestamp,sourceIP,destIP,sourcePort,destPort,protocol,tr
 | Decision | A=Allowed, D=Denied |
 | Flow State | B=Begin, C=Continuing, E=End |
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Flow logs not appearing (storage account in wrong region)
 

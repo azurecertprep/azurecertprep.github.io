@@ -323,7 +323,7 @@ Purge protection must be enabled on the Key Vault used for CMK. Without it, dele
 
 </details>
 
-## Break and fix
+## Break & fix
 
 ### Scenario a: CMK Key disabled
 

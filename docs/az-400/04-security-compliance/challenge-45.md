@@ -308,7 +308,7 @@ az security assessment list \
 
 Build a security dashboard in Azure Workbooks:
 
-```
+```text
 // KQL query for DevOps security findings over time
 SecurityRecommendation
 | where RecommendationName contains "DevOps" or RecommendationName contains "GitHub" or RecommendationName contains "Azure DevOps"
@@ -316,7 +316,7 @@ SecurityRecommendation
 | render timechart
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: GitHub connector shows "Disconnected" status
 

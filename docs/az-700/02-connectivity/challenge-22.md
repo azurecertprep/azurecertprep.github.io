@@ -435,7 +435,7 @@ Get-AzVirtualHubEffectiveRoute `
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Basic SKU with VPN gateway fails
 

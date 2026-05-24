@@ -643,7 +643,7 @@ After completing all tasks, you should have:
 3. **Citations** referencing specific document titles and paths
 4. **Comparison** showing grounded responses stay within your data while ungrounded may include external knowledge
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

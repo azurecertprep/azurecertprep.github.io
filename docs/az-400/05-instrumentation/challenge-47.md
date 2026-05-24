@@ -346,7 +346,7 @@ spec:
 
 Verify end-to-end tracing:
 
-```
+```text
 // KQL: Find a request and trace it across services
 requests
 | where timestamp > ago(1h)
@@ -360,7 +360,7 @@ requests
 | project-away operation_Id1
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Container Insights shows no data for new namespace
 

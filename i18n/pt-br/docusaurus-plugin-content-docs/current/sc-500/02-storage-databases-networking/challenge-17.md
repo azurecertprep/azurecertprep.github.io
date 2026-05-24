@@ -448,7 +448,7 @@ az network nsg rule create \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Servidores web não conseguem se conectar aos servidores de aplicação
 

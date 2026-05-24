@@ -1,25 +1,25 @@
 ---
 sidebar_position: 5
-title: "Desafio 43: Manuseio de arquivos sensíveis e prevenção de vazamentos"
+title: "Desafio 43: Manuseio de arquivos sensÃ­veis e prevenÃ§Ã£o de vazamentos"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 43: Manuseio de arquivos sensíveis e prevenção de vazamentos
+# Desafio 43: Manuseio de arquivos sensÃ­veis e prevenÃ§Ã£o de vazamentos
 
 ## Habilidades do exame abordadas
 
-- Projetar e implementar uma estratégia para gerenciar arquivos sensíveis durante o deployment, incluindo secure files do Azure Pipelines
-- Projetar pipelines para prevenir vazamento de informações sensíveis
+- Projetar e implementar uma estratÃ©gia para gerenciar arquivos sensÃ­veis durante o deployment, incluindo secure files do Azure Pipelines
+- Projetar pipelines para prevenir vazamento de informaÃ§Ãµes sensÃ­veis
 
-## Cenário
+## CenÃ¡rio
 
-Um desenvolvedor da Contoso Ltd acidentalmente registrou uma string de conexão de banco de dados na saída de um pipeline ao depurar uma falha de deployment. Na mesma semana, outro desenvolvedor fez commit de um arquivo `.env` contendo chaves de API de produção no repositório. Os secrets ficaram expostos no histórico de commits por três dias antes de alguém perceber. Você deve implementar múltiplas camadas de proteção para prevenir vazamento de secrets tanto na saída do pipeline quanto no controle de código-fonte.
+Um desenvolvedor da Contoso Ltd acidentalmente registrou uma string de conexÃ£o de banco de dados na saÃ­da de um pipeline ao depurar uma falha de deployment. Na mesma semana, outro desenvolvedor fez commit de um arquivo `.env` contendo chaves de API de produÃ§Ã£o no repositÃ³rio. Os secrets ficaram expostos no histÃ³rico de commits por trÃªs dias antes de alguÃ©m perceber. VocÃª deve implementar mÃºltiplas camadas de proteÃ§Ã£o para prevenir vazamento de secrets tanto na saÃ­da do pipeline quanto no controle de cÃ³digo-fonte.
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
 - Projeto Azure DevOps com um pipeline
-- Repositório GitHub com GitHub Actions
+- RepositÃ³rio GitHub com GitHub Actions
 - Git instalado localmente
 - Python 3.8+ (para pre-commit hooks)
 
@@ -27,7 +27,7 @@ Um desenvolvedor da Contoso Ltd acidentalmente registrou uma string de conexão 
 
 ### Tarefa 1: Secure files do Azure Pipelines
 
-Secure files no Azure Pipelines são armazenados criptografados e só podem ser consumidos por tasks específicas. São ideais para certificados, chaves SSH e arquivos de configuração.
+Secure files no Azure Pipelines sÃ£o armazenados criptografados e sÃ³ podem ser consumidos por tasks especÃ­ficas. SÃ£o ideais para certificados, chaves SSH e arquivos de configuraÃ§Ã£o.
 
 ```bash
 # Upload a secure file via CLI
@@ -87,11 +87,11 @@ steps:
     condition: always()
 ```
 
-Configure as permissões de secure files:
+Configure as permissÃµes de secure files:
 
 1. Pipelines > Library > Secure files
-2. Selecione o arquivo > Pipeline permissions: restrinja a pipelines específicos
-3. Selecione o arquivo > Approvals and checks: adicione aprovadores para certificados de produção
+2. Selecione o arquivo > Pipeline permissions: restrinja a pipelines especÃ­ficos
+3. Selecione o arquivo > Approvals and checks: adicione aprovadores para certificados de produÃ§Ã£o
 
 ### Tarefa 2: GitHub Actions: mascarar secrets nos logs
 
@@ -184,7 +184,7 @@ steps:
       API_KEY: $(fetchSecrets.API_KEY)
 ```
 
-### Tarefa 4: Boas práticas de gitignore para arquivos de secrets
+### Tarefa 4: Boas prÃ¡ticas de gitignore para arquivos de secrets
 
 Crie um `.gitignore` abrangente para secrets:
 
@@ -227,7 +227,7 @@ credentials
 docker-compose.override.yml
 ```
 
-Verifique se nada sensível já está sendo rastreado:
+Verifique se nada sensÃ­vel jÃ¡ estÃ¡ sendo rastreado:
 
 ```bash
 # Check if any sensitive files are already tracked
@@ -243,7 +243,7 @@ git commit -m "fix: remove tracked secret files"
 git status --ignored | grep .env
 ```
 
-### Tarefa 5: Pre-commit hooks para bloquear padrões de secrets
+### Tarefa 5: Pre-commit hooks para bloquear padrÃµes de secrets
 
 Instale e configure o gitleaks:
 
@@ -324,7 +324,7 @@ rm test-secrets.txt
 
 ### Tarefa 6: GitHub push protection (bloquear pushes contendo secrets)
 
-Habilite a proteção de push com secret scanning no nível do repositório ou organização:
+Habilite a proteÃ§Ã£o de push com secret scanning no nÃ­vel do repositÃ³rio ou organizaÃ§Ã£o:
 
 ```bash
 # Enable via GitHub API (organization-wide)
@@ -340,13 +340,13 @@ gh api repos/contoso/webapp -X PATCH \
 
 Quando a push protection bloqueia um commit:
 
-```
+```text
 remote: error: GH013: Repository rule violations found for refs/heads/main.
 remote: - GITHUB PUSH PROTECTION
-remote:   —————————————————————————————————————————
+remote:   â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 remote:   Resolve the following violations before pushing again
 remote:
-remote:   — Push cannot contain secrets —
+remote:   â€” Push cannot contain secrets â€”
 remote:
 remote:   locations:
 remote:     - commit: abc123def
@@ -354,20 +354,20 @@ remote:       path: src/config.js:3
 remote:       secret type: Azure Storage Account Key
 ```
 
-Opções do desenvolvedor quando bloqueado:
+OpÃ§Ãµes do desenvolvedor quando bloqueado:
 1. Remover o secret e fazer amend no commit
-2. Se for um falso positivo, fazer bypass com um motivo documentado (se permitido pela política)
+2. Se for um falso positivo, fazer bypass com um motivo documentado (se permitido pela polÃ­tica)
 
-Configure as definições de push protection da organização:
+Configure as definiÃ§Ãµes de push protection da organizaÃ§Ã£o:
 
 1. Organization Settings > Code security and analysis
-2. Secret scanning: Habilitar para todos os repositórios
-3. Push protection: Habilitar para todos os repositórios
-4. Allow actors to bypass push protection: Restringir (exigir revisão da equipe de segurança)
+2. Secret scanning: Habilitar para todos os repositÃ³rios
+3. Push protection: Habilitar para todos os repositÃ³rios
+4. Allow actors to bypass push protection: Restringir (exigir revisÃ£o da equipe de seguranÃ§a)
 
-### Tarefa 7: Filtragem de saída do pipeline e mascaramento de secrets
+### Tarefa 7: Filtragem de saÃ­da do pipeline e mascaramento de secrets
 
-Secrets do Azure Pipelines são mascarados automaticamente, mas padrões adicionais podem vazar:
+Secrets do Azure Pipelines sÃ£o mascarados automaticamente, mas padrÃµes adicionais podem vazar:
 
 ```yaml
 # azure-pipelines.yml
@@ -450,26 +450,26 @@ steps:
     condition: always()
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Cenário de quebra 1: Secret aparece nos logs do pipeline
+### CenÃ¡rio de quebra 1: Secret aparece nos logs do pipeline
 
-Um desenvolvedor adiciona `echo $CONNECTION_STRING` para depuração e a senha completa do banco de dados aparece no log de build.
+Um desenvolvedor adiciona `echo $CONNECTION_STRING` para depuraÃ§Ã£o e a senha completa do banco de dados aparece no log de build.
 
-**Causa:** A variável não foi marcada como secret, então o Azure DevOps não a mascara na saída.
+**Causa:** A variÃ¡vel nÃ£o foi marcada como secret, entÃ£o o Azure DevOps nÃ£o a mascara na saÃ­da.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção (imediata):** Exclua os logs da execução do pipeline:
+**CorreÃ§Ã£o (imediata):** Exclua os logs da execuÃ§Ã£o do pipeline:
 
 ```bash
 # Delete the run to remove exposed logs
 az pipelines runs delete --id <run-id> --yes
 ```
 
-**Correção (preventiva):** Marque a variável como secret e use `isSecret`:
+**CorreÃ§Ã£o (preventiva):** Marque a variÃ¡vel como secret e use `isSecret`:
 
 ```yaml
 variables:
@@ -488,15 +488,15 @@ steps:
 
 </details>
 
-### Cenário de quebra 2: Pre-commit hook bloqueia dados de teste legítimos
+### CenÃ¡rio de quebra 2: Pre-commit hook bloqueia dados de teste legÃ­timos
 
 Desenvolvedores reclamam que o gitleaks bloqueia commits contendo chaves de API de teste em fixtures de teste.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Atualize o `.gitleaks.toml` para incluir padrões de teste na allowlist:
+**CorreÃ§Ã£o:** Atualize o `.gitleaks.toml` para incluir padrÃµes de teste na allowlist:
 
 ```toml
 [allowlist]
@@ -513,52 +513,52 @@ regexes = ['''test_api_key_[a-z0-9]+''']
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Um pipeline da Contoso precisa fazer deploy usando uma chave SSH que não deve ser acessível a desenvolvedores nem armazenada no controle de código-fonte. Onde a chave SSH deve ser armazenada?",
+    question: "Um pipeline da Contoso precisa fazer deploy usando uma chave SSH que nÃ£o deve ser acessÃ­vel a desenvolvedores nem armazenada no controle de cÃ³digo-fonte. Onde a chave SSH deve ser armazenada?",
     options: [
-      "Como uma variável de pipeline marcada como secret",
+      "Como uma variÃ¡vel de pipeline marcada como secret",
       "No Azure Key Vault como um secret",
-      "Como um secure file do Azure Pipelines com permissões restritas de pipeline",
-      "Em um repositório Git privado com acesso limitado"
+      "Como um secure file do Azure Pipelines com permissÃµes restritas de pipeline",
+      "Em um repositÃ³rio Git privado com acesso limitado"
     ],
     correctIndex: 2,
-    explanation: "Secure files do Azure Pipelines são criptografados em repouso e só podem ser baixados por pipelines autorizados via a task DownloadSecureFile. Não são armazenados no controle de código-fonte, não são visíveis para desenvolvedores na library (apenas administradores podem ver o conteúdo) e podem ter permissões de pipeline e verificações de aprovação configuradas."
+    explanation: "Secure files do Azure Pipelines sÃ£o criptografados em repouso e sÃ³ podem ser baixados por pipelines autorizados via a task DownloadSecureFile. NÃ£o sÃ£o armazenados no controle de cÃ³digo-fonte, nÃ£o sÃ£o visÃ­veis para desenvolvedores na library (apenas administradores podem ver o conteÃºdo) e podem ter permissÃµes de pipeline e verificaÃ§Ãµes de aprovaÃ§Ã£o configuradas."
   },
   {
-    question: "Um workflow do GitHub Actions recupera um secret dinamicamente via uma chamada de API. Como você deve prevenir que esse valor apareça nos logs do workflow?",
+    question: "Um workflow do GitHub Actions recupera um secret dinamicamente via uma chamada de API. Como vocÃª deve prevenir que esse valor apareÃ§a nos logs do workflow?",
     options: [
       "Usar o contexto 'secrets' que mascara automaticamente todos os valores",
       "Usar 'echo \"::add-mask::$SECRET_VALUE\"' antes de usar o valor",
       "Definir 'ACTIONS_STEP_DEBUG' como false",
-      "Redirecionar toda a saída para /dev/null"
+      "Redirecionar toda a saÃ­da para /dev/null"
     ],
     correctIndex: 1,
-    explanation: "O comando de workflow ::add-mask:: instrui o GitHub Actions a mascarar um valor específico em toda a saída de log subsequente. Isso é necessário para secrets recuperados dinamicamente que não estão armazenados nas configurações de secrets do repositório (que são mascarados automaticamente). Uma vez mascarado, qualquer ocorrência do valor nos logs é substituída por asteriscos."
+    explanation: "O comando de workflow ::add-mask:: instrui o GitHub Actions a mascarar um valor especÃ­fico em toda a saÃ­da de log subsequente. Isso Ã© necessÃ¡rio para secrets recuperados dinamicamente que nÃ£o estÃ£o armazenados nas configuraÃ§Ãµes de secrets do repositÃ³rio (que sÃ£o mascarados automaticamente). Uma vez mascarado, qualquer ocorrÃªncia do valor nos logs Ã© substituÃ­da por asteriscos."
   },
   {
-    question: "A Contoso quer prevenir que desenvolvedores acidentalmente façam push de secrets para qualquer repositório na organização. Qual recurso fornece a proteção mais abrangente?",
+    question: "A Contoso quer prevenir que desenvolvedores acidentalmente faÃ§am push de secrets para qualquer repositÃ³rio na organizaÃ§Ã£o. Qual recurso fornece a proteÃ§Ã£o mais abrangente?",
     options: [
-      "Regras de branch protection exigindo revisões de PR",
-      "GitHub secret scanning push protection habilitada no nível da organização",
-      "Pre-commit hooks instalados em cada máquina de desenvolvedor",
-      "Um workflow de CI que escaneia secrets após cada push"
+      "Regras de branch protection exigindo revisÃµes de PR",
+      "GitHub secret scanning push protection habilitada no nÃ­vel da organizaÃ§Ã£o",
+      "Pre-commit hooks instalados em cada mÃ¡quina de desenvolvedor",
+      "Um workflow de CI que escaneia secrets apÃ³s cada push"
     ],
     correctIndex: 1,
-    explanation: "A GitHub push protection bloqueia o push no nível do servidor antes que o secret entre no repositório, fornecendo proteção garantida independentemente da configuração do lado do cliente. Pre-commit hooks podem ser contornados, branch protection apenas exige revisões (revisores podem não perceber secrets) e escaneamento por CI só detecta secrets depois que já foram commitados."
+    explanation: "A GitHub push protection bloqueia o push no nÃ­vel do servidor antes que o secret entre no repositÃ³rio, fornecendo proteÃ§Ã£o garantida independentemente da configuraÃ§Ã£o do lado do cliente. Pre-commit hooks podem ser contornados, branch protection apenas exige revisÃµes (revisores podem nÃ£o perceber secrets) e escaneamento por CI sÃ³ detecta secrets depois que jÃ¡ foram commitados."
   },
   {
-    question: "Um variable group do Azure Pipelines está vinculado ao Key Vault. Um desenvolvedor cria um pipeline que referencia esse variable group e imprime todas as variáveis no log. Os valores de secret do Key Vault aparecerão no log?",
+    question: "Um variable group do Azure Pipelines estÃ¡ vinculado ao Key Vault. Um desenvolvedor cria um pipeline que referencia esse variable group e imprime todas as variÃ¡veis no log. Os valores de secret do Key Vault aparecerÃ£o no log?",
     options: [
-      "Sim, variáveis de variable group são sempre visíveis nos logs",
-      "Não, variáveis vinculadas ao Key Vault são automaticamente tratadas como secret e mascaradas",
-      "Somente se o pipeline tiver a configuração \"Allow access to all pipelines\" habilitada",
+      "Sim, variÃ¡veis de variable group sÃ£o sempre visÃ­veis nos logs",
+      "NÃ£o, variÃ¡veis vinculadas ao Key Vault sÃ£o automaticamente tratadas como secret e mascaradas",
+      "Somente se o pipeline tiver a configuraÃ§Ã£o \"Allow access to all pipelines\" habilitada",
       "Somente se o desenvolvedor tiver a role Key Vault Secrets User"
     ],
     correctIndex: 1,
-    explanation: "Variáveis originadas de um variable group vinculado ao Key Vault são automaticamente tratadas como variáveis secret pelo Azure Pipelines. Seus valores são mascarados (substituídos por asteriscos) em toda a saída de log do pipeline, mesmo que um script tente explicitamente exibi-los com echo."
+    explanation: "VariÃ¡veis originadas de um variable group vinculado ao Key Vault sÃ£o automaticamente tratadas como variÃ¡veis secret pelo Azure Pipelines. Seus valores sÃ£o mascarados (substituÃ­dos por asteriscos) em toda a saÃ­da de log do pipeline, mesmo que um script tente explicitamente exibi-los com echo."
   }
 ]} />
 

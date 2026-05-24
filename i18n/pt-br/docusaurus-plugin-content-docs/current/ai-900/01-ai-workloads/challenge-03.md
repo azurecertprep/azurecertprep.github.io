@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 03: Padrões e Casos de Uso Comuns de IA"
+title: "Desafio 03: Padrões e Casos de Uso Comuns de IA"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

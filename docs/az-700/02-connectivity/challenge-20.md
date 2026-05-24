@@ -138,7 +138,7 @@ az network express-route peering connection list \
 
 **Expected output:**
 
-```
+```text
 Name                  CircuitConnectionStatus  AddressPrefix     ProvisioningState
 --------------------  -----------------------  ----------------  -----------------
 globalreach-us-to-eu  Connected                172.16.100.0/29   Succeeded
@@ -309,7 +309,7 @@ For disaster recovery, Microsoft recommends deploying ExpressRoute circuits in a
 
 ### Redundancy design pattern
 
-```
+```text
                     +-----------------------+
                     |   Azure Region        |
                     |  (e.g., East US 2)    |
@@ -395,7 +395,7 @@ az network express-route port location list --output table
 
 **Expected output:**
 
-```
+```text
 Name                   AvailableBandwidths    Address
 ---------------------  --------------------   --------
 Equinix-Ashburn-DC2    100 Gbps, 10 Gbps     21715 Filigree Ct, Ashburn, VA
@@ -468,7 +468,7 @@ Note that when using ExpressRoute Direct, you do not specify `--provider` or `--
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario A: Global Reach between circuits at the same peering location
 
@@ -476,7 +476,7 @@ Note that when using ExpressRoute Direct, you do not specify `--provider` or `--
 
 **Error message:**
 
-```
+```text
 (GlobalReachSamePeeringLocation) The two circuits are at the same peering location.
 Global Reach requires circuits at different peering locations.
 ```

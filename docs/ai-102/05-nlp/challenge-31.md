@@ -31,7 +31,7 @@ Azure AI Language (Text Analytics) provides NLP capabilities:
 | **Entity Linking** | Link entities to Wikipedia knowledge base |
 | **Language Detection** | Identify language of text |
 
-The client supports **batch operations** — send multiple documents in one request for efficiency.
+The client supports **batch operations** â€” send multiple documents in one request for efficiency.
 
 ## Prerequisites
 - Azure subscription
@@ -97,7 +97,7 @@ for idx, result in enumerate(results):
           f"neg={result.confidence_scores.negative:.3f})")
     
     for sentence in result.sentences:
-        print(f"  Sentence: '{sentence.text[:40]}...' → {sentence.sentiment}")
+        print(f"  Sentence: '{sentence.text[:40]}...' â†’ {sentence.sentiment}")
         
         # Opinion mining - aspect-based sentiment
         for mined_opinion in sentence.mined_opinions:
@@ -193,7 +193,7 @@ for idx, result in enumerate(ner_results):
     if not result.is_error:
         print(f"Doc {idx}:")
         for entity in result.entities:
-            print(f"  '{entity.text}' → {entity.category}"
+            print(f"  '{entity.text}' â†’ {entity.category}"
                   f"{f'/{entity.subcategory}' if entity.subcategory else ''}"
                   f" (confidence: {entity.confidence_score:.3f})")
 
@@ -203,7 +203,7 @@ print("\n=== LINKED ENTITIES ===")
 for idx, result in enumerate(linked_results):
     if not result.is_error:
         for entity in result.entities:
-            print(f"  '{entity.name}' → {entity.url}")
+            print(f"  '{entity.name}' â†’ {entity.url}")
             print(f"    Data source: {entity.data_source}, ID: {entity.data_source_entity_id}")
 ```
 
@@ -247,8 +247,8 @@ curl -s "${ENDPOINT}/language/:analyze-text?api-version=2023-04-01" \
 multilingual_docs = [
     "Hello, how are you today?",
     "Bonjour, comment allez-vous?",
-    "こんにちは、元気ですか？",
-    "Hola, ¿cómo estás?"
+    "ã“ã‚“ã«ã¡ã¯ã€å…ƒæ°—ã§ã™ã‹ï¼Ÿ",
+    "Hola, Â¿cÃ³mo estÃ¡s?"
 ]
 
 lang_results = client.detect_language(multilingual_docs)
@@ -256,7 +256,7 @@ print("=== LANGUAGE DETECTION ===")
 for idx, result in enumerate(lang_results):
     if not result.is_error:
         lang = result.primary_language
-        print(f"  '{multilingual_docs[idx][:30]}...' → {lang.name} ({lang.iso6391_name}) "
+        print(f"  '{multilingual_docs[idx][:30]}...' â†’ {lang.name} ({lang.iso6391_name}) "
               f"confidence: {lang.confidence_score:.3f}")
 ```
 
@@ -265,10 +265,10 @@ for idx, result in enumerate(lang_results):
 
 ## Expected Output
 
-```
+```text
 Document 0: 'The hotel room was clean and spacious, but the s...'
   Overall: mixed (pos=0.450, neu=0.100, neg=0.450)
-  Sentence: 'The hotel room was clean and sp...' → mixed
+  Sentence: 'The hotel room was clean and sp...' â†’ mixed
     Target: 'room' (positive)
       Assessment: 'clean' (positive)
       Assessment: 'spacious' (positive)
@@ -281,21 +281,21 @@ Doc 0: ['Microsoft CEO Satya Nadella', 'Azure AI updates', 'Build 2024 conferenc
 
 === NAMED ENTITIES ===
 Doc 0:
-  'Microsoft' → Organization (confidence: 0.990)
-  'Satya Nadella' → Person (confidence: 0.985)
-  'Azure AI' → Product (confidence: 0.920)
-  'Build 2024' → Event (confidence: 0.880)
-  'Seattle' → Location (confidence: 0.995)
-  'May 21' → DateTime/Date (confidence: 0.970)
+  'Microsoft' â†’ Organization (confidence: 0.990)
+  'Satya Nadella' â†’ Person (confidence: 0.985)
+  'Azure AI' â†’ Product (confidence: 0.920)
+  'Build 2024' â†’ Event (confidence: 0.880)
+  'Seattle' â†’ Location (confidence: 0.995)
+  'May 21' â†’ DateTime/Date (confidence: 0.970)
 
 === LANGUAGE DETECTION ===
-  'Hello, how are you today?...' → English (en) confidence: 1.000
-  'Bonjour, comment allez-vous?...' → French (fr) confidence: 1.000
-  'こんにちは、元気ですか？...' → Japanese (ja) confidence: 1.000
-  'Hola, ¿cómo estás?...' → Spanish (es) confidence: 1.000
+  'Hello, how are you today?...' â†’ English (en) confidence: 1.000
+  'Bonjour, comment allez-vous?...' â†’ French (fr) confidence: 1.000
+  'ã“ã‚“ã«ã¡ã¯ã€å…ƒæ°—ã§ã™ã‹ï¼Ÿ...' â†’ Japanese (ja) confidence: 1.000
+  'Hola, Â¿cÃ³mo estÃ¡s?...' â†’ Spanish (es) confidence: 1.000
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -346,7 +346,7 @@ Doc 0:
     options: [
       "Catch a single exception for the entire batch",
       "Check the is_error property on each individual document result",
-      "Errors are never returned — failed documents are silently skipped",
+      "Errors are never returned â€” failed documents are silently skipped",
       "Retry the entire batch if any document fails"
     ],
     correctAnswer: 1,

@@ -372,7 +372,7 @@ az role assignment create \
   --scope "/subscriptions/<sub-id>/resourceGroups/rg-contoso-prod/providers/microsoft.insights/components/ai-contoso-webapp"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: KQL query returns no results despite existing data
 

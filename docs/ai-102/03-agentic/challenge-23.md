@@ -352,7 +352,7 @@ asyncio.run(run_evaluation())
 
 ## Expected Output
 
-```
+```text
 ============================================================
 [Researcher]:
 ============================================================
@@ -380,7 +380,7 @@ The content is well-structured and accurate. APPROVED.
 [TechnicalAgent]: HTTP 429 indicates rate limiting. Check your TPM quota...
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

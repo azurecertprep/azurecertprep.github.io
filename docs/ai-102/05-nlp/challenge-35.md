@@ -233,7 +233,7 @@ curl -s "https://${REGION}.tts.speech.microsoft.com/cognitiveservices/v1" \
 
 ## Expected Output
 
-```
+```text
 Speech synthesized successfully!
 Audio duration: 4.82 seconds
 Audio length: 77120 bytes
@@ -250,7 +250,7 @@ Available en-US voices (148):
     Styles: chat, customerservice, narration-professional
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -301,7 +301,7 @@ Available en-US voices (148):
     options: [
       "Only WAV files",
       "Only MP3",
-      "Only streaming — no file output",
+      "Only streaming â€” no file output",
       "WAV, MP3, OGG Opus, raw PCM, and other compressed formats"
     ],
     correctAnswer: 3,

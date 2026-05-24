@@ -391,7 +391,7 @@ Para o runbook gerenciar recursos do Azure, a Conta do Automation precisa de uma
 
 </details>
 
-## Quebrar & consertar
+## Quebra & conserta
 
 ### Cenário a: extensão falha ao instalar
 

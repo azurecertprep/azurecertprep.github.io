@@ -10,34 +10,34 @@ import TabItem from '@theme/TabItem';
 # Desafio 34: Speech-to-Text
 
 :::info Tempo Estimado
-**50 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
+**50 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Implementar transcrição speech-to-text
-- Configurar transcrição em tempo real e em lote
-- Implementar modelos de fala personalizados para vocabulário específico de domínio
+- Implementar transcriÃ§Ã£o speech-to-text
+- Configurar transcriÃ§Ã£o em tempo real e em lote
+- Implementar modelos de fala personalizados para vocabulÃ¡rio especÃ­fico de domÃ­nio
 
-## Visão Geral
+## VisÃ£o Geral
 
-O serviço Azure Speech fornece capacidades de speech-to-text (STT):
+O serviÃ§o Azure Speech fornece capacidades de speech-to-text (STT):
 
-| Modo | Descrição | Caso de Uso |
+| Modo | DescriÃ§Ã£o | Caso de Uso |
 |------|-----------|-------------|
-| **Tempo real** | Reconhecimento contínuo de microfone/stream | Legendas ao vivo, comandos de voz |
-| **Lote** | Transcrição assíncrona de arquivos de áudio | Gravações de reuniões, call centers |
-| **Custom Speech** | Modelos treinados com seu vocabulário | Domínios médico, jurídico, técnico |
+| **Tempo real** | Reconhecimento contÃ­nuo de microfone/stream | Legendas ao vivo, comandos de voz |
+| **Lote** | TranscriÃ§Ã£o assÃ­ncrona de arquivos de Ã¡udio | GravaÃ§Ãµes de reuniÃµes, call centers |
+| **Custom Speech** | Modelos treinados com seu vocabulÃ¡rio | DomÃ­nios mÃ©dico, jurÃ­dico, tÃ©cnico |
 
 Classes principais: `SpeechConfig`, `SpeechRecognizer`, `AudioConfig`
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura do Azure
 - Recurso Azure Speech
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-cognitiveservices-speech` (v1.38+)
-- Microfone (para tempo real) ou arquivo de áudio (.wav)
+- Microfone (para tempo real) ou arquivo de Ã¡udio (.wav)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Criar Recurso de Speech
 
@@ -125,7 +125,7 @@ switch (result.Reason)
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Reconhecimento Contínuo (Transcrição Completa de Reunião)
+### Tarefa 3: Reconhecimento ContÃ­nuo (TranscriÃ§Ã£o Completa de ReuniÃ£o)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -210,7 +210,7 @@ Console.WriteLine(string.Join(" ", transcript));
 </TabItem>
 </Tabs>
 
-### Tarefa 4: API de Transcrição em Lote
+### Tarefa 4: API de TranscriÃ§Ã£o em Lote
 
 <Tabs>
 <TabItem value="rest" label="REST API">
@@ -249,9 +249,9 @@ curl -s "https://${REGION}.api.cognitive.microsoft.com/speechtotext/v3.2/transcr
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Recognizing from file...
 Recognized: Welcome to the quarterly business review meeting.
 Duration: 3.45 seconds
@@ -267,73 +267,73 @@ Full transcript (4 segments):
 Welcome to the quarterly business review meeting. Today we'll discuss our progress on key initiatives. Let's start with the revenue numbers from last quarter. We exceeded our target by fifteen percent.
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Resultado `NoMatch` | Nenhuma fala reconhecida | Áudio é silêncio, formato errado ou idioma errado | Verifique formato WAV (16kHz, 16-bit, mono PCM); verifique configuração de idioma |
-| `Canceled` com erro de autenticação | 401 Unauthorized | Chave ou região errada | Verifique se a chave corresponde à região; verifique se o recurso está ativo |
-| Reconhecimento truncado | Apenas primeira sentença | Usou `recognize_once` em vez de contínuo | Use `start_continuous_recognition` para áudio longo |
-| Palavras faltando | Transcrição incompleta | Vocabulário específico de domínio | Treine modelo Custom Speech com sua terminologia |
-| Alta latência | Resultados lentos | Rede ou chunks grandes de áudio | Use streaming/push de áudio; verifique conectividade de rede |
+| Resultado `NoMatch` | Nenhuma fala reconhecida | Ãudio Ã© silÃªncio, formato errado ou idioma errado | Verifique formato WAV (16kHz, 16-bit, mono PCM); verifique configuraÃ§Ã£o de idioma |
+| `Canceled` com erro de autenticaÃ§Ã£o | 401 Unauthorized | Chave ou regiÃ£o errada | Verifique se a chave corresponde Ã  regiÃ£o; verifique se o recurso estÃ¡ ativo |
+| Reconhecimento truncado | Apenas primeira sentenÃ§a | Usou `recognize_once` em vez de contÃ­nuo | Use `start_continuous_recognition` para Ã¡udio longo |
+| Palavras faltando | TranscriÃ§Ã£o incompleta | VocabulÃ¡rio especÃ­fico de domÃ­nio | Treine modelo Custom Speech com sua terminologia |
+| Alta latÃªncia | Resultados lentos | Rede ou chunks grandes de Ã¡udio | Use streaming/push de Ã¡udio; verifique conectividade de rede |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a diferença entre recognize_once e reconhecimento contínuo?",
+    question: "Qual Ã© a diferenÃ§a entre recognize_once e reconhecimento contÃ­nuo?",
     options: [
-      "recognize_once é mais rápido; contínuo é mais preciso",
-      "recognize_once processa uma única elocução e para; reconhecimento contínuo processa até ser explicitamente parado",
-      "recognize_once funciona offline; contínuo requer internet",
-      "Produzem resultados idênticos mas com APIs diferentes"
+      "recognize_once Ã© mais rÃ¡pido; contÃ­nuo Ã© mais preciso",
+      "recognize_once processa uma Ãºnica elocuÃ§Ã£o e para; reconhecimento contÃ­nuo processa atÃ© ser explicitamente parado",
+      "recognize_once funciona offline; contÃ­nuo requer internet",
+      "Produzem resultados idÃªnticos mas com APIs diferentes"
     ],
     correctAnswer: 1,
-    explanation: "recognize_once escuta uma única elocução (até o silêncio) e retorna. O reconhecimento contínuo processa todo o fluxo de áudio, disparando eventos 'recognized' para cada elocução até ser parado."
+    explanation: "recognize_once escuta uma Ãºnica elocuÃ§Ã£o (atÃ© o silÃªncio) e retorna. O reconhecimento contÃ­nuo processa todo o fluxo de Ã¡udio, disparando eventos 'recognized' para cada elocuÃ§Ã£o atÃ© ser parado."
   },
   {
-    question: "Qual formato de áudio o Speech SDK espera para entrada de arquivo?",
+    question: "Qual formato de Ã¡udio o Speech SDK espera para entrada de arquivo?",
     options: [
-      "Qualquer formato de áudio — converte automaticamente",
+      "Qualquer formato de Ã¡udio â€” converte automaticamente",
       "Apenas MP3",
-      "WAV com codificação PCM (padrão: 16kHz, 16-bit, mono)",
+      "WAV com codificaÃ§Ã£o PCM (padrÃ£o: 16kHz, 16-bit, mono)",
       "FLAC ou OGG Vorbis"
     ],
     correctAnswer: 2,
-    explanation: "O SDK espera arquivos WAV com codificação PCM. O formato padrão esperado é 16kHz de taxa de amostragem, 16-bit de profundidade, canal mono. Outros formatos podem precisar de configuração explícita de AudioStreamFormat."
+    explanation: "O SDK espera arquivos WAV com codificaÃ§Ã£o PCM. O formato padrÃ£o esperado Ã© 16kHz de taxa de amostragem, 16-bit de profundidade, canal mono. Outros formatos podem precisar de configuraÃ§Ã£o explÃ­cita de AudioStreamFormat."
   },
   {
-    question: "Quando você deve usar transcrição em lote em vez de reconhecimento em tempo real?",
+    question: "Quando vocÃª deve usar transcriÃ§Ã£o em lote em vez de reconhecimento em tempo real?",
     options: [
-      "Quando você precisa de resultados em menos de 1 segundo",
-      "Lote é sempre preferível ao tempo real",
-      "Quando você precisa de diarização de falantes",
-      "Quando transcrever arquivos de áudio pré-gravados de forma assíncrona, especialmente gravações longas ou múltiplos arquivos"
+      "Quando vocÃª precisa de resultados em menos de 1 segundo",
+      "Lote Ã© sempre preferÃ­vel ao tempo real",
+      "Quando vocÃª precisa de diarizaÃ§Ã£o de falantes",
+      "Quando transcrever arquivos de Ã¡udio prÃ©-gravados de forma assÃ­ncrona, especialmente gravaÃ§Ãµes longas ou mÃºltiplos arquivos"
     ],
     correctAnswer: 3,
-    explanation: "A transcrição em lote é para arquivos pré-gravados processados de forma assíncrona via REST API. É ideal para gravações longas, múltiplos arquivos e quando resultados em tempo real não são necessários."
+    explanation: "A transcriÃ§Ã£o em lote Ã© para arquivos prÃ©-gravados processados de forma assÃ­ncrona via REST API. Ã‰ ideal para gravaÃ§Ãµes longas, mÃºltiplos arquivos e quando resultados em tempo real nÃ£o sÃ£o necessÃ¡rios."
   },
   {
-    question: "O que a diarização fornece no speech-to-text?",
+    question: "O que a diarizaÃ§Ã£o fornece no speech-to-text?",
     options: [
-      "Identificação de qual falante disse o quê (separação de falantes)",
-      "Tradução para outro idioma",
-      "Correção de pontuação",
-      "Redução de ruído"
+      "IdentificaÃ§Ã£o de qual falante disse o quÃª (separaÃ§Ã£o de falantes)",
+      "TraduÃ§Ã£o para outro idioma",
+      "CorreÃ§Ã£o de pontuaÃ§Ã£o",
+      "ReduÃ§Ã£o de ruÃ­do"
     ],
     correctAnswer: 0,
-    explanation: "A diarização separa a fala por falante, identificando 'quem disse o quê'. Ela rotula segmentos da transcrição com IDs de falantes, útil para reuniões com múltiplos participantes."
+    explanation: "A diarizaÃ§Ã£o separa a fala por falante, identificando 'quem disse o quÃª'. Ela rotula segmentos da transcriÃ§Ã£o com IDs de falantes, Ãºtil para reuniÃµes com mÃºltiplos participantes."
   },
   {
-    question: "Como você lida com CancellationReason.Error no reconhecimento de fala?",
+    question: "Como vocÃª lida com CancellationReason.Error no reconhecimento de fala?",
     options: [
-      "Ignore — é apenas informativo",
+      "Ignore â€” Ã© apenas informativo",
       "Reinicie o reconhecedor automaticamente",
-      "Verifique cancellation_details.error_details para o erro específico (autenticação, rede, problema de formato) e corrija adequadamente",
+      "Verifique cancellation_details.error_details para o erro especÃ­fico (autenticaÃ§Ã£o, rede, problema de formato) e corrija adequadamente",
       "Mude para um idioma diferente"
     ],
     correctAnswer: 2,
-    explanation: "CancellationReason.Error indica uma falha real. Verifique error_details para detalhes — causas comuns são credenciais inválidas, problemas de rede ou formato de áudio não suportado."
+    explanation: "CancellationReason.Error indica uma falha real. Verifique error_details para detalhes â€” causas comuns sÃ£o credenciais invÃ¡lidas, problemas de rede ou formato de Ã¡udio nÃ£o suportado."
   }
 ]} />
 
@@ -345,7 +345,7 @@ az group delete --name rg-ai102-speech --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral do Speech-to-text](https://learn.microsoft.com/azure/ai-services/speech-service/speech-to-text)
-- [Início rápido do Speech SDK](https://learn.microsoft.com/azure/ai-services/speech-service/get-started-speech-to-text)
-- [Transcrição em lote](https://learn.microsoft.com/azure/ai-services/speech-service/batch-transcription)
+- [VisÃ£o geral do Speech-to-text](https://learn.microsoft.com/azure/ai-services/speech-service/speech-to-text)
+- [InÃ­cio rÃ¡pido do Speech SDK](https://learn.microsoft.com/azure/ai-services/speech-service/get-started-speech-to-text)
+- [TranscriÃ§Ã£o em lote](https://learn.microsoft.com/azure/ai-services/speech-service/batch-transcription)
 - [Custom Speech](https://learn.microsoft.com/azure/ai-services/speech-service/custom-speech-overview)

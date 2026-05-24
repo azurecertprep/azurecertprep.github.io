@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
-title: "Challenge 40: Azure AI Search — Index and Skillset"
+title: "Challenge 40: Azure AI Search â€” Index and Skillset"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 40: Azure AI Search — Index and Skillset
+# Challenge 40: Azure AI Search â€” Index and Skillset
 
 :::info Estimated Time
 **60-75 min** | **Cost**: ~$0.50 (Free tier Search + Storage) | **Domain**: Knowledge Mining & Extraction (15-20%)
@@ -28,7 +28,7 @@ import TabItem from '@theme/TabItem';
 
 Azure AI Search is a cloud search service that provides indexing and querying capabilities over heterogeneous content. The enrichment pipeline follows this architecture:
 
-**Data Source** → **Indexer** → **Skillset** (AI enrichment) → **Index** (searchable store)
+**Data Source** â†’ **Indexer** â†’ **Skillset** (AI enrichment) â†’ **Index** (searchable store)
 
 Key concepts:
 - **Data source**: Connection to content (Blob Storage, SQL Database, Cosmos DB, Table Storage)
@@ -38,16 +38,16 @@ Key concepts:
 
 ## Architecture
 
-```
-┌─────────────┐     ┌──────────┐     ┌────────────┐     ┌─────────┐
-│ Blob Storage│────▶│ Indexer  │────▶│  Skillset  │────▶│  Index  │
-│ (PDFs, imgs)│     │          │     │ (AI Skills)│     │(search) │
-└─────────────┘     └──────────┘     └────────────┘     └─────────┘
-                                           │
-                                     ┌─────┴─────┐
-                                     │ AI Services│
-                                     │ (multi)    │
-                                     └───────────┘
+```text
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Blob Storageâ”‚â”€â”€â”€â”€â–¶â”‚ Indexer  â”‚â”€â”€â”€â”€â–¶â”‚  Skillset  â”‚â”€â”€â”€â”€â–¶â”‚  Index  â”‚
+â”‚ (PDFs, imgs)â”‚     â”‚          â”‚     â”‚ (AI Skills)â”‚     â”‚(search) â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                           â”‚
+                                     â”Œâ”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”
+                                     â”‚ AI Servicesâ”‚
+                                     â”‚ (multi)    â”‚
+                                     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ## Prerequisites
@@ -105,7 +105,7 @@ az cognitiveservices account create \
   --name $AI_SERVICE \
   --resource-group $RG \
   --location $LOCATION \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --yes
 
@@ -543,15 +543,15 @@ After the indexer completes, querying the index should return enriched documents
 }
 ```
 
-## Break and Fix
+## Break & fix
 
 | # | Scenario | Symptom | Root Cause | Fix |
 |---|----------|---------|------------|-----|
 | 1 | Indexer fails with "Could not execute skill" | Indexer status shows `transientFailure` | AI Services key is invalid or the resource is in a different region than the search service | Ensure AI Services is in the same region; update the key in the skillset |
 | 2 | Enriched fields are null in the index | Documents index but `keyphrases` and `organizations` are empty | Output field mappings use incorrect source paths (e.g., missing `/document/` prefix) | Fix `outputFieldMappings` source paths to match skillset output `targetName` with `/document/` prefix |
 | 3 | Indexer cannot connect to Blob Storage | `StorageException: Access denied` | Storage connection string is invalid or container doesn't exist | Verify connection string and container name in data source definition |
-| 4 | Index creation fails with "analyzer not found" | HTTP 400 on index creation | Analyzer name misspelled (e.g., `en.Microsoft` instead of `en.microsoft`) | Use correct analyzer name — they are case-sensitive |
-| 5 | Duplicate documents in index after re-run | Document count doubles on each run | Missing or incorrect document key mapping — `metadata_storage_path` needs Base64 encoding | Use `metadata_storage_path` with `base64Encode` mapping function as the key |
+| 4 | Index creation fails with "analyzer not found" | HTTP 400 on index creation | Analyzer name misspelled (e.g., `en.Microsoft` instead of `en.microsoft`) | Use correct analyzer name â€” they are case-sensitive |
+| 5 | Duplicate documents in index after re-run | Document count doubles on each run | Missing or incorrect document key mapping â€” `metadata_storage_path` needs Base64 encoding | Use `metadata_storage_path` with `base64Encode` mapping function as the key |
 
 ## Knowledge Check
 

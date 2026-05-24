@@ -367,7 +367,7 @@ Azure is retiring default outbound access for new deployments. All new VMs witho
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: NAT Gateway deployment fails with Basic SKU public IP
 

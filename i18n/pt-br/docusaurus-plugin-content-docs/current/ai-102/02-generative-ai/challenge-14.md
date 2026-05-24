@@ -643,7 +643,7 @@ Após completar todas as tarefas, você deve ter:
 3. **Citações** referenciando títulos e caminhos de documentos específicos
 4. **Comparação** mostrando que respostas fundamentadas ficam dentro dos seus dados enquanto não fundamentadas podem incluir conhecimento externo
 
-## Break and Fix
+## Quebra & conserta
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|

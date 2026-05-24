@@ -1,10 +1,10 @@
 ---
 sidebar_position: 4
-title: "Challenge 17: Point-to-Site VPN & Client Configuration"
+title: "Desafio 17: VPN Ponto a Site & Configuração do Cliente"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 17: VPN ponto a site e configuração de cliente
+# Desafio 17: VPN ponto a site e configuraÃ§Ã£o de cliente
 
 :::info Tempo e custo estimados
 
@@ -12,22 +12,22 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A força de trabalho remota da Contoso precisa de acesso seguro às redes virtuais do Azure a partir de seus laptops pessoais e corporativos. A equipe de rede deve configurar a conectividade VPN ponto a site (P2S) em um gateway VPN existente, suportando múltiplos tipos de túnel para acomodar clientes Windows, macOS e Linux. Eles precisam gerar e distribuir pacotes de configuração de cliente VPN e entender quando recomendar cada tipo de túnel com base nos requisitos organizacionais.
+A forÃ§a de trabalho remota da Contoso precisa de acesso seguro Ã s redes virtuais do Azure a partir de seus laptops pessoais e corporativos. A equipe de rede deve configurar a conectividade VPN ponto a site (P2S) em um gateway VPN existente, suportando mÃºltiplos tipos de tÃºnel para acomodar clientes Windows, macOS e Linux. Eles precisam gerar e distribuir pacotes de configuraÃ§Ã£o de cliente VPN e entender quando recomendar cada tipo de tÃºnel com base nos requisitos organizacionais.
 
 ## Habilidades de exame abordadas
 
-| Habilidade | Descrição |
+| Habilidade | DescriÃ§Ã£o |
 |------------|-----------|
-| Selecionar um SKU de gateway de rede virtual apropriado | Escolher um SKU que suporte P2S e os tipos de túnel necessários |
-| Selecionar e configurar um tipo de túnel | Configurar OpenVPN, IKEv2 ou SSTP com base nos requisitos do SO do cliente |
-| Implementar um arquivo de configuração de cliente VPN | Gerar e distribuir pacotes de cliente VPN |
-| Especificar os requisitos do Azure para o Azure Network Adapter | Entender a configuração simplificada de P2S via Windows Admin Center |
+| Selecionar um SKU de gateway de rede virtual apropriado | Escolher um SKU que suporte P2S e os tipos de tÃºnel necessÃ¡rios |
+| Selecionar e configurar um tipo de tÃºnel | Configurar OpenVPN, IKEv2 ou SSTP com base nos requisitos do SO do cliente |
+| Implementar um arquivo de configuraÃ§Ã£o de cliente VPN | Gerar e distribuir pacotes de cliente VPN |
+| Especificar os requisitos do Azure para o Azure Network Adapter | Entender a configuraÃ§Ã£o simplificada de P2S via Windows Admin Center |
 
-## Visão geral da arquitetura
+## VisÃ£o geral da arquitetura
 
-```
+```text
 Remote Clients                        Azure
 +------------------+                  +---------------------------+
 | Windows laptop   |---[OpenVPN]----->|                           |
@@ -42,15 +42,15 @@ Remote Clients                        Azure
                                       +---------------+
 ```
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-Este desafio baseia-se em um gateway VPN implantado em um desafio anterior. Se você não tiver um, implante o gateway primeiro usando os comandos de configuração na Tarefa 1.
+Este desafio baseia-se em um gateway VPN implantado em um desafio anterior. Se vocÃª nÃ£o tiver um, implante o gateway primeiro usando os comandos de configuraÃ§Ã£o na Tarefa 1.
 
 ---
 
-## Tarefa 1: Implantar o gateway VPN base (se ainda não estiver implantado)
+## Tarefa 1: Implantar o gateway VPN base (se ainda nÃ£o estiver implantado)
 
-Se você já possui um gateway VPN do Desafio 14, pule para a Tarefa 2.
+Se vocÃª jÃ¡ possui um gateway VPN do Desafio 14, pule para a Tarefa 2.
 
 ### Azure CLI
 
@@ -134,9 +134,9 @@ New-AzVirtualNetworkGateway -Name $gwName -ResourceGroupName $rg `
 
 ---
 
-## Tarefa 2: Configurar P2S com tipo de túnel OpenVPN
+## Tarefa 2: Configurar P2S com tipo de tÃºnel OpenVPN
 
-OpenVPN é o tipo de túnel recomendado para suporte multiplataforma (Windows, macOS, Linux). Ele usa TLS e opera na porta 443.
+OpenVPN Ã© o tipo de tÃºnel recomendado para suporte multiplataforma (Windows, macOS, Linux). Ele usa TLS e opera na porta 443.
 
 ### Azure CLI
 
@@ -173,14 +173,14 @@ $gw.VpnClientConfiguration | Format-List
 ```
 
 :::tip Dica de exame
-OpenVPN é o único tipo de túnel que suporta todos os três principais métodos de autenticação: certificados, Microsoft Entra ID e RADIUS. Ele também funciona em Windows, macOS, Linux, iOS e Android.
+OpenVPN Ã© o Ãºnico tipo de tÃºnel que suporta todos os trÃªs principais mÃ©todos de autenticaÃ§Ã£o: certificados, Microsoft Entra ID e RADIUS. Ele tambÃ©m funciona em Windows, macOS, Linux, iOS e Android.
 :::
 
 ---
 
-## Tarefa 3: Configurar tipo de túnel IKEv2
+## Tarefa 3: Configurar tipo de tÃºnel IKEv2
 
-IKEv2 é uma solução VPN IPsec baseada em padrões, suportada nativamente no Windows 10+ e macOS sem software de cliente adicional.
+IKEv2 Ã© uma soluÃ§Ã£o VPN IPsec baseada em padrÃµes, suportada nativamente no Windows 10+ e macOS sem software de cliente adicional.
 
 ### Azure CLI
 
@@ -211,18 +211,18 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
   -VpnClientProtocol "IkeV2", "OpenVPN"
 ```
 
-:::note Considerações sobre IKEv2
+:::note ConsideraÃ§Ãµes sobre IKEv2
 - IKEv2 usa portas UDP 500 e 4500, que podem ser bloqueadas por alguns firewalls corporativos
-- Suporta no máximo 128 conexões simultâneas por instância de gateway
-- Necessário para configuração Always On VPN com túneis de nível de máquina
+- Suporta no mÃ¡ximo 128 conexÃµes simultÃ¢neas por instÃ¢ncia de gateway
+- NecessÃ¡rio para configuraÃ§Ã£o Always On VPN com tÃºneis de nÃ­vel de mÃ¡quina
 - Suporte nativo no cliente Windows 10/11 e macOS (sem necessidade de aplicativo de terceiros)
 :::
 
 ---
 
-## Tarefa 4: Configurar tipo de túnel SSTP
+## Tarefa 4: Configurar tipo de tÃºnel SSTP
 
-SSTP (Secure Socket Tunneling Protocol) é um protocolo exclusivo para Windows que usa a porta TCP 443, sendo ideal para conexões atrás de firewalls restritivos.
+SSTP (Secure Socket Tunneling Protocol) Ã© um protocolo exclusivo para Windows que usa a porta TCP 443, sendo ideal para conexÃµes atrÃ¡s de firewalls restritivos.
 
 ### Azure CLI
 
@@ -258,25 +258,25 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
 #   -VpnClientProtocol "IkeV2", "SSTP"
 ```
 
-### Características do SSTP
+### CaracterÃ­sticas do SSTP
 
 | Propriedade | Detalhe |
 |-------------|---------|
 | SO suportado | Somente Windows |
 | Porta | TCP 443 (mesma do HTTPS) |
 | Compatibilidade com firewall | Excelente - atravessa a maioria dos firewalls e proxies |
-| Máximo de conexões | 128 por instância de gateway |
-| Limitação de protocolo | Não pode ser combinado com OpenVPN no mesmo gateway (ambos usam TLS; IKEv2+SSTP é válido) |
+| MÃ¡ximo de conexÃµes | 128 por instÃ¢ncia de gateway |
+| LimitaÃ§Ã£o de protocolo | NÃ£o pode ser combinado com OpenVPN no mesmo gateway (ambos usam TLS; IKEv2+SSTP Ã© vÃ¡lido) |
 
-:::warning Limitação importante
-SSTP e OpenVPN não podem coexistir no mesmo gateway porque ambos usam tunelamento baseado em TLS na porta TCP 443. Combinações válidas são: IKEv2+OpenVPN (multiplataforma), IKEv2+SSTP (Windows com travessia de firewall) ou IKEv2 sozinho. Se você precisa de suporte a macOS/Linux e travessia de firewall, escolha IKEv2+OpenVPN.
+:::warning LimitaÃ§Ã£o importante
+SSTP e OpenVPN nÃ£o podem coexistir no mesmo gateway porque ambos usam tunelamento baseado em TLS na porta TCP 443. CombinaÃ§Ãµes vÃ¡lidas sÃ£o: IKEv2+OpenVPN (multiplataforma), IKEv2+SSTP (Windows com travessia de firewall) ou IKEv2 sozinho. Se vocÃª precisa de suporte a macOS/Linux e travessia de firewall, escolha IKEv2+OpenVPN.
 :::
 
 ---
 
-## Tarefa 5: Gerar e baixar o pacote de configuração de cliente VPN
+## Tarefa 5: Gerar e baixar o pacote de configuraÃ§Ã£o de cliente VPN
 
-O pacote de configuração de cliente VPN contém as configurações necessárias para que dispositivos clientes se conectem via P2S.
+O pacote de configuraÃ§Ã£o de cliente VPN contÃ©m as configuraÃ§Ãµes necessÃ¡rias para que dispositivos clientes se conectem via P2S.
 
 ### Azure CLI
 
@@ -304,20 +304,20 @@ $profile = New-AzVpnClientConfiguration -ResourceGroupName $rg `
 $profile.VPNProfileSASUrl
 ```
 
-### O que contém o pacote de cliente
+### O que contÃ©m o pacote de cliente
 
-O arquivo ZIP baixado contém pastas para cada protocolo configurado:
+O arquivo ZIP baixado contÃ©m pastas para cada protocolo configurado:
 
-```
+```text
 VpnClientConfiguration.zip
-├── OpenVPN/          # OpenVPN profile (.ovpn file)
-├── WindowsAmd64/    # Windows 64-bit native client installer
-├── WindowsX86/      # Windows 32-bit native client installer
-├── Generic/         # Profile XML for manual configuration
-└── AzureVPN/        # Azure VPN Client profile (azurevpnconfig.xml)
+â”œâ”€â”€ OpenVPN/          # OpenVPN profile (.ovpn file)
+â”œâ”€â”€ WindowsAmd64/    # Windows 64-bit native client installer
+â”œâ”€â”€ WindowsX86/      # Windows 32-bit native client installer
+â”œâ”€â”€ Generic/         # Profile XML for manual configuration
+â””â”€â”€ AzureVPN/        # Azure VPN Client profile (azurevpnconfig.xml)
 ```
 
-| Cliente | Protocolo usado | Arquivo de configuração |
+| Cliente | Protocolo usado | Arquivo de configuraÃ§Ã£o |
 |---------|----------------|------------------------|
 | Azure VPN Client (Windows/macOS) | OpenVPN | AzureVPN/azurevpnconfig.xml |
 | OpenVPN Connect | OpenVPN | OpenVPN/vpnconfig.ovpn |
@@ -329,38 +329,38 @@ VpnClientConfiguration.zip
 
 ## Tarefa 6: Entender o Azure Network Adapter
 
-Azure Network Adapter é um recurso do Windows Admin Center que fornece uma experiência simplificada de configuração de VPN ponto a site para máquinas Windows Server.
+Azure Network Adapter Ã© um recurso do Windows Admin Center que fornece uma experiÃªncia simplificada de configuraÃ§Ã£o de VPN ponto a site para mÃ¡quinas Windows Server.
 
-### Características principais
+### CaracterÃ­sticas principais
 
-| Recurso | Descrição |
+| Recurso | DescriÃ§Ã£o |
 |---------|-----------|
-| Objetivo | Conectar Windows Server local à VNet do Azure sem configuração complexa de VPN |
+| Objetivo | Conectar Windows Server local Ã  VNet do Azure sem configuraÃ§Ã£o complexa de VPN |
 | Interface | Plugin do Windows Admin Center |
 | Protocolo usado | VPN P2S IKEv2 |
-| Autenticação | Baseada em certificado (gerado automaticamente) |
+| AutenticaÃ§Ã£o | Baseada em certificado (gerado automaticamente) |
 | Requisito de gateway | Requer gateway VPN existente com P2S configurado |
-| Caso de uso | Gerenciamento híbrido, conectividade de servidor único |
+| Caso de uso | Gerenciamento hÃ­brido, conectividade de servidor Ãºnico |
 
 ### Requisitos do Azure Network Adapter
 
 1. Windows Admin Center instalado e registrado com o Azure
-2. Um gateway VPN existente com SKU compatível com P2S (VpnGw1 ou superior)
-3. O gateway deve ter o pool de endereços P2S configurado
-4. Permissões de assinatura do Azure para gerenciar o gateway VPN
-5. Windows Server 2012 R2 ou posterior na máquina local
+2. Um gateway VPN existente com SKU compatÃ­vel com P2S (VpnGw1 ou superior)
+3. O gateway deve ter o pool de endereÃ§os P2S configurado
+4. PermissÃµes de assinatura do Azure para gerenciar o gateway VPN
+5. Windows Server 2012 R2 ou posterior na mÃ¡quina local
 
 :::tip Dica de exame
-O Azure Network Adapter automatiza a geração de certificados, a configuração do gateway e a instalação do cliente. Você não precisa gerar certificados manualmente nem baixar pacotes de cliente ao usar este recurso. É uma experiência baseada em "assistente" através do Windows Admin Center.
+O Azure Network Adapter automatiza a geraÃ§Ã£o de certificados, a configuraÃ§Ã£o do gateway e a instalaÃ§Ã£o do cliente. VocÃª nÃ£o precisa gerar certificados manualmente nem baixar pacotes de cliente ao usar este recurso. Ã‰ uma experiÃªncia baseada em "assistente" atravÃ©s do Windows Admin Center.
 :::
 
 ---
 
 ## Tarefa 7: Entender as capacidades do SKU do gateway VPN para P2S
 
-### Comparação de SKU para P2S
+### ComparaÃ§Ã£o de SKU para P2S
 
-| SKU | Máximo de conexões P2S | Túneis suportados | Throughput |
+| SKU | MÃ¡ximo de conexÃµes P2S | TÃºneis suportados | Throughput |
 |-----|------------------------:|-------------------|-----------|
 | Basic | 128 | Somente SSTP | 100 Mbps |
 | VpnGw1 | 250 | SSTP, IKEv2, OpenVPN | 650 Mbps |
@@ -369,21 +369,21 @@ O Azure Network Adapter automatiza a geração de certificados, a configuração
 | VpnGw4 | 5.000 | SSTP, IKEv2, OpenVPN | 5,0 Gbps |
 | VpnGw5 | 10.000 | SSTP, IKEv2, OpenVPN | 10,0 Gbps |
 
-:::warning Limitação do SKU Basic
-O SKU Basic suporta apenas o tipo de túnel SSTP (somente Windows). Ele não suporta IKEv2 ou OpenVPN. Para conectividade P2S multiplataforma, use VpnGw1 ou superior.
+:::warning LimitaÃ§Ã£o do SKU Basic
+O SKU Basic suporta apenas o tipo de tÃºnel SSTP (somente Windows). Ele nÃ£o suporta IKEv2 ou OpenVPN. Para conectividade P2S multiplataforma, use VpnGw1 ou superior.
 :::
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Sobreposição de pool de endereços
+### CenÃ¡rio 1: SobreposiÃ§Ã£o de pool de endereÃ§os
 
-**Sintoma:** Os clientes se conectam à VPN, mas não conseguem acessar recursos na VNet.
+**Sintoma:** Os clientes se conectam Ã  VPN, mas nÃ£o conseguem acessar recursos na VNet.
 
-**Causa raiz:** O pool de endereços P2S (172.16.201.0/24) se sobrepõe a uma sub-rede local ou outro espaço de endereço de VNet.
+**Causa raiz:** O pool de endereÃ§os P2S (172.16.201.0/24) se sobrepÃµe a uma sub-rede local ou outro espaÃ§o de endereÃ§o de VNet.
 
-**Correção:** Escolha um pool de endereços P2S que não se sobreponha a nenhuma rede conectada:
+**CorreÃ§Ã£o:** Escolha um pool de endereÃ§os P2S que nÃ£o se sobreponha a nenhuma rede conectada:
 
 ```bash
 az network vnet-gateway update \
@@ -392,13 +392,13 @@ az network vnet-gateway update \
   --address-prefixes "192.168.100.0/24"
 ```
 
-### Cenário 2: Cliente macOS não consegue conectar (tipo de túnel incorreto)
+### CenÃ¡rio 2: Cliente macOS nÃ£o consegue conectar (tipo de tÃºnel incorreto)
 
-**Sintoma:** Usuários de macOS relatam falhas de conexão. O gateway está configurado apenas com SSTP.
+**Sintoma:** UsuÃ¡rios de macOS relatam falhas de conexÃ£o. O gateway estÃ¡ configurado apenas com SSTP.
 
-**Causa raiz:** SSTP é exclusivo para Windows. O macOS requer IKEv2 ou OpenVPN.
+**Causa raiz:** SSTP Ã© exclusivo para Windows. O macOS requer IKEv2 ou OpenVPN.
 
-**Correção:** Adicione IKEv2 ou OpenVPN à configuração do gateway:
+**CorreÃ§Ã£o:** Adicione IKEv2 ou OpenVPN Ã  configuraÃ§Ã£o do gateway:
 
 ```bash
 az network vnet-gateway update \
@@ -407,13 +407,13 @@ az network vnet-gateway update \
   --client-protocol OpenVPN IkeV2
 ```
 
-### Cenário 3: Pacote de configuração de cliente desatualizado
+### CenÃ¡rio 3: Pacote de configuraÃ§Ã£o de cliente desatualizado
 
-**Sintoma:** O cliente se conecta com configurações antigas após a reconfiguração do gateway.
+**Sintoma:** O cliente se conecta com configuraÃ§Ãµes antigas apÃ³s a reconfiguraÃ§Ã£o do gateway.
 
-**Causa raiz:** O cliente está usando um perfil VPN gerado antes da atualização do gateway.
+**Causa raiz:** O cliente estÃ¡ usando um perfil VPN gerado antes da atualizaÃ§Ã£o do gateway.
 
-**Correção:** Regenere a configuração do cliente VPN e redistribua:
+**CorreÃ§Ã£o:** Regenere a configuraÃ§Ã£o do cliente VPN e redistribua:
 
 ```bash
 az network vnet-gateway vpn-client generate \
@@ -422,13 +422,13 @@ az network vnet-gateway vpn-client generate \
   --processor-architecture Amd64
 ```
 
-### Cenário 4: Cliente OpenVPN falha na porta 443
+### CenÃ¡rio 4: Cliente OpenVPN falha na porta 443
 
 **Sintoma:** O cliente OpenVPN relata timeout ao conectar na porta 443.
 
-**Causa raiz:** Um proxy ou firewall intermediário está interceptando o tráfego TLS e interrompendo o handshake do OpenVPN.
+**Causa raiz:** Um proxy ou firewall intermediÃ¡rio estÃ¡ interceptando o trÃ¡fego TLS e interrompendo o handshake do OpenVPN.
 
-**Correção:** Certifique-se de que o proxy ou firewall permita conexões TLS diretas ao IP público do gateway. Considere adicionar uma exceção para o IP do gateway na configuração do proxy, ou mude para IKEv2 (UDP 500/4500) se UDP for permitido.
+**CorreÃ§Ã£o:** Certifique-se de que o proxy ou firewall permita conexÃµes TLS diretas ao IP pÃºblico do gateway. Considere adicionar uma exceÃ§Ã£o para o IP do gateway na configuraÃ§Ã£o do proxy, ou mude para IKEv2 (UDP 500/4500) se UDP for permitido.
 
 ---
 
@@ -446,12 +446,12 @@ Remove-AzResourceGroup -Name "rg-p2s-lab" -Force -AsJob
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-17-q1",
-    question: "Which tunnel type supports Windows, macOS, and Linux clients?",
+    question: "Qual tipo de túnel suporta clientes Windows, macOS e Linux?",
     options: [
       "OpenVPN",
       "SSTP",
@@ -459,11 +459,11 @@ Remove-AzResourceGroup -Name "rg-p2s-lab" -Force -AsJob
       "L2TP"
     ],
     correctIndex: 0,
-    explanation: "OpenVPN supports Windows, macOS, Linux, iOS, and Android. SSTP is Windows-only. IKEv2 supports Windows and macOS natively but requires additional software on Linux. L2TP is not supported for Azure P2S VPN."
+    explanation: "O OpenVPN suporta Windows, macOS, Linux, iOS e Android. O SSTP é exclusivo para Windows. O IKEv2 suporta Windows e macOS nativamente, mas requer software adicional no Linux. O L2TP não é suportado para VPN P2S do Azure."
   },
   {
     id: "az700-17-q2",
-    question: "A company needs P2S VPN connectivity for 300 concurrent remote users. Which is the minimum VPN gateway SKU that supports this requirement?",
+    question: "Uma empresa precisa de conectividade VPN P2S para 300 usuários remotos simultâneos. Qual é o SKU mínimo de VPN Gateway que suporta esse requisito?",
     options: [
       "Basic",
       "VpnGw1",
@@ -471,11 +471,11 @@ Remove-AzResourceGroup -Name "rg-p2s-lab" -Force -AsJob
       "VpnGw3"
     ],
     correctIndex: 2,
-    explanation: "VpnGw2 supports up to 500 P2S connections. VpnGw1 supports only 250, which is insufficient for 300 users. Basic supports only 128 connections and is limited to SSTP."
+    explanation: "O VpnGw2 suporta até 500 conexões P2S. O VpnGw1 suporta apenas 250, o que é insuficiente para 300 usuários. O Basic suporta apenas 128 conexões e é limitado ao SSTP."
   },
   {
     id: "az700-17-q3",
-    question: "Which protocol uses TCP port 443 and works only on Windows?",
+    question: "Qual protocolo usa a porta TCP 443 e funciona apenas no Windows?",
     options: [
       "OpenVPN",
       "IKEv2",
@@ -483,23 +483,23 @@ Remove-AzResourceGroup -Name "rg-p2s-lab" -Force -AsJob
       "WireGuard"
     ],
     correctIndex: 2,
-    explanation: "SSTP (Secure Socket Tunneling Protocol) uses TCP port 443 and is supported only on Windows. OpenVPN also uses port 443 but is cross-platform. IKEv2 uses UDP 500 and 4500."
+    explanation: "O SSTP (Secure Socket Tunneling Protocol) usa a porta TCP 443 e é suportado apenas no Windows. O OpenVPN também usa a porta 443, mas é multiplataforma. O IKEv2 usa UDP 500 e 4500."
   },
   {
     id: "az700-17-q4",
-    question: "What does the command 'az network vnet-gateway vpn-client generate' return?",
+    question: "O que o comando 'az network vnet-gateway vpn-client generate' retorna?",
     options: [
-      "A URL to download the VPN client configuration ZIP file",
-      "The VPN client configuration XML inline",
-      "A list of connected P2S clients",
-      "The gateway public IP address"
+      "Uma URL para baixar o arquivo ZIP de configuração do cliente VPN",
+      "A configuração XML do cliente VPN inline",
+      "Uma lista de clientes P2S conectados",
+      "O endereço IP público do gateway"
     ],
     correctIndex: 0,
-    explanation: "The 'az network vnet-gateway vpn-client generate' command generates the VPN client configuration and returns a URL (SAS URL) to download the ZIP file containing client profiles for all configured protocols."
+    explanation: "O comando 'az network vnet-gateway vpn-client generate' gera a configuração do cliente VPN e retorna uma URL (SAS URL) para baixar o arquivo ZIP contendo perfis de cliente para todos os protocolos configurados."
   },
   {
     id: "az700-17-q5",
-    question: "Which tunnel type is required for Always On VPN with machine-level tunneling?",
+    question: "Qual tipo de túnel é necessário para Always On VPN com tunelamento em nível de máquina?",
     options: [
       "OpenVPN",
       "SSTP",
@@ -507,19 +507,19 @@ Remove-AzResourceGroup -Name "rg-p2s-lab" -Force -AsJob
       "GRE"
     ],
     correctIndex: 2,
-    explanation: "Always On VPN with device (machine) tunnel requires IKEv2 protocol. The device tunnel connects before any user logs on and uses machine certificate authentication. OpenVPN can be used for the user tunnel but not the device tunnel."
+    explanation: "O Always On VPN com túnel de dispositivo (máquina) requer o protocolo IKEv2. O túnel de dispositivo conecta antes de qualquer usuário fazer logon e usa autenticação por certificado de máquina. O OpenVPN pode ser usado para o túnel de usuário, mas não para o túnel de dispositivo."
   },
   {
     id: "az700-17-q6",
-    question: "What is the purpose of Azure Network Adapter in Windows Admin Center?",
+    question: "Qual é a finalidade do Azure Network Adapter no Windows Admin Center?",
     options: [
-      "To configure site-to-site VPN between on-premises networks",
-      "To provide a simplified wizard for connecting a Windows Server to an Azure VNet via P2S",
-      "To manage Azure virtual NIC settings on VMs",
-      "To configure ExpressRoute private peering"
+      "Configurar VPN site-to-site entre redes on-premises",
+      "Fornecer um assistente simplificado para conectar um Windows Server a uma Azure VNet via P2S",
+      "Gerenciar configurações de NIC virtual do Azure em VMs",
+      "Configurar peering privado do ExpressRoute"
     ],
     correctIndex: 1,
-    explanation: "Azure Network Adapter is a Windows Admin Center feature that simplifies connecting an on-premises Windows Server to an Azure VNet using P2S VPN. It automates certificate generation, gateway configuration, and client setup."
+    explanation: "O Azure Network Adapter é um recurso do Windows Admin Center que simplifica a conexão de um Windows Server on-premises a uma Azure VNet usando VPN P2S. Ele automatiza a geração de certificados, configuração do gateway e configuração do cliente."
   }
 ]} />
 

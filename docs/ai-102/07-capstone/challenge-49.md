@@ -40,35 +40,35 @@ You are building an **Enterprise Document Intelligence Platform** for a global f
 6. **Indexes** everything in Azure AI Search with vector embeddings
 7. **Serves** a conversational RAG interface using Azure OpenAI
 
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                     Enterprise Document Intelligence Platform                           │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                        │
-│  ┌─────────┐     ┌──────────────┐     ┌───────────────┐     ┌─────────────────┐      │
-│  │  Blob   │────▶│  Doc Intel   │────▶│  Translation  │────▶│  NLP Enrichment │      │
-│  │ Storage │     │  + OCR       │     │  (Translator) │     │  (Text Analytics│      │
-│  └─────────┘     └──────────────┘     └───────────────┘     │  + Custom NER)  │      │
-│       │                                                       └────────┬────────┘      │
-│       │                                                                │               │
-│       │          ┌──────────────┐     ┌───────────────┐               │               │
-│       └─────────▶│  Vision API  │     │ Content Safety│◀──────────────┤               │
-│                  │  (Images)    │     │  (Moderation) │               │               │
-│                  └──────┬───────┘     └───────────────┘               │               │
-│                         │                                              │               │
-│                         ▼                                              ▼               │
-│                  ┌──────────────────────────────────────────────────────┐              │
-│                  │              Azure AI Search                          │              │
-│                  │  (Full-text + Vector + Semantic + Knowledge Store)   │              │
-│                  └──────────────────────────┬───────────────────────────┘              │
-│                                             │                                          │
-│                                             ▼                                          │
-│                  ┌──────────────────────────────────────────────────────┐              │
-│                  │              Azure OpenAI (GPT-4o)                    │              │
-│                  │  RAG Chat Interface with grounded responses          │              │
-│                  └──────────────────────────────────────────────────────┘              │
-│                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+```text
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                     Enterprise Document Intelligence Platform                           â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                                        â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”‚
+â”‚  â”‚  Blob   â”‚â”€â”€â”€â”€â–¶â”‚  Doc Intel   â”‚â”€â”€â”€â”€â–¶â”‚  Translation  â”‚â”€â”€â”€â”€â–¶â”‚  NLP Enrichment â”‚      â”‚
+â”‚  â”‚ Storage â”‚     â”‚  + OCR       â”‚     â”‚  (Translator) â”‚     â”‚  (Text Analyticsâ”‚      â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚  + Custom NER)  â”‚      â”‚
+â”‚       â”‚                                                       â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â”‚
+â”‚       â”‚                                                                â”‚               â”‚
+â”‚       â”‚          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”               â”‚               â”‚
+â”‚       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚  Vision API  â”‚     â”‚ Content Safetyâ”‚â—€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤               â”‚
+â”‚                  â”‚  (Images)    â”‚     â”‚  (Moderation) â”‚               â”‚               â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜               â”‚               â”‚
+â”‚                         â”‚                                              â”‚               â”‚
+â”‚                         â–¼                                              â–¼               â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”              â”‚
+â”‚                  â”‚              Azure AI Search                          â”‚              â”‚
+â”‚                  â”‚  (Full-text + Vector + Semantic + Knowledge Store)   â”‚              â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜              â”‚
+â”‚                                             â”‚                                          â”‚
+â”‚                                             â–¼                                          â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”              â”‚
+â”‚                  â”‚              Azure OpenAI (GPT-4o)                    â”‚              â”‚
+â”‚                  â”‚  RAG Chat Interface with grounded responses          â”‚              â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜              â”‚
+â”‚                                                                                        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ## Prerequisites
@@ -76,7 +76,7 @@ You are building an **Enterprise Document Intelligence Platform** for a global f
 - Azure subscription with Contributor role
 - Access to Azure OpenAI (approved)
 - Python 3.9+ with packages:
-  ```
+  ```text
   azure-search-documents>=11.4.0
   azure-ai-documentintelligence>=1.0.0
   azure-ai-textanalytics>=5.3.0
@@ -88,7 +88,7 @@ You are building an **Enterprise Document Intelligence Platform** for a global f
   azure-identity>=1.15.0
   ```
 - .NET 8 with packages:
-  ```
+  ```text
   Azure.Search.Documents
   Azure.AI.DocumentIntelligence
   Azure.AI.TextAnalytics
@@ -100,7 +100,7 @@ You are building an **Enterprise Document Intelligence Platform** for a global f
 
 ## Implementation
 
-### Task 1: Deploy all Azure AI resources (Domain 1 — Plan & Manage)
+### Task 1: Deploy all Azure AI resources (Domain 1 â€” Plan & Manage)
 
 ```bash
 RG="rg-ai102-capstone"
@@ -114,7 +114,7 @@ az cognitiveservices account create \
   --name "ai-services-${UNIQUE_ID}" \
   --resource-group $RG \
   --location $LOCATION \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 --yes
 
 # 2. Azure OpenAI
@@ -203,7 +203,7 @@ STORAGE_CONN=$(az storage account show-connection-string --name "stcapstone${UNI
 echo "All resources deployed successfully"
 ```
 
-### Task 2: Configure RBAC and monitoring (Domain 1 — Plan & Manage)
+### Task 2: Configure RBAC and monitoring (Domain 1 â€” Plan & Manage)
 
 ```bash
 # Enable diagnostic logging on AI Search
@@ -317,7 +317,7 @@ Console.WriteLine($"Extracted {pages} pages, {content.Length} chars, language: {
 </TabItem>
 </Tabs>
 
-### Task 4: Translate non-English content (Domain 4 — NLP)
+### Task 4: Translate non-English content (Domain 4 â€” NLP)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -357,7 +357,7 @@ if doc_data["language"] != "en":
     print(f"Translated from {translation['detected_language']} (confidence: {translation['confidence']:.2%})")
 else:
     doc_data["original_language"] = "en"
-    print("Content already in English — no translation needed")
+    print("Content already in English â€” no translation needed")
 ```
 
 </TabItem>
@@ -388,7 +388,7 @@ async Task<string> TranslateAsync(string text, string targetLang = "en")
 </TabItem>
 </Tabs>
 
-### Task 5: Apply NLP enrichment (Domain 4 — NLP)
+### Task 5: Apply NLP enrichment (Domain 4 â€” NLP)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -577,7 +577,7 @@ print(f"Categories: {moderation['categories']}")
 print(f"Action: {moderation['action']}")
 
 if not moderation["is_safe"]:
-    print("⚠️  Content flagged for review — will not be indexed automatically")
+    print("âš ï¸  Content flagged for review â€” will not be indexed automatically")
 ```
 
 </TabItem>
@@ -778,8 +778,8 @@ Never make up information not present in the context."""
     )
 
     answer = response.choices[0].message.content
-    print(f"\n🤖 Assistant: {answer}")
-    print(f"\n📚 Sources: {', '.join(sources)}")
+    print(f"\nðŸ¤– Assistant: {answer}")
+    print(f"\nðŸ“š Sources: {', '.join(sources)}")
     return answer
 
 # Test the RAG interface
@@ -830,7 +830,7 @@ async Task<string> RagChatAsync(string question)
 </TabItem>
 </Tabs>
 
-### Task 10: Speech integration — voice queries (Domain 4 — Speech)
+### Task 10: Speech integration â€” voice queries (Domain 4 â€” Speech)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -846,7 +846,7 @@ def speech_to_text_query() -> str:
 
     recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
-    print("🎤 Speak your question...")
+    print("ðŸŽ¤ Speak your question...")
     result = recognizer.recognize_once_async().get()
 
     if result.reason == speechsdk.ResultReason.RecognizedSpeech:
@@ -870,7 +870,7 @@ def text_to_speech_response(text: str):
 
     result = synthesizer.speak_text_async(text).get()
     if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-        print("🔊 Audio response delivered")
+        print("ðŸ”Š Audio response delivered")
     else:
         print(f"Speech synthesis failed: {result.reason}")
 
@@ -911,13 +911,13 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
 
 ## Expected Output
 
-```
+```text
 === Enterprise Document Intelligence Platform ===
 
 [Task 3] Extracted 1 pages, 2456 chars, 1 tables
          Detected language: en
 
-[Task 4] Content already in English — no translation needed
+[Task 4] Content already in English â€” no translation needed
 
 [Task 5] Sentiment: neutral
          Key phrases: ['consulting services', 'total amount', 'payment terms']
@@ -935,14 +935,14 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
 [Task 8] Enterprise documents index created
          Document indexed: Invoice_1.pdf
 
-[Task 9] 🤖 Assistant: Based on the context, Invoice_1.pdf from Contoso Ltd mentions
+[Task 9] ðŸ¤– Assistant: Based on the context, Invoice_1.pdf from Contoso Ltd mentions
          consulting services with a total amount of $3,800.00 USD.
-         📚 Sources: Invoice_1.pdf
+         ðŸ“š Sources: Invoice_1.pdf
 
-[Task 10] 🔊 Audio response delivered
+[Task 10] ðŸ”Š Audio response delivered
 ```
 
-## Break and Fix
+## Break & fix
 
 | # | Scenario | Symptom | Root Cause | Fix |
 |---|----------|---------|------------|-----|
@@ -962,7 +962,7 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
       "Before extraction (translate the raw file first)",
       "After extraction (Document Intelligence) but before NLP enrichment",
       "After indexing (translate search results on demand)",
-      "Translation is not needed — AI services handle multilingual natively"
+      "Translation is not needed â€” AI services handle multilingual natively"
     ],
     correctIndex: 1,
     explanation: "Translation should occur after Document Intelligence extracts text (which handles multilingual OCR) but before NLP enrichment services like Text Analytics that work best with a target language. This ensures accurate extraction of the original document followed by consistent NLP processing in a standard language."
@@ -1013,7 +1013,7 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
       "Shared access signatures (SAS tokens)"
     ],
     correctIndex: 1,
-    explanation: "Managed identity is the recommended approach for Azure service-to-service authentication. It eliminates credential management entirely — no secrets to rotate, no keys to store. Combined with RBAC roles (e.g., Cognitive Services User), it provides least-privilege access without credential exposure."
+    explanation: "Managed identity is the recommended approach for Azure service-to-service authentication. It eliminates credential management entirely â€” no secrets to rotate, no keys to store. Combined with RBAC roles (e.g., Cognitive Services User), it provides least-privilege access without credential exposure."
   },
   {
     id: "ai102-49-q6",
@@ -1031,7 +1031,7 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
     id: "ai102-49-q7",
     question: "A document processed through your pipeline contains personally identifiable information (PII). What should the pipeline do?",
     options: [
-      "Store both the original and a redacted version — use redacted for search display and original for authorized access",
+      "Store both the original and a redacted version â€” use redacted for search display and original for authorized access",
       "Delete the document immediately",
       "Replace PII in the original document permanently",
       "Encrypt the PII fields in the search index"
@@ -1043,10 +1043,10 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
     id: "ai102-49-q8",
     question: "You want to enable voice-based queries against your document search system. What is the correct service chain?",
     options: [
-      "Speech-to-Text → Direct OpenAI chat → Text-to-Speech",
-      "LUIS → Search query → Text-to-Speech",
-      "Speech-to-Text → Search query → RAG response → Text-to-Speech",
-      "Custom Speech model → Search → Audio file generation"
+      "Speech-to-Text â†’ Direct OpenAI chat â†’ Text-to-Speech",
+      "LUIS â†’ Search query â†’ Text-to-Speech",
+      "Speech-to-Text â†’ Search query â†’ RAG response â†’ Text-to-Speech",
+      "Custom Speech model â†’ Search â†’ Audio file generation"
     ],
     correctIndex: 2,
     explanation: "The correct chain for voice-enabled RAG: (1) Azure Speech-to-Text converts spoken query to text, (2) text drives a hybrid search query, (3) search results feed into RAG with Azure OpenAI for a grounded answer, (4) Azure Text-to-Speech converts the answer to audio. This leverages real-time speech with grounded AI responses."

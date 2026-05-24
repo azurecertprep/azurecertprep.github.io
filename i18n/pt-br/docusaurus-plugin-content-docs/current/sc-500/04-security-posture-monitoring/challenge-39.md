@@ -165,7 +165,7 @@ echo "Governance rule created - high severity findings will be auto-assigned"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Caminhos de ataque não aparecem após habilitar o CSPM
 

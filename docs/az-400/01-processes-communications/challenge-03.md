@@ -37,7 +37,7 @@ Conventional Commits provide a structured format that enables automated tooling:
 
 ### Format specification
 
-```
+```text
 <type>[optional scope]: <description>
 
 [optional body]
@@ -62,7 +62,7 @@ Conventional Commits provide a structured format that enables automated tooling:
 
 ### Breaking changes
 
-```
+```text
 feat(api)!: change authentication endpoint response format
 
 BREAKING CHANGE: The /auth/token endpoint now returns a JSON object
@@ -509,7 +509,7 @@ git push origin main
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Commits are not linking to Azure Boards work items
 

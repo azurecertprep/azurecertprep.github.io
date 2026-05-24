@@ -287,7 +287,7 @@ az storage account show \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Storage account acessível apesar das regras de firewall
 

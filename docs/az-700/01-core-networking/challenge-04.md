@@ -520,7 +520,7 @@ You cannot manually edit or delete auto-registered records. If you need to overr
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Attempting auto-registration on two zones for the same VNet
 

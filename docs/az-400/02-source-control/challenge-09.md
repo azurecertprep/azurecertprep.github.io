@@ -438,7 +438,7 @@ gh api repos/contoso/platform-monorepo --method PATCH \
 EOF
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Intern pushes to production path
 

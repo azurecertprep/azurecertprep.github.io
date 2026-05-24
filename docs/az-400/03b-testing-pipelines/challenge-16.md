@@ -472,7 +472,7 @@ stages:
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### The problem
 

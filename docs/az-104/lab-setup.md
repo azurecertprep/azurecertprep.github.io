@@ -76,7 +76,7 @@ All challenges include cleanup scripts. **Always run cleanup after each challeng
 
 We use a consistent naming convention across all challenges:
 
-```
+```text
 rg-az104-challenge-XX        # Resource group per challenge
 staz104chXXxxxx               # Storage accounts (globally unique)
 vm-az104-XX                   # Virtual machines

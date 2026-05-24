@@ -596,7 +596,7 @@ New-AzLoadBalancer `
 6. Add health probe `probe-tcp-postgres` (TCP, port 5432, interval 10s).
 7. Add rule `rule-postgres` (TCP 5432/5432, idle timeout 30 min).
 
-## Break and fix
+## Break & fix
 
 These exercises simulate common misconfigurations. Diagnose and fix each one.
 

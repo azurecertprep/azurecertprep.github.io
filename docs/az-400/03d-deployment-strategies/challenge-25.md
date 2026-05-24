@@ -525,7 +525,7 @@ az monitor metrics alert create \
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Exercise 1: Slot swap fails due to sticky settings
 

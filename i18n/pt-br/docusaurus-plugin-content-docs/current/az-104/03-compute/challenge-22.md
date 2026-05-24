@@ -403,7 +403,7 @@ Você só pode aumentar o tamanho de um managed disk, nunca diminuir. Se precisa
 
 </details>
 
-## Quebrar & consertar
+## Quebra & conserta
 
 ### Cenário a: falha na criptografia de disco
 

@@ -19,11 +19,11 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Azure OpenAI provides access to multimodal AI capabilities through two primary features: **DALL-E 3** for image generation and **GPT-4o** for vision understanding. DALL-E 3 generates images from text descriptions, supporting sizes of 1024×1024, 1024×1792, and 1792×1024 with configurable quality settings (standard or HD). Each generation request produces a unique image with a temporary URL valid for 24 hours.
+Azure OpenAI provides access to multimodal AI capabilities through two primary features: **DALL-E 3** for image generation and **GPT-4o** for vision understanding. DALL-E 3 generates images from text descriptions, supporting sizes of 1024Ã—1024, 1024Ã—1792, and 1792Ã—1024 with configurable quality settings (standard or HD). Each generation request produces a unique image with a temporary URL valid for 24 hours.
 
 GPT-4o's vision capabilities allow the model to analyze images provided either as URLs or base64-encoded data. The model can describe image content, extract text (OCR), interpret charts and diagrams, compare multiple images, and answer questions about visual content. Images are processed as special content parts within the chat completions API, maintaining the familiar message structure.
 
-When working with multimodal inputs, understanding token costs is important: image analysis costs vary by resolution. The `detail` parameter controls processing: `low` uses a fixed 85 tokens regardless of size, while `high` processes the image at full resolution with costs proportional to the number of 512×512 tiles needed to cover the image.
+When working with multimodal inputs, understanding token costs is important: image analysis costs vary by resolution. The `detail` parameter controls processing: `low` uses a fixed 85 tokens regardless of size, while `high` processes the image at full resolution with costs proportional to the number of 512Ã—512 tiles needed to cover the image.
 
 ## Architecture
 
@@ -690,7 +690,7 @@ time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o
 
 ## Expected Output
 
-```
+```text
 Image URL: https://dalleproduse.blob.core.windows.net/...
 Revised prompt: A highly detailed modern cloud data center rendered in isometric 3D...
 
@@ -712,7 +712,7 @@ Time: 1.2s | Tokens: 198
 Time: 2.8s | Tokens: 1542
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|-----------|-----|

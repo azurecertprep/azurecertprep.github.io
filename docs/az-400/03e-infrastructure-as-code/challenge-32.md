@@ -492,7 +492,7 @@ stages:
                     azurePowerShellVersion: LatestVersion
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the non-reporting Machine Configuration
 

@@ -351,7 +351,7 @@ az network vpn-gateway connection list \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Túnel VPN S2S não estabelece — incompatibilidade na Fase 1
 

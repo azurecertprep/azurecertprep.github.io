@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Challenge 04: Azure DNS Private Zones & Auto-Registration"
+title: "Desafio 04: Azure DNS Zonas Privadas & Registro Automático"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -634,55 +634,55 @@ az group delete --name rg-privatedns-lab --yes --no-wait
 <KnowledgeCheck questions={[
   {
     id: "az700-04-q1",
-    question: "A virtual network already has auto-registration enabled on private DNS zone 'app.internal'. What happens when you try to create a second link with auto-registration enabled to 'db.internal' for the same VNet?",
+    question: "Uma rede virtual já tem auto-registration habilitado na zona DNS privada 'app.internal'. O que acontece quando você tenta criar um segundo link com auto-registration habilitado para 'db.internal' para a mesma VNet?",
     options: [
-      "Both zones will register VM records from the VNet",
-      "The operation fails because a VNet can only have auto-registration enabled on one private DNS zone",
-      "The first link is automatically downgraded to resolution-only",
-      "The second zone takes priority and the first stops registering"
+      "Ambas as zonas registrarão registros de VM da VNet",
+      "A operação falha porque uma VNet só pode ter auto-registration habilitado em uma zona DNS privada",
+      "O primeiro link é automaticamente rebaixado para somente resolução",
+      "A segunda zona tem prioridade e a primeira para de registrar"
     ],
     correctIndex: 1,
-    explanation: "A specific virtual network can be linked to only one private DNS zone with automatic registration enabled. Attempting to create a second registration link for the same VNet will fail with an error."
+    explanation: "Uma rede virtual específica pode ser vinculada a apenas uma zona DNS privada com registro automático habilitado. Tentar criar um segundo link de registro para a mesma VNet falhará com um erro."
   },
   {
     id: "az700-04-q2",
-    question: "You link spoke-vnet to private DNS zone 'contoso.internal' with --registration-enabled false. A VM in spoke-vnet tries to resolve 'vm-hub.contoso.internal'. What is the result?",
+    question: "Você vincula spoke-vnet à zona DNS privada 'contoso.internal' com --registration-enabled false. Uma VM em spoke-vnet tenta resolver 'vm-hub.contoso.internal'. Qual é o resultado?",
     options: [
-      "Resolution fails because registration is disabled",
-      "Resolution succeeds because the VNet is linked for resolution",
-      "Resolution only works if VNet peering is configured",
-      "Resolution requires a custom DNS server to forward the query"
+      "A resolução falha porque o registro está desabilitado",
+      "A resolução é bem-sucedida porque a VNet está vinculada para resolução",
+      "A resolução só funciona se o peering de VNet estiver configurado",
+      "A resolução requer um servidor DNS personalizado para encaminhar a consulta"
     ],
     correctIndex: 1,
-    explanation: "A VNet linked to a private DNS zone (even without auto-registration) can resolve all records in that zone. The resolution virtual network link provides read access to the zone's records. VNet peering is not required for DNS resolution through private zones."
+    explanation: "Uma VNet vinculada a uma zona DNS privada (mesmo sem auto-registration) pode resolver todos os registros naquela zona. O link de rede virtual de resolução fornece acesso de leitura aos registros da zona. O peering de VNet não é necessário para resolução DNS através de zonas privadas."
   },
   {
     id: "az700-04-q3",
-    question: "Which resources benefit from private DNS zone auto-registration?",
+    question: "Quais recursos se beneficiam do auto-registration de zona DNS privada?",
     options: [
-      "Virtual machines, internal load balancers, and application gateways",
-      "Virtual machines only",
-      "All resources with a private IP address in the linked VNet",
-      "Virtual machines and private endpoints"
+      "Máquinas virtuais, load balancers internos e application gateways",
+      "Somente máquinas virtuais",
+      "Todos os recursos com um IP privado na VNet vinculada",
+      "Máquinas virtuais e private endpoints"
     ],
     correctIndex: 1,
-    explanation: "Auto-registration works only for virtual machines. DNS records for all other resources (internal load balancers, private endpoints, application gateways) must be created manually or through DNS zone groups."
+    explanation: "O auto-registration funciona apenas para máquinas virtuais. Registros DNS para todos os outros recursos (load balancers internos, private endpoints, application gateways) devem ser criados manualmente ou através de DNS zone groups."
   },
   {
     id: "az700-04-q4",
-    question: "You need to ensure that VMs across three VNets (hub, spoke1, spoke2) can all resolve each other using the private DNS zone 'corp.local'. None of the VNets have auto-registration enabled on any other zone. What is the minimum configuration?",
+    question: "Você precisa garantir que VMs em três VNets (hub, spoke1, spoke2) possam resolver umas às outras usando a zona DNS privada 'corp.local'. Nenhuma das VNets tem auto-registration habilitado em outra zona. Qual é a configuração mínima?",
     options: [
-      "Link all three VNets with auto-registration enabled",
-      "Link all three VNets to the zone (auto-registration on at least one), and create manual records for VMs in resolution-only VNets",
-      "Configure VNet peering between all three VNets; DNS resolves automatically through peering",
-      "Deploy Azure DNS Private Resolver in the hub VNet"
+      "Vincular todas as três VNets com auto-registration habilitado",
+      "Vincular todas as três VNets à zona (auto-registration em pelo menos uma) e criar registros manuais para VMs em VNets somente resolução",
+      "Configurar peering de VNet entre todas as três VNets; o DNS resolve automaticamente através do peering",
+      "Implantar Azure DNS Private Resolver na VNet hub"
     ],
     correctIndex: 0,
-    explanation: "The minimum configuration is to link all three VNets with auto-registration enabled to 'corp.local'. The limit is one auto-registration zone PER VNET (not one VNet per zone). Up to 100 VNets can have auto-registration enabled on the same zone. Since none of these VNets already auto-register to another zone, all three can auto-register to 'corp.local', giving every VM an automatic A record and full resolution access."
+    explanation: "A configuração mínima é vincular todas as três VNets com auto-registration habilitado em 'corp.local'. O limite é uma zona de auto-registration POR VNET (não uma VNet por zona). Até 100 VNets podem ter auto-registration habilitado na mesma zona. Como nenhuma dessas VNets já faz auto-registration em outra zona, todas as três podem se registrar automaticamente em 'corp.local', dando a cada VM um registro A automático e acesso completo à resolução."
   },
   {
     id: "az700-04-q5",
-    question: "Which command correctly creates a virtual network link to a private DNS zone with auto-registration enabled?",
+    question: "Qual comando cria corretamente um link de rede virtual para uma zona DNS privada com auto-registration habilitado?",
     options: [
       "az network private-dns link vnet create --zone-name corp.internal --name mylink --virtual-network myVnet --registration-enabled true",
       "az network dns link vnet create --zone-name corp.internal --name mylink --virtual-network myVnet --auto-register true",
@@ -690,19 +690,19 @@ az group delete --name rg-privatedns-lab --yes --no-wait
       "az network private-dns link vnet create --zone-name corp.internal --name mylink --virtual-network myVnet --auto-registration true"
     ],
     correctIndex: 0,
-    explanation: "The correct command is 'az network private-dns link vnet create' with the --registration-enabled parameter (not --auto-register or --auto-registration). The --resource-group parameter is also required but omitted here for brevity."
+    explanation: "O comando correto é 'az network private-dns link vnet create' com o parâmetro --registration-enabled (não --auto-register ou --auto-registration). O parâmetro --resource-group também é necessário, mas foi omitido aqui por brevidade."
   },
   {
     id: "az700-04-q6",
-    question: "Your organization uses privatelink.blob.core.windows.net for storage account private endpoints. A VM in spoke-vnet cannot resolve the private endpoint FQDN. The hub VNet is linked to the privatelink zone. What should you do?",
+    question: "Sua organização usa privatelink.blob.core.windows.net para private endpoints de contas de armazenamento. Uma VM em spoke-vnet não consegue resolver o FQDN do private endpoint. A VNet hub está vinculada à zona privatelink. O que você deve fazer?",
     options: [
-      "Enable auto-registration on the privatelink zone for spoke-vnet",
-      "Create a VNet link from the privatelink zone to spoke-vnet with registration disabled",
-      "Add a conditional forwarder on the spoke-vnet DNS settings",
-      "Create a VNet peering between spoke-vnet and the storage account's VNet"
+      "Habilitar auto-registration na zona privatelink para spoke-vnet",
+      "Criar um link de VNet da zona privatelink para spoke-vnet com registro desabilitado",
+      "Adicionar um conditional forwarder nas configurações DNS de spoke-vnet",
+      "Criar um peering de VNet entre spoke-vnet e a VNet da conta de armazenamento"
     ],
     correctIndex: 1,
-    explanation: "For a VNet to resolve records in a private DNS zone, it must be linked to that zone. Creating a virtual network link with registration disabled allows spoke-vnet VMs to resolve the private endpoint records. Auto-registration should not be enabled on privatelink zones."
+    explanation: "Para que uma VNet resolva registros em uma zona DNS privada, ela deve estar vinculada a essa zona. Criar um link de rede virtual com registro desabilitado permite que as VMs de spoke-vnet resolvam os registros do private endpoint. O auto-registration não deve ser habilitado em zonas privatelink."
   }
 ]} />
 

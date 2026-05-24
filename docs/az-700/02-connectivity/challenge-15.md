@@ -24,14 +24,14 @@ Contoso's site-to-site VPN established in Challenge 14 uses a single VPN gateway
 
 **Architecture:**
 
-```
+```text
 On-prem Site A (Dallas)           Azure (East US)              On-prem Site B (Chicago)
 (10.10.0.0/16)                   (10.1.0.0/16)               (10.20.0.0/16)
                                        |
-[VPN Device A]  ─── Tunnel 1 ──► [pip-vgw-1]                [VPN Device B]
+[VPN Device A]  â”€â”€â”€ Tunnel 1 â”€â”€â–º [pip-vgw-1]                [VPN Device B]
   203.0.113.10                        |                        198.51.100.25
                                   [VPN Gateway]
-[VPN Device A]  ─── Tunnel 2 ──► [pip-vgw-2]                [VPN Device B]
+[VPN Device A]  â”€â”€â”€ Tunnel 2 â”€â”€â–º [pip-vgw-2]                [VPN Device B]
   203.0.113.10                        |                        198.51.100.25
                                   Active-Active
                                (VpnGw2AZ, Zone 1+2)
@@ -517,7 +517,7 @@ For details, see [Azure Extended Network documentation](https://learn.microsoft.
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: BGP ASN conflict
 

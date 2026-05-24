@@ -28,7 +28,7 @@ Your task is to deploy an Application Gateway v2 instance with multi-site listen
 
 ## Architecture overview
 
-```
+```text
 Internet
    |
    v
@@ -572,7 +572,7 @@ Get-AzApplicationGatewayBackendHealth `
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Issue 1: Multi-site listener conflict (missing host header)
 

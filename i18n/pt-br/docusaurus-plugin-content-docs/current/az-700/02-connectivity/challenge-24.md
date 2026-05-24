@@ -1,51 +1,51 @@
 ---
 sidebar_position: 11
-title: "Challenge 24: Hybrid Connectivity Troubleshooting"
+title: "Desafio 24: Solução de Problemas de Conectividade Híbrida"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 24: Solução de problemas de conectividade híbrida
+# Challenge 24: SoluÃ§Ã£o de problemas de conectividade hÃ­brida
 
 :::info Tempo e custo estimados
 
-**60–90 minutos** | **~$0,19/h** (Gateway VPN) + **~$1,20/h** (Circuito ER) | **Peso no exame: 20–25%**
+**60â€“90 minutos** | **~$0,19/h** (Gateway VPN) + **~$1,20/h** (Circuito ER) | **Peso no exame: 20â€“25%**
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A equipe de operações de rede da Contoso recebeu três tickets de escalonamento esta manhã:
+A equipe de operaÃ§Ãµes de rede da Contoso recebeu trÃªs tickets de escalonamento esta manhÃ£:
 
-1. **Ticket 1 -- Instabilidade da VPN S2S:** O túnel VPN site a site entre a sede (local) e o Azure continua desconectando a cada 5-10 minutos. Os usuários relatam conectividade intermitente com aplicações hospedadas no Azure.
+1. **Ticket 1 -- Instabilidade da VPN S2S:** O tÃºnel VPN site a site entre a sede (local) e o Azure continua desconectando a cada 5-10 minutos. Os usuÃ¡rios relatam conectividade intermitente com aplicaÃ§Ãµes hospedadas no Azure.
 
-2. **Ticket 2 -- Falhas de autenticação P2S:** Trabalhadores remotos usando o cliente VPN ponto a site estão recebendo erros de autenticação. Alguns usuários recebem "falha na validação do certificado" enquanto outros veem erros de "incompatibilidade de tipo de túnel".
+2. **Ticket 2 -- Falhas de autenticaÃ§Ã£o P2S:** Trabalhadores remotos usando o cliente VPN ponto a site estÃ£o recebendo erros de autenticaÃ§Ã£o. Alguns usuÃ¡rios recebem "falha na validaÃ§Ã£o do certificado" enquanto outros veem erros de "incompatibilidade de tipo de tÃºnel".
 
-3. **Ticket 3 -- ExpressRoute não provisionado:** Um circuito ExpressRoute recém-solicitado mostra "Provider Provisioning State: NotProvisioned" mesmo que o provedor de serviços afirme ter concluído sua parte da configuração.
+3. **Ticket 3 -- ExpressRoute nÃ£o provisionado:** Um circuito ExpressRoute recÃ©m-solicitado mostra "Provider Provisioning State: NotProvisioned" mesmo que o provedor de serviÃ§os afirme ter concluÃ­do sua parte da configuraÃ§Ã£o.
 
-A equipe deve usar ferramentas de diagnóstico do Azure para identificar sistematicamente as causas raiz e resolver cada problema.
+A equipe deve usar ferramentas de diagnÃ³stico do Azure para identificar sistematicamente as causas raiz e resolver cada problema.
 
 ## Habilidades de exame avaliadas
 
-| Habilidade | Descrição |
+| Habilidade | DescriÃ§Ã£o |
 |-------|-------------|
-| Diagnosticar e resolver problemas de conectividade do gateway de rede virtual | Solucionar problemas de conexões VPN S2S, integridade do gateway e falhas IKE |
-| Diagnosticar e resolver problemas de autenticação e do lado do cliente (P2S) | Solucionar problemas de certificados, tipos de túnel e pools de endereços |
-| Diagnosticar e resolver problemas de conexão ExpressRoute | Verificar estado do circuito, configuração de peering, tabelas ARP e tabelas de rotas |
+| Diagnosticar e resolver problemas de conectividade do gateway de rede virtual | Solucionar problemas de conexÃµes VPN S2S, integridade do gateway e falhas IKE |
+| Diagnosticar e resolver problemas de autenticaÃ§Ã£o e do lado do cliente (P2S) | Solucionar problemas de certificados, tipos de tÃºnel e pools de endereÃ§os |
+| Diagnosticar e resolver problemas de conexÃ£o ExpressRoute | Verificar estado do circuito, configuraÃ§Ã£o de peering, tabelas ARP e tabelas de rotas |
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-Este desafio assume que os seguintes recursos existem (de desafios anteriores ou de uma configuração de laboratório):
+Este desafio assume que os seguintes recursos existem (de desafios anteriores ou de uma configuraÃ§Ã£o de laboratÃ³rio):
 
 - Grupo de recursos com Gateway VPN (VpnGw1 ou superior)
-- Conexão VPN S2S ativa
-- Configuração de VPN P2S com autenticação por certificado
-- Circuito ExpressRoute (pode usar um circuito de teste/simulação)
+- ConexÃ£o VPN S2S ativa
+- ConfiguraÃ§Ã£o de VPN P2S com autenticaÃ§Ã£o por certificado
+- Circuito ExpressRoute (pode usar um circuito de teste/simulaÃ§Ã£o)
 
 ---
 
-## Tarefa 1: Solucionar problemas da VPN S2S -- verificar status da conexão
+## Tarefa 1: Solucionar problemas da VPN S2S -- verificar status da conexÃ£o
 
-Comece examinando o objeto de conexão VPN para determinar o estado atual e coletar métricas.
+Comece examinando o objeto de conexÃ£o VPN para determinar o estado atual e coletar mÃ©tricas.
 
 ### Azure CLI
 
@@ -100,20 +100,20 @@ $conn | Select-Object `
 $conn.IpsecPolicies
 ```
 
-### Valores de status da conexão
+### Valores de status da conexÃ£o
 
 | Status | Significado |
 |--------|---------|
-| Connected | O túnel está ativo e passando tráfego |
-| Connecting | Negociação IKE em andamento |
-| NotConnected | O túnel está inativo, nenhuma negociação ativa |
-| Unknown | O gateway não consegue determinar o estado (geralmente durante atualizações) |
+| Connected | O tÃºnel estÃ¡ ativo e passando trÃ¡fego |
+| Connecting | NegociaÃ§Ã£o IKE em andamento |
+| NotConnected | O tÃºnel estÃ¡ inativo, nenhuma negociaÃ§Ã£o ativa |
+| Unknown | O gateway nÃ£o consegue determinar o estado (geralmente durante atualizaÃ§Ãµes) |
 
 ---
 
-## Tarefa 2: Analisar diagnósticos de VPN com o Network Watcher
+## Tarefa 2: Analisar diagnÃ³sticos de VPN com o Network Watcher
 
-Use a solução de problemas de VPN do Network Watcher para executar diagnósticos automatizados que analisam logs IKE, descartes de pacotes e integridade do gateway.
+Use a soluÃ§Ã£o de problemas de VPN do Network Watcher para executar diagnÃ³sticos automatizados que analisam logs IKE, descartes de pacotes e integridade do gateway.
 
 ### Azure CLI
 
@@ -160,23 +160,23 @@ Start-AzNetworkWatcherResourceTroubleshooting `
   -StoragePath "https://stdiagcontoso.blob.core.windows.net/vpn-diagnostics"
 ```
 
-### Códigos de erro IKE comuns nos diagnósticos
+### CÃ³digos de erro IKE comuns nos diagnÃ³sticos
 
-| Erro | Significado | Resolução |
+| Erro | Significado | ResoluÃ§Ã£o |
 |-------|---------|------------|
-| ERROR_IPSEC_IKE_NO_POLICY | Incompatibilidade de política IKE Fase 1 | Alinhar criptografia, integridade, grupo DH em ambos os lados |
-| ERROR_IPSEC_IKE_TIMED_OUT | Peer não responde | Verificar acessibilidade do dispositivo local, regras de firewall para UDP 500/4500 |
-| ERROR_IPSEC_IKE_AUTH_FAIL | Incompatibilidade de chave pré-compartilhada | Verificar se a chave compartilhada é igual em ambos os lados |
+| ERROR_IPSEC_IKE_NO_POLICY | Incompatibilidade de polÃ­tica IKE Fase 1 | Alinhar criptografia, integridade, grupo DH em ambos os lados |
+| ERROR_IPSEC_IKE_TIMED_OUT | Peer nÃ£o responde | Verificar acessibilidade do dispositivo local, regras de firewall para UDP 500/4500 |
+| ERROR_IPSEC_IKE_AUTH_FAIL | Incompatibilidade de chave prÃ©-compartilhada | Verificar se a chave compartilhada Ã© igual em ambos os lados |
 | ERROR_IPSEC_IKE_DH_FAIL | Incompatibilidade de grupo DH | Garantir que ambos os lados usem o mesmo grupo Diffie-Hellman |
-| ERROR_IPSEC_IKE_SA_DELETED | Tempo de vida da SA expirou, rekey falhou | Verificar configurações de tempo de vida da SA; padrão do Azure é 28800s (8h) para IKE |
+| ERROR_IPSEC_IKE_SA_DELETED | Tempo de vida da SA expirou, rekey falhou | Verificar configuraÃ§Ãµes de tempo de vida da SA; padrÃ£o do Azure Ã© 28800s (8h) para IKE |
 
 ---
 
-## Tarefa 3: Solucionar problemas de autenticação da VPN P2S
+## Tarefa 3: Solucionar problemas de autenticaÃ§Ã£o da VPN P2S
 
-Problemas de P2S geralmente se enquadram em três categorias: problemas de certificado, incompatibilidade de tipo de túnel ou esgotamento do pool de endereços.
+Problemas de P2S geralmente se enquadram em trÃªs categorias: problemas de certificado, incompatibilidade de tipo de tÃºnel ou esgotamento do pool de endereÃ§os.
 
-### Verificar configuração P2S
+### Verificar configuraÃ§Ã£o P2S
 
 #### Azure CLI
 
@@ -210,11 +210,11 @@ $gw.VpnClientConfiguration.VpnClientRootCertificates |
   Select-Object Name, ProvisioningState
 ```
 
-### Problemas comuns de P2S e resolução
+### Problemas comuns de P2S e resoluÃ§Ã£o
 
-#### Problema 1: Falha na validação do certificado
+#### Problema 1: Falha na validaÃ§Ã£o do certificado
 
-O certificado do cliente não foi emitido por uma CA raiz que está carregada no gateway.
+O certificado do cliente nÃ£o foi emitido por uma CA raiz que estÃ¡ carregada no gateway.
 
 ```bash
 # List uploaded root certificates
@@ -231,9 +231,9 @@ az network vnet-gateway root-cert create \
   --public-cert-data "MIIDuzCCAqO..."
 ```
 
-#### Problema 2: Incompatibilidade de tipo de túnel
+#### Problema 2: Incompatibilidade de tipo de tÃºnel
 
-O cliente está configurado para IKEv2, mas o gateway suporta apenas SSTP, ou vice-versa.
+O cliente estÃ¡ configurado para IKEv2, mas o gateway suporta apenas SSTP, ou vice-versa.
 
 ```bash
 # Update gateway to support both IKEv2 and OpenVPN
@@ -243,9 +243,9 @@ az network vnet-gateway update \
   --client-protocol IkeV2 OpenVPN
 ```
 
-#### Problema 3: Esgotamento do pool de endereços
+#### Problema 3: Esgotamento do pool de endereÃ§os
 
-Todos os IPs de clientes P2S estão alocados. Nenhum novo cliente pode se conectar.
+Todos os IPs de clientes P2S estÃ£o alocados. Nenhum novo cliente pode se conectar.
 
 ```bash
 # Check current address pool size
@@ -261,15 +261,15 @@ az network vnet-gateway update \
   --address-prefixes "172.16.0.0/16"
 ```
 
-:::tip Dimensionamento do pool de endereços
-Um prefixo /24 fornece aproximadamente 251 endereços de cliente utilizáveis. Para implantações maiores, use /16 ou múltiplos prefixos. O pool de endereços não deve sobrepor nenhum espaço de endereço de VNet ou intervalos locais.
+:::tip Dimensionamento do pool de endereÃ§os
+Um prefixo /24 fornece aproximadamente 251 endereÃ§os de cliente utilizÃ¡veis. Para implantaÃ§Ãµes maiores, use /16 ou mÃºltiplos prefixos. O pool de endereÃ§os nÃ£o deve sobrepor nenhum espaÃ§o de endereÃ§o de VNet ou intervalos locais.
 :::
 
 ---
 
 ## Tarefa 4: Solucionar problemas de circuito e peering ExpressRoute
 
-Examine o estado de provisionamento do circuito ExpressRoute, a configuração de peering e verifique a conectividade de camada 2/3.
+Examine o estado de provisionamento do circuito ExpressRoute, a configuraÃ§Ã£o de peering e verifique a conectividade de camada 2/3.
 
 ### Azure CLI
 
@@ -368,18 +368,18 @@ Get-AzExpressRouteCircuitRouteTable `
 
 ### Matriz de estados do ExpressRoute
 
-| Estado de provisionamento do circuito | Estado do provedor de serviços | Significado |
+| Estado de provisionamento do circuito | Estado do provedor de serviÃ§os | Significado |
 |---------------------------|----------------------|---------|
 | Enabled | NotProvisioned | Circuito criado no Azure; aguardando o provedor |
-| Enabled | Provisioning | Provedor está configurando seu lado |
-| Enabled | Provisioned | Provedor concluiu; pronto para configuração de peering |
-| Deprovisioning | Deprovisioning | Circuito sendo excluído |
+| Enabled | Provisioning | Provedor estÃ¡ configurando seu lado |
+| Enabled | Provisioned | Provedor concluiu; pronto para configuraÃ§Ã£o de peering |
+| Deprovisioning | Deprovisioning | Circuito sendo excluÃ­do |
 
 ---
 
-## Tarefa 5: Usar reset do gateway como último recurso
+## Tarefa 5: Usar reset do gateway como Ãºltimo recurso
 
-Quando um gateway se torna não responsivo ou os túneis ficam presos em um estado inválido, redefinir o gateway reinicia a instância ativa e força a renegociação IKE.
+Quando um gateway se torna nÃ£o responsivo ou os tÃºneis ficam presos em um estado invÃ¡lido, redefinir o gateway reinicia a instÃ¢ncia ativa e forÃ§a a renegociaÃ§Ã£o IKE.
 
 ### Azure CLI
 
@@ -416,17 +416,17 @@ Get-AzVirtualNetworkGateway -ResourceGroupName $RG -Name $GwName |
 
 :::warning Impacto do reset do gateway
 Redefinir um gateway:
-- Interrompe TODAS as conexões nesse gateway (S2S, P2S e VNet-to-VNet)
-- Leva de 5 a 15 minutos para ser concluído
-- Não altera a configuração do gateway -- apenas reinicia a instância ativa
-- Para gateways ativo-ativo, você pode redefinir cada instância separadamente usando o parâmetro `--gateway-vip`
+- Interrompe TODAS as conexÃµes nesse gateway (S2S, P2S e VNet-to-VNet)
+- Leva de 5 a 15 minutos para ser concluÃ­do
+- NÃ£o altera a configuraÃ§Ã£o do gateway -- apenas reinicia a instÃ¢ncia ativa
+- Para gateways ativo-ativo, vocÃª pode redefinir cada instÃ¢ncia separadamente usando o parÃ¢metro `--gateway-vip`
 :::
 
 ---
 
-## Tarefa 6: Solução de problemas avançada com captura de pacotes
+## Tarefa 6: SoluÃ§Ã£o de problemas avanÃ§ada com captura de pacotes
 
-Para problemas persistentes, capture pacotes no gateway VPN para analisar o handshake IKE e o tráfego do plano de dados.
+Para problemas persistentes, capture pacotes no gateway VPN para analisar o handshake IKE e o trÃ¡fego do plano de dados.
 
 ### Azure CLI
 
@@ -463,15 +463,15 @@ Stop-AzVirtualNetworkGatewayPacketCapture `
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Instabilidade da conexão VPN (timeout DPD)
+### CenÃ¡rio 1: Instabilidade da conexÃ£o VPN (timeout DPD)
 
-**Sintoma:** O túnel S2S desconecta a cada 5-10 minutos, reconecta automaticamente e depois cai novamente. Os contadores de bytes transferidos são zerados a cada vez.
+**Sintoma:** O tÃºnel S2S desconecta a cada 5-10 minutos, reconecta automaticamente e depois cai novamente. Os contadores de bytes transferidos sÃ£o zerados a cada vez.
 
-**Causa raiz:** O timeout de Dead Peer Detection (DPD) está configurado de forma muito agressiva no dispositivo local. O Azure usa um timeout DPD de 45 segundos por padrão. Se o dispositivo local tem um timeout menor (ex.: 10 segundos) e há picos breves de latência, ele derruba o túnel.
+**Causa raiz:** O timeout de Dead Peer Detection (DPD) estÃ¡ configurado de forma muito agressiva no dispositivo local. O Azure usa um timeout DPD de 45 segundos por padrÃ£o. Se o dispositivo local tem um timeout menor (ex.: 10 segundos) e hÃ¡ picos breves de latÃªncia, ele derruba o tÃºnel.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 ```bash
 # Check the connection for custom IPsec/IKE policies
 az network vpn-connection show \
@@ -488,7 +488,7 @@ az network watcher troubleshooting start \
   --storage-path $STORAGE_PATH
 ```
 
-**Correção:** Defina uma política IPsec personalizada com timeout DPD apropriado (mínimo do Azure é 9 segundos, recomendado é 45 segundos). Garanta também que o dispositivo local esteja alinhado:
+**CorreÃ§Ã£o:** Defina uma polÃ­tica IPsec personalizada com timeout DPD apropriado (mÃ­nimo do Azure Ã© 9 segundos, recomendado Ã© 45 segundos). Garanta tambÃ©m que o dispositivo local esteja alinhado:
 ```bash
 az network vpn-connection ipsec-policy add \
   --connection-name $CONNECTION_NAME \
@@ -505,13 +505,13 @@ az network vpn-connection ipsec-policy add \
 
 ---
 
-### Cenário 2: Pool de endereços P2S cheio
+### CenÃ¡rio 2: Pool de endereÃ§os P2S cheio
 
 **Sintoma:** Novos clientes VPN P2S recebem o erro "no available IP addresses" ou falham ao conectar enquanto clientes existentes permanecem conectados.
 
-**Causa raiz:** O pool de endereços P2S foi configurado com um /28 (14 IPs utilizáveis) e todos os endereços estão alocados para sessões existentes.
+**Causa raiz:** O pool de endereÃ§os P2S foi configurado com um /28 (14 IPs utilizÃ¡veis) e todos os endereÃ§os estÃ£o alocados para sessÃµes existentes.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 ```bash
 # Check current pool size
 az network vnet-gateway show \
@@ -525,7 +525,7 @@ az network vnet-gateway vpn-client show-health \
   --resource-group $RG 2>/dev/null || echo "Use Azure Portal > VPN Gateway > Point-to-site configuration > Connected clients"
 ```
 
-**Correção:** Expanda o pool de endereços para acomodar mais clientes:
+**CorreÃ§Ã£o:** Expanda o pool de endereÃ§os para acomodar mais clientes:
 ```bash
 az network vnet-gateway update \
   --name $GW_NAME \
@@ -534,18 +534,18 @@ az network vnet-gateway update \
 ```
 
 :::note
-Alterar o pool de endereços requer que os clientes P2S existentes se reconectem. Planeje essa mudança durante uma janela de manutenção.
+Alterar o pool de endereÃ§os requer que os clientes P2S existentes se reconectem. Planeje essa mudanÃ§a durante uma janela de manutenÃ§Ã£o.
 :::
 
 ---
 
-### Cenário 3: Falha de ARP do ExpressRoute (VLAN incorreta)
+### CenÃ¡rio 3: Falha de ARP do ExpressRoute (VLAN incorreta)
 
-**Sintoma:** O estado de peering do ExpressRoute mostra "Enabled", mas a tabela ARP retorna resultados vazios. Nenhuma rota é aprendida.
+**Sintoma:** O estado de peering do ExpressRoute mostra "Enabled", mas a tabela ARP retorna resultados vazios. Nenhuma rota Ã© aprendida.
 
-**Causa raiz:** O VLAN ID configurado no peering do Azure não corresponde ao VLAN ID configurado pelo provedor de serviços em seu roteador de borda.
+**Causa raiz:** O VLAN ID configurado no peering do Azure nÃ£o corresponde ao VLAN ID configurado pelo provedor de serviÃ§os em seu roteador de borda.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 ```bash
 # Check the VLAN ID in peering configuration
 az network express-route peering show \
@@ -562,7 +562,7 @@ az network express-route list-arp-tables \
   --device-path "primary"
 ```
 
-**Correção:** Coordene com o provedor de serviços para confirmar o VLAN ID correto e então atualize o peering:
+**CorreÃ§Ã£o:** Coordene com o provedor de serviÃ§os para confirmar o VLAN ID correto e entÃ£o atualize o peering:
 ```bash
 # Update peering with correct VLAN ID (example: provider confirms VLAN 200)
 az network express-route peering update \
@@ -572,32 +572,32 @@ az network express-route peering update \
   --vlan-id 200
 ```
 
-Após a atualização, verifique se o ARP resolve dentro de 1-2 minutos e se as rotas BGP começam a aparecer na tabela de rotas.
+ApÃ³s a atualizaÃ§Ã£o, verifique se o ARP resolve dentro de 1-2 minutos e se as rotas BGP comeÃ§am a aparecer na tabela de rotas.
 
 ---
 
-## Árvore de decisão para solução de problemas
+## Ãrvore de decisÃ£o para soluÃ§Ã£o de problemas
 
-```
-Túnel VPN Inativo?
-├── Verificar connectionStatus
-│   ├── NotConnected → Verificar acessibilidade do dispositivo local (UDP 500/4500)
-│   ├── Connecting → Negociação IKE falhando
-│   │   ├── Verificar correspondência de chave compartilhada
-│   │   ├── Verificar alinhamento de política IKE/IPsec
-│   │   └── Executar solução de problemas do Network Watcher
-│   └── Connected mas sem tráfego → Verificar roteamento (UDR, BGP, NSG)
-│
+```text
+TÃºnel VPN Inativo?
+â”œâ”€â”€ Verificar connectionStatus
+â”‚   â”œâ”€â”€ NotConnected â†’ Verificar acessibilidade do dispositivo local (UDP 500/4500)
+â”‚   â”œâ”€â”€ Connecting â†’ NegociaÃ§Ã£o IKE falhando
+â”‚   â”‚   â”œâ”€â”€ Verificar correspondÃªncia de chave compartilhada
+â”‚   â”‚   â”œâ”€â”€ Verificar alinhamento de polÃ­tica IKE/IPsec
+â”‚   â”‚   â””â”€â”€ Executar soluÃ§Ã£o de problemas do Network Watcher
+â”‚   â””â”€â”€ Connected mas sem trÃ¡fego â†’ Verificar roteamento (UDR, BGP, NSG)
+â”‚
 VPN P2S Falhando?
-├── Erro de certificado → Verificar cert raiz carregado, cert cliente não revogado
-├── Erro de tipo de túnel → Alinhar protocolo do cliente com config do gateway (IKEv2/OpenVPN/SSTP)
-└── Sem IPs disponíveis → Expandir pool de endereços
-│
-ExpressRoute Não Funcionando?
-├── Estado do Provedor = NotProvisioned → Contatar provedor
-├── Estado do Peering = Disabled → Verificar configuração de peering
-├── Tabela ARP vazia → Incompatibilidade de VLAN ou problema L2 com provedor
-└── Rotas ausentes → Incompatibilidade de ASN BGP ou filtragem de prefixo
+â”œâ”€â”€ Erro de certificado â†’ Verificar cert raiz carregado, cert cliente nÃ£o revogado
+â”œâ”€â”€ Erro de tipo de tÃºnel â†’ Alinhar protocolo do cliente com config do gateway (IKEv2/OpenVPN/SSTP)
+â””â”€â”€ Sem IPs disponÃ­veis â†’ Expandir pool de endereÃ§os
+â”‚
+ExpressRoute NÃ£o Funcionando?
+â”œâ”€â”€ Estado do Provedor = NotProvisioned â†’ Contatar provedor
+â”œâ”€â”€ Estado do Peering = Disabled â†’ Verificar configuraÃ§Ã£o de peering
+â”œâ”€â”€ Tabela ARP vazia â†’ Incompatibilidade de VLAN ou problema L2 com provedor
+â””â”€â”€ Rotas ausentes â†’ Incompatibilidade de ASN BGP ou filtragem de prefixo
 ```
 
 ---
@@ -615,24 +615,24 @@ Remove-AzResourceGroup -Name "rg-hybrid-challenge24" -Force -AsJob
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-24-q1",
-    question: "A VPN connection shows connectionStatus 'Connecting' for over 10 minutes. The on-premises device log shows 'no proposal chosen'. What is the most likely cause?",
+    question: "Uma conexão VPN mostra connectionStatus 'Connecting' por mais de 10 minutos. O log do dispositivo on-premises mostra 'no proposal chosen'. Qual é a causa mais provável?",
     options: [
-      "IKE Phase 1 policy mismatch -- encryption, integrity, or DH group settings differ between Azure and on-premises",
-      "The pre-shared key is incorrect on the Azure side",
-      "The VPN gateway needs to be reset",
-      "The on-premises public IP address has changed"
+      "Incompatibilidade de política IKE Phase 1 -- configurações de criptografia, integridade ou grupo DH diferem entre Azure e on-premises",
+      "A chave pré-compartilhada está incorreta no lado do Azure",
+      "O gateway VPN precisa ser resetado",
+      "O endereço IP público on-premises foi alterado"
     ],
     correctIndex: 0,
-    explanation: "'No proposal chosen' is a classic IKE Phase 1 error indicating that the responder cannot find a matching security association proposal. This means the encryption algorithm, integrity algorithm, or Diffie-Hellman group configured on Azure does not match what the on-premises device is proposing. A PSK mismatch would show 'authentication failed' instead."
+    explanation: "'No proposal chosen' é um erro clássico de IKE Phase 1 indicando que o respondedor não consegue encontrar uma proposta de associação de segurança compatível. Isso significa que o algoritmo de criptografia, algoritmo de integridade ou grupo Diffie-Hellman configurado no Azure não corresponde ao que o dispositivo on-premises está propondo. Uma incompatibilidade de PSK mostraria 'authentication failed' em vez disso."
   },
   {
     id: "az700-24-q2",
-    question: "Which command starts automated VPN troubleshooting that analyzes IKE logs and produces a diagnostic report?",
+    question: "Qual comando inicia a solução automatizada de problemas VPN que analisa logs IKE e produz um relatório de diagnóstico?",
     options: [
       "az network watcher troubleshooting start --resource --resource-type vpnConnection --storage-account --storage-path",
       "az network vpn-connection show --query connectionStatus",
@@ -640,54 +640,54 @@ Remove-AzResourceGroup -Name "rg-hybrid-challenge24" -Force -AsJob
       "az network watcher test-connectivity --source-resource --dest-address"
     ],
     correctIndex: 0,
-    explanation: "The 'az network watcher troubleshooting start' command runs automated diagnostics on VPN gateways or connections. It requires a storage account and path to store the diagnostic logs and analysis. It examines IKE negotiation, packet drops, gateway health, and produces a structured report with error codes and recommendations."
+    explanation: "O comando 'az network watcher troubleshooting start' executa diagnósticos automatizados em gateways ou conexões VPN. Ele requer uma conta de armazenamento e caminho para armazenar os logs de diagnóstico e análise. Ele examina a negociação IKE, perda de pacotes, saúde do gateway e produz um relatório estruturado com códigos de erro e recomendações."
   },
   {
     id: "az700-24-q3",
-    question: "An ExpressRoute circuit shows circuitProvisioningState 'Enabled' and serviceProviderProvisioningState 'NotProvisioned'. What does this indicate?",
+    question: "Um circuito ExpressRoute mostra circuitProvisioningState 'Enabled' e serviceProviderProvisioningState 'NotProvisioned'. O que isso indica?",
     options: [
-      "The circuit has been created in Azure but the service provider has not yet completed their provisioning on their edge routers",
-      "The circuit is misconfigured and needs to be deleted and recreated",
-      "Azure has detected a billing issue with the circuit",
-      "The peering configuration is invalid"
+      "O circuito foi criado no Azure, mas o provedor de serviço ainda não completou o provisionamento nos seus roteadores de borda",
+      "O circuito está mal configurado e precisa ser excluído e recriado",
+      "O Azure detectou um problema de cobrança com o circuito",
+      "A configuração de peering é inválida"
     ],
     correctIndex: 0,
-    explanation: "circuitProvisioningState 'Enabled' means the Azure resource is successfully deployed. serviceProviderProvisioningState 'NotProvisioned' means the connectivity provider has not yet configured their edge infrastructure (cross-connects, VLAN tagging, etc.). You need to share the service key with your provider so they can complete provisioning on their side."
+    explanation: "circuitProvisioningState 'Enabled' significa que o recurso Azure foi implantado com sucesso. serviceProviderProvisioningState 'NotProvisioned' significa que o provedor de conectividade ainda não configurou sua infraestrutura de borda (cross-connects, VLAN tagging, etc.). Você precisa compartilhar a service key com seu provedor para que eles possam completar o provisionamento do lado deles."
   },
   {
     id: "az700-24-q4",
-    question: "P2S VPN clients fail to connect with 'certificate validation failed'. The root CA certificate was recently renewed. What action resolves this?",
+    question: "Clientes VPN P2S falham ao conectar com 'certificate validation failed'. O certificado da CA raiz foi renovado recentemente. Qual ação resolve isso?",
     options: [
-      "Upload the new root CA certificate to the VPN gateway and ensure client certificates are issued by the new CA",
-      "Reset the VPN gateway to clear the certificate cache",
-      "Regenerate the VPN client configuration package and redistribute",
-      "Change the VPN tunnel type from IKEv2 to OpenVPN"
+      "Fazer upload do novo certificado da CA raiz no gateway VPN e garantir que os certificados de cliente sejam emitidos pela nova CA",
+      "Resetar o gateway VPN para limpar o cache de certificados",
+      "Regenerar o pacote de configuração do cliente VPN e redistribuir",
+      "Alterar o tipo de túnel VPN de IKEv2 para OpenVPN"
     ],
     correctIndex: 0,
-    explanation: "When a root CA is renewed, the new certificate must be uploaded to the VPN gateway using 'az network vnet-gateway root-cert create'. Client certificates must also be reissued from the new CA. The gateway validates client certificates against uploaded root certificates -- if the root is not present, all clients issued by that CA will fail authentication."
+    explanation: "Quando uma CA raiz é renovada, o novo certificado deve ser carregado no gateway VPN usando 'az network vnet-gateway root-cert create'. Os certificados de cliente também devem ser reemitidos pela nova CA. O gateway valida certificados de cliente contra os certificados raiz carregados -- se o certificado raiz não estiver presente, todos os clientes emitidos por aquela CA falharão na autenticação."
   },
   {
     id: "az700-24-q5",
-    question: "After resetting a VPN gateway, what is the expected impact?",
+    question: "Após resetar um gateway VPN, qual é o impacto esperado?",
     options: [
-      "All connections (S2S, P2S, and VNet-to-VNet) on the gateway are disrupted for 5-15 minutes",
-      "Only the specific S2S connection that was having issues is reset",
-      "The gateway configuration is reverted to default settings",
-      "P2S clients remain connected but S2S tunnels are renegotiated"
+      "Todas as conexões (S2S, P2S e VNet-to-VNet) no gateway são interrompidas por 5-15 minutos",
+      "Apenas a conexão S2S específica que estava com problemas é resetada",
+      "A configuração do gateway é revertida para as configurações padrão",
+      "Clientes P2S permanecem conectados, mas os túneis S2S são renegociados"
     ],
     correctIndex: 0,
-    explanation: "A gateway reset restarts the active gateway instance, which disrupts ALL connections -- S2S tunnels, P2S client sessions, and VNet-to-VNet connections. It takes 5-15 minutes to complete. The reset does not change any configuration; it only restarts the instance and forces renegotiation of all tunnels. For active-active gateways, you can reset one instance at a time to minimize impact."
+    explanation: "Um reset de gateway reinicia a instância ativa do gateway, o que interrompe TODAS as conexões -- túneis S2S, sessões de clientes P2S e conexões VNet-to-VNet. Leva de 5 a 15 minutos para completar. O reset não altera nenhuma configuração; apenas reinicia a instância e força a renegociação de todos os túneis. Para gateways active-active, você pode resetar uma instância por vez para minimizar o impacto."
   },
   {
     id: "az700-24-q6",
-    question: "An ExpressRoute peering shows state 'Enabled' but the ARP table returns empty results on both primary and secondary paths. What is the most likely layer 2 issue?",
+    question: "Um peering ExpressRoute mostra estado 'Enabled', mas a tabela ARP retorna resultados vazios nos caminhos primário e secundário. Qual é o problema de camada 2 mais provável?",
     options: [
-      "The VLAN ID configured in the Azure peering does not match the VLAN tag configured by the service provider",
-      "The BGP ASN is misconfigured on the Azure side",
-      "The ExpressRoute circuit bandwidth is insufficient",
-      "The peering subnet masks are /31 instead of /30"
+      "O VLAN ID configurado no peering do Azure não corresponde à tag VLAN configurada pelo provedor de serviço",
+      "O BGP ASN está mal configurado no lado do Azure",
+      "A largura de banda do circuito ExpressRoute é insuficiente",
+      "As máscaras de sub-rede do peering são /31 em vez de /30"
     ],
     correctIndex: 0,
-    explanation: "An empty ARP table indicates a layer 2 connectivity failure -- the Azure MSEE router cannot reach the provider/customer edge router at the Ethernet frame level. The most common cause is a VLAN ID mismatch between what Azure expects and what the provider has tagged. BGP ASN issues would show in the route table (layer 3), not ARP. Both /30 and /31 subnets are supported for peering."
+    explanation: "Uma tabela ARP vazia indica uma falha de conectividade de camada 2 -- o roteador MSEE do Azure não consegue alcançar o roteador de borda do provedor/cliente no nível de quadro Ethernet. A causa mais comum é uma incompatibilidade de VLAN ID entre o que o Azure espera e o que o provedor configurou. Problemas de BGP ASN apareceriam na tabela de rotas (camada 3), não no ARP. Ambas as sub-redes /30 e /31 são suportadas para peering."
   }
 ]} />

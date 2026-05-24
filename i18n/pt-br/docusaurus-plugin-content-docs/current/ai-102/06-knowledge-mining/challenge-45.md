@@ -1,16 +1,16 @@
 ---
 sidebar_position: 7
-title: "Desafio 45: Azure Document Intelligence — Modelos Pré-construídos"
+title: "Desafio 45: Azure Document Intelligence â€” Modelos PrÃ©-construÃ­dos"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 45: Azure Document Intelligence — Modelos Pré-construídos
+# Desafio 45: Azure Document Intelligence â€” Modelos PrÃ©-construÃ­dos
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$1.00 (Document Intelligence camada S0 + transações) | **Domínio**: Knowledge Mining & Extraction (15-20%)
+**45-60 min** | **Custo**: ~$1.00 (Document Intelligence camada S0 + transaÃ§Ãµes) | **DomÃ­nio**: Knowledge Mining & Extraction (15-20%)
 :::
 
 ## Habilidades do exame cobertas
@@ -18,34 +18,34 @@ import TabItem from '@theme/TabItem';
 | Habilidade | Peso |
 |-------|--------|
 | Provisionar o Azure AI Document Intelligence | Alto |
-| Usar modelos pré-construídos para extrair dados de documentos | Alto |
-| Selecionar o modelo pré-construído apropriado para um cenário | Alto |
-| Lidar com pontuações de confiança e campos extraídos | Médio |
-| Usar o modelo de layout para extração de estrutura | Médio |
+| Usar modelos prÃ©-construÃ­dos para extrair dados de documentos | Alto |
+| Selecionar o modelo prÃ©-construÃ­do apropriado para um cenÃ¡rio | Alto |
+| Lidar com pontuaÃ§Ãµes de confianÃ§a e campos extraÃ­dos | MÃ©dio |
+| Usar o modelo de layout para extraÃ§Ã£o de estrutura | MÃ©dio |
 
-## Visão geral
+## VisÃ£o geral
 
-O Azure AI Document Intelligence (anteriormente Form Recognizer) usa aprendizado de máquina para extrair dados estruturados de documentos. Os modelos pré-construídos são pré-treinados para tipos comuns de documentos:
+O Azure AI Document Intelligence (anteriormente Form Recognizer) usa aprendizado de mÃ¡quina para extrair dados estruturados de documentos. Os modelos prÃ©-construÃ­dos sÃ£o prÃ©-treinados para tipos comuns de documentos:
 
-| Modelo | Caso de uso | Campos-chave extraídos |
+| Modelo | Caso de uso | Campos-chave extraÃ­dos |
 |-------|----------|-------------------|
 | `prebuilt-invoice` | Faturas | VendorName, InvoiceTotal, DueDate, LineItems |
 | `prebuilt-receipt` | Recibos | MerchantName, Total, TransactionDate, Items |
 | `prebuilt-idDocument` | Documentos de identidade/Passaportes | FirstName, LastName, DateOfBirth, DocumentNumber |
-| `prebuilt-businessCard` | Cartões de visita | ContactNames, Emails, PhoneNumbers |
-| `prebuilt-tax.us.w2` | Formulários US W-2 | Employee, Employer, WagesTips, FederalIncomeTax |
+| `prebuilt-businessCard` | CartÃµes de visita | ContactNames, Emails, PhoneNumbers |
+| `prebuilt-tax.us.w2` | FormulÃ¡rios US W-2 | Employee, Employer, WagesTips, FederalIncomeTax |
 | `prebuilt-layout` | Qualquer documento | Pages, Tables, Paragraphs, SelectionMarks |
 | `prebuilt-read` | Qualquer documento | Linhas de texto, palavras, idiomas |
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Assinatura do Azure com função de Contributor
+- Assinatura do Azure com funÃ§Ã£o de Contributor
 - Azure CLI 2.60+
 - Python 3.9+ com `azure-ai-documentintelligence>=1.0.0`
 - .NET 8 com `Azure.AI.DocumentIntelligence`
 - Documentos de exemplo (PDF de fatura, imagem de recibo)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Provisionar o Azure Document Intelligence
 
@@ -77,7 +77,7 @@ DOC_KEY=$(az cognitiveservices account keys list \
 echo "Endpoint: $DOC_ENDPOINT"
 ```
 
-### Tarefa 2: Analisar uma fatura com modelo pré-construído
+### Tarefa 2: Analisar uma fatura com modelo prÃ©-construÃ­do
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -122,7 +122,7 @@ for document in result.documents:
             item_fields = item.value_object
             desc = item_fields.get("Description", {})
             amount = item_fields.get("Amount", {})
-            print(f"    {i+1}. {desc.value_string if desc else 'N/A'} — ${amount.value_currency.amount if amount else 'N/A'}")
+            print(f"    {i+1}. {desc.value_string if desc else 'N/A'} â€” ${amount.value_currency.amount if amount else 'N/A'}")
 ```
 
 </TabItem>
@@ -192,7 +192,7 @@ curl -s "$OPERATION_URL" \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Extrair informações de documento de identidade
+### Tarefa 3: Extrair informaÃ§Ãµes de documento de identidade
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -355,9 +355,9 @@ curl -s "$OPERATION_URL" \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Document type: invoice
 Confidence: 95.20%
   Vendor: CONTOSO LTD. (confidence: 97.80%)
@@ -366,28 +366,28 @@ Confidence: 95.20%
   Due: 2024-02-15
 
   Line Items (4 items):
-    1. Consulting Services — $1500.00
-    2. Software License — $1200.00
-    3. Support Plan — $800.00
-    4. Training — $300.00
+    1. Consulting Services â€” $1500.00
+    2. Software License â€” $1200.00
+    3. Support Plan â€” $800.00
+    4. Training â€” $300.00
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| # | Cenário | Sintoma | Causa Raiz | Correção |
+| # | CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---|----------|---------|------------|-----|
-| 1 | Modelo retorna resultados vazios | Array `documents` está vazio | Modelo errado para o tipo de documento (ex.: usando `prebuilt-receipt` para uma fatura) | Selecione o modelo pré-construído correto que corresponda ao tipo do seu documento |
-| 2 | Pontuações de confiança baixas | Campos extraídos com < 50% de confiança | Documento de baixa qualidade (digitalização borrada, manuscrito) | Use digitalizações de maior resolução; considere um modelo personalizado para documentos manuscritos |
-| 3 | Erro "Resource not found" | HTTP 404 no endpoint de análise | Usando formato antigo de endpoint do Form Recognizer em vez do Document Intelligence | Use o formato de endpoint: `{endpoint}/documentintelligence/documentModels/{model}:analyze?api-version=2024-11-30` |
-| 4 | Timeout em documentos grandes | Operação de longa duração nunca é concluída | Documento excede o limite de páginas (2000 páginas para layout) ou é muito grande | Divida documentos grandes; use o parâmetro `pages` para processar páginas específicas |
-| 5 | Itens de linha ausentes | Total da fatura extraído mas array de itens está vazio | Layout do documento não é padrão; modelo não consegue identificar a estrutura da tabela | Tente `prebuilt-layout` para ver a extração bruta da tabela; considere um modelo personalizado |
+| 1 | Modelo retorna resultados vazios | Array `documents` estÃ¡ vazio | Modelo errado para o tipo de documento (ex.: usando `prebuilt-receipt` para uma fatura) | Selecione o modelo prÃ©-construÃ­do correto que corresponda ao tipo do seu documento |
+| 2 | PontuaÃ§Ãµes de confianÃ§a baixas | Campos extraÃ­dos com < 50% de confianÃ§a | Documento de baixa qualidade (digitalizaÃ§Ã£o borrada, manuscrito) | Use digitalizaÃ§Ãµes de maior resoluÃ§Ã£o; considere um modelo personalizado para documentos manuscritos |
+| 3 | Erro "Resource not found" | HTTP 404 no endpoint de anÃ¡lise | Usando formato antigo de endpoint do Form Recognizer em vez do Document Intelligence | Use o formato de endpoint: `{endpoint}/documentintelligence/documentModels/{model}:analyze?api-version=2024-11-30` |
+| 4 | Timeout em documentos grandes | OperaÃ§Ã£o de longa duraÃ§Ã£o nunca Ã© concluÃ­da | Documento excede o limite de pÃ¡ginas (2000 pÃ¡ginas para layout) ou Ã© muito grande | Divida documentos grandes; use o parÃ¢metro `pages` para processar pÃ¡ginas especÃ­ficas |
+| 5 | Itens de linha ausentes | Total da fatura extraÃ­do mas array de itens estÃ¡ vazio | Layout do documento nÃ£o Ã© padrÃ£o; modelo nÃ£o consegue identificar a estrutura da tabela | Tente `prebuilt-layout` para ver a extraÃ§Ã£o bruta da tabela; considere um modelo personalizado |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ai102-45-q1",
-    question: "Você precisa extrair o nome do fornecedor, total da fatura e itens de linha de faturas digitalizadas. Qual modelo você deve usar?",
+    question: "VocÃª precisa extrair o nome do fornecedor, total da fatura e itens de linha de faturas digitalizadas. Qual modelo vocÃª deve usar?",
     options: [
       "prebuilt-layout",
       "prebuilt-invoice",
@@ -395,35 +395,35 @@ Confidence: 95.20%
       "prebuilt-document"
     ],
     correctIndex: 1,
-    explanation: "O modelo prebuilt-invoice é especificamente treinado para extrair campos específicos de faturas como VendorName, InvoiceTotal, DueDate e LineItems. Embora o prebuilt-layout possa extrair tabelas, ele não compreende a semântica de faturas."
+    explanation: "O modelo prebuilt-invoice Ã© especificamente treinado para extrair campos especÃ­ficos de faturas como VendorName, InvoiceTotal, DueDate e LineItems. Embora o prebuilt-layout possa extrair tabelas, ele nÃ£o compreende a semÃ¢ntica de faturas."
   },
   {
     id: "ai102-45-q2",
-    question: "A operação de análise do Document Intelligence retorna imediatamente com um cabeçalho Operation-Location. O que isso indica?",
+    question: "A operaÃ§Ã£o de anÃ¡lise do Document Intelligence retorna imediatamente com um cabeÃ§alho Operation-Location. O que isso indica?",
     options: [
-      "A operação é assíncrona — você deve fazer polling na URL do Operation-Location para obter os resultados",
+      "A operaÃ§Ã£o Ã© assÃ­ncrona â€” vocÃª deve fazer polling na URL do Operation-Location para obter os resultados",
       "O documento era muito grande e foi rejeitado",
-      "A análise está completa e os resultados estão no cabeçalho",
-      "A requisição foi redirecionada para outro endpoint"
+      "A anÃ¡lise estÃ¡ completa e os resultados estÃ£o no cabeÃ§alho",
+      "A requisiÃ§Ã£o foi redirecionada para outro endpoint"
     ],
     correctIndex: 0,
-    explanation: "O Document Intelligence usa um padrão assíncrono. O POST inicial retorna HTTP 202 com um cabeçalho Operation-Location. Você faz polling nessa URL até que o status da operação se torne 'succeeded', e então recupera os resultados do corpo da resposta."
+    explanation: "O Document Intelligence usa um padrÃ£o assÃ­ncrono. O POST inicial retorna HTTP 202 com um cabeÃ§alho Operation-Location. VocÃª faz polling nessa URL atÃ© que o status da operaÃ§Ã£o se torne 'succeeded', e entÃ£o recupera os resultados do corpo da resposta."
   },
   {
     id: "ai102-45-q3",
-    question: "Um campo é extraído com confiança de 0.45 (45%). O que sua aplicação deve fazer?",
+    question: "Um campo Ã© extraÃ­do com confianÃ§a de 0.45 (45%). O que sua aplicaÃ§Ã£o deve fazer?",
     options: [
       "Rejeitar o documento inteiro",
-      "Reenviar o documento com configurações de maior resolução",
-      "Sinalizar o campo para revisão humana com base em um limiar de confiança",
-      "Aceitar o valor já que qualquer extração é melhor que entrada manual"
+      "Reenviar o documento com configuraÃ§Ãµes de maior resoluÃ§Ã£o",
+      "Sinalizar o campo para revisÃ£o humana com base em um limiar de confianÃ§a",
+      "Aceitar o valor jÃ¡ que qualquer extraÃ§Ã£o Ã© melhor que entrada manual"
     ],
     correctIndex: 2,
-    explanation: "A melhor prática é definir um limiar de confiança (tipicamente 0.8 ou 80%) e sinalizar campos abaixo dele para revisão humana. Uma confiança de 45% sugere que o modelo está incerto. Não rejeite o documento inteiro — outros campos podem ter alta confiança."
+    explanation: "A melhor prÃ¡tica Ã© definir um limiar de confianÃ§a (tipicamente 0.8 ou 80%) e sinalizar campos abaixo dele para revisÃ£o humana. Uma confianÃ§a de 45% sugere que o modelo estÃ¡ incerto. NÃ£o rejeite o documento inteiro â€” outros campos podem ter alta confianÃ§a."
   },
   {
     id: "ai102-45-q4",
-    question: "Qual modelo pré-construído extrai tabelas, parágrafos e marcas de seleção de QUALQUER tipo de documento sem precisar conhecer o formato do documento?",
+    question: "Qual modelo prÃ©-construÃ­do extrai tabelas, parÃ¡grafos e marcas de seleÃ§Ã£o de QUALQUER tipo de documento sem precisar conhecer o formato do documento?",
     options: [
       "prebuilt-read",
       "prebuilt-document",
@@ -431,11 +431,11 @@ Confidence: 95.20%
       "prebuilt-layout"
     ],
     correctIndex: 3,
-    explanation: "O prebuilt-layout é o modelo de extração de estrutura de propósito geral. Ele identifica páginas, tabelas, parágrafos, marcas de seleção (checkboxes) e códigos de barras de qualquer documento. O prebuilt-read apenas extrai texto. O prebuilt-invoice/receipt são específicos para formatos."
+    explanation: "O prebuilt-layout Ã© o modelo de extraÃ§Ã£o de estrutura de propÃ³sito geral. Ele identifica pÃ¡ginas, tabelas, parÃ¡grafos, marcas de seleÃ§Ã£o (checkboxes) e cÃ³digos de barras de qualquer documento. O prebuilt-read apenas extrai texto. O prebuilt-invoice/receipt sÃ£o especÃ­ficos para formatos."
   },
   {
     id: "ai102-45-q5",
-    question: "Qual é o formato correto de endpoint da API para analisar um documento com o Document Intelligence (API 2024-11-30)?",
+    question: "Qual Ã© o formato correto de endpoint da API para analisar um documento com o Document Intelligence (API 2024-11-30)?",
     options: [
       "{endpoint}/formrecognizer/v2.1/prebuilt/{modelId}/analyze",
       "{endpoint}/documentintelligence/documentModels/{modelId}:analyze?api-version=2024-11-30",
@@ -443,7 +443,7 @@ Confidence: 95.20%
       "{endpoint}/documentintelligence/analyze/{modelId}?api-version=2024-11-30"
     ],
     correctIndex: 1,
-    explanation: "A API atual do Document Intelligence (v4.0, 2024-11-30) usa o formato de endpoint: {endpoint}/documentintelligence/documentModels/{modelId}:analyze. O caminho antigo formrecognizer está depreciado."
+    explanation: "A API atual do Document Intelligence (v4.0, 2024-11-30) usa o formato de endpoint: {endpoint}/documentintelligence/documentModels/{modelId}:analyze. O caminho antigo formrecognizer estÃ¡ depreciado."
   }
 ]} />
 
@@ -455,8 +455,8 @@ az group delete --name rg-ai102-docintell --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral do Document Intelligence](https://learn.microsoft.com/azure/ai-services/document-intelligence/overview)
-- [Modelos pré-construídos](https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-model-overview)
+- [VisÃ£o geral do Document Intelligence](https://learn.microsoft.com/azure/ai-services/document-intelligence/overview)
+- [Modelos prÃ©-construÃ­dos](https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-model-overview)
 - [Modelo de fatura](https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-invoice)
 - [Modelo de layout](https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-layout)
-- [Início rápido com SDK (Python)](https://learn.microsoft.com/azure/ai-services/document-intelligence/quickstarts/get-started-sdks-rest-api)
+- [InÃ­cio rÃ¡pido com SDK (Python)](https://learn.microsoft.com/azure/ai-services/document-intelligence/quickstarts/get-started-sdks-rest-api)

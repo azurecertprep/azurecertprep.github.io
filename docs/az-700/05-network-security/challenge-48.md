@@ -27,7 +27,7 @@ You must demonstrate that:
 
 ## Architecture overview
 
-```
+```text
    +--------------------------------------------------+
    |         Azure Virtual Network Manager             |
    |  (Security Admin Rules - deny by default)         |
@@ -556,7 +556,7 @@ az network bastion ssh \
 
 ---
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: AVNM security admin rule blocks Bastion
 
@@ -682,7 +682,7 @@ az network bastion update \
     question: "How do AVNM security admin rules interact with NSG rules?",
     options: [
       "NSG rules are evaluated first, then AVNM rules override conflicts",
-      "AVNM security admin rules are evaluated BEFORE NSG rules and take precedence ✅",
+      "AVNM security admin rules are evaluated BEFORE NSG rules and take precedence âœ…",
       "AVNM rules and NSG rules are merged and the lowest priority number wins",
       "AVNM rules only apply when no NSG is associated with the subnet"
     ],
@@ -694,7 +694,7 @@ az network bastion update \
     question: "What is required for Just-in-Time VM access to function?",
     options: [
       "Azure Firewall Premium and a public IP on the VM",
-      "Microsoft Defender for Servers (Plan 2) and an NSG associated with the VM ✅",
+      "Microsoft Defender for Servers (Plan 2) and an NSG associated with the VM âœ…",
       "Azure Bastion Standard SKU and a network security perimeter",
       "Azure Virtual Network Manager and a security admin configuration"
     ],
@@ -706,7 +706,7 @@ az network bastion update \
     question: "Which Azure Bastion SKU supports native client connectivity (az network bastion ssh)?",
     options: [
       "Basic SKU",
-      "Standard SKU with tunneling enabled ✅",
+      "Standard SKU with tunneling enabled âœ…",
       "Developer SKU",
       "Any SKU with a public IP"
     ],
@@ -719,7 +719,7 @@ az network bastion update \
     options: [
       "Allow, Deny, Drop",
       "Permit, Block, Override",
-      "Allow, Deny, AlwaysAllow ✅",
+      "Allow, Deny, AlwaysAllow âœ…",
       "Accept, Reject, Force"
     ],
     correctIndex: 2,
@@ -731,7 +731,7 @@ az network bastion update \
     options: [
       "Add an NSG allow rule for the Bastion subnet - it will override the AVNM deny",
       "Remove the AVNM deny rule entirely",
-      "Add an AlwaysAllow rule with a lower priority number for traffic from the AzureBastionSubnet ✅",
+      "Add an AlwaysAllow rule with a lower priority number for traffic from the AzureBastionSubnet âœ…",
       "Redeploy Bastion in a different VNet not managed by AVNM"
     ],
     correctIndex: 2,
@@ -741,7 +741,7 @@ az network bastion update \
     id: "az700-48-q6",
     question: "How can you define dynamic membership for an AVNM network group?",
     options: [
-      "Using Azure Policy with conditional expressions that match VNet properties like tags ✅",
+      "Using Azure Policy with conditional expressions that match VNet properties like tags âœ…",
       "Using NSG flow logs to automatically detect VNet communication patterns",
       "Using Azure Monitor alerts to add VNets when traffic thresholds are met",
       "Using ARM template deployments with linked resource IDs"

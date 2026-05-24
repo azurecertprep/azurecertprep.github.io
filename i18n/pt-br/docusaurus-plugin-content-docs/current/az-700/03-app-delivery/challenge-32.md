@@ -1,6 +1,6 @@
 ---
 sidebar_position: 8
-title: "Challenge 32: Azure Front Door rules & Private Link"
+title: "Desafio 32: Azure Front Door Regras & Private Link"
 sidebar_label: "Challenge 32"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -543,7 +543,7 @@ az afd route create \
 Conjuntos de regras são executados na ordem em que estão listados no parâmetro `--rule-sets`. Neste exemplo, as reescritas de URL de tenant acontecem primeiro, depois os cabeçalhos de segurança são adicionados. Essa ordem importa: se a regra de redirecionamento de segurança dispara primeiro (com `--match-processing-behavior Stop`), as regras subsequentes em outros conjuntos de regras não seriam executadas para aquela solicitação.
 :::
 
-## Quebra e correção
+## Quebra & conserta
 
 ### Cenário 1: Conjunto de regras não sendo avaliado (incompatibilidade de ordem/condição)
 
@@ -653,75 +653,75 @@ az afd custom-domain regenerate-validation-token \
 <KnowledgeCheck questions={[
   {
     id: "az700-32-q1",
-    question: "In which order do rule sets execute when multiple are associated with a single route?",
+    question: "Em qual ordem os rule sets são executados quando múltiplos estão associados a uma única rota?",
     options: [
-      "In the order they are listed in the route's rule-sets association ✅",
-      "Alphabetically by rule set name",
-      "By creation timestamp (oldest first)",
-      "All rule sets execute simultaneously in parallel"
+      "Na ordem em que estão listados na associação rule-sets da rota ✅",
+      "Alfabeticamente pelo nome do rule set",
+      "Por timestamp de criação (mais antigo primeiro)",
+      "Todos os rule sets executam simultaneamente em paralelo"
     ],
     correctIndex: 0,
-    explanation: "Rule sets execute in the order they appear in the route's rule-sets list. Within each rule set, individual rules execute in ascending order of their 'order' value. This sequencing is important for dependencies between rules."
+    explanation: "Os rule sets executam na ordem em que aparecem na lista rule-sets da rota. Dentro de cada rule set, as regras individuais executam em ordem crescente de seu valor 'order'. Essa sequência é importante para dependências entre regras."
   },
   {
     id: "az700-32-q2",
-    question: "After creating a Private Link origin in Front Door Premium, the origin status shows as 'Pending'. What must happen next?",
+    question: "Após criar uma origem com Private Link no Front Door Premium, o status da origem mostra 'Pending'. O que deve acontecer em seguida?",
     options: [
-      "The target resource owner must approve the Private Link connection ✅",
-      "Wait 24 hours for automatic approval",
-      "Run az afd origin update with --approve-private-link flag",
-      "Create a Private Endpoint in the target resource's VNet"
+      "O proprietário do recurso de destino deve aprovar a conexão Private Link ✅",
+      "Aguardar 24 horas para aprovação automática",
+      "Executar az afd origin update com a flag --approve-private-link",
+      "Criar um Private Endpoint na VNet do recurso de destino"
     ],
     correctIndex: 0,
-    explanation: "Private Link connections initiated by Front Door enter a 'Pending' state. The owner of the target resource (App Service, Storage, etc.) must explicitly approve the connection. Until approved, no traffic flows through the private link."
+    explanation: "Conexões Private Link iniciadas pelo Front Door entram em estado 'Pending'. O proprietário do recurso de destino (App Service, Storage, etc.) deve aprovar explicitamente a conexão. Até ser aprovada, nenhum tráfego flui pelo private link."
   },
   {
     id: "az700-32-q3",
-    question: "You configure a managed certificate for custom domain 'app.contoso.com'. Which DNS records must you create for validation?",
+    question: "Você configura um certificado gerenciado para o domínio personalizado 'app.contoso.com'. Quais registros DNS você deve criar para validação?",
     options: [
-      "A CNAME for the domain pointing to the FD endpoint AND a TXT record _dnsauth.app.contoso.com with the validation token ✅",
-      "Only a CNAME record pointing to the Front Door endpoint",
-      "An A record pointing to the Front Door IP address",
-      "A TXT record at the apex domain with 'azure-verify=<profile-id>'"
+      "Um CNAME para o domínio apontando para o endpoint do FD E um registro TXT _dnsauth.app.contoso.com com o token de validação ✅",
+      "Apenas um registro CNAME apontando para o endpoint do Front Door",
+      "Um registro A apontando para o endereço IP do Front Door",
+      "Um registro TXT no domínio apex com 'azure-verify=<profile-id>'"
     ],
     correctIndex: 0,
-    explanation: "Front Door managed certificate validation requires both a CNAME record (pointing the custom domain to the FD endpoint) and a TXT record at _dnsauth.<domain> containing the validation token. Both records must be present for certificate issuance."
+    explanation: "A validação de certificado gerenciado do Front Door requer tanto um registro CNAME (apontando o domínio personalizado para o endpoint do FD) quanto um registro TXT em _dnsauth.<domínio> contendo o token de validação. Ambos os registros devem estar presentes para a emissão do certificado."
   },
   {
     id: "az700-32-q4",
-    question: "A rule has --match-processing-behavior set to 'Stop'. What happens when this rule matches a request?",
+    question: "Uma regra tem --match-processing-behavior definido como 'Stop'. O que acontece quando esta regra corresponde a uma requisição?",
     options: [
-      "The rule's action executes and no subsequent rules in any rule set are evaluated ✅",
-      "Only rules in the current rule set stop; other rule sets still execute",
-      "The request is immediately dropped without forwarding",
-      "Caching is disabled for this request"
+      "A ação da regra é executada e nenhuma regra subsequente em nenhum rule set é avaliada ✅",
+      "Apenas as regras no rule set atual param; outros rule sets ainda executam",
+      "A requisição é imediatamente descartada sem encaminhamento",
+      "O caching é desabilitado para esta requisição"
     ],
     correctIndex: 0,
-    explanation: "When match-processing-behavior is 'Stop', the current rule's action executes and then ALL remaining rules (in the current and subsequent rule sets) are skipped. This is commonly used for redirect rules to prevent further processing."
+    explanation: "Quando match-processing-behavior é 'Stop', a ação da regra atual é executada e então TODAS as regras restantes (no rule set atual e nos subsequentes) são puladas. Isso é comumente usado para regras de redirecionamento para evitar processamento adicional."
   },
   {
     id: "az700-32-q5",
-    question: "Which Front Door SKU supports Private Link origins?",
+    question: "Qual SKU do Front Door suporta origens com Private Link?",
     options: [
-      "Premium only ✅",
-      "Both Standard and Premium",
-      "Standard only",
-      "Neither; Private Link requires a separate Private Endpoint resource"
+      "Apenas Premium ✅",
+      "Standard e Premium",
+      "Apenas Standard",
+      "Nenhum; Private Link requer um recurso separado de Private Endpoint"
     ],
     correctIndex: 0,
-    explanation: "Private Link origin connectivity is an exclusive feature of Azure Front Door Premium. Standard SKU does not support Private Link origins. This is one of the key differentiators between the two tiers."
+    explanation: "A conectividade de origem via Private Link é um recurso exclusivo do Azure Front Door Premium. O SKU Standard não suporta origens com Private Link. Este é um dos principais diferenciadores entre as duas camadas."
   },
   {
     id: "az700-32-q6",
-    question: "You create a URL rewrite rule with source-pattern '/api/v1/' and destination '/api/v2/' with preserve-unmatched-path set to true. A request arrives for '/api/v1/users/123'. What path reaches the origin?",
+    question: "Você cria uma regra de reescrita de URL com source-pattern '/api/v1/' e destination '/api/v2/' com preserve-unmatched-path definido como true. Uma requisição chega para '/api/v1/users/123'. Qual caminho chega à origem?",
     options: [
       "/api/v2/users/123 ✅",
       "/api/v2/",
-      "/api/v1/users/123 (no change)",
+      "/api/v1/users/123 (sem alteração)",
       "/users/123"
     ],
     correctIndex: 0,
-    explanation: "With preserve-unmatched-path set to true, the matched portion '/api/v1/' is replaced with '/api/v2/' and the remaining path '/users/123' is appended. This preserves the full path structure while changing the prefix."
+    explanation: "Com preserve-unmatched-path definido como true, a parte correspondente '/api/v1/' é substituída por '/api/v2/' e o caminho restante '/users/123' é anexado. Isso preserva a estrutura completa do caminho enquanto altera o prefixo."
   }
 ]} />
 

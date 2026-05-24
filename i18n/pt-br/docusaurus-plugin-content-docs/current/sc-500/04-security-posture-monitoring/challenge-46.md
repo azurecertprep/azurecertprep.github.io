@@ -294,7 +294,7 @@ echo "  OfficeActivity | where Operation contains 'Sensitivity'"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Windows Security events mostram apenas um subconjunto dos Event IDs esperados
 

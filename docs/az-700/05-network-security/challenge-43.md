@@ -622,7 +622,7 @@ New-AzFirewallPolicyRuleCollectionGroup `
   -RuleCollection @($urlCollection, $webCatCollection)
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Child policy priority collision with parent
 

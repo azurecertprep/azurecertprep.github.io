@@ -376,7 +376,7 @@ az network manager list-deploy-status \
 
 ---
 
-## Quebre &amp; Conserte
+## Quebra & conserta
 
 ### Cenário 1: Regras de security admin não aparecem nas VNets
 

@@ -330,7 +330,7 @@ kubectl get pods --all-namespaces -o json | \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Pods de aplicação falhando ao iniciar após aplicação de Pod Security Standard
 

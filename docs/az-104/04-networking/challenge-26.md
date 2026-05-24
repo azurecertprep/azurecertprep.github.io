@@ -427,7 +427,7 @@ az network nic list-effective-nsg \
     "Effective security rules reviewed for combined NIC + subnet NSG impact"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: VM cannot reach internet
 

@@ -456,7 +456,7 @@ cat projected-doc.json | python -m json.tool
 }
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
 | # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 07: Clustering em Machine Learning"
+title: "Desafio 07: Clustering em Machine Learning"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

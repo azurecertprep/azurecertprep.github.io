@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 08 | Virtual Machines & Scale Sets"
+title: "Desafio 08: Máquinas Virtuais & Scale Sets"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

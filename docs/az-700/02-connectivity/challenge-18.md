@@ -27,7 +27,7 @@ Contoso has three distinct user groups that require point-to-site VPN access wit
 
 ## Architecture overview
 
-```
+```text
 Authentication Methods for P2S VPN
                                           +-------------------+
   Admins (cert)  ----[Client Cert]------->|                   |
@@ -410,7 +410,7 @@ Always On VPN ensures that an authorized Windows 10/11 device maintains a persis
 
 ### Always On VPN tunnel types
 
-```
+```text
 +-------------------------------------------------------+
 |  DEVICE TUNNEL (IKEv2 + machine cert)                 |
 |  - Connects before user logs on                        |
@@ -477,7 +477,7 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Entra ID configured with IKEv2 (incompatible)
 

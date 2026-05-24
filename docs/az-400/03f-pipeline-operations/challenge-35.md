@@ -29,7 +29,7 @@ Target: Reduce pipeline duration to under 15 minutes and monthly cost below $100
 
 The repository is a Node.js monorepo with 3 packages:
 
-```
+```text
 contoso-platform/
   packages/
     api/          (Express.js REST API)
@@ -498,7 +498,7 @@ stages:
 
 Understand Azure Pipelines parallel job pricing:
 
-```
+```text
 # Azure Pipelines parallel jobs:
 # Free tier: 1 Microsoft-hosted parallel job (1800 min/month)
 # Additional: $40/month per parallel job (unlimited minutes)
@@ -564,7 +564,7 @@ Alternative using `nx affected` for monorepos:
         run: npx nx affected --target=test --base=HEAD~1 --head=HEAD
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Fix the broken cache
 

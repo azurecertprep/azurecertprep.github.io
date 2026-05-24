@@ -69,7 +69,7 @@ az cognitiveservices account create \
   --name $AI_SERVICE \
   --resource-group $RG \
   --location $LOCATION \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --yes
 
@@ -506,7 +506,7 @@ curl -X DELETE "${AI_ENDPOINT}/contentunderstanding/analyzers/invoice-analyzer?a
 }
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
 | # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|

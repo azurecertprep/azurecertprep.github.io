@@ -508,7 +508,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/documents-
 }
 ```
 
-## Quebra e Correção
+## Quebra & conserta
 
 | # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|

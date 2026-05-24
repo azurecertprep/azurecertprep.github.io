@@ -265,7 +265,7 @@ az graph query -q "
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Conector AWS mostra status "Unhealthy"
 

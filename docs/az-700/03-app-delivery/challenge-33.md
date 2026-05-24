@@ -673,7 +673,7 @@ az network traffic-manager endpoint list \
 
 ## Architecture summary
 
-```
+```text
 Users (Global)
     |
     v
@@ -705,7 +705,7 @@ Users (Global)
     |--- smtp-westeurope.fabrikam.com (Priority 2)
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Front Door health probes blocked by AppGW NSG
 

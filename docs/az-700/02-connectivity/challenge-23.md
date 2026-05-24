@@ -479,7 +479,7 @@ az network vhub route-table route add \
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Spoke in wrong route table
 

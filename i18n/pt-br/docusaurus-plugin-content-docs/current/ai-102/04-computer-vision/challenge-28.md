@@ -1,53 +1,53 @@
 ---
 sidebar_position: 6
-title: "Desafio 28: Detecção e Análise Facial"
+title: "Desafio 28: DetecÃ§Ã£o e AnÃ¡lise Facial"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 28: Detecção e Análise Facial
+# Desafio 28: DetecÃ§Ã£o e AnÃ¡lise Facial
 
 :::info Tempo Estimado
-**45 min** | **Custo**: $1-3 (estimado) | **Domínio**: Implementar Soluções de Visão Computacional (10-15%)
+**45 min** | **Custo**: $1-3 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de VisÃ£o Computacional (10-15%)
 :::
 
 :::caution Acesso Limitado
-Os recursos de **identificação** e **verificação** facial requerem [aprovação de Acesso Limitado](https://aka.ms/facerecognition). Este desafio foca nos recursos de **detecção** disponíveis sem aprovação.
+Os recursos de **identificaÃ§Ã£o** e **verificaÃ§Ã£o** facial requerem [aprovaÃ§Ã£o de Acesso Limitado](https://aka.ms/facerecognition). Este desafio foca nos recursos de **detecÃ§Ã£o** disponÃ­veis sem aprovaÃ§Ã£o.
 :::
 
 ## Habilidades do exame abordadas
-- Implementar soluções de detecção facial
+- Implementar soluÃ§Ãµes de detecÃ§Ã£o facial
 - Detectar rostos e analisar atributos faciais
-- Compreender as limitações de IA responsável nos serviços faciais
+- Compreender as limitaÃ§Ãµes de IA responsÃ¡vel nos serviÃ§os faciais
 
-## Visão Geral
+## VisÃ£o Geral
 
-O serviço Azure AI Face fornece detecção facial com análise de atributos. A detecção está disponível sem restrições; identificação/verificação requerem aprovação.
+O serviÃ§o Azure AI Face fornece detecÃ§Ã£o facial com anÃ¡lise de atributos. A detecÃ§Ã£o estÃ¡ disponÃ­vel sem restriÃ§Ãµes; identificaÃ§Ã£o/verificaÃ§Ã£o requerem aprovaÃ§Ã£o.
 
-**Atributos de detecção** (disponíveis sem Acesso Limitado):
-- Localização do rosto (bounding box)
-- Pose da cabeça (pitch, roll, yaw)
-- Nível de desfoque (low, medium, high)
-- Nível de exposição (underExposure, goodExposure, overExposure)
-- Nível de ruído
-- Oclusão (testa, olhos, boca ocluídos)
-- Acessórios (chapéus, óculos)
+**Atributos de detecÃ§Ã£o** (disponÃ­veis sem Acesso Limitado):
+- LocalizaÃ§Ã£o do rosto (bounding box)
+- Pose da cabeÃ§a (pitch, roll, yaw)
+- NÃ­vel de desfoque (low, medium, high)
+- NÃ­vel de exposiÃ§Ã£o (underExposure, goodExposure, overExposure)
+- NÃ­vel de ruÃ­do
+- OclusÃ£o (testa, olhos, boca ocluÃ­dos)
+- AcessÃ³rios (chapÃ©us, Ã³culos)
 - Qualidade para reconhecimento
 
-**Recursos restritos** (requerem aprovação de Acesso Limitado):
-- Identificação facial (correspondência 1:N)
-- Verificação facial (correspondência 1:1)
+**Recursos restritos** (requerem aprovaÃ§Ã£o de Acesso Limitado):
+- IdentificaÃ§Ã£o facial (correspondÃªncia 1:N)
+- VerificaÃ§Ã£o facial (correspondÃªncia 1:1)
 - Gerenciamento de PersonGroup
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura Azure
 - Recurso Azure AI Face
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-ai-vision-face` (v1.0+)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Criar Recurso Face
 
@@ -211,15 +211,15 @@ faces = client.detect(
 print(f"Found {len(faces)} faces in group photo")
 for i, face in enumerate(faces):
     quality = face.face_attributes.quality_for_recognition
-    print(f"  Face {i+1}: quality={quality} {'✓' if quality == 'high' else '⚠'}")
+    print(f"  Face {i+1}: quality={quality} {'âœ“' if quality == 'high' else 'âš '}")
 ```
 
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Detected 1 face(s):
 
 Face 1:
@@ -232,39 +232,39 @@ Face 1:
   Quality for recognition: high
 
 Found 5 faces in group photo
-  Face 1: quality=high ✓
-  Face 2: quality=high ✓
-  Face 3: quality=medium ⚠
-  Face 4: quality=high ✓
-  Face 5: quality=low ⚠
+  Face 1: quality=high âœ“
+  Face 2: quality=high âœ“
+  Face 3: quality=medium âš 
+  Face 4: quality=high âœ“
+  Face 5: quality=low âš 
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Nenhum rosto detectado | Array vazio retornado | Rosto muito pequeno (< 36x36 px) ou severamente ocluído | Garanta rostos com pelo menos 36x36 pixels; use maior resolução |
-| 403 Forbidden no identify | Acesso negado | Recurso requer aprovação de Acesso Limitado | Solicite em https://aka.ms/facerecognition; use apenas detecção |
-| Erro `InvalidImage` | 400 Bad Request | Formato de imagem não suportado ou corrompido | Use JPEG, PNG, GIF ou BMP; máximo 6MB |
-| Modelo de detecção errado | Atributos ausentes | Detection_01 não suporta todos os atributos | Use `detection_03` para suporte mais recente de atributos |
-| Resultados inconsistentes | Contagens diferentes de rostos | Diferenças entre modelos de detecção | Use um modelo de detecção consistentemente |
+| Nenhum rosto detectado | Array vazio retornado | Rosto muito pequeno (< 36x36 px) ou severamente ocluÃ­do | Garanta rostos com pelo menos 36x36 pixels; use maior resoluÃ§Ã£o |
+| 403 Forbidden no identify | Acesso negado | Recurso requer aprovaÃ§Ã£o de Acesso Limitado | Solicite em https://aka.ms/facerecognition; use apenas detecÃ§Ã£o |
+| Erro `InvalidImage` | 400 Bad Request | Formato de imagem nÃ£o suportado ou corrompido | Use JPEG, PNG, GIF ou BMP; mÃ¡ximo 6MB |
+| Modelo de detecÃ§Ã£o errado | Atributos ausentes | Detection_01 nÃ£o suporta todos os atributos | Use `detection_03` para suporte mais recente de atributos |
+| Resultados inconsistentes | Contagens diferentes de rostos | DiferenÃ§as entre modelos de detecÃ§Ã£o | Use um modelo de detecÃ§Ã£o consistentemente |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Quais recursos do serviço Face requerem aprovação de Acesso Limitado?",
+    question: "Quais recursos do serviÃ§o Face requerem aprovaÃ§Ã£o de Acesso Limitado?",
     options: [
-      "Detecção facial e análise de atributos",
-      "Detecção de bounding box e pose da cabeça",
-      "Detecção de desfoque, exposição e ruído",
-      "Identificação facial (1:N) e verificação (1:1)"
+      "DetecÃ§Ã£o facial e anÃ¡lise de atributos",
+      "DetecÃ§Ã£o de bounding box e pose da cabeÃ§a",
+      "DetecÃ§Ã£o de desfoque, exposiÃ§Ã£o e ruÃ­do",
+      "IdentificaÃ§Ã£o facial (1:N) e verificaÃ§Ã£o (1:1)"
     ],
     correctAnswer: 3,
-    explanation: "Identificação facial (correspondência contra um grupo) e verificação (comparação de dois rostos) requerem aprovação de Acesso Limitado. Detecção e análise de atributos estão disponíveis sem aprovação."
+    explanation: "IdentificaÃ§Ã£o facial (correspondÃªncia contra um grupo) e verificaÃ§Ã£o (comparaÃ§Ã£o de dois rostos) requerem aprovaÃ§Ã£o de Acesso Limitado. DetecÃ§Ã£o e anÃ¡lise de atributos estÃ£o disponÃ­veis sem aprovaÃ§Ã£o."
   },
   {
-    question: "Qual é o tamanho mínimo detectável de rosto no serviço Azure Face?",
+    question: "Qual Ã© o tamanho mÃ­nimo detectÃ¡vel de rosto no serviÃ§o Azure Face?",
     options: [
       "36x36 pixels",
       "10x10 pixels",
@@ -272,10 +272,10 @@ Found 5 faces in group photo
       "200x200 pixels"
     ],
     correctAnswer: 0,
-    explanation: "O tamanho mínimo de rosto para detecção é 36x36 pixels. Para melhor análise de atributos, regiões faciais maiores (idealmente 200x200+) são recomendadas."
+    explanation: "O tamanho mÃ­nimo de rosto para detecÃ§Ã£o Ã© 36x36 pixels. Para melhor anÃ¡lise de atributos, regiÃµes faciais maiores (idealmente 200x200+) sÃ£o recomendadas."
   },
   {
-    question: "Qual modelo de detecção você deve usar para o suporte mais completo de atributos?",
+    question: "Qual modelo de detecÃ§Ã£o vocÃª deve usar para o suporte mais completo de atributos?",
     options: [
       "detection_01",
       "detection_02",
@@ -283,29 +283,29 @@ Found 5 faces in group photo
       "detection_04"
     ],
     correctAnswer: 2,
-    explanation: "Detection_03 fornece o melhor suporte a atributos incluindo detecção de máscara, pose da cabeça, desfoque, exposição e qualidade para reconhecimento."
+    explanation: "Detection_03 fornece o melhor suporte a atributos incluindo detecÃ§Ã£o de mÃ¡scara, pose da cabeÃ§a, desfoque, exposiÃ§Ã£o e qualidade para reconhecimento."
   },
   {
     question: "O que 'qualityForRecognition' indica?",
     options: [
-      "A qualidade geral da imagem (resolução, compressão)",
-      "Quão adequado o rosto detectado é para tarefas de identificação/verificação (low, medium, high)",
-      "O score de confiança da detecção facial em si",
-      "Se a imagem atende aos requisitos mínimos de tamanho"
+      "A qualidade geral da imagem (resoluÃ§Ã£o, compressÃ£o)",
+      "QuÃ£o adequado o rosto detectado Ã© para tarefas de identificaÃ§Ã£o/verificaÃ§Ã£o (low, medium, high)",
+      "O score de confianÃ§a da detecÃ§Ã£o facial em si",
+      "Se a imagem atende aos requisitos mÃ­nimos de tamanho"
     ],
     correctAnswer: 1,
-    explanation: "qualityForRecognition indica se a qualidade da imagem facial é suficiente para reconhecimento (identificação/verificação) — classificada como low, medium ou high baseada em pose, desfoque e oclusão."
+    explanation: "qualityForRecognition indica se a qualidade da imagem facial Ã© suficiente para reconhecimento (identificaÃ§Ã£o/verificaÃ§Ã£o) â€” classificada como low, medium ou high baseada em pose, desfoque e oclusÃ£o."
   },
   {
-    question: "Qual é a diferença entre detecção facial e identificação facial?",
+    question: "Qual Ã© a diferenÃ§a entre detecÃ§Ã£o facial e identificaÃ§Ã£o facial?",
     options: [
-      "Detecção é mais rápida; identificação é mais precisa",
-      "Detecção funciona em vídeo; identificação funciona em imagens",
-      "Não há diferença — são a mesma operação",
-      "Detecção localiza rostos e retorna atributos; identificação compara rostos contra um grupo de pessoas conhecido"
+      "DetecÃ§Ã£o Ã© mais rÃ¡pida; identificaÃ§Ã£o Ã© mais precisa",
+      "DetecÃ§Ã£o funciona em vÃ­deo; identificaÃ§Ã£o funciona em imagens",
+      "NÃ£o hÃ¡ diferenÃ§a â€” sÃ£o a mesma operaÃ§Ã£o",
+      "DetecÃ§Ã£o localiza rostos e retorna atributos; identificaÃ§Ã£o compara rostos contra um grupo de pessoas conhecido"
     ],
     correctAnswer: 3,
-    explanation: "Detecção encontra rostos em uma imagem e retorna localizações + atributos. Identificação pega um rosto detectado e o compara contra um PersonGroup para determinar QUEM é a pessoa."
+    explanation: "DetecÃ§Ã£o encontra rostos em uma imagem e retorna localizaÃ§Ãµes + atributos. IdentificaÃ§Ã£o pega um rosto detectado e o compara contra um PersonGroup para determinar QUEM Ã© a pessoa."
   }
 ]} />
 
@@ -317,7 +317,7 @@ az group delete --name rg-ai102-face --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral do serviço Face](https://learn.microsoft.com/azure/ai-services/computer-vision/overview-identity)
-- [Conceitos de detecção facial](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-face-detection)
-- [Uso responsável do Face](https://learn.microsoft.com/azure/ai-services/computer-vision/responsible-use-identity)
-- [Política de Acesso Limitado](https://learn.microsoft.com/azure/ai-services/cognitive-services-limited-access)
+- [VisÃ£o geral do serviÃ§o Face](https://learn.microsoft.com/azure/ai-services/computer-vision/overview-identity)
+- [Conceitos de detecÃ§Ã£o facial](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-face-detection)
+- [Uso responsÃ¡vel do Face](https://learn.microsoft.com/azure/ai-services/computer-vision/responsible-use-identity)
+- [PolÃ­tica de Acesso Limitado](https://learn.microsoft.com/azure/ai-services/cognitive-services-limited-access)

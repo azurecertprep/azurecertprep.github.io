@@ -353,7 +353,7 @@ az rest --method GET \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Agente de IA bloqueado após implantação da política de Conditional Access
 

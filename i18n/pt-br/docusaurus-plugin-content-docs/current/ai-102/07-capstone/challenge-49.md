@@ -1,82 +1,82 @@
 ---
 sidebar_position: 1
-title: "Desafio 49: Solução Empresarial de IA de Ponta a Ponta"
+title: "Desafio 49: SoluÃ§Ã£o Empresarial de IA de Ponta a Ponta"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 49: Solução Empresarial de IA de Ponta a Ponta
+# Desafio 49: SoluÃ§Ã£o Empresarial de IA de Ponta a Ponta
 
 :::info Tempo Estimado
-**3-4 horas** | **Custo**: ~$5-10 (múltiplos serviços de IA) | **Capstone**: Todos os 6 Domínios do AI-102
+**3-4 horas** | **Custo**: ~$5-10 (mÃºltiplos serviÃ§os de IA) | **Capstone**: Todos os 6 DomÃ­nios do AI-102
 :::
 
 :::caution Aviso de Custo
-Este capstone implanta múltiplos serviços Azure AI. Monitore os custos cuidadosamente e limpe os recursos quando terminar. O desafio usa camadas Basic/S0 onde necessário.
+Este capstone implanta mÃºltiplos serviÃ§os Azure AI. Monitore os custos cuidadosamente e limpe os recursos quando terminar. O desafio usa camadas Basic/S0 onde necessÃ¡rio.
 :::
 
-## Habilidades do exame cobertas (Todos os Domínios)
+## Habilidades do exame cobertas (Todos os DomÃ­nios)
 
-| Domínio | Habilidades |
+| DomÃ­nio | Habilidades |
 |---------|-------------|
-| 1. Planejar e Gerenciar | Implantação de recursos, rede, RBAC, monitoramento, IA responsável |
-| 2. Moderação de Conteúdo | Azure AI Content Safety, moderação de texto/imagem, categorias personalizadas |
-| 3. Visão Computacional | Análise de imagem, OCR, custom vision, análise espacial |
-| 4. NLP | Análise de texto, compreensão de linguagem, tradução, serviços de fala |
+| 1. Planejar e Gerenciar | ImplantaÃ§Ã£o de recursos, rede, RBAC, monitoramento, IA responsÃ¡vel |
+| 2. ModeraÃ§Ã£o de ConteÃºdo | Azure AI Content Safety, moderaÃ§Ã£o de texto/imagem, categorias personalizadas |
+| 3. VisÃ£o Computacional | AnÃ¡lise de imagem, OCR, custom vision, anÃ¡lise espacial |
+| 4. NLP | AnÃ¡lise de texto, compreensÃ£o de linguagem, traduÃ§Ã£o, serviÃ§os de fala |
 | 5. IA Generativa | Azure OpenAI chat/completions, RAG, embeddings, engenharia de prompt |
-| 6. Mineração de Conhecimento | AI Search, Document Intelligence, skillsets, pesquisa vetorial |
+| 6. MineraÃ§Ã£o de Conhecimento | AI Search, Document Intelligence, skillsets, pesquisa vetorial |
 
-## Visão Geral
+## VisÃ£o Geral
 
-Você está construindo uma **Plataforma Empresarial de Inteligência Documental** para uma empresa global de serviços financeiros. A plataforma:
+VocÃª estÃ¡ construindo uma **Plataforma Empresarial de InteligÃªncia Documental** para uma empresa global de serviÃ§os financeiros. A plataforma:
 
-1. **Ingere** documentos (contratos, relatórios, correspondências) em múltiplos idiomas
-2. **Extrai** texto, tabelas e entidades usando Document Intelligence e Visão Computacional
-3. **Traduz** conteúdo para inglês usando o Translator
-4. **Enriquece** com NLP (sentimento, frases-chave, detecção de PII, entidades personalizadas)
-5. **Modera** conteúdo através do AI Content Safety
+1. **Ingere** documentos (contratos, relatÃ³rios, correspondÃªncias) em mÃºltiplos idiomas
+2. **Extrai** texto, tabelas e entidades usando Document Intelligence e VisÃ£o Computacional
+3. **Traduz** conteÃºdo para inglÃªs usando o Translator
+4. **Enriquece** com NLP (sentimento, frases-chave, detecÃ§Ã£o de PII, entidades personalizadas)
+5. **Modera** conteÃºdo atravÃ©s do AI Content Safety
 6. **Indexa** tudo no Azure AI Search com embeddings vetoriais
 7. **Serve** uma interface de chat RAG conversacional usando Azure OpenAI
 
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                     Enterprise Document Intelligence Platform                           │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                        │
-│  ┌─────────┐     ┌──────────────┐     ┌───────────────┐     ┌─────────────────┐      │
-│  │  Blob   │────▶│  Doc Intel   │────▶│  Translation  │────▶│  NLP Enrichment │      │
-│  │ Storage │     │  + OCR       │     │  (Translator) │     │  (Text Analytics│      │
-│  └─────────┘     └──────────────┘     └───────────────┘     │  + Custom NER)  │      │
-│       │                                                       └────────┬────────┘      │
-│       │                                                                │               │
-│       │          ┌──────────────┐     ┌───────────────┐               │               │
-│       └─────────▶│  Vision API  │     │ Content Safety│◀──────────────┤               │
-│                  │  (Images)    │     │  (Moderation) │               │               │
-│                  └──────┬───────┘     └───────────────┘               │               │
-│                         │                                              │               │
-│                         ▼                                              ▼               │
-│                  ┌──────────────────────────────────────────────────────┐              │
-│                  │              Azure AI Search                          │              │
-│                  │  (Full-text + Vector + Semantic + Knowledge Store)   │              │
-│                  └──────────────────────────┬───────────────────────────┘              │
-│                                             │                                          │
-│                                             ▼                                          │
-│                  ┌──────────────────────────────────────────────────────┐              │
-│                  │              Azure OpenAI (GPT-4o)                    │              │
-│                  │  RAG Chat Interface with grounded responses          │              │
-│                  └──────────────────────────────────────────────────────┘              │
-│                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────┘
+```text
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                     Enterprise Document Intelligence Platform                           â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                                        â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”‚
+â”‚  â”‚  Blob   â”‚â”€â”€â”€â”€â–¶â”‚  Doc Intel   â”‚â”€â”€â”€â”€â–¶â”‚  Translation  â”‚â”€â”€â”€â”€â–¶â”‚  NLP Enrichment â”‚      â”‚
+â”‚  â”‚ Storage â”‚     â”‚  + OCR       â”‚     â”‚  (Translator) â”‚     â”‚  (Text Analyticsâ”‚      â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚  + Custom NER)  â”‚      â”‚
+â”‚       â”‚                                                       â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â”‚
+â”‚       â”‚                                                                â”‚               â”‚
+â”‚       â”‚          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”               â”‚               â”‚
+â”‚       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¶â”‚  Vision API  â”‚     â”‚ Content Safetyâ”‚â—€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤               â”‚
+â”‚                  â”‚  (Images)    â”‚     â”‚  (Moderation) â”‚               â”‚               â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜               â”‚               â”‚
+â”‚                         â”‚                                              â”‚               â”‚
+â”‚                         â–¼                                              â–¼               â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”              â”‚
+â”‚                  â”‚              Azure AI Search                          â”‚              â”‚
+â”‚                  â”‚  (Full-text + Vector + Semantic + Knowledge Store)   â”‚              â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜              â”‚
+â”‚                                             â”‚                                          â”‚
+â”‚                                             â–¼                                          â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”              â”‚
+â”‚                  â”‚              Azure OpenAI (GPT-4o)                    â”‚              â”‚
+â”‚                  â”‚  RAG Chat Interface with grounded responses          â”‚              â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜              â”‚
+â”‚                                                                                        â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
-- Assinatura Azure com função de Contributor
+- Assinatura Azure com funÃ§Ã£o de Contributor
 - Acesso ao Azure OpenAI (aprovado)
 - Python 3.9+ com pacotes:
-  ```
+  ```text
   azure-search-documents>=11.4.0
   azure-ai-documentintelligence>=1.0.0
   azure-ai-textanalytics>=5.3.0
@@ -88,7 +88,7 @@ Você está construindo uma **Plataforma Empresarial de Inteligência Documental
   azure-identity>=1.15.0
   ```
 - .NET 8 com pacotes:
-  ```
+  ```text
   Azure.Search.Documents
   Azure.AI.DocumentIntelligence
   Azure.AI.TextAnalytics
@@ -98,9 +98,9 @@ Você está construindo uma **Plataforma Empresarial de Inteligência Documental
   Microsoft.CognitiveServices.Speech
   ```
 
-## Implementação
+## ImplementaÃ§Ã£o
 
-### Tarefa 1: Implantar todos os recursos Azure AI (Domínio 1 — Planejar e Gerenciar)
+### Tarefa 1: Implantar todos os recursos Azure AI (DomÃ­nio 1 â€” Planejar e Gerenciar)
 
 ```bash
 RG="rg-ai102-capstone"
@@ -114,7 +114,7 @@ az cognitiveservices account create \
   --name "ai-services-${UNIQUE_ID}" \
   --resource-group $RG \
   --location $LOCATION \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 --yes
 
 # 2. Azure OpenAI
@@ -203,7 +203,7 @@ STORAGE_CONN=$(az storage account show-connection-string --name "stcapstone${UNI
 echo "All resources deployed successfully"
 ```
 
-### Tarefa 2: Configurar RBAC e monitoramento (Domínio 1 — Planejar e Gerenciar)
+### Tarefa 2: Configurar RBAC e monitoramento (DomÃ­nio 1 â€” Planejar e Gerenciar)
 
 ```bash
 # Enable diagnostic logging on AI Search
@@ -231,7 +231,7 @@ az role assignment create \
   --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/$RG/providers/Microsoft.Search/searchServices/search-${UNIQUE_ID}"
 ```
 
-### Tarefa 3: Extrair conteúdo com Document Intelligence (Domínio 6)
+### Tarefa 3: Extrair conteÃºdo com Document Intelligence (DomÃ­nio 6)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -317,7 +317,7 @@ Console.WriteLine($"Extracted {pages} pages, {content.Length} chars, language: {
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Traduzir conteúdo não-inglês (Domínio 4 — NLP)
+### Tarefa 4: Traduzir conteÃºdo nÃ£o-inglÃªs (DomÃ­nio 4 â€” NLP)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -357,7 +357,7 @@ if doc_data["language"] != "en":
     print(f"Translated from {translation['detected_language']} (confidence: {translation['confidence']:.2%})")
 else:
     doc_data["original_language"] = "en"
-    print("Content already in English — no translation needed")
+    print("Content already in English â€” no translation needed")
 ```
 
 </TabItem>
@@ -388,7 +388,7 @@ async Task<string> TranslateAsync(string text, string targetLang = "en")
 </TabItem>
 </Tabs>
 
-### Tarefa 5: Aplicar enriquecimento NLP (Domínio 4 — NLP)
+### Tarefa 5: Aplicar enriquecimento NLP (DomÃ­nio 4 â€” NLP)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -474,7 +474,7 @@ Console.WriteLine($"PII entities: {pii.Value.Count}");
 </TabItem>
 </Tabs>
 
-### Tarefa 6: Analisar imagens com Visão Computacional (Domínio 3)
+### Tarefa 6: Analisar imagens com VisÃ£o Computacional (DomÃ­nio 3)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -537,7 +537,7 @@ Console.WriteLine($"OCR: {string.Join(" ", imageResult.Value.Read.Blocks.SelectM
 </TabItem>
 </Tabs>
 
-### Tarefa 7: Verificação de moderação de conteúdo (Domínio 2)
+### Tarefa 7: VerificaÃ§Ã£o de moderaÃ§Ã£o de conteÃºdo (DomÃ­nio 2)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -577,7 +577,7 @@ print(f"Categories: {moderation['categories']}")
 print(f"Action: {moderation['action']}")
 
 if not moderation["is_safe"]:
-    print("⚠️  Content flagged for review — will not be indexed automatically")
+    print("âš ï¸  Content flagged for review â€” will not be indexed automatically")
 ```
 
 </TabItem>
@@ -602,7 +602,7 @@ Console.WriteLine($"Safe to index: {isSafe}");
 </TabItem>
 </Tabs>
 
-### Tarefa 8: Criar índice de pesquisa vetorial e indexar documentos (Domínio 6)
+### Tarefa 8: Criar Ã­ndice de pesquisa vetorial e indexar documentos (DomÃ­nio 6)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -722,7 +722,7 @@ await searchClient.UploadDocumentsAsync(new[] { searchDoc });
 </TabItem>
 </Tabs>
 
-### Tarefa 9: Construir interface de chat RAG com Azure OpenAI (Domínio 5)
+### Tarefa 9: Construir interface de chat RAG com Azure OpenAI (DomÃ­nio 5)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -778,8 +778,8 @@ Never make up information not present in the context."""
     )
 
     answer = response.choices[0].message.content
-    print(f"\n🤖 Assistant: {answer}")
-    print(f"\n📚 Sources: {', '.join(sources)}")
+    print(f"\nðŸ¤– Assistant: {answer}")
+    print(f"\nðŸ“š Sources: {', '.join(sources)}")
     return answer
 
 # Test the RAG interface
@@ -830,7 +830,7 @@ async Task<string> RagChatAsync(string question)
 </TabItem>
 </Tabs>
 
-### Tarefa 10: Integração de fala — consultas por voz (Domínio 4 — Fala)
+### Tarefa 10: IntegraÃ§Ã£o de fala â€” consultas por voz (DomÃ­nio 4 â€” Fala)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -846,7 +846,7 @@ def speech_to_text_query() -> str:
 
     recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
-    print("🎤 Speak your question...")
+    print("ðŸŽ¤ Speak your question...")
     result = recognizer.recognize_once_async().get()
 
     if result.reason == speechsdk.ResultReason.RecognizedSpeech:
@@ -870,7 +870,7 @@ def text_to_speech_response(text: str):
 
     result = synthesizer.speak_text_async(text).get()
     if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-        print("🔊 Audio response delivered")
+        print("ðŸ”Š Audio response delivered")
     else:
         print(f"Speech synthesis failed: {result.reason}")
 
@@ -909,15 +909,15 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 === Enterprise Document Intelligence Platform ===
 
 [Task 3] Extracted 1 pages, 2456 chars, 1 tables
          Detected language: en
 
-[Task 4] Content already in English — no translation needed
+[Task 4] Content already in English â€” no translation needed
 
 [Task 5] Sentiment: neutral
          Key phrases: ['consulting services', 'total amount', 'payment terms']
@@ -935,65 +935,65 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
 [Task 8] Enterprise documents index created
          Document indexed: Invoice_1.pdf
 
-[Task 9] 🤖 Assistant: Based on the context, Invoice_1.pdf from Contoso Ltd mentions
+[Task 9] ðŸ¤– Assistant: Based on the context, Invoice_1.pdf from Contoso Ltd mentions
          consulting services with a total amount of $3,800.00 USD.
-         📚 Sources: Invoice_1.pdf
+         ðŸ“š Sources: Invoice_1.pdf
 
-[Task 10] 🔊 Audio response delivered
+[Task 10] ðŸ”Š Audio response delivered
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| # | Cenário | Sintoma | Causa Raiz | Correção |
+| # | CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---|---------|---------|------------|----------|
-| 1 | Cota de implantação do OpenAI excedida | HTTP 429 "Rate limit exceeded" | Muitas requisições concorrentes ou consumo de tokens excedeu a cota de TPM | Implementar retry com backoff exponencial; aumentar a capacidade de implantação; enviar requisições menores em lotes |
-| 2 | Índice de pesquisa retorna 0 resultados | Consultas retornam vazio apesar de documentos indexados | Incompatibilidade de dimensões vetoriais entre o modelo de embedding e a definição do campo no índice | Garantir que `vectorSearchDimensions` do índice corresponda à saída do modelo de embedding (1536 para text-embedding-3-small) |
-| 3 | Detecção de PII não encontra dados sensíveis | PII conhecido (SSNs, números de cartão de crédito) não detectado | Parâmetro de idioma do Text Analytics incorreto ou conteúdo excede o limite por requisição | Definir dica de idioma correta; dividir documentos em menos de 5.120 caracteres por chamada de API |
-| 4 | Translator retorna saída ilegível | Qualidade da tradução muito ruim para certos documentos | Documento fonte contém erros de OCR que confundem a tradução | Pré-processar saída do OCR para corrigir erros comuns; usar Document Intelligence com configurações de resolução mais alta |
-| 5 | Content Safety bloqueia conteúdo legítimo | Documentos empresariais marcados como inseguros | Limiar de segurança muito agressivo (severidade 0-1 é variação normal de linguagem) | Ajustar limiar de severidade de 2 para 4; criar lista de permissões para categorias de documentos sabidamente seguros |
+| 1 | Cota de implantaÃ§Ã£o do OpenAI excedida | HTTP 429 "Rate limit exceeded" | Muitas requisiÃ§Ãµes concorrentes ou consumo de tokens excedeu a cota de TPM | Implementar retry com backoff exponencial; aumentar a capacidade de implantaÃ§Ã£o; enviar requisiÃ§Ãµes menores em lotes |
+| 2 | Ãndice de pesquisa retorna 0 resultados | Consultas retornam vazio apesar de documentos indexados | Incompatibilidade de dimensÃµes vetoriais entre o modelo de embedding e a definiÃ§Ã£o do campo no Ã­ndice | Garantir que `vectorSearchDimensions` do Ã­ndice corresponda Ã  saÃ­da do modelo de embedding (1536 para text-embedding-3-small) |
+| 3 | DetecÃ§Ã£o de PII nÃ£o encontra dados sensÃ­veis | PII conhecido (SSNs, nÃºmeros de cartÃ£o de crÃ©dito) nÃ£o detectado | ParÃ¢metro de idioma do Text Analytics incorreto ou conteÃºdo excede o limite por requisiÃ§Ã£o | Definir dica de idioma correta; dividir documentos em menos de 5.120 caracteres por chamada de API |
+| 4 | Translator retorna saÃ­da ilegÃ­vel | Qualidade da traduÃ§Ã£o muito ruim para certos documentos | Documento fonte contÃ©m erros de OCR que confundem a traduÃ§Ã£o | PrÃ©-processar saÃ­da do OCR para corrigir erros comuns; usar Document Intelligence com configuraÃ§Ãµes de resoluÃ§Ã£o mais alta |
+| 5 | Content Safety bloqueia conteÃºdo legÃ­timo | Documentos empresariais marcados como inseguros | Limiar de seguranÃ§a muito agressivo (severidade 0-1 Ã© variaÃ§Ã£o normal de linguagem) | Ajustar limiar de severidade de 2 para 4; criar lista de permissÃµes para categorias de documentos sabidamente seguros |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ai102-49-q1",
-    question: "Você está projetando um pipeline de IA empresarial que processa documentos em 12 idiomas. Em que ponto do pipeline a tradução deve ocorrer?",
+    question: "VocÃª estÃ¡ projetando um pipeline de IA empresarial que processa documentos em 12 idiomas. Em que ponto do pipeline a traduÃ§Ã£o deve ocorrer?",
     options: [
-      "Antes da extração (traduzir o arquivo bruto primeiro)",
-      "Após a extração (Document Intelligence) mas antes do enriquecimento NLP",
-      "Após a indexação (traduzir resultados de pesquisa sob demanda)",
-      "Tradução não é necessária — os serviços de IA lidam com multilíngue nativamente"
+      "Antes da extraÃ§Ã£o (traduzir o arquivo bruto primeiro)",
+      "ApÃ³s a extraÃ§Ã£o (Document Intelligence) mas antes do enriquecimento NLP",
+      "ApÃ³s a indexaÃ§Ã£o (traduzir resultados de pesquisa sob demanda)",
+      "TraduÃ§Ã£o nÃ£o Ã© necessÃ¡ria â€” os serviÃ§os de IA lidam com multilÃ­ngue nativamente"
     ],
     correctIndex: 1,
-    explanation: "A tradução deve ocorrer após o Document Intelligence extrair o texto (que lida com OCR multilíngue) mas antes dos serviços de enriquecimento NLP como Text Analytics que funcionam melhor com um idioma-alvo. Isso garante extração precisa do documento original seguida por processamento NLP consistente em um idioma padrão."
+    explanation: "A traduÃ§Ã£o deve ocorrer apÃ³s o Document Intelligence extrair o texto (que lida com OCR multilÃ­ngue) mas antes dos serviÃ§os de enriquecimento NLP como Text Analytics que funcionam melhor com um idioma-alvo. Isso garante extraÃ§Ã£o precisa do documento original seguida por processamento NLP consistente em um idioma padrÃ£o."
   },
   {
     id: "ai102-49-q2",
-    question: "Seu sistema RAG retorna respostas alucinadas que não estão nos documentos fonte. Qual é a mitigação MAIS eficaz?",
+    question: "Seu sistema RAG retorna respostas alucinadas que nÃ£o estÃ£o nos documentos fonte. Qual Ã© a mitigaÃ§Ã£o MAIS eficaz?",
     options: [
       "Mudar para um modelo maior (GPT-4o para GPT-4-turbo)",
-      "Aumentar o número de resultados de pesquisa no contexto",
-      "Adicionar moderação de conteúdo na saída",
-      "Usar um prompt de sistema que instrua o modelo a responder apenas com base no contexto, diminuir a temperatura e incluir citações de fontes"
+      "Aumentar o nÃºmero de resultados de pesquisa no contexto",
+      "Adicionar moderaÃ§Ã£o de conteÃºdo na saÃ­da",
+      "Usar um prompt de sistema que instrua o modelo a responder apenas com base no contexto, diminuir a temperatura e incluir citaÃ§Ãµes de fontes"
     ],
     correctIndex: 3,
-    explanation: "A abordagem mais eficaz combina: (1) prompt de sistema explícito restringindo respostas ao contexto fornecido, (2) temperatura baixa (0.1-0.3) para reduzir respostas criativas, e (3) exigir citações de fontes para que você possa verificar o embasamento. Mais contexto ou modelos maiores não resolvem inerentemente problemas de embasamento."
+    explanation: "A abordagem mais eficaz combina: (1) prompt de sistema explÃ­cito restringindo respostas ao contexto fornecido, (2) temperatura baixa (0.1-0.3) para reduzir respostas criativas, e (3) exigir citaÃ§Ãµes de fontes para que vocÃª possa verificar o embasamento. Mais contexto ou modelos maiores nÃ£o resolvem inerentemente problemas de embasamento."
   },
   {
     id: "ai102-49-q3",
-    question: "Qual serviço Azure AI você usaria para garantir que conteúdo enviado não contenha discurso de ódio ou conteúdo violento antes da indexação?",
+    question: "Qual serviÃ§o Azure AI vocÃª usaria para garantir que conteÃºdo enviado nÃ£o contenha discurso de Ã³dio ou conteÃºdo violento antes da indexaÃ§Ã£o?",
     options: [
       "Azure AI Content Safety",
-      "Azure AI Text Analytics (análise de sentimento)",
-      "Azure OpenAI com filtragem de conteúdo",
-      "Skill de moderação de conteúdo integrada do Azure AI Search"
+      "Azure AI Text Analytics (anÃ¡lise de sentimento)",
+      "Azure OpenAI com filtragem de conteÃºdo",
+      "Skill de moderaÃ§Ã£o de conteÃºdo integrada do Azure AI Search"
     ],
     correctIndex: 0,
-    explanation: "Azure AI Content Safety é o serviço dedicado para moderação de conteúdo, fornecendo pontuações de severidade em categorias (ódio, violência, autolesão, sexual). Text Analytics fornece sentimento (não segurança), a filtragem de conteúdo do OpenAI só funciona dentro de chamadas OpenAI, e o AI Search não tem skill de moderação integrada."
+    explanation: "Azure AI Content Safety Ã© o serviÃ§o dedicado para moderaÃ§Ã£o de conteÃºdo, fornecendo pontuaÃ§Ãµes de severidade em categorias (Ã³dio, violÃªncia, autolesÃ£o, sexual). Text Analytics fornece sentimento (nÃ£o seguranÃ§a), a filtragem de conteÃºdo do OpenAI sÃ³ funciona dentro de chamadas OpenAI, e o AI Search nÃ£o tem skill de moderaÃ§Ã£o integrada."
   },
   {
     id: "ai102-49-q4",
-    question: "Você precisa processar um documento que contém tanto texto impresso QUANTO notas manuscritas. Qual abordagem de extração lida com ambos?",
+    question: "VocÃª precisa processar um documento que contÃ©m tanto texto impresso QUANTO notas manuscritas. Qual abordagem de extraÃ§Ã£o lida com ambos?",
     options: [
       "API de OCR do Computer Vision apenas",
       "Modelo prebuilt-layout do Document Intelligence (apenas impresso)",
@@ -1001,62 +1001,62 @@ if (speechResult.Reason == ResultReason.RecognizedSpeech)
       "Analisador de documentos do Content Understanding"
     ],
     correctIndex: 2,
-    explanation: "O modelo prebuilt-read do Document Intelligence suporta reconhecimento de texto tanto impresso quanto manuscrito. Ele usa OCR avançado que lida com conteúdo misto (impresso por máquina + manuscrito) em uma única passagem de análise."
+    explanation: "O modelo prebuilt-read do Document Intelligence suporta reconhecimento de texto tanto impresso quanto manuscrito. Ele usa OCR avanÃ§ado que lida com conteÃºdo misto (impresso por mÃ¡quina + manuscrito) em uma Ãºnica passagem de anÃ¡lise."
   },
   {
     id: "ai102-49-q5",
-    question: "Para melhores práticas de RBAC, qual abordagem de identidade você deve usar em produção para comunicação serviço-a-serviço?",
+    question: "Para melhores prÃ¡ticas de RBAC, qual abordagem de identidade vocÃª deve usar em produÃ§Ã£o para comunicaÃ§Ã£o serviÃ§o-a-serviÃ§o?",
     options: [
-      "Chaves de API armazenadas em variáveis de ambiente",
-      "Identidade gerenciada com atribuições de função RBAC",
+      "Chaves de API armazenadas em variÃ¡veis de ambiente",
+      "Identidade gerenciada com atribuiÃ§Ãµes de funÃ§Ã£o RBAC",
       "Service principal com segredo do cliente no Key Vault",
       "Assinaturas de acesso compartilhado (tokens SAS)"
     ],
     correctIndex: 1,
-    explanation: "Identidade gerenciada é a abordagem recomendada para autenticação serviço-a-serviço no Azure. Ela elimina completamente o gerenciamento de credenciais — sem segredos para rotacionar, sem chaves para armazenar. Combinada com funções RBAC (ex.: Cognitive Services User), fornece acesso de menor privilégio sem exposição de credenciais."
+    explanation: "Identidade gerenciada Ã© a abordagem recomendada para autenticaÃ§Ã£o serviÃ§o-a-serviÃ§o no Azure. Ela elimina completamente o gerenciamento de credenciais â€” sem segredos para rotacionar, sem chaves para armazenar. Combinada com funÃ§Ãµes RBAC (ex.: Cognitive Services User), fornece acesso de menor privilÃ©gio sem exposiÃ§Ã£o de credenciais."
   },
   {
     id: "ai102-49-q6",
-    question: "Seu índice de pesquisa tem 1 milhão de documentos. A pesquisa híbrida (keyword + vetor) retorna resultados em 2 segundos. Como você pode melhorar a latência?",
+    question: "Seu Ã­ndice de pesquisa tem 1 milhÃ£o de documentos. A pesquisa hÃ­brida (keyword + vetor) retorna resultados em 2 segundos. Como vocÃª pode melhorar a latÃªncia?",
     options: [
       "Remover o componente de pesquisa vetorial completamente",
-      "Aumentar o parâmetro ef_search do HNSW ao máximo",
+      "Aumentar o parÃ¢metro ef_search do HNSW ao mÃ¡ximo",
       "Mudar para KNN exaustivo em vez de HNSW",
-      "Adicionar ranking semântico apenas nos top-N resultados pré-filtrados (reranking, não pesquisa semântica completa)"
+      "Adicionar ranking semÃ¢ntico apenas nos top-N resultados prÃ©-filtrados (reranking, nÃ£o pesquisa semÃ¢ntica completa)"
     ],
     correctIndex: 3,
-    explanation: "Ranking semântico como um reranker em resultados pré-filtrados (ex.: top 50) adiciona qualidade sem latência significativa. Remover pesquisa vetorial perde relevância, aumentar ef_search adiciona latência, e KNN exaustivo é O(n) que é muito mais lento que HNSW em escala."
+    explanation: "Ranking semÃ¢ntico como um reranker em resultados prÃ©-filtrados (ex.: top 50) adiciona qualidade sem latÃªncia significativa. Remover pesquisa vetorial perde relevÃ¢ncia, aumentar ef_search adiciona latÃªncia, e KNN exaustivo Ã© O(n) que Ã© muito mais lento que HNSW em escala."
   },
   {
     id: "ai102-49-q7",
-    question: "Um documento processado pelo seu pipeline contém informações de identificação pessoal (PII). O que o pipeline deve fazer?",
+    question: "Um documento processado pelo seu pipeline contÃ©m informaÃ§Ãµes de identificaÃ§Ã£o pessoal (PII). O que o pipeline deve fazer?",
     options: [
-      "Armazenar tanto a versão original quanto uma versão redigida — usar a redigida para exibição na pesquisa e a original para acesso autorizado",
+      "Armazenar tanto a versÃ£o original quanto uma versÃ£o redigida â€” usar a redigida para exibiÃ§Ã£o na pesquisa e a original para acesso autorizado",
       "Excluir o documento imediatamente",
       "Substituir PII no documento original permanentemente",
-      "Criptografar os campos de PII no índice de pesquisa"
+      "Criptografar os campos de PII no Ã­ndice de pesquisa"
     ],
     correctIndex: 0,
-    explanation: "A melhor prática é armazenar ambas as versões: a versão redigida (da detecção de PII do Text Analytics) no índice de pesquisa para consultas gerais e exibição, enquanto o original é armazenado em um local seguro separado para acesso autorizado. Isso equilibra privacidade com preservação de dados."
+    explanation: "A melhor prÃ¡tica Ã© armazenar ambas as versÃµes: a versÃ£o redigida (da detecÃ§Ã£o de PII do Text Analytics) no Ã­ndice de pesquisa para consultas gerais e exibiÃ§Ã£o, enquanto o original Ã© armazenado em um local seguro separado para acesso autorizado. Isso equilibra privacidade com preservaÃ§Ã£o de dados."
   },
   {
     id: "ai102-49-q8",
-    question: "Você deseja habilitar consultas por voz contra seu sistema de pesquisa de documentos. Qual é a cadeia de serviços correta?",
+    question: "VocÃª deseja habilitar consultas por voz contra seu sistema de pesquisa de documentos. Qual Ã© a cadeia de serviÃ§os correta?",
     options: [
-      "Speech-to-Text → Chat direto com OpenAI → Text-to-Speech",
-      "LUIS → Consulta de pesquisa → Text-to-Speech",
-      "Speech-to-Text → Consulta de pesquisa → Resposta RAG → Text-to-Speech",
-      "Modelo de Custom Speech → Pesquisa → Geração de arquivo de áudio"
+      "Speech-to-Text â†’ Chat direto com OpenAI â†’ Text-to-Speech",
+      "LUIS â†’ Consulta de pesquisa â†’ Text-to-Speech",
+      "Speech-to-Text â†’ Consulta de pesquisa â†’ Resposta RAG â†’ Text-to-Speech",
+      "Modelo de Custom Speech â†’ Pesquisa â†’ GeraÃ§Ã£o de arquivo de Ã¡udio"
     ],
     correctIndex: 2,
-    explanation: "A cadeia correta para RAG habilitado por voz: (1) Azure Speech-to-Text converte a consulta falada em texto, (2) o texto direciona uma consulta de pesquisa híbrida, (3) os resultados da pesquisa alimentam o RAG com Azure OpenAI para uma resposta fundamentada, (4) Azure Text-to-Speech converte a resposta em áudio. Isso aproveita fala em tempo real com respostas de IA fundamentadas."
+    explanation: "A cadeia correta para RAG habilitado por voz: (1) Azure Speech-to-Text converte a consulta falada em texto, (2) o texto direciona uma consulta de pesquisa hÃ­brida, (3) os resultados da pesquisa alimentam o RAG com Azure OpenAI para uma resposta fundamentada, (4) Azure Text-to-Speech converte a resposta em Ã¡udio. Isso aproveita fala em tempo real com respostas de IA fundamentadas."
   }
 ]} />
 
 ## Limpeza
 
 :::danger Importante
-Este capstone cria múltiplos recursos faturáveis. Sempre faça a limpeza quando terminar.
+Este capstone cria mÃºltiplos recursos faturÃ¡veis. Sempre faÃ§a a limpeza quando terminar.
 :::
 
 ```bash
@@ -1069,8 +1069,8 @@ echo "All capstone resources scheduled for deletion"
 ## Saiba Mais
 
 - [Resumo de habilidades do exame AI-102](https://learn.microsoft.com/credentials/certifications/azure-ai-engineer/)
-- [Documentação do Azure AI Services](https://learn.microsoft.com/azure/ai-services/)
+- [DocumentaÃ§Ã£o do Azure AI Services](https://learn.microsoft.com/azure/ai-services/)
 - [RAG com Azure AI Search](https://learn.microsoft.com/azure/search/retrieval-augmented-generation-overview)
 - [Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/)
-- [Princípios de IA Responsável](https://www.microsoft.com/ai/responsible-ai)
-- [Padrões de arquitetura Azure AI](https://learn.microsoft.com/azure/architecture/ai-ml/)
+- [PrincÃ­pios de IA ResponsÃ¡vel](https://www.microsoft.com/ai/responsible-ai)
+- [PadrÃµes de arquitetura Azure AI](https://learn.microsoft.com/azure/architecture/ai-ml/)

@@ -43,7 +43,7 @@ Unlike traditional Active Directory (which runs on Windows Server), Entra ID is 
    - **Users**: All users in your tenant
    - **Groups**: Security groups and Microsoft 365 groups
    - **Enterprise applications**: Integrated SaaS apps
-4. This is read-only exploration — no cost
+4. This is read-only exploration â€” no cost
 
 ### Task 3: Understand authentication methods
 
@@ -63,12 +63,12 @@ Unlike traditional Active Directory (which runs on Windows Server), Entra ID is 
 
 **Single Sign-On (SSO)** means one login gives access to multiple applications:
 
-```
+```text
 User logs in ONCE to Entra ID
-    → Access Microsoft 365 ✓
-    → Access Salesforce ✓
-    → Access GitHub ✓
-    → Access custom apps ✓
+    â†’ Access Microsoft 365 âœ“
+    â†’ Access Salesforce âœ“
+    â†’ Access GitHub âœ“
+    â†’ Access custom apps âœ“
 ```
 
 Benefits:
@@ -157,6 +157,6 @@ az account show --query "{TenantId:tenantId, Name:name}" --output table
 
 ## Learn More
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
 - [Microsoft Learn: Describe Azure identity, access, and security](https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/)
 - [Microsoft Entra ID documentation](https://learn.microsoft.com/en-us/entra/fundamentals/)

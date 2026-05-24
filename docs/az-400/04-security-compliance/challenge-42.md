@@ -325,7 +325,7 @@ az role assignment create \
   --scope "/subscriptions/<sub-id>/resourceGroups/rg-contoso-secrets/providers/Microsoft.KeyVault/vaults/kv-contoso-secrets-001"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Pipeline returns 403 when reading Key Vault
 

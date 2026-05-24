@@ -23,7 +23,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 The key insight is that LLMs respond to **context**. A system message sets the behavioral boundaries ("You are a professional email editor"). **Few-shot examples** show the model what format you expect. Specific instructions ("Respond in bullet points, limit to 3 items") constrain the output. And **grounding data** (relevant documents or facts) gives the model accurate information to reference instead of relying on potentially outdated training data.
 
-Prompt engineering is not about "tricking" the AI — it's about clear communication. Think of it like giving instructions to a new employee: the more context, examples, and constraints you provide, the better the result. Azure OpenAI's parameters (temperature, top-p, max tokens) further tune the model's behavior.
+Prompt engineering is not about "tricking" the AI â€” it's about clear communication. Think of it like giving instructions to a new employee: the more context, examples, and constraints you provide, the better the result. Azure OpenAI's parameters (temperature, top-p, max tokens) further tune the model's behavior.
 
 ## Explore
 
@@ -38,19 +38,19 @@ An effective prompt typically includes some or all of these elements:
 | **Instruction** | Tell the model what to do | "Summarize the following in 3 bullet points." |
 | **Input data** | The content to process | [The text to summarize] |
 | **Output format** | Specify desired structure | "Format as a numbered list" or "Respond in JSON" |
-| **Few-shot examples** | Show expected behavior | "Example: Input: X → Output: Y" |
+| **Few-shot examples** | Show expected behavior | "Example: Input: X â†’ Output: Y" |
 | **Constraints** | Set boundaries | "Maximum 100 words. Do not include opinions." |
 
 ### Task 2: Compare good vs. bad prompts
 
 **Scenario**: You want a product description for a new wireless headphone.
 
-❌ **Bad prompt**:
+âŒ **Bad prompt**:
 > "Write about headphones."
 
 Result: Generic, unfocused text about headphones in general.
 
-✅ **Good prompt**:
+âœ… **Good prompt**:
 > "Write a 50-word product description for wireless noise-cancelling headphones targeting business travelers. Emphasize comfort for long flights, battery life, and noise cancellation. Tone: professional but friendly."
 
 Result: Focused, specific description matching the requirements.
@@ -65,14 +65,14 @@ Result: Focused, specific description matching the requirements.
 
 ### Task 3: Practice few-shot prompting
 
-**Zero-shot** — No examples (model relies on training):
-```
+**Zero-shot** â€” No examples (model relies on training):
+```python
 Classify the following review as Positive, Negative, or Neutral:
 "The product arrived on time and works exactly as described."
 ```
 
-**One-shot** — One example:
-```
+**One-shot** â€” One example:
+```python
 Classify reviews as Positive, Negative, or Neutral.
 
 Example:
@@ -84,8 +84,8 @@ Review: "The product arrived on time and works exactly as described."
 Classification:
 ```
 
-**Few-shot** — Multiple examples:
-```
+**Few-shot** â€” Multiple examples:
+```python
 Classify reviews as Positive, Negative, or Neutral.
 
 Review: "Absolutely terrible quality, broke after one day."
@@ -116,22 +116,22 @@ These parameters control the randomness and creativity of outputs:
 | 0.7-1.0 | Creative, varied responses | Creative writing, brainstorming, storytelling |
 | >1.0 | Very random, potentially incoherent | Rarely useful in production |
 
-**Top-p** (0 to 1) — Nucleus sampling:
-- Top-p 0.1: Only considers the top 10% most likely tokens → very focused
-- Top-p 0.9: Considers the top 90% most likely tokens → more diverse
+**Top-p** (0 to 1) â€” Nucleus sampling:
+- Top-p 0.1: Only considers the top 10% most likely tokens â†’ very focused
+- Top-p 0.9: Considers the top 90% most likely tokens â†’ more diverse
 - Works as an alternative to temperature (use one or the other, not both)
 
 **Your task**: For each scenario, what temperature would you recommend?
-1. Extracting dates from a legal contract → **0** (accuracy matters, no creativity)
-2. Writing marketing taglines → **0.8-1.0** (creativity desired)
-3. Answering customer FAQ questions → **0.3** (consistent but natural)
-4. Generating poetry → **1.0+** (maximum creativity)
+1. Extracting dates from a legal contract â†’ **0** (accuracy matters, no creativity)
+2. Writing marketing taglines â†’ **0.8-1.0** (creativity desired)
+3. Answering customer FAQ questions â†’ **0.3** (consistent but natural)
+4. Generating poetry â†’ **1.0+** (maximum creativity)
 
 ### Task 5: Understand grounding and context windows
 
 **Grounding** connects the model to real data to reduce hallucinations:
 
-```
+```yaml
 System: You are a customer support agent. Only answer based on 
 the following product documentation. If the answer is not in the 
 documentation, say "I don't have that information."
@@ -149,7 +149,7 @@ This approach (called **Retrieval-Augmented Generation / RAG**) is preferred bec
 - Provides up-to-date information (not limited to training data)
 - Enables verifiable responses (you can check against the source)
 
-**Context window** — the total tokens a model can handle (input + output):
+**Context window** â€” the total tokens a model can handle (input + output):
 | Model | Context Window |
 |-------|---------------|
 | GPT-4o | 128,000 tokens |
@@ -176,7 +176,7 @@ For the exam, remember: system messages set behavior, few-shot examples show for
 | Misconception | Reality |
 |---------------|---------|
 | Longer prompts always produce better results | Concise, clear prompts with the right context often outperform verbose ones; unnecessary length wastes tokens |
-| Temperature 0 means the model won't make mistakes | Temperature 0 makes output deterministic (same input → same output) but doesn't guarantee factual accuracy |
+| Temperature 0 means the model won't make mistakes | Temperature 0 makes output deterministic (same input â†’ same output) but doesn't guarantee factual accuracy |
 | Few-shot examples teach the model permanently | Examples only apply to the current conversation; the model doesn't retain learning between sessions |
 | You should always use maximum context window | Including irrelevant context can actually confuse the model; include only what's needed to answer the question |
 | Prompt engineering is a one-time task | Effective prompts require iterative testing and refinement based on actual outputs |
@@ -204,7 +204,7 @@ For the exam, remember: system messages set behavior, few-shot examples show for
       question: 'An application needs to extract specific data points from invoices with high accuracy. What temperature setting is most appropriate?',
       options: ['Temperature 0 (deterministic)', 'Temperature 0.7 (balanced)', 'Temperature 1.0 (creative)', 'Temperature 2.0 (maximum randomness)'],
       correctAnswer: 0,
-      explanation: 'Temperature 0 produces deterministic, focused output — ideal for data extraction tasks where accuracy and consistency matter more than creativity. Higher temperatures introduce randomness that could produce incorrect extractions.'
+      explanation: 'Temperature 0 produces deterministic, focused output â€” ideal for data extraction tasks where accuracy and consistency matter more than creativity. Higher temperatures introduce randomness that could produce incorrect extractions.'
     },
     {
       id: 'ai900-22-q4',

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Challenge 04: Visão Geral dos Azure AI Services"
+title: "Desafio 04: Visão Geral dos Azure AI Services"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -82,7 +82,7 @@ Após a implantação:
 az cognitiveservices account create \
   --name ai900-demo \
   --resource-group rg-ai900-lab \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku F0 \
   --location eastus
 

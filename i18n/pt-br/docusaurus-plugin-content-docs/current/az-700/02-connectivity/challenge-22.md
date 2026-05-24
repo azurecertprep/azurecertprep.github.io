@@ -1,6 +1,6 @@
 ---
 sidebar_position: 9
-title: "Challenge 22: Virtual WAN Hub-Spoke"
+title: "Desafio 22: Virtual WAN Hub-Spoke"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -8,68 +8,68 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::info Tempo e custo estimados
 
-**90–120 minutos** | **~$0,36/h** (Virtual WAN Standard + Gateway VPN) | **Peso no exame: 20–25%**
+**90â€“120 minutos** | **~$0,36/h** (Virtual WAN Standard + Gateway VPN) | **Peso no exame: 20â€“25%**
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso está migrando de uma topologia hub-spoke configurada manualmente (VNet peering com rotas definidas pelo usuário) para o Azure Virtual WAN para simplificar o gerenciamento de conectividade de branches e spokes. Eles operam em duas regiões do Azure -- East US e West Europe -- e precisam de conectividade automatizada spoke-to-spoke, gateways VPN integrados para filiais e roteamento centralizado sem manter tabelas UDR manualmente.
+A Contoso estÃ¡ migrando de uma topologia hub-spoke configurada manualmente (VNet peering com rotas definidas pelo usuÃ¡rio) para o Azure Virtual WAN para simplificar o gerenciamento de conectividade de branches e spokes. Eles operam em duas regiÃµes do Azure -- East US e West Europe -- e precisam de conectividade automatizada spoke-to-spoke, gateways VPN integrados para filiais e roteamento centralizado sem manter tabelas UDR manualmente.
 
-A arquitetura atual exige dezenas de relações de peering e tabelas de rotas. A equipe de rede deseja consolidar isso em uma implantação Virtual WAN Standard que suporte roteamento de trânsito entre spokes, VPN site-to-site para branches locais e futura integração com ExpressRoute.
+A arquitetura atual exige dezenas de relaÃ§Ãµes de peering e tabelas de rotas. A equipe de rede deseja consolidar isso em uma implantaÃ§Ã£o Virtual WAN Standard que suporte roteamento de trÃ¢nsito entre spokes, VPN site-to-site para branches locais e futura integraÃ§Ã£o com ExpressRoute.
 
 ## Habilidades de exame avaliadas
 
-| Habilidade | Descrição |
+| Habilidade | DescriÃ§Ã£o |
 |------------|-----------|
 | Selecionar um SKU do Virtual WAN | Escolher entre Basic e Standard com base nos requisitos de conectividade |
-| Projetar uma arquitetura Virtual WAN | Selecionar tipos e serviços incluindo posicionamento de hub e tipos de gateway |
-| Criar um hub virtual no Virtual WAN | Implantar hubs com prefixos de endereço e configurações de SKU corretos |
-| Escolher uma unidade de escala apropriada | Dimensionar unidades de escala do gateway para requisitos de throughput e conexão |
+| Projetar uma arquitetura Virtual WAN | Selecionar tipos e serviÃ§os incluindo posicionamento de hub e tipos de gateway |
+| Criar um hub virtual no Virtual WAN | Implantar hubs com prefixos de endereÃ§o e configuraÃ§Ãµes de SKU corretos |
+| Escolher uma unidade de escala apropriada | Dimensionar unidades de escala do gateway para requisitos de throughput e conexÃ£o |
 | Implantar um gateway em um hub virtual | Provisionar gateways VPN dentro da infraestrutura do hub virtual |
 
-## Visão geral da arquitetura
+## VisÃ£o geral da arquitetura
 
-```
+```text
 On-premises Branch
        |
    [VPN Site]
        |
-  ┌────┴────────────────────────────────────┐
-  │        Virtual WAN (Standard)            │
-  │                                          │
-  │  ┌──────────────┐  ┌──────────────────┐ │
-  │  │  Hub East US │  │  Hub West Europe  │ │
-  │  │  10.1.0.0/24 │  │  10.2.0.0/24     │ │
-  │  │              │  │                   │ │
-  │  │ [VPN GW]     │  │  [VPN GW]        │ │
-  │  └──────┬───────┘  └────────┬─────────┘ │
-  └─────────┼────────────────────┼───────────┘
-            │                    │
-     ┌──────┼──────┐      ┌─────┼──────┐
-     │      │      │      │     │      │
+  â”Œâ”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+  â”‚        Virtual WAN (Standard)            â”‚
+  â”‚                                          â”‚
+  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+  â”‚  â”‚  Hub East US â”‚  â”‚  Hub West Europe  â”‚ â”‚
+  â”‚  â”‚  10.1.0.0/24 â”‚  â”‚  10.2.0.0/24     â”‚ â”‚
+  â”‚  â”‚              â”‚  â”‚                   â”‚ â”‚
+  â”‚  â”‚ [VPN GW]     â”‚  â”‚  [VPN GW]        â”‚ â”‚
+  â”‚  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+            â”‚                    â”‚
+     â”Œâ”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”
+     â”‚      â”‚      â”‚      â”‚     â”‚      â”‚
   Spoke1  Spoke2  Spoke3  Spoke4  Spoke5
 ```
 
 ## Conceitos-chave
 
-### Comparação de SKUs do Virtual WAN
+### ComparaÃ§Ã£o de SKUs do Virtual WAN
 
 | Recurso | Basic | Standard |
 |---------|-------|----------|
 | VPN site-to-site | Sim | Sim |
-| VPN ponto-a-site | Não | Sim |
-| ExpressRoute | Não | Sim |
-| Trânsito VNet-to-VNet pelo hub | Não | Sim |
-| Conectividade hub-to-hub | Não | Sim |
-| Azure Firewall no hub | Não | Sim |
-| NVA no hub | Não | Sim |
+| VPN ponto-a-site | NÃ£o | Sim |
+| ExpressRoute | NÃ£o | Sim |
+| TrÃ¢nsito VNet-to-VNet pelo hub | NÃ£o | Sim |
+| Conectividade hub-to-hub | NÃ£o | Sim |
+| Azure Firewall no hub | NÃ£o | Sim |
+| NVA no hub | NÃ£o | Sim |
 
 ### Unidades de escala
 
-Cada unidade de escala do gateway VPN fornece aproximadamente 500 Mbps de throughput agregado. Configurações comuns:
+Cada unidade de escala do gateway VPN fornece aproximadamente 500 Mbps de throughput agregado. ConfiguraÃ§Ãµes comuns:
 
-| Unidades de escala | Throughput agregado | Máx. de conexões S2S |
+| Unidades de escala | Throughput agregado | MÃ¡x. de conexÃµes S2S |
 |--------------------|---------------------|----------------------|
 | 1 | 500 Mbps | 500 |
 | 2 | 1 Gbps | 500 |
@@ -80,7 +80,7 @@ Cada unidade de escala do gateway VPN fornece aproximadamente 500 Mbps de throug
 
 ## Tarefa 1: Criar o recurso Virtual WAN
 
-Provisione um recurso Virtual WAN com o SKU Standard para suportar roteamento de trânsito, múltiplos tipos de gateway e comunicação hub-to-hub.
+Provisione um recurso Virtual WAN com o SKU Standard para suportar roteamento de trÃ¢nsito, mÃºltiplos tipos de gateway e comunicaÃ§Ã£o hub-to-hub.
 
 ### Azure CLI
 
@@ -125,14 +125,14 @@ New-AzVirtualWan `
 ```
 
 :::tip Por que Standard?
-O SKU Basic suporta apenas VPN site-to-site. Ele não suporta trânsito spoke-to-spoke, ExpressRoute, ponto-a-site, Azure Firewall ou conectividade hub-to-hub. Para a maioria das implantações empresariais, o Standard é necessário.
+O SKU Basic suporta apenas VPN site-to-site. Ele nÃ£o suporta trÃ¢nsito spoke-to-spoke, ExpressRoute, ponto-a-site, Azure Firewall ou conectividade hub-to-hub. Para a maioria das implantaÃ§Ãµes empresariais, o Standard Ã© necessÃ¡rio.
 :::
 
 ---
 
-## Tarefa 2: Criar um hub virtual na região primária
+## Tarefa 2: Criar um hub virtual na regiÃ£o primÃ¡ria
 
-Implante um hub virtual em East US com um prefixo de endereço dedicado. O espaço de endereço do hub não deve se sobrepor a nenhuma VNet spoke conectada.
+Implante um hub virtual em East US com um prefixo de endereÃ§o dedicado. O espaÃ§o de endereÃ§o do hub nÃ£o deve se sobrepor a nenhuma VNet spoke conectada.
 
 ### Azure CLI
 
@@ -164,7 +164,7 @@ New-AzVirtualHub `
 ```
 
 :::warning Tempo de provisionamento do hub
-A criação do hub virtual leva de 20 a 30 minutos. O hub deve atingir o estado de provisionamento **Succeeded** antes que você possa conectar spokes ou implantar gateways. Monitore o status com:
+A criaÃ§Ã£o do hub virtual leva de 20 a 30 minutos. O hub deve atingir o estado de provisionamento **Succeeded** antes que vocÃª possa conectar spokes ou implantar gateways. Monitore o status com:
 ```bash
 az network vhub show --name "hub-eastus" --resource-group $RG --query "provisioningState"
 ```
@@ -172,9 +172,9 @@ az network vhub show --name "hub-eastus" --resource-group $RG --query "provision
 
 ---
 
-## Tarefa 3: Criar VNets spoke e conectá-las ao hub
+## Tarefa 3: Criar VNets spoke e conectÃ¡-las ao hub
 
-Crie VNets spoke e estabeleça conexões com o hub virtual. O Virtual WAN gerencia automaticamente o roteamento entre spokes conectados.
+Crie VNets spoke e estabeleÃ§a conexÃµes com o hub virtual. O Virtual WAN gerencia automaticamente o roteamento entre spokes conectados.
 
 ### Azure CLI
 
@@ -267,7 +267,7 @@ New-AzVirtualHubVnetConnection `
 
 ## Tarefa 4: Implantar um gateway VPN no hub virtual
 
-Implante um gateway VPN site-to-site dentro do hub. Selecione as unidades de escala com base no throughput necessário -- a Contoso precisa de 1 Gbps de largura de banda agregada.
+Implante um gateway VPN site-to-site dentro do hub. Selecione as unidades de escala com base no throughput necessÃ¡rio -- a Contoso precisa de 1 Gbps de largura de banda agregada.
 
 ### Azure CLI
 
@@ -294,7 +294,7 @@ New-AzVpnGateway `
 ```
 
 :::warning Provisionamento do gateway
-A criação do gateway VPN dentro de um hub virtual leva de 25 a 45 minutos. Não prossiga para a criação de conexões até que o gateway atinja o estado **Succeeded**:
+A criaÃ§Ã£o do gateway VPN dentro de um hub virtual leva de 25 a 45 minutos. NÃ£o prossiga para a criaÃ§Ã£o de conexÃµes atÃ© que o gateway atinja o estado **Succeeded**:
 ```bash
 az network vpn-gateway show \
   --name "vpngw-hub-eastus" \
@@ -305,9 +305,9 @@ az network vpn-gateway show \
 
 ---
 
-## Tarefa 5: Criar um site VPN e conexão
+## Tarefa 5: Criar um site VPN e conexÃ£o
 
-Defina o branch local como um site VPN e crie a conexão S2S através do gateway VPN do Virtual WAN.
+Defina o branch local como um site VPN e crie a conexÃ£o S2S atravÃ©s do gateway VPN do Virtual WAN.
 
 ### Azure CLI
 
@@ -363,7 +363,7 @@ New-AzVpnConnection `
 
 ## Tarefa 6: Verificar conectividade spoke-to-spoke
 
-Com o SKU Standard, o roteamento de trânsito spoke-to-spoke é automático através do hub. Verifique consultando as rotas efetivas nas conexões dos spokes.
+Com o SKU Standard, o roteamento de trÃ¢nsito spoke-to-spoke Ã© automÃ¡tico atravÃ©s do hub. Verifique consultando as rotas efetivas nas conexÃµes dos spokes.
 
 ### Azure CLI
 
@@ -404,15 +404,15 @@ Get-AzVirtualHubEffectiveRoute `
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: SKU Basic com gateway VPN falha
+### CenÃ¡rio 1: SKU Basic com gateway VPN falha
 
-**Sintoma:** A tentativa de implantar um gateway VPN falha com um erro sobre recursos não suportados.
+**Sintoma:** A tentativa de implantar um gateway VPN falha com um erro sobre recursos nÃ£o suportados.
 
-**Causa raiz:** O Virtual WAN foi criado com `--type Basic`, mas gateways além do S2S VPN básico exigem o SKU Standard. Além disso, o Basic não suporta trânsito spoke-to-spoke.
+**Causa raiz:** O Virtual WAN foi criado com `--type Basic`, mas gateways alÃ©m do S2S VPN bÃ¡sico exigem o SKU Standard. AlÃ©m disso, o Basic nÃ£o suporta trÃ¢nsito spoke-to-spoke.
 
-**Correção:**
+**CorreÃ§Ã£o:**
 ```bash
 # Upgrade from Basic to Standard
 az network vwan update \
@@ -422,18 +422,18 @@ az network vwan update \
 ```
 
 :::note
-A atualização de Basic para Standard é uma operação não disruptiva. No entanto, o downgrade de Standard para Basic não é suportado.
+A atualizaÃ§Ã£o de Basic para Standard Ã© uma operaÃ§Ã£o nÃ£o disruptiva. No entanto, o downgrade de Standard para Basic nÃ£o Ã© suportado.
 :::
 
 ---
 
-### Cenário 2: Conectividade spoke não funciona após conexão ao hub
+### CenÃ¡rio 2: Conectividade spoke nÃ£o funciona apÃ³s conexÃ£o ao hub
 
-**Sintoma:** VMs em VNets spoke não conseguem se comunicar mesmo com as conexões mostrando status Succeeded.
+**Sintoma:** VMs em VNets spoke nÃ£o conseguem se comunicar mesmo com as conexÃµes mostrando status Succeeded.
 
-**Causa raiz:** O hub virtual não provisionou totalmente sua infraestrutura de roteamento. O estado de roteamento do hub deve ser **Provisioned** (não apenas a conexão).
+**Causa raiz:** O hub virtual nÃ£o provisionou totalmente sua infraestrutura de roteamento. O estado de roteamento do hub deve ser **Provisioned** (nÃ£o apenas a conexÃ£o).
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 ```bash
 # Check hub routing state
 az network vhub show \
@@ -442,7 +442,7 @@ az network vhub show \
   --query "{routingState:routingState, provisioningState:provisioningState}"
 ```
 
-**Correção:** Aguarde até que `routingState` mostre `Provisioned`. Se estiver travado, remova e recrie a conexão:
+**CorreÃ§Ã£o:** Aguarde atÃ© que `routingState` mostre `Provisioned`. Se estiver travado, remova e recrie a conexÃ£o:
 ```bash
 az network vhub connection delete \
   --name "conn-spoke1" \
@@ -460,13 +460,13 @@ az network vhub connection create \
 
 ---
 
-### Cenário 3: Throughput insuficiente do gateway VPN
+### CenÃ¡rio 3: Throughput insuficiente do gateway VPN
 
-**Sintoma:** A filial reporta conectividade lenta. O monitoramento mostra que o gateway VPN está saturado em 500 Mbps.
+**Sintoma:** A filial reporta conectividade lenta. O monitoramento mostra que o gateway VPN estÃ¡ saturado em 500 Mbps.
 
 **Causa raiz:** O gateway foi implantado com unidade de escala 1, fornecendo apenas 500 Mbps de throughput agregado.
 
-**Correção:**
+**CorreÃ§Ã£o:**
 ```bash
 # Update the VPN gateway scale unit
 az network vpn-gateway update \
@@ -491,12 +491,12 @@ Remove-AzResourceGroup -Name "rg-vwan-challenge22" -Force -AsJob
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-22-q1",
-    question: "Contoso needs spoke-to-spoke transit routing through a Virtual WAN hub, ExpressRoute connectivity, and Azure Firewall integration. Which Virtual WAN SKU must they select?",
+    question: "A Contoso precisa de roteamento de trânsito spoke-to-spoke através de um hub Virtual WAN, conectividade ExpressRoute e integração com Azure Firewall. Qual SKU do Virtual WAN eles devem selecionar?",
     options: [
       "Standard",
       "Basic",
@@ -504,11 +504,11 @@ Remove-AzResourceGroup -Name "rg-vwan-challenge22" -Force -AsJob
       "Enterprise"
     ],
     correctIndex: 0,
-    explanation: "The Standard SKU is required for spoke-to-spoke transit, ExpressRoute, Point-to-Site VPN, Azure Firewall in hub, NVA in hub, and hub-to-hub connectivity. The Basic SKU only supports site-to-site VPN without transit routing. Premium and Enterprise SKUs do not exist for Virtual WAN."
+    explanation: "O SKU Standard é necessário para trânsito spoke-to-spoke, ExpressRoute, VPN Point-to-Site, Azure Firewall no hub, NVA no hub e conectividade hub-to-hub. O SKU Basic suporta apenas VPN site-to-site sem roteamento de trânsito. Os SKUs Premium e Enterprise não existem para o Virtual WAN."
   },
   {
     id: "az700-22-q2",
-    question: "A VPN gateway in a Virtual WAN hub is configured with 2 scale units. What is the approximate aggregate throughput?",
+    question: "Um gateway VPN em um hub Virtual WAN está configurado com 2 unidades de escala. Qual é o throughput agregado aproximado?",
     options: [
       "250 Mbps",
       "500 Mbps",
@@ -516,23 +516,23 @@ Remove-AzResourceGroup -Name "rg-vwan-challenge22" -Force -AsJob
       "2 Gbps"
     ],
     correctIndex: 2,
-    explanation: "Each VPN gateway scale unit provides approximately 500 Mbps of aggregate throughput. With 2 scale units, the gateway provides approximately 1 Gbps. Scale unit 1 = 500 Mbps, scale unit 2 = 1 Gbps, scale unit 20 = 10 Gbps."
+    explanation: "Cada unidade de escala do gateway VPN fornece aproximadamente 500 Mbps de throughput agregado. Com 2 unidades de escala, o gateway fornece aproximadamente 1 Gbps. Unidade de escala 1 = 500 Mbps, unidade de escala 2 = 1 Gbps, unidade de escala 20 = 10 Gbps."
   },
   {
     id: "az700-22-q3",
-    question: "After creating a virtual hub and connecting two spoke VNets, VMs in the spokes cannot communicate. The hub connection shows Succeeded. What should you check next?",
+    question: "Após criar um hub virtual e conectar duas VNets spoke, as VMs nos spokes não conseguem se comunicar. A conexão do hub mostra Succeeded. O que você deve verificar em seguida?",
     options: [
-      "Verify the hub routingState shows Provisioned",
-      "Create a UDR in each spoke to route traffic to the hub",
-      "Enable VNet peering between the two spokes directly",
-      "Add a route to the defaultRouteTable manually"
+      "Verificar se o routingState do hub mostra Provisioned",
+      "Criar uma UDR em cada spoke para rotear tráfego para o hub",
+      "Habilitar VNet peering entre os dois spokes diretamente",
+      "Adicionar uma rota à defaultRouteTable manualmente"
     ],
     correctIndex: 0,
-    explanation: "In Virtual WAN, spoke-to-spoke transit routing is automatic when using Standard SKU. No UDRs or manual peering is needed. However, the hub must have its routingState as Provisioned for routing to work. The connection provisioningState and the hub routingState are separate -- both must be healthy."
+    explanation: "No Virtual WAN, o roteamento de trânsito spoke-to-spoke é automático ao usar o SKU Standard. Nenhuma UDR ou peering manual é necessário. No entanto, o hub deve ter seu routingState como Provisioned para que o roteamento funcione. O provisioningState da conexão e o routingState do hub são separados -- ambos devem estar saudáveis."
   },
   {
     id: "az700-22-q4",
-    question: "Which CLI command creates a VPN site representing an on-premises branch in Azure Virtual WAN?",
+    question: "Qual comando CLI cria um site VPN representando uma filial on-premises no Azure Virtual WAN?",
     options: [
       "az network vpn-site create --ip-address --name --resource-group --virtual-wan",
       "az network vnet-gateway create --name --resource-group --vnet --gateway-type Vpn",
@@ -540,18 +540,18 @@ Remove-AzResourceGroup -Name "rg-vwan-challenge22" -Force -AsJob
       "az network vpn-gateway connection create --gateway-name --name --resource-group"
     ],
     correctIndex: 0,
-    explanation: "In Virtual WAN, on-premises branches are represented as VPN sites using 'az network vpn-site create'. This is different from traditional VPN where you create a local network gateway. The VPN site is associated with the Virtual WAN resource and connected via the hub VPN gateway."
+    explanation: "No Virtual WAN, filiais on-premises são representadas como sites VPN usando 'az network vpn-site create'. Isso é diferente da VPN tradicional onde você cria um local network gateway. O site VPN é associado ao recurso Virtual WAN e conectado através do gateway VPN do hub."
   },
   {
     id: "az700-22-q5",
-    question: "What happens when you attempt to downgrade a Virtual WAN from Standard to Basic SKU?",
+    question: "O que acontece quando você tenta fazer downgrade de um Virtual WAN de Standard para o SKU Basic?",
     options: [
-      "The downgrade succeeds but disables all transit routing",
-      "The downgrade is not supported -- you can only upgrade from Basic to Standard",
-      "The downgrade requires removing all ExpressRoute connections first",
-      "The downgrade triggers a 30-minute maintenance window"
+      "O downgrade é bem-sucedido mas desabilita todo o roteamento de trânsito",
+      "O downgrade não é suportado -- você só pode fazer upgrade de Basic para Standard",
+      "O downgrade requer remover todas as conexões ExpressRoute primeiro",
+      "O downgrade aciona uma janela de manutenção de 30 minutos"
     ],
     correctIndex: 1,
-    explanation: "Downgrading from Standard to Basic is not supported in Azure Virtual WAN. You can only upgrade from Basic to Standard. If you need a Basic deployment, you must create a new Virtual WAN resource. The upgrade from Basic to Standard is a non-disruptive operation."
+    explanation: "O downgrade de Standard para Basic não é suportado no Azure Virtual WAN. Você só pode fazer upgrade de Basic para Standard. Se precisar de uma implantação Basic, deve criar um novo recurso Virtual WAN. O upgrade de Basic para Standard é uma operação não disruptiva."
   }
 ]} />

@@ -306,7 +306,7 @@ az rest --method GET \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Usuário não consegue ativar sua função elegível
 

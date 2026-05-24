@@ -543,7 +543,7 @@ az afd route create \
 Rule sets execute in the order they are listed in the `--rule-sets` parameter. In this example, tenant URL rewrites happen first, then security headers are added. This order matters: if the security redirect rule fires first (with `--match-processing-behavior Stop`), subsequent rules in other rule sets would not execute for that request.
 :::
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Rule set not evaluating (order/condition mismatch)
 

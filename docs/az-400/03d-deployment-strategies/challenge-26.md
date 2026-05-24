@@ -623,7 +623,7 @@ stages:
 
 ---
 
-## Break and fix exercises
+## Break & fix
 
 ### Exercise 1: Auto-swap not triggering
 

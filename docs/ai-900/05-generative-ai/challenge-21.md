@@ -19,11 +19,11 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Overview
 
-**Azure AI Foundry** (formerly Azure AI Studio) is Microsoft's unified platform for building, evaluating, and deploying AI applications. Think of it as the "one-stop shop" for generative AI development on Azure. It brings together model access, prompt engineering, evaluation tools, and deployment — all in a single portal at [ai.azure.com](https://ai.azure.com).
+**Azure AI Foundry** (formerly Azure AI Studio) is Microsoft's unified platform for building, evaluating, and deploying AI applications. Think of it as the "one-stop shop" for generative AI development on Azure. It brings together model access, prompt engineering, evaluation tools, and deployment â€” all in a single portal at [ai.azure.com](https://ai.azure.com).
 
-The platform is organized around **hubs** and **projects**. A **hub** is a top-level container that manages shared resources like compute, connections, and security settings across your organization. A **project** lives inside a hub and is where individual teams do their AI work — selecting models, testing prompts, building flows, and deploying applications. This hub-project hierarchy enables enterprise governance while giving teams flexibility.
+The platform is organized around **hubs** and **projects**. A **hub** is a top-level container that manages shared resources like compute, connections, and security settings across your organization. A **project** lives inside a hub and is where individual teams do their AI work â€” selecting models, testing prompts, building flows, and deploying applications. This hub-project hierarchy enables enterprise governance while giving teams flexibility.
 
-A standout feature is the **model catalog** — a curated collection of AI models from multiple providers. Beyond OpenAI's GPT models, you can access models from Meta (Llama), Mistral, Microsoft (Phi), Cohere, and others. This lets you compare and choose the best model for your specific use case, considering factors like performance, cost, and licensing.
+A standout feature is the **model catalog** â€” a curated collection of AI models from multiple providers. Beyond OpenAI's GPT models, you can access models from Meta (Llama), Mistral, Microsoft (Phi), Cohere, and others. This lets you compare and choose the best model for your specific use case, considering factors like performance, cost, and licensing.
 
 ## Explore
 
@@ -31,21 +31,21 @@ A standout feature is the **model catalog** — a curated collection of AI model
 
 Azure AI Foundry uses a hierarchical structure for organization:
 
-```
+```text
 Azure AI Foundry
-└── Hub (shared resources, security, governance)
-    ├── Project A (team 1 - customer chatbot)
-    │   ├── Model deployments
-    │   ├── Prompt flows
-    │   └── Evaluations
-    ├── Project B (team 2 - document processing)
-    │   ├── Model deployments
-    │   ├── Prompt flows
-    │   └── Evaluations
-    └── Shared Resources
-        ├── Compute instances
-        ├── Connections (to data sources, APIs)
-        └── Security settings
+â””â”€â”€ Hub (shared resources, security, governance)
+    â”œâ”€â”€ Project A (team 1 - customer chatbot)
+    â”‚   â”œâ”€â”€ Model deployments
+    â”‚   â”œâ”€â”€ Prompt flows
+    â”‚   â””â”€â”€ Evaluations
+    â”œâ”€â”€ Project B (team 2 - document processing)
+    â”‚   â”œâ”€â”€ Model deployments
+    â”‚   â”œâ”€â”€ Prompt flows
+    â”‚   â””â”€â”€ Evaluations
+    â””â”€â”€ Shared Resources
+        â”œâ”€â”€ Compute instances
+        â”œâ”€â”€ Connections (to data sources, APIs)
+        â””â”€â”€ Security settings
 ```
 
 | Component | Purpose | Analogy |
@@ -57,7 +57,7 @@ Azure AI Foundry
 
 ### Task 2: Explore the model catalog
 
-Navigate to: [ai.azure.com](https://ai.azure.com) → **Model catalog**
+Navigate to: [ai.azure.com](https://ai.azure.com) â†’ **Model catalog**
 
 The model catalog offers models from multiple providers:
 
@@ -70,11 +70,11 @@ The model catalog offers models from multiple providers:
 | Cohere | Command R+ | Enterprise search, RAG scenarios |
 
 **Model catalog features**:
-- **Model cards** — Description, capabilities, limitations for each model
-- **Benchmarks** — Performance comparisons across tasks
-- **Deployment options** — Serverless API, managed compute, or self-hosted
-- **Licensing info** — Open-source vs. proprietary terms
-- **Try it** — Test models directly in the catalog before deploying
+- **Model cards** â€” Description, capabilities, limitations for each model
+- **Benchmarks** â€” Performance comparisons across tasks
+- **Deployment options** â€” Serverless API, managed compute, or self-hosted
+- **Licensing info** â€” Open-source vs. proprietary terms
+- **Try it** â€” Test models directly in the catalog before deploying
 
 ### Task 3: Understand deployment options
 
@@ -90,30 +90,30 @@ Azure AI Foundry offers different ways to deploy models:
 - No need to provision compute
 - Pay only for tokens consumed
 - Models from Meta, Mistral, and others available this way
-- Fast to set up — get an endpoint in minutes
+- Fast to set up â€” get an endpoint in minutes
 
 ### Task 4: Explore prompt flow and evaluation
 
 Azure AI Foundry includes tools for building and evaluating AI applications:
 
-**Prompt Flow** — Visual tool for building LLM application workflows:
+**Prompt Flow** â€” Visual tool for building LLM application workflows:
 - Chain multiple LLM calls together
 - Add data processing steps between calls
 - Include branching logic
 - Connect to external data sources
 - Test and debug flows visually
 
-**Evaluation** — Measure AI application quality:
-- **Groundedness** — Are responses based on provided data?
-- **Relevance** — Do responses answer the question?
-- **Coherence** — Are responses logically structured?
-- **Fluency** — Is the language natural?
-- **Safety** — Does the output avoid harmful content?
+**Evaluation** â€” Measure AI application quality:
+- **Groundedness** â€” Are responses based on provided data?
+- **Relevance** â€” Do responses answer the question?
+- **Coherence** â€” Are responses logically structured?
+- **Fluency** â€” Is the language natural?
+- **Safety** â€” Does the output avoid harmful content?
 
-**Your task**: Consider a customer support chatbot. What evaluation metrics would matter most? (Groundedness and relevance — you want accurate answers based on real documentation, not hallucinated responses.)
+**Your task**: Consider a customer support chatbot. What evaluation metrics would matter most? (Groundedness and relevance â€” you want accurate answers based on real documentation, not hallucinated responses.)
 
 :::tip
-For the exam, remember that Azure AI Foundry is the platform that brings everything together — model selection, prompt engineering, evaluation, and deployment. It's not a model itself, but the environment where you work with models.
+For the exam, remember that Azure AI Foundry is the platform that brings everything together â€” model selection, prompt engineering, evaluation, and deployment. It's not a model itself, but the environment where you work with models.
 :::
 
 ## Key Concepts
@@ -132,7 +132,7 @@ For the exam, remember that Azure AI Foundry is the platform that brings everyth
 | Misconception | Reality |
 |---------------|---------|
 | Azure AI Foundry only offers OpenAI models | The model catalog includes models from Meta, Mistral, Microsoft, Cohere, and other providers |
-| Azure AI Foundry replaces Azure OpenAI Service | They work together — Azure OpenAI Service provides the models; AI Foundry is the development platform |
+| Azure AI Foundry replaces Azure OpenAI Service | They work together â€” Azure OpenAI Service provides the models; AI Foundry is the development platform |
 | You need a hub for every project | Multiple projects share a single hub; the hub provides shared governance and resources |
 | All models in the catalog are free to use | Models have different pricing; some are pay-per-token, others require dedicated compute |
 | Prompt flow requires coding | Prompt flow provides a visual, low-code interface for building LLM workflows (though code can be added) |
@@ -160,7 +160,7 @@ For the exam, remember that Azure AI Foundry is the platform that brings everyth
       question: 'A company wants to quickly test a Meta Llama model without provisioning any compute infrastructure. Which deployment option should they choose?',
       options: ['Managed Compute', 'Self-hosted deployment', 'Serverless API (Models as a Service)', 'Azure Virtual Machine'],
       correctAnswer: 2,
-      explanation: 'Serverless API (Models as a Service) allows you to deploy and use models without provisioning compute infrastructure. You pay per token consumed and can get an endpoint running in minutes — ideal for quick testing and variable workloads.'
+      explanation: 'Serverless API (Models as a Service) allows you to deploy and use models without provisioning compute infrastructure. You pay per token consumed and can get an endpoint running in minutes â€” ideal for quick testing and variable workloads.'
     },
     {
       id: 'ai900-21-q4',
@@ -174,7 +174,7 @@ For the exam, remember that Azure AI Foundry is the platform that brings everyth
       question: 'Which statement about Azure AI Foundry is correct?',
       options: ['It only supports GPT models from OpenAI', 'It is a unified platform for building, evaluating, and deploying AI applications', 'It replaces all other Azure AI services', 'It requires advanced coding skills to use'],
       correctAnswer: 1,
-      explanation: 'Azure AI Foundry is Microsoft\'s unified platform that brings together model selection (from multiple providers), prompt engineering, evaluation tools, and deployment capabilities — all in one environment at ai.azure.com.'
+      explanation: 'Azure AI Foundry is Microsoft\'s unified platform that brings together model selection (from multiple providers), prompt engineering, evaluation tools, and deployment capabilities â€” all in one environment at ai.azure.com.'
     }
   ]}
 />

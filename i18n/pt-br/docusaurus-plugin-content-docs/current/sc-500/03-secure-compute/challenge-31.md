@@ -281,7 +281,7 @@ Revise as métricas-chave do dashboard semanalmente:
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Dashboard de segurança de IA não mostra dados apesar de cargas de trabalho de IA ativas
 

@@ -1,45 +1,45 @@
 ---
 sidebar_position: 11
-title: "Desafio 20: Orquestração Multi-Modelo"
+title: "Desafio 20: OrquestraÃ§Ã£o Multi-Modelo"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 20: Orquestração Multi-Modelo
+# Desafio 20: OrquestraÃ§Ã£o Multi-Modelo
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$3.00 (estimado) | **Domínio**: Soluções de IA Generativa (15-20%)
+**45-60 min** | **Custo**: ~$3.00 (estimado) | **DomÃ­nio**: SoluÃ§Ãµes de IA Generativa (15-20%)
 :::
 
 ## Habilidades do exame cobertas
-- Implementar orquestração de múltiplos modelos de IA generativa
-- Implantar modelos em contêineres para cenários de borda
+- Implementar orquestraÃ§Ã£o de mÃºltiplos modelos de IA generativa
+- Implantar modelos em contÃªineres para cenÃ¡rios de borda
 - Implementar function calling para uso de ferramentas
 
-## Visão Geral
+## VisÃ£o Geral
 
-Sistemas de IA em produção raramente dependem de um único modelo. **Orquestração multi-modelo** roteia requisições para diferentes modelos com base na complexidade da tarefa, restrições de custo ou requisitos de capacidade. Por exemplo, um roteador pode enviar tarefas simples de classificação para o GPT-4o-mini (rápido, barato) enquanto direciona raciocínio complexo para o GPT-4o (mais lento, mais capaz). Esse padrão otimiza o tradeoff custo-qualidade em um portfólio de aplicações.
+Sistemas de IA em produÃ§Ã£o raramente dependem de um Ãºnico modelo. **OrquestraÃ§Ã£o multi-modelo** roteia requisiÃ§Ãµes para diferentes modelos com base na complexidade da tarefa, restriÃ§Ãµes de custo ou requisitos de capacidade. Por exemplo, um roteador pode enviar tarefas simples de classificaÃ§Ã£o para o GPT-4o-mini (rÃ¡pido, barato) enquanto direciona raciocÃ­nio complexo para o GPT-4o (mais lento, mais capaz). Esse padrÃ£o otimiza o tradeoff custo-qualidade em um portfÃ³lio de aplicaÃ§Ãµes.
 
-**Semantic Kernel** é o SDK de orquestração open-source da Microsoft que fornece abstrações para serviços de IA, plugins (funções que o modelo pode chamar) e planejadores que decompõem tarefas complexas em etapas. Ele suporta tanto Python quanto C#, integrando-se nativamente com o Azure OpenAI. Function calling (uso de ferramentas) permite que modelos invoquem ferramentas externas — APIs, bancos de dados ou código customizado — descrevendo as funções disponíveis e deixando o modelo decidir quando e como chamá-las.
+**Semantic Kernel** Ã© o SDK de orquestraÃ§Ã£o open-source da Microsoft que fornece abstraÃ§Ãµes para serviÃ§os de IA, plugins (funÃ§Ãµes que o modelo pode chamar) e planejadores que decompÃµem tarefas complexas em etapas. Ele suporta tanto Python quanto C#, integrando-se nativamente com o Azure OpenAI. Function calling (uso de ferramentas) permite que modelos invoquem ferramentas externas â€” APIs, bancos de dados ou cÃ³digo customizado â€” descrevendo as funÃ§Ãµes disponÃ­veis e deixando o modelo decidir quando e como chamÃ¡-las.
 
-Para cenários de implantação na borda, os contêineres Azure AI empacotam modelos para operação offline ou de baixa latência. Modelos em contêineres operam independentemente de conectividade com a nuvem, sendo adequados para chãos de fábrica, veículos ou redes restritas onde o acesso à nuvem é limitado ou proibido.
+Para cenÃ¡rios de implantaÃ§Ã£o na borda, os contÃªineres Azure AI empacotam modelos para operaÃ§Ã£o offline ou de baixa latÃªncia. Modelos em contÃªineres operam independentemente de conectividade com a nuvem, sendo adequados para chÃ£os de fÃ¡brica, veÃ­culos ou redes restritas onde o acesso Ã  nuvem Ã© limitado ou proibido.
 
 ## Arquitetura
 
-Este desafio implementa um roteador de modelos, configura function calling com ferramentas, constrói um pipeline de orquestração multi-etapas e implanta um endpoint de modelo em contêiner.
+Este desafio implementa um roteador de modelos, configura function calling com ferramentas, constrÃ³i um pipeline de orquestraÃ§Ã£o multi-etapas e implanta um endpoint de modelo em contÃªiner.
 
 ![Challenge 20 topology](/img/ai-102/challenge-20-topology.svg)
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Recurso Azure OpenAI com GPT-4o e GPT-4o-mini implantados
 - Python 3.9+ com pacotes `openai`, `semantic-kernel`
 - .NET 8 SDK com pacotes NuGet `Azure.AI.OpenAI`, `Microsoft.SemanticKernel`
-- Docker Desktop (para a tarefa de implantação em contêiner)
+- Docker Desktop (para a tarefa de implantaÃ§Ã£o em contÃªiner)
 - Azure Container Registry (opcional, para push)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Implementar Roteador de Modelos (Baseado em Complexidade)
 
@@ -107,7 +107,7 @@ class ModelRouter:
 # Test the router
 router = ModelRouter()
 
-# Simple request → routes to GPT-4o-mini
+# Simple request â†’ routes to GPT-4o-mini
 result1 = router.route(
     [{"role": "user", "content": "What is Azure?"}],
     max_tokens=100
@@ -116,7 +116,7 @@ print(f"Simple: model={result1['model_used']}, "
       f"latency={result1['latency_ms']:.0f}ms")
 print(f"  Response: {result1['response'].choices[0].message.content[:80]}...\n")
 
-# Complex request → routes to GPT-4o
+# Complex request â†’ routes to GPT-4o
 result2 = router.route(
     [{"role": "user", "content": "Analyze the trade-offs between using Azure Functions Consumption plan vs Premium plan. Compare cost implications, cold start behavior, and scaling characteristics for a multi-step data processing pipeline."}],
     max_tokens=300
@@ -199,7 +199,7 @@ Console.WriteLine($"  Response: {result2.Content[0].Text[..Math.Min(80, result2.
 <TabItem value="rest" label="REST API">
 
 ```bash
-# Simple request → route to gpt-4o-mini
+# Simple request â†’ route to gpt-4o-mini
 echo "=== Simple Request (gpt-4o-mini) ==="
 time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-10-21" \
   -H "Content-Type: application/json" \
@@ -209,7 +209,7 @@ time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o
     "max_tokens": 100
   }' | jq -r '.choices[0].message.content'
 
-# Complex request → route to gpt-4o
+# Complex request â†’ route to gpt-4o
 echo ""
 echo "=== Complex Request (gpt-4o) ==="
 time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21" \
@@ -710,7 +710,7 @@ curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o-mini
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Implantar Endpoint de Modelo em Contêiner
+### Tarefa 4: Implantar Endpoint de Modelo em ContÃªiner
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -891,9 +891,9 @@ az container create \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```yaml
 Simple: model=gpt-4o-mini, latency=285ms
   Response: Azure is Microsoft's cloud computing platform that provides a wide range of...
 
@@ -903,15 +903,15 @@ Complex: model=gpt-4o, latency=1250ms
 Calling: get_weather({"location": "Seattle", "unit": "celsius"})
 Calling: search_documents({"query": "Azure Functions"})
 
-Final answer: The weather in Seattle is currently 18°C and partly cloudy. I also found
+Final answer: The weather in Seattle is currently 18Â°C and partly cloudy. I also found
 documentation about Azure Functions in our knowledge base...
 
 === Multi-Step Analysis Pipeline ===
 Step 1: Summarizing...
 Summary:
-• Migration to Azure Data Factory planned for end of January
-• Excellent Q4 performance with 99.9% uptime
-• Rising compute costs need investigation (spot instances)
+â€¢ Migration to Azure Data Factory planned for end of January
+â€¢ Excellent Q4 performance with 99.9% uptime
+â€¢ Rising compute costs need investigation (spot instances)
 
 Step 2: Extracting actions...
 Actions:
@@ -922,46 +922,46 @@ Step 3: Analyzing sentiment...
 Sentiment: positive
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Função não chamada | Modelo responde diretamente sem tool call | Descrição da função confusa ou irrelevante | Melhorar descrições das funções; usar `tool_choice: "required"` |
-| Loop infinito de ferramentas | Modelo continua chamando a mesma função | Sem condição de terminação | Limitar rodadas de tool call; adicionar lógica de "done" |
-| Erro no plugin do Semantic Kernel | Exceção `FunctionNotFound` | Plugin não registrado ou nome de função incorreto | Verificar chamada `add_plugin()` e se o nome da função corresponde |
-| Contêiner falha ao iniciar | Erro `Eula=accept` ausente | EULA não aceito | Definir variável de ambiente `Eula=accept` |
-| Erro de billing no contêiner | Contêiner para após 10-15 min | Endpoint de billing inacessível | Garantir que a URL de `Billing` está acessível; verificar rede |
+| FunÃ§Ã£o nÃ£o chamada | Modelo responde diretamente sem tool call | DescriÃ§Ã£o da funÃ§Ã£o confusa ou irrelevante | Melhorar descriÃ§Ãµes das funÃ§Ãµes; usar `tool_choice: "required"` |
+| Loop infinito de ferramentas | Modelo continua chamando a mesma funÃ§Ã£o | Sem condiÃ§Ã£o de terminaÃ§Ã£o | Limitar rodadas de tool call; adicionar lÃ³gica de "done" |
+| Erro no plugin do Semantic Kernel | ExceÃ§Ã£o `FunctionNotFound` | Plugin nÃ£o registrado ou nome de funÃ§Ã£o incorreto | Verificar chamada `add_plugin()` e se o nome da funÃ§Ã£o corresponde |
+| ContÃªiner falha ao iniciar | Erro `Eula=accept` ausente | EULA nÃ£o aceito | Definir variÃ¡vel de ambiente `Eula=accept` |
+| Erro de billing no contÃªiner | ContÃªiner para apÃ³s 10-15 min | Endpoint de billing inacessÃ­vel | Garantir que a URL de `Billing` estÃ¡ acessÃ­vel; verificar rede |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ch20-q1",
     question: "No function calling do Azure OpenAI, o que o modelo retorna quando decide usar uma ferramenta?",
     options: [
-      "O resultado real da função",
-      "Um array tool_calls com o nome da função e argumentos a executar",
-      "Uma URL de redirecionamento para o endpoint da função",
-      "Um erro indicando que execução manual é necessária"
+      "O resultado real da funÃ§Ã£o",
+      "Um array tool_calls com o nome da funÃ§Ã£o e argumentos a executar",
+      "Uma URL de redirecionamento para o endpoint da funÃ§Ã£o",
+      "Um erro indicando que execuÃ§Ã£o manual Ã© necessÃ¡ria"
     ],
     correctAnswer: 1,
-    explanation: "Quando o modelo decide usar uma ferramenta, ele retorna uma mensagem com finish_reason='tool_calls' contendo um array tool_calls. Cada entrada inclui o nome da função e argumentos serializados. A aplicação deve executar a função e enviar os resultados de volta em uma requisição subsequente."
+    explanation: "Quando o modelo decide usar uma ferramenta, ele retorna uma mensagem com finish_reason='tool_calls' contendo um array tool_calls. Cada entrada inclui o nome da funÃ§Ã£o e argumentos serializados. A aplicaÃ§Ã£o deve executar a funÃ§Ã£o e enviar os resultados de volta em uma requisiÃ§Ã£o subsequente."
   },
   {
     id: "ch20-q2",
-    question: "Qual é a principal vantagem de usar um roteador de modelos em arquiteturas multi-modelo?",
+    question: "Qual Ã© a principal vantagem de usar um roteador de modelos em arquiteturas multi-modelo?",
     options: [
       "Otimiza tradeoffs de custo-qualidade combinando complexidade da tarefa com capacidade do modelo",
-      "Aumenta a precisão de todas as respostas",
+      "Aumenta a precisÃ£o de todas as respostas",
       "Elimina a necessidade de rate limiting",
-      "Fornece failover automático entre regiões"
+      "Fornece failover automÃ¡tico entre regiÃµes"
     ],
     correctAnswer: 0,
-    explanation: "Um roteador de modelos direciona requisições simples para modelos mais baratos e rápidos (como GPT-4o-mini) e requisições complexas para modelos mais capazes (como GPT-4o). Isso otimiza custos sem sacrificar qualidade onde ela importa, já que tarefas simples não se beneficiam de modelos caros."
+    explanation: "Um roteador de modelos direciona requisiÃ§Ãµes simples para modelos mais baratos e rÃ¡pidos (como GPT-4o-mini) e requisiÃ§Ãµes complexas para modelos mais capazes (como GPT-4o). Isso otimiza custos sem sacrificar qualidade onde ela importa, jÃ¡ que tarefas simples nÃ£o se beneficiam de modelos caros."
   },
   {
     id: "ch20-q3",
-    question: "Qual variável de ambiente é necessária para que os contêineres Azure AI funcionem corretamente?",
+    question: "Qual variÃ¡vel de ambiente Ã© necessÃ¡ria para que os contÃªineres Azure AI funcionem corretamente?",
     options: [
       "Apenas AZURE_OPENAI_ENDPOINT",
       "ConnectionString e ContainerName",
@@ -969,31 +969,31 @@ Sentiment: positive
       "AZURE_TENANT_ID e AZURE_CLIENT_ID"
     ],
     correctAnswer: 2,
-    explanation: "Os contêineres Azure AI requerem três variáveis de ambiente: Eula=accept (acordo legal), Billing (a URL do endpoint Azure AI para medição de uso) e ApiKey (autenticação). O contêiner envia dados de uso para o endpoint de billing, mas processa requisições localmente."
+    explanation: "Os contÃªineres Azure AI requerem trÃªs variÃ¡veis de ambiente: Eula=accept (acordo legal), Billing (a URL do endpoint Azure AI para mediÃ§Ã£o de uso) e ApiKey (autenticaÃ§Ã£o). O contÃªiner envia dados de uso para o endpoint de billing, mas processa requisiÃ§Ãµes localmente."
   },
   {
     id: "ch20-q4",
-    question: "No Semantic Kernel, o que é um 'plugin'?",
+    question: "No Semantic Kernel, o que Ã© um 'plugin'?",
     options: [
-      "Um checkpoint de modelo pré-treinado",
+      "Um checkpoint de modelo prÃ©-treinado",
       "Um componente de middleware de logging",
-      "Uma configuração de conexão com banco de dados",
-      "Uma coleção de funções (nativas ou baseadas em prompt) que estendem as capacidades do kernel"
+      "Uma configuraÃ§Ã£o de conexÃ£o com banco de dados",
+      "Uma coleÃ§Ã£o de funÃ§Ãµes (nativas ou baseadas em prompt) que estendem as capacidades do kernel"
     ],
     correctAnswer: 3,
-    explanation: "No Semantic Kernel, um plugin é uma coleção de funções do kernel (seja funções de código nativo ou funções semânticas baseadas em prompt) que estendem o que a IA pode fazer. Plugins são registrados no kernel e podem ser invocados pelo modelo via function calling ou diretamente pelo código da aplicação."
+    explanation: "No Semantic Kernel, um plugin Ã© uma coleÃ§Ã£o de funÃ§Ãµes do kernel (seja funÃ§Ãµes de cÃ³digo nativo ou funÃ§Ãµes semÃ¢nticas baseadas em prompt) que estendem o que a IA pode fazer. Plugins sÃ£o registrados no kernel e podem ser invocados pelo modelo via function calling ou diretamente pelo cÃ³digo da aplicaÃ§Ã£o."
   },
   {
     id: "ch20-q5",
-    question: "Ao implementar function calling, o que acontece depois que a aplicação executa a função e retorna os resultados?",
+    question: "Ao implementar function calling, o que acontece depois que a aplicaÃ§Ã£o executa a funÃ§Ã£o e retorna os resultados?",
     options: [
-      "O resultado da função é adicionado como mensagem de tool e uma nova requisição de completion é feita",
-      "A conversa termina e o resultado é retornado diretamente ao usuário",
+      "O resultado da funÃ§Ã£o Ã© adicionado como mensagem de tool e uma nova requisiÃ§Ã£o de completion Ã© feita",
+      "A conversa termina e o resultado Ã© retornado diretamente ao usuÃ¡rio",
       "O modelo automaticamente retreina com os novos dados",
-      "O resultado da função é armazenado em cache apenas para chamadas futuras"
+      "O resultado da funÃ§Ã£o Ã© armazenado em cache apenas para chamadas futuras"
     ],
     correctAnswer: 0,
-    explanation: "Após executar a função, a aplicação adiciona o resultado como uma mensagem 'tool' (com tool_call_id correspondente) e faz outra requisição de chat completion. O modelo então gera uma resposta em linguagem natural incorporando os resultados da ferramenta, que pode incluir chamadas adicionais de ferramentas se necessário."
+    explanation: "ApÃ³s executar a funÃ§Ã£o, a aplicaÃ§Ã£o adiciona o resultado como uma mensagem 'tool' (com tool_call_id correspondente) e faz outra requisiÃ§Ã£o de chat completion. O modelo entÃ£o gera uma resposta em linguagem natural incorporando os resultados da ferramenta, que pode incluir chamadas adicionais de ferramentas se necessÃ¡rio."
   }
 ]} />
 
@@ -1009,7 +1009,7 @@ az group delete --name rg-ai102-challenge20 --yes --no-wait
 
 ## Saiba Mais
 - [Function calling com Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/how-to/function-calling)
-- [Documentação do Semantic Kernel](https://learn.microsoft.com/semantic-kernel/overview/)
-- [Contêineres Azure AI](https://learn.microsoft.com/azure/ai-services/cognitive-services-container-support)
-- [Padrões de orquestração multi-modelo](https://learn.microsoft.com/azure/ai-services/openai/concepts/models)
+- [DocumentaÃ§Ã£o do Semantic Kernel](https://learn.microsoft.com/semantic-kernel/overview/)
+- [ContÃªineres Azure AI](https://learn.microsoft.com/azure/ai-services/cognitive-services-container-support)
+- [PadrÃµes de orquestraÃ§Ã£o multi-modelo](https://learn.microsoft.com/azure/ai-services/openai/concepts/models)
 - [Plugins do Semantic Kernel](https://learn.microsoft.com/semantic-kernel/concepts/plugins/)

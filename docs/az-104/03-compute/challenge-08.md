@@ -279,7 +279,7 @@ az vm list -d -g rg-az104-challenge08 --query "[].{Name:name, State:powerState}"
     "All VMs deallocated when finished"
   ]}
 />
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario a: unavailable VM size
 ```bash

@@ -456,7 +456,7 @@ cat projected-doc.json | python -m json.tool
 }
 ```
 
-## Break and Fix
+## Break & fix
 
 | # | Scenario | Symptom | Root Cause | Fix |
 |---|----------|---------|------------|-----|

@@ -32,7 +32,7 @@ Think of face detection like a bouncer at a venue. First, they DETECT faces in a
 
 | Capability | What it does | Access | Example |
 |-----------|-------------|--------|---------|
-| **Face Detection** | Finds faces in an image — returns bounding box coordinates | Broadly available | "There are 3 faces in this photo" |
+| **Face Detection** | Finds faces in an image â€” returns bounding box coordinates | Broadly available | "There are 3 faces in this photo" |
 | **Face Analysis** | Determines attributes of detected faces | Limited attributes available | "Face 1: appears to wear glasses, head pose tilted left" |
 | **Face Verification** | Determines if two faces are the same person | **Restricted access (approval required)** | "Are these two photos the same person? 92% match" |
 | **Face Identification** | Identifies WHO a person is from a known group | **Restricted access (approval required)** | "This is Employee #4521" |
@@ -44,7 +44,7 @@ When Azure AI Face detects a face, it returns:
 | Data returned | Description |
 |--------------|-------------|
 | **Face bounding box** | Rectangle coordinates showing where the face is in the image |
-| **Face landmarks** | Key points (nose tip, eye corners, mouth corners) — 27 points |
+| **Face landmarks** | Key points (nose tip, eye corners, mouth corners) â€” 27 points |
 | **Head pose** | Roll, yaw, and pitch angles of the head |
 | **Accessories** | Whether the person wears glasses, headwear |
 | **Blur** | How blurry the face area is |
@@ -76,18 +76,18 @@ Visit the [Azure AI Vision demo](https://portal.vision.cognitive.azure.com/) and
 
 A typical Face Detection API response looks like this conceptually:
 
-```
+```text
 Detection Results:
-├── Face 1
-│   ├── Bounding box: { left: 120, top: 80, width: 200, height: 250 }
-│   ├── Face landmarks: { pupilLeft: {x, y}, pupilRight: {x, y}, noseTip: {x, y}, ... }
-│   ├── Head pose: { roll: -2.1, yaw: 5.3, pitch: -1.8 }
-│   ├── Accessories: { glasses: "ReadingGlasses" }
-│   ├── Blur: { value: 0.1, blurLevel: "low" }
-│   └── Occlusion: { foreheadOccluded: false, eyeOccluded: false }
-├── Face 2
-│   ├── Bounding box: { left: 450, top: 95, width: 180, height: 230 }
-│   └── ...
+â”œâ”€â”€ Face 1
+â”‚   â”œâ”€â”€ Bounding box: { left: 120, top: 80, width: 200, height: 250 }
+â”‚   â”œâ”€â”€ Face landmarks: { pupilLeft: {x, y}, pupilRight: {x, y}, noseTip: {x, y}, ... }
+â”‚   â”œâ”€â”€ Head pose: { roll: -2.1, yaw: 5.3, pitch: -1.8 }
+â”‚   â”œâ”€â”€ Accessories: { glasses: "ReadingGlasses" }
+â”‚   â”œâ”€â”€ Blur: { value: 0.1, blurLevel: "low" }
+â”‚   â””â”€â”€ Occlusion: { foreheadOccluded: false, eyeOccluded: false }
+â”œâ”€â”€ Face 2
+â”‚   â”œâ”€â”€ Bounding box: { left: 450, top: 95, width: 180, height: 230 }
+â”‚   â””â”€â”€ ...
 ```
 
 **Key points**:
@@ -143,7 +143,7 @@ The exam tests whether you understand:
       question: 'Why does Microsoft require Limited Access approval for face identification and verification features?',
       options: ['Because they are expensive to run', 'To prevent misuse and uphold Responsible AI principles', 'Because they are still in beta testing', 'Because they only work in certain Azure regions'],
       correctAnswer: 1,
-      explanation: 'Microsoft restricts face identification and verification to prevent potential misuse (surveillance, bias, privacy violations). This reflects their Responsible AI commitment — specifically fairness, privacy, and accountability principles.'
+      explanation: 'Microsoft restricts face identification and verification to prevent potential misuse (surveillance, bias, privacy violations). This reflects their Responsible AI commitment â€” specifically fairness, privacy, and accountability principles.'
     },
     {
       id: 'ai900-13-q3',
@@ -157,7 +157,7 @@ The exam tests whether you understand:
       question: 'A retail store wants to count how many customers enter their store using cameras, but they do NOT need to know WHO the customers are. Which capability is sufficient?',
       options: ['Face identification', 'Face verification', 'Face detection (or person detection with Azure AI Vision)', 'Face analysis'],
       correctAnswer: 2,
-      explanation: 'To count people, you only need to detect faces or persons — not identify them. Face detection (or Azure AI Vision person detection) finds and counts people without identifying who they are, and doesn\'t require Limited Access approval.'
+      explanation: 'To count people, you only need to detect faces or persons â€” not identify them. Face detection (or Azure AI Vision person detection) finds and counts people without identifying who they are, and doesn\'t require Limited Access approval.'
     },
     {
       id: 'ai900-13-q5',

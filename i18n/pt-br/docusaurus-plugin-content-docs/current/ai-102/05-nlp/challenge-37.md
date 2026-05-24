@@ -10,39 +10,39 @@ import TabItem from '@theme/TabItem';
 # Desafio 37: Conversational Language Understanding (CLU)
 
 :::info Tempo Estimado
-**60 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
+**60 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Criar intents e entidades para compreensão de linguagem conversacional
+- Criar intents e entidades para compreensÃ£o de linguagem conversacional
 - Adicionar utterances para treinar o modelo
 - Treinar, avaliar e implantar um modelo CLU
 - Consultar um modelo CLU implantado
 
-## Visão Geral
+## VisÃ£o Geral
 
-Conversational Language Understanding (CLU) é o substituto do LUIS (Language Understanding). Ele classifica utterances do usuário em **intents** e extrai **entidades**:
+Conversational Language Understanding (CLU) Ã© o substituto do LUIS (Language Understanding). Ele classifica utterances do usuÃ¡rio em **intents** e extrai **entidades**:
 
-| Conceito | Descrição |
+| Conceito | DescriÃ§Ã£o |
 |----------|-----------|
-| **Intent** | O objetivo do usuário (ex.: "BookFlight", "GetWeather") |
-| **Entity** | Informação-chave extraída (ex.: destino, data) |
+| **Intent** | O objetivo do usuÃ¡rio (ex.: "BookFlight", "GetWeather") |
+| **Entity** | InformaÃ§Ã£o-chave extraÃ­da (ex.: destino, data) |
 | **Utterance** | Texto de exemplo mapeado para intents/entidades para treinamento |
 
 Tipos de entidade:
-- **Learned** — Aprendida por machine learning a partir de exemplos rotulados
-- **List** — Conjunto definido de valores com sinônimos
-- **Prebuilt** — Tipos pré-treinados (datetime, number, temperature, etc.)
+- **Learned** â€” Aprendida por machine learning a partir de exemplos rotulados
+- **List** â€” Conjunto definido de valores com sinÃ´nimos
+- **Prebuilt** â€” Tipos prÃ©-treinados (datetime, number, temperature, etc.)
 
-CLU usa o endpoint do serviço Language em: `https://{endpoint}.cognitiveservices.azure.com/language/`
+CLU usa o endpoint do serviÃ§o Language em: `https://{endpoint}.cognitiveservices.azure.com/language/`
 
-## Pré-requisitos
+## PrÃ©-requisitos
 - Assinatura do Azure
 - Recurso Azure AI Language
 - Python 3.9+ com `requests` e `azure-ai-language-conversations`
-- Dados de treinamento (utterances com rótulos de intent/entidade)
+- Dados de treinamento (utterances com rÃ³tulos de intent/entidade)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
 ### Tarefa 1: Criar Projeto CLU via REST
 
@@ -358,9 +358,9 @@ curl -s "${ENDPOINT}/language/:analyze-conversations?api-version=2023-04-01" \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Project created: 201
 Import started: 202
   Import status: running
@@ -390,40 +390,40 @@ Query: 'Cancel my reservation please'
   Entities:
 ```
 
-## Quebrar e Corrigir
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Baixa confiança de intent | Intent errado previsto | Poucas utterances de treinamento por intent | Adicione 10-15+ utterances diversas por intent |
-| Entidade não extraída | Entidades ausentes na resposta | Offset/length de entidade incorreto no treinamento | Verifique se os offsets de caractere correspondem às posições exatas do texto |
-| Treinamento falha | Erros de validação | Utterances duplicadas ou spans de entidade inválidos | Verifique dados de treinamento para entidades sobrepostas e duplicatas |
-| Deploy falha | 409 Conflict | Nome de deployment já existe com modelo diferente | Delete o deployment existente ou use nome diferente |
-| Intent None corresponde a tudo | Disparo excessivo | Intent None tem exemplos muito similares a outros intents | Faça exemplos do intent None claramente não relacionados a todos os outros intents |
+| Baixa confianÃ§a de intent | Intent errado previsto | Poucas utterances de treinamento por intent | Adicione 10-15+ utterances diversas por intent |
+| Entidade nÃ£o extraÃ­da | Entidades ausentes na resposta | Offset/length de entidade incorreto no treinamento | Verifique se os offsets de caractere correspondem Ã s posiÃ§Ãµes exatas do texto |
+| Treinamento falha | Erros de validaÃ§Ã£o | Utterances duplicadas ou spans de entidade invÃ¡lidos | Verifique dados de treinamento para entidades sobrepostas e duplicatas |
+| Deploy falha | 409 Conflict | Nome de deployment jÃ¡ existe com modelo diferente | Delete o deployment existente ou use nome diferente |
+| Intent None corresponde a tudo | Disparo excessivo | Intent None tem exemplos muito similares a outros intents | FaÃ§a exemplos do intent None claramente nÃ£o relacionados a todos os outros intents |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a relação entre intents e utterances no CLU?",
+    question: "Qual Ã© a relaÃ§Ã£o entre intents e utterances no CLU?",
     options: [
       "Cada intent pode ter apenas uma utterance",
-      "Intents são extraídos de utterances automaticamente",
-      "Utterances são textos de exemplo rotulados com um intent, ensinando o modelo a reconhecer objetivos do usuário",
-      "Utterances e intents são o mesmo conceito"
+      "Intents sÃ£o extraÃ­dos de utterances automaticamente",
+      "Utterances sÃ£o textos de exemplo rotulados com um intent, ensinando o modelo a reconhecer objetivos do usuÃ¡rio",
+      "Utterances e intents sÃ£o o mesmo conceito"
     ],
     correctAnswer: 2,
-    explanation: "Utterances são exemplos de treinamento rotulados mapeados para intents. Múltiplas utterances diversas por intent ensinam o modelo a reconhecer o mesmo objetivo expresso de maneiras diferentes."
+    explanation: "Utterances sÃ£o exemplos de treinamento rotulados mapeados para intents. MÃºltiplas utterances diversas por intent ensinam o modelo a reconhecer o mesmo objetivo expresso de maneiras diferentes."
   },
   {
-    question: "Quais são os três tipos de entidade no CLU?",
+    question: "Quais sÃ£o os trÃªs tipos de entidade no CLU?",
     options: [
       "String, Number, Boolean",
-      "Learned (baseada em ML), List (valores definidos com sinônimos) e Prebuilt (tipos pré-treinados)",
+      "Learned (baseada em ML), List (valores definidos com sinÃ´nimos) e Prebuilt (tipos prÃ©-treinados)",
       "Simple, Composite, Regex",
       "Required, Optional, Dynamic"
     ],
     correctAnswer: 1,
-    explanation: "CLU suporta: entidades Learned (treinadas a partir de exemplos rotulados), entidades List (conjuntos de valores definidos com sinônimos) e entidades Prebuilt (DateTime, Number, etc.)."
+    explanation: "CLU suporta: entidades Learned (treinadas a partir de exemplos rotulados), entidades List (conjuntos de valores definidos com sinÃ´nimos) e entidades Prebuilt (DateTime, Number, etc.)."
   },
   {
     question: "O que substituiu o LUIS (Language Understanding) no Azure AI?",
@@ -434,29 +434,29 @@ Query: 'Cancel my reservation please'
       "Conversational Language Understanding (CLU) no Azure AI Language"
     ],
     correctAnswer: 3,
-    explanation: "CLU é o sucessor do LUIS, fornecendo o mesmo reconhecimento de intent/entidade com precisão aprimorada, integrado ao serviço Azure AI Language."
+    explanation: "CLU Ã© o sucessor do LUIS, fornecendo o mesmo reconhecimento de intent/entidade com precisÃ£o aprimorada, integrado ao serviÃ§o Azure AI Language."
   },
   {
-    question: "Qual é o propósito do intent 'None'?",
+    question: "Qual Ã© o propÃ³sito do intent 'None'?",
     options: [
-      "Captura utterances que não correspondem a nenhum intent definido (consultas fora do escopo)",
+      "Captura utterances que nÃ£o correspondem a nenhum intent definido (consultas fora do escopo)",
       "Trata erros no modelo",
-      "É automaticamente atribuído a utterances não treinadas",
+      "Ã‰ automaticamente atribuÃ­do a utterances nÃ£o treinadas",
       "Desabilita o reconhecimento de intent"
     ],
     correctAnswer: 0,
-    explanation: "O intent 'None' captura utterances fora do escopo que não pertencem a nenhum intent definido. Deve ter exemplos diversos de consultas irrelevantes."
+    explanation: "O intent 'None' captura utterances fora do escopo que nÃ£o pertencem a nenhum intent definido. Deve ter exemplos diversos de consultas irrelevantes."
   },
   {
-    question: "Como você especifica posições de caractere para rótulos de entidade em utterances de treinamento?",
+    question: "Como vocÃª especifica posiÃ§Ãµes de caractere para rÃ³tulos de entidade em utterances de treinamento?",
     options: [
-      "Por índice de palavra (primeira palavra = 0, segunda = 1)",
-      "Por posições de início e fim de palavras",
-      "Por posição percentual no texto",
+      "Por Ã­ndice de palavra (primeira palavra = 0, segunda = 1)",
+      "Por posiÃ§Ãµes de inÃ­cio e fim de palavras",
+      "Por posiÃ§Ã£o percentual no texto",
       "Por offset de caractere e tamanho dentro do texto da utterance"
     ],
     correctAnswer: 3,
-    explanation: "Entidades são rotuladas usando offset de caractere (posição inicial) e length (número de caracteres) dentro do texto da utterance, usando indexação de unidades de código UTF-16."
+    explanation: "Entidades sÃ£o rotuladas usando offset de caractere (posiÃ§Ã£o inicial) e length (nÃºmero de caracteres) dentro do texto da utterance, usando indexaÃ§Ã£o de unidades de cÃ³digo UTF-16."
   }
 ]} />
 
@@ -468,7 +468,7 @@ az group delete --name rg-ai102-nlp --yes --no-wait
 
 ## Saiba Mais
 
-- [Visão geral do CLU](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview)
-- [Início rápido: Construir um projeto CLU](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/quickstart)
+- [VisÃ£o geral do CLU](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview)
+- [InÃ­cio rÃ¡pido: Construir um projeto CLU](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/quickstart)
 - [Tipos de entidade](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/concepts/entity-components)
-- [Migração do LUIS](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/how-to/migrate-from-luis)
+- [MigraÃ§Ã£o do LUIS](https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/how-to/migrate-from-luis)

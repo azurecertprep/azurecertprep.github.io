@@ -428,7 +428,7 @@ az storage account show --name $CMK_STORAGE --resource-group $RG_NAME \
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Renovação de certificado falhou - "Issuer not found"
 

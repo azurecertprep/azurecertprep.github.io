@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 14: Azure Monitor & Alerts"
+title: "Desafio 14: Azure Monitor & Alertas"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';
@@ -241,7 +241,7 @@ az network watcher test-ip-flow \
   --resource-group $RG
 ```
 
-## Quebre & conserte
+## Quebra & conserta
 
 ### Quebre
 1. **Alerta sem ação** | Crie uma regra de alerta mas não anexe um grupo de ação. Acione a condição. Observe: o alerta dispara no portal mas nenhuma notificação é enviada. Por quê?

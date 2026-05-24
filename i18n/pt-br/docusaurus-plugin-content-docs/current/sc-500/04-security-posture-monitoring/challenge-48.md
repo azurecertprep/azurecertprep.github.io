@@ -323,7 +323,7 @@ SecurityCopilotAudit_CL
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Plugin retorna "No data available"
 

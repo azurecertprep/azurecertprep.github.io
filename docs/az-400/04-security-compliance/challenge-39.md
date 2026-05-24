@@ -248,7 +248,7 @@ az ad app federated-credential create \
 az ad app federated-credential list --id $OBJECT_ID
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Federated credential subject mismatch
 

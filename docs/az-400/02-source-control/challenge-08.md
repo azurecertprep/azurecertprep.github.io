@@ -492,7 +492,7 @@ Create a specialized template for hotfixes:
 - [ ] Post-incident review scheduled
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Required status check never completes
 

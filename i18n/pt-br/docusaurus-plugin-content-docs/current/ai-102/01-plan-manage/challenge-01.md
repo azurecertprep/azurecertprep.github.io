@@ -1,49 +1,49 @@
 ---
 sidebar_position: 2
-title: "Desafio 01: Selecionar o Serviço Azure AI Correto"
+title: "Desafio 01: Selecionar o ServiÃ§o Azure AI Correto"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 01: Selecionar o Serviço Azure AI Correto
+# Desafio 01: Selecionar o ServiÃ§o Azure AI Correto
 
 :::info Tempo Estimado
-**45 min** | **Custo**: ~$0,50 | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
+**45 min** | **Custo**: ~$0,50 | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
-- Selecionar o serviço Azure AI apropriado para uma solução de IA generativa
-- Selecionar o serviço Azure AI apropriado para uma solução de visão computacional
-- Selecionar o serviço Azure AI apropriado para uma solução de processamento de linguagem natural
-- Selecionar o serviço Azure AI apropriado para uma solução de fala
-- Selecionar o serviço Azure AI apropriado para uma solução de inteligência de documentos
-- Selecionar o serviço Azure AI apropriado para uma solução de mineração de conhecimento
+- Selecionar o serviÃ§o Azure AI apropriado para uma soluÃ§Ã£o de IA generativa
+- Selecionar o serviÃ§o Azure AI apropriado para uma soluÃ§Ã£o de visÃ£o computacional
+- Selecionar o serviÃ§o Azure AI apropriado para uma soluÃ§Ã£o de processamento de linguagem natural
+- Selecionar o serviÃ§o Azure AI apropriado para uma soluÃ§Ã£o de fala
+- Selecionar o serviÃ§o Azure AI apropriado para uma soluÃ§Ã£o de inteligÃªncia de documentos
+- Selecionar o serviÃ§o Azure AI apropriado para uma soluÃ§Ã£o de mineraÃ§Ã£o de conhecimento
 
-## Visão Geral
+## VisÃ£o Geral
 
-Os serviços Azure AI fornecem um amplo portfólio de capacidades cognitivas por meio de APIs pré-construídas e modelos personalizáveis. Escolher o serviço correto é crítico—usar o Azure OpenAI para extração simples de texto quando o Document Intelligence existe, ou usar Computer Vision para tarefas mais adequadas ao GPT-4o multimodal, leva a custos e complexidade desnecessários.
+Os serviÃ§os Azure AI fornecem um amplo portfÃ³lio de capacidades cognitivas por meio de APIs prÃ©-construÃ­das e modelos personalizÃ¡veis. Escolher o serviÃ§o correto Ã© crÃ­ticoâ€”usar o Azure OpenAI para extraÃ§Ã£o simples de texto quando o Document Intelligence existe, ou usar Computer Vision para tarefas mais adequadas ao GPT-4o multimodal, leva a custos e complexidade desnecessÃ¡rios.
 
-Este desafio orienta você pela taxonomia dos serviços Azure AI, ajuda a construir uma árvore de decisão mental e verifica sua capacidade de descobrir e validar programaticamente os serviços disponíveis em uma assinatura. Você comparará recursos multi-serviço (que fornecem um único endpoint para múltiplas capacidades) com recursos de serviço único (que oferecem recursos específicos do serviço e isolamento).
+Este desafio orienta vocÃª pela taxonomia dos serviÃ§os Azure AI, ajuda a construir uma Ã¡rvore de decisÃ£o mental e verifica sua capacidade de descobrir e validar programaticamente os serviÃ§os disponÃ­veis em uma assinatura. VocÃª compararÃ¡ recursos multi-serviÃ§o (que fornecem um Ãºnico endpoint para mÃºltiplas capacidades) com recursos de serviÃ§o Ãºnico (que oferecem recursos especÃ­ficos do serviÃ§o e isolamento).
 
-Compreender os trade-offs entre tipos de serviço—camadas de preço, disponibilidade regional, conjuntos de recursos e diferenças de SLA—é essencial para o exame AI-102 e para decisões de arquitetura no mundo real.
+Compreender os trade-offs entre tipos de serviÃ§oâ€”camadas de preÃ§o, disponibilidade regional, conjuntos de recursos e diferenÃ§as de SLAâ€”Ã© essencial para o exame AI-102 e para decisÃµes de arquitetura no mundo real.
 
 ## Arquitetura
 
-Você criará tanto um recurso Azure AI multi-serviço quanto recursos individuais de serviço único, e então enumerará programaticamente suas capacidades e comparará seus endpoints.
+VocÃª criarÃ¡ tanto um recurso Azure AI multi-serviÃ§o quanto recursos individuais de serviÃ§o Ãºnico, e entÃ£o enumerarÃ¡ programaticamente suas capacidades e compararÃ¡ seus endpoints.
 
 ![Topologia do Desafio 01](/img/ai-102/challenge-01-topology.svg)
 
-## Pré-requisitos
-- Assinatura Azure com acesso aos serviços Azure AI
+## PrÃ©-requisitos
+- Assinatura Azure com acesso aos serviÃ§os Azure AI
 - Azure CLI 2.50+ instalado
 - Python 3.9+ com `pip` ou .NET 8 SDK
 - Pacotes Python `azure-identity` e `azure-mgmt-cognitiveservices` (ou NuGet equivalente)
 
-## Implementação
+## ImplementaÃ§Ã£o
 
-### Tarefa 1: Criar um Recurso Azure AI Multi-Serviço
+### Tarefa 1: Criar um Recurso Azure AI Multi-ServiÃ§o
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -63,7 +63,7 @@ account = client.accounts.begin_create(
     account_name="ai-multiservice-01",
     account=Account(
         sku=Sku(name="S0"),
-        kind="CognitiveServices",
+        kind="AIServices",
         location="eastus",
         properties=AccountProperties()
     )
@@ -114,7 +114,7 @@ Console.WriteLine($"Endpoint: {result.Value.Data.Properties.Endpoint}");
 az cognitiveservices account create \
   --name ai-multiservice-01 \
   --resource-group rg-ai102-challenge01 \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku S0 \
   --location eastus \
   --yes
@@ -133,7 +133,7 @@ az cognitiveservices account keys list \
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Listar os Tipos de Serviços AI Disponíveis
+### Tarefa 2: Listar os Tipos de ServiÃ§os AI DisponÃ­veis
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -193,7 +193,7 @@ az cognitiveservices account list \
 
 # List available kinds in a region
 az cognitiveservices account list-skus \
-  --kind CognitiveServices \
+  --kind AIServices \
   --location eastus \
   -o table
 
@@ -207,7 +207,7 @@ az cognitiveservices account list-skus \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Criar Recursos de Serviço Único e Comparar
+### Tarefa 3: Criar Recursos de ServiÃ§o Ãšnico e Comparar
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -299,9 +299,9 @@ az cognitiveservices account show --name ai-vision-01 \
 </TabItem>
 </Tabs>
 
-## Saída Esperada
+## SaÃ­da Esperada
 
-```
+```text
 Created: ai-multiservice-01
 Endpoint: https://eastus.api.cognitive.microsoft.com/
 Kind: CognitiveServices
@@ -324,31 +324,31 @@ Multi-service endpoint: https://eastus.api.cognitive.microsoft.com/
 Supports: Vision, Language, Speech, Decision (single key)
 ```
 
-## Quebrar e Consertar
+## Quebra & conserta
 
-| Cenário | Sintoma | Causa Raiz | Correção |
+| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
 |---------|---------|------------|----------|
-| Tipo incorreto especificado | Erro `InvalidParameterValue` | Usando nome de tipo obsoleto (ex.: "Face" vs "CognitiveServices") | Verifique `az cognitiveservices account list-skus` para tipos válidos |
-| Região não disponível | Erro `LocationNotAvailable` | Serviço não disponível na região escolhida | Use `az account list-locations` e verifique a matriz de disponibilidade do serviço |
-| SKU incompatível | `SkuNotAvailable` | SKU solicitado não oferecido para aquele tipo | Combine o SKU com o tipo de serviço (ex.: TextAnalytics usa "S" e não "S0") |
-| Cota excedida | `QuotaExceeded` | Muitos recursos do mesmo tipo na assinatura | Exclua recursos não utilizados ou solicite aumento de cota |
+| Tipo incorreto especificado | Erro `InvalidParameterValue` | Usando nome de tipo obsoleto (ex.: "Face" vs "CognitiveServices") | Verifique `az cognitiveservices account list-skus` para tipos vÃ¡lidos |
+| RegiÃ£o nÃ£o disponÃ­vel | Erro `LocationNotAvailable` | ServiÃ§o nÃ£o disponÃ­vel na regiÃ£o escolhida | Use `az account list-locations` e verifique a matriz de disponibilidade do serviÃ§o |
+| SKU incompatÃ­vel | `SkuNotAvailable` | SKU solicitado nÃ£o oferecido para aquele tipo | Combine o SKU com o tipo de serviÃ§o (ex.: TextAnalytics usa "S" e nÃ£o "S0") |
+| Cota excedida | `QuotaExceeded` | Muitos recursos do mesmo tipo na assinatura | Exclua recursos nÃ£o utilizados ou solicite aumento de cota |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Você precisa usar um único endpoint e chave para acessar as capacidades de Computer Vision, Language e Speech. Qual tipo de recurso você deve criar?",
+    question: "VocÃª precisa usar um Ãºnico endpoint e chave para acessar as capacidades de Computer Vision, Language e Speech. Qual tipo de recurso vocÃª deve criar?",
     options: [
       "ComputerVision com SKU S1",
-      "CognitiveServices (recurso multi-serviço)",
-      "OpenAI com implantação Standard",
+      "CognitiveServices (recurso multi-serviÃ§o)",
+      "OpenAI com implantaÃ§Ã£o Standard",
       "AIServices com SKU combinado"
     ],
     correctAnswer: 1,
-    explanation: "Um recurso multi-serviço (kind: CognitiveServices) fornece um único endpoint e chave para múltiplos serviços Azure AI, incluindo Vision, Language e Speech."
+    explanation: "Um recurso multi-serviÃ§o (kind: AIServices) fornece um Ãºnico endpoint e chave para mÃºltiplos serviÃ§os Azure AI, incluindo Vision, Language e Speech."
   },
   {
-    question: "Qual serviço Azure AI você deve usar para extrair dados estruturados de faturas e recibos?",
+    question: "Qual serviÃ§o Azure AI vocÃª deve usar para extrair dados estruturados de faturas e recibos?",
     options: [
       "Azure AI Language com reconhecimento de entidades personalizadas",
       "Azure AI Vision com OCR",
@@ -356,40 +356,40 @@ Supports: Vision, Language, Speech, Decision (single key)
       "Azure OpenAI com GPT-4o"
     ],
     correctAnswer: 2,
-    explanation: "O Azure AI Document Intelligence (anteriormente Form Recognizer) é projetado especificamente para extrair dados estruturados de documentos como faturas, recibos e formulários com modelos pré-construídos e personalizados."
+    explanation: "O Azure AI Document Intelligence (anteriormente Form Recognizer) Ã© projetado especificamente para extrair dados estruturados de documentos como faturas, recibos e formulÃ¡rios com modelos prÃ©-construÃ­dos e personalizados."
   },
   {
-    question: "Qual é uma limitação importante dos recursos multi-serviço do Azure AI em comparação com recursos de serviço único?",
+    question: "Qual Ã© uma limitaÃ§Ã£o importante dos recursos multi-serviÃ§o do Azure AI em comparaÃ§Ã£o com recursos de serviÃ§o Ãºnico?",
     options: [
-      "Recursos multi-serviço custam mais por chamada de API",
-      "Recursos multi-serviço não podem usar identidade gerenciada",
-      "Alguns recursos específicos do serviço requerem recursos de serviço único",
-      "Recursos multi-serviço são limitados a uma região"
+      "Recursos multi-serviÃ§o custam mais por chamada de API",
+      "Recursos multi-serviÃ§o nÃ£o podem usar identidade gerenciada",
+      "Alguns recursos especÃ­ficos do serviÃ§o requerem recursos de serviÃ§o Ãºnico",
+      "Recursos multi-serviÃ§o sÃ£o limitados a uma regiÃ£o"
     ],
     correctAnswer: 2,
-    explanation: "Alguns recursos avançados específicos do serviço (como voz neural personalizada ou certas implantações em contêiner) requerem recursos dedicados de serviço único em vez do recurso multi-serviço."
+    explanation: "Alguns recursos avanÃ§ados especÃ­ficos do serviÃ§o (como voz neural personalizada ou certas implantaÃ§Ãµes em contÃªiner) requerem recursos dedicados de serviÃ§o Ãºnico em vez do recurso multi-serviÃ§o."
   },
   {
-    question: "Você precisa implementar tradução de fala em tempo real para uma aplicação de conferência. Qual serviço você deve selecionar?",
+    question: "VocÃª precisa implementar traduÃ§Ã£o de fala em tempo real para uma aplicaÃ§Ã£o de conferÃªncia. Qual serviÃ§o vocÃª deve selecionar?",
     options: [
-      "Azure AI Translator com tradução de documentos",
-      "Azure AI Speech com API de tradução de fala",
+      "Azure AI Translator com traduÃ§Ã£o de documentos",
+      "Azure AI Speech com API de traduÃ§Ã£o de fala",
       "Azure OpenAI com modelo Whisper",
-      "Azure AI Language com tradução de texto"
+      "Azure AI Language com traduÃ§Ã£o de texto"
     ],
     correctAnswer: 1,
-    explanation: "O serviço Azure AI Speech inclui uma API de tradução de fala que fornece tradução em tempo real de fala para fala e de fala para texto, ideal para cenários de conferência."
+    explanation: "O serviÃ§o Azure AI Speech inclui uma API de traduÃ§Ã£o de fala que fornece traduÃ§Ã£o em tempo real de fala para fala e de fala para texto, ideal para cenÃ¡rios de conferÃªncia."
   },
   {
-    question: "Qual cenário requer o Azure OpenAI Service em vez do Azure AI Language?",
+    question: "Qual cenÃ¡rio requer o Azure OpenAI Service em vez do Azure AI Language?",
     options: [
-      "Extrair frases-chave de avaliações de clientes",
+      "Extrair frases-chave de avaliaÃ§Ãµes de clientes",
       "Detectar o idioma de texto recebido",
-      "Gerar textos de marketing criativos a partir de descrições de produtos",
+      "Gerar textos de marketing criativos a partir de descriÃ§Ãµes de produtos",
       "Classificar tickets de suporte em categorias predefinidas"
     ],
     correctAnswer: 2,
-    explanation: "Gerar conteúdo criativo requer capacidades de IA generativa fornecidas pelo Azure OpenAI Service. O Azure AI Language lida com tarefas de extração, detecção e classificação, mas não com geração de texto aberta."
+    explanation: "Gerar conteÃºdo criativo requer capacidades de IA generativa fornecidas pelo Azure OpenAI Service. O Azure AI Language lida com tarefas de extraÃ§Ã£o, detecÃ§Ã£o e classificaÃ§Ã£o, mas nÃ£o com geraÃ§Ã£o de texto aberta."
   }
 ]} />
 
@@ -400,7 +400,7 @@ az group delete --name rg-ai102-challenge01 --yes --no-wait
 ```
 
 ## Saiba Mais
-- [Documentação dos serviços Azure AI](https://learn.microsoft.com/azure/ai-services/)
-- [Recursos multi-serviço vs serviço único](https://learn.microsoft.com/azure/ai-services/multi-service-resource)
-- [Preços dos serviços Azure AI](https://azure.microsoft.com/pricing/details/cognitive-services/)
+- [DocumentaÃ§Ã£o dos serviÃ§os Azure AI](https://learn.microsoft.com/azure/ai-services/)
+- [Recursos multi-serviÃ§o vs serviÃ§o Ãºnico](https://learn.microsoft.com/azure/ai-services/multi-service-resource)
+- [PreÃ§os dos serviÃ§os Azure AI](https://azure.microsoft.com/pricing/details/cognitive-services/)
 - [Disponibilidade regional](https://azure.microsoft.com/global-infrastructure/services/?products=cognitive-services)

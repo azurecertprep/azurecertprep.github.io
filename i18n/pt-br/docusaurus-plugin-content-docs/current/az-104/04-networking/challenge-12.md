@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "Challenge 12 | Network Security"
+title: "Desafio 12: Segurança de Rede"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

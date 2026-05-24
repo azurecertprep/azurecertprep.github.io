@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Challenge 08: Deep Learning e Transformers"
+title: "Desafio 08: Deep Learning e Transformers"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';

@@ -275,7 +275,7 @@ az policy state list \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Agente Arc mostra status "Disconnected" para múltiplos servidores
 

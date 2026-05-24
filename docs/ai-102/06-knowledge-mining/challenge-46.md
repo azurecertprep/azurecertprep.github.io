@@ -333,7 +333,7 @@ print(f"Component models: {len(composed_model.doc_types)} document types")
 for doc_type in composed_model.doc_types:
     print(f"  - {doc_type}")
 
-# Use the composed model — it auto-classifies the document
+# Use the composed model â€” it auto-classifies the document
 poller = client.begin_analyze_document(
     "composed-documents-model",
     AnalyzeDocumentRequest(url_source=test_url)
@@ -387,7 +387,7 @@ curl -s -i -X POST \
 </TabItem>
 </Tabs>
 
-### Task 5: Model management — list, get, delete
+### Task 5: Model management â€” list, get, delete
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -447,7 +447,7 @@ curl -s -X DELETE \
 
 ## Expected Output
 
-```
+```text
 Model ID: purchase-order-model
 Status: ready
 Created: 2024-03-15T10:30:00Z
@@ -463,7 +463,7 @@ Document type: purchase-order-model
   Total: number (confidence: 0.93)
 ```
 
-## Break and Fix
+## Break & fix
 
 | # | Scenario | Symptom | Root Cause | Fix |
 |---|----------|---------|------------|-----|

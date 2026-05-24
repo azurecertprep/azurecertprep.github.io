@@ -1,36 +1,36 @@
 ---
 sidebar_position: 1
-title: "Desafio 31: Estratégia de infraestrutura como código"
+title: "Desafio 31: EstratÃ©gia de infraestrutura como cÃ³digo"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 31: Estratégia de infraestrutura como código
+# Desafio 31: EstratÃ©gia de infraestrutura como cÃ³digo
 
-:::info Plataforma: comparação
+:::info Plataforma: comparaÃ§Ã£o
 Este desafio abrange tanto GitHub Actions quanto Azure Pipelines para workflows de deploy de IaC.
 :::
 
 ## Habilidades do exame mapeadas
 
-- Recomendar uma tecnologia de gerenciamento de configuração para infraestrutura de aplicações
-- Implementar uma estratégia de gerenciamento de configuração para infraestrutura de aplicações
-- Definir uma estratégia de IaC, incluindo controle de código-fonte e automação de testes e deploy
+- Recomendar uma tecnologia de gerenciamento de configuraÃ§Ã£o para infraestrutura de aplicaÃ§Ãµes
+- Implementar uma estratÃ©gia de gerenciamento de configuraÃ§Ã£o para infraestrutura de aplicaÃ§Ãµes
+- Definir uma estratÃ©gia de IaC, incluindo controle de cÃ³digo-fonte e automaÃ§Ã£o de testes e deploy
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Ltd gerencia mais de 200 recursos Azure em 5 ambientes (dev, test, staging, production-east, production-west). Todas as alterações de infraestrutura foram realizadas manualmente através do Portal Azure por uma equipe de 4 engenheiros de operações. Isso levou a:
+A Contoso Ltd gerencia mais de 200 recursos Azure em 5 ambientes (dev, test, staging, production-east, production-west). Todas as alteraÃ§Ãµes de infraestrutura foram realizadas manualmente atravÃ©s do Portal Azure por uma equipe de 4 engenheiros de operaÃ§Ãµes. Isso levou a:
 
-- Desvio de configuração entre ambientes (staging possui SKUs diferentes de produção)
-- Nenhum rastro de auditoria sobre quem alterou o quê e quando
-- 3 incidentes de produção no último trimestre causados por configurações manuais incorretas
+- Desvio de configuraÃ§Ã£o entre ambientes (staging possui SKUs diferentes de produÃ§Ã£o)
+- Nenhum rastro de auditoria sobre quem alterou o quÃª e quando
+- 3 incidentes de produÃ§Ã£o no Ãºltimo trimestre causados por configuraÃ§Ãµes manuais incorretas
 - 2 semanas de tempo de espera para provisionamento de novos ambientes
 
-O CTO determinou a migração para Infraestrutura como Código com testes automatizados, revisão por pares e deploy via CI/CD. A equipe deve escolher entre Bicep, Terraform e ARM templates, e então implementar um pipeline completo.
+O CTO determinou a migraÃ§Ã£o para Infraestrutura como CÃ³digo com testes automatizados, revisÃ£o por pares e deploy via CI/CD. A equipe deve escolher entre Bicep, Terraform e ARM templates, e entÃ£o implementar um pipeline completo.
 
 A arquitetura alvo inclui:
 
-```
+```text
 contoso-infrastructure/
   modules/
     networking/
@@ -48,22 +48,22 @@ contoso-infrastructure/
   azure-pipelines/
 ```
 
-## Tarefa 1: Comparar tecnologias de IaC e criar uma matriz de decisão
+## Tarefa 1: Comparar tecnologias de IaC e criar uma matriz de decisÃ£o
 
 Avalie Bicep, Terraform e ARM templates para os requisitos da Contoso:
 
-| Critério | ARM templates | Bicep | Terraform |
+| CritÃ©rio | ARM templates | Bicep | Terraform |
 |----------|--------------|-------|-----------|
-| Curva de aprendizado | JSON verboso, íngreme | DSL simplificado, moderado | HCL, moderado |
+| Curva de aprendizado | JSON verboso, Ã­ngreme | DSL simplificado, moderado | HCL, moderado |
 | Suporte multi-cloud | Apenas Azure | Apenas Azure | Multi-cloud |
-| Gerenciamento de estado | Stateless (Azure é a fonte de verdade) | Stateless | Requer estado remoto |
-| Modularidade | Templates vinculados/aninhados | Módulos com registro | Módulos com registro |
+| Gerenciamento de estado | Stateless (Azure Ã© a fonte de verdade) | Stateless | Requer estado remoto |
+| Modularidade | Templates vinculados/aninhados | MÃ³dulos com registro | MÃ³dulos com registro |
 | What-if / Plan | `az deployment what-if` | `az deployment what-if` | `terraform plan` |
-| Suporte IDE | Limitado | Extensão VS Code com IntelliSense | Extensão VS Code |
-| Módulos da comunidade | Azure Verified Modules | Azure Verified Modules | Terraform Registry |
-| Detecção de drift | Nenhuma nativa | Nenhuma nativa | `terraform plan` detecta drift |
+| Suporte IDE | Limitado | ExtensÃ£o VS Code com IntelliSense | ExtensÃ£o VS Code |
+| MÃ³dulos da comunidade | Azure Verified Modules | Azure Verified Modules | Terraform Registry |
+| DetecÃ§Ã£o de drift | Nenhuma nativa | Nenhuma nativa | `terraform plan` detecta drift |
 
-Para a Contoso (somente Azure, deseja detecção de drift, parte da equipe conhece HCL):
+Para a Contoso (somente Azure, deseja detecÃ§Ã£o de drift, parte da equipe conhece HCL):
 
 ```bash
 # Decision: Use Bicep for new Azure-native projects (simpler syntax, no state to manage)
@@ -309,7 +309,7 @@ jobs:
 
 ## Tarefa 3: Implementar Terraform com backend Azure via Azure Pipelines
 
-Configure o Terraform com estado remoto no Azure Storage e faça deploy via Azure Pipelines:
+Configure o Terraform com estado remoto no Azure Storage e faÃ§a deploy via Azure Pipelines:
 
 ```bash
 # Create storage account for Terraform state
@@ -547,7 +547,7 @@ stages:
                     environmentServiceNameAzureRM: "contoso-terraform-sc"
 ```
 
-## Tarefa 4: Implementar estratégia de testes de IaC
+## Tarefa 4: Implementar estratÃ©gia de testes de IaC
 
 Configure testes automatizados para Bicep e Terraform:
 
@@ -618,7 +618,7 @@ Adicione um job de testes ao workflow do GitHub Actions:
 
 ## Tarefa 5: Implementar workflow de PR com plan-on-PR e apply-on-merge
 
-Configure proteção de branch e o workflow de revisão:
+Configure proteÃ§Ã£o de branch e o workflow de revisÃ£o:
 
 ```bash
 # Configure branch protection requiring IaC review
@@ -628,12 +628,12 @@ gh api repos/{owner}/{repo}/branches/main/protection --method PUT \
   --field enforce_admins=true
 ```
 
-O workflow de PR publica os resultados do what-if como um comentário (mostrado na Tarefa 2). O princípio chave:
+O workflow de PR publica os resultados do what-if como um comentÃ¡rio (mostrado na Tarefa 2). O princÃ­pio chave:
 
 - No pull request: validar, lint, plan/what-if (somente leitura, informativo)
-- No merge para main: aplicar as alterações (operações de escrita)
+- No merge para main: aplicar as alteraÃ§Ãµes (operaÃ§Ãµes de escrita)
 
-Isso garante que toda alteração de infraestrutura seja revisada por pares com visibilidade completa do que será alterado antes da aplicação.
+Isso garante que toda alteraÃ§Ã£o de infraestrutura seja revisada por pares com visibilidade completa do que serÃ¡ alterado antes da aplicaÃ§Ã£o.
 
 ## Tarefa 6: Gerenciamento de estado para Terraform
 
@@ -655,7 +655,7 @@ terraform import azurerm_resource_group.main \
 terraform state mv module.old_name module.new_name
 ```
 
-Melhores práticas de gerenciamento de estado para o pipeline:
+Melhores prÃ¡ticas de gerenciamento de estado para o pipeline:
 
 ```yaml
 # In Azure Pipelines, use separate state files per environment
@@ -685,9 +685,9 @@ az storage blob list \
   --output table
 ```
 
-## Tarefa 7: Detecção de drift com pipelines agendados
+## Tarefa 7: DetecÃ§Ã£o de drift com pipelines agendados
 
-Crie um pipeline agendado que detecta desvios de configuração:
+Crie um pipeline agendado que detecta desvios de configuraÃ§Ã£o:
 
 ```yaml
 # GitHub Actions - .github/workflows/drift-detection.yml
@@ -750,7 +750,7 @@ jobs:
             });
 ```
 
-Para Terraform, a detecção de drift é mais simples:
+Para Terraform, a detecÃ§Ã£o de drift Ã© mais simples:
 
 ```yaml
 # Azure Pipelines - scheduled drift detection
@@ -798,9 +798,9 @@ stages:
             displayName: "Evaluate drift status"
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Corrigir o deploy Bicep com falha
+### ExercÃ­cio 1: Corrigir o deploy Bicep com falha
 
 O seguinte template Bicep e pipeline possuem problemas. Identifique e corrija-os:
 
@@ -844,7 +844,7 @@ jobs:
           # ERROR 6: Missing --parameters flag
 ```
 
-**Versão corrigida:**
+**VersÃ£o corrigida:**
 
 ```bicep
 // FIXED: main.bicep
@@ -893,11 +893,11 @@ jobs:
             --location eastus2
 ```
 
-### Exercício 2: Corrigir o erro de bloqueio de estado do Terraform
+### ExercÃ­cio 2: Corrigir o erro de bloqueio de estado do Terraform
 
 Um desenvolvedor reporta este erro ao executar `terraform apply`:
 
-```
+```yaml
 Error: Error acquiring the state lock
 Lock Info:
   ID:        a1b2c3d4-e5f6-7890-abcd-ef1234567890
@@ -907,13 +907,13 @@ Lock Info:
   Created:   2024-01-15 08:30:00.000000000 +0000 UTC
 ```
 
-**Diagnóstico:** Uma execução anterior do pipeline falhou sem liberar o bloqueio de estado.
+**DiagnÃ³stico:** Uma execuÃ§Ã£o anterior do pipeline falhou sem liberar o bloqueio de estado.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:**
+**CorreÃ§Ã£o:**
 
 ```bash
 # Verify the lock is stale (previous run no longer active)
@@ -932,52 +932,52 @@ terraform force-unlock a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a principal vantagem de usar 'az deployment sub what-if' em um pipeline de PR?",
+    question: "Qual Ã© a principal vantagem de usar 'az deployment sub what-if' em um pipeline de PR?",
     options: [
-      "Ele faz deploy de recursos em uma assinatura temporária para testes",
-      "Ele mostra quais alterações seriam feitas sem realmente modificar nenhum recurso",
-      "Ele valida a sintaxe Bicep e verifica erros de compilação",
-      "Ele executa o deploy em modo sandbox que reverte automaticamente após 1 hora"
+      "Ele faz deploy de recursos em uma assinatura temporÃ¡ria para testes",
+      "Ele mostra quais alteraÃ§Ãµes seriam feitas sem realmente modificar nenhum recurso",
+      "Ele valida a sintaxe Bicep e verifica erros de compilaÃ§Ã£o",
+      "Ele executa o deploy em modo sandbox que reverte automaticamente apÃ³s 1 hora"
     ],
     correctIndex: 1,
-    explanation: "A operação what-if é uma comparação somente leitura que mostra quais recursos seriam criados, modificados ou excluídos se o deploy fosse executado. Isso dá aos revisores visibilidade completa do impacto das alterações de infraestrutura durante a revisão de código sem fazer nenhuma alteração real nos recursos Azure."
+    explanation: "A operaÃ§Ã£o what-if Ã© uma comparaÃ§Ã£o somente leitura que mostra quais recursos seriam criados, modificados ou excluÃ­dos se o deploy fosse executado. Isso dÃ¡ aos revisores visibilidade completa do impacto das alteraÃ§Ãµes de infraestrutura durante a revisÃ£o de cÃ³digo sem fazer nenhuma alteraÃ§Ã£o real nos recursos Azure."
   },
   {
-    question: "Qual código de saída do comando Terraform indica que drift foi detectado?",
+    question: "Qual cÃ³digo de saÃ­da do comando Terraform indica que drift foi detectado?",
     options: [
-      "Código de saída 0 (plan não tem alterações)",
-      "Código de saída 1 (plan encontrou um erro)",
-      "Código de saída 2 (plan bem-sucedido com alterações detectadas)",
-      "Código de saída 3 (plan detectou alterações destrutivas)"
+      "CÃ³digo de saÃ­da 0 (plan nÃ£o tem alteraÃ§Ãµes)",
+      "CÃ³digo de saÃ­da 1 (plan encontrou um erro)",
+      "CÃ³digo de saÃ­da 2 (plan bem-sucedido com alteraÃ§Ãµes detectadas)",
+      "CÃ³digo de saÃ­da 3 (plan detectou alteraÃ§Ãµes destrutivas)"
     ],
     correctIndex: 2,
-    explanation: "Quando terraform plan é executado com a flag -detailed-exitcode, ele retorna código de saída 0 para nenhuma alteração, código de saída 1 para erros e código de saída 2 quando alterações são detectadas. Isso o torna ideal para scripts de detecção de drift que precisam determinar programaticamente se o estado real difere do estado desejado."
+    explanation: "Quando terraform plan Ã© executado com a flag -detailed-exitcode, ele retorna cÃ³digo de saÃ­da 0 para nenhuma alteraÃ§Ã£o, cÃ³digo de saÃ­da 1 para erros e cÃ³digo de saÃ­da 2 quando alteraÃ§Ãµes sÃ£o detectadas. Isso o torna ideal para scripts de detecÃ§Ã£o de drift que precisam determinar programaticamente se o estado real difere do estado desejado."
   },
   {
     question: "Por que os arquivos de estado do Terraform devem usar um backend remoto com bloqueio em um pipeline CI/CD?",
     options: [
-      "Arquivos de estado locais são grandes demais para runners de pipeline",
-      "Backends remotos fornecem backup e criptografia automáticos",
-      "Múltiplas execuções de pipeline podem corromper o estado sem bloqueio, e o estado deve persistir entre execuções",
-      "O Terraform requer acesso à rede para ler arquivos de estado"
+      "Arquivos de estado locais sÃ£o grandes demais para runners de pipeline",
+      "Backends remotos fornecem backup e criptografia automÃ¡ticos",
+      "MÃºltiplas execuÃ§Ãµes de pipeline podem corromper o estado sem bloqueio, e o estado deve persistir entre execuÃ§Ãµes",
+      "O Terraform requer acesso Ã  rede para ler arquivos de estado"
     ],
     correctIndex: 2,
-    explanation: "Arquivos de estado rastreiam o mapeamento entre definições de IaC e recursos reais. Sem um backend remoto, o estado seria perdido entre execuções do pipeline (cada execução recebe um workspace limpo). Sem bloqueio, execuções concorrentes poderiam ler/gravar o estado simultaneamente, levando a corrupção ou criação duplicada de recursos."
+    explanation: "Arquivos de estado rastreiam o mapeamento entre definiÃ§Ãµes de IaC e recursos reais. Sem um backend remoto, o estado seria perdido entre execuÃ§Ãµes do pipeline (cada execuÃ§Ã£o recebe um workspace limpo). Sem bloqueio, execuÃ§Ãµes concorrentes poderiam ler/gravar o estado simultaneamente, levando a corrupÃ§Ã£o ou criaÃ§Ã£o duplicada de recursos."
   },
   {
-    question: "Em uma arquitetura de módulos Bicep, qual é a abordagem recomendada para valores específicos de ambiente?",
+    question: "Em uma arquitetura de mÃ³dulos Bicep, qual Ã© a abordagem recomendada para valores especÃ­ficos de ambiente?",
     options: [
-      "Usar lógica condicional com instruções 'if' dentro do módulo",
+      "Usar lÃ³gica condicional com instruÃ§Ãµes 'if' dentro do mÃ³dulo",
       "Criar arquivos Bicep separados para cada ambiente",
-      "Usar arquivos de parâmetros ('.bicepparam') por ambiente com um template compartilhado",
-      "Codificar valores de ambiente diretamente no módulo e usar nomes de deploy para diferenciar"
+      "Usar arquivos de parÃ¢metros ('.bicepparam') por ambiente com um template compartilhado",
+      "Codificar valores de ambiente diretamente no mÃ³dulo e usar nomes de deploy para diferenciar"
     ],
     correctIndex: 2,
-    explanation: "O padrão recomendado é um conjunto único de templates Bicep com arquivos .bicepparam específicos por ambiente que fornecem valores diferentes (SKUs, contagens de instâncias, feature flags) por ambiente. Isso garante que a estrutura da infraestrutura seja consistente enquanto permite que a configuração varie, reduzindo duplicação e drift entre definições de ambiente."
+    explanation: "O padrÃ£o recomendado Ã© um conjunto Ãºnico de templates Bicep com arquivos .bicepparam especÃ­ficos por ambiente que fornecem valores diferentes (SKUs, contagens de instÃ¢ncias, feature flags) por ambiente. Isso garante que a estrutura da infraestrutura seja consistente enquanto permite que a configuraÃ§Ã£o varie, reduzindo duplicaÃ§Ã£o e drift entre definiÃ§Ãµes de ambiente."
   }
 ]} />
 

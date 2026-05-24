@@ -404,7 +404,7 @@ if [ -n "$LOCKABLE_FILES" ]; then
 fi
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: LFS files show as pointer text instead of actual content
 

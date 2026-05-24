@@ -204,7 +204,7 @@ ALTER ROLE db_datawriter ADD MEMBER [app-relecloud-api];
 ```
 
 Connection string (no password needed):
-```
+```text
 Server=tcp:sql-relecloud.database.windows.net,1433;Database=releclouddb;Authentication=Active Directory Managed Identity;
 ```
 

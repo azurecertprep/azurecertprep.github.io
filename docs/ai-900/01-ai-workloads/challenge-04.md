@@ -82,7 +82,7 @@ After deployment:
 az cognitiveservices account create \
   --name ai900-demo \
   --resource-group rg-ai900-lab \
-  --kind CognitiveServices \
+  --kind AIServices \
   --sku F0 \
   --location eastus
 

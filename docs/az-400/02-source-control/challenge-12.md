@@ -46,34 +46,34 @@ Document the trade-offs for Contoso's specific situation:
 
 Example mono-repo structure:
 
-```
+```text
 contoso-platform/
-├── services/
-│   ├── user-service/
-│   │   ├── src/
-│   │   ├── tests/
-│   │   ├── Dockerfile
-│   │   └── package.json
-│   ├── order-service/
-│   │   ├── src/
-│   │   ├── tests/
-│   │   ├── Dockerfile
-│   │   └── package.json
-│   └── payment-service/
-│       └── ...
-├── libs/
-│   ├── shared-types/
-│   ├── common-utils/
-│   └── auth-middleware/
-├── infrastructure/
-│   ├── terraform/
-│   └── kubernetes/
-├── tools/
-│   ├── scripts/
-│   └── generators/
-├── .github/workflows/
-├── package.json (workspace root)
-└── nx.json (or turborepo.json)
+â”œâ”€â”€ services/
+â”‚   â”œâ”€â”€ user-service/
+â”‚   â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ tests/
+â”‚   â”‚   â”œâ”€â”€ Dockerfile
+â”‚   â”‚   â””â”€â”€ package.json
+â”‚   â”œâ”€â”€ order-service/
+â”‚   â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ tests/
+â”‚   â”‚   â”œâ”€â”€ Dockerfile
+â”‚   â”‚   â””â”€â”€ package.json
+â”‚   â””â”€â”€ payment-service/
+â”‚       â””â”€â”€ ...
+â”œâ”€â”€ libs/
+â”‚   â”œâ”€â”€ shared-types/
+â”‚   â”œâ”€â”€ common-utils/
+â”‚   â””â”€â”€ auth-middleware/
+â”œâ”€â”€ infrastructure/
+â”‚   â”œâ”€â”€ terraform/
+â”‚   â””â”€â”€ kubernetes/
+â”œâ”€â”€ tools/
+â”‚   â”œâ”€â”€ scripts/
+â”‚   â””â”€â”€ generators/
+â”œâ”€â”€ .github/workflows/
+â”œâ”€â”€ package.json (workspace root)
+â””â”€â”€ nx.json (or turborepo.json)
 ```
 
 ### Task 2: Multi-repo advantages and disadvantages
@@ -100,7 +100,7 @@ contoso-platform/
 
 Example multi-repo structure:
 
-```
+```text
 # GitHub organization: contoso
 contoso/user-service          (team: identity)
 contoso/catalog-service       (team: catalog)
@@ -546,7 +546,7 @@ steps:
     displayName: 'Build and test order-service'
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: Sparse-checkout is missing files needed for build
 

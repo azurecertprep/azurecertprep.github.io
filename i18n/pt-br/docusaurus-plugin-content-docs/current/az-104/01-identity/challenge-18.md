@@ -272,7 +272,7 @@ Para visualizar custos, você precisa no mínimo da função **Cost Management R
 
 </details>
 
-## Quebrar & consertar
+## Quebra & conserta
 
 ### Cenário a: orçamento não está alertando
 

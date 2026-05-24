@@ -305,7 +305,7 @@ Defina a variável de ambiente `AZCOPY_CONCURRENCY_VALUE` para aumentar conexõe
 
 </details>
 
-## Quebrar & consertar
+## Quebra & conserta
 
 ### Cenário a: token SAS expirado
 

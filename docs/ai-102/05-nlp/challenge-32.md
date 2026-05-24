@@ -212,7 +212,7 @@ for result in results:
 
 ## Expected Output
 
-```
+```text
 Document 0:
   Redacted: My name is ********* and my email is ********************.
   My SSN is *********** and I live at *********************************.
@@ -236,7 +236,7 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
   [DateTime] '01/15/2024' (0.990)
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|
@@ -265,7 +265,7 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
     options: [
       "Use a different API endpoint for each category",
       "Create a custom model trained on those categories only",
-      "PII detection always returns all categories — filter client-side",
+      "PII detection always returns all categories â€” filter client-side",
       "Pass a categories_filter parameter with the desired PiiEntityCategory values"
     ],
     correctAnswer: 3,
@@ -296,9 +296,9 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
   {
     question: "Can PII detection process multiple documents in a single request?",
     options: [
-      "No — only one document per request",
-      "Yes — unlimited documents per request",
-      "Yes — batch operations support up to 25 documents per request",
+      "No â€” only one document per request",
+      "Yes â€” unlimited documents per request",
+      "Yes â€” batch operations support up to 25 documents per request",
       "Only if documents are in the same language"
     ],
     correctAnswer: 2,

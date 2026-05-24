@@ -486,7 +486,7 @@ allActivities
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: A regra de análise do Sentinel dispara mas o Defender XDR não mostra o incidente
 

@@ -448,7 +448,7 @@ az network vnet subnet update \
 
 ---
 
-## Break & fix scenarios
+## Break & fix
 
 ### Scenario 1: DNS not resolving to private IP
 

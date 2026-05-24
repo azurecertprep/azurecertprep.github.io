@@ -614,7 +614,7 @@ $workloadSubnet.RouteTable = $rt
 $spokeVnet | Set-AzVirtualNetwork
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario 1: FQDN rules not matching (DNS proxy not enabled)
 

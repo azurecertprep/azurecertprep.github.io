@@ -48,7 +48,7 @@ Create an Azure OpenAI resource with the S0 SKU in a supported region.
 <TabItem value="python" label="Python SDK">
 
 ```python
-# Provisioning is done via Azure CLI or ARM—use the resource with Python SDK
+# Provisioning is done via Azure CLI or ARMâ€”use the resource with Python SDK
 import os
 from openai import AzureOpenAI
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
@@ -528,7 +528,7 @@ done
 
 ## Expected Output
 
-```
+```text
 Connected successfully: Hello! Connection confirmed.
 Response: Standard uses shared compute with pay-per-token, Global Standard optimizes
 routing across regions, and Provisioned (PTU) guarantees dedicated throughput capacity.
@@ -545,7 +545,7 @@ Global Standard Deployment:
   Avg: 380ms | Min: 280ms | Max: 520ms
 ```
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|-----------|-----|

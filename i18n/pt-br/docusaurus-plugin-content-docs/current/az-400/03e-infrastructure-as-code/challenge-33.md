@@ -8,23 +8,23 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 33: Azure Deployment Environments
 
 :::info Plataforma: ADO-first
-Este desafio foca em Azure DevOps Pipelines. Equivalentes no GitHub Actions são mencionados quando relevante.
+Este desafio foca em Azure DevOps Pipelines. Equivalentes no GitHub Actions sÃ£o mencionados quando relevante.
 :::
 
 ## Habilidades do exame mapeadas
 
 - Projetar e implementar Azure Deployment Environments para auto-deploy sob demanda
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Ltd tem 40 desenvolvedores trabalhando em uma plataforma de microsserviços. Atualmente, solicitar um ambiente de dev/test envolve abrir um ticket de TI e esperar de 3 a 5 dias úteis para que a operação provisione os recursos manualmente. Esse gargalo causa:
+A Contoso Ltd tem 40 desenvolvedores trabalhando em uma plataforma de microsserviÃ§os. Atualmente, solicitar um ambiente de dev/test envolve abrir um ticket de TI e esperar de 3 a 5 dias Ãºteis para que a operaÃ§Ã£o provisione os recursos manualmente. Esse gargalo causa:
 
-- Desenvolvedores compartilhando ambientes, levando a conflitos e configurações quebradas
-- Ambientes de longa duração caros que ficam ociosos 80% do tempo
-- Inconsistência entre ambientes de desenvolvimento e produção
-- Shadow IT: desenvolvedores provisionando seus próprios recursos fora dos controles de governança
+- Desenvolvedores compartilhando ambientes, levando a conflitos e configuraÃ§Ãµes quebradas
+- Ambientes de longa duraÃ§Ã£o caros que ficam ociosos 80% do tempo
+- InconsistÃªncia entre ambientes de desenvolvimento e produÃ§Ã£o
+- Shadow IT: desenvolvedores provisionando seus prÃ³prios recursos fora dos controles de governanÃ§a
 
-A equipe de engenharia de plataforma precisa implementar provisionamento de ambientes por autoatendimento onde os desenvolvedores possam criar ambientes totalmente configurados sob demanda, com proteções para controle de custos e conformidade.
+A equipe de engenharia de plataforma precisa implementar provisionamento de ambientes por autoatendimento onde os desenvolvedores possam criar ambientes totalmente configurados sob demanda, com proteÃ§Ãµes para controle de custos e conformidade.
 
 ## Tarefa 1: Criar um Dev Center e Projeto
 
@@ -65,7 +65,7 @@ az role assignment create \
 
 ## Tarefa 2: Definir tipos de ambiente (Dev, Test, Staging)
 
-Crie tipos de ambiente que mapeiam para assinaturas Azure com políticas diferentes:
+Crie tipos de ambiente que mapeiam para assinaturas Azure com polÃ­ticas diferentes:
 
 ```bash
 # Create environment types at the Dev Center level
@@ -116,11 +116,11 @@ az devcenter admin project-environment-type create \
   --status Enabled
 ```
 
-## Tarefa 3: Criar definições de ambiente (templates IaC no catálogo)
+## Tarefa 3: Criar definiÃ§Ãµes de ambiente (templates IaC no catÃ¡logo)
 
 Crie templates Bicep que definem como um ambiente se apresenta:
 
-```
+```text
 contoso-environment-catalog/
   environments/
     WebApp/
@@ -278,9 +278,9 @@ parameters:
     default: true
 ```
 
-## Tarefa 4: Configurar catálogo a partir de repositório GitHub
+## Tarefa 4: Configurar catÃ¡logo a partir de repositÃ³rio GitHub
 
-Conecte o Dev Center a um repositório GitHub contendo definições de ambiente:
+Conecte o Dev Center a um repositÃ³rio GitHub contendo definiÃ§Ãµes de ambiente:
 
 ```bash
 # Create a GitHub personal access token or use a GitHub App
@@ -311,7 +311,7 @@ az devcenter admin environment-definition list \
   --output table
 ```
 
-Para catálogo do Azure DevOps:
+Para catÃ¡logo do Azure DevOps:
 
 ```bash
 # Alternative: Use Azure DevOps repository as catalog source
@@ -363,15 +363,15 @@ az devcenter dev environment delete \
 ```
 
 O Developer Portal (https://devportal.microsoft.com) fornece uma interface web onde os desenvolvedores podem:
-- Navegar pelas definições de ambiente disponíveis
-- Criar novos ambientes com formulários de parâmetros guiados
+- Navegar pelas definiÃ§Ãµes de ambiente disponÃ­veis
+- Criar novos ambientes com formulÃ¡rios de parÃ¢metros guiados
 - Visualizar ambientes ativos e seus status
-- Acessar as saídas do ambiente (URLs, credenciais)
+- Acessar as saÃ­das do ambiente (URLs, credenciais)
 - Excluir ambientes que possuem
 
-## Tarefa 6: Definir limites e políticas (máximo de ambientes, agendamento de exclusão automática)
+## Tarefa 6: Definir limites e polÃ­ticas (mÃ¡ximo de ambientes, agendamento de exclusÃ£o automÃ¡tica)
 
-Configure controles de governança para prevenir excesso de custos:
+Configure controles de governanÃ§a para prevenir excesso de custos:
 
 ```bash
 # Set maximum environments per user at project level (already set during create)
@@ -453,9 +453,9 @@ foreach ($rg in $expiredGroups) {
 Write-Output "Processed $($expiredGroups.Count) expired environments."
 ```
 
-## Tarefa 7: Integração CI/CD (criar ambientes efêmeros por PR)
+## Tarefa 7: IntegraÃ§Ã£o CI/CD (criar ambientes efÃªmeros por PR)
 
-Crie um pipeline que provisiona um ambiente para cada pull request e o destrói no merge:
+Crie um pipeline que provisiona um ambiente para cada pull request e o destrÃ³i no merge:
 
 ```yaml
 # azure-pipelines/pr-environment.yml
@@ -575,7 +575,7 @@ stages:
                 Invoke-RestMethod -Uri $uri -Method Post -Body $body -ContentType "application/json" -Headers @{Authorization="Bearer $(System.AccessToken)"}
 ```
 
-Equivalente no GitHub Actions para destruição do ambiente de PR:
+Equivalente no GitHub Actions para destruiÃ§Ã£o do ambiente de PR:
 
 ```yaml
 # .github/workflows/pr-cleanup.yml
@@ -607,17 +607,17 @@ jobs:
             --yes 2>/dev/null || echo "Environment not found (may already be deleted)"
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Corrigir a criação de ambiente com falha
+### ExercÃ­cio 1: Corrigir a criaÃ§Ã£o de ambiente com falha
 
 Um desenvolvedor reporta este erro ao criar um ambiente:
 
-```
+```text
 ERROR: The environment definition 'WebApp' was not found in catalog 'contoso-environments'.
 ```
 
-**Passos de diagnóstico:**
+**Passos de diagnÃ³stico:**
 
 ```bash
 # Check if catalog is synced
@@ -638,9 +638,9 @@ az devcenter admin catalog get-sync-error-details \
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** O caminho do catálogo foi configurado incorretamente. As definições de ambiente estão na raiz do repositório, não em uma subpasta:
+**CorreÃ§Ã£o:** O caminho do catÃ¡logo foi configurado incorretamente. As definiÃ§Ãµes de ambiente estÃ£o na raiz do repositÃ³rio, nÃ£o em uma subpasta:
 
 ```bash
 # Delete and recreate catalog with correct path
@@ -668,20 +668,20 @@ az devcenter admin catalog sync \
 
 </details>
 
-### Exercício 2: Corrigir o erro de permissão negada
+### ExercÃ­cio 2: Corrigir o erro de permissÃ£o negada
 
 Um desenvolvedor com a role "Deployment Environments User" recebe:
 
-```
+```text
 ERROR: AuthorizationFailed - The client does not have authorization to perform action
 'Microsoft.Resources/deployments/write' over scope '/subscriptions/{dev-sub-id}/...'
 ```
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** A identidade gerenciada do tipo de ambiente do projeto precisa de permissões na assinatura alvo:
+**CorreÃ§Ã£o:** A identidade gerenciada do tipo de ambiente do projeto precisa de permissÃµes na assinatura alvo:
 
 ```bash
 # Get the project environment type's identity principal ID
@@ -700,52 +700,52 @@ az role assignment create \
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual é a relação entre um tipo de ambiente do Dev Center e um tipo de ambiente do projeto?",
+    question: "Qual Ã© a relaÃ§Ã£o entre um tipo de ambiente do Dev Center e um tipo de ambiente do projeto?",
     options: [
-      "São a mesma coisa; \"tipo de ambiente do projeto\" é apenas um nome mais novo",
-      "Os tipos de ambiente do Dev Center definem categorias; os tipos de ambiente do projeto mapeiam essas categorias para assinaturas e identidades específicas",
-      "Os tipos do Dev Center são para produção; os tipos do projeto são para desenvolvimento",
-      "Os tipos do Dev Center definem os templates IaC; os tipos do projeto definem os parâmetros"
+      "SÃ£o a mesma coisa; \"tipo de ambiente do projeto\" Ã© apenas um nome mais novo",
+      "Os tipos de ambiente do Dev Center definem categorias; os tipos de ambiente do projeto mapeiam essas categorias para assinaturas e identidades especÃ­ficas",
+      "Os tipos do Dev Center sÃ£o para produÃ§Ã£o; os tipos do projeto sÃ£o para desenvolvimento",
+      "Os tipos do Dev Center definem os templates IaC; os tipos do projeto definem os parÃ¢metros"
     ],
     correctIndex: 1,
-    explanation: "Os tipos de ambiente do Dev Center (Dev, Test, Staging) são categorias abstratas definidas centralmente. Os tipos de ambiente do projeto herdam desses e adicionam configuração de deploy: para qual assinatura fazer deploy, qual identidade gerenciada usar e quais roles RBAC atribuir. Essa separação permite que um único Dev Center atenda múltiplos projetos com mapeamentos de assinatura diferentes."
+    explanation: "Os tipos de ambiente do Dev Center (Dev, Test, Staging) sÃ£o categorias abstratas definidas centralmente. Os tipos de ambiente do projeto herdam desses e adicionam configuraÃ§Ã£o de deploy: para qual assinatura fazer deploy, qual identidade gerenciada usar e quais roles RBAC atribuir. Essa separaÃ§Ã£o permite que um Ãºnico Dev Center atenda mÃºltiplos projetos com mapeamentos de assinatura diferentes."
   },
   {
-    question: "Como o Azure Deployment Environments aplica governança de custos para autoatendimento dos desenvolvedores?",
+    question: "Como o Azure Deployment Environments aplica governanÃ§a de custos para autoatendimento dos desenvolvedores?",
     options: [
-      "Exigindo aprovação do gerente para cada criação de ambiente",
-      "Através de limites máximos de ambientes por usuário, restrições de tipo de ambiente e exclusão automática agendada",
+      "Exigindo aprovaÃ§Ã£o do gerente para cada criaÃ§Ã£o de ambiente",
+      "AtravÃ©s de limites mÃ¡ximos de ambientes por usuÃ¡rio, restriÃ§Ãµes de tipo de ambiente e exclusÃ£o automÃ¡tica agendada",
       "Limitando ambientes apenas a SKUs de camada gratuita",
-      "Deduzindo custos do orçamento pessoal Azure do desenvolvedor"
+      "Deduzindo custos do orÃ§amento pessoal Azure do desenvolvedor"
     ],
     correctIndex: 1,
-    explanation: "O ADE fornece múltiplos controles de governança: máximo de ambientes por usuário (definido no projeto), acesso por tipo de ambiente (qual role pode criar Staging vs Dev), restrições de parâmetros nas definições de ambiente (SKUs permitidas) e políticas organizacionais para expiração automática. Esses garantem que os desenvolvedores tenham velocidade de autoatendimento enquanto permanecem dentro dos limites de custo."
+    explanation: "O ADE fornece mÃºltiplos controles de governanÃ§a: mÃ¡ximo de ambientes por usuÃ¡rio (definido no projeto), acesso por tipo de ambiente (qual role pode criar Staging vs Dev), restriÃ§Ãµes de parÃ¢metros nas definiÃ§Ãµes de ambiente (SKUs permitidas) e polÃ­ticas organizacionais para expiraÃ§Ã£o automÃ¡tica. Esses garantem que os desenvolvedores tenham velocidade de autoatendimento enquanto permanecem dentro dos limites de custo."
   },
   {
-    question: "O que é um catálogo no Azure Deployment Environments?",
+    question: "O que Ã© um catÃ¡logo no Azure Deployment Environments?",
     options: [
-      "Um marketplace de recursos Azure pré-construídos disponíveis para compra",
-      "Um repositório Git contendo templates IaC (definições de ambiente) que o Dev Center sincroniza e oferece aos desenvolvedores",
-      "Uma lista de serviços Azure aprovados que os desenvolvedores podem provisionar",
+      "Um marketplace de recursos Azure prÃ©-construÃ­dos disponÃ­veis para compra",
+      "Um repositÃ³rio Git contendo templates IaC (definiÃ§Ãµes de ambiente) que o Dev Center sincroniza e oferece aos desenvolvedores",
+      "Uma lista de serviÃ§os Azure aprovados que os desenvolvedores podem provisionar",
       "Um Azure Container Registry contendo imagens base aprovadas"
     ],
     correctIndex: 1,
-    explanation: "Um catálogo é uma conexão com um repositório Git (GitHub ou Azure Repos) contendo definições de ambiente. Cada definição inclui um manifesto YAML e um template IaC (Bicep ou Terraform). O Dev Center sincroniza periodicamente o catálogo, tornando definições de ambiente novas ou atualizadas disponíveis para os desenvolvedores através do portal ou CLI."
+    explanation: "Um catÃ¡logo Ã© uma conexÃ£o com um repositÃ³rio Git (GitHub ou Azure Repos) contendo definiÃ§Ãµes de ambiente. Cada definiÃ§Ã£o inclui um manifesto YAML e um template IaC (Bicep ou Terraform). O Dev Center sincroniza periodicamente o catÃ¡logo, tornando definiÃ§Ãµes de ambiente novas ou atualizadas disponÃ­veis para os desenvolvedores atravÃ©s do portal ou CLI."
   },
   {
-    question: "Qual é o principal benefício de criar ambientes efêmeros por pull request?",
+    question: "Qual Ã© o principal benefÃ­cio de criar ambientes efÃªmeros por pull request?",
     options: [
-      "Elimina a necessidade de revisão de código pois os ambientes são testados automaticamente",
-      "Fornece ambientes isolados e semelhantes à produção para testar alterações do PR sem afetar ambientes compartilhados",
-      "Reduz o número de branches no repositório",
-      "Faz merge automático de pull requests quando os testes passam"
+      "Elimina a necessidade de revisÃ£o de cÃ³digo pois os ambientes sÃ£o testados automaticamente",
+      "Fornece ambientes isolados e semelhantes Ã  produÃ§Ã£o para testar alteraÃ§Ãµes do PR sem afetar ambientes compartilhados",
+      "Reduz o nÃºmero de branches no repositÃ³rio",
+      "Faz merge automÃ¡tico de pull requests quando os testes passam"
     ],
     correctIndex: 1,
-    explanation: "Ambientes efêmeros de PR dão a cada pull request sua própria infraestrutura isolada para testar alterações. Isso previne conflitos entre desenvolvedores compartilhando ambientes, habilita desenvolvimento paralelo e garante que o ambiente do PR esteja sempre limpo e consistente. Quando o PR sofre merge ou é fechado, o ambiente é automaticamente destruído, controlando custos."
+    explanation: "Ambientes efÃªmeros de PR dÃ£o a cada pull request sua prÃ³pria infraestrutura isolada para testar alteraÃ§Ãµes. Isso previne conflitos entre desenvolvedores compartilhando ambientes, habilita desenvolvimento paralelo e garante que o ambiente do PR esteja sempre limpo e consistente. Quando o PR sofre merge ou Ã© fechado, o ambiente Ã© automaticamente destruÃ­do, controlando custos."
   }
 ]} />
 

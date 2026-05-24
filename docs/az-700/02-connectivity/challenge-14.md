@@ -444,7 +444,7 @@ az network vpn-connection create \
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Shared key mismatch
 

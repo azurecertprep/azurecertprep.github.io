@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-title: "Challenge 31: Azure Front Door configuration"
+title: "Desafio 31: Configuração do Azure Front Door"
 sidebar_label: "Challenge 31"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -402,7 +402,7 @@ Cabeçalhos de resposta importantes para verificar:
 - **X-Azure-Ref**: Referência única para a transação do Front Door (útil para tickets de suporte)
 - **Age**: Segundos desde que o objeto foi armazenado no cache de borda
 
-## Quebra e correção
+## Quebra & conserta
 
 Estes exercícios simulam configurações incorretas comuns do Front Door.
 
@@ -496,55 +496,55 @@ az afd route delete \
 <KnowledgeCheck questions={[
   {
     id: "az700-31-q1",
-    question: "What is the primary difference between Azure Front Door Standard and Premium SKUs?",
+    question: "Qual é a principal diferença entre os SKUs Standard e Premium do Azure Front Door?",
     options: [
-      "Premium adds Private Link origin support, enhanced WAF, and bot protection ✅",
-      "Premium supports more endpoints per profile",
-      "Standard does not support caching",
-      "Premium uses a different anycast network"
+      "O Premium adiciona suporte a origem com Private Link, WAF aprimorado e proteção contra bots ✅",
+      "O Premium suporta mais endpoints por perfil",
+      "O Standard não suporta caching",
+      "O Premium usa uma rede anycast diferente"
     ],
     correctIndex: 0,
-    explanation: "Front Door Premium adds Private Link origin connectivity, enhanced WAF with bot protection and managed rule sets, and security reports. Both SKUs share the same global anycast network and caching capabilities."
+    explanation: "O Front Door Premium adiciona conectividade de origem via Private Link, WAF aprimorado com proteção contra bots e conjuntos de regras gerenciadas, e relatórios de segurança. Ambos os SKUs compartilham a mesma rede anycast global e capacidades de caching."
   },
   {
     id: "az700-31-q2",
-    question: "An origin group has two origins: Origin-A (priority 1, weight 600) and Origin-B (priority 2, weight 400). How is traffic distributed when both origins are healthy?",
+    question: "Um grupo de origem tem duas origens: Origin-A (prioridade 1, peso 600) e Origin-B (prioridade 2, peso 400). Como o tráfego é distribuído quando ambas as origens estão íntegras?",
     options: [
-      "100% to Origin-A, 0% to Origin-B ✅",
-      "60% to Origin-A, 40% to Origin-B",
-      "50% to each origin",
-      "Traffic is distributed based on geographic proximity"
+      "100% para Origin-A, 0% para Origin-B ✅",
+      "60% para Origin-A, 40% para Origin-B",
+      "50% para cada origem",
+      "O tráfego é distribuído com base na proximidade geográfica"
     ],
     correctIndex: 0,
-    explanation: "Priority determines failover order. All traffic goes to priority 1 origins while healthy. Weight only distributes traffic among origins at the same priority level. Since Origin-B is priority 2, it receives no traffic while Origin-A (priority 1) is healthy."
+    explanation: "A prioridade determina a ordem de failover. Todo o tráfego vai para origens de prioridade 1 enquanto estiverem íntegras. O peso distribui tráfego apenas entre origens no mesmo nível de prioridade. Como Origin-B é prioridade 2, ela não recebe tráfego enquanto Origin-A (prioridade 1) estiver íntegra."
   },
   {
     id: "az700-31-q3",
-    question: "A Front Door route has caching enabled with query-string-caching-behavior set to IncludeSpecifiedQueryStrings and query-parameters set to 'sku'. Which two URLs produce the SAME cache entry?",
+    question: "Uma rota do Front Door tem caching habilitado com query-string-caching-behavior definido como IncludeSpecifiedQueryStrings e query-parameters definido como 'sku'. Quais duas URLs produzem a MESMA entrada de cache?",
     options: [
-      "/products?sku=ABC&color=red and /products?sku=ABC&color=blue ✅",
-      "/products?sku=ABC and /products?sku=XYZ",
-      "/products?sku=ABC and /products",
-      "/Products?sku=ABC and /products?sku=ABC"
+      "/products?sku=ABC&color=red e /products?sku=ABC&color=blue ✅",
+      "/products?sku=ABC e /products?sku=XYZ",
+      "/products?sku=ABC e /products",
+      "/Products?sku=ABC e /products?sku=ABC"
     ],
     correctIndex: 0,
-    explanation: "With IncludeSpecifiedQueryStrings, only the listed parameters (sku) differentiate cache entries. Both URLs have sku=ABC, so the 'color' parameter is ignored in the cache key. Different sku values or missing sku create separate entries. URL paths are case-sensitive."
+    explanation: "Com IncludeSpecifiedQueryStrings, apenas os parâmetros listados (sku) diferenciam entradas de cache. Ambas as URLs têm sku=ABC, então o parâmetro 'color' é ignorado na chave de cache. Valores diferentes de sku ou sku ausente criam entradas separadas. Os caminhos de URL diferenciam maiúsculas e minúsculas."
   },
   {
     id: "az700-31-q4",
-    question: "Front Door health probes to all origins in a group are returning HTTP 404. What happens to incoming client requests?",
+    question: "As health probes do Front Door para todas as origens em um grupo estão retornando HTTP 404. O que acontece com as requisições de clientes de entrada?",
     options: [
-      "Front Door returns 503 Service Unavailable to clients ✅",
-      "Front Door routes traffic to origins anyway using round-robin",
-      "Front Door retries the request to each origin sequentially",
-      "Front Door caches the last successful response and serves that"
+      "O Front Door retorna 503 Service Unavailable para os clientes ✅",
+      "O Front Door roteia o tráfego para as origens mesmo assim usando round-robin",
+      "O Front Door tenta novamente a requisição para cada origem sequencialmente",
+      "O Front Door armazena em cache a última resposta bem-sucedida e serve essa"
     ],
     correctIndex: 0,
-    explanation: "When all origins in a group are marked unhealthy (non-200 probe responses), Front Door cannot route traffic and returns 503 Service Unavailable. Front Door does not route to unhealthy origins or serve stale cache when all origins are down."
+    explanation: "Quando todas as origens em um grupo são marcadas como não íntegras (respostas de probe não-200), o Front Door não pode rotear tráfego e retorna 503 Service Unavailable. O Front Door não roteia para origens não íntegras nem serve cache desatualizado quando todas as origens estão indisponíveis."
   },
   {
     id: "az700-31-q5",
-    question: "Which Azure CLI command group should you use for Azure Front Door Standard/Premium (current generation)?",
+    question: "Qual grupo de comandos do Azure CLI você deve usar para o Azure Front Door Standard/Premium (geração atual)?",
     options: [
       "az afd ✅",
       "az network front-door",
@@ -552,19 +552,19 @@ az afd route delete \
       "az frontdoor"
     ],
     correctIndex: 0,
-    explanation: "The 'az afd' command group manages Front Door Standard/Premium profiles. The 'az network front-door' group is for the deprecated Front Door Classic. While 'az cdn' shares some heritage, Front Door Standard/Premium operations use 'az afd' exclusively."
+    explanation: "O grupo de comandos 'az afd' gerencia perfis do Front Door Standard/Premium. O grupo 'az network front-door' é para o Front Door Classic descontinuado. Embora 'az cdn' compartilhe alguma herança, as operações do Front Door Standard/Premium usam exclusivamente 'az afd'."
   },
   {
     id: "az700-31-q6",
-    question: "You enable compression on a Front Door route. Which content type is compressed by default?",
+    question: "Você habilita compressão em uma rota do Front Door. Qual tipo de conteúdo é comprimido por padrão?",
     options: [
-      "text/html and application/javascript ✅",
-      "image/jpeg and image/png",
+      "text/html e application/javascript ✅",
+      "image/jpeg e image/png",
       "application/octet-stream",
-      "All content types regardless of MIME type"
+      "Todos os tipos de conteúdo independentemente do tipo MIME"
     ],
     correctIndex: 0,
-    explanation: "Front Door compresses text-based content types (text/html, text/css, application/javascript, application/json, etc.) by default. Already-compressed formats like JPEG, PNG, and binary streams are not compressed further. You can customize the list with --content-types-to-compress."
+    explanation: "O Front Door comprime tipos de conteúdo baseados em texto (text/html, text/css, application/javascript, application/json, etc.) por padrão. Formatos já comprimidos como JPEG, PNG e streams binários não são comprimidos adicionalmente. Você pode personalizar a lista com --content-types-to-compress."
   }
 ]} />
 

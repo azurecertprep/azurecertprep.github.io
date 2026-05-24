@@ -338,7 +338,7 @@ echo "Backend application must support PROXY protocol v2 to parse this."
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Criação do Private Link service falha — políticas de rede da sub-rede não desabilitadas
 

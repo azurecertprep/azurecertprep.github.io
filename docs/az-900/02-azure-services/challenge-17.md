@@ -39,31 +39,31 @@ RBAC answers: "Who can do what, on which resources?"
 |------|------------|
 | **Owner** | Full access + can assign roles to others |
 | **Contributor** | Full access EXCEPT assigning roles |
-| **Reader** | View only — cannot change anything |
+| **Reader** | View only â€” cannot change anything |
 | **User Access Administrator** | Manage user access only |
 
 ### Task 2: Explore RBAC in the Portal
 
 1. In Azure Portal, navigate to your **Subscription**
 2. Click **Access control (IAM)** in the left menu
-3. Click **Roles** tab — browse available roles
-4. Click **Role assignments** tab — see who has access
-5. Click **Check access** — see what a specific user can do
+3. Click **Roles** tab â€” browse available roles
+4. Click **Role assignments** tab â€” see who has access
+5. Click **Check access** â€” see what a specific user can do
 6. This is read-only exploration
 
 **RBAC inheritance:**
-```
-Management Group (Owner) → applies to all below
-  └── Subscription (Contributor) → applies to all RGs and resources
-        └── Resource Group (Reader) → applies to all resources in this RG
-              └── Resource (custom) → applies to this resource only
+```text
+Management Group (Owner) â†’ applies to all below
+  â””â”€â”€ Subscription (Contributor) â†’ applies to all RGs and resources
+        â””â”€â”€ Resource Group (Reader) â†’ applies to all resources in this RG
+              â””â”€â”€ Resource (custom) â†’ applies to this resource only
 ```
 
 ### Task 3: Understand Conditional Access
 
 Conditional Access policies are "if-then" rules:
 
-**IF** (condition) → **THEN** (action)
+**IF** (condition) â†’ **THEN** (action)
 
 | Signal (IF) | Action (THEN) |
 |------------|---------------|
@@ -82,12 +82,12 @@ Conditional Access policies are "if-then" rules:
 ### Task 4: Explore Conditional Access in Portal
 
 1. In Azure Portal, search for **Conditional Access**
-2. Or navigate: **Microsoft Entra ID** → **Security** → **Conditional Access**
+2. Or navigate: **Microsoft Entra ID** â†’ **Security** â†’ **Conditional Access**
 3. Browse the **Policies** section
 4. Click **+ New policy** to see what options exist:
    - **Assignments**: Users, apps, conditions
    - **Access controls**: Grant, Block, Require MFA
-5. Click **Cancel** — don't create a policy
+5. Click **Cancel** â€” don't create a policy
 
 ### Task 5: Understand external identities
 
@@ -117,9 +117,9 @@ az role definition list --query "[?roleType=='BuiltInRole'] | [0:10].{Name:roleN
 
 | Concept | Description |
 |---------|-------------|
-| **RBAC** | Role-based access control — assign permissions to roles, roles to users |
+| **RBAC** | Role-based access control â€” assign permissions to roles, roles to users |
 | **Role assignment** | Combination of security principal + role + scope |
-| **Scope** | Where the role applies (management group → subscription → RG → resource) |
+| **Scope** | Where the role applies (management group â†’ subscription â†’ RG â†’ resource) |
 | **Conditional Access** | If-then policies that evaluate sign-in context |
 | **B2B** | Invite external users to collaborate using their own identity |
 | **B2C** | Customer-facing identity management for apps |
@@ -153,7 +153,7 @@ az role definition list --query "[?roleType=='BuiltInRole'] | [0:10].{Name:roleN
     {
       id: 'az900-17-q4',
       question: 'If a Contributor role is assigned at the subscription level, what does the user have access to?',
-      options: ['Only that subscription settings', 'All resource groups and resources within that subscription', 'Only the first resource group', 'Nothing — Contributor requires resource-level assignment'],
+      options: ['Only that subscription settings', 'All resource groups and resources within that subscription', 'Only the first resource group', 'Nothing â€” Contributor requires resource-level assignment'],
       correctAnswer: 1,
       explanation: 'RBAC permissions are inherited downward. A Contributor role at the subscription level gives full access (except role assignments) to ALL resource groups and resources within that subscription.'
     },
@@ -169,6 +169,6 @@ az role definition list --query "[?roleType=='BuiltInRole'] | [0:10].{Name:roleN
 
 ## Learn More
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
 - [Microsoft Learn: Describe Azure identity, access, and security](https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/)
 - [Azure RBAC documentation](https://learn.microsoft.com/en-us/azure/role-based-access-control/)

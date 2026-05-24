@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 14: Site-to-Site VPN Gateway"
+title: "Desafio 14: VPN Gateway Site a Site"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
@@ -12,75 +12,75 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-:::warning Tempo de implantação
+:::warning Tempo de implantaÃ§Ã£o
 
-O provisionamento do VPN Gateway leva **30-45 minutos**. Use `--no-wait` e continue com outras tarefas enquanto o gateway é implantado.
+O provisionamento do VPN Gateway leva **30-45 minutos**. Use `--no-wait` e continue com outras tarefas enquanto o gateway Ã© implantado.
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso possui uma rede virtual hub no Azure (`vnet-hub`, 10.1.0.0/16) e um datacenter local com o espaço de endereço 192.168.0.0/16. O dispositivo VPN local possui o IP público 203.0.113.50. A equipe de rede deve estabelecer um túnel VPN IPsec site a site entre a VNet hub do Azure e o datacenter local para habilitar a conectividade híbrida para cargas de trabalho que ainda não podem migrar para o Azure.
+A Contoso possui uma rede virtual hub no Azure (`vnet-hub`, 10.1.0.0/16) e um datacenter local com o espaÃ§o de endereÃ§o 192.168.0.0/16. O dispositivo VPN local possui o IP pÃºblico 203.0.113.50. A equipe de rede deve estabelecer um tÃºnel VPN IPsec site a site entre a VNet hub do Azure e o datacenter local para habilitar a conectividade hÃ­brida para cargas de trabalho que ainda nÃ£o podem migrar para o Azure.
 
 **Arquitetura:**
 
-```
+```text
 On-premises datacenter                     Azure
 (192.168.0.0/16)                          (10.1.0.0/16)
 
 [VPN Device: 203.0.113.50] ---IPsec--- [VPN Gateway: vgw-hub]
                                               |
                                          vnet-hub
-                                           ├── GatewaySubnet (10.1.255.0/27)
-                                           ├── snet-workloads (10.1.1.0/24)
-                                           └── snet-mgmt (10.1.2.0/24)
+                                           â”œâ”€â”€ GatewaySubnet (10.1.255.0/27)
+                                           â”œâ”€â”€ snet-workloads (10.1.1.0/24)
+                                           â””â”€â”€ snet-mgmt (10.1.2.0/24)
 ```
 
 ## Objetivos de aprendizagem
 
-Após concluir este desafio, você será capaz de:
+ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
 
-- Projetar e implementar uma conexão VPN site a site
+- Projetar e implementar uma conexÃ£o VPN site a site
 - Criar e configurar um gateway de rede local representando o ambiente local
 - Criar e configurar um gateway de rede virtual (tipo VPN)
-- Identificar quando usar uma VPN baseada em política versus uma conexão VPN baseada em rota
-- Verificar o status da conexão VPN e solucionar problemas de conectividade
+- Identificar quando usar uma VPN baseada em polÃ­tica versus uma conexÃ£o VPN baseada em rota
+- Verificar o status da conexÃ£o VPN e solucionar problemas de conectividade
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
 - Uma assinatura do Azure com acesso de Colaborador
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com o módulo Az instalado (`Install-Module Az -Force`)
-- Um grupo de recursos e VNet já criados (ou crie-os na Tarefa 1)
+- PowerShell com o mÃ³dulo Az instalado (`Install-Module Az -Force`)
+- Um grupo de recursos e VNet jÃ¡ criados (ou crie-os na Tarefa 1)
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
 | GatewaySubnet | Sub-rede dedicada para o gateway VPN; deve ser nomeada exatamente `GatewaySubnet`; tamanho recomendado /27 ou maior |
-| Gateway de rede virtual | Endpoint VPN gerenciado pelo Azure; suporta baseado em rota (dinâmico) ou baseado em política (estático) |
-| Gateway de rede local | Representação lógica do dispositivo VPN local (IP público + prefixos de endereço) |
-| Conexão VPN | O túnel IPsec/IKE que conecta o gateway de rede virtual ao gateway de rede local |
-| VPN baseada em rota | Usa tabelas de rotas para seleção de tráfego; suporta múltiplos túneis, P2S, VNet a VNet, coexistência com ExpressRoute |
-| VPN baseada em política | Usa seletores de tráfego (ACLs); limitada a um único túnel S2S; necessária para dispositivos legados |
-| Chave compartilhada (PSK) | Chave pré-compartilhada que deve coincidir em ambos os lados do túnel |
+| Gateway de rede virtual | Endpoint VPN gerenciado pelo Azure; suporta baseado em rota (dinÃ¢mico) ou baseado em polÃ­tica (estÃ¡tico) |
+| Gateway de rede local | RepresentaÃ§Ã£o lÃ³gica do dispositivo VPN local (IP pÃºblico + prefixos de endereÃ§o) |
+| ConexÃ£o VPN | O tÃºnel IPsec/IKE que conecta o gateway de rede virtual ao gateway de rede local |
+| VPN baseada em rota | Usa tabelas de rotas para seleÃ§Ã£o de trÃ¡fego; suporta mÃºltiplos tÃºneis, P2S, VNet a VNet, coexistÃªncia com ExpressRoute |
+| VPN baseada em polÃ­tica | Usa seletores de trÃ¡fego (ACLs); limitada a um Ãºnico tÃºnel S2S; necessÃ¡ria para dispositivos legados |
+| Chave compartilhada (PSK) | Chave prÃ©-compartilhada que deve coincidir em ambos os lados do tÃºnel |
 
-### VPN baseada em política vs baseada em rota
+### VPN baseada em polÃ­tica vs baseada em rota
 
-| Recurso | Baseada em política | Baseada em rota |
+| Recurso | Baseada em polÃ­tica | Baseada em rota |
 |---------|--------------------|--------------------|
-| Versão IKE | Somente IKEv1 | IKEv1 e IKEv2 |
-| Máximo de túneis S2S | 1 | 30 (VpnGw1) a 100 (VpnGw4/5) |
-| Ponto a site | Não suportado | Suportado |
-| Suporte a BGP | Não suportado | Suportado |
-| VNet a VNet | Não suportado | Suportado |
-| Coexistência com ExpressRoute | Não suportado | Suportado |
+| VersÃ£o IKE | Somente IKEv1 | IKEv1 e IKEv2 |
+| MÃ¡ximo de tÃºneis S2S | 1 | 30 (VpnGw1) a 100 (VpnGw4/5) |
+| Ponto a site | NÃ£o suportado | Suportado |
+| Suporte a BGP | NÃ£o suportado | Suportado |
+| VNet a VNet | NÃ£o suportado | Suportado |
+| CoexistÃªncia com ExpressRoute | NÃ£o suportado | Suportado |
 | SKU do gateway | Somente Basic | VpnGw1-5, VpnGw1AZ-5AZ |
-| Caso de uso | Dispositivos locais legados que exigem correspondência de política IKEv1 | Todas as implantações modernas |
+| Caso de uso | Dispositivos locais legados que exigem correspondÃªncia de polÃ­tica IKEv1 | Todas as implantaÃ§Ãµes modernas |
 
 :::tip Nota de exame
 
-O exame frequentemente testa quando a VPN baseada em política é necessária versus a baseada em rota. A resposta quase sempre é baseada em rota, a menos que a questão declare explicitamente um dispositivo legado que suporta apenas IKEv1 com seletores de tráfego baseados em política. Gateways baseados em rota são a recomendação padrão.
+O exame frequentemente testa quando a VPN baseada em polÃ­tica Ã© necessÃ¡ria versus a baseada em rota. A resposta quase sempre Ã© baseada em rota, a menos que a questÃ£o declare explicitamente um dispositivo legado que suporta apenas IKEv1 com seletores de trÃ¡fego baseados em polÃ­tica. Gateways baseados em rota sÃ£o a recomendaÃ§Ã£o padrÃ£o.
 
 :::
 
@@ -138,10 +138,10 @@ New-AzVirtualNetwork `
 
 :::note Requisitos do GatewaySubnet
 
-- O nome **deve** ser `GatewaySubnet` (sensível a maiúsculas/minúsculas, nenhum outro nome funciona)
-- O tamanho mínimo recomendado é /27 (32 endereços) para permitir crescimento futuro e configurações active-active
-- /28 é o mínimo absoluto, mas limita a expansibilidade futura
-- Não associe um NSG ou tabela de rotas ao GatewaySubnet (isso pode interromper a operação do gateway)
+- O nome **deve** ser `GatewaySubnet` (sensÃ­vel a maiÃºsculas/minÃºsculas, nenhum outro nome funciona)
+- O tamanho mÃ­nimo recomendado Ã© /27 (32 endereÃ§os) para permitir crescimento futuro e configuraÃ§Ãµes active-active
+- /28 Ã© o mÃ­nimo absoluto, mas limita a expansibilidade futura
+- NÃ£o associe um NSG ou tabela de rotas ao GatewaySubnet (isso pode interromper a operaÃ§Ã£o do gateway)
 
 :::
 
@@ -149,7 +149,7 @@ New-AzVirtualNetwork `
 
 ## Tarefa 2: Implantar o gateway VPN
 
-### Etapa 1: Criar um IP público para o gateway
+### Etapa 1: Criar um IP pÃºblico para o gateway
 
 ```bash
 az network public-ip create \
@@ -208,7 +208,7 @@ New-AzVirtualNetworkGateway `
     -AsJob
 ```
 
-### Etapa 3: Monitorar o progresso da implantação
+### Etapa 3: Monitorar o progresso da implantaÃ§Ã£o
 
 ```bash
 # Check provisioning state (repeat until "Succeeded")
@@ -223,7 +223,7 @@ az network vnet-gateway show \
 
 ## Tarefa 3: Criar o gateway de rede local
 
-O gateway de rede local representa o dispositivo VPN local no Azure. Ele armazena o IP público do dispositivo local e os prefixos de endereço da rede local.
+O gateway de rede local representa o dispositivo VPN local no Azure. Ele armazena o IP pÃºblico do dispositivo local e os prefixos de endereÃ§o da rede local.
 
 ### Azure CLI
 
@@ -247,9 +247,9 @@ New-AzLocalNetworkGateway `
     -AddressPrefix "192.168.0.0/16"
 ```
 
-### Múltiplas sub-redes locais
+### MÃºltiplas sub-redes locais
 
-Se a rede local tiver múltiplas sub-redes não contíguas, liste todas:
+Se a rede local tiver mÃºltiplas sub-redes nÃ£o contÃ­guas, liste todas:
 
 ```bash
 az network local-gateway create \
@@ -262,9 +262,9 @@ az network local-gateway create \
 
 ---
 
-## Tarefa 4: Criar a conexão VPN
+## Tarefa 4: Criar a conexÃ£o VPN
 
-Após o gateway VPN concluir o provisionamento, crie a conexão IPsec.
+ApÃ³s o gateway VPN concluir o provisionamento, crie a conexÃ£o IPsec.
 
 ### Azure CLI
 
@@ -295,16 +295,16 @@ New-AzVirtualNetworkGatewayConnection `
 
 :::note Requisitos da chave compartilhada
 
-- A chave compartilhada deve ser idêntica em ambos os lados (Azure e dispositivo local)
-- Máximo de 128 caracteres
-- Suporta caracteres alfanuméricos e caracteres especiais
-- Use uma chave forte e gerada aleatoriamente em produção
+- A chave compartilhada deve ser idÃªntica em ambos os lados (Azure e dispositivo local)
+- MÃ¡ximo de 128 caracteres
+- Suporta caracteres alfanumÃ©ricos e caracteres especiais
+- Use uma chave forte e gerada aleatoriamente em produÃ§Ã£o
 
 :::
 
 ---
 
-## Tarefa 5: Verificar o status da conexão
+## Tarefa 5: Verificar o status da conexÃ£o
 
 ### Azure CLI
 
@@ -326,26 +326,26 @@ Get-AzVirtualNetworkGatewayConnection `
     Select-Object Name, ConnectionStatus, IngressBytesTransferred, EgressBytesTransferred
 ```
 
-### Valores de status da conexão
+### Valores de status da conexÃ£o
 
 | Status | Significado |
 |--------|-------------|
-| Connected | O túnel está estabelecido e passando tráfego |
-| Connecting | O lado Azure está pronto, mas aguardando resposta do dispositivo local |
-| NotConnected | O objeto de conexão existe, mas o túnel não foi iniciado |
-| Unknown | Não é possível determinar o estado (verifique a integridade do gateway) |
+| Connected | O tÃºnel estÃ¡ estabelecido e passando trÃ¡fego |
+| Connecting | O lado Azure estÃ¡ pronto, mas aguardando resposta do dispositivo local |
+| NotConnected | O objeto de conexÃ£o existe, mas o tÃºnel nÃ£o foi iniciado |
+| Unknown | NÃ£o Ã© possÃ­vel determinar o estado (verifique a integridade do gateway) |
 
-:::tip Simulação de laboratório
+:::tip SimulaÃ§Ã£o de laboratÃ³rio
 
-Em um laboratório sem um dispositivo local real, a conexão permanecerá no estado `Connecting`. Isso é esperado. Para simular um túnel totalmente conectado, implante um segundo gateway VPN em outra VNet e crie uma conexão VNet a VNet (ambos os lados estão sob seu controle).
+Em um laboratÃ³rio sem um dispositivo local real, a conexÃ£o permanecerÃ¡ no estado `Connecting`. Isso Ã© esperado. Para simular um tÃºnel totalmente conectado, implante um segundo gateway VPN em outra VNet e crie uma conexÃ£o VNet a VNet (ambos os lados estÃ£o sob seu controle).
 
 :::
 
 ---
 
-## Tarefa 6: Testar conectividade (simulação de laboratório com segunda VNet)
+## Tarefa 6: Testar conectividade (simulaÃ§Ã£o de laboratÃ³rio com segunda VNet)
 
-Para verificar a conectividade ponta a ponta em um laboratório, crie uma segunda VNet simulando a rede local:
+Para verificar a conectividade ponta a ponta em um laboratÃ³rio, crie uma segunda VNet simulando a rede local:
 
 ```bash
 # Create simulated on-prem VNet
@@ -383,7 +383,7 @@ az network vnet-gateway create \
     --no-wait
 ```
 
-Após ambos os gateways serem provisionados, crie conexões em ambas as direções:
+ApÃ³s ambos os gateways serem provisionados, crie conexÃµes em ambas as direÃ§Ãµes:
 
 ```bash
 # Update local gateway with actual public IP of simulated on-prem gateway
@@ -423,15 +423,15 @@ az network vpn-connection create \
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Incompatibilidade de chave compartilhada
+### CenÃ¡rio 1: Incompatibilidade de chave compartilhada
 
-**Sintoma:** O status da conexão permanece `Connecting` indefinidamente.
+**Sintoma:** O status da conexÃ£o permanece `Connecting` indefinidamente.
 
-**Causa raiz:** A chave compartilhada na conexão Azure não corresponde à chave configurada no dispositivo local.
+**Causa raiz:** A chave compartilhada na conexÃ£o Azure nÃ£o corresponde Ã  chave configurada no dispositivo local.
 
-**Comando de diagnóstico:**
+**Comando de diagnÃ³stico:**
 
 ```bash
 az network vpn-connection show \
@@ -442,7 +442,7 @@ az network vpn-connection show \
 # Returns: Connecting
 ```
 
-**Correção:** Atualize a chave compartilhada para que ambos os lados coincidam:
+**CorreÃ§Ã£o:** Atualize a chave compartilhada para que ambos os lados coincidam:
 
 ```bash
 az network vpn-connection update \
@@ -451,13 +451,13 @@ az network vpn-connection update \
     --shared-key "CorrectMatchingKey2024!"
 ```
 
-### Cenário 2: GatewaySubnet ausente
+### CenÃ¡rio 2: GatewaySubnet ausente
 
-**Sintoma:** A criação do gateway falha com um erro sobre sub-rede ausente.
+**Sintoma:** A criaÃ§Ã£o do gateway falha com um erro sobre sub-rede ausente.
 
-**Causa raiz:** A VNet não possui uma sub-rede nomeada exatamente `GatewaySubnet`.
+**Causa raiz:** A VNet nÃ£o possui uma sub-rede nomeada exatamente `GatewaySubnet`.
 
-**Correção:** Crie a sub-rede com o nome exato exigido:
+**CorreÃ§Ã£o:** Crie a sub-rede com o nome exato exigido:
 
 ```bash
 az network vnet subnet create \
@@ -467,13 +467,13 @@ az network vnet subnet create \
     --address-prefixes 10.1.255.0/27
 ```
 
-### Cenário 3: Prefixos de endereço local incorretos
+### CenÃ¡rio 3: Prefixos de endereÃ§o local incorretos
 
-**Sintoma:** O túnel VPN está `Connected`, mas o tráfego para certas sub-redes locais não é roteado pelo túnel.
+**Sintoma:** O tÃºnel VPN estÃ¡ `Connected`, mas o trÃ¡fego para certas sub-redes locais nÃ£o Ã© roteado pelo tÃºnel.
 
-**Causa raiz:** O gateway de rede local está sem prefixos de endereço para algumas sub-redes locais.
+**Causa raiz:** O gateway de rede local estÃ¡ sem prefixos de endereÃ§o para algumas sub-redes locais.
 
-**Comando de diagnóstico:**
+**Comando de diagnÃ³stico:**
 
 ```bash
 az network local-gateway show \
@@ -483,7 +483,7 @@ az network local-gateway show \
     --output tsv
 ```
 
-**Correção:** Atualize o gateway local com todos os prefixos locais:
+**CorreÃ§Ã£o:** Atualize o gateway local com todos os prefixos locais:
 
 ```bash
 az network local-gateway update \
@@ -494,68 +494,68 @@ az network local-gateway update \
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-14-q1",
-    question: "What must the dedicated subnet for a VPN gateway be named?",
+    question: "Qual deve ser o nome da sub-rede dedicada para um VPN Gateway?",
     options: [
       "GatewaySubnet",
       "VpnGatewaySubnet",
       "gateway-subnet",
-      "Any name with a 'gateway' tag"
+      "Qualquer nome com uma tag 'gateway'"
     ],
     correctIndex: 0,
-    explanation: "The subnet must be named exactly 'GatewaySubnet' (case-sensitive). Azure will not deploy a virtual network gateway into a subnet with any other name."
+    explanation: "A sub-rede deve ser nomeada exatamente como 'GatewaySubnet' (sensível a maiúsculas/minúsculas). O Azure não implantará um gateway de rede virtual em uma sub-rede com qualquer outro nome."
   },
   {
     id: "az700-14-q2",
-    question: "A partner organization has a legacy VPN device that only supports IKEv1 with policy-based traffic selectors. Which VPN type must you configure on the Azure VPN gateway?",
+    question: "Uma organização parceira possui um dispositivo VPN legado que suporta apenas IKEv1 com seletores de tráfego baseados em política. Qual tipo de VPN você deve configurar no Azure VPN Gateway?",
     options: [
-      "Route-based with custom IPsec policy",
+      "Route-based com política IPsec personalizada",
       "Policy-based",
-      "Route-based with BGP enabled",
-      "Route-based with forced tunneling"
+      "Route-based com BGP habilitado",
+      "Route-based com túnel forçado"
     ],
     correctIndex: 1,
-    explanation: "Policy-based VPN gateways use IKEv1 with traffic selectors defined by ACLs (access policies). They are required when the on-premises device only supports policy-based negotiations. Route-based gateways use IKEv2 with route tables and do not support legacy IKEv1-only devices that require policy matching."
+    explanation: "VPN Gateways policy-based utilizam IKEv1 com seletores de tráfego definidos por ACLs (políticas de acesso). Eles são necessários quando o dispositivo local suporta apenas negociações policy-based. Gateways route-based utilizam IKEv2 com tabelas de rotas e não suportam dispositivos legados que requerem apenas IKEv1 com correspondência de política."
   },
   {
     id: "az700-14-q3",
-    question: "Which Azure resource represents the on-premises VPN device in a site-to-site VPN configuration?",
+    question: "Qual recurso do Azure representa o dispositivo VPN local em uma configuração de VPN site-to-site?",
     options: [
       "Virtual network gateway",
-      "VPN connection",
+      "Conexão VPN",
       "Local network gateway",
-      "Network interface"
+      "Interface de rede"
     ],
     correctIndex: 2,
-    explanation: "The local network gateway is the Azure resource that represents the on-premises VPN device. It stores the public IP address of the on-prem device and the address prefixes of the on-premises network, allowing Azure to know where to route traffic destined for on-prem."
+    explanation: "O Local network gateway é o recurso do Azure que representa o dispositivo VPN local. Ele armazena o endereço IP público do dispositivo local e os prefixos de endereço da rede on-premises, permitindo que o Azure saiba para onde rotear o tráfego destinado à rede local."
   },
   {
     id: "az700-14-q4",
-    question: "A VPN connection shows status 'Connecting' for over 30 minutes. What is the most likely cause?",
+    question: "Uma conexão VPN mostra o status 'Connecting' por mais de 30 minutos. Qual é a causa mais provável?",
     options: [
-      "The VPN gateway SKU is too small",
-      "The shared key (PSK) does not match between both sides",
-      "The GatewaySubnet is too large",
-      "The local network gateway is in the wrong region"
+      "O SKU do VPN Gateway é muito pequeno",
+      "A chave compartilhada (PSK) não corresponde entre os dois lados",
+      "A GatewaySubnet é muito grande",
+      "O Local network gateway está na região errada"
     ],
     correctIndex: 1,
-    explanation: "A persistent 'Connecting' state typically indicates that the IKE negotiation is failing. The most common cause is a shared key mismatch between the Azure connection and the on-premises device. Other causes include firewall rules blocking UDP 500/4500 or incompatible IKE/IPsec parameters."
+    explanation: "Um estado persistente de 'Connecting' tipicamente indica que a negociação IKE está falhando. A causa mais comum é uma incompatibilidade da chave compartilhada entre a conexão do Azure e o dispositivo local. Outras causas incluem regras de firewall bloqueando UDP 500/4500 ou parâmetros IKE/IPsec incompatíveis."
   },
   {
     id: "az700-14-q5",
-    question: "Which of the following is NOT a limitation of policy-based VPN gateways?",
+    question: "Qual das seguintes opções NÃO é uma limitação dos VPN Gateways policy-based?",
     options: [
-      "Maximum of one S2S tunnel",
-      "No BGP support",
-      "No support for IKEv1",
-      "No Point-to-Site support"
+      "Máximo de um túnel S2S",
+      "Sem suporte a BGP",
+      "Sem suporte a IKEv1",
+      "Sem suporte a Point-to-Site"
     ],
     correctIndex: 2,
-    explanation: "Policy-based VPN gateways exclusively use IKEv1, so 'no support for IKEv1' is incorrect as a limitation. The actual limitations are: only one S2S tunnel, no BGP, no P2S, no VNet-to-VNet, and only the Basic SKU."
+    explanation: "VPN Gateways policy-based utilizam exclusivamente IKEv1, portanto 'sem suporte a IKEv1' é incorreto como limitação. As limitações reais são: apenas um túnel S2S, sem BGP, sem P2S, sem VNet-to-VNet e apenas o SKU Basic."
   }
 ]} />
 
@@ -563,7 +563,7 @@ az network local-gateway update \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para parar a cobrança:
+Remova todos os recursos criados neste desafio para parar a cobranÃ§a:
 
 ```bash
 az group delete --name rg-vpn-lab --yes --no-wait
@@ -575,7 +575,7 @@ Remove-AzResourceGroup -Name "rg-vpn-lab" -Force -AsJob
 
 ---
 
-## Referências adicionais
+## ReferÃªncias adicionais
 
 - [Create a site-to-site VPN connection](https://learn.microsoft.com/en-us/azure/vpn-gateway/tutorial-site-to-site-portal)
 - [About VPN Gateway](https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways)

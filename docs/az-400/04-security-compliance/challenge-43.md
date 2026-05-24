@@ -346,13 +346,13 @@ gh api repos/contoso/webapp -X PATCH --input - <<< '{
 
 When push protection blocks a commit:
 
-```
+```text
 remote: error: GH013: Repository rule violations found for refs/heads/main.
 remote: - GITHUB PUSH PROTECTION
-remote:   —————————————————————————————————————————
+remote:   â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 remote:   Resolve the following violations before pushing again
 remote:
-remote:   — Push cannot contain secrets —
+remote:   â€” Push cannot contain secrets â€”
 remote:
 remote:   locations:
 remote:     - commit: abc123def
@@ -456,7 +456,7 @@ steps:
     condition: always()
 ```
 
-## Break and fix
+## Break & fix
 
 ### Break scenario 1: Secret appears in pipeline logs
 

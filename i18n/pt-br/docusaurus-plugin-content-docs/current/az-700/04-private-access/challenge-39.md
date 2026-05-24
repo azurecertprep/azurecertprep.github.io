@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: "Challenge 39: Migrate Service Endpoints to Private Endpoints"
+title: "Desafio 39: Migrar Service Endpoints para Private Endpoints"
 sidebar_label: "Challenge 39"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -13,22 +13,22 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## Cenário
+## CenÃ¡rio
 
-O Woodgrove Bank tem utilizado service endpoints para proteger o acesso ao Azure Storage e ao Azure SQL Database a partir das sub-redes de sua VNet. Como parte de uma iniciativa de modernização de segurança, a equipe de rede deve migrar todos os service endpoints para Private Endpoints. Isso fornece isolamento mais forte (IPs privados na VNet), habilita o acesso local via VPN e elimina os riscos de exfiltração de dados que os service endpoints sozinhos não conseguem resolver completamente.
+O Woodgrove Bank tem utilizado service endpoints para proteger o acesso ao Azure Storage e ao Azure SQL Database a partir das sub-redes de sua VNet. Como parte de uma iniciativa de modernizaÃ§Ã£o de seguranÃ§a, a equipe de rede deve migrar todos os service endpoints para Private Endpoints. Isso fornece isolamento mais forte (IPs privados na VNet), habilita o acesso local via VPN e elimina os riscos de exfiltraÃ§Ã£o de dados que os service endpoints sozinhos nÃ£o conseguem resolver completamente.
 
-A migração deve ser realizada com tempo de inatividade zero. Tanto os service endpoints quanto os Private Endpoints podem coexistir durante o período de transição. O caminho crítico é:
+A migraÃ§Ã£o deve ser realizada com tempo de inatividade zero. Tanto os service endpoints quanto os Private Endpoints podem coexistir durante o perÃ­odo de transiÃ§Ã£o. O caminho crÃ­tico Ã©:
 
-1. Implantar Private Endpoints junto com os service endpoints existentes (coexistência).
+1. Implantar Private Endpoints junto com os service endpoints existentes (coexistÃªncia).
 2. Configurar o DNS para resolver para IPs privados.
-3. Validar a conectividade através do Private Endpoint.
+3. Validar a conectividade atravÃ©s do Private Endpoint.
 4. Remover as regras de VNet do firewall da conta de armazenamento.
-5. Desabilitar o acesso à rede pública.
+5. Desabilitar o acesso Ã  rede pÃºblica.
 6. Remover os service endpoints da sub-rede.
 
-### Ordem de migração (crítica)
+### Ordem de migraÃ§Ã£o (crÃ­tica)
 
-```
+```json
 [Current State]
   Subnet -> Service Endpoint -> Storage (public IP, VNet rule)
 
@@ -49,15 +49,15 @@ A migração deve ser realizada com tempo de inatividade zero. Tanto os service 
   Subnet -> Private Endpoint -> Storage (private IP only)
 ```
 
-:::caution Risco de migração
-Nunca remova o service endpoint ou as regras de VNet antes de validar que a resolução DNS do Private Endpoint está funcionando. Durante a coexistência, o tráfego utilizará qualquer caminho para o qual o DNS resolver. Se o DNS ainda apontar para o IP público, remover a regra de VNet interromperá a conectividade.
+:::caution Risco de migraÃ§Ã£o
+Nunca remova o service endpoint ou as regras de VNet antes de validar que a resoluÃ§Ã£o DNS do Private Endpoint estÃ¡ funcionando. Durante a coexistÃªncia, o trÃ¡fego utilizarÃ¡ qualquer caminho para o qual o DNS resolver. Se o DNS ainda apontar para o IP pÃºblico, remover a regra de VNet interromperÃ¡ a conectividade.
 :::
 
 ---
 
-## Tarefa 1: Documentar a configuração atual de service endpoint
+## Tarefa 1: Documentar a configuraÃ§Ã£o atual de service endpoint
 
-Antes de migrar, capture a configuração existente para planejamento de rollback.
+Antes de migrar, capture a configuraÃ§Ã£o existente para planejamento de rollback.
 
 ### Azure CLI
 
@@ -170,7 +170,7 @@ Write-Output "=== Current Storage VNet Rules ==="
 
 ## Tarefa 2: Implantar Private Endpoint junto com o service endpoint existente
 
-Durante esta fase, tanto o SE quanto o PE coexistem. O tráfego existente continua fluindo pelo service endpoint até que o DNS seja atualizado.
+Durante esta fase, tanto o SE quanto o PE coexistem. O trÃ¡fego existente continua fluindo pelo service endpoint atÃ© que o DNS seja atualizado.
 
 ### Azure CLI
 
@@ -235,8 +235,8 @@ New-AzPrivateEndpoint `
 
 ### Portal
 
-1. Navegue até **Private endpoints** e selecione **+ Create**.
-2. Defina o grupo de recursos, nome como `pe-storagename-blob`, região como **East US**.
+1. Navegue atÃ© **Private endpoints** e selecione **+ Create**.
+2. Defina o grupo de recursos, nome como `pe-storagename-blob`, regiÃ£o como **East US**.
 3. Em **Resource**, selecione a conta de armazenamento e o sub-recurso `blob`.
 4. Em **Virtual Network**, selecione `vnet-production` e a sub-rede `snet-private-endpoints`.
 5. Selecione **Review + create** e depois **Create**.
@@ -245,7 +245,7 @@ New-AzPrivateEndpoint `
 
 ## Tarefa 3: Configurar zona de DNS privado e link
 
-Para que o DNS resolva o FQDN do armazenamento para o IP privado, uma zona de DNS privado é necessária.
+Para que o DNS resolva o FQDN do armazenamento para o IP privado, uma zona de DNS privado Ã© necessÃ¡ria.
 
 ### Azure CLI
 
@@ -301,14 +301,14 @@ New-AzPrivateDnsZoneGroup -ResourceGroupName $rg `
 
 1. Pesquise por **Private DNS zones** e selecione **+ Create**.
 2. Nome: `privatelink.blob.core.windows.net`, grupo de recursos: `rg-challenge39`.
-3. Após a criação, vá para **Virtual network links** e adicione um link para `vnet-production`.
-4. Volte ao Private Endpoint, selecione **DNS configuration** e adicione um grupo de zona DNS vinculado à zona.
+3. ApÃ³s a criaÃ§Ã£o, vÃ¡ para **Virtual network links** e adicione um link para `vnet-production`.
+4. Volte ao Private Endpoint, selecione **DNS configuration** e adicione um grupo de zona DNS vinculado Ã  zona.
 
 ---
 
 ## Tarefa 4: Validar conectividade do Private Endpoint
 
-Este é o passo crítico antes de remover os service endpoints. Confirme que o DNS resolve para o IP privado.
+Este Ã© o passo crÃ­tico antes de remover os service endpoints. Confirme que o DNS resolve para o IP privado.
 
 ### Azure CLI
 
@@ -350,19 +350,19 @@ Resolve-DnsName -Name "$storageName.blob.core.windows.net"
 Test-NetConnection -ComputerName "$storageName.blob.core.windows.net" -Port 443
 ```
 
-:::tip Lista de verificação de validação
-Antes de prosseguir com a remoção dos service endpoints, confirme:
-1. `nslookup` resolve para um IP privado (10.x.x.x), não um IP público.
+:::tip Lista de verificaÃ§Ã£o de validaÃ§Ã£o
+Antes de prosseguir com a remoÃ§Ã£o dos service endpoints, confirme:
+1. `nslookup` resolve para um IP privado (10.x.x.x), nÃ£o um IP pÃºblico.
 2. A cadeia CNAME inclui `privatelink.blob.core.windows.net`.
-3. Os testes de conectividade da aplicação são bem-sucedidos.
-4. Os clientes locais (se aplicável) também resolvem para o IP privado.
+3. Os testes de conectividade da aplicaÃ§Ã£o sÃ£o bem-sucedidos.
+4. Os clientes locais (se aplicÃ¡vel) tambÃ©m resolvem para o IP privado.
 :::
 
 ---
 
 ## Tarefa 5: Remover infraestrutura de service endpoint
 
-Após a validação confirmar que o Private Endpoint está funcionando, remova a configuração do service endpoint na ordem correta.
+ApÃ³s a validaÃ§Ã£o confirmar que o Private Endpoint estÃ¡ funcionando, remova a configuraÃ§Ã£o do service endpoint na ordem correta.
 
 ### Azure CLI
 
@@ -430,17 +430,17 @@ Get-AzStorageAccount -ResourceGroupName $rg -Name $storageName | `
 
 ### Portal
 
-1. Navegue até a conta de armazenamento > **Networking**.
+1. Navegue atÃ© a conta de armazenamento > **Networking**.
 2. Em **Virtual networks**, remova a regra de VNet para `snet-app`.
 3. Defina **Public network access** como **Disabled**.
 4. Salve.
-5. Navegue até VNet > sub-rede `snet-app` > **Service endpoints**.
+5. Navegue atÃ© VNet > sub-rede `snet-app` > **Service endpoints**.
 6. Remova `Microsoft.Storage` da lista.
 7. Salve.
 
 ---
 
-## Tarefa 6: Verificar conectividade pós-migração
+## Tarefa 6: Verificar conectividade pÃ³s-migraÃ§Ã£o
 
 ```bash
 # From a VM inside the VNet, confirm blob access still works via PE
@@ -461,15 +461,15 @@ curl -s -o /dev/null -w "%{http_code}" \
 
 ---
 
-## Cenários de quebra e correção
+## CenÃ¡rios de quebra e correÃ§Ã£o
 
-### Cenário 1: Remoção do service endpoint antes do DNS do PE estar funcionando
+### CenÃ¡rio 1: RemoÃ§Ã£o do service endpoint antes do DNS do PE estar funcionando
 
-**Sintoma**: Após remover o service endpoint e as regras de VNet, as aplicações perdem conectividade com a conta de armazenamento. O DNS ainda resolve para o IP público, e o acesso público agora está negado.
+**Sintoma**: ApÃ³s remover o service endpoint e as regras de VNet, as aplicaÃ§Ãµes perdem conectividade com a conta de armazenamento. O DNS ainda resolve para o IP pÃºblico, e o acesso pÃºblico agora estÃ¡ negado.
 
-**Causa raiz**: A zona de DNS privado não foi criada, não foi vinculada à VNet, ou o grupo de zona DNS não foi configurado no Private Endpoint. Sem o DNS adequado, o FQDN ainda resolve para o IP público.
+**Causa raiz**: A zona de DNS privado nÃ£o foi criada, nÃ£o foi vinculada Ã  VNet, ou o grupo de zona DNS nÃ£o foi configurado no Private Endpoint. Sem o DNS adequado, o FQDN ainda resolve para o IP pÃºblico.
 
-**Correção (rollback)**:
+**CorreÃ§Ã£o (rollback)**:
 
 ```bash
 # Re-enable public network access temporarily
@@ -503,17 +503,17 @@ az network private-dns link vnet list \
   --query "[].{name:name, vnet:virtualNetwork.id}" -o table
 ```
 
-**Insight principal**: Sempre valide a resolução DNS antes de remover os service endpoints. A ordem de rollback é inversa: restaurar acesso público, reabilitar SE, readicionar regras de VNet.
+**Insight principal**: Sempre valide a resoluÃ§Ã£o DNS antes de remover os service endpoints. A ordem de rollback Ã© inversa: restaurar acesso pÃºblico, reabilitar SE, readicionar regras de VNet.
 
 ---
 
-### Cenário 2: Cache DNS não atualizado após migração
+### CenÃ¡rio 2: Cache DNS nÃ£o atualizado apÃ³s migraÃ§Ã£o
 
-**Sintoma**: Alguns clientes ainda conectam pelo caminho público mesmo com a zona de DNS privado corretamente configurada. Falhas intermitentes ocorrem pois algumas requisições atingem o IP público (agora negado) enquanto outras alcançam o IP privado.
+**Sintoma**: Alguns clientes ainda conectam pelo caminho pÃºblico mesmo com a zona de DNS privado corretamente configurada. Falhas intermitentes ocorrem pois algumas requisiÃ§Ãµes atingem o IP pÃºblico (agora negado) enquanto outras alcanÃ§am o IP privado.
 
-**Causa raiz**: Cache DNS no nível do sistema operacional do cliente, nível da aplicação, ou em resolvedores DNS intermediários. O registro DNS do IP público antigo possui um TTL que ainda não expirou.
+**Causa raiz**: Cache DNS no nÃ­vel do sistema operacional do cliente, nÃ­vel da aplicaÃ§Ã£o, ou em resolvedores DNS intermediÃ¡rios. O registro DNS do IP pÃºblico antigo possui um TTL que ainda nÃ£o expirou.
 
-**Correção**:
+**CorreÃ§Ã£o**:
 
 ```powershell
 # On Windows clients, flush DNS cache
@@ -535,17 +535,17 @@ az network vnet show \
   --query "dhcpOptions.dnsServers" -o tsv
 ```
 
-**Insight principal**: Planeje o tempo de propagação do TTL do DNS. Registros DNS do Azure tipicamente possuem TTLs curtos (10-60 segundos), mas o cache do lado do cliente pode persistir por mais tempo. Permita tempo adequado entre a transferência de DNS e a remoção do SE. Se servidores DNS personalizados estão configurados na VNet, certifique-se de que esses servidores podem encaminhar para o Azure DNS (168.63.129.16) ou que possuem a zona de DNS privado vinculada.
+**Insight principal**: Planeje o tempo de propagaÃ§Ã£o do TTL do DNS. Registros DNS do Azure tipicamente possuem TTLs curtos (10-60 segundos), mas o cache do lado do cliente pode persistir por mais tempo. Permita tempo adequado entre a transferÃªncia de DNS e a remoÃ§Ã£o do SE. Se servidores DNS personalizados estÃ£o configurados na VNet, certifique-se de que esses servidores podem encaminhar para o Azure DNS (168.63.129.16) ou que possuem a zona de DNS privado vinculada.
 
 ---
 
-### Cenário 3: Clientes locais quebrados após desabilitar acesso público
+### CenÃ¡rio 3: Clientes locais quebrados apÃ³s desabilitar acesso pÃºblico
 
-**Sintoma**: Clientes locais que acessam a conta de armazenamento via VPN perdem conectividade após o acesso à rede pública ser desabilitado. Eles anteriormente acessavam pelo endpoint público com regras de firewall baseadas em IP.
+**Sintoma**: Clientes locais que acessam a conta de armazenamento via VPN perdem conectividade apÃ³s o acesso Ã  rede pÃºblica ser desabilitado. Eles anteriormente acessavam pelo endpoint pÃºblico com regras de firewall baseadas em IP.
 
-**Causa raiz**: O DNS local não foi atualizado para resolver o FQDN do armazenamento para o IP do Private Endpoint. Sem encaminhamento DNS para um Azure DNS Private Resolver ou encaminhador condicional, os clientes locais ainda resolvem para o IP público (que agora está bloqueado).
+**Causa raiz**: O DNS local nÃ£o foi atualizado para resolver o FQDN do armazenamento para o IP do Private Endpoint. Sem encaminhamento DNS para um Azure DNS Private Resolver ou encaminhador condicional, os clientes locais ainda resolvem para o IP pÃºblico (que agora estÃ¡ bloqueado).
 
-**Correção**:
+**CorreÃ§Ã£o**:
 
 ```bash
 # Option 1: Configure DNS forwarding from on-prem (see Challenge 37)
@@ -568,84 +568,84 @@ az storage account network-rule add \
   --ip-address "203.0.113.0/24"
 ```
 
-**Insight principal**: Private Endpoints só funcionam se o DNS resolver o FQDN para o IP privado. Clientes locais precisam de infraestrutura de encaminhamento DNS (DNS Private Resolver, encaminhadores condicionais ou entradas de arquivo host) para resolver zonas de DNS privado do Azure. Planeje isso antes de desabilitar o acesso público.
+**Insight principal**: Private Endpoints sÃ³ funcionam se o DNS resolver o FQDN para o IP privado. Clientes locais precisam de infraestrutura de encaminhamento DNS (DNS Private Resolver, encaminhadores condicionais ou entradas de arquivo host) para resolver zonas de DNS privado do Azure. Planeje isso antes de desabilitar o acesso pÃºblico.
 
 ---
 
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "az700-39-q1",
-    question: "During a migration from service endpoints to Private Endpoints, what is the correct order of operations?",
+    question: "Durante uma migração de service endpoints para Private Endpoints, qual é a ordem correta de operações?",
     options: [
-      "Remove SE, deploy PE, configure DNS, validate",
-      "Deploy PE, configure DNS, validate, remove VNet rules, disable public access, remove SE ✅",
-      "Configure DNS, deploy PE, remove SE, validate",
-      "Disable public access, deploy PE, configure DNS, remove SE"
+      "Remover SE, implantar PE, configurar DNS, validar",
+      "Implantar PE, configurar DNS, validar, remover regras de VNet, desabilitar acesso público, remover SE ✅",
+      "Configurar DNS, implantar PE, remover SE, validar",
+      "Desabilitar acesso público, implantar PE, configurar DNS, remover SE"
     ],
     correctIndex: 1,
-    explanation: "The correct order ensures zero-downtime: deploy PE alongside SE (coexistence), configure DNS for private resolution, validate connectivity works via PE, then remove VNet rules, disable public access, and finally remove SE from the subnet."
+    explanation: "A ordem correta garante zero tempo de inatividade: implantar PE junto com SE (coexistência), configurar DNS para resolução privada, validar que a conectividade funciona via PE, então remover regras de VNet, desabilitar acesso público e finalmente remover SE da sub-rede."
   },
   {
     id: "az700-39-q2",
-    question: "Can service endpoints and Private Endpoints coexist on the same storage account simultaneously?",
+    question: "Service endpoints e Private Endpoints podem coexistir na mesma conta de armazenamento simultaneamente?",
     options: [
-      "No, they are mutually exclusive configurations",
-      "Yes, both can be active simultaneously during migration ✅",
-      "Only if public network access is set to Enabled",
-      "Only if the Private Endpoint is in a different VNet"
+      "Não, são configurações mutuamente exclusivas",
+      "Sim, ambos podem estar ativos simultaneamente durante a migração ✅",
+      "Apenas se o acesso à rede pública estiver definido como Habilitado",
+      "Apenas se o Private Endpoint estiver em uma VNet diferente"
     ],
     correctIndex: 1,
-    explanation: "Service endpoints and Private Endpoints can coexist on the same storage account. During migration, traffic from a subnet uses whichever path DNS resolves to. The VNet rule (SE) and Private Endpoint can both be active, enabling a safe migration with rollback capability."
+    explanation: "Service endpoints e Private Endpoints podem coexistir na mesma conta de armazenamento. Durante a migração, o tráfego de uma sub-rede usa o caminho para o qual o DNS resolve. A regra de VNet (SE) e o Private Endpoint podem estar ambos ativos, permitindo uma migração segura com capacidade de rollback."
   },
   {
     id: "az700-39-q3",
-    question: "After deploying a Private Endpoint, what determines whether traffic flows via the SE or PE path?",
+    question: "Após implantar um Private Endpoint, o que determina se o tráfego flui pelo caminho do SE ou do PE?",
     options: [
-      "The network routing table in the subnet",
-      "The DNS resolution result (public IP vs private IP) ✅",
-      "The order in which SE and PE were created",
-      "The storage account firewall priority rules"
+      "A tabela de roteamento de rede na sub-rede",
+      "O resultado da resolução DNS (IP público vs IP privado) ✅",
+      "A ordem em que SE e PE foram criados",
+      "As regras de prioridade do firewall da conta de armazenamento"
     ],
     correctIndex: 1,
-    explanation: "DNS resolution is the determining factor. If the FQDN resolves to the public IP (no Private DNS zone), traffic uses the service endpoint path. If it resolves to a private IP (Private DNS zone active), traffic goes directly to the Private Endpoint. This is why DNS configuration is the critical cutover step."
+    explanation: "A resolução DNS é o fator determinante. Se o FQDN resolve para o IP público (sem zona de Private DNS), o tráfego usa o caminho do service endpoint. Se resolve para um IP privado (zona de Private DNS ativa), o tráfego vai diretamente para o Private Endpoint. Por isso a configuração DNS é a etapa crítica de transição."
   },
   {
     id: "az700-39-q4",
-    question: "What is the risk of disabling public network access on a storage account before verifying on-premises DNS configuration?",
+    question: "Qual é o risco de desabilitar o acesso à rede pública em uma conta de armazenamento antes de verificar a configuração DNS local?",
     options: [
-      "No risk, Private Endpoints always work regardless of DNS",
-      "On-premises clients will lose access because they still resolve to the public IP which is now blocked ✅",
-      "The Private Endpoint will also stop working",
-      "Azure VMs in the VNet will lose access"
+      "Nenhum risco, Private Endpoints sempre funcionam independente do DNS",
+      "Clientes locais perderão acesso porque ainda resolvem para o IP público que agora está bloqueado ✅",
+      "O Private Endpoint também parará de funcionar",
+      "VMs do Azure na VNet perderão acesso"
     ],
     correctIndex: 1,
-    explanation: "If on-premises DNS has not been configured to resolve the storage FQDN to the Private Endpoint IP (via DNS forwarding or host records), on-premises clients will still resolve to the public IP. With public access disabled, these connections will be refused."
+    explanation: "Se o DNS local não foi configurado para resolver o FQDN do armazenamento para o IP do Private Endpoint (via encaminhamento DNS ou registros de host), os clientes locais ainda resolverão para o IP público. Com o acesso público desabilitado, essas conexões serão recusadas."
   },
   {
     id: "az700-39-q5",
-    question: "If you need to roll back a failed PE migration, what is the correct rollback sequence?",
+    question: "Se você precisar reverter uma migração de PE que falhou, qual é a sequência correta de rollback?",
     options: [
-      "Remove the Private Endpoint first, then re-enable SE",
-      "Re-enable public access, re-add VNet rule, re-enable SE on subnet ✅",
-      "Simply remove the Private DNS zone to revert DNS",
-      "Delete and recreate the storage account"
+      "Remover o Private Endpoint primeiro, depois reabilitar o SE",
+      "Reabilitar acesso público, readicionar regra de VNet, reabilitar SE na sub-rede ✅",
+      "Simplesmente remover a zona de Private DNS para reverter o DNS",
+      "Excluir e recriar a conta de armazenamento"
     ],
     correctIndex: 1,
-    explanation: "Rollback requires restoring the previous state: re-enable public network access on the storage account, re-add the VNet rule allowing subnet access, and ensure the service endpoint is still enabled on the subnet. The Private Endpoint and DNS zone can remain (they do not interfere)."
+    explanation: "O rollback requer restaurar o estado anterior: reabilitar o acesso à rede pública na conta de armazenamento, readicionar a regra de VNet permitindo acesso à sub-rede e garantir que o service endpoint ainda esteja habilitado na sub-rede. O Private Endpoint e a zona DNS podem permanecer (eles não interferem)."
   },
   {
     id: "az700-39-q6",
-    question: "After migration is complete and public access is disabled, which clients can still access the storage account?",
+    question: "Após a migração ser concluída e o acesso público estar desabilitado, quais clientes ainda podem acessar a conta de armazenamento?",
     options: [
-      "Only clients in the same VNet as the Private Endpoint",
-      "Clients in the same VNet, peered VNets, and on-premises clients with proper DNS configuration (all via PE) ✅",
-      "Only Azure services with trusted access enabled",
-      "No clients can access it; public access must remain enabled"
+      "Apenas clientes na mesma VNet do Private Endpoint",
+      "Clientes na mesma VNet, VNets emparelhadas e clientes locais com configuração DNS adequada (todos via PE) ✅",
+      "Apenas serviços Azure com acesso confiável habilitado",
+      "Nenhum cliente pode acessar; o acesso público deve permanecer habilitado"
     ],
     correctIndex: 1,
-    explanation: "With public access disabled, access is only possible via Private Endpoints. This includes clients in the PE VNet, peered VNets (if DNS is configured), and on-premises clients connected via VPN/ExpressRoute with DNS forwarding to resolve the FQDN to the PE private IP."
+    explanation: "Com o acesso público desabilitado, o acesso só é possível via Private Endpoints. Isso inclui clientes na VNet do PE, VNets emparelhadas (se o DNS estiver configurado) e clientes locais conectados via VPN/ExpressRoute com encaminhamento DNS para resolver o FQDN para o IP privado do PE."
   }
 ]} />
 
@@ -664,11 +664,11 @@ Remove-AzResourceGroup -Name "rg-challenge39" -Force -AsJob
 ```
 
 :::warning Gerenciamento de custos
-Private Endpoints custam aproximadamente **$0.01/hora** por endpoint mais cobranças de processamento de dados. A VM de teste e a conta de armazenamento também geram cobranças mínimas. Exclua o grupo de recursos imediatamente após concluir este desafio.
+Private Endpoints custam aproximadamente **$0.01/hora** por endpoint mais cobranÃ§as de processamento de dados. A VM de teste e a conta de armazenamento tambÃ©m geram cobranÃ§as mÃ­nimas. Exclua o grupo de recursos imediatamente apÃ³s concluir este desafio.
 :::
 
 ---
 
 ## Resumo
 
-Neste desafio, você realizou uma migração com tempo de inatividade zero de service endpoints para Private Endpoints. Você aprendeu a importância crítica da ordem de migração -- implantar PE junto com SE, validar a resolução DNS antes de remover a infraestrutura de SE, e as armadilhas comuns que causam indisponibilidades (remoção prematura do SE, cache DNS, configuração DNS local ausente). Este padrão de migração é um tópico frequente no exame e uma tarefa comum no mundo real à medida que as organizações adotam Private Endpoints para melhorar a postura de segurança.
+Neste desafio, vocÃª realizou uma migraÃ§Ã£o com tempo de inatividade zero de service endpoints para Private Endpoints. VocÃª aprendeu a importÃ¢ncia crÃ­tica da ordem de migraÃ§Ã£o -- implantar PE junto com SE, validar a resoluÃ§Ã£o DNS antes de remover a infraestrutura de SE, e as armadilhas comuns que causam indisponibilidades (remoÃ§Ã£o prematura do SE, cache DNS, configuraÃ§Ã£o DNS local ausente). Este padrÃ£o de migraÃ§Ã£o Ã© um tÃ³pico frequente no exame e uma tarefa comum no mundo real Ã  medida que as organizaÃ§Ãµes adotam Private Endpoints para melhorar a postura de seguranÃ§a.

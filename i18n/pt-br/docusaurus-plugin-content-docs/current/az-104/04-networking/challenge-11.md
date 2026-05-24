@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Challenge 11 | Virtual Networks & Subnets"
+title: "Desafio 11: Redes Virtuais & Sub-redes"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

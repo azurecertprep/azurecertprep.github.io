@@ -240,7 +240,7 @@ echo "FIM configured - monitoring /etc/passwd, /etc/shadow, and /etc/sudoers"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Solicitação JIT falha com "Policy not found"
 

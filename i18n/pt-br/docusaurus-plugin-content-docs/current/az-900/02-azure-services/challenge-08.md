@@ -8,7 +8,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 08: Hierarquia de Recursos Azure
 
 :::info Tempo Estimado
-**25-35 min** | **Custo**: Gratuito | **Domínio**: Arquitetura e Serviços Azure (35-40%)
+**25-35 min** | **Custo**: Gratuito | **DomÃ­nio**: Arquitetura e ServiÃ§os Azure (35-40%)
 :::
 
 ## Habilidades do exame cobertas
@@ -18,41 +18,41 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 - Descrever management groups
 - Descrever a hierarquia de resource groups, subscriptions e management groups
 
-## Visão Geral
+## VisÃ£o Geral
 
-O Azure organiza recursos em uma hierarquia de quatro níveis. Entender essa hierarquia é crítico porque ela controla acesso (RBAC), aplicação de políticas e faturamento.
+O Azure organiza recursos em uma hierarquia de quatro nÃ­veis. Entender essa hierarquia Ã© crÃ­tico porque ela controla acesso (RBAC), aplicaÃ§Ã£o de polÃ­ticas e faturamento.
 
-```
+```text
 Management Groups
-  └── Subscriptions
-        └── Resource Groups
-              └── Resources
+  â””â”€â”€ Subscriptions
+        â””â”€â”€ Resource Groups
+              â””â”€â”€ Resources
 ```
 
-Cada nível herda configurações do nível acima. Políticas aplicadas em um management group fluem para todas as subscriptions, resource groups e recursos abaixo dele.
+Cada nÃ­vel herda configuraÃ§Ãµes do nÃ­vel acima. PolÃ­ticas aplicadas em um management group fluem para todas as subscriptions, resource groups e recursos abaixo dele.
 
 ## Explorar
 
 ### Tarefa 1: Entender a hierarquia
 
-| Nível | Finalidade | Exemplo |
+| NÃ­vel | Finalidade | Exemplo |
 |-------|-----------|---------|
-| **Management groups** | Organizar subscriptions; aplicar políticas em escala | "Production", "Development" |
+| **Management groups** | Organizar subscriptions; aplicar polÃ­ticas em escala | "Production", "Development" |
 | **Subscriptions** | Limite de faturamento + limite de controle de acesso | "Pay-As-You-Go", "Visual Studio Enterprise" |
-| **Resource groups** | Container lógico para recursos relacionados | "rg-webapp-prod", "rg-database-dev" |
-| **Resources** | Instâncias individuais de serviços Azure | Uma VM específica, storage account ou banco de dados |
+| **Resource groups** | Container lÃ³gico para recursos relacionados | "rg-webapp-prod", "rg-database-dev" |
+| **Resources** | InstÃ¢ncias individuais de serviÃ§os Azure | Uma VM especÃ­fica, storage account ou banco de dados |
 
 ### Tarefa 2: Explorar resource groups no Portal
 
 1. No Portal Azure, pesquise por **Resource groups**
-2. Clique em **+ Create** para ver o formulário de criação:
-   - Observe que você escolhe uma **Subscription** e uma **Region**
-   - Resource groups são gratuitos — são apenas containers
+2. Clique em **+ Create** para ver o formulÃ¡rio de criaÃ§Ã£o:
+   - Observe que vocÃª escolhe uma **Subscription** e uma **Region**
+   - Resource groups sÃ£o gratuitos â€” sÃ£o apenas containers
 3. Crie um resource group:
    - Nome: `rg-az900-learning`
-   - Região: Sua região mais próxima
-   - Clique em **Review + create** → **Create**
-4. Abra seu novo resource group — observe que está vazio (sem custo!)
+   - RegiÃ£o: Sua regiÃ£o mais prÃ³xima
+   - Clique em **Review + create** â†’ **Create**
+4. Abra seu novo resource group â€” observe que estÃ¡ vazio (sem custo!)
 
 ### Tarefa 3: Entender subscriptions
 
@@ -67,38 +67,38 @@ Cada nível herda configurações do nível acima. Políticas aplicadas em um ma
 **Fatos importantes:**
 - Todo recurso Azure pertence a exatamente UM resource group
 - Todo resource group pertence a exatamente UMA subscription
-- Uma subscription pode ter múltiplos resource groups
-- Subscriptions são a unidade primária de faturamento
+- Uma subscription pode ter mÃºltiplos resource groups
+- Subscriptions sÃ£o a unidade primÃ¡ria de faturamento
 
 ### Tarefa 4: Explorar management groups
 
 1. No Portal Azure, pesquise por **Management groups**
-2. Você verá o **Tenant Root Group** (o topo da sua hierarquia)
-3. Todas as subscriptions estão aninhadas dentro de management groups
+2. VocÃª verÃ¡ o **Tenant Root Group** (o topo da sua hierarquia)
+3. Todas as subscriptions estÃ£o aninhadas dentro de management groups
 
-**Exemplo de hierarquia para uma grande organização:**
-```
+**Exemplo de hierarquia para uma grande organizaÃ§Ã£o:**
+```text
 Tenant Root Group
-├── Production
-│   ├── Subscription: Prod-East
-│   └── Subscription: Prod-West
-├── Development
-│   └── Subscription: Dev-Team
-└── Sandbox
-    └── Subscription: Individual-Testing
+â”œâ”€â”€ Production
+â”‚   â”œâ”€â”€ Subscription: Prod-East
+â”‚   â””â”€â”€ Subscription: Prod-West
+â”œâ”€â”€ Development
+â”‚   â””â”€â”€ Subscription: Dev-Team
+â””â”€â”€ Sandbox
+    â””â”€â”€ Subscription: Individual-Testing
 ```
 
 ### Tarefa 5: Regras de resource groups
 
 Regras importantes para lembrar:
 
-| Regra | Descrição |
+| Regra | DescriÃ§Ã£o |
 |-------|-----------|
-| Recursos só podem estar em UM grupo | Uma VM não pode estar em dois resource groups |
-| Resource groups PODEM abranger regiões | Um RG em "East US" pode conter recursos em "West Europe" |
+| Recursos sÃ³ podem estar em UM grupo | Uma VM nÃ£o pode estar em dois resource groups |
+| Resource groups PODEM abranger regiÃµes | Um RG em "East US" pode conter recursos em "West Europe" |
 | Deletar um RG deleta TODOS os recursos dentro | Cuidado! |
-| RGs não podem ser aninhados | Você não pode colocar um resource group dentro de outro |
-| Permissões são herdadas | RBAC no nível do RG se aplica a todos os recursos dentro dele |
+| RGs nÃ£o podem ser aninhados | VocÃª nÃ£o pode colocar um resource group dentro de outro |
+| PermissÃµes sÃ£o herdadas | RBAC no nÃ­vel do RG se aplica a todos os recursos dentro dele |
 
 :::tip Alternativa Azure CLI
 ```bash
@@ -118,59 +118,59 @@ az group show --name rg-az900-learning --output table
 
 ## Conceitos-Chave
 
-| Conceito | Descrição |
+| Conceito | DescriÃ§Ã£o |
 |----------|-----------|
-| **Resource** | Qualquer item gerenciável no Azure (VM, banco de dados, VNet) |
+| **Resource** | Qualquer item gerenciÃ¡vel no Azure (VM, banco de dados, VNet) |
 | **Resource group** | Container que agrupa recursos relacionados para gerenciamento |
 | **Subscription** | Unidade de faturamento e limite de controle de acesso |
-| **Management group** | Container para gerenciar acesso/políticas entre subscriptions |
-| **Herança** | Políticas e acesso fluem PARA BAIXO na hierarquia |
-| **Tenant** | A organização de nível superior do Azure AD (Entra ID) |
+| **Management group** | Container para gerenciar acesso/polÃ­ticas entre subscriptions |
+| **HeranÃ§a** | PolÃ­ticas e acesso fluem PARA BAIXO na hierarquia |
+| **Tenant** | A organizaÃ§Ã£o de nÃ­vel superior do Azure AD (Entra ID) |
 
-## Verificação de Conhecimento
+## VerificaÃ§Ã£o de Conhecimento
 
 <KnowledgeCheck
   questions={[
     {
       id: 'az900-08-q1',
-      question: 'O que acontece quando você deleta um resource group?',
-      options: ['Apenas o grupo é deletado; os recursos são movidos', 'Todos os recursos dentro do grupo também são deletados', 'A subscription é cancelada', 'Os recursos são arquivados por 30 dias'],
+      question: 'O que acontece quando vocÃª deleta um resource group?',
+      options: ['Apenas o grupo Ã© deletado; os recursos sÃ£o movidos', 'Todos os recursos dentro do grupo tambÃ©m sÃ£o deletados', 'A subscription Ã© cancelada', 'Os recursos sÃ£o arquivados por 30 dias'],
       correctAnswer: 1,
-      explanation: 'Deletar um resource group deleta TODOS os recursos contidos nele. Esta é uma ação permanente e é útil para limpar ambientes inteiros de uma vez.'
+      explanation: 'Deletar um resource group deleta TODOS os recursos contidos nele. Esta Ã© uma aÃ§Ã£o permanente e Ã© Ãºtil para limpar ambientes inteiros de uma vez.'
     },
     {
       id: 'az900-08-q2',
-      question: 'Qual nível da hierarquia Azure é o limite primário de faturamento?',
+      question: 'Qual nÃ­vel da hierarquia Azure Ã© o limite primÃ¡rio de faturamento?',
       options: ['Management group', 'Subscription', 'Resource group', 'Resource'],
       correctAnswer: 1,
-      explanation: 'A subscription é o limite primário de faturamento. Todos os custos de recursos dentro de uma subscription são faturados juntos. Management groups ajudam a organizar subscriptions, mas não são faturados diretamente.'
+      explanation: 'A subscription Ã© o limite primÃ¡rio de faturamento. Todos os custos de recursos dentro de uma subscription sÃ£o faturados juntos. Management groups ajudam a organizar subscriptions, mas nÃ£o sÃ£o faturados diretamente.'
     },
     {
       id: 'az900-08-q3',
-      question: 'Um resource group pode conter recursos de diferentes regiões Azure?',
-      options: ['Não, todos os recursos devem estar na mesma região que o resource group', 'Sim, um resource group pode conter recursos de qualquer região', 'Somente se estiverem em regiões pareadas', 'Somente dentro da mesma geografia'],
+      question: 'Um resource group pode conter recursos de diferentes regiÃµes Azure?',
+      options: ['NÃ£o, todos os recursos devem estar na mesma regiÃ£o que o resource group', 'Sim, um resource group pode conter recursos de qualquer regiÃ£o', 'Somente se estiverem em regiÃµes pareadas', 'Somente dentro da mesma geografia'],
       correctAnswer: 1,
-      explanation: 'Um resource group pode conter recursos de qualquer região Azure. A região do resource group especifica apenas onde os metadados do grupo são armazenados, não onde seus recursos devem ser implantados.'
+      explanation: 'Um resource group pode conter recursos de qualquer regiÃ£o Azure. A regiÃ£o do resource group especifica apenas onde os metadados do grupo sÃ£o armazenados, nÃ£o onde seus recursos devem ser implantados.'
     },
     {
       id: 'az900-08-q4',
-      question: 'Uma organização tem múltiplos departamentos que precisam cada um de seu próprio faturamento e controle de acesso Azure. O que eles devem usar?',
-      options: ['Múltiplos resource groups em uma subscription', 'Múltiplas subscriptions organizadas por management groups', 'Múltiplas regiões', 'Múltiplas contas de tenant'],
+      question: 'Uma organizaÃ§Ã£o tem mÃºltiplos departamentos que precisam cada um de seu prÃ³prio faturamento e controle de acesso Azure. O que eles devem usar?',
+      options: ['MÃºltiplos resource groups em uma subscription', 'MÃºltiplas subscriptions organizadas por management groups', 'MÃºltiplas regiÃµes', 'MÃºltiplas contas de tenant'],
       correctAnswer: 1,
-      explanation: 'Usar múltiplas subscriptions (uma por departamento) fornece limites separados de faturamento e acesso. Management groups podem então organizar essas subscriptions e aplicar políticas entre elas.'
+      explanation: 'Usar mÃºltiplas subscriptions (uma por departamento) fornece limites separados de faturamento e acesso. Management groups podem entÃ£o organizar essas subscriptions e aplicar polÃ­ticas entre elas.'
     },
     {
       id: 'az900-08-q5',
-      question: 'Uma política é aplicada no nível do management group. Quais recursos ela afeta?',
-      options: ['Apenas recursos diretamente no management group', 'Todos os recursos em todas as subscriptions dentro daquele management group', 'Apenas a primeira subscription no grupo', 'Nenhum — políticas só funcionam no nível da subscription'],
+      question: 'Uma polÃ­tica Ã© aplicada no nÃ­vel do management group. Quais recursos ela afeta?',
+      options: ['Apenas recursos diretamente no management group', 'Todos os recursos em todas as subscriptions dentro daquele management group', 'Apenas a primeira subscription no grupo', 'Nenhum â€” polÃ­ticas sÃ³ funcionam no nÃ­vel da subscription'],
       correctAnswer: 1,
-      explanation: 'Políticas aplicadas no nível do management group são herdadas por todas as subscriptions, resource groups e recursos abaixo daquele management group na hierarquia.'
+      explanation: 'PolÃ­ticas aplicadas no nÃ­vel do management group sÃ£o herdadas por todas as subscriptions, resource groups e recursos abaixo daquele management group na hierarquia.'
     }
   ]}
 />
 
 ## Saiba Mais
 
-- 📚 [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
 - [Microsoft Learn: Describe core architectural components](https://learn.microsoft.com/en-us/training/modules/describe-core-architectural-components-of-azure/)
 - [Azure Resource Manager overview](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)

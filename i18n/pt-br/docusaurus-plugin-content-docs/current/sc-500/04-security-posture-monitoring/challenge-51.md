@@ -724,7 +724,7 @@ az monitor log-analytics workspace update \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: A regra de análise gera muitos falsos positivos
 

@@ -1750,7 +1750,7 @@ Get-AzNetworkWatcherNextHop `
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 ### Scenario 1: Spoke VMs cannot reach the internet
 

@@ -906,7 +906,7 @@ After completing all tasks, you should have:
 4. **RAG responses** using `vector_semantic_hybrid` query type
 5. **Evaluation scores** for groundedness, relevance, and coherence (target ≥ 4/5)
 
-## Break and Fix
+## Break & fix
 
 | Scenario | Symptom | Root Cause | Fix |
 |----------|---------|------------|-----|

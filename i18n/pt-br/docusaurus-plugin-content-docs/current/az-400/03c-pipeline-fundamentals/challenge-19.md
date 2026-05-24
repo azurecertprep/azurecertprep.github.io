@@ -8,21 +8,21 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 19: Fundamentos do GitHub Actions
 
 :::info Plataforma: GitHub-first
-Este desafio foca em GitHub Actions. Equivalentes no Azure DevOps são mencionados quando relevante.
+Este desafio foca em GitHub Actions. Equivalentes no Azure DevOps sÃ£o mencionados quando relevante.
 :::
 
 ## Habilidades do exame
 
-- Selecionar uma solução de automação de deploy, incluindo GitHub Actions
+- Selecionar uma soluÃ§Ã£o de automaÃ§Ã£o de deploy, incluindo GitHub Actions
 - Desenvolver pipelines usando YAML
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Ltd está migrando seus pipelines de CI/CD do Jenkins para o GitHub Actions. A aplicação principal é uma API REST em Node.js (Express.js) que é containerizada e implantada no Azure App Service. A equipe precisa de um workflow completo que lide com build, testes, criação de imagem de contêiner e deploys em estágios.
+A Contoso Ltd estÃ¡ migrando seus pipelines de CI/CD do Jenkins para o GitHub Actions. A aplicaÃ§Ã£o principal Ã© uma API REST em Node.js (Express.js) que Ã© containerizada e implantada no Azure App Service. A equipe precisa de um workflow completo que lide com build, testes, criaÃ§Ã£o de imagem de contÃªiner e deploys em estÃ¡gios.
 
-A estrutura do repositório:
+A estrutura do repositÃ³rio:
 
-```
+```text
 contoso-api/
   src/
     index.js
@@ -38,7 +38,7 @@ contoso-api/
     actions/
 ```
 
-## Tarefa 1: Criar o workflow de CI com estágios de build e teste
+## Tarefa 1: Criar o workflow de CI com estÃ¡gios de build e teste
 
 Crie `.github/workflows/ci-cd.yml` com triggers para push na `main` e pull requests:
 
@@ -159,7 +159,7 @@ jobs:
 
 ## Tarefa 2: Adicionar build Docker e push para o GitHub Container Registry
 
-Adicione um job que faz build e push da imagem de contêiner:
+Adicione um job que faz build e push da imagem de contÃªiner:
 
 ```yaml
   docker:
@@ -212,7 +212,7 @@ Adicione um job que faz build e push da imagem de contêiner:
             BUILD_SHA=${{ needs.build.outputs.sha_short }}
 ```
 
-## Tarefa 3: Deploy para o Azure App Service com staging e produção
+## Tarefa 3: Deploy para o Azure App Service com staging e produÃ§Ã£o
 
 Adicione jobs de deploy usando environments:
 
@@ -273,7 +273,7 @@ Adicione jobs de deploy usando environments:
             --target-slot production
 ```
 
-## Tarefa 4: Criar uma composite action para etapas reutilizáveis
+## Tarefa 4: Criar uma composite action para etapas reutilizÃ¡veis
 
 Crie `.github/actions/setup-node-project/action.yml`:
 
@@ -333,9 +333,9 @@ Use a composite action no workflow:
           node-version: ${{ env.NODE_VERSION }}
 ```
 
-## Tarefa 5: Configurar secrets e variáveis de ambiente
+## Tarefa 5: Configurar secrets e variÃ¡veis de ambiente
 
-Configure os seguintes secrets e variáveis nos níveis de repositório e environment:
+Configure os seguintes secrets e variÃ¡veis nos nÃ­veis de repositÃ³rio e environment:
 
 ```bash
 # Repository secrets (available to all workflows)
@@ -354,11 +354,11 @@ gh variable set APP_SERVICE_PLAN --env staging --body "contoso-plan-staging"
 gh variable set APP_SERVICE_PLAN --env production --body "contoso-plan-prod"
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Exercício 1: Corrigir o workflow com falha
+### ExercÃ­cio 1: Corrigir o workflow com falha
 
-O workflow a seguir contém erros. Identifique e corrija-os:
+O workflow a seguir contÃ©m erros. Identifique e corrija-os:
 
 ```yaml
 name: Broken Workflow
@@ -391,7 +391,7 @@ jobs:
           images: ${{ needs.build.outputs.image }}  # ERROR 5: build job has no outputs defined
 ```
 
-**Versão corrigida:**
+**VersÃ£o corrigida:**
 
 ```yaml
 name: Fixed Workflow
@@ -427,9 +427,9 @@ jobs:
           images: ${{ needs.build.outputs.image }}
 ```
 
-### Exercício 2: Depurar o problema de permissões
+### ExercÃ­cio 2: Depurar o problema de permissÃµes
 
-Um workflow que faz push para o GHCR falha com `denied: permission_denied`. O arquivo de workflow contém:
+Um workflow que faz push para o GHCR falha com `denied: permission_denied`. O arquivo de workflow contÃ©m:
 
 ```yaml
 permissions:
@@ -438,9 +438,9 @@ permissions:
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Adicione a permissão `packages: write` para permitir push para o GHCR:
+**CorreÃ§Ã£o:** Adicione a permissÃ£o `packages: write` para permitir push para o GHCR:
 
 ```yaml
 permissions:
@@ -449,22 +449,22 @@ permissions:
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "No GitHub Actions, qual é a maneira correta de passar dados entre jobs?",
+    question: "No GitHub Actions, qual Ã© a maneira correta de passar dados entre jobs?",
     options: [
-      "Usar variáveis de ambiente definidas com 'export'",
+      "Usar variÃ¡veis de ambiente definidas com 'export'",
       "Escrever em um arquivo compartilhado no workspace",
       "Usar outputs de job com '$GITHUB_OUTPUT' e o contexto 'needs'",
-      "Usar variáveis de repositório como armazenamento intermediário"
+      "Usar variÃ¡veis de repositÃ³rio como armazenamento intermediÃ¡rio"
     ],
     correctIndex: 2,
-    explanation: "Os outputs de job são definidos usando echo \"key=value\" >> $GITHUB_OUTPUT em um step com um id, declarados na seção outputs do job e consumidos em jobs downstream usando ${{ needs.job_id.outputs.key }}. Variáveis de ambiente e arquivos do workspace não persistem entre jobs, pois cada job executa em um runner novo."
+    explanation: "Os outputs de job sÃ£o definidos usando echo \"key=value\" >> $GITHUB_OUTPUT em um step com um id, declarados na seÃ§Ã£o outputs do job e consumidos em jobs downstream usando ${{ needs.job_id.outputs.key }}. VariÃ¡veis de ambiente e arquivos do workspace nÃ£o persistem entre jobs, pois cada job executa em um runner novo."
   },
   {
-    question: "Qual configuração de trigger permite execução manual do workflow com parâmetros customizados?",
+    question: "Qual configuraÃ§Ã£o de trigger permite execuÃ§Ã£o manual do workflow com parÃ¢metros customizados?",
     options: [
       "'on: manual'",
       "'on: workflow_dispatch' com 'inputs'",
@@ -472,21 +472,21 @@ permissions:
       "'on: push' com 'if: github.event.manual'"
     ],
     correctIndex: 1,
-    explanation: "workflow_dispatch permite acionamento manual pela UI do GitHub ou API com inputs tipados (string, boolean, choice, environment). repository_dispatch é acionado via API com um client_payload, mas não fornece a mesma experiência de entrada orientada pela UI."
+    explanation: "workflow_dispatch permite acionamento manual pela UI do GitHub ou API com inputs tipados (string, boolean, choice, environment). repository_dispatch Ã© acionado via API com um client_payload, mas nÃ£o fornece a mesma experiÃªncia de entrada orientada pela UI."
   },
   {
-    question: "Qual é a principal vantagem de uma composite action sobre um reusable workflow?",
+    question: "Qual Ã© a principal vantagem de uma composite action sobre um reusable workflow?",
     options: [
       "Composite actions podem usar secrets diretamente",
       "Composite actions executam no mesmo job, compartilhando o workspace e o runner",
-      "Composite actions suportam estratégias de matrix",
+      "Composite actions suportam estratÃ©gias de matrix",
       "Composite actions podem acionar outros workflows"
     ],
     correctIndex: 1,
-    explanation: "Composite actions executam como steps dentro do job que as invoca, ou seja, compartilham o mesmo workspace, variáveis de ambiente e runner. Reusable workflows executam como um job separado (ou conjunto de jobs) com sua própria instância de runner. Isso torna as composite actions melhores para agrupar steps relacionados que precisam de estado compartilhado."
+    explanation: "Composite actions executam como steps dentro do job que as invoca, ou seja, compartilham o mesmo workspace, variÃ¡veis de ambiente e runner. Reusable workflows executam como um job separado (ou conjunto de jobs) com sua prÃ³pria instÃ¢ncia de runner. Isso torna as composite actions melhores para agrupar steps relacionados que precisam de estado compartilhado."
   },
   {
-    question: "Qual valor de 'permissions' é necessário para que um workflow faça push de imagens de contêiner para o GitHub Container Registry (ghcr.io)?",
+    question: "Qual valor de 'permissions' Ã© necessÃ¡rio para que um workflow faÃ§a push de imagens de contÃªiner para o GitHub Container Registry (ghcr.io)?",
     options: [
       "'contents: write'",
       "'packages: write'",
@@ -494,7 +494,7 @@ permissions:
       "'registry: write'"
     ],
     correctIndex: 1,
-    explanation: "O GHCR usa o escopo de permissão packages. O workflow precisa de packages: write para fazer push de imagens e packages: read para pull. Quando permissions é definido explicitamente, apenas as permissões listadas são concedidas (princípio do menor privilégio)."
+    explanation: "O GHCR usa o escopo de permissÃ£o packages. O workflow precisa de packages: write para fazer push de imagens e packages: read para pull. Quando permissions Ã© definido explicitamente, apenas as permissÃµes listadas sÃ£o concedidas (princÃ­pio do menor privilÃ©gio)."
   }
 ]} />
 

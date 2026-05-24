@@ -12,11 +12,11 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 - Configurar coleta de telemetria usando Application Insights, VM Insights, Container Insights, Azure Monitor for Storage e Azure Monitor for Networks
 
-## Cenário
+## CenÃ¡rio
 
-A Contoso Ltd opera uma arquitetura de microsserviços com componentes executando em Azure VMs (serviço legado de pedidos), Azure Kubernetes Service (serviços de pagamento e estoque) e Azure App Service (frontend web). Cada equipe monitora de forma diferente: a equipe de VMs verifica sessões RDP, a equipe de AKS usa logs básicos via kubectl, e a equipe de App Service não usa nenhum monitoramento. O CTO quer observabilidade padronizada em todas as plataformas de computação com rastreamento distribuído para acompanhar requisições de ponta a ponta.
+A Contoso Ltd opera uma arquitetura de microsserviÃ§os com componentes executando em Azure VMs (serviÃ§o legado de pedidos), Azure Kubernetes Service (serviÃ§os de pagamento e estoque) e Azure App Service (frontend web). Cada equipe monitora de forma diferente: a equipe de VMs verifica sessÃµes RDP, a equipe de AKS usa logs bÃ¡sicos via kubectl, e a equipe de App Service nÃ£o usa nenhum monitoramento. O CTO quer observabilidade padronizada em todas as plataformas de computaÃ§Ã£o com rastreamento distribuÃ­do para acompanhar requisiÃ§Ãµes de ponta a ponta.
 
-## Pré-requisitos
+## PrÃ©-requisitos
 
 - Assinatura Azure com acesso de Contributor
 - Um web app no Azure App Service
@@ -67,7 +67,7 @@ az webapp config appsettings set \
 az webapp restart --name app-contoso-web --resource-group rg-contoso-prod
 ```
 
-Instrumentação baseada em SDK (para mais controle) em uma aplicação .NET:
+InstrumentaÃ§Ã£o baseada em SDK (para mais controle) em uma aplicaÃ§Ã£o .NET:
 
 ```csharp
 // Program.cs
@@ -127,9 +127,9 @@ az monitor data-collection rule association create \
 ```
 
 O VM Insights fornece:
-- Aba de desempenho: CPU, memória, IOPS de disco, rede
-- Aba de mapa: dependências de processos e conexões de rede
-- Monitoramento de conexões entre VMs e serviços externos
+- Aba de desempenho: CPU, memÃ³ria, IOPS de disco, rede
+- Aba de mapa: dependÃªncias de processos e conexÃµes de rede
+- Monitoramento de conexÃµes entre VMs e serviÃ§os externos
 
 ### Tarefa 3: Habilitar Container Insights para AKS
 
@@ -181,7 +181,7 @@ data:
 EOF
 ```
 
-### Tarefa 4: Configurar métricas e eventos personalizados
+### Tarefa 4: Configurar mÃ©tricas e eventos personalizados
 
 ```bash
 # Send custom metrics via Application Insights SDK
@@ -274,7 +274,7 @@ az webapp config appsettings set \
   --settings "MicrosoftAppInsights_AdaptiveSamplingTelemetryProcessor_MaxTelemetryItemsPerSecond=5"
 ```
 
-Configuração de amostragem baseada em SDK:
+ConfiguraÃ§Ã£o de amostragem baseada em SDK:
 
 ```csharp
 // Program.cs - Configure sampling
@@ -297,7 +297,7 @@ builder.Services.Configure<TelemetryConfiguration>(config =>
 });
 ```
 
-Amostragem de ingestão (server-side, aplicada a todos os dados independentemente das configurações do SDK):
+Amostragem de ingestÃ£o (server-side, aplicada a todos os dados independentemente das configuraÃ§Ãµes do SDK):
 
 ```bash
 # Set daily cap to control costs
@@ -308,9 +308,9 @@ az monitor app-insights component update \
   --cap 5  # 5 GB daily cap
 ```
 
-### Tarefa 7: Implementar correlação de rastreamento distribuído
+### Tarefa 7: Implementar correlaÃ§Ã£o de rastreamento distribuÃ­do
 
-Garantir correlação de rastreamento entre serviços:
+Garantir correlaÃ§Ã£o de rastreamento entre serviÃ§os:
 
 ```bash
 # Application Insights automatically correlates requests using W3C Trace Context
@@ -322,7 +322,7 @@ Garantir correlação de rastreamento entre serviços:
 # tracestate: (optional vendor-specific state)
 ```
 
-Configurar correlação em microsserviços:
+Configurar correlaÃ§Ã£o em microsserviÃ§os:
 
 ```yaml
 # For AKS services, deploy with environment variables for App Insights
@@ -348,7 +348,7 @@ spec:
 
 Verificar rastreamento de ponta a ponta:
 
-```
+```text
 // KQL: Find a request and trace it across services
 requests
 | where timestamp > ago(1h)
@@ -362,15 +362,15 @@ requests
 | project-away operation_Id1
 ```
 
-## Exercícios de quebra e conserto
+## ExercÃ­cios de quebra e conserto
 
-### Cenário de quebra 1: Container Insights não mostra dados para novo namespace
+### CenÃ¡rio de quebra 1: Container Insights nÃ£o mostra dados para novo namespace
 
-Um novo microsserviço é implantado em um novo namespace do Kubernetes, mas o Container Insights não mostra logs nem métricas.
+Um novo microsserviÃ§o Ã© implantado em um novo namespace do Kubernetes, mas o Container Insights nÃ£o mostra logs nem mÃ©tricas.
 
-**Causa:** O ConfigMap do Container Insights exclui certos namespaces da coleta de logs, ou o novo namespace foi adicionado à lista de exclusão.
+**Causa:** O ConfigMap do Container Insights exclui certos namespaces da coleta de logs, ou o novo namespace foi adicionado Ã  lista de exclusÃ£o.
 
-**Diagnóstico:**
+**DiagnÃ³stico:**
 
 ```bash
 kubectl get configmap container-azm-ms-agentconfig -n kube-system -o yaml
@@ -378,9 +378,9 @@ kubectl get configmap container-azm-ms-agentconfig -n kube-system -o yaml
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Atualize o ConfigMap para incluir o novo namespace:
+**CorreÃ§Ã£o:** Atualize o ConfigMap para incluir o novo namespace:
 
 ```bash
 kubectl edit configmap container-azm-ms-agentconfig -n kube-system
@@ -391,17 +391,17 @@ kubectl rollout restart daemonset omsagent -n kube-system
 
 </details>
 
-### Cenário de quebra 2: Rastreamento distribuído mostra lacunas entre serviços
+### CenÃ¡rio de quebra 2: Rastreamento distribuÃ­do mostra lacunas entre serviÃ§os
 
-O Application Map mostra todos os serviços, mas a correlação de rastreamento falha entre o frontend e o serviço de pagamento.
+O Application Map mostra todos os serviÃ§os, mas a correlaÃ§Ã£o de rastreamento falha entre o frontend e o serviÃ§o de pagamento.
 
-**Causa:** O serviço de pagamento usa um cliente HTTP personalizado que não propaga os cabeçalhos W3C de contexto de rastreamento.
+**Causa:** O serviÃ§o de pagamento usa um cliente HTTP personalizado que nÃ£o propaga os cabeÃ§alhos W3C de contexto de rastreamento.
 
 
 <details>
-<summary>Mostrar solução</summary>
+<summary>Mostrar soluÃ§Ã£o</summary>
 
-**Correção:** Garanta que a biblioteca do cliente HTTP propague os cabeçalhos `traceparent` e `tracestate`. Em Node.js com Application Insights:
+**CorreÃ§Ã£o:** Garanta que a biblioteca do cliente HTTP propague os cabeÃ§alhos `traceparent` e `tracestate`. Em Node.js com Application Insights:
 
 ```javascript
 // The Application Insights SDK auto-patches common HTTP libraries
@@ -421,22 +421,22 @@ function makeDownstreamCall(url, payload) {
 ```
 
 </details>
-## Verificação de conhecimento
+## VerificaÃ§Ã£o de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "A Contoso tem um web app .NET no App Service. Eles querem telemetria do Application Insights sem modificar o código da aplicação. O que devem configurar?",
+    question: "A Contoso tem um web app .NET no App Service. Eles querem telemetria do Application Insights sem modificar o cÃ³digo da aplicaÃ§Ã£o. O que devem configurar?",
     options: [
-      "Instalar o pacote NuGet do Application Insights e adicionar código de inicialização do SDK",
-      "Habilitar auto-instrumentação configurando o app setting 'ApplicationInsightsAgent_EXTENSION_VERSION'",
-      "Implantar um agente do Application Insights como contêiner sidecar",
+      "Instalar o pacote NuGet do Application Insights e adicionar cÃ³digo de inicializaÃ§Ã£o do SDK",
+      "Habilitar auto-instrumentaÃ§Ã£o configurando o app setting 'ApplicationInsightsAgent_EXTENSION_VERSION'",
+      "Implantar um agente do Application Insights como contÃªiner sidecar",
       "Configurar uma data collection rule com o Azure Monitor Agent"
     ],
     correctIndex: 1,
-    explanation: "A auto-instrumentação do App Service (codeless attach) habilita o Application Insights configurando o app setting ApplicationInsightsAgent_EXTENSION_VERSION para ~3 junto com a connection string. Nenhuma alteração de código ou pacote NuGet é necessária. Isso funciona para aplicações .NET, Java, Node.js e Python no App Service."
+    explanation: "A auto-instrumentaÃ§Ã£o do App Service (codeless attach) habilita o Application Insights configurando o app setting ApplicationInsightsAgent_EXTENSION_VERSION para ~3 junto com a connection string. Nenhuma alteraÃ§Ã£o de cÃ³digo ou pacote NuGet Ã© necessÃ¡ria. Isso funciona para aplicaÃ§Ãµes .NET, Java, Node.js e Python no App Service."
   },
   {
-    question: "A Contoso executa serviços em VMs, AKS e App Service. Qual solução de monitoramento fornece mapeamento de dependências no nível de processo, mostrando quais processos se comunicam com quais serviços externos na VM?",
+    question: "A Contoso executa serviÃ§os em VMs, AKS e App Service. Qual soluÃ§Ã£o de monitoramento fornece mapeamento de dependÃªncias no nÃ­vel de processo, mostrando quais processos se comunicam com quais serviÃ§os externos na VM?",
     options: [
       "Application Insights",
       "Container Insights",
@@ -444,29 +444,29 @@ function makeDownstreamCall(url, payload) {
       "Network Watcher"
     ],
     correctIndex: 2,
-    explanation: "O recurso Map do VM Insights descobre processos em execução na VM e suas conexões de rede, mostrando quais processos se comunicam com serviços externos, bancos de dados e outras VMs. Isso fornece um mapa de dependências sem exigir alterações no código da aplicação."
+    explanation: "O recurso Map do VM Insights descobre processos em execuÃ§Ã£o na VM e suas conexÃµes de rede, mostrando quais processos se comunicam com serviÃ§os externos, bancos de dados e outras VMs. Isso fornece um mapa de dependÃªncias sem exigir alteraÃ§Ãµes no cÃ³digo da aplicaÃ§Ã£o."
   },
   {
-    question: "O Application Insights está gerando 50 GB de telemetria diariamente, resultando em custos altos. Qual abordagem reduz custos enquanto preserva visibilidade de erros e exceções?",
+    question: "O Application Insights estÃ¡ gerando 50 GB de telemetria diariamente, resultando em custos altos. Qual abordagem reduz custos enquanto preserva visibilidade de erros e exceÃ§Ãµes?",
     options: [
       "Desabilitar o Application Insights completamente",
-      "Configurar amostragem adaptativa que exclui exceções da amostragem",
-      "Definir um limite diário de 1 GB e perder todos os dados acima do limite",
-      "Mudar do Application Insights baseado em workspace para o clássico"
+      "Configurar amostragem adaptativa que exclui exceÃ§Ãµes da amostragem",
+      "Definir um limite diÃ¡rio de 1 GB e perder todos os dados acima do limite",
+      "Mudar do Application Insights baseado em workspace para o clÃ¡ssico"
     ],
     correctIndex: 1,
-    explanation: "A amostragem adaptativa reduz o volume de telemetria ajustando dinamicamente a taxa de amostragem enquanto mantém precisão estatística. Ao excluir exceções da amostragem, todos os erros são preservados para depuração enquanto requisições bem-sucedidas de rotina são amostradas. Isso é mais eficaz do que um limite diário, que descarta toda a telemetria após o limite."
+    explanation: "A amostragem adaptativa reduz o volume de telemetria ajustando dinamicamente a taxa de amostragem enquanto mantÃ©m precisÃ£o estatÃ­stica. Ao excluir exceÃ§Ãµes da amostragem, todos os erros sÃ£o preservados para depuraÃ§Ã£o enquanto requisiÃ§Ãµes bem-sucedidas de rotina sÃ£o amostradas. Isso Ã© mais eficaz do que um limite diÃ¡rio, que descarta toda a telemetria apÃ³s o limite."
   },
   {
-    question: "Uma requisição ao web app da Contoso chama três microsserviços backend. No Application Insights, a visualização de transação de ponta a ponta mostra apenas a requisição inicial sem as chamadas downstream. Qual é a causa mais provável?",
+    question: "Uma requisiÃ§Ã£o ao web app da Contoso chama trÃªs microsserviÃ§os backend. No Application Insights, a visualizaÃ§Ã£o de transaÃ§Ã£o de ponta a ponta mostra apenas a requisiÃ§Ã£o inicial sem as chamadas downstream. Qual Ã© a causa mais provÃ¡vel?",
     options: [
-      "Os serviços backend não estão instrumentados com o Application Insights",
-      "Os serviços usam recursos diferentes do Application Insights",
-      "Os cabeçalhos de contexto de rastreamento não estão sendo propagados entre os serviços",
-      "A amostragem está filtrando chamadas de dependência"
+      "Os serviÃ§os backend nÃ£o estÃ£o instrumentados com o Application Insights",
+      "Os serviÃ§os usam recursos diferentes do Application Insights",
+      "Os cabeÃ§alhos de contexto de rastreamento nÃ£o estÃ£o sendo propagados entre os serviÃ§os",
+      "A amostragem estÃ¡ filtrando chamadas de dependÃªncia"
     ],
     correctIndex: 2,
-    explanation: "O rastreamento distribuído requer que os cabeçalhos de contexto de rastreamento W3C (traceparent) sejam propagados entre os serviços. Se um serviço não encaminha esses cabeçalhos nas chamadas HTTP de saída, a telemetria downstream não pode ser correlacionada com a requisição pai. Todos os serviços devem estar instrumentados E o contexto de rastreamento deve fluir através dos cabeçalhos HTTP."
+    explanation: "O rastreamento distribuÃ­do requer que os cabeÃ§alhos de contexto de rastreamento W3C (traceparent) sejam propagados entre os serviÃ§os. Se um serviÃ§o nÃ£o encaminha esses cabeÃ§alhos nas chamadas HTTP de saÃ­da, a telemetria downstream nÃ£o pode ser correlacionada com a requisiÃ§Ã£o pai. Todos os serviÃ§os devem estar instrumentados E o contexto de rastreamento deve fluir atravÃ©s dos cabeÃ§alhos HTTP."
   }
 ]} />
 

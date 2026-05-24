@@ -337,7 +337,7 @@ az webapp log show --name $WEB_APP_NAME --resource-group $RG_NAME --only-show-er
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Referência do Key Vault retorna "SecretNotFound" no App Service
 

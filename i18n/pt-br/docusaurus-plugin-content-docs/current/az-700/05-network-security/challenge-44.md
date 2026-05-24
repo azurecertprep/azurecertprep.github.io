@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-title: "Challenge 44: Secured virtual hub (Firewall in vWAN)"
+title: "Desafio 44: Hub Virtual Protegido (Firewall em vWAN)"
 sidebar_label: "Challenge 44"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
@@ -510,7 +510,7 @@ az network firewall show \
   -o json
 ```
 
-## Quebra e correção
+## Quebra & conserta
 
 Estes exercícios simulam configurações incorretas comuns em implantações de hub virtual protegido.
 
@@ -593,7 +593,7 @@ az monitor diagnostic-settings show \
 <KnowledgeCheck questions={[
   {
     id: "az700-44-q1",
-    question: "Which SKU must be used when deploying Azure Firewall inside a Virtual WAN hub?",
+    question: "Qual SKU deve ser usado ao implantar o Azure Firewall dentro de um hub Virtual WAN?",
     options: [
       "AZFW_Hub ✅",
       "AZFW_VNet",
@@ -601,47 +601,47 @@ az monitor diagnostic-settings show \
       "Premium_Hub"
     ],
     correctIndex: 0,
-    explanation: "The AZFW_Hub SKU is specifically designed for deployment inside Virtual WAN hubs (secured virtual hubs). AZFW_VNet is for standalone VNet deployments where you manage the AzureFirewallSubnet yourself. Using AZFW_VNet in a Virtual WAN hub will fail."
+    explanation: "O SKU AZFW_Hub é projetado especificamente para implantação dentro de hubs Virtual WAN (hubs virtuais protegidos). O AZFW_VNet é para implantações autônomas em VNet onde você gerencia a AzureFirewallSubnet por conta própria. Usar AZFW_VNet em um hub Virtual WAN falhará."
   },
   {
     id: "az700-44-q2",
-    question: "What are the two routing policy types available in Virtual WAN routing intent?",
+    question: "Quais são os dois tipos de política de roteamento disponíveis na intenção de roteamento do Virtual WAN?",
     options: [
-      "InternetTraffic and PrivateTraffic ✅",
-      "PublicTraffic and InternalTraffic",
-      "InboundTraffic and OutboundTraffic",
-      "NorthSouth and EastWest"
+      "InternetTraffic e PrivateTraffic ✅",
+      "PublicTraffic e InternalTraffic",
+      "InboundTraffic e OutboundTraffic",
+      "NorthSouth e EastWest"
     ],
     correctIndex: 0,
-    explanation: "Routing intent supports two policy types: InternetTraffic (forces 0.0.0.0/0 internet traffic through the next hop) and PrivateTraffic (forces all RFC 1918 inter-spoke and branch traffic through the next hop). Both must be configured to achieve full traffic inspection."
+    explanation: "A intenção de roteamento suporta dois tipos de política: InternetTraffic (força o tráfego de internet 0.0.0.0/0 pelo próximo salto) e PrivateTraffic (força todo o tráfego RFC 1918 entre spokes e branches pelo próximo salto). Ambos devem ser configurados para alcançar inspeção completa do tráfego."
   },
   {
     id: "az700-44-q3",
-    question: "What distinguishes a secured virtual hub from a standard Virtual WAN hub?",
+    question: "O que distingue um hub virtual protegido de um hub Virtual WAN padrão?",
     options: [
-      "A secured virtual hub has Azure Firewall or a supported security partner provider deployed within it ✅",
-      "A secured virtual hub uses the Premium WAN type instead of Standard",
-      "A secured virtual hub encrypts all traffic between spokes automatically",
-      "A secured virtual hub requires ExpressRoute connectivity"
+      "Um hub virtual protegido tem Azure Firewall ou um provedor parceiro de segurança suportado implantado dentro dele ✅",
+      "Um hub virtual protegido usa o tipo Premium de WAN em vez do Standard",
+      "Um hub virtual protegido criptografa todo o tráfego entre spokes automaticamente",
+      "Um hub virtual protegido requer conectividade ExpressRoute"
     ],
     correctIndex: 0,
-    explanation: "A secured virtual hub is simply a Virtual WAN hub with Azure Firewall (or a supported third-party security partner provider) deployed inside it. This is managed through Azure Firewall Manager. The hub type must be Standard (not Basic), but Premium is not a valid type."
+    explanation: "Um hub virtual protegido é simplesmente um hub Virtual WAN com Azure Firewall (ou um provedor parceiro de segurança de terceiros suportado) implantado dentro dele. Isso é gerenciado pelo Azure Firewall Manager. O tipo de hub deve ser Standard (não Basic), mas Premium não é um tipo válido."
   },
   {
     id: "az700-44-q4",
-    question: "When routing intent with PrivateTraffic policy is enabled, what happens to inter-spoke traffic?",
+    question: "Quando a intenção de roteamento com política PrivateTraffic é habilitada, o que acontece com o tráfego entre spokes?",
     options: [
-      "All inter-spoke traffic is routed through the Azure Firewall next hop specified in the policy ✅",
-      "Inter-spoke traffic is blocked by default until explicit allow rules are created",
-      "Traffic flows directly between spokes but is logged by the firewall",
-      "Only traffic between different regions is routed through the firewall"
+      "Todo o tráfego entre spokes é roteado pelo próximo salto do Azure Firewall especificado na política ✅",
+      "O tráfego entre spokes é bloqueado por padrão até que regras explícitas de permissão sejam criadas",
+      "O tráfego flui diretamente entre spokes, mas é registrado pelo firewall",
+      "Apenas o tráfego entre regiões diferentes é roteado pelo firewall"
     ],
     correctIndex: 0,
-    explanation: "When the PrivateTraffic routing policy is configured, the hub automatically programs routes so that all RFC 1918 traffic (including inter-spoke) passes through the specified next hop (Azure Firewall). The firewall policy rules then determine whether to allow or deny the traffic."
+    explanation: "Quando a política de roteamento PrivateTraffic é configurada, o hub programa automaticamente rotas para que todo o tráfego RFC 1918 (incluindo entre spokes) passe pelo próximo salto especificado (Azure Firewall). As regras da política de firewall então determinam se o tráfego deve ser permitido ou negado."
   },
   {
     id: "az700-44-q5",
-    question: "Which Virtual WAN type is required to deploy Azure Firewall in a hub?",
+    question: "Qual tipo de Virtual WAN é necessário para implantar o Azure Firewall em um hub?",
     options: [
       "Standard ✅",
       "Basic",
@@ -649,19 +649,19 @@ az monitor diagnostic-settings show \
       "Enterprise"
     ],
     correctIndex: 0,
-    explanation: "Azure Virtual WAN must be Standard type to support Azure Firewall, VPN Gateway, and ExpressRoute in hubs. The Basic type only supports site-to-site VPN. There is no Premium or Enterprise type."
+    explanation: "O Azure Virtual WAN deve ser do tipo Standard para suportar Azure Firewall, VPN Gateway e ExpressRoute nos hubs. O tipo Basic suporta apenas VPN site-to-site. Não existe tipo Premium ou Enterprise."
   },
   {
     id: "az700-44-q6",
-    question: "You deployed Azure Firewall in a Virtual WAN hub but inter-spoke traffic is not being inspected. What is the most likely cause?",
+    question: "Você implantou o Azure Firewall em um hub Virtual WAN, mas o tráfego entre spokes não está sendo inspecionado. Qual é a causa mais provável?",
     options: [
-      "Routing intent with PrivateTraffic policy was not configured ✅",
-      "The firewall tier needs to be upgraded to Premium",
-      "Spoke VNets need NSG rules allowing firewall inspection",
-      "The AZFW_VNet SKU was accidentally used instead of AZFW_Hub"
+      "A intenção de roteamento com política PrivateTraffic não foi configurada ✅",
+      "O tier do firewall precisa ser atualizado para Premium",
+      "As VNets spoke precisam de regras de NSG permitindo inspeção do firewall",
+      "O SKU AZFW_VNet foi usado acidentalmente em vez do AZFW_Hub"
     ],
     correctIndex: 0,
-    explanation: "Deploying Azure Firewall in a hub does not automatically force traffic through it. You must configure routing intent with the PrivateTraffic policy to inject routes that direct inter-spoke traffic through the firewall. Without routing intent, traffic flows directly between connected spokes."
+    explanation: "Implantar o Azure Firewall em um hub não força automaticamente o tráfego por ele. Você deve configurar a intenção de roteamento com a política PrivateTraffic para injetar rotas que direcionam o tráfego entre spokes pelo firewall. Sem a intenção de roteamento, o tráfego flui diretamente entre os spokes conectados."
   }
 ]} />
 

@@ -339,7 +339,7 @@ rm -f secret-backup.blob key-backup.blob
 
 ---
 
-## Break & Fix
+## Quebra & conserta
 
 ### Cenário 1: Aplicativo não consegue acessar o Key Vault após configuração do firewall
 

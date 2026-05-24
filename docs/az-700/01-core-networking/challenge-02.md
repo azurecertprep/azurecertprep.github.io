@@ -396,7 +396,7 @@ az network vnet subnet update \
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 These exercises demonstrate common mistakes and platform guardrails.
 

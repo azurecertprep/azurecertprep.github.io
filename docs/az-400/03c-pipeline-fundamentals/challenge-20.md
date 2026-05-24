@@ -22,7 +22,7 @@ Contoso Ltd's enterprise team uses Azure DevOps for their software delivery. The
 
 The repository structure:
 
-```
+```text
 contoso-webapi/
   src/
     Contoso.Api/
@@ -554,7 +554,7 @@ pr:
   drafts: false
 ```
 
-## Break and fix
+## Break & fix
 
 ### Exercise 1: Template parameter errors
 

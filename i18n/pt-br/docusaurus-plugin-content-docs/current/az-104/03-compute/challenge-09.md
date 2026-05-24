@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "Challenge 09 | Containers in Azure"
+title: "Desafio 09: Contêineres no Azure"
 ---
 
 import SuccessChecklist from '@site/src/components/SuccessChecklist';

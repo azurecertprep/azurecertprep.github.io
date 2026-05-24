@@ -362,13 +362,13 @@ Block specific known-bad packages from being introduced:
     echo "No banned packages detected"
 ```
 
-## Break and fix
+## Break & fix
 
 ### Scenario: Dependabot PR breaks build due to breaking change
 
 Dependabot opens a PR to update `@contoso/auth-sdk` from 1.2.0 to 2.0.0. The CI pipeline fails with:
 
-```
+```text
 TypeError: AuthClient.validateToken is not a function
     at Object.<anonymous> (src/middleware/auth.js:15:32)
 ```

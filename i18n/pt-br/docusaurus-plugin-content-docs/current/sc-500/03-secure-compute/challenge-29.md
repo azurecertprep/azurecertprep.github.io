@@ -331,7 +331,7 @@ az monitor scheduled-query create \
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: AI Gateway retornando erros 429 apesar de baixo uso de tokens
 

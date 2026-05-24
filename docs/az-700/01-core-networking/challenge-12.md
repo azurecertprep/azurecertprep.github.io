@@ -569,7 +569,7 @@ Use `--window-size` to define the aggregation period and `--evaluation-frequency
 
 ---
 
-## Break and fix scenarios
+## Break & fix
 
 These scenarios represent common misconfigurations encountered in production and on the exam.
 

@@ -202,7 +202,7 @@ echo "  - Associated organizations"
 
 ---
 
-## Quebre & Conserte
+## Quebra & conserta
 
 ### Cenário 1: Avaliação de vulnerabilidades não mostra resultados para uma VM
 
