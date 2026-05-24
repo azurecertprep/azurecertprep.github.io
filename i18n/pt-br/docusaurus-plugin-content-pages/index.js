@@ -337,6 +337,208 @@ const az700Challenges = [
   { num: '49', title: 'Enterprise Multi-Região (Capstone)', domain: 'capstone', href: '/docs/az-700/capstone/challenge-49' },
 ];
 
+const ai900DomainLabels = {
+  'ai-workloads': 'Cargas de Trabalho de IA',
+  'machine-learning': 'Machine Learning',
+  'computer-vision': 'Visão Computacional',
+  'nlp': 'PLN',
+  'generative-ai': 'IA Generativa',
+  'capstone': 'Capstone',
+};
+
+const ai900Challenges = [
+  { num: '01', title: 'Identificar Cargas de Trabalho de IA', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-01' },
+  { num: '02', title: 'Princípios de IA Responsável', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-02' },
+  { num: '03', title: 'Padrões e Casos de Uso de IA', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-03' },
+  { num: '04', title: 'Visão Geral dos Serviços Azure AI', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-04' },
+  { num: '05', title: 'Regressão em Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-05' },
+  { num: '06', title: 'Classificação em Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-06' },
+  { num: '07', title: 'Clustering em Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-07' },
+  { num: '08', title: 'Deep Learning e Transformers', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-08' },
+  { num: '09', title: 'Workspace do Azure Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-09' },
+  { num: '10', title: 'Classificação de Imagens', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-10' },
+  { num: '11', title: 'Detecção de Objetos', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-11' },
+  { num: '12', title: 'Reconhecimento Óptico de Caracteres (OCR)', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-12' },
+  { num: '13', title: 'Detecção e Análise de Rosto', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-13' },
+  { num: '14', title: 'Análise de Texto: Frases-chave e Entidades', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-14' },
+  { num: '15', title: 'Análise de Sentimento e Detecção de Idioma', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-15' },
+  { num: '16', title: 'Reconhecimento e Síntese de Fala', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-16' },
+  { num: '17', title: 'Tradução de Idiomas', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-17' },
+  { num: '18', title: 'Serviços Azure AI Language e Speech', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-18' },
+  { num: '19', title: 'Fundamentos de IA Generativa', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-19' },
+  { num: '20', title: 'Azure OpenAI Service', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-20' },
+  { num: '21', title: 'Azure AI Foundry', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-21' },
+  { num: '22', title: 'Noções Básicas de Engenharia de Prompt', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-22' },
+  { num: '23', title: 'IA Responsável para IA Generativa', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-23' },
+  { num: '24', title: 'Ponta a Ponta: Portfólio Azure AI', domain: 'capstone', href: '/docs/ai-900/capstone/challenge-24' },
+];
+
+const ai102DomainLabels = {
+  'plan-manage': 'Planejar & Gerenciar',
+  'generative-ai': 'IA Generativa',
+  'agentic': 'Agentes de IA',
+  'computer-vision': 'Visão Computacional',
+  'nlp': 'PLN',
+  'knowledge-mining': 'Mineração de Conhecimento',
+  'capstone': 'Capstone',
+};
+
+const ai102Challenges = [
+  { num: '01', title: 'Selecionar o Serviço Azure AI Correto', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-01' },
+  { num: '02', title: 'Criar e Configurar Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-02' },
+  { num: '03', title: 'Implantar Modelos de IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-03' },
+  { num: '04', title: 'SDKs, REST APIs e Autenticação', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-04' },
+  { num: '05', title: 'CI/CD para Soluções de IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-05' },
+  { num: '06', title: 'Implantação em Contêiner para IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-06' },
+  { num: '07', title: 'Monitorar Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-07' },
+  { num: '08', title: 'Gerenciamento de Custos para Serviços de IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-08' },
+  { num: '09', title: 'Proteger Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-09' },
+  { num: '10', title: 'Implementação de IA Responsável', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-10' },
+  { num: '11', title: 'Configuração do Azure AI Foundry', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-11' },
+  { num: '12', title: 'Implantar Modelos de IA Generativa', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-12' },
+  { num: '13', title: 'Prompt Flow', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-13' },
+  { num: '14', title: 'Padrão RAG: Básico', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-14' },
+  { num: '15', title: 'Padrão RAG: Avançado', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-15' },
+  { num: '16', title: 'Azure OpenAI: Provisionamento e Configuração', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-16' },
+  { num: '17', title: 'Engenharia de Prompt e Templates', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-17' },
+  { num: '18', title: 'DALL-E e Modelos Multimodais', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-18' },
+  { num: '19', title: 'Otimizar Soluções de IA Generativa', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-19' },
+  { num: '20', title: 'Orquestração Multi-Modelo', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-20' },
+  { num: '21', title: 'Fundamentos e Arquitetura de Agentes', domain: 'agentic', href: '/docs/ai-102/agentic/challenge-21' },
+  { num: '22', title: 'Azure AI Agent Service', domain: 'agentic', href: '/docs/ai-102/agentic/challenge-22' },
+  { num: '23', title: 'Orquestração Multi-Agente', domain: 'agentic', href: '/docs/ai-102/agentic/challenge-23' },
+  { num: '24', title: 'Azure AI Vision - Análise de Imagem', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-24' },
+  { num: '25', title: 'Custom Vision - Classificação de Imagens', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-25' },
+  { num: '26', title: 'Custom Vision - Detecção de Objetos', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-26' },
+  { num: '27', title: 'OCR - Extrair Texto de Imagens', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-27' },
+  { num: '28', title: 'Detecção e Análise de Rosto', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-28' },
+  { num: '29', title: 'Análise de Vídeo com Video Indexer', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-29' },
+  { num: '30', title: 'Análise Espacial', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-30' },
+  { num: '31', title: 'Análise de Texto - Frases-chave, Entidades, Sentimento', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-31' },
+  { num: '32', title: 'Detecção e Redação de PII', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-32' },
+  { num: '33', title: 'Tradução de Texto e Documentos', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-33' },
+  { num: '34', title: 'Fala para Texto', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-34' },
+  { num: '35', title: 'Texto para Fala e SSML', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-35' },
+  { num: '36', title: 'Tradução de Fala', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-36' },
+  { num: '37', title: 'Compreensão de Linguagem Conversacional (CLU)', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-37' },
+  { num: '38', title: 'Respostas a Perguntas Personalizadas', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-38' },
+  { num: '39', title: 'Modelos de Tradução Personalizados', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-39' },
+  { num: '40', title: 'Azure AI Search — Índice e Skillset', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-40' },
+  { num: '41', title: 'Skills Personalizadas no Azure AI Search', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-41' },
+  { num: '42', title: 'Consultas de Pesquisa — Sintaxe e Filtros', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-42' },
+  { num: '43', title: 'Projeções de Knowledge Store', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-43' },
+  { num: '44', title: 'Pesquisa Semântica e Vetorial', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-44' },
+  { num: '45', title: 'Azure Document Intelligence — Modelos Pré-construídos', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-45' },
+  { num: '46', title: 'Modelos Personalizados de Document Intelligence', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-46' },
+  { num: '47', title: 'Azure Content Understanding — Análise Multimodal', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-47' },
+  { num: '48', title: 'Pipeline de Processamento Multi-Formato', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-48' },
+  { num: '49', title: 'Solução Empresarial de IA Ponta a Ponta', domain: 'capstone', href: '/docs/ai-102/capstone/challenge-49' },
+];
+
+const coverageData = [
+  {
+    exam: 'AZ-900',
+    title: 'Azure Fundamentals',
+    challenges: 24,
+    href: '/docs/az-900/overview',
+    domains: [
+      { name: 'Conceitos de Nuvem', weight: 27, color: 'var(--coverage-cloud-concepts)' },
+      { name: 'Serviços Azure', weight: 38, color: 'var(--coverage-azure-services)' },
+      { name: 'Gerenciamento & Governança', weight: 35, color: 'var(--coverage-management)' },
+    ],
+  },
+  {
+    exam: 'AZ-104',
+    title: 'Azure Administrator',
+    challenges: 28,
+    href: '/docs/az-104/overview',
+    domains: [
+      { name: 'Identidade & Governança', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'Armazenamento', weight: 18, color: 'var(--coverage-storage)' },
+      { name: 'Computação', weight: 22, color: 'var(--coverage-compute)' },
+      { name: 'Rede', weight: 18, color: 'var(--coverage-networking)' },
+      { name: 'Monitorar & Manter', weight: 20, color: 'var(--coverage-monitor)' },
+    ],
+  },
+  {
+    exam: 'AZ-305',
+    title: 'Solutions Architect',
+    challenges: 50,
+    href: '/docs/az-305/overview',
+    domains: [
+      { name: 'Identidade & Monitoramento', weight: 27, color: 'var(--coverage-identity)' },
+      { name: 'Armazenamento de Dados', weight: 22, color: 'var(--coverage-storage)' },
+      { name: 'Continuidade de Negócios', weight: 18, color: 'var(--coverage-networking)' },
+      { name: 'Infraestrutura', weight: 33, color: 'var(--coverage-compute)' },
+    ],
+  },
+  {
+    exam: 'AZ-400',
+    title: 'DevOps Engineer',
+    challenges: 51,
+    href: '/docs/az-400/overview',
+    domains: [
+      { name: 'Processos', weight: 12, color: 'var(--coverage-cloud-concepts)' },
+      { name: 'Controle de Código-Fonte', weight: 12, color: 'var(--coverage-azure-services)' },
+      { name: 'Pipelines', weight: 39, color: 'var(--coverage-compute)' },
+      { name: 'Segurança', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'Instrumentação', weight: 15, color: 'var(--coverage-monitor)' },
+    ],
+  },
+  {
+    exam: 'SC-500',
+    title: 'Security Operations',
+    challenges: 52,
+    href: '/docs/sc-500/overview',
+    domains: [
+      { name: 'Identidade & Governança', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'Armazenamento & Rede', weight: 27, color: 'var(--coverage-networking)' },
+      { name: 'Segurança de IA', weight: 10, color: 'var(--coverage-ai-security)' },
+      { name: 'Computação Segura', weight: 20, color: 'var(--coverage-compute)' },
+      { name: 'Postura de Segurança', weight: 21, color: 'var(--coverage-monitor)' },
+    ],
+  },
+  {
+    exam: 'AZ-700',
+    title: 'Network Engineer',
+    challenges: 49,
+    href: '/docs/az-700/overview',
+    domains: [
+      { name: 'Core Networking', weight: 27, color: 'var(--coverage-networking)' },
+      { name: 'Conectividade', weight: 22, color: 'var(--coverage-compute)' },
+      { name: 'Entrega de Apps', weight: 18, color: 'var(--coverage-azure-services)' },
+      { name: 'Acesso Privado', weight: 12, color: 'var(--coverage-identity)' },
+      { name: 'Segurança de Rede', weight: 21, color: 'var(--coverage-monitor)' },
+    ],
+  },
+  {
+    exam: 'AI-900',
+    title: 'Azure AI Fundamentals',
+    challenges: 24,
+    href: '/docs/ai-900/overview',
+    domains: [
+      { name: 'Cargas de IA', weight: 17, color: 'var(--coverage-cloud-concepts)' },
+      { name: 'Machine Learning', weight: 22, color: 'var(--coverage-compute)' },
+      { name: 'Visão Computacional', weight: 17, color: 'var(--coverage-azure-services)' },
+      { name: 'PLN', weight: 22, color: 'var(--coverage-identity)' },
+      { name: 'IA Generativa', weight: 22, color: 'var(--coverage-networking)' },
+    ],
+  },
+  {
+    exam: 'AI-102',
+    title: 'Azure AI Engineer',
+    challenges: 49,
+    href: '/docs/ai-102/overview',
+    domains: [
+      { name: 'Planejar & Gerenciar', weight: 20, color: 'var(--coverage-identity)' },
+      { name: 'IA Generativa', weight: 20, color: 'var(--coverage-compute)' },
+      { name: 'Agentes de IA', weight: 6, color: 'var(--coverage-ai-security)' },
+      { name: 'Visão Computacional', weight: 14, color: 'var(--coverage-azure-services)' },
+      { name: 'PLN', weight: 18, color: 'var(--coverage-networking)' },
+      { name: 'Mineração de Conhecimento', weight: 22, color: 'var(--coverage-monitor)' },
+    ],
+  },
+];
 
 const FeatureList = [
   {
@@ -690,114 +892,95 @@ function AZ700ChallengeGrid() {
   );
 }
 
-function CertificationCoverage() {
+function AI900ChallengeGrid() {
   return (
     <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
-      <div className="container" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <Heading as="h2" style={{textAlign: 'center', fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem'}}>100% de Cobertura da Certificação</Heading>
-        <p style={{textAlign: 'center', color: 'var(--ifm-color-emphasis-600)', fontSize: '1.1rem', maxWidth: '600px', marginBottom: '2rem'}}>
-          Cada domínio dos guias de estudo oficiais mapeado para desafios práticos.
-        </p>
-        <div style={{display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center'}}>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-900 (24 desafios)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domínio</th>
-                  <th style={{textAlign: 'center'}}>Peso</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--cloud-concepts">Conceitos de Nuvem</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--azure-services">Serviços Azure</span></td><td style={{textAlign: 'center'}}>35-40%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--management">Gerenciamento & Governança</span></td><td style={{textAlign: 'center'}}>30-35%</td></tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
-              Baseado em exploração | Custo $0 | Portal-first
-            </p>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-104 (28 desafios)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domínio</th>
-                  <th style={{textAlign: 'center'}}>Peso</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identidade & Governança</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--storage">Armazenamento</span></td><td style={{textAlign: 'center'}}>15-20%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Computação</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Rede</span></td><td style={{textAlign: 'center'}}>15-20%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitor">Monitorar & Manter</span></td><td style={{textAlign: 'center'}}>10-15%</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-305 (50 desafios)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domínio</th>
-                  <th style={{textAlign: 'center'}}>Peso</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity-gov">Identidade & Monitoramento</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--data">Armazenamento de Dados</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--bcdr">Continuidade de Negócios</span></td><td style={{textAlign: 'center'}}>15-20%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--infra">Infraestrutura</span></td><td style={{textAlign: 'center'}}>30-35%</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>AZ-400 (51 desafios)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domínio</th>
-                  <th style={{textAlign: 'center'}}>Habilidades</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--processes">Processos & Comunicação</span></td><td style={{textAlign: 'center'}}>6 desafios</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--source-control">Controle de Código-Fonte</span></td><td style={{textAlign: 'center'}}>6 desafios</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--pipelines">Pipelines de Build & Release</span></td><td style={{textAlign: 'center'}}>20 desafios</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--security">Segurança & Conformidade</span></td><td style={{textAlign: 'center'}}>7 desafios</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--instrumentation">Instrumentação</span></td><td style={{textAlign: 'center'}}>5 desafios</td></tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
-              67 habilidades cobertas | 100% de cobertura do exame
-            </p>
-          </div>
-          <div>
-            <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>SC-500 (52 desafios)</h3>
-            <table style={{width: 'auto', borderCollapse: 'collapse'}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign: 'center'}}>Domínio</th>
-                  <th style={{textAlign: 'center'}}>Peso</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--identity">Identidade & Governança</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--networking">Armazenamento & Rede</span></td><td style={{textAlign: 'center'}}>25-30%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--ai-security">Segurança de IA</span></td><td style={{textAlign: 'center'}}>NOVO</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--compute">Computação Segura</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-                <tr><td style={{textAlign: 'center'}}><span className="domain-badge domain-badge--monitoring">Postura de Segurança</span></td><td style={{textAlign: 'center'}}>20-25%</td></tr>
-              </tbody>
-            </table>
-            <p style={{textAlign: 'center', marginTop: '0.5rem', fontSize: '0.85rem', opacity: 0.7}}>
-              89 habilidades cobertas | 100% de cobertura do exame
-            </p>
-          </div>
+      <div className="container">
+        <div className="section-heading">
+          <Heading as="h2">AI-900: Azure AI Fundamentals</Heading>
+          <p>24 desafios de exploração — ML, Visão Computacional, PLN e conceitos de IA Generativa. Custo $0.</p>
         </div>
-        <p style={{textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem', opacity: 0.7}}>
-          Alinhado com os guias de estudo oficiais da Microsoft de Abril de 2026.
+        <div className="row">
+          {ai900Challenges.map((ch) => (
+            <div key={ch.num} className="col col--3" style={{marginBottom: '1rem'}}>
+              <Link to={ch.href} className="challenge-card">
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem'}}>
+                  <span className="challenge-number">{ch.num}</span>
+                  <span className={`domain-badge domain-badge--${ch.domain}`}>
+                    {ai900DomainLabels[ch.domain]}
+                  </span>
+                </div>
+                <strong>{ch.title}</strong>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AI102ChallengeGrid() {
+  return (
+    <section style={{padding: '2rem 0'}}>
+      <div className="container">
+        <div className="section-heading">
+          <Heading as="h2">AI-102: Azure AI Engineer Associate</Heading>
+          <p>49 desafios práticos — OpenAI, Search, Visão, PLN, Agentes e soluções empresariais de IA.</p>
+        </div>
+        <div className="row">
+          {ai102Challenges.map((ch) => (
+            <div key={ch.num} className="col col--3" style={{marginBottom: '1rem'}}>
+              <Link to={ch.href} className="challenge-card">
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem'}}>
+                  <span className="challenge-number">{ch.num}</span>
+                  <span className={`domain-badge domain-badge--${ch.domain}`}>
+                    {ai102DomainLabels[ch.domain]}
+                  </span>
+                </div>
+                <strong>{ch.title}</strong>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CertificationCoverage() {
+  return (
+    <section style={{padding: '2rem 0'}}>
+      <div className="container" style={{maxWidth: '800px', margin: '0 auto'}}>
+        <div className="section-heading">
+          <Heading as="h2">100% de Cobertura da Certificação</Heading>
+          <p>Cada domínio dos guias de estudo oficiais mapeado para desafios práticos.</p>
+        </div>
+        <div className="coverage-bars">
+          {coverageData.map((exam) => (
+            <div key={exam.exam} className="coverage-row">
+              <Link to={exam.href} className="coverage-label">
+                <span className="coverage-exam">{exam.exam}</span>
+                <span className="coverage-title">{exam.title}</span>
+                <span className="coverage-count">{exam.challenges}</span>
+              </Link>
+              <div className="coverage-bar">
+                {exam.domains.map((domain, idx) => (
+                  <div
+                    key={idx}
+                    className="coverage-segment"
+                    style={{width: `${domain.weight}%`, background: domain.color}}
+                    title={`${domain.name}: ~${domain.weight}%`}
+                  >
+                    <span className="coverage-segment-label">{domain.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{textAlign: 'center', marginTop: '1.5rem', fontSize: '0.85rem', opacity: 0.6}}>
+          Alinhado com os guias de estudo oficiais da Microsoft — Maio 2026
         </p>
       </div>
     </section>
@@ -882,6 +1065,8 @@ export default function Home() {
         <AZ400ChallengeGrid />
         <SC500ChallengeGrid />
         <AZ700ChallengeGrid />
+        <AI900ChallengeGrid />
+        <AI102ChallengeGrid />
         <CertificationCoverage />
         <ExamRoadmap />
       </main>

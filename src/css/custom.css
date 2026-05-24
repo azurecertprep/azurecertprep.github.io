@@ -176,6 +176,14 @@
 .domain-badge--app-delivery { background: #e8f5e9; color: #2e7d32; }
 .domain-badge--private-access { background: #fff8e1; color: #f57f17; }
 .domain-badge--network-security { background: #fce4ec; color: #c62828; }
+.domain-badge--ai-workloads { background: #ede7f6; color: #4527a0; }
+.domain-badge--machine-learning { background: #e0f7fa; color: #00695c; }
+.domain-badge--computer-vision { background: #fff3e0; color: #e65100; }
+.domain-badge--nlp { background: #f3e5f5; color: #6a1b9a; }
+.domain-badge--generative-ai { background: #e8eaf6; color: #283593; }
+.domain-badge--plan-manage { background: #e0f2f1; color: #004d40; }
+.domain-badge--agentic { background: #fce4ec; color: #880e4f; }
+.domain-badge--knowledge-mining { background: #fff8e1; color: #f57f17; }
 
 [data-theme='dark'] .domain-badge--identity { background: #4a235a; color: #d7bde2; }
 [data-theme='dark'] .domain-badge--storage { background: #1e4d2b; color: #abebc6; }
@@ -197,6 +205,14 @@
 [data-theme='dark'] .domain-badge--app-delivery { background: #1b4332; color: #a5d6a7; }
 [data-theme='dark'] .domain-badge--private-access { background: #4a3f0a; color: #fff59d; }
 [data-theme='dark'] .domain-badge--network-security { background: #4a0e0e; color: #ef9a9a; }
+[data-theme='dark'] .domain-badge--ai-workloads { background: #2a1a4e; color: #b39ddb; }
+[data-theme='dark'] .domain-badge--machine-learning { background: #004d40; color: #80cbc4; }
+[data-theme='dark'] .domain-badge--computer-vision { background: #4a2c0a; color: #ffcc80; }
+[data-theme='dark'] .domain-badge--nlp { background: #3a1a5b; color: #ce93d8; }
+[data-theme='dark'] .domain-badge--generative-ai { background: #1a237e; color: #9fa8da; }
+[data-theme='dark'] .domain-badge--plan-manage { background: #1a3c3a; color: #b2dfdb; }
+[data-theme='dark'] .domain-badge--agentic { background: #4a0e23; color: #f8bbd0; }
+[data-theme='dark'] .domain-badge--knowledge-mining { background: #4a3f0a; color: #fff59d; }
 
 /* Reference table */
 .reference-table {
