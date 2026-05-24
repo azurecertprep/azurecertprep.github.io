@@ -628,22 +628,3 @@ npm uninstall jest jest-junit @types/jest undici
 # Clean up generated reports
 rm -rf coverage/ reports/
 ```
-
-# Desafio 16: Estratégia de testes em pipelines
-
-:::info Plataforma: GitHub Actions como padrão
-
-:::
-
-## Habilidades do exame
-
-- Projetar uma estratégia abrangente de testes, incluindo testes locais, testes unitários, testes de integração e testes de carga
-- Implementar testes em um pipeline
-
-## Cenário
-
-A plataforma de e-commerce da Contoso não possui testes automatizados no pipeline. Os deployments frequentemente quebram a produção. Projete e implemente uma pirâmide de testes dentro do pipeline de CI.
-
-## Em breve
-
-Este desafio está em desenvolvimento.
