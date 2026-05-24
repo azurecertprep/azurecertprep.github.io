@@ -5,8 +5,8 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
 const stats = [
-  { number: '205', label: 'Desafios' },
-  { number: '5', label: 'Exames' },
+  { number: '327', label: 'Desafios' },
+  { number: '8', label: 'Exames' },
   { number: '100%', label: 'Cobertura' },
   { number: 'v2026.05', label: 'Objetivos do Exame' },
 ];
@@ -276,11 +276,72 @@ const az900Challenges = [
   { num: '24', title: 'Azure Monitor, Log Analytics & Alertas', domain: 'management', href: '/docs/az-900/management-governance/challenge-24' },
 ];
 
+const az700DomainLabels = {
+  'core-networking': 'Rede Principal',
+  'connectivity': 'Conectividade',
+  'app-delivery': 'Entrega de Apps',
+  'private-access': 'Acesso Privado',
+  'network-security': 'Segurança de Rede',
+  'capstone': 'Capstone',
+};
+
+const az700Challenges = [
+  { num: '01', title: 'Topologia Hub-Spoke VNet', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-01' },
+  { num: '02', title: 'Sub-redes & Delegação', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-02' },
+  { num: '03', title: 'Azure DNS & Domínios Customizados', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-03' },
+  { num: '04', title: 'VNet Peering', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-04' },
+  { num: '05', title: 'Peering Global & Gateway Transit', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-05' },
+  { num: '06', title: 'Zonas DNS Privadas', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-06' },
+  { num: '07', title: 'Rotas Definidas pelo Usuário & NVA', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-07' },
+  { num: '08', title: 'Azure Virtual Network Manager', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-08' },
+  { num: '09', title: 'Azure Route Server & BGP', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-09' },
+  { num: '10', title: 'NAT Gateway', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-10' },
+  { num: '11', title: 'Network Watcher & Diagnósticos', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-11' },
+  { num: '12', title: 'Azure Bastion', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-12' },
+  { num: '13', title: 'Proteção DDoS', domain: 'core-networking', href: '/docs/az-700/core-networking/challenge-13' },
+  { num: '14', title: 'VPN Site-to-Site', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-14' },
+  { num: '15', title: 'VPN S2S Alta Disponibilidade', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-15' },
+  { num: '16', title: 'VPN SKU & Políticas IPsec', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-16' },
+  { num: '17', title: 'VPN Point-to-Site', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-17' },
+  { num: '18', title: 'Métodos de Autenticação P2S', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-18' },
+  { num: '19', title: 'ExpressRoute Private Peering', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-19' },
+  { num: '20', title: 'ExpressRoute Avançado', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-20' },
+  { num: '21', title: 'ExpressRoute Microsoft Peering', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-21' },
+  { num: '22', title: 'Virtual WAN Hub-Spoke', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-22' },
+  { num: '23', title: 'Roteamento Virtual WAN & NVA', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-23' },
+  { num: '24', title: 'Troubleshooting de Conectividade Híbrida', domain: 'connectivity', href: '/docs/az-700/connectivity/challenge-24' },
+  { num: '25', title: 'Azure Load Balancer', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-25' },
+  { num: '26', title: 'Cross-Region & Gateway LB', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-26' },
+  { num: '27', title: 'Traffic Manager', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-27' },
+  { num: '28', title: 'Fundamentos do Application Gateway', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-28' },
+  { num: '29', title: 'Application Gateway TLS & Rewrites', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-29' },
+  { num: '30', title: 'Escalabilidade do Application Gateway', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-30' },
+  { num: '31', title: 'Azure Front Door', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-31' },
+  { num: '32', title: 'Front Door Rules & Private Link', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-32' },
+  { num: '33', title: 'Balanceamento Global Multi-Camada', domain: 'app-delivery', href: '/docs/az-700/app-delivery/challenge-33' },
+  { num: '34', title: 'Private Endpoints & DNS', domain: 'private-access', href: '/docs/az-700/private-access/challenge-34' },
+  { num: '35', title: 'PE para Múltiplos Serviços', domain: 'private-access', href: '/docs/az-700/private-access/challenge-35' },
+  { num: '36', title: 'Private Link Service', domain: 'private-access', href: '/docs/az-700/private-access/challenge-36' },
+  { num: '37', title: 'Private Link & On-Premises', domain: 'private-access', href: '/docs/az-700/private-access/challenge-37' },
+  { num: '38', title: 'Service Endpoints & Políticas', domain: 'private-access', href: '/docs/az-700/private-access/challenge-38' },
+  { num: '39', title: 'Migração SE para PE', domain: 'private-access', href: '/docs/az-700/private-access/challenge-39' },
+  { num: '40', title: 'NSG & Application Security Groups', domain: 'network-security', href: '/docs/az-700/network-security/challenge-40' },
+  { num: '41', title: 'VNet Flow Logs & Traffic Analytics', domain: 'network-security', href: '/docs/az-700/network-security/challenge-41' },
+  { num: '42', title: 'Implantação do Azure Firewall', domain: 'network-security', href: '/docs/az-700/network-security/challenge-42' },
+  { num: '43', title: 'Firewall Manager & Políticas', domain: 'network-security', href: '/docs/az-700/network-security/challenge-43' },
+  { num: '44', title: 'Secured Virtual Hub', domain: 'network-security', href: '/docs/az-700/network-security/challenge-44' },
+  { num: '45', title: 'WAF no Application Gateway', domain: 'network-security', href: '/docs/az-700/network-security/challenge-45' },
+  { num: '46', title: 'WAF no Front Door', domain: 'network-security', href: '/docs/az-700/network-security/challenge-46' },
+  { num: '47', title: 'Hub-Spoke com NVA Chaining', domain: 'network-security', href: '/docs/az-700/network-security/challenge-47' },
+  { num: '48', title: 'Segmentação de Rede & JIT', domain: 'network-security', href: '/docs/az-700/network-security/challenge-48' },
+  { num: '49', title: 'Enterprise Multi-Região (Capstone)', domain: 'capstone', href: '/docs/az-700/capstone/challenge-49' },
+];
+
 
 const FeatureList = [
   {
     title: '100% de Cobertura do Exame',
-    description: 'Cada habilidade dos guias de estudo oficiais da Microsoft mapeada para desafios práticos. 5 exames, 205 desafios — verificados com os objetivos atuais.',
+    description: 'Cada habilidade dos guias de estudo oficiais da Microsoft mapeada para desafios práticos. 8 exames, 327 desafios — verificados com os objetivos atuais.',
   },
   {
     title: 'Labs Práticos',
@@ -378,6 +439,33 @@ const examCards = [
     tagline: 'Sentinel, Defender e IAM',
     challenges: 52,
     href: '/docs/sc-500/overview',
+  },
+  {
+    icon: '🌐',
+    code: 'AZ-700',
+    level: 'Associate',
+    role: 'Network Engineer',
+    tagline: 'VPN, ExpressRoute, Firewall e LB',
+    challenges: 49,
+    href: '/docs/az-700/overview',
+  },
+  {
+    icon: '🧠',
+    code: 'AI-900',
+    level: 'Fundamentals',
+    role: 'Azure AI Fundamentals',
+    tagline: 'ML, Visão, NLP e IA Generativa',
+    challenges: 24,
+    href: '/docs/ai-900/overview',
+  },
+  {
+    icon: '🤖',
+    code: 'AI-102',
+    level: 'Associate',
+    role: 'Azure AI Engineer',
+    tagline: 'OpenAI, Search, Vision e Agentes',
+    challenges: 49,
+    href: '/docs/ai-102/overview',
   },
   {
     icon: '🧪',
@@ -574,6 +662,34 @@ function SC500ChallengeGrid() {
   );
 }
 
+function AZ700ChallengeGrid() {
+  return (
+    <section style={{padding: '2rem 0'}}>
+      <div className="container">
+        <div className="section-heading">
+          <Heading as="h2">AZ-700: Azure Network Engineer Associate</Heading>
+          <p>49 desafios práticos — VPN, ExpressRoute, Firewall, Load Balancer, Private Link e design de rede corporativa.</p>
+        </div>
+        <div className="row">
+          {az700Challenges.map((ch) => (
+            <div key={ch.num} className="col col--3" style={{marginBottom: '1rem'}}>
+              <Link to={ch.href} className="challenge-card">
+                <div style={{display: 'flex', alignItems: 'center', marginBottom: '0.5rem'}}>
+                  <span className="challenge-number">{ch.num}</span>
+                  <span className={`domain-badge domain-badge--${ch.domain}`}>
+                    {az700DomainLabels[ch.domain]}
+                  </span>
+                </div>
+                <strong>{ch.title}</strong>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CertificationCoverage() {
   return (
     <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
@@ -730,6 +846,21 @@ function ExamRoadmap() {
               <td style={{textAlign: 'center'}}>Cloud and AI Security Engineer <small style={{opacity: 0.7}}>(substitui AZ-500)</small></td>
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (52 desafios)</span></td>
             </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><strong>AZ-700</strong></td>
+              <td style={{textAlign: 'center'}}>Azure Network Engineer Associate</td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (49 desafios)</span></td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><strong>AI-900</strong></td>
+              <td style={{textAlign: 'center'}}>Azure AI Fundamentals</td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (24 desafios)</span></td>
+            </tr>
+            <tr>
+              <td style={{textAlign: 'center'}}><strong>AI-102</strong></td>
+              <td style={{textAlign: 'center'}}>Azure AI Engineer</td>
+              <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (49 desafios)</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -741,7 +872,7 @@ export default function Home() {
   return (
     <Layout
       title="Preparação Hands-on para Certificação Azure"
-      description="Não estude apenas — construa. Desafios práticos para certificações Azure. AZ-900, AZ-104, AZ-305, AZ-400 e SC-500 disponíveis.">
+      description="Não estude apenas — construa. Desafios práticos para certificações Azure. AZ-900, AZ-104, AZ-305, AZ-400, SC-500, AZ-700, AI-900 e AI-102 disponíveis.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
@@ -750,6 +881,7 @@ export default function Home() {
         <AZ305ChallengeGrid />
         <AZ400ChallengeGrid />
         <SC500ChallengeGrid />
+        <AZ700ChallengeGrid />
         <CertificationCoverage />
         <ExamRoadmap />
       </main>
