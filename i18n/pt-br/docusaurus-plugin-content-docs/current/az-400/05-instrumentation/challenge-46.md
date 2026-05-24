@@ -1,33 +1,33 @@
 ---
 sidebar_position: 1
-title: "Desafio 46: IntegraÃ§Ã£o do Azure Monitor com DevOps"
+title: "Desafio 46: Integração do Azure Monitor com DevOps"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 46: IntegraÃ§Ã£o do Azure Monitor com DevOps
+# Desafio 46: Integração do Azure Monitor com DevOps
 
 ## Habilidades do exame abordadas
 
-- Configurar Azure Monitor e Azure Monitor Logs para integraÃ§Ã£o com ferramentas DevOps
+- Configurar Azure Monitor e Azure Monitor Logs para integração com ferramentas DevOps
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd faz deploy de sua aplicaÃ§Ã£o web principal cinco vezes por dia. Apesar dessa velocidade, a equipe de operaÃ§Ãµes nÃ£o tem correlaÃ§Ã£o entre deploys e regressÃµes de desempenho. Na semana passada, um deploy introduziu um vazamento de memÃ³ria que passou despercebido por 8 horas porque ninguÃ©m conectou a taxa crescente de erros ao deploy das 14h15. VocÃª deve conectar o Azure Monitor ao pipeline de CI/CD para que o impacto dos deploys seja imediatamente visÃ­vel e o rollback automatizado possa ser acionado quando a saÃºde do sistema degradar.
+A Contoso Ltd faz deploy de sua aplicação web principal cinco vezes por dia. Apesar dessa velocidade, a equipe de operações não tem correlação entre deploys e regressões de desempenho. Na semana passada, um deploy introduziu um vazamento de memória que passou despercebido por 8 horas porque ninguém conectou a taxa crescente de erros ao deploy das 14h15. Você deve conectar o Azure Monitor ao pipeline de CI/CD para que o impacto dos deploys seja imediatamente visível e o rollback automatizado possa ser acionado quando a saúde do sistema degradar.
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Assinatura Azure com acesso de Contributor
 - Azure App Service ou similar com Application Insights habilitado
-- Projeto Azure DevOps ou repositÃ³rio GitHub com um pipeline de deploy
+- Projeto Azure DevOps ou repositório GitHub com um pipeline de deploy
 - Azure CLI instalado
 - Workspace do Log Analytics
 
 ## Tarefas
 
-### Tarefa 1: Criar anotaÃ§Ãµes de deploy no Application Insights
+### Tarefa 1: Criar anotações de deploy no Application Insights
 
-As anotaÃ§Ãµes de deploy marcam pontos especÃ­ficos no tempo nos grÃ¡ficos do Application Insights, facilitando a correlaÃ§Ã£o de mudanÃ§as em mÃ©tricas com deploys.
+As anotações de deploy marcam pontos específicos no tempo nos gráficos do Application Insights, facilitando a correlação de mudanças em métricas com deploys.
 
 Para Azure Pipelines:
 
@@ -73,9 +73,9 @@ steps:
           --body "$ANNOTATION_PROPERTIES"
 ```
 
-### Tarefa 2: Configurar alertas do Azure Monitor que acionam aÃ§Ãµes no pipeline
+### Tarefa 2: Configurar alertas do Azure Monitor que acionam ações no pipeline
 
-Crie alertas que disparam quando um deploy causa degradaÃ§Ã£o:
+Crie alertas que disparam quando um deploy causa degradação:
 
 ```bash
 # Create a Log Analytics workspace (if not existing)
@@ -172,19 +172,19 @@ stages:
                 echo "Health check passed."
 ```
 
-Para validaÃ§Ã£o baseada em gates (pipelines de release do Azure DevOps):
+Para validação baseada em gates (pipelines de release do Azure DevOps):
 
-1. Navegue atÃ©: Release pipeline > Stage > Pre-deployment conditions > Gates
+1. Navegue até: Release pipeline > Stage > Pre-deployment conditions > Gates
 2. Adicione o gate: "Query Azure Monitor alerts"
    - Resource group: rg-contoso-prod
    - Alert rules: alert-high-error-rate, alert-exception-spike
    - Filtro: Fired
-3. OpÃ§Ãµes de avaliaÃ§Ã£o do gate:
-   - Tempo entre avaliaÃ§Ãµes: 5 minutos
+3. Opções de avaliação do gate:
+   - Tempo entre avaliações: 5 minutos
    - Tempo limite: 30 minutos
-   - DuraÃ§Ã£o mÃ­nima: 10 minutos
+   - Duração mínima: 10 minutos
 
-### Tarefa 4: Criar anotaÃ§Ãµes de release via GitHub Actions
+### Tarefa 4: Criar anotações de release via GitHub Actions
 
 ```yaml
 # .github/workflows/deploy-with-annotations.yml
@@ -252,7 +252,7 @@ jobs:
           fi
 ```
 
-### Tarefa 5: Configurar grupos de aÃ§Ã£o do Azure Monitor
+### Tarefa 5: Configurar grupos de ação do Azure Monitor
 
 ```bash
 # Create a comprehensive action group for deployment events
@@ -275,9 +275,9 @@ az monitor action-group test-notifications create \
   --recipients email-receiver="ops-lead"
 ```
 
-### Tarefa 6: Painel vinculando deploys a mudanÃ§as na taxa de erros
+### Tarefa 6: Painel vinculando deploys a mudanças na taxa de erros
 
-Crie um workbook que correlaciona deploys com a saÃºde da aplicaÃ§Ã£o:
+Crie um workbook que correlaciona deploys com a saúde da aplicação:
 
 ```bash
 # Create a workbook via ARM template
@@ -374,15 +374,15 @@ jobs:
             }'
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### CenÃ¡rio de quebra 1: AnotaÃ§Ãµes de deploy nÃ£o aparecem nos grÃ¡ficos
+### Cenário de quebra 1: Anotações de deploy não aparecem nos gráficos
 
-ApÃ³s configurar as anotaÃ§Ãµes, elas nÃ£o aparecem nos grÃ¡ficos de mÃ©tricas do Application Insights.
+Após configurar as anotações, elas não aparecem nos gráficos de métricas do Application Insights.
 
-**Causa:** A chamada Ã  API de anotaÃ§Ãµes usa o ID de recurso errado, ou o formato do timestamp estÃ¡ incorreto, ou o usuÃ¡rio nÃ£o tem permissÃµes de escrita no Application Insights.
+**Causa:** A chamada Ã  API de anotações usa o ID de recurso errado, ou o formato do timestamp está incorreto, ou o usuário não tem permissões de escrita no Application Insights.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Verify the Application Insights resource ID
@@ -398,17 +398,17 @@ az rest --method get \
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Garanta que o timestamp estÃ¡ no formato UTC ISO 8601 e que o service principal tem acesso de Contributor ao recurso Application Insights.
+**Correção:** Garanta que o timestamp está no formato UTC ISO 8601 e que o service principal tem acesso de Contributor ao recurso Application Insights.
 
 </details>
 
-### CenÃ¡rio de quebra 2: Alerta do Azure Monitor dispara mas o pipeline de rollback nÃ£o Ã© acionado
+### Cenário de quebra 2: Alerta do Azure Monitor dispara mas o pipeline de rollback não é acionado
 
-**Causa:** A aÃ§Ã£o de webhook no grupo de aÃ§Ã£o estÃ¡ configurada incorretamente ou o pipeline de destino requer autenticaÃ§Ã£o.
+**Causa:** A ação de webhook no grupo de ação está configurada incorretamente ou o pipeline de destino requer autenticação.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check action group webhook status
@@ -420,9 +420,9 @@ az monitor action-group show \
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Para pipelines do Azure DevOps, use um service hook ou Azure Function intermediÃ¡rio que se autentica com um PAT. Para GitHub Actions, use o evento `repository_dispatch` com um proxy de webhook-para-dispatch:
+**Correção:** Para pipelines do Azure DevOps, use um service hook ou Azure Function intermediário que se autentica com um PAT. Para GitHub Actions, use o evento `repository_dispatch` com um proxy de webhook-para-dispatch:
 
 ```bash
 # Use Azure Function as intermediary
@@ -433,52 +433,52 @@ curl -X POST https://api.github.com/repos/contoso/webapp/dispatches \
 ```
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "A Contoso faz deploy 5 vezes por dia e quer ver imediatamente o impacto de cada deploy nos grÃ¡ficos de desempenho do Application Insights. O que eles devem configurar?",
+    question: "A Contoso faz deploy 5 vezes por dia e quer ver imediatamente o impacto de cada deploy nos gráficos de desempenho do Application Insights. O que eles devem configurar?",
     options: [
-      "Habilitar profiling contÃ­nuo no Application Insights",
-      "Criar anotaÃ§Ãµes de deploy via a API REST do Application Insights apÃ³s cada deploy",
+      "Habilitar profiling contínuo no Application Insights",
+      "Criar anotações de deploy via a API REST do Application Insights após cada deploy",
       "Configurar o Application Insights para detectar deploys automaticamente",
-      "Habilitar detecÃ§Ã£o inteligente no Application Insights"
+      "Habilitar detecção inteligente no Application Insights"
     ],
     correctIndex: 1,
-    explanation: "As anotaÃ§Ãµes de deploy sÃ£o marcadores verticais nos grÃ¡ficos de sÃ©ries temporais do Application Insights que indicam quando um deploy ocorreu. Elas devem ser criadas explicitamente via a API REST ou CLI durante a etapa de deploy do pipeline. Isso permite a correlaÃ§Ã£o visual entre deploys e mudanÃ§as nas mÃ©tricas."
+    explanation: "As anotações de deploy são marcadores verticais nos gráficos de séries temporais do Application Insights que indicam quando um deploy ocorreu. Elas devem ser criadas explicitamente via a API REST ou CLI durante a etapa de deploy do pipeline. Isso permite a correlação visual entre deploys e mudanças nas métricas."
   },
   {
-    question: "Um pipeline de release nÃ£o deve prosseguir para o estÃ¡gio de produÃ§Ã£o se o Azure Monitor mostrar alertas crÃ­ticos ativos. Qual recurso fornece essa capacidade de controle?",
+    question: "Um pipeline de release não deve prosseguir para o estágio de produção se o Azure Monitor mostrar alertas críticos ativos. Qual recurso fornece essa capacidade de controle?",
     options: [
-      "PolÃ­ticas de branch",
-      "AprovaÃ§Ãµes de ambiente",
+      "Políticas de branch",
+      "Aprovações de ambiente",
       "Gates de deploy com tipo de gate \"Query Azure Monitor alerts\"",
       "Triggers de pipeline"
     ],
     correctIndex: 2,
-    explanation: "Os gates de deploy do Azure DevOps podem consultar o Azure Monitor para alertas ativos e bloquear a progressÃ£o do pipeline atÃ© que os alertas sejam resolvidos. O tipo de gate \"Query Azure Monitor alerts\" verifica regras de alerta especificadas e sÃ³ permite que o estÃ¡gio prossiga quando nenhum alerta correspondente estiver no estado \"Fired\"."
+    explanation: "Os gates de deploy do Azure DevOps podem consultar o Azure Monitor para alertas ativos e bloquear a progressão do pipeline até que os alertas sejam resolvidos. O tipo de gate \"Query Azure Monitor alerts\" verifica regras de alerta especificadas e só permite que o estágio prossiga quando nenhum alerta correspondente estiver no estado \"Fired\"."
   },
   {
-    question: "ApÃ³s um deploy, a Contoso quer fazer rollback automaticamente se a taxa de erros exceder 5% dentro de 10 minutos. Qual Ã© a melhor arquitetura?",
+    question: "Após um deploy, a Contoso quer fazer rollback automaticamente se a taxa de erros exceder 5% dentro de 10 minutos. Qual é a melhor arquitetura?",
     options: [
       "Um desenvolvedor monitora o painel e aciona o rollback manualmente",
-      "Um alerta do Azure Monitor aciona um webhook de grupo de aÃ§Ã£o que invoca um pipeline de rollback",
-      "DetecÃ§Ã£o inteligente do Application Insights com notificaÃ§Ãµes por email",
-      "Um pipeline agendado que verifica mÃ©tricas a cada hora"
+      "Um alerta do Azure Monitor aciona um webhook de grupo de ação que invoca um pipeline de rollback",
+      "Detecção inteligente do Application Insights com notificações por email",
+      "Um pipeline agendado que verifica métricas a cada hora"
     ],
     correctIndex: 1,
-    explanation: "Um alerta do Azure Monitor com uma condiÃ§Ã£o de mÃ©trica (taxa de erros > 5%) e uma janela de avaliaÃ§Ã£o de 10 minutos, conectado a um grupo de aÃ§Ã£o que aciona um pipeline de rollback via webhook, fornece detecÃ§Ã£o e resposta totalmente automatizadas. A detecÃ§Ã£o inteligente Ã© Ãºtil, mas nÃ£o aciona aÃ§Ãµes automatizadas, e verificaÃ§Ãµes agendadas sÃ£o muito lentas."
+    explanation: "Um alerta do Azure Monitor com uma condição de métrica (taxa de erros > 5%) e uma janela de avaliação de 10 minutos, conectado a um grupo de ação que aciona um pipeline de rollback via webhook, fornece detecção e resposta totalmente automatizadas. A detecção inteligente é útil, mas não aciona ações automatizadas, e verificações agendadas são muito lentas."
   },
   {
-    question: "Um grupo de aÃ§Ã£o do Azure Monitor inclui um webhook para acionar um pipeline do Azure DevOps para rollback. O webhook dispara, mas o pipeline nÃ£o inicia. Qual Ã© a causa mais provÃ¡vel?",
+    question: "Um grupo de ação do Azure Monitor inclui um webhook para acionar um pipeline do Azure DevOps para rollback. O webhook dispara, mas o pipeline não inicia. Qual é a causa mais provável?",
     options: [
-      "O pipeline estÃ¡ desabilitado",
-      "A URL do webhook requer autenticaÃ§Ã£o que o grupo de aÃ§Ã£o nÃ£o fornece",
-      "Webhooks do Azure Monitor tÃªm limite de taxa",
+      "O pipeline está desabilitado",
+      "A URL do webhook requer autenticação que o grupo de ação não fornece",
+      "Webhooks do Azure Monitor têm limite de taxa",
       "O pipeline deve ser acionado manualmente"
     ],
     correctIndex: 1,
-    explanation: "A API REST de pipelines do Azure DevOps requer autenticaÃ§Ã£o (PAT ou token OAuth). Grupos de aÃ§Ã£o do Azure Monitor enviam payloads de webhook sem cabeÃ§alhos de autenticaÃ§Ã£o personalizados. Um intermediÃ¡rio (Azure Function ou Logic App) Ã© tipicamente necessÃ¡rio para receber o webhook e entÃ£o se autenticar no Azure DevOps para acionar o pipeline."
+    explanation: "A API REST de pipelines do Azure DevOps requer autenticação (PAT ou token OAuth). Grupos de ação do Azure Monitor enviam payloads de webhook sem cabeçalhos de autenticação personalizados. Um intermediário (Azure Function ou Logic App) é tipicamente necessário para receber o webhook e então se autenticar no Azure DevOps para acionar o pipeline."
   }
 ]} />
 

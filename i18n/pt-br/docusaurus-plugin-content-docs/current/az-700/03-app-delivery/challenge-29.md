@@ -14,22 +14,22 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 :::
 
 :::warning Alerta de custo
-O Application Gateway v2 Ã© cobrado por hora mesmo quando ocioso. O SKU WAF_v2 custa aproximadamente $0,443/hora-gateway mais $0,0144/hora-unidade de capacidade. Exclua o gateway imediatamente apÃ³s concluir este desafio para evitar cobranÃ§as inesperadas.
+O Application Gateway v2 é cobrado por hora mesmo quando ocioso. O SKU WAF_v2 custa aproximadamente $0,443/hora-gateway mais $0,0144/hora-unidade de capacidade. Exclua o gateway imediatamente após concluir este desafio para evitar cobranças inesperadas.
 :::
 
-## CenÃ¡rio
+## Cenário
 
-VocÃª Ã© o engenheiro de seguranÃ§a da Woodgrove Financial Services. A empresa possui requisitos rigorosos para proteger o trÃ¡fego atravÃ©s do Application Gateway:
+Você é o engenheiro de segurança da Woodgrove Financial Services. A empresa possui requisitos rigorosos para proteger o tráfego através do Application Gateway:
 
-- **AplicaÃ§Ãµes pÃºblicas** devem usar terminaÃ§Ã£o TLS no gateway com certificados armazenados no Azure Key Vault
-- **Endpoints de API de parceiros** exigem TLS mÃºtuo (mTLS), onde tanto o gateway quanto o cliente conectante apresentam certificados para autenticaÃ§Ã£o
-- **TLS de ponta a ponta** Ã© obrigatÃ³rio para o backend de processamento de pagamentos, mantendo a criptografia entre o gateway e os servidores de back-end
-- **MigraÃ§Ã£o de URLs legadas** requer regras de reescrita para redirecionar padrÃµes de URL antigos para a nova estrutura de API sem quebrar integraÃ§Ãµes existentes
+- **Aplicações públicas** devem usar terminação TLS no gateway com certificados armazenados no Azure Key Vault
+- **Endpoints de API de parceiros** exigem TLS mútuo (mTLS), onde tanto o gateway quanto o cliente conectante apresentam certificados para autenticação
+- **TLS de ponta a ponta** é obrigatório para o backend de processamento de pagamentos, mantendo a criptografia entre o gateway e os servidores de back-end
+- **Migração de URLs legadas** requer regras de reescrita para redirecionar padrões de URL antigos para a nova estrutura de API sem quebrar integrações existentes
 - **Redirecionamento HTTP-para-HTTPS** deve ser aplicado globalmente
 
-Sua tarefa Ã© configurar polÃ­ticas TLS, fazer upload de certificados, habilitar mTLS, criar regras de reescrita para manipulaÃ§Ã£o de cabeÃ§alhos e URLs, e configurar redirecionamentos.
+Sua tarefa é configurar políticas TLS, fazer upload de certificados, habilitar mTLS, criar regras de reescrita para manipulação de cabeçalhos e URLs, e configurar redirecionamentos.
 
-## VisÃ£o geral da arquitetura
+## Visão geral da arquitetura
 
 ```text
 Internet
@@ -40,17 +40,17 @@ Internet
 [Legacy client]  --HTTP---> [AppGW] --301------> HTTPS listener
 ```
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
-- Desafio 28 concluÃ­do (Application Gateway implantado)
+- Desafio 28 concluído (Application Gateway implantado)
 - Certificados autoassinados para teste (formato PFX)
-- OpenSSL ou PowerShell para geraÃ§Ã£o de certificados
+- OpenSSL ou PowerShell para geração de certificados
 
 ---
 
 ## Tarefa 1: Gerar certificados de teste
 
-Esses certificados autoassinados sÃ£o apenas para fins de laboratÃ³rio. Ambientes de produÃ§Ã£o devem usar certificados de uma Autoridade Certificadora confiÃ¡vel.
+Esses certificados autoassinados são apenas para fins de laboratório. Ambientes de produção devem usar certificados de uma Autoridade Certificadora confiável.
 
 ### Bash (OpenSSL)
 
@@ -133,9 +133,9 @@ Export-Certificate `
 
 ---
 
-## Tarefa 2: Configurar terminaÃ§Ã£o TLS
+## Tarefa 2: Configurar terminação TLS
 
-A terminaÃ§Ã£o TLS descriptografa o trÃ¡fego no Application Gateway. O gateway realiza o handshake SSL, reduzindo a carga de CPU nos servidores de back-end.
+A terminação TLS descriptografa o tráfego no Application Gateway. O gateway realiza o handshake SSL, reduzindo a carga de CPU nos servidores de back-end.
 
 ### Azure CLI
 
@@ -204,9 +204,9 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ---
 
-## Tarefa 3: Definir polÃ­tica TLS
+## Tarefa 3: Definir política TLS
 
-As polÃ­ticas TLS controlam quais versÃµes de protocolo e conjuntos de cifras sÃ£o aceitÃ¡veis. O Application Gateway suporta os tipos de polÃ­tica Predefined, Custom e CustomV2.
+As políticas TLS controlam quais versões de protocolo e conjuntos de cifras são aceitáveis. O Application Gateway suporta os tipos de política Predefined, Custom e CustomV2.
 
 ### Azure CLI
 
@@ -252,7 +252,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ## Tarefa 4: Configurar TLS de ponta a ponta
 
-O TLS de ponta a ponta mantÃ©m a criptografia entre o Application Gateway e os servidores de back-end. Para o SKU v2, vocÃª faz upload do certificado de CA raiz confiÃ¡vel que assinou o certificado do servidor de back-end.
+O TLS de ponta a ponta mantém a criptografia entre o Application Gateway e os servidores de back-end. Para o SKU v2, você faz upload do certificado de CA raiz confiável que assinou o certificado do servidor de back-end.
 
 ### Azure CLI
 
@@ -305,9 +305,9 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ---
 
-## Tarefa 5: Configurar TLS mÃºtuo (mTLS)
+## Tarefa 5: Configurar TLS mútuo (mTLS)
 
-O TLS mÃºtuo exige que o cliente apresente um certificado que Ã© validado contra uma CA de cliente confiÃ¡vel. No Application Gateway v2, o mTLS Ã© configurado atravÃ©s de perfis SSL e certificados de cliente confiÃ¡veis.
+O TLS mútuo exige que o cliente apresente um certificado que é validado contra uma CA de cliente confiável. No Application Gateway v2, o mTLS é configurado através de perfis SSL e certificados de cliente confiáveis.
 
 ### Azure CLI
 
@@ -368,7 +368,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ## Tarefa 6: Criar regras de reescrita
 
-As regras de reescrita modificam cabeÃ§alhos de requisiÃ§Ã£o e resposta HTTP, e podem reescrever caminhos de URL e query strings. Elas sÃ£o avaliadas apÃ³s o processamento das regras de roteamento.
+As regras de reescrita modificam cabeçalhos de requisição e resposta HTTP, e podem reescrever caminhos de URL e query strings. Elas são avaliadas após o processamento das regras de roteamento.
 
 ### Azure CLI
 
@@ -515,7 +515,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ### Portal
 
-1. Navegue atÃ© o recurso do Application Gateway
+1. Navegue até o recurso do Application Gateway
 2. Selecione **Listeners** e crie um ouvinte HTTP na porta 80
 3. Selecione **Rules** e crie uma nova regra de roteamento
 4. Defina o tipo de regra como **Basic** e selecione o ouvinte HTTP
@@ -526,15 +526,15 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ---
 
-## ExercÃ­cios de quebra e correÃ§Ã£o
+## Exercícios de quebra e correção
 
-### Problema 1: Cadeia de certificados incompleta (intermediÃ¡rio ausente)
+### Problema 1: Cadeia de certificados incompleta (intermediário ausente)
 
-**Sintoma**: Os navegadores exibem "NET::ERR_CERT_AUTHORITY_INVALID" ao conectar ao ouvinte HTTPS. O certificado parece vÃ¡lido quando inspecionado diretamente, mas a cadeia nÃ£o pode ser verificada.
+**Sintoma**: Os navegadores exibem "NET::ERR_CERT_AUTHORITY_INVALID" ao conectar ao ouvinte HTTPS. O certificado parece válido quando inspecionado diretamente, mas a cadeia não pode ser verificada.
 
-**Causa raiz**: O arquivo PFX carregado no Application Gateway contÃ©m apenas o certificado folha sem os certificados de CA intermediÃ¡rios. Os navegadores precisam da cadeia completa para validar o certificado atÃ© uma raiz confiÃ¡vel.
+**Causa raiz**: O arquivo PFX carregado no Application Gateway contém apenas o certificado folha sem os certificados de CA intermediários. Os navegadores precisam da cadeia completa para validar o certificado até uma raiz confiável.
 
-**CorreÃ§Ã£o**: Reconstrua o arquivo PFX com a cadeia de certificados completa:
+**Correção**: Reconstrua o arquivo PFX com a cadeia de certificados completa:
 
 ```bash
 # Combine leaf + intermediate into chain
@@ -556,13 +556,13 @@ az network application-gateway ssl-cert update \
   --cert-password "AppGwP@ss123"
 ```
 
-### Problema 2: CondiÃ§Ã£o de reescrita nÃ£o avaliada (nome de variÃ¡vel incorreto)
+### Problema 2: Condição de reescrita não avaliada (nome de variável incorreto)
 
-**Sintoma**: A regra de reescrita de URL estÃ¡ configurada, mas as requisiÃ§Ãµes para `/v1/api/users` nÃ£o estÃ£o sendo reescritas para `/v2/api/users`. A regra parece nÃ£o ter efeito.
+**Sintoma**: A regra de reescrita de URL está configurada, mas as requisições para `/v1/api/users` não estão sendo reescritas para `/v2/api/users`. A regra parece não ter efeito.
 
-**Causa raiz**: A condiÃ§Ã£o usa `uri_path` (sem o prefixo `var_`) como nome da variÃ¡vel de servidor. As condiÃ§Ãµes de reescrita do Application Gateway exigem o formato correto da variÃ¡vel: `var_uri_path` para o caminho do URI.
+**Causa raiz**: A condição usa `uri_path` (sem o prefixo `var_`) como nome da variável de servidor. As condições de reescrita do Application Gateway exigem o formato correto da variável: `var_uri_path` para o caminho do URI.
 
-**CorreÃ§Ã£o**: Atualize a condiÃ§Ã£o da regra de reescrita para usar o nome de variÃ¡vel correto:
+**Correção**: Atualize a condição da regra de reescrita para usar o nome de variável correto:
 
 ```bash
 az network application-gateway rewrite-rule update \
@@ -573,15 +573,15 @@ az network application-gateway rewrite-rule update \
   --conditions "[{\"variable\":\"var_uri_path\",\"pattern\":\"/v1/api/(.*)\",\"ignore-case\":true,\"negate\":false}]"
 ```
 
-As variÃ¡veis de servidor comuns para condiÃ§Ãµes de reescrita incluem: `var_uri_path`, `var_query_string`, `var_host`, `var_request_uri`, `var_server_name`, e cabeÃ§alhos HTTP acessados como `http_req_HeaderName`.
+As variáveis de servidor comuns para condições de reescrita incluem: `var_uri_path`, `var_query_string`, `var_host`, `var_request_uri`, `var_server_name`, e cabeçalhos HTTP acessados como `http_req_HeaderName`.
 
 ### Problema 3: Cookie de afinidade causando desbalanceamento
 
-**Sintoma**: ApÃ³s habilitar a afinidade baseada em cookie, um servidor de back-end recebe 90% do trÃ¡fego enquanto os outros permanecem ociosos. Novas sessÃµes nÃ£o estÃ£o sendo distribuÃ­das uniformemente.
+**Sintoma**: Após habilitar a afinidade baseada em cookie, um servidor de back-end recebe 90% do tráfego enquanto os outros permanecem ociosos. Novas sessões não estão sendo distribuídas uniformemente.
 
-**Causa raiz**: A afinidade baseada em cookie fixa uma sessÃ£o de cliente a um servidor de back-end especÃ­fico durante toda sua vida Ãºtil. Se a distribuiÃ§Ã£o inicial de sessÃµes estava desbalanceada (por exemplo, durante uma implantaÃ§Ã£o quando apenas um servidor estava saudÃ¡vel), as requisiÃ§Ãµes subsequentes continuam sendo roteadas para esse servidor via cookie de afinidade.
+**Causa raiz**: A afinidade baseada em cookie fixa uma sessão de cliente a um servidor de back-end específico durante toda sua vida útil. Se a distribuição inicial de sessões estava desbalanceada (por exemplo, durante uma implantação quando apenas um servidor estava saudável), as requisições subsequentes continuam sendo roteadas para esse servidor via cookie de afinidade.
 
-**CorreÃ§Ã£o**: Desabilite e reabilite temporariamente a afinidade, ou ajuste as configuraÃ§Ãµes HTTP:
+**Correção**: Desabilite e reabilite temporariamente a afinidade, ou ajuste as configurações HTTP:
 
 ```bash
 # Disable cookie-based affinity to reset distribution
@@ -601,7 +601,7 @@ az network application-gateway http-settings update \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[{id:"q1", question:"Qual tipo de política TLS você deve usar para especificar tanto uma versão mínima de protocolo quanto uma lista personalizada de cipher suites?", options:["Predefined","Custom ✅","CustomV2","Standard"], correctIndex:1, explanation:"O tipo de política Custom permite especificar tanto uma versão mínima de protocolo (--min-protocol-version) quanto cipher suites específicos (--cipher-suites). Políticas predefinidas usam uma configuração nomeada fixa. CustomV2 é para ciphers mais recentes com TLS 1.2/1.3."},{id:"q2", question:"No TLS mútuo (mTLS) no Application Gateway v2, onde o certificado CA de cliente confiável é configurado?", options:["Diretamente no listener HTTP","Nas configurações HTTP do backend","Em um perfil SSL associado ao listener ✅","Na configuração de IP do frontend"], correctIndex:2, explanation:"A validação de certificado de cliente mTLS é configurada através de perfis SSL no Application Gateway v2. O perfil SSL referencia certificados de cliente confiáveis e é associado a um listener específico."},{id:"q3", question:"Qual tipo de redirecionamento define um código de status HTTP 301?", options:["Found","Temporary","Permanent ✅","SeeOther"], correctIndex:2, explanation:"O tipo de redirecionamento Permanent mapeia para HTTP 301 (Moved Permanently). Found mapeia para 302, Temporary mapeia para 307 e SeeOther mapeia para 303."},{id:"q4", question:"Qual é o formato correto de variável de servidor para acessar o caminho da URI em uma condição de regra de reescrita?", options:["uri_path","server.uri_path","var_uri_path ✅","http_uri_path"], correctIndex:2, explanation:"As condições de reescrita do Application Gateway usam o prefixo 'var_' para variáveis de servidor. O caminho da URI é acessado como 'var_uri_path'. Cabeçalhos de requisição HTTP usam o formato 'http_req_HeaderName'."},{id:"q5", question:"Para TLS de ponta a ponta com Application Gateway v2, qual tipo de certificado deve ser carregado para verificar o servidor de backend?", options:["A chave privada PFX do servidor de backend","O certificado CA raiz confiável que assinou o certificado do backend ✅","O próprio certificado SSL do Application Gateway","Um certificado de cliente para o backend verificar o gateway"], correctIndex:1, explanation:"O Application Gateway v2 usa certificados raiz confiáveis (a CA que assinou o certificado do servidor de backend) para verificar a identidade do servidor de backend durante TLS de ponta a ponta. O SKU v1 usa certificados de autenticação (o certificado público do backend) em vez disso."},{id:"q6", question:"Uma regra de reescrita tem --include-path definido como true em uma configuração de redirecionamento. O que isso significa?", options:["O caminho da requisição original é anexado à URL de destino do redirecionamento ✅","Um novo caminho é adicionado a todas as requisições independentemente do original","O caminho é removido do redirecionamento","Apenas requisições com um caminho específico disparam o redirecionamento"], correctIndex:0, explanation:"Quando --include-path é true, o caminho da URL da requisição original é preservado e anexado ao destino do redirecionamento. Por exemplo, uma requisição para /old/page seria redirecionada para https://target/old/page em vez de apenas https://target/."}]} />
 
@@ -619,18 +619,18 @@ Remove-AzResourceGroup -Name "rg-appgw-lab" -Force
 ```
 
 :::warning
-O Application Gateway v2 cobra aproximadamente $0,27/hora enquanto implantado. Sempre exclua seus recursos de laboratÃ³rio imediatamente apÃ³s concluir os exercÃ­cios para evitar custos desnecessÃ¡rios.
+O Application Gateway v2 cobra aproximadamente $0,27/hora enquanto implantado. Sempre exclua seus recursos de laboratório imediatamente após concluir os exercícios para evitar custos desnecessários.
 :::
 
 ---
 
-## Principais conclusÃµes
+## Principais conclusões
 
-- A terminaÃ§Ã£o TLS descarrega o processamento SSL para o gateway; o back-end recebe trÃ¡fego HTTP nÃ£o criptografado
-- O TLS de ponta a ponta mantÃ©m a criptografia entre o gateway e o back-end; requer um **certificado de raiz confiÃ¡vel** no gateway (SKU v2)
-- O TLS mÃºtuo (mTLS) Ã© configurado atravÃ©s de **perfis SSL** que referenciam certificados de CA de cliente confiÃ¡veis
-- Tipos de polÃ­tica TLS: **Predefined** (polÃ­tica nomeada), **Custom** (escolha versÃµes e cifras), **CustomV2** (apenas cifras modernas)
-- As regras de reescrita usam variÃ¡veis de servidor com o prefixo `var_` (por exemplo, `var_uri_path`, `var_query_string`)
-- Os tipos de redirecionamento mapeiam para cÃ³digos de status HTTP: **Permanent** (301), **Found** (302), **SeeOther** (303), **Temporary** (307)
-- Os flags `--include-path` e `--include-query-string` nos redirecionamentos controlam se os componentes originais da URL sÃ£o preservados
-- Problemas na cadeia de certificados sÃ£o a causa mais comum de erros TLS; sempre inclua certificados intermediÃ¡rios no arquivo PFX
+- A terminação TLS descarrega o processamento SSL para o gateway; o back-end recebe tráfego HTTP não criptografado
+- O TLS de ponta a ponta mantém a criptografia entre o gateway e o back-end; requer um **certificado de raiz confiável** no gateway (SKU v2)
+- O TLS mútuo (mTLS) é configurado através de **perfis SSL** que referenciam certificados de CA de cliente confiáveis
+- Tipos de política TLS: **Predefined** (política nomeada), **Custom** (escolha versões e cifras), **CustomV2** (apenas cifras modernas)
+- As regras de reescrita usam variáveis de servidor com o prefixo `var_` (por exemplo, `var_uri_path`, `var_query_string`)
+- Os tipos de redirecionamento mapeiam para códigos de status HTTP: **Permanent** (301), **Found** (302), **SeeOther** (303), **Temporary** (307)
+- Os flags `--include-path` e `--include-query-string` nos redirecionamentos controlam se os componentes originais da URL são preservados
+- Problemas na cadeia de certificados são a causa mais comum de erros TLS; sempre inclua certificados intermediários no arquivo PFX

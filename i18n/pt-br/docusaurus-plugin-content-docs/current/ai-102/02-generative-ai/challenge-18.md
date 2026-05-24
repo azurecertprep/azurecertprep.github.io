@@ -10,35 +10,35 @@ import TabItem from '@theme/TabItem';
 # Desafio 18: DALL-E e Modelos Multimodais
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$2,00 (estimado, geraÃ§Ã£o de imagens) | **DomÃ­nio**: SoluÃ§Ãµes de IA Generativa (15-20%)
+**45-60 min** | **Custo**: ~$2,00 (estimado, geração de imagens) | **Domínio**: Soluções de IA Generativa (15-20%)
 :::
 
 ## Habilidades do exame cobertas
 - Usar DALL-E para gerar imagens
-- Usar modelos multimodais grandes (capacidades de visÃ£o do GPT-4o)
+- Usar modelos multimodais grandes (capacidades de visão do GPT-4o)
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Azure OpenAI fornece acesso a capacidades de IA multimodal atravÃ©s de dois recursos principais: **DALL-E 3** para geraÃ§Ã£o de imagens e **GPT-4o** para compreensÃ£o visual. O DALL-E 3 gera imagens a partir de descriÃ§Ãµes textuais, suportando tamanhos de 1024Ã—1024, 1024Ã—1792 e 1792Ã—1024 com configuraÃ§Ãµes de qualidade ajustÃ¡veis (standard ou HD). Cada requisiÃ§Ã£o de geraÃ§Ã£o produz uma imagem Ãºnica com uma URL temporÃ¡ria vÃ¡lida por 24 horas.
+O Azure OpenAI fornece acesso a capacidades de IA multimodal através de dois recursos principais: **DALL-E 3** para geração de imagens e **GPT-4o** para compreensão visual. O DALL-E 3 gera imagens a partir de descrições textuais, suportando tamanhos de 1024Ã—1024, 1024Ã—1792 e 1792Ã—1024 com configurações de qualidade ajustáveis (standard ou HD). Cada requisição de geração produz uma imagem única com uma URL temporária válida por 24 horas.
 
-As capacidades de visÃ£o do GPT-4o permitem que o modelo analise imagens fornecidas como URLs ou dados codificados em base64. O modelo pode descrever conteÃºdo de imagens, extrair texto (OCR), interpretar grÃ¡ficos e diagramas, comparar mÃºltiplas imagens e responder perguntas sobre conteÃºdo visual. As imagens sÃ£o processadas como partes de conteÃºdo especiais dentro da API de chat completions, mantendo a estrutura de mensagens familiar.
+As capacidades de visão do GPT-4o permitem que o modelo analise imagens fornecidas como URLs ou dados codificados em base64. O modelo pode descrever conteúdo de imagens, extrair texto (OCR), interpretar gráficos e diagramas, comparar múltiplas imagens e responder perguntas sobre conteúdo visual. As imagens são processadas como partes de conteúdo especiais dentro da API de chat completions, mantendo a estrutura de mensagens familiar.
 
-Ao trabalhar com entradas multimodais, entender os custos de tokens Ã© importante: os custos de anÃ¡lise de imagens variam por resoluÃ§Ã£o. O parÃ¢metro `detail` controla o processamento: `low` usa 85 tokens fixos independente do tamanho, enquanto `high` processa a imagem em resoluÃ§Ã£o completa com custos proporcionais ao nÃºmero de blocos 512Ã—512 necessÃ¡rios para cobrir a imagem.
+Ao trabalhar com entradas multimodais, entender os custos de tokens é importante: os custos de análise de imagens variam por resolução. O parâmetro `detail` controla o processamento: `low` usa 85 tokens fixos independente do tamanho, enquanto `high` processa a imagem em resolução completa com custos proporcionais ao número de blocos 512Ã—512 necessários para cobrir a imagem.
 
 ## Arquitetura
 
-Este desafio gera imagens com DALL-E 3, analisa imagens com a visÃ£o do GPT-4o e explora capacidades de OCR e compreensÃ£o de grÃ¡ficos.
+Este desafio gera imagens com DALL-E 3, analisa imagens com a visão do GPT-4o e explora capacidades de OCR e compreensão de gráficos.
 
 ![Topologia do Desafio 18](/img/ai-102/challenge-18-topology.svg)
 
-## PrÃ©-requisitos
-- Recurso Azure OpenAI com modelo DALL-E 3 implantado (nome da implantaÃ§Ã£o: `dall-e-3`)
-- Recurso Azure OpenAI com modelo GPT-4o implantado (nome da implantaÃ§Ã£o: `gpt-4o`)
+## Pré-requisitos
+- Recurso Azure OpenAI com modelo DALL-E 3 implantado (nome da implantação: `dall-e-3`)
+- Recurso Azure OpenAI com modelo GPT-4o implantado (nome da implantação: `gpt-4o`)
 - Python 3.9+ com pacote `openai` instalado
 - .NET 8 SDK com pacote NuGet `Azure.AI.OpenAI`
-- Imagens de exemplo para anÃ¡lise de visÃ£o (URLs ou arquivos locais)
+- Imagens de exemplo para análise de visão (URLs ou arquivos locais)
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Gerar Imagens com DALL-E 3
 
@@ -169,7 +169,7 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/dall-e-3/image
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Analisar Imagens com VisÃ£o do GPT-4o (Entrada por URL)
+### Tarefa 2: Analisar Imagens com Visão do GPT-4o (Entrada por URL)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -354,7 +354,7 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/co
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Extrair Texto de Imagens (OCR com VisÃ£o)
+### Tarefa 3: Extrair Texto de Imagens (OCR com Visão)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -538,7 +538,7 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/co
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Comparar Abordagens de AnÃ¡lise de Imagem
+### Tarefa 4: Comparar Abordagens de Análise de Imagem
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -688,7 +688,7 @@ time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Image URL: https://dalleproduse.blob.core.windows.net/...
@@ -714,15 +714,15 @@ Time: 2.8s | Tokens: 1542
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| DALL-E retorna erro de filtro de conteÃºdo | `ContentFilterError` | Prompt acionou filtros de seguranÃ§a | Reformule o prompt; evite conteÃºdo potencialmente sensÃ­vel |
-| URL da imagem retorna 400 | `Invalid image URL` | URL nÃ£o Ã© publicamente acessÃ­vel | Use codificaÃ§Ã£o base64 para imagens privadas |
-| VisÃ£o retorna anÃ¡lise imprecisa | DescriÃ§Ãµes incorretas | Usando `detail: "low"` em imagens complexas | Mude para `detail: "high"` para anÃ¡lise detalhada |
-| Contagem de tokens inesperadamente alta | Conta elevada para requisiÃ§Ãµes de visÃ£o | Imagens de alta resoluÃ§Ã£o com `detail: "high"` | Use `detail: "low"` quando resoluÃ§Ã£o completa nÃ£o Ã© necessÃ¡ria |
-| DALL-E n>1 falha | `InvalidRequestError` | DALL-E 3 suporta apenas n=1 | Defina n=1; faÃ§a mÃºltiplas requisiÃ§Ãµes para mÃºltiplas imagens |
+| DALL-E retorna erro de filtro de conteúdo | `ContentFilterError` | Prompt acionou filtros de segurança | Reformule o prompt; evite conteúdo potencialmente sensível |
+| URL da imagem retorna 400 | `Invalid image URL` | URL não é publicamente acessível | Use codificação base64 para imagens privadas |
+| Visão retorna análise imprecisa | Descrições incorretas | Usando `detail: "low"` em imagens complexas | Mude para `detail: "high"` para análise detalhada |
+| Contagem de tokens inesperadamente alta | Conta elevada para requisições de visão | Imagens de alta resolução com `detail: "high"` | Use `detail: "low"` quando resolução completa não é necessária |
+| DALL-E n>1 falha | `InvalidRequestError` | DALL-E 3 suporta apenas n=1 | Defina n=1; faça múltiplas requisições para múltiplas imagens |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
@@ -732,50 +732,50 @@ Time: 2.8s | Tokens: 1542
       "256x256, 512x512, 1024x1024",
       "1024x1024, 1024x1792, 1792x1024",
       "512x512, 1024x1024, 2048x2048",
-      "Qualquer resoluÃ§Ã£o personalizada atÃ© 4096x4096"
+      "Qualquer resolução personalizada até 4096x4096"
     ],
     correctAnswer: 1,
-    explanation: "O DALL-E 3 suporta trÃªs tamanhos fixos: 1024x1024 (quadrado), 1024x1792 (retrato) e 1792x1024 (paisagem). O DALL-E 2 mais antigo suportava 256x256 e 512x512, mas esses nÃ£o estÃ£o disponÃ­veis no DALL-E 3."
+    explanation: "O DALL-E 3 suporta três tamanhos fixos: 1024x1024 (quadrado), 1024x1792 (retrato) e 1792x1024 (paisagem). O DALL-E 2 mais antigo suportava 256x256 e 512x512, mas esses não estão disponíveis no DALL-E 3."
   },
   {
     id: "ch18-q2",
-    question: "Como as imagens sÃ£o fornecidas ao GPT-4o para anÃ¡lise de visÃ£o?",
+    question: "Como as imagens são fornecidas ao GPT-4o para análise de visão?",
     options: [
-      "Como partes de conteÃºdo dentro do array de mensagens da API de chat completions",
-      "Como uma chamada de API separada para um endpoint especÃ­fico de visÃ£o",
+      "Como partes de conteúdo dentro do array de mensagens da API de chat completions",
+      "Como uma chamada de API separada para um endpoint específico de visão",
       "Fazendo upload para Azure Blob Storage e fornecendo um token SAS",
-      "AtravÃ©s da API Azure AI Vision apenas"
+      "Através da API Azure AI Vision apenas"
     ],
     correctAnswer: 0,
-    explanation: "A visÃ£o do GPT-4o usa a API padrÃ£o de chat completions. As imagens sÃ£o incluÃ­das como partes de conteÃºdo (type: 'image_url') dentro das mensagens do usuÃ¡rio, junto com partes de texto. A imagem pode ser fornecida como URL ou URI de dados codificados em base64."
+    explanation: "A visão do GPT-4o usa a API padrão de chat completions. As imagens são incluídas como partes de conteúdo (type: 'image_url') dentro das mensagens do usuário, junto com partes de texto. A imagem pode ser fornecida como URL ou URI de dados codificados em base64."
   },
   {
     id: "ch18-q3",
-    question: "O que o parÃ¢metro 'detail' controla ao enviar imagens para o GPT-4o?",
+    question: "O que o parâmetro 'detail' controla ao enviar imagens para o GPT-4o?",
     options: [
-      "A qualidade de saÃ­da das imagens geradas",
-      "Se o modelo retorna anÃ¡lise estruturada ou nÃ£o estruturada",
-      "A resoluÃ§Ã£o na qual o modelo processa a imagem, afetando o custo de tokens e a precisÃ£o",
-      "O nÃ­vel de compressÃ£o aplicado antes da transmissÃ£o"
+      "A qualidade de saída das imagens geradas",
+      "Se o modelo retorna análise estruturada ou não estruturada",
+      "A resolução na qual o modelo processa a imagem, afetando o custo de tokens e a precisão",
+      "O nível de compressão aplicado antes da transmissão"
     ],
     correctAnswer: 2,
-    explanation: "O parÃ¢metro 'detail' (low/high/auto) controla a resoluÃ§Ã£o de processamento da imagem. 'low' usa 85 tokens fixos independente do tamanho. 'high' processa em resoluÃ§Ã£o completa, com custos de tokens proporcionais ao nÃºmero de blocos 512x512 necessÃ¡rios, fornecendo anÃ¡lise mais precisa."
+    explanation: "O parâmetro 'detail' (low/high/auto) controla a resolução de processamento da imagem. 'low' usa 85 tokens fixos independente do tamanho. 'high' processa em resolução completa, com custos de tokens proporcionais ao número de blocos 512x512 necessários, fornecendo análise mais precisa."
   },
   {
     id: "ch18-q4",
-    question: "O que Ã© o campo 'revised_prompt' em uma resposta do DALL-E 3?",
+    question: "O que é o campo 'revised_prompt' em uma resposta do DALL-E 3?",
     options: [
-      "Uma sugestÃ£o de melhoria para a prÃ³xima vez",
-      "O prompt original com correÃ§Ãµes ortogrÃ¡ficas",
-      "A versÃ£o automaticamente aprimorada do seu prompt pelo DALL-E 3 usada para a geraÃ§Ã£o",
-      "Uma versÃ£o filtrada pela moderaÃ§Ã£o com conteÃºdo sinalizado removido"
+      "Uma sugestão de melhoria para a próxima vez",
+      "O prompt original com correções ortográficas",
+      "A versão automaticamente aprimorada do seu prompt pelo DALL-E 3 usada para a geração",
+      "Uma versão filtrada pela moderação com conteúdo sinalizado removido"
     ],
     correctAnswer: 2,
-    explanation: "O DALL-E 3 reescreve automaticamente os prompts para adicionar detalhes e melhorar a qualidade da geraÃ§Ã£o. O campo 'revised_prompt' mostra o prompt aprimorado que foi realmente usado para gerar a imagem. Este Ã© um recurso integrado e nÃ£o pode ser desativado."
+    explanation: "O DALL-E 3 reescreve automaticamente os prompts para adicionar detalhes e melhorar a qualidade da geração. O campo 'revised_prompt' mostra o prompt aprimorado que foi realmente usado para gerar a imagem. Este é um recurso integrado e não pode ser desativado."
   },
   {
     id: "ch18-q5",
-    question: "Por quanto tempo as URLs de imagens geradas pelo DALL-E 3 sÃ£o vÃ¡lidas antes de expirarem?",
+    question: "Por quanto tempo as URLs de imagens geradas pelo DALL-E 3 são válidas antes de expirarem?",
     options: [
       "1 hora",
       "7 dias",
@@ -783,7 +783,7 @@ Time: 2.8s | Tokens: 1542
       "24 horas"
     ],
     correctAnswer: 3,
-    explanation: "As URLs de imagens do DALL-E 3 sÃ£o temporÃ¡rias e expiram apÃ³s 24 horas. AplicaÃ§Ãµes que precisam persistir as imagens devem baixÃ¡-las imediatamente apÃ³s a geraÃ§Ã£o e armazenÃ¡-las em seu prÃ³prio storage (por exemplo, Azure Blob Storage)."
+    explanation: "As URLs de imagens do DALL-E 3 são temporárias e expiram após 24 horas. Aplicações que precisam persistir as imagens devem baixá-las imediatamente após a geração e armazená-las em seu próprio storage (por exemplo, Azure Blob Storage)."
   }
 ]} />
 
@@ -794,8 +794,8 @@ az group delete --name rg-ai102-challenge18 --yes --no-wait
 ```
 
 ## Saiba Mais
-- [ReferÃªncia da API DALL-E](https://learn.microsoft.com/azure/ai-services/openai/reference#image-generation)
-- [Capacidades de visÃ£o do GPT-4o](https://learn.microsoft.com/azure/ai-services/openai/how-to/gpt-with-vision)
-- [CÃ¡lculo de tokens de imagem](https://learn.microsoft.com/azure/ai-services/openai/overview#image-tokens-gpt-4o)
-- [Filtragem de conteÃºdo para DALL-E](https://learn.microsoft.com/azure/ai-services/openai/concepts/content-filter)
-- [VisÃ£o geral de modelos multimodais](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-4o-and-gpt-4-turbo)
+- [Referência da API DALL-E](https://learn.microsoft.com/azure/ai-services/openai/reference#image-generation)
+- [Capacidades de visão do GPT-4o](https://learn.microsoft.com/azure/ai-services/openai/how-to/gpt-with-vision)
+- [Cálculo de tokens de imagem](https://learn.microsoft.com/azure/ai-services/openai/overview#image-tokens-gpt-4o)
+- [Filtragem de conteúdo para DALL-E](https://learn.microsoft.com/azure/ai-services/openai/concepts/content-filter)
+- [Visão geral de modelos multimodais](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#gpt-4o-and-gpt-4-turbo)

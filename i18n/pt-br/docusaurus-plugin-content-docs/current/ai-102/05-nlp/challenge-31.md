@@ -10,36 +10,36 @@ import TabItem from '@theme/TabItem';
 # Desafio 31: Text Analytics - Frases-chave, Entidades, Sentimento
 
 :::info Tempo Estimado
-**45 min** | **Custo**: $1-3 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
+**45 min** | **Custo**: $1-3 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
 - Extrair frases-chave de texto
 - Reconhecer entidades nomeadas e entidades vinculadas
-- Determinar sentimento com mineraÃ§Ã£o de opiniÃ£o
+- Determinar sentimento com mineração de opinião
 - Detectar idioma
 
-## VisÃ£o Geral
+## Visão Geral
 
 O Azure AI Language (Text Analytics) fornece capacidades de NLP:
 
-| Recurso | DescriÃ§Ã£o |
+| Recurso | Descrição |
 |---------|-----------|
-| **AnÃ¡lise de Sentimento** | Positivo/neutro/negativo com confianÃ§a + mineraÃ§Ã£o de opiniÃ£o |
-| **ExtraÃ§Ã£o de Frases-chave** | Identificar os principais pontos de discussÃ£o |
-| **Reconhecimento de Entidades Nomeadas (NER)** | Detectar entidades (Pessoa, Local, OrganizaÃ§Ã£o, DateTime, etc.) |
-| **VinculaÃ§Ã£o de Entidades** | Vincular entidades Ã  base de conhecimento da Wikipedia |
-| **DetecÃ§Ã£o de Idioma** | Identificar o idioma do texto |
+| **Análise de Sentimento** | Positivo/neutro/negativo com confiança + mineração de opinião |
+| **Extração de Frases-chave** | Identificar os principais pontos de discussão |
+| **Reconhecimento de Entidades Nomeadas (NER)** | Detectar entidades (Pessoa, Local, Organização, DateTime, etc.) |
+| **Vinculação de Entidades** | Vincular entidades Ã  base de conhecimento da Wikipedia |
+| **Detecção de Idioma** | Identificar o idioma do texto |
 
-O cliente suporta **operaÃ§Ãµes em lote** â€” envie mÃºltiplos documentos em uma Ãºnica requisiÃ§Ã£o para eficiÃªncia.
+O cliente suporta **operações em lote** â€” envie múltiplos documentos em uma única requisição para eficiência.
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura do Azure
-- Recurso Azure AI Language (ou multi-serviÃ§o)
+- Recurso Azure AI Language (ou multi-serviço)
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-ai-textanalytics` (v5.3+)
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Criar Recurso de Language
 
@@ -57,7 +57,7 @@ ENDPOINT=$(az cognitiveservices account show --name language-ai102 --resource-gr
 KEY=$(az cognitiveservices account keys list --name language-ai102 --resource-group rg-ai102-nlp --query key1 -o tsv)
 ```
 
-### Tarefa 2: Analisar Sentimento com MineraÃ§Ã£o de OpiniÃ£o
+### Tarefa 2: Analisar Sentimento com Mineração de Opinião
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -237,7 +237,7 @@ curl -s "${ENDPOINT}/language/:analyze-text?api-version=2023-04-01" \
 </TabItem>
 </Tabs>
 
-### Tarefa 4: DetecÃ§Ã£o de Idioma
+### Tarefa 4: Detecção de Idioma
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -248,7 +248,7 @@ multilingual_docs = [
     "Hello, how are you today?",
     "Bonjour, comment allez-vous?",
     "ã“ã‚“ã«ã¡ã¯ã€å…ƒæ°—ã§ã™ã‹ï¼Ÿ",
-    "Hola, Â¿cÃ³mo estÃ¡s?"
+    "Hola, Â¿cómo estás?"
 ]
 
 lang_results = client.detect_language(multilingual_docs)
@@ -263,7 +263,7 @@ for idx, result in enumerate(lang_results):
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Document 0: 'The hotel room was clean and spacious, but the s...'
@@ -292,76 +292,76 @@ Doc 0:
   'Hello, how are you today?...' â†’ English (en) confidence: 1.000
   'Bonjour, comment allez-vous?...' â†’ French (fr) confidence: 1.000
   'ã“ã‚“ã«ã¡ã¯ã€å…ƒæ°—ã§ã™ã‹ï¼Ÿ...' â†’ Japanese (ja) confidence: 1.000
-  'Hola, Â¿cÃ³mo estÃ¡s?...' â†’ Spanish (es) confidence: 1.000
+  'Hola, Â¿cómo estás?...' â†’ Spanish (es) confidence: 1.000
 ```
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Resultados mistos em texto claro | Sentimento `mixed` inesperado | MineraÃ§Ã£o de opiniÃ£o detecta opiniÃµes opostas | Use sentimento no nÃ­vel da sentenÃ§a para granularidade |
-| Frases-chave vazias | Nenhuma frase retornada | Texto muito curto ou genÃ©rico | ForneÃ§a texto substancial (10+ palavras recomendado) |
-| Categoria de entidade `Unknown` | Entidades nÃ£o reconhecidas | Termos especÃ­ficos de domÃ­nio nÃ£o estÃ£o no modelo | Use modelo NER personalizado para entidades especializadas |
+| Resultados mistos em texto claro | Sentimento `mixed` inesperado | Mineração de opinião detecta opiniões opostas | Use sentimento no nível da sentença para granularidade |
+| Frases-chave vazias | Nenhuma frase retornada | Texto muito curto ou genérico | Forneça texto substancial (10+ palavras recomendado) |
+| Categoria de entidade `Unknown` | Entidades não reconhecidas | Termos específicos de domínio não estão no modelo | Use modelo NER personalizado para entidades especializadas |
 | Erro em lote em um doc | `InvalidDocument` nos resultados | Documento excede 5.120 caracteres | Divida documentos longos; verifique `is_error` por documento |
-| DetecÃ§Ã£o de idioma errada | Idioma incorreto | Texto em mÃºltiplos idiomas confunde a detecÃ§Ã£o | Separe texto por idioma; use amostras mais longas |
+| Detecção de idioma errada | Idioma incorreto | Texto em múltiplos idiomas confunde a detecção | Separe texto por idioma; use amostras mais longas |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "O que a mineraÃ§Ã£o de opiniÃ£o adiciona Ã  anÃ¡lise de sentimento padrÃ£o?",
+    question: "O que a mineração de opinião adiciona Ã  análise de sentimento padrão?",
     options: [
-      "Fornece pontuaÃ§Ãµes de sentimento geral mais precisas",
+      "Fornece pontuações de sentimento geral mais precisas",
       "Traduz o texto antes de analisar o sentimento",
-      "Identifica alvos (aspectos) especÃ­ficos e as avaliaÃ§Ãµes (opiniÃµes) sobre eles",
+      "Identifica alvos (aspectos) específicos e as avaliações (opiniões) sobre eles",
       "Detecta o idioma do texto"
     ],
     correctAnswer: 2,
-    explanation: "A mineraÃ§Ã£o de opiniÃ£o extrai sentimento baseado em aspectos: alvos (ex.: 'room', 'service') e avaliaÃ§Ãµes (ex.: 'clean', 'slow') com sua polaridade individual de sentimento."
+    explanation: "A mineração de opinião extrai sentimento baseado em aspectos: alvos (ex.: 'room', 'service') e avaliações (ex.: 'clean', 'slow') com sua polaridade individual de sentimento."
   },
   {
-    question: "Qual Ã© o tamanho mÃ¡ximo de documento para uma Ãºnica requisiÃ§Ã£o de text analytics?",
+    question: "Qual é o tamanho máximo de documento para uma única requisição de text analytics?",
     options: [
-      "5.120 caracteres por documento (atÃ© 25 documentos por lote)",
+      "5.120 caracteres por documento (até 25 documentos por lote)",
       "1.000 caracteres por documento",
       "10.000 palavras por documento",
       "Sem limite"
     ],
     correctAnswer: 0,
-    explanation: "Cada documento pode ter atÃ© 5.120 caracteres. Uma Ãºnica requisiÃ§Ã£o em lote pode conter atÃ© 25 documentos (ou 125.000 caracteres no total)."
+    explanation: "Cada documento pode ter até 5.120 caracteres. Uma única requisição em lote pode conter até 25 documentos (ou 125.000 caracteres no total)."
   },
   {
-    question: "Qual Ã© a diferenÃ§a entre Named Entity Recognition (NER) e Entity Linking?",
+    question: "Qual é a diferença entre Named Entity Recognition (NER) e Entity Linking?",
     options: [
-      "NER Ã© mais rÃ¡pido; Entity Linking Ã© mais preciso",
-      "SÃ£o o mesmo recurso com nomes diferentes",
-      "NER funciona apenas em inglÃªs; Entity Linking suporta todos os idiomas",
+      "NER é mais rápido; Entity Linking é mais preciso",
+      "São o mesmo recurso com nomes diferentes",
+      "NER funciona apenas em inglês; Entity Linking suporta todos os idiomas",
       "NER categoriza entidades (Person, Location, etc.); Entity Linking conecta entidades a entradas da base de conhecimento da Wikipedia"
     ],
     correctAnswer: 3,
-    explanation: "NER identifica entidades e atribui categorias (Person, Org, Location, DateTime). Entity Linking vai alÃ©m, vinculando entidades a entradas da Wikipedia com URLs e IDs."
+    explanation: "NER identifica entidades e atribui categorias (Person, Org, Location, DateTime). Entity Linking vai além, vinculando entidades a entradas da Wikipedia com URLs e IDs."
   },
   {
-    question: "Como vocÃª deve lidar com erros em resultados de text analytics em lote?",
+    question: "Como você deve lidar com erros em resultados de text analytics em lote?",
     options: [
-      "Capturar uma Ãºnica exceÃ§Ã£o para o lote inteiro",
+      "Capturar uma única exceção para o lote inteiro",
       "Verificar a propriedade is_error em cada resultado de documento individual",
-      "Erros nunca sÃ£o retornados â€” documentos que falharam sÃ£o ignorados silenciosamente",
+      "Erros nunca são retornados â€” documentos que falharam são ignorados silenciosamente",
       "Reenviar o lote inteiro se qualquer documento falhar"
     ],
     correctAnswer: 1,
-    explanation: "Em operaÃ§Ãµes em lote, cada resultado de documento possui uma propriedade is_error. Alguns documentos podem ter sucesso enquanto outros falham, entÃ£o vocÃª deve verificar cada resultado individualmente."
+    explanation: "Em operações em lote, cada resultado de documento possui uma propriedade is_error. Alguns documentos podem ter sucesso enquanto outros falham, então você deve verificar cada resultado individualmente."
   },
   {
-    question: "Qual formato de pontuaÃ§Ã£o de confianÃ§a a detecÃ§Ã£o de idioma retorna?",
+    question: "Qual formato de pontuação de confiança a detecção de idioma retorna?",
     options: [
       "Uma porcentagem de 0% a 100%",
       "Um inteiro de 1 a 10",
-      "Um float de 0.0 a 1.0 indicando a confianÃ§a da detecÃ§Ã£o",
-      "Um booleano (detectado ou nÃ£o detectado)"
+      "Um float de 0.0 a 1.0 indicando a confiança da detecção",
+      "Um booleano (detectado ou não detectado)"
     ],
     correctAnswer: 2,
-    explanation: "A detecÃ§Ã£o de idioma retorna uma pontuaÃ§Ã£o de confianÃ§a de 0.0 a 1.0 para cada idioma detectado. Uma pontuaÃ§Ã£o de 1.0 significa confianÃ§a mÃ¡xima."
+    explanation: "A detecção de idioma retorna uma pontuação de confiança de 0.0 a 1.0 para cada idioma detectado. Uma pontuação de 1.0 significa confiança máxima."
   }
 ]} />
 
@@ -373,7 +373,7 @@ az group delete --name rg-ai102-nlp --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Text Analytics](https://learn.microsoft.com/azure/ai-services/language-service/overview)
-- [AnÃ¡lise de sentimento](https://learn.microsoft.com/azure/ai-services/language-service/sentiment-opinion-mining/overview)
+- [Visão geral do Text Analytics](https://learn.microsoft.com/azure/ai-services/language-service/overview)
+- [Análise de sentimento](https://learn.microsoft.com/azure/ai-services/language-service/sentiment-opinion-mining/overview)
 - [Reconhecimento de entidades nomeadas](https://learn.microsoft.com/azure/ai-services/language-service/named-entity-recognition/overview)
-- [ExtraÃ§Ã£o de frases-chave](https://learn.microsoft.com/azure/ai-services/language-service/key-phrase-extraction/overview)
+- [Extração de frases-chave](https://learn.microsoft.com/azure/ai-services/language-service/key-phrase-extraction/overview)

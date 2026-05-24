@@ -12,37 +12,37 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Habilidades do exame
 
-- Projetar uma estratÃ©gia para escalar e otimizar um repositÃ³rio Git, incluindo Scalar e compartilhamento entre repositÃ³rios
+- Projetar uma estratégia para escalar e otimizar um repositório Git, incluindo Scalar e compartilhamento entre repositórios
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd opera 15 microsserviÃ§os que compÃµem sua plataforma de e-commerce: user-service, catalog-service, order-service, payment-service, shipping-service, notification-service, search-service, analytics-service, auth-service, inventory-service, review-service, recommendation-service, admin-portal, customer-portal e shared-libs. Algumas equipes defendem o mono-repo (refatoraÃ§Ã£o entre serviÃ§os mais fÃ¡cil, pipeline de CI Ãºnico, alteraÃ§Ãµes atÃ´micas). Outras querem repositÃ³rios separados (propriedade clara, deploys independentes, tamanhos de clone menores). O repositÃ³rio cresceu para 8GB com 5 anos de histÃ³rico e 50.000 commits. O tempo de clone Ã© de 25 minutos. O CTO quer uma recomendaÃ§Ã£o baseada em dados com detalhes de implementaÃ§Ã£o para qualquer abordagem escolhida.
+A Contoso Ltd opera 15 microsserviços que compõem sua plataforma de e-commerce: user-service, catalog-service, order-service, payment-service, shipping-service, notification-service, search-service, analytics-service, auth-service, inventory-service, review-service, recommendation-service, admin-portal, customer-portal e shared-libs. Algumas equipes defendem o mono-repo (refatoração entre serviços mais fácil, pipeline de CI único, alterações atômicas). Outras querem repositórios separados (propriedade clara, deploys independentes, tamanhos de clone menores). O repositório cresceu para 8GB com 5 anos de histórico e 50.000 commits. O tempo de clone é de 25 minutos. O CTO quer uma recomendação baseada em dados com detalhes de implementação para qualquer abordagem escolhida.
 
 ## Tarefas
 
 ### Tarefa 1: Vantagens e desvantagens do mono-repo
 
-Documente os trade-offs para a situaÃ§Ã£o especÃ­fica da Contoso:
+Documente os trade-offs para a situação específica da Contoso:
 
-#### AnÃ¡lise de mono-repo para a plataforma de e-commerce da Contoso
+#### Análise de mono-repo para a plataforma de e-commerce da Contoso
 
 **Vantagens:**
-- AlteraÃ§Ãµes atÃ´micas entre serviÃ§os (renomear um tipo compartilhado, atualizar todos os 15 serviÃ§os em um Ãºnico commit)
-- Fonte Ãºnica de verdade para bibliotecas compartilhadas (sem divergÃªncia de versÃ£o entre serviÃ§os)
-- ConfiguraÃ§Ã£o unificada de pipeline de CI/CD
-- Descoberta de cÃ³digo mais fÃ¡cil e colaboraÃ§Ã£o entre equipes
-- Ferramentas e linting consistentes em todos os serviÃ§os
-- Gerenciamento simplificado de dependÃªncias (todos os serviÃ§os usam as mesmas versÃµes)
-- RefatoraÃ§Ã£o entre fronteiras de serviÃ§os Ã© simples
+- Alterações atômicas entre serviços (renomear um tipo compartilhado, atualizar todos os 15 serviços em um único commit)
+- Fonte única de verdade para bibliotecas compartilhadas (sem divergência de versão entre serviços)
+- Configuração unificada de pipeline de CI/CD
+- Descoberta de código mais fácil e colaboração entre equipes
+- Ferramentas e linting consistentes em todos os serviços
+- Gerenciamento simplificado de dependências (todos os serviços usam as mesmas versões)
+- Refatoração entre fronteiras de serviços é simples
 
 **Desvantagens:**
-- Tamanho do repositÃ³rio (8GB) torna o clone lento (25 min)
+- Tamanho do repositório (8GB) torna o clone lento (25 min)
 - Todos os 50 desenvolvedores acionam o CI a cada push (sem filtro por caminho)
-- Granularidade de permissÃµes Ã© limitada (mais difÃ­cil restringir acesso por serviÃ§o)
-- Ponto Ãºnico de falha (indisponibilidade do repo afeta todas as equipes)
-- Conflitos de merge em arquivos compartilhados (package.json, configuraÃ§Ã£o de CI)
-- OperaÃ§Ãµes Git ficam lentas Ã  medida que o histÃ³rico cresce
-- Todas as equipes devem concordar com a estratÃ©gia de branching
+- Granularidade de permissões é limitada (mais difícil restringir acesso por serviço)
+- Ponto único de falha (indisponibilidade do repo afeta todas as equipes)
+- Conflitos de merge em arquivos compartilhados (package.json, configuração de CI)
+- Operações Git ficam lentas Ã  medida que o histórico cresce
+- Todas as equipes devem concordar com a estratégia de branching
 
 Exemplo de estrutura de mono-repo:
 
@@ -78,25 +78,25 @@ contoso-platform/
 
 ### Tarefa 2: Vantagens e desvantagens do multi-repo
 
-#### AnÃ¡lise de multi-repo para a plataforma de e-commerce da Contoso
+#### Análise de multi-repo para a plataforma de e-commerce da Contoso
 
 **Vantagens:**
 - Fronteiras claras de propriedade (cada equipe possui seu repo)
 - Ciclos de release e versionamento independentes
-- Controle de acesso granular por repositÃ³rio
-- RepositÃ³rios menores sÃ£o rÃ¡pidos para clonar e operar
-- Equipes podem escolher suas prÃ³prias ferramentas e linguagens
-- Falhas sÃ£o isoladas (problemas de CI de um repo nÃ£o bloqueiam outros)
+- Controle de acesso granular por repositório
+- Repositórios menores são rápidos para clonar e operar
+- Equipes podem escolher suas próprias ferramentas e linguagens
+- Falhas são isoladas (problemas de CI de um repo não bloqueiam outros)
 - Escala bem com o crescimento organizacional
 
 **Desvantagens:**
-- AlteraÃ§Ãµes entre serviÃ§os exigem PRs coordenados entre repos
-- Versionamento de bibliotecas compartilhadas cria problemas de dependÃªncia diamante
-- Ferramentas e prÃ¡ticas inconsistentes entre repos
-- Descoberta Ã© mais difÃ­cil (onde esse serviÃ§o estÃ¡?)
-- Testes de integraÃ§Ã£o exigem checkout de mÃºltiplos repos
-- AtualizaÃ§Ãµes de dependÃªncias devem ser propagadas em cada repo separadamente
-- RefatoraÃ§Ã£o entre fronteiras de serviÃ§os Ã© dolorosa
+- Alterações entre serviços exigem PRs coordenados entre repos
+- Versionamento de bibliotecas compartilhadas cria problemas de dependência diamante
+- Ferramentas e práticas inconsistentes entre repos
+- Descoberta é mais difícil (onde esse serviço está?)
+- Testes de integração exigem checkout de múltiplos repos
+- Atualizações de dependências devem ser propagadas em cada repo separadamente
+- Refatoração entre fronteiras de serviços é dolorosa
 
 Exemplo de estrutura multi-repo:
 
@@ -119,9 +119,9 @@ contoso/customer-portal       (team: frontend)
 contoso/shared-libs           (team: platform)
 ```
 
-### Tarefa 3: Implementar Scalar para otimizaÃ§Ã£o de repositÃ³rios grandes
+### Tarefa 3: Implementar Scalar para otimização de repositórios grandes
 
-Scalar (mantido pela Microsoft, integrado ao Git desde a versÃ£o 2.38) otimiza o desempenho de repositÃ³rios grandes:
+Scalar (mantido pela Microsoft, integrado ao Git desde a versão 2.38) otimiza o desempenho de repositórios grandes:
 
 ```bash
 # Register the repository with Scalar (enables all optimizations)
@@ -182,7 +182,7 @@ jobs:
 
 ### Tarefa 4: Configurar sparse-checkout para acesso a subconjunto do mono-repo
 
-Permita que desenvolvedores trabalhem apenas no serviÃ§o de sua equipe dentro do mono-repo:
+Permita que desenvolvedores trabalhem apenas no serviço de sua equipe dentro do mono-repo:
 
 ```bash
 # Initialize sparse-checkout in cone mode (faster than pattern mode)
@@ -219,7 +219,7 @@ git sparse-checkout set services/user-service libs/auth-middleware
 # Only downloads blobs for the sparse paths (not entire repo history)
 ```
 
-Crie perfis de sparse-checkout especÃ­ficos por equipe:
+Crie perfis de sparse-checkout específicos por equipe:
 
 ```bash
 # scripts/sparse-profiles/commerce-team.sh
@@ -251,7 +251,7 @@ git sparse-checkout set \
   infrastructure/terraform/analytics
 ```
 
-### Tarefa 5: Git submodules para dependÃªncias entre repositÃ³rios
+### Tarefa 5: Git submodules para dependências entre repositórios
 
 Configure submodules ao usar multi-repo para compartilhar bibliotecas comuns:
 
@@ -300,9 +300,9 @@ rm -rf .git/modules/libs/shared
 git commit -m "chore: remove shared-libs submodule"
 ```
 
-### Tarefa 6: Checkout de mÃºltiplos repositÃ³rios no Azure DevOps Pipelines
+### Tarefa 6: Checkout de múltiplos repositórios no Azure DevOps Pipelines
 
-Configure o Azure Pipelines para fazer checkout de mÃºltiplos repositÃ³rios:
+Configure o Azure Pipelines para fazer checkout de múltiplos repositórios:
 
 ```yaml
 # azure-pipelines.yml - Multi-repo checkout
@@ -369,9 +369,9 @@ steps:
     displayName: 'Validate infrastructure'
 ```
 
-### Tarefa 7: Checkout de mÃºltiplos repositÃ³rios no GitHub Actions
+### Tarefa 7: Checkout de múltiplos repositórios no GitHub Actions
 
-Configure o GitHub Actions para trabalhar com mÃºltiplos repositÃ³rios:
+Configure o GitHub Actions para trabalhar com múltiplos repositórios:
 
 ```yaml
 # .github/workflows/ci-multi-repo.yml
@@ -419,9 +419,9 @@ jobs:
           npm run test:integration -- --config ../infrastructure/test-config.json
 ```
 
-### Tarefa 8: OtimizaÃ§Ã£o de build com triggers por caminho
+### Tarefa 8: Otimização de build com triggers por caminho
 
-Construa e teste apenas os serviÃ§os que realmente mudaram:
+Construa e teste apenas os serviços que realmente mudaram:
 
 ```yaml
 # .github/workflows/ci-path-triggers.yml
@@ -546,11 +546,11 @@ steps:
     displayName: 'Build and test order-service'
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### CenÃ¡rio 1: Sparse-checkout estÃ¡ sem arquivos necessÃ¡rios para o build
+### Cenário 1: Sparse-checkout está sem arquivos necessários para o build
 
-Um desenvolvedor configurou sparse-checkout apenas para `services/order-service`, mas o build falha porque importa de `libs/shared-types` que nÃ£o foi incluÃ­do no checkout.
+Um desenvolvedor configurou sparse-checkout apenas para `services/order-service`, mas o build falha porque importa de `libs/shared-types` que não foi incluído no checkout.
 
 ```bash
 # Error during build:
@@ -565,9 +565,9 @@ git sparse-checkout list
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o**: Adicione os caminhos de dependÃªncia faltantes ao sparse-checkout:
+**Correção**: Adicione os caminhos de dependência faltantes ao sparse-checkout:
 
 ```bash
 # Add the shared library paths
@@ -593,9 +593,9 @@ EOF
 
 </details>
 
-### CenÃ¡rio 2: Submodule estÃ¡ preso em commit antigo apÃ³s pull
+### Cenário 2: Submodule está preso em commit antigo após pull
 
-ApÃ³s executar `git pull`, o diretÃ³rio do submodule ainda mostra a versÃ£o antiga mesmo que `.gitmodules` tenha sido atualizado.
+Após executar `git pull`, o diretório do submodule ainda mostra a versão antiga mesmo que `.gitmodules` tenha sido atualizado.
 
 ```bash
 # The submodule shows as modified but content is old
@@ -614,9 +614,9 @@ git log --oneline -1
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o**: Atualize o submodule para corresponder ao que o repositÃ³rio pai espera:
+**Correção**: Atualize o submodule para corresponder ao que o repositório pai espera:
 
 ```bash
 # Update submodule to the commit specified by the parent
@@ -637,52 +637,52 @@ git commit -m "chore: update shared-libs submodule to latest"
 
 </details>
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: ": A Contoso tem um mono-repo com 15 microsserviÃ§os. Um desenvolvedor trabalha apenas no order-service e precisa clonar o repo rapidamente. Qual combinaÃ§Ã£o de recursos do Git fornece o clone mais rÃ¡pido com uso mÃ­nimo de disco?",
+    question: ": A Contoso tem um mono-repo com 15 microsserviços. Um desenvolvedor trabalha apenas no order-service e precisa clonar o repo rapidamente. Qual combinação de recursos do Git fornece o clone mais rápido com uso mínimo de disco?",
     options: [
       "'git clone --depth=1' (shallow clone)",
       "'git clone --filter=blob:none --sparse' seguido de 'git sparse-checkout set services/order-service'",
-      "'git clone' seguido de exclusÃ£o dos diretÃ³rios indesejados",
+      "'git clone' seguido de exclusão dos diretórios indesejados",
       "'git clone --single-branch --branch=main'"
     ],
     correctIndex: 1,
-    explanation: "Essa combinaÃ§Ã£o usa partial clone (--filter=blob:none) para evitar o download de objetos blob atÃ© que sejam necessÃ¡rios, e sparse-checkout para materializar apenas os arquivos dos caminhos especificados. Juntos, minimizam tanto a transferÃªncia de rede quanto o uso de disco. O desenvolvedor obtÃ©m o histÃ³rico completo de commits (para blame, log, etc.) mas sÃ³ baixa o conteÃºdo de arquivos para os caminhos necessÃ¡rios. Shallow clone (opÃ§Ã£o A) limita a profundidade do histÃ³rico mas ainda baixa todos os arquivos. A opÃ§Ã£o D ainda baixa todos os blobs de todos os caminhos."
+    explanation: "Essa combinação usa partial clone (--filter=blob:none) para evitar o download de objetos blob até que sejam necessários, e sparse-checkout para materializar apenas os arquivos dos caminhos especificados. Juntos, minimizam tanto a transferência de rede quanto o uso de disco. O desenvolvedor obtém o histórico completo de commits (para blame, log, etc.) mas só baixa o conteúdo de arquivos para os caminhos necessários. Shallow clone (opção A) limita a profundidade do histórico mas ainda baixa todos os arquivos. A opção D ainda baixa todos os blobs de todos os caminhos."
   },
   {
-    question: ": O que o comando 'scalar register' do Scalar habilita para um repositÃ³rio Git?",
+    question: ": O que o comando 'scalar register' do Scalar habilita para um repositório Git?",
     options: [
-      "Faz upload do repositÃ³rio para um servidor Scalar centralizado para cache",
-      "Habilita um conjunto de otimizaÃ§Ãµes de desempenho do Git incluindo FSMonitor, commit-graph, multi-pack index e manutenÃ§Ã£o em segundo plano",
-      "Converte o repositÃ³rio para um novo formato especÃ­fico do Scalar incompatÃ­vel com o Git padrÃ£o",
-      "Habilita filtragem de partial clone no lado do servidor para todos os clones deste repositÃ³rio"
+      "Faz upload do repositório para um servidor Scalar centralizado para cache",
+      "Habilita um conjunto de otimizações de desempenho do Git incluindo FSMonitor, commit-graph, multi-pack index e manutenção em segundo plano",
+      "Converte o repositório para um novo formato específico do Scalar incompatível com o Git padrão",
+      "Habilita filtragem de partial clone no lado do servidor para todos os clones deste repositório"
     ],
     correctIndex: 1,
-    explanation: "scalar register configura o repositÃ³rio local com otimizaÃ§Ãµes de desempenho que fazem parte do Git padrÃ£o mas nÃ£o sÃ£o habilitadas por padrÃ£o. Estas incluem: FSMonitor (observador de sistema de arquivos para git status mais rÃ¡pido), commit-graph (grafo prÃ©-computado para log/travessia mais rÃ¡pidos), multi-pack index (consultas de objetos mais rÃ¡pidas) e tarefas de manutenÃ§Ã£o em segundo plano agendadas (prefetch, atualizaÃ§Ãµes de commit-graph, limpeza de objetos soltos, repack incremental). O repositÃ³rio continua sendo um repositÃ³rio Git padrÃ£o acessÃ­vel por qualquer cliente Git."
+    explanation: "scalar register configura o repositório local com otimizações de desempenho que fazem parte do Git padrão mas não são habilitadas por padrão. Estas incluem: FSMonitor (observador de sistema de arquivos para git status mais rápido), commit-graph (grafo pré-computado para log/travessia mais rápidos), multi-pack index (consultas de objetos mais rápidas) e tarefas de manutenção em segundo plano agendadas (prefetch, atualizações de commit-graph, limpeza de objetos soltos, repack incremental). O repositório continua sendo um repositório Git padrão acessível por qualquer cliente Git."
   },
   {
-    question: ": Em uma configuraÃ§Ã£o multi-repo, a equipe A atualiza 'shared-libs' v2.3.0 para v2.4.0 com uma breaking change. Qual Ã© o principal desafio que isso cria?",
+    question: ": Em uma configuração multi-repo, a equipe A atualiza 'shared-libs' v2.3.0 para v2.4.0 com uma breaking change. Qual é o principal desafio que isso cria?",
     options: [
       "Todos os outros repos atualizam automaticamente e podem quebrar",
-      "Cada repo consumidor deve atualizar independentemente sua dependÃªncia, testar e lanÃ§ar, criando sobrecarga de coordenaÃ§Ã£o e risco de divergÃªncia de versÃ£o",
-      "Git submodules impedem qualquer repo de usar a nova versÃ£o",
+      "Cada repo consumidor deve atualizar independentemente sua dependência, testar e lançar, criando sobrecarga de coordenação e risco de divergência de versão",
+      "Git submodules impedem qualquer repo de usar a nova versão",
       "O repo shared-libs deve ser forked para cada equipe consumidora"
     ],
     correctIndex: 1,
-    explanation: "Em uma configuraÃ§Ã£o multi-repo, atualizar uma dependÃªncia compartilhada requer que cada repositÃ³rio consumidor atualize explicitamente sua referÃªncia (ponteiro de submodule, versÃ£o do pacote, etc.), execute seus prÃ³prios testes e faÃ§a deploy. Isso cria sobrecarga de coordenaÃ§Ã£o, especialmente com breaking changes. Alguns repos podem permanecer na v2.3.0 enquanto outros migram para v2.4.0, criando divergÃªncia de versÃ£o. Em um mono-repo, a breaking change e todas as atualizaÃ§Ãµes aos consumidores acontecem em um Ãºnico commit atÃ´mico."
+    explanation: "Em uma configuração multi-repo, atualizar uma dependência compartilhada requer que cada repositório consumidor atualize explicitamente sua referência (ponteiro de submodule, versão do pacote, etc.), execute seus próprios testes e faça deploy. Isso cria sobrecarga de coordenação, especialmente com breaking changes. Alguns repos podem permanecer na v2.3.0 enquanto outros migram para v2.4.0, criando divergência de versão. Em um mono-repo, a breaking change e todas as atualizações aos consumidores acontecem em um único commit atômico."
   },
   {
-    question: ": Um arquivo YAML do Azure Pipelines usa 'trigger.paths.include' para construir apenas quando caminhos especÃ­ficos mudam. Um desenvolvedor modifica 'libs/shared-types/index.ts'. Qual comportamento do pipeline estÃ¡ correto?",
+    question: ": Um arquivo YAML do Azure Pipelines usa 'trigger.paths.include' para construir apenas quando caminhos específicos mudam. Um desenvolvedor modifica 'libs/shared-types/index.ts'. Qual comportamento do pipeline está correto?",
     options: [
-      "Todos os pipelines sÃ£o acionados porque qualquer alteraÃ§Ã£o de arquivo aciona todos os pipelines por padrÃ£o",
-      "Apenas pipelines cujo 'paths.include' corresponde a 'libs/shared-types/**' serÃ£o acionados",
-      "Nenhum pipeline Ã© acionado porque alteraÃ§Ãµes em bibliotecas sÃ£o excluÃ­das por padrÃ£o",
-      "O pipeline Ã© acionado mas pula a etapa de build e executa apenas os testes"
+      "Todos os pipelines são acionados porque qualquer alteração de arquivo aciona todos os pipelines por padrão",
+      "Apenas pipelines cujo 'paths.include' corresponde a 'libs/shared-types/**' serão acionados",
+      "Nenhum pipeline é acionado porque alterações em bibliotecas são excluídas por padrão",
+      "O pipeline é acionado mas pula a etapa de build e executa apenas os testes"
     ],
     correctIndex: 1,
-    explanation: "Os triggers por caminho do Azure Pipelines filtram quais pushes ativam um pipeline. Quando trigger.paths.include estÃ¡ configurado, o pipeline sÃ³ executa se pelo menos um arquivo alterado corresponder aos padrÃµes de inclusÃ£o. Uma alteraÃ§Ã£o em libs/shared-types/index.ts sÃ³ aciona pipelines que incluem libs/shared-types/ ou libs/ em seu filtro de caminho. Outros pipelines (por exemplo, aqueles que sÃ³ observam services/user-service/) nÃ£o serÃ£o acionados. Ã‰ assim que mono-repos alcanÃ§am eficiÃªncia de CI por serviÃ§o."
+    explanation: "Os triggers por caminho do Azure Pipelines filtram quais pushes ativam um pipeline. Quando trigger.paths.include está configurado, o pipeline só executa se pelo menos um arquivo alterado corresponder aos padrões de inclusão. Uma alteração em libs/shared-types/index.ts só aciona pipelines que incluem libs/shared-types/ ou libs/ em seu filtro de caminho. Outros pipelines (por exemplo, aqueles que só observam services/user-service/) não serão acionados. Ã‰ assim que mono-repos alcançam eficiência de CI por serviço."
   }
 ]} />
 

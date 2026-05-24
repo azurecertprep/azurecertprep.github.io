@@ -10,36 +10,36 @@ import TabItem from '@theme/TabItem';
 # Desafio 03: Implantar Modelos de IA
 
 :::info Tempo Estimado
-**60 min** | **Custo**: ~$1.00 | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
+**60 min** | **Custo**: ~$1.00 | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
-- Implantar modelos de IA usando opÃ§Ãµes de implantaÃ§Ã£o apropriadas
-- Planejar capacidade para implantaÃ§Ãµes de modelos (tokens por minuto, requisiÃ§Ãµes por minuto)
-- Gerenciar versÃµes de modelos e ciclo de vida
-- Escolher entre implantaÃ§Ãµes Standard, Global Standard e Provisioned Throughput
+- Implantar modelos de IA usando opções de implantação apropriadas
+- Planejar capacidade para implantações de modelos (tokens por minuto, requisições por minuto)
+- Gerenciar versões de modelos e ciclo de vida
+- Escolher entre implantações Standard, Global Standard e Provisioned Throughput
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Azure OpenAI Service requer implantaÃ§Ã£o explÃ­cita do modelo antes de vocÃª poder fazer chamadas de inferÃªncia. Diferente dos serviÃ§os tradicionais do Azure AI (onde vocÃª cria um recurso e imediatamente obtÃ©m um endpoint), o Azure OpenAI separa a criaÃ§Ã£o do recurso da implantaÃ§Ã£o do modelo â€” dando a vocÃª controle sobre quais modelos estÃ£o disponÃ­veis, sua capacidade e seu ciclo de vida de versÃµes.
+O Azure OpenAI Service requer implantação explícita do modelo antes de você poder fazer chamadas de inferência. Diferente dos serviços tradicionais do Azure AI (onde você cria um recurso e imediatamente obtém um endpoint), o Azure OpenAI separa a criação do recurso da implantação do modelo â€” dando a você controle sobre quais modelos estão disponíveis, sua capacidade e seu ciclo de vida de versões.
 
-Este desafio cobre os trÃªs tipos de implantaÃ§Ã£o que aparecem no exame AI-102: **Standard** (pago por token, regional), **Global Standard** (pago por token, roteamento global) e **Provisioned Throughput** (capacidade reservada, latÃªncia previsÃ­vel). VocÃª implantarÃ¡ modelos programaticamente, configurarÃ¡ capacidade em Tokens Por Minuto (TPM), gerenciarÃ¡ versÃµes de modelos e entenderÃ¡ as polÃ­ticas de atualizaÃ§Ã£o que controlam transiÃ§Ãµes automÃ¡ticas de versÃ£o.
+Este desafio cobre os três tipos de implantação que aparecem no exame AI-102: **Standard** (pago por token, regional), **Global Standard** (pago por token, roteamento global) e **Provisioned Throughput** (capacidade reservada, latência previsível). Você implantará modelos programaticamente, configurará capacidade em Tokens Por Minuto (TPM), gerenciará versões de modelos e entenderá as políticas de atualização que controlam transições automáticas de versão.
 
-O planejamento de capacidade Ã© um tÃ³pico importante no exame â€” vocÃª precisa entender como TPM se traduz em throughput real, como monitorar utilizaÃ§Ã£o e quando escolher provisioned throughput em vez de implantaÃ§Ãµes standard.
+O planejamento de capacidade é um tópico importante no exame â€” você precisa entender como TPM se traduz em throughput real, como monitorar utilização e quando escolher provisioned throughput em vez de implantações standard.
 
 ## Arquitetura
 
-VocÃª criarÃ¡ um recurso Azure OpenAI, implantarÃ¡ mÃºltiplos modelos com diferentes tipos de implantaÃ§Ã£o e capacidades, e entÃ£o validarÃ¡ sua disponibilidade e compararÃ¡ seus comportamentos.
+Você criará um recurso Azure OpenAI, implantará múltiplos modelos com diferentes tipos de implantação e capacidades, e então validará sua disponibilidade e comparará seus comportamentos.
 
 ![Topologia do Desafio 03](/img/ai-102/challenge-03-topology.svg)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure com acesso ao Azure OpenAI aprovado
-- Azure CLI 2.50+ com extensÃ£o `cognitiveservices`
+- Azure CLI 2.50+ com extensão `cognitiveservices`
 - Python 3.9+ com `pip` ou .NET 8 SDK
 - Pacotes Python `azure-identity`, `azure-mgmt-cognitiveservices`, `openai`
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Criar um Recurso Azure OpenAI e Implantar um Modelo
 
@@ -189,7 +189,7 @@ az cognitiveservices account deployment show \
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Implantar MÃºltiplos Modelos com Diferentes ConfiguraÃ§Ãµes
+### Tarefa 2: Implantar Múltiplos Modelos com Diferentes Configurações
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -296,7 +296,7 @@ az cognitiveservices account list-models \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Testar ImplantaÃ§Ã£o e Monitorar Capacidade
+### Tarefa 3: Testar Implantação e Monitorar Capacidade
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -396,7 +396,7 @@ curl -v "${ENDPOINT}/openai/deployments/gpt-4o-standard/chat/completions?api-ver
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 OpenAI resource: https://ai102-openai-03.openai.azure.com/
@@ -425,41 +425,41 @@ Response: Azure OpenAI supports three deployment types...
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Modelo nÃ£o disponÃ­vel | Erro `ModelNotFound` | Modelo nÃ£o disponÃ­vel na regiÃ£o selecionada | Verifique `az cognitiveservices account list-models` para disponibilidade regional |
-| Capacidade excedida | `InsufficientQuota` | Cota de TPM da assinatura totalmente alocada | Reduza a capacidade em outras implantaÃ§Ãµes ou solicite aumento de cota |
-| VersÃ£o invÃ¡lida | `InvalidModelVersion` | VersÃ£o especificada foi descontinuada ou ainda nÃ£o estÃ¡ disponÃ­vel | Liste as versÃµes disponÃ­veis com a API de modelos |
-| 429 Too Many Requests | Rate limiting durante inferÃªncia | Excedendo TPM/RPM configurado | Aumente a capacidade da implantaÃ§Ã£o ou implemente retry com backoff exponencial |
-| Nome de implantaÃ§Ã£o errado | `DeploymentNotFound` nas chamadas do SDK | Usando nome do modelo em vez do nome da implantaÃ§Ã£o | O parÃ¢metro `model` no SDK deve ser o nome da implantaÃ§Ã£o que vocÃª escolheu, nÃ£o "gpt-4o" |
+| Modelo não disponível | Erro `ModelNotFound` | Modelo não disponível na região selecionada | Verifique `az cognitiveservices account list-models` para disponibilidade regional |
+| Capacidade excedida | `InsufficientQuota` | Cota de TPM da assinatura totalmente alocada | Reduza a capacidade em outras implantações ou solicite aumento de cota |
+| Versão inválida | `InvalidModelVersion` | Versão especificada foi descontinuada ou ainda não está disponível | Liste as versões disponíveis com a API de modelos |
+| 429 Too Many Requests | Rate limiting durante inferência | Excedendo TPM/RPM configurado | Aumente a capacidade da implantação ou implemente retry com backoff exponencial |
+| Nome de implantação errado | `DeploymentNotFound` nas chamadas do SDK | Usando nome do modelo em vez do nome da implantação | O parâmetro `model` no SDK deve ser o nome da implantação que você escolheu, não "gpt-4o" |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a principal diferenÃ§a entre implantaÃ§Ãµes Standard e Global Standard no Azure OpenAI?",
+    question: "Qual é a principal diferença entre implantações Standard e Global Standard no Azure OpenAI?",
     options: [
       "Standard usa GPT-4o enquanto Global Standard suporta apenas GPT-4o-mini",
-      "Global Standard roteia o trÃ¡fego entre mÃºltiplas regiÃµes para maior disponibilidade",
-      "ImplantaÃ§Ãµes Standard sÃ£o gratuitas enquanto Global Standard Ã© pago por token",
+      "Global Standard roteia o tráfego entre múltiplas regiões para maior disponibilidade",
+      "Implantações Standard são gratuitas enquanto Global Standard é pago por token",
       "Global Standard requer unidades de throughput provisionado (PTUs)"
     ],
     correctAnswer: 1,
-    explanation: "ImplantaÃ§Ãµes Global Standard roteiam o trÃ¡fego dinamicamente pela infraestrutura global do Azure, proporcionando maior disponibilidade e throughput. Ambos sÃ£o pagos por token, mas Global Standard pode aproveitar capacidade entre regiÃµes."
+    explanation: "Implantações Global Standard roteiam o tráfego dinamicamente pela infraestrutura global do Azure, proporcionando maior disponibilidade e throughput. Ambos são pagos por token, mas Global Standard pode aproveitar capacidade entre regiões."
   },
   {
-    question: "VocÃª configurou uma capacidade de implantaÃ§Ã£o de 30K TPM. O que acontece quando sua aplicaÃ§Ã£o envia requisiÃ§Ãµes que excedem esse limite?",
+    question: "Você configurou uma capacidade de implantação de 30K TPM. O que acontece quando sua aplicação envia requisições que excedem esse limite?",
     options: [
-      "As requisiÃ§Ãµes sÃ£o enfileiradas e processadas quando hÃ¡ capacidade disponÃ­vel",
-      "A implantaÃ§Ã£o escala automaticamente para lidar com a carga",
-      "RequisiÃ§Ãµes excedentes recebem respostas HTTP 429 e devem ser reenviadas",
-      "As requisiÃ§Ãµes sÃ£o roteadas para outra implantaÃ§Ã£o no mesmo recurso"
+      "As requisições são enfileiradas e processadas quando há capacidade disponível",
+      "A implantação escala automaticamente para lidar com a carga",
+      "Requisições excedentes recebem respostas HTTP 429 e devem ser reenviadas",
+      "As requisições são roteadas para outra implantação no mesmo recurso"
     ],
     correctAnswer: 2,
-    explanation: "Quando o TPM Ã© excedido, o Azure OpenAI retorna HTTP 429 (Too Many Requests) com um header Retry-After. As aplicaÃ§Ãµes devem implementar lÃ³gica de retry com backoff exponencial. ImplantaÃ§Ãµes Standard nÃ£o escalam automaticamente."
+    explanation: "Quando o TPM é excedido, o Azure OpenAI retorna HTTP 429 (Too Many Requests) com um header Retry-After. As aplicações devem implementar lógica de retry com backoff exponencial. Implantações Standard não escalam automaticamente."
   },
   {
-    question: "Qual opÃ§Ã£o de atualizaÃ§Ã£o de versÃ£o vocÃª deve escolher se deseja controlar exatamente quando a versÃ£o do seu modelo muda?",
+    question: "Qual opção de atualização de versão você deve escolher se deseja controlar exatamente quando a versão do seu modelo muda?",
     options: [
       "NoAutoUpgrade",
       "OnceNewDefaultVersionAvailable",
@@ -467,29 +467,29 @@ Response: Azure OpenAI supports three deployment types...
       "ManualUpgradeOnly"
     ],
     correctAnswer: 0,
-    explanation: "NoAutoUpgrade significa que a implantaÃ§Ã£o nunca serÃ¡ atualizada automaticamente para uma versÃ£o mais recente do modelo â€” vocÃª deve atualizÃ¡-la manualmente, dando controle completo sobre o momento. OnceCurrentVersionExpired ainda faz atualizaÃ§Ã£o automÃ¡tica quando a versÃ£o Ã© descontinuada. OnceNewDefaultVersionAvailable atualiza quando um novo padrÃ£o Ã© designado. ManualUpgradeOnly nÃ£o Ã© uma opÃ§Ã£o vÃ¡lida."
+    explanation: "NoAutoUpgrade significa que a implantação nunca será atualizada automaticamente para uma versão mais recente do modelo â€” você deve atualizá-la manualmente, dando controle completo sobre o momento. OnceCurrentVersionExpired ainda faz atualização automática quando a versão é descontinuada. OnceNewDefaultVersionAvailable atualiza quando um novo padrão é designado. ManualUpgradeOnly não é uma opção válida."
   },
   {
-    question: "Ao fazer uma chamada de API para o Azure OpenAI, qual valor vocÃª deve passar como parÃ¢metro 'model' no SDK?",
+    question: "Ao fazer uma chamada de API para o Azure OpenAI, qual valor você deve passar como parâmetro 'model' no SDK?",
     options: [
       "O nome base do modelo (ex: 'gpt-4o')",
-      "O nome da implantaÃ§Ã£o que vocÃª especificou ao criar a implantaÃ§Ã£o",
-      "A string da versÃ£o do modelo (ex: '2024-08-06')",
+      "O nome da implantação que você especificou ao criar a implantação",
+      "A string da versão do modelo (ex: '2024-08-06')",
       "O nome do recurso combinado com o nome do modelo"
     ],
     correctAnswer: 1,
-    explanation: "No Azure OpenAI, o parÃ¢metro 'model' nas chamadas do SDK se refere ao nome da sua implantaÃ§Ã£o, nÃ£o ao nome do modelo subjacente. Isso Ã© diferente da API do OpenAI onde vocÃª especifica o modelo diretamente."
+    explanation: "No Azure OpenAI, o parâmetro 'model' nas chamadas do SDK se refere ao nome da sua implantação, não ao nome do modelo subjacente. Isso é diferente da API do OpenAI onde você especifica o modelo diretamente."
   },
   {
-    question: "Quando vocÃª deve escolher Provisioned Throughput (PTU) em vez de implantaÃ§Ã£o Standard?",
+    question: "Quando você deve escolher Provisioned Throughput (PTU) em vez de implantação Standard?",
     options: [
-      "Quando vocÃª precisa do menor custo possÃ­vel por token",
-      "Quando vocÃª precisa de latÃªncia previsÃ­vel e capacidade garantida para cargas de trabalho de produÃ§Ã£o",
-      "Quando vocÃª quer usar as versÃµes mais recentes dos modelos imediatamente",
-      "Quando vocÃª precisa apenas de chamadas de API ocasionais e em rajadas"
+      "Quando você precisa do menor custo possível por token",
+      "Quando você precisa de latência previsível e capacidade garantida para cargas de trabalho de produção",
+      "Quando você quer usar as versões mais recentes dos modelos imediatamente",
+      "Quando você precisa apenas de chamadas de API ocasionais e em rajadas"
     ],
     correctAnswer: 1,
-    explanation: "Provisioned Throughput fornece capacidade reservada com latÃªncia previsÃ­vel, sendo ideal para cargas de trabalho de produÃ§Ã£o com padrÃµes de trÃ¡fego consistentes. Standard Ã© mais econÃ´mico para uso variÃ¡vel/baixo, enquanto PTU garante throughput independentemente da demanda regional."
+    explanation: "Provisioned Throughput fornece capacidade reservada com latência previsível, sendo ideal para cargas de trabalho de produção com padrões de tráfego consistentes. Standard é mais econômico para uso variável/baixo, enquanto PTU garante throughput independentemente da demanda regional."
   }
 ]} />
 

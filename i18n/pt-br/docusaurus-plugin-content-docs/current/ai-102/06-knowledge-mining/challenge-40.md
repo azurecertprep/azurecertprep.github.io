@@ -1,16 +1,16 @@
 ---
 sidebar_position: 2
-title: "Desafio 40: Azure AI Search â€” Ãndice e Skillset"
+title: "Desafio 40: Azure AI Search â€” Índice e Skillset"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 40: Azure AI Search â€” Ãndice e Skillset
+# Desafio 40: Azure AI Search â€” Índice e Skillset
 
 :::info Tempo Estimado
-**60-75 min** | **Custo**: ~$0.50 (Tier gratuito Search + Storage) | **DomÃ­nio**: Knowledge Mining & Extraction (15-20%)
+**60-75 min** | **Custo**: ~$0.50 (Tier gratuito Search + Storage) | **Domínio**: Knowledge Mining & Extraction (15-20%)
 :::
 
 ## Habilidades do exame cobertas
@@ -19,22 +19,22 @@ import TabItem from '@theme/TabItem';
 |-------|--------|
 | Provisionar um recurso Azure AI Search | Alto |
 | Criar uma fonte de dados | Alto |
-| Criar um Ã­ndice | Alto |
+| Criar um índice | Alto |
 | Criar e executar um indexador | Alto |
 | Criar um skillset com skills integradas | Alto |
-| Mapear campos enriquecidos para um Ã­ndice | MÃ©dio |
+| Mapear campos enriquecidos para um índice | Médio |
 
-## VisÃ£o Geral
+## Visão Geral
 
-Azure AI Search Ã© um serviÃ§o de busca em nuvem que fornece capacidades de indexaÃ§Ã£o e consulta sobre conteÃºdo heterogÃªneo. O pipeline de enriquecimento segue esta arquitetura:
+Azure AI Search é um serviço de busca em nuvem que fornece capacidades de indexação e consulta sobre conteúdo heterogêneo. O pipeline de enriquecimento segue esta arquitetura:
 
-**Data Source** â†’ **Indexer** â†’ **Skillset** (enriquecimento com IA) â†’ **Index** (armazenamento pesquisÃ¡vel)
+**Data Source** â†’ **Indexer** â†’ **Skillset** (enriquecimento com IA) â†’ **Index** (armazenamento pesquisável)
 
 Conceitos-chave:
-- **Data source**: ConexÃ£o com o conteÃºdo (Blob Storage, SQL Database, Cosmos DB, Table Storage)
-- **Index**: Schema que define campos pesquisÃ¡veis com tipos e atributos (searchable, filterable, sortable, facetable)
-- **Skillset**: ColeÃ§Ã£o de skills de IA que enriquecem o conteÃºdo durante a indexaÃ§Ã£o (reconhecimento de entidades, extraÃ§Ã£o de frases-chave, detecÃ§Ã£o de idioma, OCR, anÃ¡lise de imagem)
-- **Indexer**: Orquestrador que puxa dados da fonte, executa o skillset e popula o Ã­ndice
+- **Data source**: Conexão com o conteúdo (Blob Storage, SQL Database, Cosmos DB, Table Storage)
+- **Index**: Schema que define campos pesquisáveis com tipos e atributos (searchable, filterable, sortable, facetable)
+- **Skillset**: Coleção de skills de IA que enriquecem o conteúdo durante a indexação (reconhecimento de entidades, extração de frases-chave, detecção de idioma, OCR, análise de imagem)
+- **Indexer**: Orquestrador que puxa dados da fonte, executa o skillset e popula o índice
 
 ## Arquitetura
 
@@ -50,15 +50,15 @@ Conceitos-chave:
                                      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
-- Assinatura Azure com funÃ§Ã£o de Contributor
+- Assinatura Azure com função de Contributor
 - Azure CLI 2.60+
 - Python 3.9+ com `azure-search-documents>=11.4.0` e `azure-identity`
 - .NET 8 SDK com pacote NuGet `Azure.Search.Documents`
 - Uma conta de armazenamento com documentos PDF/texto de exemplo carregados em um container
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Provisionar Azure AI Search e carregar dados de exemplo
 
@@ -126,7 +126,7 @@ AI_KEY=$(az cognitiveservices account keys list \
   --query "key1" -o tsv)
 ```
 
-### Tarefa 2: Criar o Ã­ndice de busca
+### Tarefa 2: Criar o índice de busca
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -216,7 +216,7 @@ curl -X PUT "https://${SEARCH_SERVICE}.search.windows.net/indexes/documents-inde
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Criar a conexÃ£o com a fonte de dados
+### Tarefa 3: Criar a conexão com a fonte de dados
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -524,9 +524,9 @@ curl -s "https://${SEARCH_SERVICE}.search.windows.net/indexers/document-indexer/
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
-ApÃ³s a conclusÃ£o do indexador, consultar o Ã­ndice deve retornar documentos enriquecidos:
+Após a conclusão do indexador, consultar o índice deve retornar documentos enriquecidos:
 
 ```json
 {
@@ -545,20 +545,20 @@ ApÃ³s a conclusÃ£o do indexador, consultar o Ã­ndice deve retornar documen
 
 ## Quebra & conserta
 
-| # | CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|
-| 1 | Indexador falha com "Could not execute skill" | Status do indexador mostra `transientFailure` | A chave do AI Services Ã© invÃ¡lida ou o recurso estÃ¡ em uma regiÃ£o diferente do serviÃ§o de busca | Certifique-se de que o AI Services estÃ¡ na mesma regiÃ£o; atualize a chave no skillset |
-| 2 | Campos enriquecidos estÃ£o nulos no Ã­ndice | Documentos sÃ£o indexados mas `keyphrases` e `organizations` estÃ£o vazios | Os mapeamentos de campos de saÃ­da usam caminhos de origem incorretos (ex.: prefixo `/document/` ausente) | Corrija os caminhos de origem em `outputFieldMappings` para corresponder ao `targetName` da saÃ­da do skillset com o prefixo `/document/` |
-| 3 | Indexador nÃ£o consegue conectar ao Blob Storage | `StorageException: Access denied` | A connection string do armazenamento Ã© invÃ¡lida ou o container nÃ£o existe | Verifique a connection string e o nome do container na definiÃ§Ã£o da fonte de dados |
-| 4 | CriaÃ§Ã£o do Ã­ndice falha com "analyzer not found" | HTTP 400 na criaÃ§Ã£o do Ã­ndice | Nome do analyzer digitado incorretamente (ex.: `en.Microsoft` em vez de `en.microsoft`) | Use o nome correto do analyzer â€” eles sÃ£o case-sensitive |
-| 5 | Documentos duplicados no Ã­ndice apÃ³s re-execuÃ§Ã£o | Contagem de documentos dobra a cada execuÃ§Ã£o | Mapeamento de chave do documento ausente ou incorreto â€” `metadata_storage_path` precisa de codificaÃ§Ã£o Base64 | Use `metadata_storage_path` com a funÃ§Ã£o de mapeamento `base64Encode` como chave |
+| 1 | Indexador falha com "Could not execute skill" | Status do indexador mostra `transientFailure` | A chave do AI Services é inválida ou o recurso está em uma região diferente do serviço de busca | Certifique-se de que o AI Services está na mesma região; atualize a chave no skillset |
+| 2 | Campos enriquecidos estão nulos no índice | Documentos são indexados mas `keyphrases` e `organizations` estão vazios | Os mapeamentos de campos de saída usam caminhos de origem incorretos (ex.: prefixo `/document/` ausente) | Corrija os caminhos de origem em `outputFieldMappings` para corresponder ao `targetName` da saída do skillset com o prefixo `/document/` |
+| 3 | Indexador não consegue conectar ao Blob Storage | `StorageException: Access denied` | A connection string do armazenamento é inválida ou o container não existe | Verifique a connection string e o nome do container na definição da fonte de dados |
+| 4 | Criação do índice falha com "analyzer not found" | HTTP 400 na criação do índice | Nome do analyzer digitado incorretamente (ex.: `en.Microsoft` em vez de `en.microsoft`) | Use o nome correto do analyzer â€” eles são case-sensitive |
+| 5 | Documentos duplicados no índice após re-execução | Contagem de documentos dobra a cada execução | Mapeamento de chave do documento ausente ou incorreto â€” `metadata_storage_path` precisa de codificação Base64 | Use `metadata_storage_path` com a função de mapeamento `base64Encode` como chave |
 
 ## Knowledge Check
 
 <KnowledgeCheck questions={[
   {
     id: "ai102-40-q1",
-    question: "VocÃª precisa enriquecer documentos com frases-chave e reconhecimento de entidades durante a indexaÃ§Ã£o. Qual componente do Azure AI Search orquestra esse enriquecimento?",
+    question: "Você precisa enriquecer documentos com frases-chave e reconhecimento de entidades durante a indexação. Qual componente do Azure AI Search orquestra esse enriquecimento?",
     options: [
       "Skillset",
       "Index",
@@ -566,11 +566,11 @@ ApÃ³s a conclusÃ£o do indexador, consultar o Ã­ndice deve retornar documen
       "Indexer"
     ],
     correctIndex: 3,
-    explanation: "O indexer orquestra todo o pipeline: ele puxa dados da fonte de dados, invoca o skillset para enriquecimento e grava os resultados no Ã­ndice. O skillset define O QUE enriquecer, mas o indexer Ã© o componente que executa e orquestra o processo."
+    explanation: "O indexer orquestra todo o pipeline: ele puxa dados da fonte de dados, invoca o skillset para enriquecimento e grava os resultados no índice. O skillset define O QUE enriquecer, mas o indexer é o componente que executa e orquestra o processo."
   },
   {
     id: "ai102-40-q2",
-    question: "VocÃª define um KeyPhraseExtractionSkill no seu skillset. A saÃ­da da skill Ã© 'keyPhrases' com targetName 'keyphrases'. Qual caminho vocÃª usa em outputFieldMappings para mapear isso para o Ã­ndice?",
+    question: "Você define um KeyPhraseExtractionSkill no seu skillset. A saída da skill é 'keyPhrases' com targetName 'keyphrases'. Qual caminho você usa em outputFieldMappings para mapear isso para o índice?",
     options: [
       "/document/keyPhrases",
       "keyphrases",
@@ -578,11 +578,11 @@ ApÃ³s a conclusÃ£o do indexador, consultar o Ã­ndice deve retornar documen
       "/document/content/keyphrases"
     ],
     correctIndex: 2,
-    explanation: "O caminho de origem em outputFieldMappings usa o formato '/document/{targetName}'. Como a saÃ­da da skill tem targetName='keyphrases', o caminho correto no outputFieldMappings do indexer Ã© '/document/keyphrases'."
+    explanation: "O caminho de origem em outputFieldMappings usa o formato '/document/{targetName}'. Como a saída da skill tem targetName='keyphrases', o caminho correto no outputFieldMappings do indexer é '/document/keyphrases'."
   },
   {
     id: "ai102-40-q3",
-    question: "Qual skill integrada vocÃª usaria para extrair texto de documentos PDF digitalizados contendo imagens?",
+    question: "Qual skill integrada você usaria para extrair texto de documentos PDF digitalizados contendo imagens?",
     options: [
       "ImageAnalysisSkill",
       "OcrSkill",
@@ -590,11 +590,11 @@ ApÃ³s a conclusÃ£o do indexador, consultar o Ã­ndice deve retornar documen
       "TextTranslationSkill"
     ],
     correctIndex: 1,
-    explanation: "O OcrSkill (Optical Character Recognition) extrai texto de imagens dentro de documentos. Para PDFs digitalizados onde o conteÃºdo estÃ¡ incorporado em imagens em vez de texto selecionÃ¡vel, o OCR Ã© necessÃ¡rio. O ImageAnalysisSkill gera descriÃ§Ãµes/tags mas nÃ£o extrai texto."
+    explanation: "O OcrSkill (Optical Character Recognition) extrai texto de imagens dentro de documentos. Para PDFs digitalizados onde o conteúdo está incorporado em imagens em vez de texto selecionável, o OCR é necessário. O ImageAnalysisSkill gera descrições/tags mas não extrai texto."
   },
   {
     id: "ai102-40-q4",
-    question: "VocÃª cria um campo de Ã­ndice com os atributos: searchable=true, filterable=true, facetable=true. Para qual tipo de campo essa configuraÃ§Ã£o Ã© INVÃLIDA?",
+    question: "Você cria um campo de índice com os atributos: searchable=true, filterable=true, facetable=true. Para qual tipo de campo essa configuração é INVÁLIDA?",
     options: [
       "Edm.GeographyPoint",
       "Edm.String",
@@ -602,19 +602,19 @@ ApÃ³s a conclusÃ£o do indexador, consultar o Ã­ndice deve retornar documen
       "Edm.Int32"
     ],
     correctIndex: 0,
-    explanation: "Campos Edm.GeographyPoint nÃ£o podem ser searchable ou facetable. Eles sÃ³ podem ser filterable e sortable. Campos String e collection podem ser searchable, filterable e facetable. Campos numÃ©ricos (Int32) podem ser filterable, sortable e facetable, mas nÃ£o searchable."
+    explanation: "Campos Edm.GeographyPoint não podem ser searchable ou facetable. Eles só podem ser filterable e sortable. Campos String e collection podem ser searchable, filterable e facetable. Campos numéricos (Int32) podem ser filterable, sortable e facetable, mas não searchable."
   },
   {
     id: "ai102-40-q5",
-    question: "Seu indexador precisa de um recurso Azure AI Services para executar skills cognitivas integradas. O que acontece se vocÃª nÃ£o anexar um?",
+    question: "Seu indexador precisa de um recurso Azure AI Services para executar skills cognitivas integradas. O que acontece se você não anexar um?",
     options: [
       "O indexador falha imediatamente sem processar nenhum documento",
-      "As skills sÃ£o ignoradas completamente e apenas o conteÃºdo bruto Ã© indexado",
-      "As skills sÃ£o executadas mas limitadas a 20 enriquecimentos gratuitos por indexador por dia",
-      "O Azure AI Search usa seu prÃ³prio processamento integrado sem nenhum limite"
+      "As skills são ignoradas completamente e apenas o conteúdo bruto é indexado",
+      "As skills são executadas mas limitadas a 20 enriquecimentos gratuitos por indexador por dia",
+      "O Azure AI Search usa seu próprio processamento integrado sem nenhum limite"
     ],
     correctIndex: 2,
-    explanation: "Sem um recurso Azure AI Services anexado, o skillset ainda funciona mas Ã© limitado a 20 enriquecimentos gratuitos por indexador por dia. Isso Ã© Ãºtil para testes mas insuficiente para produÃ§Ã£o. Anexar um recurso AI Services faturÃ¡vel remove esse limite."
+    explanation: "Sem um recurso Azure AI Services anexado, o skillset ainda funciona mas é limitado a 20 enriquecimentos gratuitos por indexador por dia. Isso é útil para testes mas insuficiente para produção. Anexar um recurso AI Services faturável remove esse limite."
   }
 ]} />
 
@@ -626,8 +626,8 @@ az group delete --name rg-ai102-search --yes --no-wait
 
 ## Saiba Mais
 
-- [DocumentaÃ§Ã£o do Azure AI Search](https://learn.microsoft.com/azure/search/)
-- [ReferÃªncia de skills integradas](https://learn.microsoft.com/azure/search/cognitive-search-predefined-skills)
+- [Documentação do Azure AI Search](https://learn.microsoft.com/azure/search/)
+- [Referência de skills integradas](https://learn.microsoft.com/azure/search/cognitive-search-predefined-skills)
 - [Criar um indexador](https://learn.microsoft.com/azure/search/search-howto-create-indexers)
 - [Conceitos de skillset](https://learn.microsoft.com/azure/search/cognitive-search-working-with-skillsets)
-- [Mapeamentos de campos e mapeamentos de campos de saÃ­da](https://learn.microsoft.com/azure/search/search-indexer-field-mappings)
+- [Mapeamentos de campos e mapeamentos de campos de saída](https://learn.microsoft.com/azure/search/search-indexer-field-mappings)

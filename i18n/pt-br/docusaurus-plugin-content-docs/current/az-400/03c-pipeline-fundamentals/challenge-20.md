@@ -8,19 +8,19 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 20: Azure Pipelines YAML
 
 :::info Plataforma: ADO-first
-Este desafio foca em Azure Pipelines. Equivalentes no GitHub Actions sÃ£o mencionados quando relevante.
+Este desafio foca em Azure Pipelines. Equivalentes no GitHub Actions são mencionados quando relevante.
 :::
 
 ## Habilidades do exame
 
 - Desenvolver pipelines usando YAML
-- Projetar e implementar a integraÃ§Ã£o entre repositÃ³rios GitHub e Azure Pipelines
+- Projetar e implementar a integração entre repositórios GitHub e Azure Pipelines
 
-## CenÃ¡rio
+## Cenário
 
-A equipe enterprise da Contoso Ltd usa o Azure DevOps para sua entrega de software. Eles mantÃªm uma Web API em .NET 8 que Ã© implantada no Azure App Service em mÃºltiplos ambientes. A equipe precisa de um pipeline YAML multi-stage que se integre com o Azure Key Vault para secrets, use templates para consistÃªncia e se conecte ao repositÃ³rio GitHub como fonte.
+A equipe enterprise da Contoso Ltd usa o Azure DevOps para sua entrega de software. Eles mantêm uma Web API em .NET 8 que é implantada no Azure App Service em múltiplos ambientes. A equipe precisa de um pipeline YAML multi-stage que se integre com o Azure Key Vault para secrets, use templates para consistência e se conecte ao repositório GitHub como fonte.
 
-A estrutura do repositÃ³rio:
+A estrutura do repositório:
 
 ```text
 contoso-webapi/
@@ -278,7 +278,7 @@ stages:
                         --target-slot production
 ```
 
-## Tarefa 2: Configurar variable groups e integraÃ§Ã£o com Key Vault
+## Tarefa 2: Configurar variable groups e integração com Key Vault
 
 Crie variable groups vinculados ao Azure Key Vault:
 
@@ -297,7 +297,7 @@ az pipelines variable-group create \
 # Select service connection, Key Vault, and secret names
 ```
 
-ConfiguraÃ§Ã£o do variable group no pipeline:
+Configuração do variable group no pipeline:
 
 ```yaml
 variables:
@@ -464,7 +464,7 @@ stages:
 
 ## Tarefa 4: Configurar recursos do pipeline
 
-Defina recursos para templates entre repositÃ³rios e triggers de pipeline:
+Defina recursos para templates entre repositórios e triggers de pipeline:
 
 ```yaml
 resources:
@@ -504,11 +504,11 @@ stages:
               projectPath: "src/Contoso.Api/Contoso.Api.csproj"
 ```
 
-## Tarefa 5: Conectar repositÃ³rio GitHub como fonte
+## Tarefa 5: Conectar repositório GitHub como fonte
 
-Configure o Azure Pipelines para usar um repositÃ³rio GitHub:
+Configure o Azure Pipelines para usar um repositório GitHub:
 
-1. Crie uma conexÃ£o de serviÃ§o GitHub no Azure DevOps:
+1. Crie uma conexão de serviço GitHub no Azure DevOps:
 
 ```bash
 # Using Azure CLI with DevOps extension
@@ -554,11 +554,11 @@ pr:
   drafts: false
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: Erros de parÃ¢metro em template
+### Exercício 1: Erros de parâmetro em template
 
-O pipeline a seguir falha com erros de validaÃ§Ã£o de template:
+O pipeline a seguir falha com erros de validação de template:
 
 ```yaml
 # templates/broken-template.yml
@@ -579,7 +579,7 @@ steps:
       - script: echo "Running tests"
 ```
 
-**VersÃ£o corrigida:**
+**Versão corrigida:**
 
 ```yaml
 parameters:
@@ -599,7 +599,7 @@ steps:
       - script: echo "Running tests"
 ```
 
-### ExercÃ­cio 2: Problemas de escopo de variÃ¡veis
+### Exercício 2: Problemas de escopo de variáveis
 
 ```yaml
 variables:
@@ -623,9 +623,9 @@ stages:
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** VariÃ¡veis definidas no nÃ­vel de stage sÃ³ estÃ£o disponÃ­veis dentro daquele stage. Para compartilhar valores entre stages, use pipeline artifacts ou output variables:
+**Correção:** Variáveis definidas no nível de stage só estão disponíveis dentro daquele stage. Para compartilhar valores entre stages, use pipeline artifacts ou output variables:
 
 ```yaml
 stages:
@@ -648,11 +648,11 @@ stages:
 ```
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a sintaxe correta para referenciar um secret do Key Vault obtido pela task AzureKeyVault@2?",
+    question: "Qual é a sintaxe correta para referenciar um secret do Key Vault obtido pela task AzureKeyVault@2?",
     options: [
       "'$(keyVault.SecretName)'",
       "'$(SecretName)'",
@@ -660,40 +660,40 @@ stages:
       "'$(secrets.SecretName)'"
     ],
     correctIndex: 1,
-    explanation: "A task AzureKeyVault@2 mapeia secrets do Key Vault diretamente para variÃ¡veis do pipeline usando o nome do secret. Se o Key Vault contÃ©m um secret chamado SqlConnectionString, ele fica disponÃ­vel como $(SqlConnectionString) nos steps subsequentes. A task simplifica o nome do secret para um nome de variÃ¡vel diretamente."
+    explanation: "A task AzureKeyVault@2 mapeia secrets do Key Vault diretamente para variáveis do pipeline usando o nome do secret. Se o Key Vault contém um secret chamado SqlConnectionString, ele fica disponível como $(SqlConnectionString) nos steps subsequentes. A task simplifica o nome do secret para um nome de variável diretamente."
   },
   {
-    question: "Como vocÃª passa output variables entre stages no Azure Pipelines YAML?",
+    question: "Como você passa output variables entre stages no Azure Pipelines YAML?",
     options: [
       "Usar '##vso[task.setvariable]' com 'isOutput=true' e referenciar via 'stageDependencies'",
       "Usar 'echo \"key=value\" >> $PIPELINE_OUTPUT'",
       "Escrever em um arquivo compartilhado no artifact staging directory",
-      "Usar variable groups para armazenar valores em tempo de execuÃ§Ã£o"
+      "Usar variable groups para armazenar valores em tempo de execução"
     ],
     correctIndex: 0,
-    explanation: "O compartilhamento de variÃ¡veis entre stages requer definir uma output variable com isOutput=true e um step nomeado, depois referenciÃ¡-la no stage downstream usando a expressÃ£o stageDependencies.StageName.JobName.outputs['stepName.variableName']. Esta Ã© uma expressÃ£o em tempo de compilaÃ§Ã£o usando a sintaxe $[ ]."
+    explanation: "O compartilhamento de variáveis entre stages requer definir uma output variable com isOutput=true e um step nomeado, depois referenciá-la no stage downstream usando a expressão stageDependencies.StageName.JobName.outputs['stepName.variableName']. Esta é uma expressão em tempo de compilação usando a sintaxe $[ ]."
   },
   {
-    question: "Qual Ã© a diferenÃ§a principal entre expressÃµes '${{ }}' e '$[ ]' no Azure Pipelines?",
+    question: "Qual é a diferença principal entre expressões '${{ }}' e '$[ ]' no Azure Pipelines?",
     options: [
-      "'${{ }}' Ã© para templates e '$[ ]' Ã© para variÃ¡veis",
-      "'${{ }}' Ã© avaliada em tempo de compilaÃ§Ã£o (expansÃ£o de template) e '$[ ]' Ã© avaliada em tempo de execuÃ§Ã£o",
-      "'${{ }}' Ã© para pipelines YAML e '$[ ]' Ã© para pipelines clÃ¡ssicos",
-      "NÃ£o hÃ¡ diferenÃ§a; sÃ£o intercambiÃ¡veis"
+      "'${{ }}' é para templates e '$[ ]' é para variáveis",
+      "'${{ }}' é avaliada em tempo de compilação (expansão de template) e '$[ ]' é avaliada em tempo de execução",
+      "'${{ }}' é para pipelines YAML e '$[ ]' é para pipelines clássicos",
+      "Não há diferença; são intercambiáveis"
     ],
     correctIndex: 1,
-    explanation: "ExpressÃµes ${{ }} sÃ£o avaliadas durante a expansÃ£o de template antes do pipeline executar (tempo de compilaÃ§Ã£o). Elas podem incluir ou excluir steps, jobs ou stages inteiros. ExpressÃµes $[ ] sÃ£o avaliadas em tempo de execuÃ§Ã£o e podem acessar valores de runtime como output variables de jobs ou stages anteriores. $( ) tambÃ©m Ã© runtime, mas usado para expansÃ£o de macro de variÃ¡veis."
+    explanation: "Expressões ${{ }} são avaliadas durante a expansão de template antes do pipeline executar (tempo de compilação). Elas podem incluir ou excluir steps, jobs ou stages inteiros. Expressões $[ ] são avaliadas em tempo de execução e podem acessar valores de runtime como output variables de jobs ou stages anteriores. $( ) também é runtime, mas usado para expansão de macro de variáveis."
   },
   {
     question: "Ao usar um job 'deployment' com 'strategy: runOnce', o que a propriedade 'environment' habilita?",
     options: [
       "Provisiona automaticamente recursos do Azure",
-      "Fornece histÃ³rico de deploy, aprovaÃ§Ãµes manuais e verificaÃ§Ãµes configuradas naquele environment",
-      "Define variÃ¡veis de ambiente para o job",
+      "Fornece histórico de deploy, aprovações manuais e verificações configuradas naquele environment",
+      "Define variáveis de ambiente para o job",
       "Determina qual variable group usar"
     ],
     correctIndex: 1,
-    explanation: "A propriedade environment em um deployment job vincula o deploy a um recurso de environment do Azure DevOps. Isso habilita rastreamento de histÃ³rico de deploy, gates de aprovaÃ§Ã£o manual, locks exclusivos e outras verificaÃ§Ãµes configuradas no environment no Azure DevOps. Ela nÃ£o provisiona recursos nem define variÃ¡veis automaticamente."
+    explanation: "A propriedade environment em um deployment job vincula o deploy a um recurso de environment do Azure DevOps. Isso habilita rastreamento de histórico de deploy, gates de aprovação manual, locks exclusivos e outras verificações configuradas no environment no Azure DevOps. Ela não provisiona recursos nem define variáveis automaticamente."
   }
 ]} />
 

@@ -1,44 +1,44 @@
 ---
 sidebar_position: 3
-title: "Desafio 25: Custom Vision - ClassificaÃ§Ã£o de Imagens"
+title: "Desafio 25: Custom Vision - Classificação de Imagens"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 25: Custom Vision - ClassificaÃ§Ã£o de Imagens
+# Desafio 25: Custom Vision - Classificação de Imagens
 
 :::info Tempo Estimado
-**60 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de VisÃ£o Computacional (10-15%)
+**60 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de Visão Computacional (10-15%)
 :::
 
 ## Habilidades do exame abordadas
-- Escolher entre classificaÃ§Ã£o de imagem e detecÃ§Ã£o de objetos
+- Escolher entre classificação de imagem e detecção de objetos
 - Rotular imagens para treinamento de modelos personalizados
 - Treinar um modelo de imagem personalizado
-- Avaliar mÃ©tricas do modelo (precision, recall, AP)
-- Publicar e consumir iteraÃ§Ãµes do modelo personalizado
+- Avaliar métricas do modelo (precision, recall, AP)
+- Publicar e consumir iterações do modelo personalizado
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Custom Vision permite treinar modelos de classificaÃ§Ã£o de imagens especÃ­ficos para um domÃ­nio sem necessidade de expertise em ML. Dois tipos de projeto:
+O Custom Vision permite treinar modelos de classificação de imagens específicos para um domínio sem necessidade de expertise em ML. Dois tipos de projeto:
 
-| Tipo | Caso de Uso | SaÃ­da |
+| Tipo | Caso de Uso | Saída |
 |------|-------------|-------|
-| **ClassificaÃ§Ã£o - Multiclass** | Imagem pertence a UMA categoria | Uma tag por imagem |
-| **ClassificaÃ§Ã£o - Multilabel** | Imagem pode ter MÃšLTIPLAS categorias | MÃºltiplas tags por imagem |
-| **DetecÃ§Ã£o de Objetos** | Localizar objetos com bounding boxes | Tags + coordenadas |
+| **Classificação - Multiclass** | Imagem pertence a UMA categoria | Uma tag por imagem |
+| **Classificação - Multilabel** | Imagem pode ter MÃšLTIPLAS categorias | Múltiplas tags por imagem |
+| **Detecção de Objetos** | Localizar objetos com bounding boxes | Tags + coordenadas |
 
-O treinamento produz iteraÃ§Ãµes com mÃ©tricas: **Precision** (das prediÃ§Ãµes positivas, quantas estÃ£o corretas), **Recall** (dos positivos reais, quantos foram encontrados) e **AP** (Average Precision â€” Ã¡rea sob a curva precision-recall).
+O treinamento produz iterações com métricas: **Precision** (das predições positivas, quantas estão corretas), **Recall** (dos positivos reais, quantos foram encontrados) e **AP** (Average Precision â€” área sob a curva precision-recall).
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure
 - Recursos Custom Vision Training + Prediction
 - Python 3.9+
 - Pacotes: `azure-cognitiveservices-vision-customvision` (training + prediction)
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Criar Recursos Custom Vision
 
@@ -149,7 +149,7 @@ for tag_perf in performance.per_tag_performance:
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Publicar e Fazer PrediÃ§Ãµes
+### Tarefa 3: Publicar e Fazer Predições
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -213,7 +213,7 @@ curl -s "${PREDICTION_ENDPOINT}/customvision/v3.0/prediction/${PROJECT_ID}/class
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Created project: a1b2c3d4-e5f6-7890-abcd-ef1234567890
@@ -244,24 +244,24 @@ Prediction results:
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
 | Treinamento falha | `BadRequestImageCount` | Menos de 5 imagens por tag | Adicione pelo menos 5 imagens por categoria |
 | Precision baixa | Muitos falsos positivos | Imagens de treinamento muito similares entre tags | Adicione exemplos negativos diversos; use imagens mais distintas |
-| PublicaÃ§Ã£o falha | Erro de Resource ID | ID do recurso de prediÃ§Ã£o com formato incorreto | Use o caminho completo do ARM resource ID |
-| PrediÃ§Ã£o retorna 404 | IteraÃ§Ã£o nÃ£o encontrada | Modelo nÃ£o publicado ou nome de publicaÃ§Ã£o errado | Verifique se `publish_iteration` teve sucesso; use o nome correto |
-| Upload de imagem falha | `ImageUrl not reachable` | URL nÃ£o acessÃ­vel a partir do Azure | Use URLs acessÃ­veis publicamente ou faÃ§a upload direto do arquivo |
+| Publicação falha | Erro de Resource ID | ID do recurso de predição com formato incorreto | Use o caminho completo do ARM resource ID |
+| Predição retorna 404 | Iteração não encontrada | Modelo não publicado ou nome de publicação errado | Verifique se `publish_iteration` teve sucesso; use o nome correto |
+| Upload de imagem falha | `ImageUrl not reachable` | URL não acessível a partir do Azure | Use URLs acessíveis publicamente ou faça upload direto do arquivo |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a diferenÃ§a entre classificaÃ§Ã£o Multiclass e Multilabel?",
+    question: "Qual é a diferença entre classificação Multiclass e Multilabel?",
     options: [
       "Multiclass usa mais imagens de treinamento que Multilabel",
-      "Multilabel Ã© mais preciso que Multiclass",
-      "Multiclass sÃ³ funciona com 2 categorias",
-      "Multiclass atribui exatamente uma tag por imagem; Multilabel pode atribuir mÃºltiplas tags"
+      "Multilabel é mais preciso que Multiclass",
+      "Multiclass só funciona com 2 categorias",
+      "Multiclass atribui exatamente uma tag por imagem; Multilabel pode atribuir múltiplas tags"
     ],
     correctAnswer: 3,
     explanation: "Multiclass: cada imagem recebe exatamente uma tag (categorias mutuamente exclusivas). Multilabel: cada imagem pode ter zero ou mais tags simultaneamente."
@@ -269,46 +269,46 @@ Prediction results:
   {
     question: "O que a Average Precision (AP) mede no Custom Vision?",
     options: [
-      "O score mÃ©dio de confianÃ§a das prediÃ§Ãµes",
-      "O nÃºmero mÃ©dio de prediÃ§Ãµes corretas por lote",
-      "A Ã¡rea sob a curva precision-recall, resumindo o desempenho do modelo em diferentes limiares",
-      "O tempo mÃ©dio para fazer prediÃ§Ãµes"
+      "O score médio de confiança das predições",
+      "O número médio de predições corretas por lote",
+      "A área sob a curva precision-recall, resumindo o desempenho do modelo em diferentes limiares",
+      "O tempo médio para fazer predições"
     ],
     correctAnswer: 2,
-    explanation: "AP Ã© a Ã¡rea sob a curva precision-recall. Fornece uma mÃ©trica Ãºnica que resume o trade-off entre precision e recall em todos os limiares de confianÃ§a."
+    explanation: "AP é a área sob a curva precision-recall. Fornece uma métrica única que resume o trade-off entre precision e recall em todos os limiares de confiança."
   },
   {
-    question: "O que Ã© necessÃ¡rio antes de fazer prediÃ§Ãµes com um modelo Custom Vision treinado?",
+    question: "O que é necessário antes de fazer predições com um modelo Custom Vision treinado?",
     options: [
-      "Publicar a iteraÃ§Ã£o em um recurso de prediÃ§Ã£o com um nome de publicaÃ§Ã£o",
-      "Exportar o modelo para um contÃªiner",
+      "Publicar a iteração em um recurso de predição com um nome de publicação",
+      "Exportar o modelo para um contêiner",
       "Converter o modelo para formato ONNX",
       "Implantar o modelo em uma Azure Function"
     ],
     correctAnswer: 0,
-    explanation: "VocÃª deve publicar uma iteraÃ§Ã£o treinada em um endpoint de recurso de prediÃ§Ã£o com uma versÃ£o nomeada antes que ela possa servir prediÃ§Ãµes via a API de prediÃ§Ã£o."
+    explanation: "Você deve publicar uma iteração treinada em um endpoint de recurso de predição com uma versão nomeada antes que ela possa servir predições via a API de predição."
   },
   {
-    question: "Qual Ã© o nÃºmero mÃ­nimo de imagens de treinamento recomendado por tag?",
+    question: "Qual é o número mínimo de imagens de treinamento recomendado por tag?",
     options: [
       "1 imagem por tag",
-      "Pelo menos 5 imagens por tag (15+ recomendado para produÃ§Ã£o)",
+      "Pelo menos 5 imagens por tag (15+ recomendado para produção)",
       "Exatamente 100 imagens por tag",
       "50 imagens no total em todas as tags"
     ],
     correctAnswer: 1,
-    explanation: "O Custom Vision requer pelo menos 5 imagens por tag para treinar. Para qualidade de produÃ§Ã£o, 15-50+ imagens diversas por tag sÃ£o recomendadas."
+    explanation: "O Custom Vision requer pelo menos 5 imagens por tag para treinar. Para qualidade de produção, 15-50+ imagens diversas por tag são recomendadas."
   },
   {
-    question: "Como vocÃª consome um modelo Custom Vision publicado para prediÃ§Ãµes?",
+    question: "Como você consome um modelo Custom Vision publicado para predições?",
     options: [
-      "Usar o cliente de Training com o ID da iteraÃ§Ã£o",
-      "Chamar o modelo diretamente via seu endpoint de iteraÃ§Ã£o",
-      "Usar o cliente de Prediction com o project ID e o nome de publicaÃ§Ã£o",
+      "Usar o cliente de Training com o ID da iteração",
+      "Chamar o modelo diretamente via seu endpoint de iteração",
+      "Usar o cliente de Prediction com o project ID e o nome de publicação",
       "Exportar e executar localmente apenas"
     ],
     correctAnswer: 2,
-    explanation: "PrediÃ§Ãµes usam o CustomVisionPredictionClient com o project ID e o nome de publicaÃ§Ã£o atribuÃ­do durante a publicaÃ§Ã£o da iteraÃ§Ã£o."
+    explanation: "Predições usam o CustomVisionPredictionClient com o project ID e o nome de publicação atribuído durante a publicação da iteração."
   }
 ]} />
 
@@ -320,6 +320,6 @@ az group delete --name rg-ai102-customvision --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Custom Vision](https://learn.microsoft.com/azure/ai-services/custom-vision-service/overview)
-- [InÃ­cio rÃ¡pido: Construir um classificador](https://learn.microsoft.com/azure/ai-services/custom-vision-service/getting-started-build-a-classifier)
+- [Visão geral do Custom Vision](https://learn.microsoft.com/azure/ai-services/custom-vision-service/overview)
+- [Início rápido: Construir um classificador](https://learn.microsoft.com/azure/ai-services/custom-vision-service/getting-started-build-a-classifier)
 - [Avaliar e melhorar o modelo](https://learn.microsoft.com/azure/ai-services/custom-vision-service/getting-started-improving-your-classifier)

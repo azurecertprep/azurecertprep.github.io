@@ -1,49 +1,49 @@
 ---
 sidebar_position: 10
-title: "Desafio 39: Modelos de TraduÃ§Ã£o Personalizados"
+title: "Desafio 39: Modelos de Tradução Personalizados"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 39: Modelos de TraduÃ§Ã£o Personalizados
+# Desafio 39: Modelos de Tradução Personalizados
 
 :::info Tempo Estimado
-**60 min** | **Custo**: $5-15 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
+**60 min** | **Custo**: $5-15 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Implementar modelos de traduÃ§Ã£o de texto personalizados
-- Treinar e avaliar traduÃ§Ã£o personalizada com dados paralelos
-- Publicar e consumir modelos de traduÃ§Ã£o personalizados
-- Implementar respostas a perguntas em mÃºltiplos idiomas
+- Implementar modelos de tradução de texto personalizados
+- Treinar e avaliar tradução personalizada com dados paralelos
+- Publicar e consumir modelos de tradução personalizados
+- Implementar respostas a perguntas em múltiplos idiomas
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Custom Translator treina modelos de traduÃ§Ã£o especÃ­ficos de domÃ­nio usando seus dados paralelos (pares de sentenÃ§as origem-destino). Isso melhora a precisÃ£o da traduÃ§Ã£o para terminologia especializada:
+O Custom Translator treina modelos de tradução específicos de domínio usando seus dados paralelos (pares de sentenças origem-destino). Isso melhora a precisão da tradução para terminologia especializada:
 
-| Conceito | DescriÃ§Ã£o |
+| Conceito | Descrição |
 |----------|-----------|
-| **Dados paralelos** | Pares de sentenÃ§as alinhadas nos idiomas de origem e destino |
-| **PontuaÃ§Ã£o BLEU** | MÃ©trica de qualidade de traduÃ§Ã£o (0-100, maior = melhor) |
-| **Category ID** | Identificador usado para rotear requisiÃ§Ãµes ao seu modelo personalizado |
-| **Baseline** | Modelo de traduÃ§Ã£o geral da Microsoft (ponto de comparaÃ§Ã£o) |
+| **Dados paralelos** | Pares de sentenças alinhadas nos idiomas de origem e destino |
+| **Pontuação BLEU** | Métrica de qualidade de tradução (0-100, maior = melhor) |
+| **Category ID** | Identificador usado para rotear requisições ao seu modelo personalizado |
+| **Baseline** | Modelo de tradução geral da Microsoft (ponto de comparação) |
 | **Treinamento** | Ajuste fino do baseline com seus dados paralelos |
 
-Multi-language Question Answering permite que uma Ãºnica base de conhecimento atenda respostas em mÃºltiplos idiomas.
+Multi-language Question Answering permite que uma única base de conhecimento atenda respostas em múltiplos idiomas.
 
-:::note OperaÃ§Ãµes Baseadas no Portal
-Algumas operaÃ§Ãµes do Custom Translator (criaÃ§Ã£o de projeto, upload de arquivos) sÃ£o feitas principalmente via o [portal do Custom Translator](https://portal.customtranslator.azure.ai/). Este desafio documenta o fluxo de trabalho e o consumo programÃ¡tico de modelos treinados.
+:::note Operações Baseadas no Portal
+Algumas operações do Custom Translator (criação de projeto, upload de arquivos) são feitas principalmente via o [portal do Custom Translator](https://portal.customtranslator.azure.ai/). Este desafio documenta o fluxo de trabalho e o consumo programático de modelos treinados.
 :::
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura do Azure
-- Recurso Azure Translator (tier S1 para traduÃ§Ã£o personalizada)
+- Recurso Azure Translator (tier S1 para tradução personalizada)
 - Dados de treinamento paralelos (arquivos TMX, XLIFF, TSV ou TXT)
 - Acesso ao portal Custom Translator
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Preparar Dados de Treinamento Paralelos
 
@@ -58,22 +58,22 @@ import os
 
 # Example: Medical domain English-to-Spanish parallel data
 training_data_tsv = """The patient presents with acute bronchitis.\tEl paciente presenta bronquitis aguda.
-Administer 500mg amoxicillin three times daily.\tAdministrar 500mg de amoxicilina tres veces al dÃ­a.
-Blood pressure reading is 120 over 80.\tLa lectura de presiÃ³n arterial es 120 sobre 80.
-The MRI shows no abnormalities.\tLa resonancia magnÃ©tica no muestra anomalÃ­as.
+Administer 500mg amoxicillin three times daily.\tAdministrar 500mg de amoxicilina tres veces al día.
+Blood pressure reading is 120 over 80.\tLa lectura de presión arterial es 120 sobre 80.
+The MRI shows no abnormalities.\tLa resonancia magnética no muestra anomalías.
 Schedule a follow-up appointment in two weeks.\tProgramar una cita de seguimiento en dos semanas.
 Patient reports chest pain and shortness of breath.\tEl paciente reporta dolor en el pecho y dificultad para respirar.
-Prescribe ibuprofen 400mg as needed for pain.\tRecetar ibuprofeno 400mg segÃºn sea necesario para el dolor.
+Prescribe ibuprofen 400mg as needed for pain.\tRecetar ibuprofeno 400mg según sea necesario para el dolor.
 The biopsy results are benign.\tLos resultados de la biopsia son benignos.
-Apply topical antibiotic ointment twice daily.\tAplicar ungÃ¼ento antibiÃ³tico tÃ³pico dos veces al dÃ­a.
-Refer patient to cardiology for further evaluation.\tReferir al paciente a cardiologÃ­a para evaluaciÃ³n adicional."""
+Apply topical antibiotic ointment twice daily.\tAplicar ungüento antibiótico tópico dos veces al día.
+Refer patient to cardiology for further evaluation.\tReferir al paciente a cardiología para evaluación adicional."""
 
 # Save training file
 with open("medical-training-en-es.tsv", "w", encoding="utf-8") as f:
     f.write(training_data_tsv)
 
 # Tuning data (separate set for validation)
-tuning_data = """Patient exhibits symptoms of type 2 diabetes.\tEl paciente exhibe sÃ­ntomas de diabetes tipo 2.
+tuning_data = """Patient exhibits symptoms of type 2 diabetes.\tEl paciente exhibe síntomas de diabetes tipo 2.
 Recommend physical therapy twice a week.\tRecomendar fisioterapia dos veces por semana.
 Lab results indicate elevated cholesterol.\tLos resultados del laboratorio indican colesterol elevado."""
 
@@ -81,8 +81,8 @@ with open("medical-tuning-en-es.tsv", "w", encoding="utf-8") as f:
     f.write(tuning_data)
 
 # Testing data (for BLEU evaluation)
-test_data = """Administer insulin injection before meals.\tAdministrar inyecciÃ³n de insulina antes de las comidas.
-The X-ray reveals a hairline fracture.\tLa radiografÃ­a revela una fractura capilar."""
+test_data = """Administer insulin injection before meals.\tAdministrar inyección de insulina antes de las comidas.
+The X-ray reveals a hairline fracture.\tLa radiografía revela una fractura capilar."""
 
 with open("medical-test-en-es.tsv", "w", encoding="utf-8") as f:
     f.write(test_data)
@@ -141,7 +141,7 @@ Interpretation:
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Consumir Modelo de TraduÃ§Ã£o Personalizado
+### Tarefa 3: Consumir Modelo de Tradução Personalizado
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -227,7 +227,7 @@ curl -s "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Question Answering em MÃºltiplos Idiomas
+### Tarefa 4: Question Answering em Múltiplos Idiomas
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -247,7 +247,7 @@ qa_client = QuestionAnsweringClient(
 # Query in different languages against the same knowledge base
 multilingual_queries = [
     ("What is Azure AI?", "en"),
-    ("Â¿QuÃ© es Azure AI?", "es"),
+    ("Â¿Qué es Azure AI?", "es"),
     ("Azure AIã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ", "ja"),
     ("Qu'est-ce qu'Azure AI?", "fr")
 ]
@@ -277,7 +277,7 @@ curl -s "${ENDPOINT}/language/:query-knowledgebases?projectName=faq-knowledge-ba
   -H "Ocp-Apim-Subscription-Key: ${KEY}" \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "Â¿QuÃ© es Azure AI?",
+    "question": "Â¿Qué es Azure AI?",
     "top": 1,
     "language": "es"
   }' | jq '.answers[0] | {answer: .answer[0:100], confidence: .confidenceScore}'
@@ -286,7 +286,7 @@ curl -s "${ENDPOINT}/language/:query-knowledgebases?projectName=faq-knowledge-ba
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Training data files created:
@@ -312,7 +312,7 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
 [en] Q: What is Azure AI?
      A: Azure AI Services is a collection of cloud-based AI APIs that help developers...
      Confidence: 0.953
-[es] Q: Â¿QuÃ© es Azure AI?
+[es] Q: Â¿Qué es Azure AI?
      A: Azure AI Services is a collection of cloud-based AI APIs...
      Confidence: 0.891
 [ja] Q: Azure AIã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ
@@ -322,71 +322,71 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Modelo personalizado nÃ£o usado | TraduÃ§Ãµes gerais retornadas | Category ID nÃ£o especificado ou incorreto | Verifique se o parÃ¢metro `category` corresponde ao Category ID do modelo publicado |
-| PontuaÃ§Ã£o BLEU baixa | Nenhuma melhoria sobre o baseline | Dados de treinamento insuficientes ou alinhamento ruim | NecessÃ¡rio 10.000+ pares de sentenÃ§as alinhadas; verifique qualidade do alinhamento |
+| Modelo personalizado não usado | Traduções gerais retornadas | Category ID não especificado ou incorreto | Verifique se o parâmetro `category` corresponde ao Category ID do modelo publicado |
+| Pontuação BLEU baixa | Nenhuma melhoria sobre o baseline | Dados de treinamento insuficientes ou alinhamento ruim | Necessário 10.000+ pares de sentenças alinhadas; verifique qualidade do alinhamento |
 | Treinamento falha | Upload rejeitado | Formato de arquivo incorreto | Use formatos suportados: TMX, XLIFF, TSV, TXT alinhado |
-| Categoria nÃ£o encontrada | Erro 400 na traduÃ§Ã£o | Modelo nÃ£o publicado ou expirado | Publique o modelo no portal Custom Translator; verifique expiraÃ§Ã£o |
-| QA multi-idioma ruim | Baixa confianÃ§a entre idiomas | Projeto nÃ£o configurado como multilingual | Habilite `multilingualResource: true` ao criar o projeto |
+| Categoria não encontrada | Erro 400 na tradução | Modelo não publicado ou expirado | Publique o modelo no portal Custom Translator; verifique expiração |
+| QA multi-idioma ruim | Baixa confiança entre idiomas | Projeto não configurado como multilingual | Habilite `multilingualResource: true` ao criar o projeto |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Como vocÃª roteia uma requisiÃ§Ã£o de traduÃ§Ã£o para seu modelo personalizado?",
+    question: "Como você roteia uma requisição de tradução para seu modelo personalizado?",
     options: [
       "Use um endpoint de API diferente",
-      "Inclua o nome do modelo no corpo da requisiÃ§Ã£o",
-      "Adicione o parÃ¢metro 'category' com o Category ID do seu modelo Ã  requisiÃ§Ã£o de traduÃ§Ã£o",
-      "Modelos personalizados sÃ£o usados automaticamente uma vez publicados"
+      "Inclua o nome do modelo no corpo da requisição",
+      "Adicione o parâmetro 'category' com o Category ID do seu modelo Ã  requisição de tradução",
+      "Modelos personalizados são usados automaticamente uma vez publicados"
     ],
     correctAnswer: 2,
-    explanation: "O parÃ¢metro category roteia requisiÃ§Ãµes para seu modelo personalizado. Sem ele (ou com category='general'), o modelo padrÃ£o da Microsoft Ã© usado."
+    explanation: "O parâmetro category roteia requisições para seu modelo personalizado. Sem ele (ou com category='general'), o modelo padrão da Microsoft é usado."
   },
   {
-    question: "Para que a pontuaÃ§Ã£o BLEU Ã© usada no Custom Translator?",
+    question: "Para que a pontuação BLEU é usada no Custom Translator?",
     options: [
-      "Avaliar a qualidade da traduÃ§Ã£o comparando a saÃ­da do modelo personalizado com traduÃ§Ãµes de referÃªncia (escala 0-100)",
-      "Medir a velocidade da traduÃ§Ã£o",
-      "Calcular o custo da traduÃ§Ã£o",
-      "Medir o nÃºmero de idiomas suportados"
+      "Avaliar a qualidade da tradução comparando a saída do modelo personalizado com traduções de referência (escala 0-100)",
+      "Medir a velocidade da tradução",
+      "Calcular o custo da tradução",
+      "Medir o número de idiomas suportados"
     ],
     correctAnswer: 0,
-    explanation: "BLEU (Bilingual Evaluation Understudy) mede a qualidade da traduÃ§Ã£o comparando com traduÃ§Ãµes de referÃªncia. PontuaÃ§Ãµes mais altas (0-100) indicam melhor qualidade; compare pontuaÃ§Ãµes personalizada vs baseline."
+    explanation: "BLEU (Bilingual Evaluation Understudy) mede a qualidade da tradução comparando com traduções de referência. Pontuações mais altas (0-100) indicam melhor qualidade; compare pontuações personalizada vs baseline."
   },
   {
     question: "Que tipo de dados de treinamento o Custom Translator requer?",
     options: [
       "Apenas texto no idioma de origem â€” o modelo aprende o idioma de destino automaticamente",
-      "Um dicionÃ¡rio de terminologia",
-      "Exemplos de traduÃ§Ã£o do Google Translate",
-      "Dados paralelos: pares de sentenÃ§as alinhadas nos idiomas de origem e destino"
+      "Um dicionário de terminologia",
+      "Exemplos de tradução do Google Translate",
+      "Dados paralelos: pares de sentenças alinhadas nos idiomas de origem e destino"
     ],
     correctAnswer: 3,
-    explanation: "O Custom Translator requer dados paralelos â€” pares alinhados de sentenÃ§as em ambos os idiomas. O modelo aprende padrÃµes de domÃ­nio a partir desses exemplos alinhados."
+    explanation: "O Custom Translator requer dados paralelos â€” pares alinhados de sentenças em ambos os idiomas. O modelo aprende padrões de domínio a partir desses exemplos alinhados."
   },
   {
-    question: "Como o Question Answering em mÃºltiplos idiomas funciona?",
+    question: "Como o Question Answering em múltiplos idiomas funciona?",
     options: [
-      "VocÃª deve criar uma base de conhecimento separada para cada idioma",
-      "Uma Ãºnica base de conhecimento multilingual pode responder perguntas em mÃºltiplos idiomas usando correspondÃªncia entre idiomas",
+      "Você deve criar uma base de conhecimento separada para cada idioma",
+      "Uma única base de conhecimento multilingual pode responder perguntas em múltiplos idiomas usando correspondência entre idiomas",
       "As perguntas devem ser traduzidas para o idioma da KB antes de consultar",
-      "Apenas bases de conhecimento em inglÃªs suportam mÃºltiplos idiomas"
+      "Apenas bases de conhecimento em inglês suportam múltiplos idiomas"
     ],
     correctAnswer: 1,
-    explanation: "Com multilingualResource=true, uma Ãºnica base de conhecimento pode corresponder perguntas em qualquer idioma suportado a respostas, usando compreensÃ£o semÃ¢ntica entre idiomas."
+    explanation: "Com multilingualResource=true, uma única base de conhecimento pode corresponder perguntas em qualquer idioma suportado a respostas, usando compreensão semântica entre idiomas."
   },
   {
-    question: "Qual Ã© a quantidade mÃ­nima recomendada de dados de treinamento paralelos para melhoria significativa?",
+    question: "Qual é a quantidade mínima recomendada de dados de treinamento paralelos para melhoria significativa?",
     options: [
-      "10 pares de sentenÃ§as",
-      "100 pares de sentenÃ§as",
-      "1 milhÃ£o de pares de sentenÃ§as",
-      "10.000+ pares de sentenÃ§as para melhoria significativa especÃ­fica de domÃ­nio"
+      "10 pares de sentenças",
+      "100 pares de sentenças",
+      "1 milhão de pares de sentenças",
+      "10.000+ pares de sentenças para melhoria significativa específica de domínio"
     ],
     correctAnswer: 3,
-    explanation: "A Microsoft recomenda 10.000+ pares de sentenÃ§as alinhadas para melhoria significativa. Mais dados (especialmente conteÃºdo diverso e especÃ­fico de domÃ­nio) geralmente produzem modelos melhores."
+    explanation: "A Microsoft recomenda 10.000+ pares de sentenças alinhadas para melhoria significativa. Mais dados (especialmente conteúdo diverso e específico de domínio) geralmente produzem modelos melhores."
   }
 ]} />
 
@@ -398,7 +398,7 @@ az group delete --name rg-ai102-translator --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Custom Translator](https://learn.microsoft.com/azure/ai-services/translator/custom-translator/overview)
+- [Visão geral do Custom Translator](https://learn.microsoft.com/azure/ai-services/translator/custom-translator/overview)
 - [Portal do Custom Translator](https://portal.customtranslator.azure.ai/)
-- [ExplicaÃ§Ã£o da pontuaÃ§Ã£o BLEU](https://learn.microsoft.com/azure/ai-services/translator/custom-translator/concepts/bleu-score)
+- [Explicação da pontuação BLEU](https://learn.microsoft.com/azure/ai-services/translator/custom-translator/concepts/bleu-score)
 - [QA multi-idioma](https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/multiple-languages)

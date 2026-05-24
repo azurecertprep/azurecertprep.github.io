@@ -1,45 +1,45 @@
 ---
 sidebar_position: 4
-title: "Desafio 33: TraduÃ§Ã£o de Texto e Documentos"
+title: "Desafio 33: Tradução de Texto e Documentos"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 33: TraduÃ§Ã£o de Texto e Documentos
+# Desafio 33: Tradução de Texto e Documentos
 
 :::info Tempo Estimado
-**50 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
+**50 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Traduzir texto usando o serviÃ§o Azure Translator
-- Traduzir documentos preservando a formataÃ§Ã£o
-- Implementar modelos de traduÃ§Ã£o personalizados para termos especÃ­ficos de domÃ­nio
+- Traduzir texto usando o serviço Azure Translator
+- Traduzir documentos preservando a formatação
+- Implementar modelos de tradução personalizados para termos específicos de domínio
 
-## VisÃ£o Geral
+## Visão Geral
 
 O Azure Translator fornece:
 
-| Recurso | DescriÃ§Ã£o |
+| Recurso | Descrição |
 |---------|-----------|
-| **Text Translation** | TraduÃ§Ã£o em tempo real de texto (atÃ© 50.000 caracteres) |
+| **Text Translation** | Tradução em tempo real de texto (até 50.000 caracteres) |
 | **Document Translation** | Traduzir documentos inteiros preservando o layout |
-| **Custom Translator** | Treinar modelos para terminologia de domÃ­nio |
-| **TransliteraÃ§Ã£o** | Converter scripts (ex.: kanji japonÃªs â†’ romaji) |
-| **DetecÃ§Ã£o de Idioma** | Detectar automaticamente o idioma de origem |
-| **DicionÃ¡rio** | Buscar traduÃ§Ãµes alternativas |
+| **Custom Translator** | Treinar modelos para terminologia de domínio |
+| **Transliteração** | Converter scripts (ex.: kanji japonês â†’ romaji) |
+| **Detecção de Idioma** | Detectar automaticamente o idioma de origem |
+| **Dicionário** | Buscar traduções alternativas |
 
 O Text Translator usa um **endpoint global**: `https://api.cognitive.microsofttranslator.com`
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura do Azure
 - Recurso Azure Translator
 - Python 3.9+ com biblioteca `requests`
-- Para Document Translation: contÃªiner Azure Blob Storage
+- Para Document Translation: contêiner Azure Blob Storage
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Criar Recurso do Translator
 
@@ -135,7 +135,7 @@ curl -s "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
 </TabItem>
 </Tabs>
 
-### Tarefa 3: TraduÃ§Ã£o de Documentos (Lote)
+### Tarefa 3: Tradução de Documentos (Lote)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -213,7 +213,7 @@ print("Document translation configured (requires Blob Storage SAS URLs)")
 </TabItem>
 </Tabs>
 
-### Tarefa 4: TransliteraÃ§Ã£o
+### Tarefa 4: Transliteração
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -264,18 +264,18 @@ curl -s "https://api.cognitive.microsofttranslator.com/transliterate?api-version
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Source: 'Azure AI services make it easy to build intelligent applications.'
   Detected language: en (1.00)
-  â†’ [es] Los servicios de Azure AI facilitan la creaciÃ³n de aplicaciones inteligentes.
-  â†’ [fr] Les services Azure AI facilitent la crÃ©ation d'applications intelligentes.
+  â†’ [es] Los servicios de Azure AI facilitan la creación de aplicaciones inteligentes.
+  â†’ [fr] Les services Azure AI facilitent la création d'applications intelligentes.
   â†’ [ja] Azure AIã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹ã¨ã€ã‚¤ãƒ³ãƒ†ãƒªã‚¸ã‚§ãƒ³ãƒˆãªã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç°¡å˜ã«æ§‹ç¯‰ã§ãã¾ã™ã€‚
 
 Source: 'The weather in Seattle is rainy today.'
   Detected language: en (1.00)
-  â†’ [es] El clima en Seattle estÃ¡ lluvioso hoy.
+  â†’ [es] El clima en Seattle está lluvioso hoy.
   â†’ [fr] Le temps Ã  Seattle est pluvieux aujourd'hui.
   â†’ [ja] ä»Šæ—¥ã®ã‚·ã‚¢ãƒˆãƒ«ã®å¤©æ°—ã¯é›¨ã§ã™ã€‚
 
@@ -285,19 +285,19 @@ Transliterated: namaste duniya
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| 401 Unauthorized | Falha na autenticaÃ§Ã£o | Header de regiÃ£o ausente | Inclua o header `Ocp-Apim-Subscription-Region` |
-| TraduÃ§Ãµes vazias | Nenhum resultado | ParÃ¢metro `to` ausente | Especifique pelo menos um idioma de destino |
-| Idioma errado detectado | TraduÃ§Ã£o incorreta | Texto curto ou ambÃ­guo | Especifique o parÃ¢metro `from` explicitamente para origem conhecida |
-| Document translation 400 | Bad request | Token SAS ou contÃªiner invÃ¡lido | Verifique se o SAS tem permissÃµes de leitura (origem) e escrita (destino) |
-| Erro de transliteraÃ§Ã£o | Script nÃ£o suportado | CÃ³digo de script invÃ¡lido | Verifique scripts suportados por idioma via endpoint `/languages` |
+| 401 Unauthorized | Falha na autenticação | Header de região ausente | Inclua o header `Ocp-Apim-Subscription-Region` |
+| Traduções vazias | Nenhum resultado | Parâmetro `to` ausente | Especifique pelo menos um idioma de destino |
+| Idioma errado detectado | Tradução incorreta | Texto curto ou ambíguo | Especifique o parâmetro `from` explicitamente para origem conhecida |
+| Document translation 400 | Bad request | Token SAS ou contêiner inválido | Verifique se o SAS tem permissões de leitura (origem) e escrita (destino) |
+| Erro de transliteração | Script não suportado | Código de script inválido | Verifique scripts suportados por idioma via endpoint `/languages` |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© o endpoint global para a API de texto do Azure Translator?",
+    question: "Qual é o endpoint global para a API de texto do Azure Translator?",
     options: [
       "https://<resource>.cognitiveservices.azure.com/translate",
       "https://translator.azure.com/api",
@@ -308,48 +308,48 @@ Transliterated: namaste duniya
     explanation: "O Text Translator usa o endpoint global https://api.cognitive.microsofttranslator.com. Ele requer o header Ocp-Apim-Subscription-Region para roteamento regional."
   },
   {
-    question: "Qual header Ã© necessÃ¡rio alÃ©m da chave de assinatura para requisiÃ§Ãµes do Translator?",
+    question: "Qual header é necessário além da chave de assinatura para requisições do Translator?",
     options: [
-      "Ocp-Apim-Subscription-Region (especificando a regiÃ£o Azure do recurso)",
+      "Ocp-Apim-Subscription-Region (especificando a região Azure do recurso)",
       "Content-Length",
       "Accept-Language",
       "X-Forwarded-For"
     ],
     correctAnswer: 0,
-    explanation: "O header Ocp-Apim-Subscription-Region Ã© necessÃ¡rio para rotear a requisiÃ§Ã£o ao endpoint regional correto. Sem ele, as requisiÃ§Ãµes falham com 401."
+    explanation: "O header Ocp-Apim-Subscription-Region é necessário para rotear a requisição ao endpoint regional correto. Sem ele, as requisições falham com 401."
   },
   {
     question: "Como o Document Translation difere do Text Translation?",
     options: [
-      "Document Translation Ã© sÃ­ncrono; Text Translation Ã© assÃ­ncrono",
+      "Document Translation é síncrono; Text Translation é assíncrono",
       "Document Translation suporta mais idiomas",
-      "NÃ£o hÃ¡ diferenÃ§a â€” usam o mesmo endpoint",
-      "Document Translation traduz arquivos inteiros (preservando formataÃ§Ã£o) via Blob Storage; Text Translation lida com strings de texto puro"
+      "Não há diferença â€” usam o mesmo endpoint",
+      "Document Translation traduz arquivos inteiros (preservando formatação) via Blob Storage; Text Translation lida com strings de texto puro"
     ],
     correctAnswer: 3,
-    explanation: "Document Translation Ã© assÃ­ncrono â€” traduz arquivos inteiros (Word, PDF, etc.) entre contÃªineres Blob Storage preservando a formataÃ§Ã£o e layout originais."
+    explanation: "Document Translation é assíncrono â€” traduz arquivos inteiros (Word, PDF, etc.) entre contêineres Blob Storage preservando a formatação e layout originais."
   },
   {
-    question: "O que a transliteraÃ§Ã£o faz?",
+    question: "O que a transliteração faz?",
     options: [
       "Traduz texto de um idioma para outro",
-      "Converte texto de um sistema de escrita para outro dentro do mesmo idioma (ex.: kanji japonÃªs para romaji)",
+      "Converte texto de um sistema de escrita para outro dentro do mesmo idioma (ex.: kanji japonês para romaji)",
       "Detecta o idioma do texto de entrada",
       "Corrige erros de ortografia em texto traduzido"
     ],
     correctAnswer: 1,
-    explanation: "A transliteraÃ§Ã£o converte texto entre scripts sem mudar o idioma â€” ex.: kanji japonÃªs â†’ Latim (romaji), Devanagari hindi â†’ Latim."
+    explanation: "A transliteração converte texto entre scripts sem mudar o idioma â€” ex.: kanji japonês â†’ Latim (romaji), Devanagari hindi â†’ Latim."
   },
   {
-    question: "Quantos idiomas de destino vocÃª pode especificar em uma Ãºnica requisiÃ§Ã£o de traduÃ§Ã£o de texto?",
+    question: "Quantos idiomas de destino você pode especificar em uma única requisição de tradução de texto?",
     options: [
-      "Apenas 1 idioma de destino por requisiÃ§Ã£o",
-      "MÃ¡ximo de 2 idiomas de destino",
-      "MÃºltiplos idiomas de destino repetindo o parÃ¢metro 'to'",
-      "Ilimitado, mas apenas os primeiros 5 sÃ£o processados"
+      "Apenas 1 idioma de destino por requisição",
+      "Máximo de 2 idiomas de destino",
+      "Múltiplos idiomas de destino repetindo o parâmetro 'to'",
+      "Ilimitado, mas apenas os primeiros 5 são processados"
     ],
     correctAnswer: 2,
-    explanation: "VocÃª pode traduzir para mÃºltiplos idiomas em uma requisiÃ§Ã£o especificando o parÃ¢metro 'to' mÃºltiplas vezes (ex.: to=es&to=fr&to=ja). Cada traduÃ§Ã£o aparece na resposta."
+    explanation: "Você pode traduzir para múltiplos idiomas em uma requisição especificando o parâmetro 'to' múltiplas vezes (ex.: to=es&to=fr&to=ja). Cada tradução aparece na resposta."
   }
 ]} />
 
@@ -361,7 +361,7 @@ az group delete --name rg-ai102-translator --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Translator](https://learn.microsoft.com/azure/ai-services/translator/translator-overview)
-- [InÃ­cio rÃ¡pido do Text Translation](https://learn.microsoft.com/azure/ai-services/translator/quickstart-text-rest-api)
+- [Visão geral do Translator](https://learn.microsoft.com/azure/ai-services/translator/translator-overview)
+- [Início rápido do Text Translation](https://learn.microsoft.com/azure/ai-services/translator/quickstart-text-rest-api)
 - [Document Translation](https://learn.microsoft.com/azure/ai-services/translator/document-translation/overview)
 - [Custom Translator](https://learn.microsoft.com/azure/ai-services/translator/custom-translator/overview)

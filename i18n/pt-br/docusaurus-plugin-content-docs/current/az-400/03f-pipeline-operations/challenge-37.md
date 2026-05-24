@@ -9,24 +9,24 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 37: Migrar classic para YAML
 
 :::info Plataforma: ADO-first
-Este desafio Ã© especÃ­fico para a migraÃ§Ã£o do Azure DevOps Pipelines do editor classic (GUI) para YAML.
+Este desafio é específico para a migração do Azure DevOps Pipelines do editor classic (GUI) para YAML.
 :::
 
 ## Habilidades do exame mapeadas
 
 - Migrar um pipeline de classic para YAML no Azure Pipelines
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd possui 20 pipelines classic (baseados em GUI) de build e release no Azure DevOps. Esses pipelines foram criados nos Ãºltimos 4 anos e incluem:
+A Contoso Ltd possui 20 pipelines classic (baseados em GUI) de build e release no Azure DevOps. Esses pipelines foram criados nos últimos 4 anos e incluem:
 
-- 8 definiÃ§Ãµes de build classic (CI)
-- 12 definiÃ§Ãµes de release classic (CD) com mÃºltiplos stages e gates
+- 8 definições de build classic (CI)
+- 12 definições de release classic (CD) com múltiplos stages e gates
 - Task groups compartilhados entre pipelines
-- Variable groups com secrets especÃ­ficos por ambiente
-- Deployment groups para implantaÃ§Ãµes em VMs on-premises
+- Variable groups com secrets específicos por ambiente
+- Deployment groups para implantações em VMs on-premises
 
-A Microsoft recomenda pipelines YAML para controle de versÃ£o, code review e reutilizaÃ§Ã£o de templates. A equipe de DevOps da Contoso deve migrar sistematicamente sem interromper as implantaÃ§Ãµes ativas.
+A Microsoft recomenda pipelines YAML para controle de versão, code review e reutilização de templates. A equipe de DevOps da Contoso deve migrar sistematicamente sem interromper as implantações ativas.
 
 Estrutura atual do pipeline classic:
 
@@ -46,21 +46,21 @@ Classic Release: "Contoso API - CD"
 
 ## Tarefa 1: Exportar pipeline classic para YAML (funcionalidade integrada)
 
-Use a funcionalidade de exportaÃ§Ã£o integrada disponÃ­vel no Azure DevOps:
+Use a funcionalidade de exportação integrada disponível no Azure DevOps:
 
 ```text
 Passos para exportar um pipeline de build classic:
-1. Navegue atÃ© Pipelines > [Selecione o pipeline classic]
+1. Navegue até Pipelines > [Selecione o pipeline classic]
 2. Clique em "Edit"
-3. Clique no menu de trÃªs pontos (...)
-4. Selecione "Export to YAML" (se disponÃ­vel na sua versÃ£o do Azure DevOps)
+3. Clique no menu de três pontos (...)
+4. Selecione "Export to YAML" (se disponível na sua versão do Azure DevOps)
 5. Revise o YAML gerado
 
-Nota: O botÃ£o "View YAML" em tarefas individuais mostra o equivalente YAML
-de cada tarefa, que vocÃª pode combinar manualmente.
+Nota: O botão "View YAML" em tarefas individuais mostra o equivalente YAML
+de cada tarefa, que você pode combinar manualmente.
 ```
 
-Para builds onde a funcionalidade de exportaÃ§Ã£o nÃ£o estÃ¡ disponÃ­vel, converta manualmente examinando cada tarefa:
+Para builds onde a funcionalidade de exportação não está disponível, converta manualmente examinando cada tarefa:
 
 ```bash
 # List all classic build definitions in the project
@@ -144,7 +144,7 @@ steps:
 
 ## Tarefa 2: Mapear conceitos classic para equivalentes YAML
 
-Tabela de referÃªncia para migraÃ§Ã£o:
+Tabela de referência para migração:
 
 | Conceito classic | Equivalente YAML |
 |----------------|-----------------|
@@ -157,8 +157,8 @@ Tabela de referÃªncia para migraÃ§Ã£o:
 | Pre-deployment gates | Environment checks (Invoke REST API, Azure Monitor) |
 | Deployment groups | `environment:` com recursos VM |
 | Task groups | YAML templates (`template:`) |
-| Variable groups | ReferÃªncia `variables: - group:` |
-| Agent phases | `jobs:` com diferentes configuraÃ§Ãµes de `pool:` |
+| Variable groups | Referência `variables: - group:` |
+| Agent phases | `jobs:` com diferentes configurações de `pool:` |
 | Parallel deployment | `strategy: parallel:` ou matrix |
 
 ## Tarefa 3: Converter release gates para environment checks YAML
@@ -289,7 +289,7 @@ stages:
 
 ## Tarefa 4: Migrar variable groups e service connections
 
-Variable groups e service connections sÃ£o transferidos diretamente para YAML:
+Variable groups e service connections são transferidos diretamente para YAML:
 
 ```yaml
 # Variable groups are referenced by name (no changes needed to the group itself)
@@ -318,7 +318,7 @@ stages:
           - script: echo "DB_HOST=$(DB_HOST)"  # Different value from prod group
 ```
 
-Service connections sÃ£o referenciadas nos inputs das tarefas (mesmo que no classic):
+Service connections são referenciadas nos inputs das tarefas (mesmo que no classic):
 
 ```yaml
 # Service connection references don't change between classic and YAML
@@ -414,7 +414,7 @@ steps:
       publishArtifact: true
 ```
 
-Para task groups mais complexos que abrangem mÃºltiplos jobs:
+Para task groups mais complexos que abrangem múltiplos jobs:
 
 ```yaml
 # templates/deploy-stage.yml - Stage template (replaces multi-step task group)
@@ -452,7 +452,7 @@ stages:
                     package: "$(Pipeline.Workspace)/build-output"
 ```
 
-## Tarefa 6: Lidar com funcionalidades especÃ­ficas do classic (deployment groups para environments)
+## Tarefa 6: Lidar com funcionalidades específicas do classic (deployment groups para environments)
 
 Migrar deployment groups para YAML environments com recursos VM:
 
@@ -540,27 +540,27 @@ stages:
                     displayName: "Success notification"
 ```
 
-## Tarefa 7: EstratÃ©gia de migraÃ§Ã£o faseada
+## Tarefa 7: Estratégia de migração faseada
 
-Implemente uma abordagem faseada e segura para a migraÃ§Ã£o:
+Implemente uma abordagem faseada e segura para a migração:
 
 ```text
-Fase 1: ExecuÃ§Ã£o paralela (Semanas 1-2)
+Fase 1: Execução paralela (Semanas 1-2)
 - Criar pipeline YAML ao lado do classic
 - Ambos disparam nos mesmos eventos
-- Comparar resultados (mesmos artefatos, mesmos testes, mesmas implantaÃ§Ãµes)
+- Comparar resultados (mesmos artefatos, mesmos testes, mesmas implantações)
 - Pipeline YAML implanta em um ambiente "shadow" separado
 
-Fase 2: YAML como primÃ¡rio (Semanas 3-4)
+Fase 2: YAML como primário (Semanas 3-4)
 - Pipeline YAML se torna o CI/CD oficial
 - Triggers do pipeline classic desabilitados mas retidos
-- Equipe usa YAML para todas as novas implantaÃ§Ãµes
-- Classic disponÃ­vel como fallback de emergÃªncia
+- Equipe usa YAML para todas as novas implantações
+- Classic disponível como fallback de emergência
 
 Fase 3: Descomissionamento do classic (Semana 5+)
-- Deletar pipeline classic apÃ³s 2 semanas sem problemas
-- Arquivar definiÃ§Ã£o JSON do classic para referÃªncia
-- Atualizar documentaÃ§Ã£o e runbooks
+- Deletar pipeline classic após 2 semanas sem problemas
+- Arquivar definição JSON do classic para referência
+- Atualizar documentação e runbooks
 ```
 
 ```bash
@@ -594,7 +594,7 @@ az pipelines delete \
   --yes
 ```
 
-Checklist de validaÃ§Ã£o para cada pipeline migrado:
+Checklist de validação para cada pipeline migrado:
 
 ```yaml
 # Migration validation pipeline
@@ -649,11 +649,11 @@ steps:
     displayName: "Compare YAML vs classic artifacts"
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: Corrigir o download de artefato quebrado em trigger multi-pipeline
+### Exercício 1: Corrigir o download de artefato quebrado em trigger multi-pipeline
 
-ApÃ³s a migraÃ§Ã£o, o pipeline CD falha ao baixar artefatos do pipeline CI:
+Após a migração, o pipeline CD falha ao baixar artefatos do pipeline CI:
 
 ```yaml
 # BROKEN: Classic used artifact source linkage automatically
@@ -673,9 +673,9 @@ stages:
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```yaml
 # FIXED: Declare the CI pipeline as a resource
@@ -703,9 +703,9 @@ stages:
 
 </details>
 
-### ExercÃ­cio 2: Corrigir a aprovaÃ§Ã£o de prÃ©-implantaÃ§Ã£o ausente
+### Exercício 2: Corrigir a aprovação de pré-implantação ausente
 
-ApÃ³s a migraÃ§Ã£o, as implantaÃ§Ãµes para produÃ§Ã£o acontecem sem nenhuma aprovaÃ§Ã£o:
+Após a migração, as implantações para produção acontecem sem nenhuma aprovação:
 
 ```yaml
 # BROKEN: Environment exists but has no checks configured
@@ -720,13 +720,13 @@ ApÃ³s a migraÃ§Ã£o, as implantaÃ§Ãµes para produÃ§Ã£o acontecem se
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Os environment checks devem ser configurados na interface do Azure DevOps (nÃ£o podem ser definidos via YAML):
+**Correção:** Os environment checks devem ser configurados na interface do Azure DevOps (não podem ser definidos via YAML):
 
 ```text
-1. Navegue atÃ©: Pipelines > Environments > production
-2. Clique nos trÃªs pontos (...) > Approvals and checks
+1. Navegue até: Pipelines > Environments > production
+2. Clique nos três pontos (...) > Approvals and checks
 3. Adicionar check: "Approvals"
    - Approvers: grupo contoso-release-managers
    - Minimum approvals: 2
@@ -741,55 +741,55 @@ ApÃ³s a migraÃ§Ã£o, as implantaÃ§Ãµes para produÃ§Ã£o acontecem se
    - Success criteria: eq(root['status'], 'healthy')
 ```
 
-O ponto-chave: Em pipelines classic, aprovaÃ§Ãµes e gates sÃ£o configurados por stage na definiÃ§Ã£o de release. Em pipelines YAML, eles sÃ£o configurados no prÃ³prio environment e se aplicam a qualquer pipeline que implante naquele environment.
+O ponto-chave: Em pipelines classic, aprovações e gates são configurados por stage na definição de release. Em pipelines YAML, eles são configurados no próprio environment e se aplicam a qualquer pipeline que implante naquele environment.
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© o equivalente YAML dos \"pre-deployment gates\" de uma definiÃ§Ã£o de release classic?",
+    question: "Qual é o equivalente YAML dos \"pre-deployment gates\" de uma definição de release classic?",
     options: [
-      "ExpressÃµes 'condition:' no stage",
+      "Expressões 'condition:' no stage",
       "'dependsOn:' com scripts personalizados",
       "Approvals e checks do environment configurados no environment de destino",
       "'trigger:' com atrasos baseados em agendamento"
     ],
     correctIndex: 2,
-    explanation: "Os gates de prÃ©-implantaÃ§Ã£o classic (consultas ao Azure Monitor, verificaÃ§Ãµes de REST API, consultas de work items) sÃ£o substituÃ­dos por environment checks no YAML. Estes sÃ£o configurados na interface do Azure DevOps no recurso de environment, nÃ£o no prÃ³prio arquivo YAML. Isso fornece separaÃ§Ã£o de responsabilidades: o pipeline define o que implantar, o environment define os controles de governanÃ§a."
+    explanation: "Os gates de pré-implantação classic (consultas ao Azure Monitor, verificações de REST API, consultas de work items) são substituídos por environment checks no YAML. Estes são configurados na interface do Azure DevOps no recurso de environment, não no próprio arquivo YAML. Isso fornece separação de responsabilidades: o pipeline define o que implantar, o environment define os controles de governança."
   },
   {
     question: "Como os task groups classic devem ser migrados para YAML?",
     options: [
-      "ConvertÃª-los em scripts PowerShell e chamar via step 'script:'",
-      "ConvertÃª-los em YAML templates (arquivos '.yml') com 'parameters:' e referenciar com 'template:'",
+      "Convertê-los em scripts PowerShell e chamar via step 'script:'",
+      "Convertê-los em YAML templates (arquivos '.yml') com 'parameters:' e referenciar com 'template:'",
       "Continuar usando task groups diretamente (eles funcionam em pipelines YAML)",
-      "SubstituÃ­-los por extensÃµes do marketplace que fornecem a mesma funcionalidade"
+      "Substituí-los por extensões do marketplace que fornecem a mesma funcionalidade"
     ],
     correctIndex: 1,
-    explanation: "YAML templates sÃ£o os sucessores diretos dos task groups classic. Eles suportam parÃ¢metros, lÃ³gica condicional e podem ser compartilhados entre pipelines via referÃªncias de repositÃ³rio. Templates oferecem melhor controle de versÃ£o (sÃ£o arquivos em um repositÃ³rio) e suportam padrÃµes mais complexos como stage templates e job templates, alÃ©m da reutilizaÃ§Ã£o apenas de steps."
+    explanation: "YAML templates são os sucessores diretos dos task groups classic. Eles suportam parâmetros, lógica condicional e podem ser compartilhados entre pipelines via referências de repositório. Templates oferecem melhor controle de versão (são arquivos em um repositório) e suportam padrões mais complexos como stage templates e job templates, além da reutilização apenas de steps."
   },
   {
-    question: "Ao migrar uma release classic com deployment groups para YAML, qual Ã© o tipo de recurso de destino?",
+    question: "Ao migrar uma release classic com deployment groups para YAML, qual é o tipo de recurso de destino?",
     options: [
       "'environment:' com 'resourceType: Kubernetes'",
       "'environment:' com 'resourceType: VirtualMachine'",
       "'pool:' com agentes self-hosted",
-      "'resources: repositories:' com conexÃ£o SSH"
+      "'resources: repositories:' com conexão SSH"
     ],
     correctIndex: 1,
-    explanation: "Deployment groups classic sÃ£o mapeados para YAML environments com resourceType: VirtualMachine. VMs registradas no environment executam o agente do pipeline localmente, assim como os alvos de deployment group. O YAML adiciona a estratÃ©gia de rolling deployment (strategy: rolling:) que era configurada de forma diferente em releases classic."
+    explanation: "Deployment groups classic são mapeados para YAML environments com resourceType: VirtualMachine. VMs registradas no environment executam o agente do pipeline localmente, assim como os alvos de deployment group. O YAML adiciona a estratégia de rolling deployment (strategy: rolling:) que era configurada de forma diferente em releases classic."
   },
   {
-    question: "Qual Ã© a abordagem faseada recomendada para migrar de classic para YAML?",
+    question: "Qual é a abordagem faseada recomendada para migrar de classic para YAML?",
     options: [
       "Deletar o classic imediatamente e criar YAML do zero",
-      "Executar ambos em paralelo, validar que o YAML corresponde Ã  saÃ­da do classic, depois desabilitar e arquivar o classic",
+      "Executar ambos em paralelo, validar que o YAML corresponde Ã  saída do classic, depois desabilitar e arquivar o classic",
       "Converter apenas pipelines de build para YAML e manter pipelines de release como classic indefinidamente",
-      "Esperar atÃ© a Microsoft remover o suporte ao classic, depois migrar tudo de uma vez"
+      "Esperar até a Microsoft remover o suporte ao classic, depois migrar tudo de uma vez"
     ],
     correctIndex: 1,
-    explanation: "Uma abordagem faseada (execuÃ§Ã£o paralela, YAML como primÃ¡rio com classic como fallback, depois descomissionamento) minimiza o risco. Executar ambos os pipelines simultaneamente permite validar que a versÃ£o YAML produz artefatos e implantaÃ§Ãµes idÃªnticos. Somente apÃ³s um perÃ­odo de confianÃ§a o pipeline classic deve ser desabilitado e eventualmente deletado (com sua definiÃ§Ã£o arquivada para referÃªncia)."
+    explanation: "Uma abordagem faseada (execução paralela, YAML como primário com classic como fallback, depois descomissionamento) minimiza o risco. Executar ambos os pipelines simultaneamente permite validar que a versão YAML produz artefatos e implantações idênticos. Somente após um período de confiança o pipeline classic deve ser desabilitado e eventualmente deletado (com sua definição arquivada para referência)."
   }
 ]} />
 

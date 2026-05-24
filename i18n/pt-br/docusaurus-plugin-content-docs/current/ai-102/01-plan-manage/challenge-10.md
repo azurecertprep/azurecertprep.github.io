@@ -1,47 +1,47 @@
 ---
 sidebar_position: 11
-title: "Desafio 10: ImplementaÃ§Ã£o de IA ResponsÃ¡vel"
+title: "Desafio 10: Implementação de IA Responsável"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 10: ImplementaÃ§Ã£o de IA ResponsÃ¡vel
+# Desafio 10: Implementação de IA Responsável
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$0.50 | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
+**45-60 min** | **Custo**: ~$0.50 | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
-- Implementar moderaÃ§Ã£o de conteÃºdo com Azure AI Content Safety
-- Configurar filtros de conteÃºdo em implantaÃ§Ãµes do Azure OpenAI
+- Implementar moderação de conteúdo com Azure AI Content Safety
+- Configurar filtros de conteúdo em implantações do Azure OpenAI
 - Criar e gerenciar blocklists personalizadas
-- Implementar prompt shields e detecÃ§Ã£o de groundedness
+- Implementar prompt shields e detecção de groundedness
 
-## VisÃ£o Geral
+## Visão Geral
 
-A implementaÃ§Ã£o de IA responsÃ¡vel garante que os sistemas de IA sejam seguros, justos e transparentes. O Azure fornece mÃºltiplas camadas de controles de seguranÃ§a de conteÃºdo: o serviÃ§o Azure AI Content Safety para anÃ¡lise de texto e imagens, filtros de conteÃºdo configurÃ¡veis no Azure OpenAI, blocklists personalizadas para moderaÃ§Ã£o especÃ­fica de domÃ­nio, e prompt shields para defesa contra ataques de injeÃ§Ã£o.
+A implementação de IA responsável garante que os sistemas de IA sejam seguros, justos e transparentes. O Azure fornece múltiplas camadas de controles de segurança de conteúdo: o serviço Azure AI Content Safety para análise de texto e imagens, filtros de conteúdo configuráveis no Azure OpenAI, blocklists personalizadas para moderação específica de domínio, e prompt shields para defesa contra ataques de injeção.
 
-Neste desafio, vocÃª implementarÃ¡ um pipeline abrangente de seguranÃ§a de conteÃºdo. VocÃª chamarÃ¡ a API do Content Safety para analisar texto em busca de categorias de conteÃºdo prejudicial (Ã³dio, violÃªncia, autolesÃ£o, sexual), configurarÃ¡ filtros de conteÃºdo do Azure OpenAI em diferentes nÃ­veis de severidade, criarÃ¡ blocklists personalizadas para capturar conteÃºdo proibido especÃ­fico de domÃ­nio, e testarÃ¡ a API de prompt shield para detectar tentativas de jailbreak.
+Neste desafio, você implementará um pipeline abrangente de segurança de conteúdo. Você chamará a API do Content Safety para analisar texto em busca de categorias de conteúdo prejudicial (ódio, violência, autolesão, sexual), configurará filtros de conteúdo do Azure OpenAI em diferentes níveis de severidade, criará blocklists personalizadas para capturar conteúdo proibido específico de domínio, e testará a API de prompt shield para detectar tentativas de jailbreak.
 
-Esses controles formam a abordagem de defesa em profundidade recomendada pela Microsoft para aplicaÃ§Ãµes de IA em produÃ§Ã£o â€” combinando filtros no nÃ­vel da plataforma com verificaÃ§Ãµes no nÃ­vel da aplicaÃ§Ã£o para minimizar o risco de geraÃ§Ã£o de conteÃºdo prejudicial.
+Esses controles formam a abordagem de defesa em profundidade recomendada pela Microsoft para aplicações de IA em produção â€” combinando filtros no nível da plataforma com verificações no nível da aplicação para minimizar o risco de geração de conteúdo prejudicial.
 
 ## Arquitetura
 
-A arquitetura de IA responsÃ¡vel camada APIs de Content Safety, filtros de conteÃºdo, blocklists e prompt shields para fornecer proteÃ§Ã£o de conteÃºdo em mÃºltiplos nÃ­veis.
+A arquitetura de IA responsável camada APIs de Content Safety, filtros de conteúdo, blocklists e prompt shields para fornecer proteção de conteúdo em múltiplos níveis.
 
 ![Challenge 10 topology](/img/ai-102/challenge-10-topology.svg)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Assinatura do Azure
-- Recurso Azure AI Content Safety (ou recurso multi-serviÃ§o Cognitive Services)
+- Recurso Azure AI Content Safety (ou recurso multi-serviço Cognitive Services)
 - Recurso Azure OpenAI com um modelo implantado
 - Azure CLI instalado
 - Python com o pacote `azure-ai-contentsafety` instalado
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Analisar Texto com Azure AI Content Safety
 
@@ -370,7 +370,7 @@ curl -X POST "${ENDPOINT}/contentsafety/text:analyze?api-version=2024-09-01" \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Implementar DetecÃ§Ã£o de Prompt Shield
+### Tarefa 3: Implementar Detecção de Prompt Shield
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -533,7 +533,7 @@ curl -s -X POST "${ENDPOINT}/contentsafety/text:shieldPrompt?api-version=2024-09
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Configurar Filtros de ConteÃºdo do Azure OpenAI
+### Tarefa 4: Configurar Filtros de Conteúdo do Azure OpenAI
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -787,7 +787,7 @@ echo "Content filter 'strict-policy' applied to gpt-4o deployment"
 </TabItem>
 </Tabs>
 
-### Tarefa 5: Testar DetecÃ§Ã£o de Groundedness
+### Tarefa 5: Testar Detecção de Groundedness
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -968,7 +968,7 @@ curl -s -X POST "${ENDPOINT}/contentsafety/text:detectGroundedness?api-version=2
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 === Text Analysis ===
@@ -1003,71 +1003,71 @@ Hallucinated response: ungroundedDetected = true, 67% ungrounded âš 
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |----------|---------|------------|-----|
-| Filtro de conteÃºdo bloqueia conteÃºdo legÃ­timo | Mensagens do usuÃ¡rio rejeitadas com erro content_filter | Severidade do filtro configurada de forma muito restritiva (Low bloqueia conteÃºdo limÃ­trofe) | Aumente o allowedContentLevel para Medium para a categoria especÃ­fica |
-| Blocklist nÃ£o dispara | Termos proibidos passam sem detecÃ§Ã£o | Blocklist nÃ£o associada Ã  requisiÃ§Ã£o de anÃ¡lise | Inclua o parÃ¢metro `blocklistNames` na requisiÃ§Ã£o de anÃ¡lise |
-| Falsos positivos do prompt shield | InstruÃ§Ãµes normais sinalizadas como jailbreak | Prompts de sistema legÃ­timos se assemelham a padrÃµes de override | Reformule os prompts de sistema para evitar padrÃµes de gatilho; use allowlists |
-| VerificaÃ§Ã£o de groundedness retorna erros | 400 Bad Request na API de groundedness | Array groundingSources ausente ou vazio | Garanta que pelo menos uma fonte de grounding nÃ£o vazia seja fornecida |
-| Filtro de conteÃºdo nÃ£o aplicado Ã  implantaÃ§Ã£o | ImplantaÃ§Ã£o gera conteÃºdo nÃ£o filtrado | raiPolicyName nÃ£o definido na implantaÃ§Ã£o | FaÃ§a patch na implantaÃ§Ã£o para definir `raiPolicyName` com sua polÃ­tica personalizada |
+| Filtro de conteúdo bloqueia conteúdo legítimo | Mensagens do usuário rejeitadas com erro content_filter | Severidade do filtro configurada de forma muito restritiva (Low bloqueia conteúdo limítrofe) | Aumente o allowedContentLevel para Medium para a categoria específica |
+| Blocklist não dispara | Termos proibidos passam sem detecção | Blocklist não associada Ã  requisição de análise | Inclua o parâmetro `blocklistNames` na requisição de análise |
+| Falsos positivos do prompt shield | Instruções normais sinalizadas como jailbreak | Prompts de sistema legítimos se assemelham a padrões de override | Reformule os prompts de sistema para evitar padrões de gatilho; use allowlists |
+| Verificação de groundedness retorna erros | 400 Bad Request na API de groundedness | Array groundingSources ausente ou vazio | Garanta que pelo menos uma fonte de grounding não vazia seja fornecida |
+| Filtro de conteúdo não aplicado Ã  implantação | Implantação gera conteúdo não filtrado | raiPolicyName não definido na implantação | Faça patch na implantação para definir `raiPolicyName` com sua política personalizada |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Quais sÃ£o as quatro categorias de dano de conteÃºdo analisadas pelo Azure AI Content Safety?",
+    question: "Quais são as quatro categorias de dano de conteúdo analisadas pelo Azure AI Content Safety?",
     options: [
       "Spam, Phishing, Malware, Fraude",
-      "TÃ³xico, Ofensivo, Perigoso, Inapropriado",
-      "Profanidade, Bullying, DesinformaÃ§Ã£o, AmeaÃ§as",
+      "Tóxico, Ofensivo, Perigoso, Inapropriado",
+      "Profanidade, Bullying, Desinformação, Ameaças",
       "Hate, Violence, Self-Harm, Sexual"
     ],
     correctAnswer: 3,
-    explanation: "O Azure AI Content Safety analisa texto e imagens em quatro categorias de dano: Hate (discurso de Ã³dio, discriminaÃ§Ã£o), Violence (dano fÃ­sico, ameaÃ§as), Self-Harm (autolesÃ£o, suicÃ­dio) e Sexual (conteÃºdo explÃ­cito). Cada categoria reporta um nÃ­vel de severidade de 0 (seguro) a 6 (alto)."
+    explanation: "O Azure AI Content Safety analisa texto e imagens em quatro categorias de dano: Hate (discurso de ódio, discriminação), Violence (dano físico, ameaças), Self-Harm (autolesão, suicídio) e Sexual (conteúdo explícito). Cada categoria reporta um nível de severidade de 0 (seguro) a 6 (alto)."
   },
   {
     question: "O que a API de Prompt Shield detecta?",
     options: [
-      "Erros de ortografia e gramÃ¡tica em prompts",
-      "Tentativas de jailbreak e ataques de injeÃ§Ã£o indireta de prompt",
+      "Erros de ortografia e gramática em prompts",
+      "Tentativas de jailbreak e ataques de injeção indireta de prompt",
       "Contagem de tokens e estimativa de custo para prompts",
-      "PrecisÃ£o de traduÃ§Ã£o de idiomas em prompts"
+      "Precisão de tradução de idiomas em prompts"
     ],
     correctAnswer: 1,
-    explanation: "A API de Prompt Shield detecta dois tipos de ataques: tentativas diretas de jailbreak em prompts de usuÃ¡rio (tentativas de sobrescrever instruÃ§Ãµes do sistema) e ataques de injeÃ§Ã£o indireta de prompt embutidos em documentos ou dados externos que o sistema de IA processa."
+    explanation: "A API de Prompt Shield detecta dois tipos de ataques: tentativas diretas de jailbreak em prompts de usuário (tentativas de sobrescrever instruções do sistema) e ataques de injeção indireta de prompt embutidos em documentos ou dados externos que o sistema de IA processa."
   },
   {
-    question: "Ao configurar filtros de conteÃºdo do Azure OpenAI, o que significa definir 'allowedContentLevel' como 'Medium'?",
+    question: "Ao configurar filtros de conteúdo do Azure OpenAI, o que significa definir 'allowedContentLevel' como 'Medium'?",
     options: [
-      "Apenas conteÃºdo de tamanho mÃ©dio Ã© permitido",
-      "Todo conteÃºdo Ã© permitido independentemente da severidade",
-      "ConteÃºdo com severidade Low passa; Medium e acima Ã© bloqueado",
-      "Apenas conteÃºdo com severidade exatamente mÃ©dia Ã© bloqueado"
+      "Apenas conteúdo de tamanho médio é permitido",
+      "Todo conteúdo é permitido independentemente da severidade",
+      "Conteúdo com severidade Low passa; Medium e acima é bloqueado",
+      "Apenas conteúdo com severidade exatamente média é bloqueado"
     ],
     correctAnswer: 2,
-    explanation: "Definir allowedContentLevel como Medium significa que conteÃºdo com severidade Low Ã© permitido, enquanto conteÃºdo com severidade Medium e acima (Medium, High) Ã© bloqueado. Limites mais baixos sÃ£o mais restritivos â€” 'Low' bloqueia tudo com severidade Low e acima."
+    explanation: "Definir allowedContentLevel como Medium significa que conteúdo com severidade Low é permitido, enquanto conteúdo com severidade Medium e acima (Medium, High) é bloqueado. Limites mais baixos são mais restritivos â€” 'Low' bloqueia tudo com severidade Low e acima."
   },
   {
-    question: "Qual Ã© o propÃ³sito da detecÃ§Ã£o de groundedness no Azure AI Content Safety?",
+    question: "Qual é o propósito da detecção de groundedness no Azure AI Content Safety?",
     options: [
-      "Verificar se as respostas da IA sÃ£o factualmente suportadas pelo material de origem fornecido",
-      "Verificar se o modelo de IA estÃ¡ corretamente aterrado a uma fonte elÃ©trica",
-      "Garantir que a resposta da IA estÃ¡ no idioma correto",
-      "Validar que o prompt segue regras de formataÃ§Ã£o adequadas"
+      "Verificar se as respostas da IA são factualmente suportadas pelo material de origem fornecido",
+      "Verificar se o modelo de IA está corretamente aterrado a uma fonte elétrica",
+      "Garantir que a resposta da IA está no idioma correto",
+      "Validar que o prompt segue regras de formatação adequadas"
     ],
     correctAnswer: 0,
-    explanation: "A detecÃ§Ã£o de groundedness verifica se uma resposta gerada por IA Ã© factualmente suportada pelos documentos de origem/grounding fornecidos. Ela ajuda a detectar alucinaÃ§Ãµes â€” declaraÃ§Ãµes que parecem plausÃ­veis mas nÃ£o sÃ£o suportadas pelo material de referÃªncia."
+    explanation: "A detecção de groundedness verifica se uma resposta gerada por IA é factualmente suportada pelos documentos de origem/grounding fornecidos. Ela ajuda a detectar alucinações â€” declarações que parecem plausíveis mas não são suportadas pelo material de referência."
   },
   {
-    question: "Como as blocklists personalizadas diferem das categorias de seguranÃ§a de conteÃºdo integradas?",
+    question: "Como as blocklists personalizadas diferem das categorias de segurança de conteúdo integradas?",
     options: [
-      "Blocklists sÃ£o mais rÃ¡pidas mas menos precisas que as categorias",
-      "Blocklists usam correspondÃªncia exata ou por padrÃ£o para termos especÃ­ficos de domÃ­nio; categorias usam modelos de IA para detecÃ§Ã£o de dano",
-      "Blocklists sÃ³ funcionam com imagens; categorias sÃ³ funcionam com texto",
+      "Blocklists são mais rápidas mas menos precisas que as categorias",
+      "Blocklists usam correspondência exata ou por padrão para termos específicos de domínio; categorias usam modelos de IA para detecção de dano",
+      "Blocklists só funcionam com imagens; categorias só funcionam com texto",
       "Blocklists substituem completamente as categorias integradas"
     ],
     correctAnswer: 1,
-    explanation: "Blocklists personalizadas usam correspondÃªncia exata de texto ou padrÃµes para capturar termos proibidos especÃ­ficos de domÃ­nio (nomes de concorrentes, codinomes internos, frases reguladas). As categorias integradas usam modelos de classificaÃ§Ã£o de IA para detectar conteÃºdo prejudicial semanticamente. Ambos podem ser usados juntos para defesa em profundidade."
+    explanation: "Blocklists personalizadas usam correspondência exata de texto ou padrões para capturar termos proibidos específicos de domínio (nomes de concorrentes, codinomes internos, frases reguladas). As categorias integradas usam modelos de classificação de IA para detectar conteúdo prejudicial semanticamente. Ambos podem ser usados juntos para defesa em profundidade."
   }
 ]} />
 

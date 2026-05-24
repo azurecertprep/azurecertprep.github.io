@@ -1,30 +1,30 @@
 ---
 sidebar_position: 5
-title: "Desafio 29: AutomaÃ§Ã£o de deploy de banco de dados"
+title: "Desafio 29: Automação de deploy de banco de dados"
 ---
 
-# Desafio 29: AutomaÃ§Ã£o de deploy de banco de dados
+# Desafio 29: Automação de deploy de banco de dados
 
 ## Habilidades do exame mapeadas
 
 - Implementar um deploy que inclua tarefas de banco de dados
 
-## CenÃ¡rio
+## Cenário
 
-Os deploys da API da Contoso Ltd frequentemente quebram porque as alteraÃ§Ãµes no esquema do banco de dados nÃ£o sÃ£o coordenadas com as alteraÃ§Ãµes no cÃ³digo. Na semana passada, um desenvolvedor implantou uma nova versÃ£o da API que esperava uma tabela `CustomerPreferences` que ainda nÃ£o existia, causando erros 500 por 45 minutos atÃ© que um DBA executou manualmente a migraÃ§Ã£o. A equipe precisa de um pipeline de deploy consciente do banco de dados que garanta que as alteraÃ§Ãµes de esquema sejam aplicadas na ordem correta em relaÃ§Ã£o aos deploys da aplicaÃ§Ã£o.
+Os deploys da API da Contoso Ltd frequentemente quebram porque as alterações no esquema do banco de dados não são coordenadas com as alterações no código. Na semana passada, um desenvolvedor implantou uma nova versão da API que esperava uma tabela `CustomerPreferences` que ainda não existia, causando erros 500 por 45 minutos até que um DBA executou manualmente a migração. A equipe precisa de um pipeline de deploy consciente do banco de dados que garanta que as alterações de esquema sejam aplicadas na ordem correta em relação aos deploys da aplicação.
 
 **Detalhes do ambiente:**
 - Azure SQL Database: `sql-contoso-prod.database.windows.net`
 - Banco de dados: `ContosoWebDB`
-- AplicaÃ§Ã£o: .NET 8 Web API usando Entity Framework Core
+- Aplicação: .NET 8 Web API usando Entity Framework Core
 - Resource group: `rg-contoso-data`
-- RegiÃ£o: East US
+- Região: East US
 
 ---
 
-## Tarefa 1: Implementar migraÃ§Ãµes EF Core no pipeline CI/CD
+## Tarefa 1: Implementar migrações EF Core no pipeline CI/CD
 
-### Gerar uma migraÃ§Ã£o localmente
+### Gerar uma migração localmente
 
 ```bash
 # Add a new migration
@@ -41,7 +41,7 @@ dotnet ef migrations script \
   --output migrations.sql
 ```
 
-### Workflow do GitHub Actions com migraÃ§Ãµes EF Core
+### Workflow do GitHub Actions com migrações EF Core
 
 Crie `.github/workflows/deploy-with-migrations.yml`:
 
@@ -169,7 +169,7 @@ jobs:
 
 ---
 
-## Tarefa 2: Implementar migraÃ§Ãµes Flyway para SQL Server
+## Tarefa 2: Implementar migrações Flyway para SQL Server
 
 ### Estrutura do projeto Flyway
 
@@ -183,7 +183,7 @@ db/
     R__Create_reporting_views.sql
 ```
 
-### ConfiguraÃ§Ã£o do Flyway (`flyway.toml`)
+### Configuração do Flyway (`flyway.toml`)
 
 ```toml
 [environments.production]
@@ -199,7 +199,7 @@ outOfOrder = false
 validateOnMigrate = true
 ```
 
-### Arquivos de migraÃ§Ã£o de exemplo
+### Arquivos de migração de exemplo
 
 `V001__Create_customers_table.sql`:
 ```sql
@@ -261,9 +261,9 @@ CREATE INDEX IX_CustomerPreferences_CustomerId
 
 ---
 
-## Tarefa 3: OrdenaÃ§Ã£o de deploy de banco de dados (esquema primeiro, depois aplicaÃ§Ã£o)
+## Tarefa 3: Ordenação de deploy de banco de dados (esquema primeiro, depois aplicação)
 
-### Diagrama de sequÃªncia de deploy
+### Diagrama de sequência de deploy
 
 ```text
 1. Run database migrations (additive/non-breaking)
@@ -274,7 +274,7 @@ CREATE INDEX IX_CustomerPreferences_CustomerId
 6. (Optional) Remove deprecated columns/tables in next release cycle
 ```
 
-### Azure Pipelines com ordenaÃ§Ã£o estrita
+### Azure Pipelines com ordenação estrita
 
 ```yaml
 trigger:
@@ -368,9 +368,9 @@ stages:
 
 ---
 
-## Tarefa 4: EstratÃ©gias de rollback para alteraÃ§Ãµes de banco de dados
+## Tarefa 4: Estratégias de rollback para alterações de banco de dados
 
-### EstratÃ©gia 1: Forward-fix com migraÃ§Ã£o compensatÃ³ria
+### Estratégia 1: Forward-fix com migração compensatória
 
 ```bash
 # If V003 introduced a bug, create V004 to fix it (preferred in production)
@@ -379,7 +379,7 @@ dotnet ef migrations add FixOrdersIndexes \
   --startup-project src/ContosoApi
 ```
 
-### EstratÃ©gia 2: RestauraÃ§Ã£o point-in-time para falhas catastrÃ³ficas
+### Estratégia 2: Restauração point-in-time para falhas catastróficas
 
 ```bash
 # Restore database to a point before the migration
@@ -404,7 +404,7 @@ az sql db rename \
   --new-name ContosoWebDB
 ```
 
-### EstratÃ©gia 3: Backup prÃ©-migraÃ§Ã£o
+### Estratégia 3: Backup pré-migração
 
 ```yaml
   backup-before-migration:
@@ -429,9 +429,9 @@ az sql db rename \
 
 ---
 
-## Tarefa 5: Blue-green com banco de dados (padrÃ£o expand-contract)
+## Tarefa 5: Blue-green com banco de dados (padrão expand-contract)
 
-O padrÃ£o expand-contract permite migraÃ§Ãµes seguras de banco de dados em conjunto com deploys blue-green.
+O padrão expand-contract permite migrações seguras de banco de dados em conjunto com deploys blue-green.
 
 ### Fase 1: Expand (adicionar novo esquema, manter antigo)
 
@@ -446,7 +446,7 @@ SET FullName = FirstName + ' ' + LastName
 WHERE FullName IS NULL;
 ```
 
-### Fase 2: Migrate (aplicaÃ§Ã£o usa tanto o antigo quanto o novo)
+### Fase 2: Migrate (aplicação usa tanto o antigo quanto o novo)
 
 ```csharp
 // Application code handles both schemas during transition
@@ -464,7 +464,7 @@ public class Customer
 }
 ```
 
-### Fase 3: Contract (remover esquema antigo na prÃ³xima versÃ£o)
+### Fase 3: Contract (remover esquema antigo na próxima versão)
 
 ```sql
 -- V006__Contract_remove_name_columns.sql
@@ -478,17 +478,17 @@ ALTER TABLE dbo.Customers ALTER COLUMN FullName NVARCHAR(512) NOT NULL;
 
 ### Cronograma de deploy
 
-| VersÃ£o | AlteraÃ§Ã£o no banco de dados | AlteraÃ§Ã£o na aplicaÃ§Ã£o |
+| Versão | Alteração no banco de dados | Alteração na aplicação |
 |--------|----------------------------|------------------------|
 | v2.1 | Expand: Adicionar coluna `FullName` | Escrever em ambas as colunas antiga e nova |
 | v2.2 | Nenhuma | Ler apenas da nova coluna, parar de escrever na antiga |
-| v2.3 | Contract: Remover colunas antigas | Remover referÃªncias Ã s colunas antigas |
+| v2.3 | Contract: Remover colunas antigas | Remover referências Ã s colunas antigas |
 
 ---
 
-## Tarefa 6: Workflow do GitHub Actions com etapa de migraÃ§Ã£o
+## Tarefa 6: Workflow do GitHub Actions com etapa de migração
 
-Workflow completo demonstrando o padrÃ£o completo de deploy consciente do banco de dados:
+Workflow completo demonstrando o padrão completo de deploy consciente do banco de dados:
 
 ```yaml
 name: Database-aware deployment
@@ -669,9 +669,9 @@ stages:
 
 ---
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: MigraÃ§Ã£o falha por erro de permissÃ£o
+### Exercício 1: Migração falha por erro de permissão
 
 **Sintoma:** A etapa `azure/sql-action` falha com `The server principal is not able to access the database under the current security context.`
 
@@ -686,11 +686,11 @@ az sql db show \
 ```
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz:** O service principal usado pelo pipeline nÃ£o possui o role `db_ddladmin` no banco de dados de destino.
+**Causa raiz:** O service principal usado pelo pipeline não possui o role `db_ddladmin` no banco de dados de destino.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 ```sql
 -- Run as server admin to grant DDL permissions to the pipeline identity
 CREATE USER [contoso-pipeline-sp] FROM EXTERNAL PROVIDER;
@@ -701,16 +701,16 @@ ALTER ROLE db_datawriter ADD MEMBER [contoso-pipeline-sp];
 
 </details>
 
-### ExercÃ­cio 2: AplicaÃ§Ã£o implantada antes da migraÃ§Ã£o ser concluÃ­da
+### Exercício 2: Aplicação implantada antes da migração ser concluída
 
-**Sintoma:** A aplicaÃ§Ã£o lanÃ§a `SqlException: Invalid object name 'CustomerPreferences'` porque o estÃ¡gio de migraÃ§Ã£o ainda estava em execuÃ§Ã£o quando o deploy da aplicaÃ§Ã£o iniciou.
+**Sintoma:** A aplicação lança `SqlException: Invalid object name 'CustomerPreferences'` porque o estágio de migração ainda estava em execução quando o deploy da aplicação iniciou.
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz:** Os estÃ¡gios do pipeline nÃ£o tinham configuraÃ§Ã£o adequada de `dependsOn`, permitindo que fossem executados em paralelo.
+**Causa raiz:** Os estágios do pipeline não tinham configuração adequada de `dependsOn`, permitindo que fossem executados em paralelo.
 
-**CorreÃ§Ã£o:** Garanta a ordenaÃ§Ã£o estrita no pipeline:
+**Correção:** Garanta a ordenação estrita no pipeline:
 ```yaml
 stages:
   - stage: DeployDatabase
@@ -725,16 +725,16 @@ stages:
 
 </details>
 
-### ExercÃ­cio 3: Deploy de DACPAC bloqueado por perda de dados
+### Exercício 3: Deploy de DACPAC bloqueado por perda de dados
 
 **Sintoma:** O publish do DACPAC falha com `Rows were detected. The schema update is terminating because data loss might occur.`
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz:** O DACPAC detecta que uma coluna sendo removida contÃ©m dados. A flag `/p:BlockOnPossibleDataLoss=true` impede a operaÃ§Ã£o.
+**Causa raiz:** O DACPAC detecta que uma coluna sendo removida contém dados. A flag `/p:BlockOnPossibleDataLoss=true` impede a operação.
 
-**CorreÃ§Ã£o:** Use o padrÃ£o expand-contract em vez de remover colunas diretamente:
+**Correção:** Use o padrão expand-contract em vez de remover colunas diretamente:
 ```bash
 # Option 1: Override for this deployment (use with caution)
 # /p:BlockOnPossibleDataLoss=false
@@ -751,30 +751,30 @@ stages:
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "A Contoso implanta uma nova versÃ£o da API que requer uma nova tabela no banco de dados. O pipeline implanta a aplicaÃ§Ã£o primeiro e depois executa as migraÃ§Ãµes. Os usuÃ¡rios veem erros 500 por 2 minutos. Qual Ã© a ordem correta de deploy?",
+    question: "A Contoso implanta uma nova versão da API que requer uma nova tabela no banco de dados. O pipeline implanta a aplicação primeiro e depois executa as migrações. Os usuários veem erros 500 por 2 minutos. Qual é a ordem correta de deploy?",
     options: [
-      "Implantar a aplicaÃ§Ã£o, depois executar as migraÃ§Ãµes, depois reiniciar a aplicaÃ§Ã£o",
-      "Executar as migraÃ§Ãµes primeiro, depois implantar a aplicaÃ§Ã£o",
-      "Implantar a aplicaÃ§Ã£o e as migraÃ§Ãµes simultaneamente em paralelo",
-      "Executar as migraÃ§Ãµes durante a janela de manutenÃ§Ã£o apÃ³s o deploy"
+      "Implantar a aplicação, depois executar as migrações, depois reiniciar a aplicação",
+      "Executar as migrações primeiro, depois implantar a aplicação",
+      "Implantar a aplicação e as migrações simultaneamente em paralelo",
+      "Executar as migrações durante a janela de manutenção após o deploy"
     ],
     correctIndex: 1,
-    explanation: "As alteraÃ§Ãµes no esquema do banco de dados devem sempre ser aplicadas antes de implantar o cÃ³digo da aplicaÃ§Ã£o que depende delas. Isso garante que as novas tabelas, colunas ou Ã­ndices existam quando a aplicaÃ§Ã£o comeÃ§ar a utilizÃ¡-los."
+    explanation: "As alterações no esquema do banco de dados devem sempre ser aplicadas antes de implantar o código da aplicação que depende delas. Isso garante que as novas tabelas, colunas ou índices existam quando a aplicação começar a utilizá-los."
   },
   {
-    question: "A Contoso usa o padrÃ£o expand-contract para uma alteraÃ§Ã£o de esquema que renomeia uma coluna de FirstName + LastName para FullName. Quantas versÃµes esse padrÃ£o normalmente requer?",
+    question: "A Contoso usa o padrão expand-contract para uma alteração de esquema que renomeia uma coluna de FirstName + LastName para FullName. Quantas versões esse padrão normalmente requer?",
     options: [
-      "1 versÃ£o (renomear a coluna em uma Ãºnica migraÃ§Ã£o)",
-      "2 versÃµes (adicionar nova coluna, depois remover colunas antigas)",
-      "3 versÃµes (expand com nova coluna, migrar leituras/escritas, contract removendo antigas)",
-      "4 versÃµes (adicionar coluna, copiar dados, alternar leituras, remover antigas)"
+      "1 versão (renomear a coluna em uma única migração)",
+      "2 versões (adicionar nova coluna, depois remover colunas antigas)",
+      "3 versões (expand com nova coluna, migrar leituras/escritas, contract removendo antigas)",
+      "4 versões (adicionar coluna, copiar dados, alternar leituras, remover antigas)"
     ],
     correctIndex: 2,
-    explanation: "O padrÃ£o expand-contract requer no mÃ­nimo trÃªs versÃµes: (1) Expand - adicionar a nova coluna sem remover a antiga, preencher dados; (2) Migrate - a aplicaÃ§Ã£o escreve em ambas mas lÃª da nova; (3) Contract - remover colunas antigas quando nenhuma versÃ£o da aplicaÃ§Ã£o as referencia."
+    explanation: "O padrão expand-contract requer no mínimo três versões: (1) Expand - adicionar a nova coluna sem remover a antiga, preencher dados; (2) Migrate - a aplicação escreve em ambas mas lê da nova; (3) Contract - remover colunas antigas quando nenhuma versão da aplicação as referencia."
   },
   {
     question: "Qual task do Azure Pipelines deve ser usada para implantar um script SQL no Azure SQL Database?",
@@ -785,18 +785,18 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
       "PowerShell@2"
     ],
     correctIndex: 1,
-    explanation: "A task SqlAzureDacpacDeployment@1 suporta tanto deploys de DACPAC quanto execuÃ§Ã£o de scripts SQL contra o Azure SQL Database. Ela gerencia autenticaÃ§Ã£o, regras de firewall e fornece tratamento adequado de erros para operaÃ§Ãµes de banco de dados."
+    explanation: "A task SqlAzureDacpacDeployment@1 suporta tanto deploys de DACPAC quanto execução de scripts SQL contra o Azure SQL Database. Ela gerencia autenticação, regras de firewall e fornece tratamento adequado de erros para operações de banco de dados."
   },
   {
-    question: "Um pipeline gera um script de migraÃ§Ã£o idempotente do EF Core usando dotnet ef migrations script --idempotent. O que a flag --idempotent garante?",
+    question: "Um pipeline gera um script de migração idempotente do EF Core usando dotnet ef migrations script --idempotent. O que a flag --idempotent garante?",
     options: [
-      "O script executa mais rÃ¡pido em execuÃ§Ãµes subsequentes",
-      "O script pode ser re-executado com seguranÃ§a sem causar erros se as migraÃ§Ãµes jÃ¡ foram aplicadas",
-      "O script gera instruÃ§Ãµes de rollback para cada migraÃ§Ã£o",
-      "O script valida a integridade dos dados antes de aplicar alteraÃ§Ãµes"
+      "O script executa mais rápido em execuções subsequentes",
+      "O script pode ser re-executado com segurança sem causar erros se as migrações já foram aplicadas",
+      "O script gera instruções de rollback para cada migração",
+      "O script valida a integridade dos dados antes de aplicar alterações"
     ],
     correctIndex: 1,
-    explanation: "A flag --idempotent gera um script SQL que verifica a tabela __EFMigrationsHistory antes de aplicar cada migraÃ§Ã£o. Se uma migraÃ§Ã£o jÃ¡ foi registrada, ela Ã© ignorada. Isso torna o script seguro para re-execuÃ§Ã£o em pipelines CI/CD onde uma nova tentativa pode executar o mesmo script novamente."
+    explanation: "A flag --idempotent gera um script SQL que verifica a tabela __EFMigrationsHistory antes de aplicar cada migração. Se uma migração já foi registrada, ela é ignorada. Isso torna o script seguro para re-execução em pipelines CI/CD onde uma nova tentativa pode executar o mesmo script novamente."
   }
 ]} />
 

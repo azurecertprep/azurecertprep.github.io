@@ -6,17 +6,17 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 # Desafio 19: ExpressRoute private peering
 
-:::caution Modo de simulaÃ§Ã£o
-Este desafio Ã© baseado em simulaÃ§Ã£o. O ExpressRoute requer um provedor de conectividade fÃ­sica e custa $55--$10.000+/mÃªs. VocÃª aprenderÃ¡ os comandos CLI, padrÃµes de configuraÃ§Ã£o e saÃ­das esperadas sem implantar recursos reais.
+:::caution Modo de simulação
+Este desafio é baseado em simulação. O ExpressRoute requer um provedor de conectividade física e custa $55--$10.000+/mês. Você aprenderá os comandos CLI, padrões de configuração e saídas esperadas sem implantar recursos reais.
 :::
 
 :::info Tempo e custo estimados
-**45--60 minutos** | **Sem custo (simulaÃ§Ã£o)** | **Peso no exame: 20--25%**
+**45--60 minutos** | **Sem custo (simulação)** | **Peso no exame: 20--25%**
 :::
 
 ## Objetivos
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Selecionar um modelo de conectividade ExpressRoute
 - Selecionar um SKU e tier apropriados para o ExpressRoute
@@ -26,9 +26,9 @@ ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
 - Criar e configurar um gateway ExpressRoute
 - Conectar uma rede virtual a um circuito ExpressRoute
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso decidiu que suas cargas de trabalho hÃ­bridas exigem a largura de banda dedicada e a confiabilidade que somente o ExpressRoute pode fornecer. Seu datacenter local em Silicon Valley se conecta a uma instalaÃ§Ã£o de colocation da Equinix. Eles precisam:
+A Contoso decidiu que suas cargas de trabalho híbridas exigem a largura de banda dedicada e a confiabilidade que somente o ExpressRoute pode fornecer. Seu datacenter local em Silicon Valley se conecta a uma instalação de colocation da Equinix. Eles precisam:
 
 1. Selecionar o modelo de conectividade correto para seu ambiente
 2. Criar um circuito ExpressRoute com o SKU e largura de banda corretos
@@ -40,24 +40,24 @@ A Contoso decidiu que suas cargas de trabalho hÃ­bridas exigem a largura de ba
 
 ## Tarefa 1: Entender os modelos de conectividade do ExpressRoute
 
-Antes de criar qualquer recurso, vocÃª deve escolher o modelo de conectividade que corresponde Ã  sua infraestrutura fÃ­sica.
+Antes de criar qualquer recurso, você deve escolher o modelo de conectividade que corresponde Ã  sua infraestrutura física.
 
-| Modelo de conectividade | DescriÃ§Ã£o | Caso de uso |
+| Modelo de conectividade | Descrição | Caso de uso |
 |---|---|---|
-| **Co-localizaÃ§Ã£o em CloudExchange** | Seu datacenter estÃ¡ na mesma instalaÃ§Ã£o que uma exchange de nuvem (ex.: Equinix, Megaport) | Mais comum para empresas com presenÃ§a em colocation |
-| **Ethernet ponto a ponto** | Fibra dedicada entre seu datacenter e a Microsoft | Alta largura de banda, conectividade de site Ãºnico |
-| **Qualquer para qualquer (IPVPN)** | WAN baseada em MPLS que conecta mÃºltiplos escritÃ³rios filiais | Empresas multi-site que jÃ¡ utilizam MPLS |
-| **ExpressRoute Direct** | Fibra direta para o edge da Microsoft (10 Gbps ou 100 Gbps) | IngestÃ£o massiva de dados, isolamento rigoroso, MACsec |
+| **Co-localização em CloudExchange** | Seu datacenter está na mesma instalação que uma exchange de nuvem (ex.: Equinix, Megaport) | Mais comum para empresas com presença em colocation |
+| **Ethernet ponto a ponto** | Fibra dedicada entre seu datacenter e a Microsoft | Alta largura de banda, conectividade de site único |
+| **Qualquer para qualquer (IPVPN)** | WAN baseada em MPLS que conecta múltiplos escritórios filiais | Empresas multi-site que já utilizam MPLS |
+| **ExpressRoute Direct** | Fibra direta para o edge da Microsoft (10 Gbps ou 100 Gbps) | Ingestão massiva de dados, isolamento rigoroso, MACsec |
 
-Para o cenÃ¡rio da Contoso, **co-localizaÃ§Ã£o em CloudExchange** Ã© apropriada porque eles jÃ¡ estÃ£o presentes na Equinix.
+Para o cenário da Contoso, **co-localização em CloudExchange** é apropriada porque eles já estão presentes na Equinix.
 
-### Listar provedores de serviÃ§o disponÃ­veis
+### Listar provedores de serviço disponíveis
 
 ```bash
 az network express-route list-service-providers --output table
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```text
 Name                  PeeringLocations                          BandwidthsOffered
@@ -75,15 +75,15 @@ Megaport              Silicon Valley, Sydney, London            50Mbps, 100Mbps,
 
 ## Tarefa 2: Criar o circuito ExpressRoute
 
-### Entendendo os tiers e famÃ­lias de SKU
+### Entendendo os tiers e famílias de SKU
 
 | Tier do SKU | Recursos |
 |---|---|
-| **Local** | Acesso apenas a regiÃµes no mesmo metro ou prÃ³ximas. Sem cobranÃ§as de egress de dados. |
-| **Standard** | Acesso a todas as regiÃµes dentro do mesmo limite geopolÃ­tico. 10 links de VNet. |
-| **Premium** | Conectividade global (entre limites geopolÃ­ticos). 100 links de VNet. Limites de rota maiores (10.000). |
+| **Local** | Acesso apenas a regiões no mesmo metro ou próximas. Sem cobranças de egress de dados. |
+| **Standard** | Acesso a todas as regiões dentro do mesmo limite geopolítico. 10 links de VNet. |
+| **Premium** | Conectividade global (entre limites geopolíticos). 100 links de VNet. Limites de rota maiores (10.000). |
 
-| FamÃ­lia do SKU | Modelo de cobranÃ§a |
+| Família do SKU | Modelo de cobrança |
 |---|---|
 | **MeteredData** | Pagamento por GB de egress. Taxa mensal menor. |
 | **UnlimitedData** | Taxa mensal fixa independente do volume de egress. |
@@ -102,7 +102,7 @@ az network express-route create \
   --location westus2
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -134,11 +134,11 @@ az network express-route create \
 }
 ```
 
-**ObservaÃ§Ãµes importantes:**
+**Observações importantes:**
 
-- A `serviceKey` Ã© fornecida ao seu provedor de conectividade para que eles provisionem a conexÃ£o fÃ­sica do lado deles.
-- `serviceProviderProvisioningState` comeÃ§a como `NotProvisioned` atÃ© que o provedor ative o link.
-- `circuitProvisioningState` Ã© `Enabled` (lado Azure estÃ¡ pronto).
+- A `serviceKey` é fornecida ao seu provedor de conectividade para que eles provisionem a conexão física do lado deles.
+- `serviceProviderProvisioningState` começa como `NotProvisioned` até que o provedor ative o link.
+- `circuitProvisioningState` é `Enabled` (lado Azure está pronto).
 
 ### Verificar o status do circuito
 
@@ -150,7 +150,7 @@ az network express-route show \
   --output table
 ```
 
-**SaÃ­da esperada (apÃ³s o provedor provisionar):**
+**Saída esperada (após o provedor provisionar):**
 
 ```text
 Name                    Bandwidth  ProviderState  CircuitState  SKU
@@ -166,14 +166,14 @@ Um gateway de rede virtual ExpressRoute conecta sua VNet do Azure ao circuito Ex
 
 ### SKUs do gateway ExpressRoute
 
-| SKU | MÃ¡ximo de conexÃµes | MÃ¡ximo de circuitos | Throughput |
+| SKU | Máximo de conexões | Máximo de circuitos | Throughput |
 |---|---|---|---|
 | Standard (ErGw1AZ) | 4 | 4 | 1 Gbps |
 | High Performance (ErGw2AZ) | 8 | 8 | 2 Gbps |
 | Ultra Performance (ErGw3AZ) | 16 | 16 | 10 Gbps |
-| ErGwScale | 4--16 | 4--16 | 1--40 Gbps (escalÃ¡vel) |
+| ErGwScale | 4--16 | 4--16 | 1--40 Gbps (escalável) |
 
-O sufixo `AZ` indica implantaÃ§Ã£o com redundÃ¢ncia de zona entre zonas de disponibilidade.
+O sufixo `AZ` indica implantação com redundância de zona entre zonas de disponibilidade.
 
 ### Criar o GatewaySubnet
 
@@ -185,7 +185,7 @@ az network vnet subnet create \
   --address-prefixes 10.0.255.0/27
 ```
 
-### Criar um IP pÃºblico para o gateway
+### Criar um IP público para o gateway
 
 ```bash
 az network public-ip create \
@@ -209,7 +209,7 @@ az network vnet-gateway create \
   --no-wait
 ```
 
-**SaÃ­da esperada (apÃ³s a implantaÃ§Ã£o ser concluÃ­da, ~25--45 minutos):**
+**Saída esperada (após a implantação ser concluída, ~25--45 minutos):**
 
 ```json
 {
@@ -241,16 +241,16 @@ az network vnet-gateway create \
 
 ## Tarefa 4: Configurar o Azure private peering
 
-O Azure private peering habilita a conectividade entre sua rede local e VNets do Azure usando endereÃ§os IP RFC 1918 (privados). Este Ã© o tipo de peering mais comum.
+O Azure private peering habilita a conectividade entre sua rede local e VNets do Azure usando endereços IP RFC 1918 (privados). Este é o tipo de peering mais comum.
 
 ### Requisitos de peering
 
-- **Sub-rede primÃ¡ria**: Uma sub-rede IPv4 /30 para o link de sessÃ£o BGP primÃ¡rio
-- **Sub-rede secundÃ¡ria**: Uma sub-rede IPv4 /30 para o link de sessÃ£o BGP secundÃ¡rio
-- **VLAN ID**: Uma tag VLAN Ãºnica para isolar este peering no link fÃ­sico
-- **ASN do peer**: Seu nÃºmero de sistema autÃ´nomo BGP local (nÃ£o pode ser 65515, que o Azure reserva)
+- **Sub-rede primária**: Uma sub-rede IPv4 /30 para o link de sessão BGP primário
+- **Sub-rede secundária**: Uma sub-rede IPv4 /30 para o link de sessão BGP secundário
+- **VLAN ID**: Uma tag VLAN única para isolar este peering no link físico
+- **ASN do peer**: Seu número de sistema autônomo BGP local (não pode ser 65515, que o Azure reserva)
 
-Cada sub-rede /30 fornece dois IPs utilizÃ¡veis: vocÃª usa o primeiro, a Microsoft usa o segundo.
+Cada sub-rede /30 fornece dois IPs utilizáveis: você usa o primeiro, a Microsoft usa o segundo.
 
 ### Configurar o private peering
 
@@ -266,7 +266,7 @@ az network express-route peering create \
   --shared-key "ContosoSharedKey123"
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -290,7 +290,7 @@ az network express-route peering create \
 }
 ```
 
-### Verificar a configuraÃ§Ã£o do peering
+### Verificar a configuração do peering
 
 ```bash
 az network express-route peering show \
@@ -300,7 +300,7 @@ az network express-route peering show \
   --output table
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```text
 Name                  PeeringType           PeerAsn  VlanId  State    ProvisioningState
@@ -312,7 +312,7 @@ AzurePrivatePeering   AzurePrivatePeering   65020    200     Enabled  Succeeded
 
 ## Tarefa 5: Conectar a VNet ao circuito ExpressRoute
 
-Com o gateway implantado e o peering configurado, vincule-os usando `az network vpn-connection create` com o parÃ¢metro `--express-route-circuit2`.
+Com o gateway implantado e o peering configurado, vincule-os usando `az network vpn-connection create` com o parâmetro `--express-route-circuit2`.
 
 ```bash
 az network vpn-connection create \
@@ -322,7 +322,7 @@ az network vpn-connection create \
   --express-route-circuit2 er-circuit-contoso-sv
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -341,7 +341,7 @@ az network vpn-connection create \
 }
 ```
 
-### Verificar o status da conexÃ£o
+### Verificar o status da conexão
 
 ```bash
 az network vpn-connection show \
@@ -351,7 +351,7 @@ az network vpn-connection show \
   --output table
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```text
 Name          Status     Type
@@ -373,7 +373,7 @@ az network express-route show \
   --output json
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -399,7 +399,7 @@ az network express-route list-route-tables \
   --peering-name AzurePrivatePeering
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -422,22 +422,22 @@ az network express-route list-route-tables \
 }
 ```
 
-Isso mostra que a rede local (10.0.0.0/16 e 192.168.1.0/24) estÃ¡ sendo anunciada a partir do roteador do cliente (ASN 65020) para o edge da Microsoft.
+Isso mostra que a rede local (10.0.0.0/16 e 192.168.1.0/24) está sendo anunciada a partir do roteador do cliente (ASN 65020) para o edge da Microsoft.
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio A: Circuito preso em NotProvisioned
+### Cenário A: Circuito preso em NotProvisioned
 
-**Sintoma:** O circuito foi criado hÃ¡ horas, mas `serviceProviderProvisioningState` ainda mostra `NotProvisioned`.
+**Sintoma:** O circuito foi criado há horas, mas `serviceProviderProvisioningState` ainda mostra `NotProvisioned`.
 
-**Causa raiz:** O provedor de conectividade ainda nÃ£o provisionou a cross-connect fÃ­sica usando a chave de serviÃ§o.
+**Causa raiz:** O provedor de conectividade ainda não provisionou a cross-connect física usando a chave de serviço.
 
-**ResoluÃ§Ã£o:**
-1. Confirme que a chave de serviÃ§o foi compartilhada com seu provedor
+**Resolução:**
+1. Confirme que a chave de serviço foi compartilhada com seu provedor
 2. Contate o provedor para verificar se eles iniciaram o provisionamento
-3. Alguns provedores requerem ativaÃ§Ã£o separada no portal (ex.: portal Equinix Cloud Exchange)
+3. Alguns provedores requerem ativação separada no portal (ex.: portal Equinix Cloud Exchange)
 
 ```bash
 # Check current state
@@ -448,13 +448,13 @@ az network express-route show \
 # Output: "NotProvisioned"
 ```
 
-### CenÃ¡rio B: VLAN ID incorreto causa falha no peering
+### Cenário B: VLAN ID incorreto causa falha no peering
 
-**Sintoma:** O private peering mostra `state: Disabled` e a sessÃ£o BGP nÃ£o se estabelece.
+**Sintoma:** O private peering mostra `state: Disabled` e a sessão BGP não se estabelece.
 
-**Causa raiz:** O VLAN ID configurado no Azure nÃ£o corresponde Ã  tag VLAN configurada no roteador CE/PE.
+**Causa raiz:** O VLAN ID configurado no Azure não corresponde Ã  tag VLAN configurada no roteador CE/PE.
 
-**ResoluÃ§Ã£o:** Atualize o VLAN ID para corresponder Ã  configuraÃ§Ã£o do seu roteador.
+**Resolução:** Atualize o VLAN ID para corresponder Ã  configuração do seu roteador.
 
 ```bash
 az network express-route peering update \
@@ -464,13 +464,13 @@ az network express-route peering update \
   --vlan-id 300
 ```
 
-### CenÃ¡rio C: Conflito de ASN do peer
+### Cenário C: Conflito de ASN do peer
 
-**Sintoma:** A criaÃ§Ã£o do peering falha com um erro sobre o ASN ser invÃ¡lido.
+**Sintoma:** A criação do peering falha com um erro sobre o ASN ser inválido.
 
-**Causa raiz:** O ASN 65515 Ã© reservado pelo Azure para o VPN Gateway. VocÃª nÃ£o pode usÃ¡-lo como ASN do peer.
+**Causa raiz:** O ASN 65515 é reservado pelo Azure para o VPN Gateway. Você não pode usá-lo como ASN do peer.
 
-**ResoluÃ§Ã£o:** Escolha um ASN privado no intervalo 64512--65514 ou 65516--65534, ou use um ASN pÃºblico que sua organizaÃ§Ã£o possui.
+**Resolução:** Escolha um ASN privado no intervalo 64512--65514 ou 65516--65534, ou use um ASN público que sua organização possui.
 
 ---
 
@@ -489,7 +489,7 @@ On-Premises DC            Equinix Colo          Microsoft Edge         Azure VNe
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

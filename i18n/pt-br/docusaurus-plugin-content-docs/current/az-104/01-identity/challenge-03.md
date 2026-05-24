@@ -8,47 +8,47 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 03: Azure Policy & governanÃ§a
+# Desafio 03: Azure Policy & governança
 
 :::info Tempo e Custo Estimados
 
-**60-75 min** | **Custo estimado**: Gratuito (avaliaÃ§Ã£o de polÃ­tica) | **Peso no Exame: 15-20%
+**60-75 min** | **Custo estimado**: Gratuito (avaliação de política) | **Peso no Exame: 15-20%
 **
 
 :::
 
-## IntroduÃ§Ã£o
+## Introdução
 
-O CTO da Contoso Ltd. acabou de voltar de uma conferÃªncia de seguranÃ§a em nuvem e estÃ¡ preocupado. "Ouvi dizer que uma empresa implantou cargas de trabalho de produÃ§Ã£o na regiÃ£o errada e foi penalizada por violaÃ§Ãµes de soberania de dados. Isso pode acontecer conosco?" Seu trabalho: configurar barreiras de proteÃ§Ã£o para que ninguÃ©m possa implantar recursos sem tags adequadas, fora das regiÃµes aprovadas ou sem seguir os padrÃµes da empresa.
+O CTO da Contoso Ltd. acabou de voltar de uma conferência de segurança em nuvem e está preocupado. "Ouvi dizer que uma empresa implantou cargas de trabalho de produção na região errada e foi penalizada por violações de soberania de dados. Isso pode acontecer conosco?" Seu trabalho: configurar barreiras de proteção para que ninguém possa implantar recursos sem tags adequadas, fora das regiões aprovadas ou sem seguir os padrões da empresa.
 
-Azure Policy Ã© seu mecanismo de aplicaÃ§Ã£o. Pense nele como Group Policy para a nuvem | mas em vez de controlar configuraÃ§Ãµes de desktop, vocÃª estÃ¡ controlando quais recursos podem ser criados e como eles devem ser configurados.
+Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para a nuvem | mas em vez de controlar configurações de desktop, você está controlando quais recursos podem ser criados e como eles devem ser configurados.
 
 ## Habilidades do exame cobertas
 
-- Criar e gerenciar atribuiÃ§Ãµes de Azure Policy
-- Criar e gerenciar definiÃ§Ãµes e iniciativas de polÃ­tica
+- Criar e gerenciar atribuições de Azure Policy
+- Criar e gerenciar definições e iniciativas de política
 - Gerenciar bloqueios de recursos
 - Gerenciar tags de recursos
 - Gerenciar grupos de recursos
 - Gerenciar assinaturas e grupos de gerenciamento
-- Configurar e gerenciar recomendaÃ§Ãµes do Azure Advisor
-- Configurar e gerenciar orÃ§amentos e alertas de custo
+- Configurar e gerenciar recomendações do Azure Advisor
+- Configurar e gerenciar orçamentos e alertas de custo
 
-## ReferÃªncia sysadmin â†” Azure
+## Referência sysadmin â†” Azure
 
-| On-Prem / Sysadmin | Equivalente no Azure | ObservaÃ§Ãµes |
+| On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
 | Group Policy Objects (GPO) | Azure Policy | Aplicar regras em recursos |
-| ConfiguraÃ§Ãµes de "Deny" no GPO | Policy com efeito Deny | Bloquear implantaÃ§Ãµes nÃ£o conformes |
-| Auditoria via GPO | Policy com efeito Audit | Relatar nÃ£o conformidade sem bloquear |
-| Metadados obrigatÃ³rios de arquivos | Tags de recursos | Pares chave-valor em recursos |
-| Conformidade WSUS / SCCM | Azure Advisor | RecomendaÃ§Ãµes de melhores prÃ¡ticas |
-| Sistema de arquivos somente leitura | Bloqueio ReadOnly de recurso | Prevenir modificaÃ§Ãµes |
-| ProteÃ§Ã£o contra exclusÃ£o | Bloqueio CanNotDelete de recurso | Prevenir exclusÃ£o acidental |
-| Hierarquia de OUs no AD | Management groups | OrganizaÃ§Ã£o hierÃ¡rquica de assinaturas |
-| Planilha de rastreamento de orÃ§amento | Azure Budgets | Alertas automatizados de custo |
+| Configurações de "Deny" no GPO | Policy com efeito Deny | Bloquear implantações não conformes |
+| Auditoria via GPO | Policy com efeito Audit | Relatar não conformidade sem bloquear |
+| Metadados obrigatórios de arquivos | Tags de recursos | Pares chave-valor em recursos |
+| Conformidade WSUS / SCCM | Azure Advisor | Recomendações de melhores práticas |
+| Sistema de arquivos somente leitura | Bloqueio ReadOnly de recurso | Prevenir modificações |
+| Proteção contra exclusão | Bloqueio CanNotDelete de recurso | Prevenir exclusão acidental |
+| Hierarquia de OUs no AD | Management groups | Organização hierárquica de assinaturas |
+| Planilha de rastreamento de orçamento | Azure Budgets | Alertas automatizados de custo |
 
-## DescriÃ§Ã£o
+## Descrição
 
 ### Parte 1: grupos de recursos & tags
 
@@ -64,7 +64,7 @@ az group create --name rg-policy-dev --location eastus --tags Environment=Develo
    - `CostCenter` = IT-001 ou IT-002
    - `Owner` = seu nome
 
-3. Praticar operaÃ§Ãµes em massa com tags | listar todos os recursos com uma tag especÃ­fica:
+3. Praticar operações em massa com tags | listar todos os recursos com uma tag específica:
 
 ```bash
 az resource list --tag Environment=Production -o table
@@ -72,11 +72,11 @@ az resource list --tag Environment=Production -o table
 
 ### Parte 2: Azure Policy | exigir tags
 
-4. Atribuir a polÃ­tica interna **"Require a tag and its value on resources"** ao `rg-policy-prod`:
+4. Atribuir a política interna **"Require a tag and its value on resources"** ao `rg-policy-prod`:
    - Nome da tag: `CostCenter`
    - Efeito: **Deny**
 
-5. Testar a polÃ­tica tentando criar uma conta de armazenamento **sem** a tag `CostCenter` no `rg-policy-prod`:
+5. Testar a política tentando criar uma conta de armazenamento **sem** a tag `CostCenter` no `rg-policy-prod`:
 
 ```bash
 # This should FAIL after policy takes effect
@@ -87,7 +87,7 @@ az storage account create \
   --sku Standard_LRS
 ```
 
-6. Agora criar a conta de armazenamento **com** a tag obrigatÃ³ria:
+6. Agora criar a conta de armazenamento **com** a tag obrigatória:
 
 ```bash
 # This should SUCCEED
@@ -99,19 +99,19 @@ az storage account create \
   --tags CostCenter=IT-001
 ```
 
-### Parte 3: Azure Policy | localizaÃ§Ãµes permitidas
+### Parte 3: Azure Policy | localizações permitidas
 
-7. Atribuir a polÃ­tica interna **"Allowed locations"** ao `rg-policy-prod`:
-   - LocalizaÃ§Ãµes permitidas: East US, West US 2
+7. Atribuir a política interna **"Allowed locations"** ao `rg-policy-prod`:
+   - Localizações permitidas: East US, West US 2
 
-8. Testar tentando criar um recurso no `rg-policy-prod` usando uma localizaÃ§Ã£o nÃ£o permitida (ex: West Europe)
+8. Testar tentando criar um recurso no `rg-policy-prod` usando uma localização não permitida (ex: West Europe)
 
-### Parte 4: iniciativa de polÃ­tica
+### Parte 4: iniciativa de política
 
-9. Criar uma iniciativa de polÃ­tica (conjunto de polÃ­ticas) chamada `Contoso-Governance` que inclua:
+9. Criar uma iniciativa de política (conjunto de políticas) chamada `Contoso-Governance` que inclua:
    - Exigir tag `CostCenter` em recursos
    - Exigir tag `Environment` em recursos
-   - LocalizaÃ§Ãµes permitidas (East US, West US 2)
+   - Localizações permitidas (East US, West US 2)
 
 10. Atribuir a iniciativa ao `rg-policy-dev`
 
@@ -127,17 +127,17 @@ az lock create --name "PreventDeletion" \
 ```
 
 12. Tentar excluir o grupo de recursos (deve falhar)
-13. Criar um bloqueio **ReadOnly** em um recurso especÃ­fico dentro do grupo
+13. Criar um bloqueio **ReadOnly** em um recurso específico dentro do grupo
 
-### Parte 6: Azure advisor & orÃ§amentos
+### Parte 6: Azure advisor & orçamentos
 
-14. Verificar recomendaÃ§Ãµes do Azure Advisor para sua assinatura:
+14. Verificar recomendações do Azure Advisor para sua assinatura:
 
 ```bash
 az advisor recommendation list --query "[].{Category:category, Impact:impact, Description:shortDescription.problem}" -o table
 ```
 
-15. Criar um alerta de orÃ§amento na sua assinatura:
+15. Criar um alerta de orçamento na sua assinatura:
 
 <Tabs>
 <TabItem value="cli" label="Azure CLI">
@@ -155,41 +155,41 @@ az consumption budget create \
 
 :::note
 
-Alertas de orÃ§amento via CLI requerem configuraÃ§Ã£o adicional para limites de notificaÃ§Ã£o. Ã‰ mais fÃ¡cil configurÃ¡-los no Portal em **Cost Management + Billing** â†’ **Budgets**.
+Alertas de orçamento via CLI requerem configuração adicional para limites de notificação. Ã‰ mais fácil configurá-los no Portal em **Cost Management + Billing** â†’ **Budgets**.
 
 :::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. VÃ¡ para **Cost Management + Billing** â†’ **Budgets**
+1. Vá para **Cost Management + Billing** â†’ **Budgets**
 2. Clique em **+ Add**
 3. Defina **Amount** como $50, **Time grain** como Monthly
-4. Adicione uma condiÃ§Ã£o de alerta em **80%** do orÃ§amento
-5. Adicione seu email para notificaÃ§Ãµes
+4. Adicione uma condição de alerta em **80%** do orçamento
+5. Adicione seu email para notificações
 
 </TabItem>
 </Tabs>
 
-## CritÃ©rios de sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-03"
   items={[
     "Dois grupos de recursos existem com tags adequadas (Environment, CostCenter, Owner)",
-    "PolÃ­tica \"Require CostCenter tag\" estÃ¡ atribuÃ­da ao rg-policy-prod com efeito Deny",
+    "Política \"Require CostCenter tag\" está atribuída ao rg-policy-prod com efeito Deny",
     "Implantar um recurso sem a tag falha no rg-policy-prod",
     "Implantar um recurso com a tag tem sucesso",
-    "PolÃ­tica de localizaÃ§Ãµes permitidas restringe implantaÃ§Ãµes para East US e West US 2",
-    "Iniciativa de polÃ­tica Contoso-Governance foi criada com 3 polÃ­ticas e atribuÃ­da ao rg-policy-dev",
+    "Política de localizações permitidas restringe implantações para East US e West US 2",
+    "Iniciativa de política Contoso-Governance foi criada com 3 políticas e atribuída ao rg-policy-dev",
     "Bloqueio CanNotDelete existe no rg-policy-prod",
     "Tentativa de excluir o grupo de recursos bloqueado falha",
-    "RecomendaÃ§Ãµes do Azure Advisor foram revisadas"
+    "Recomendações do Azure Advisor foram revisadas"
   ]}
 />
 ## Dicas
 
 <details>
-<summary>Dica 1: Encontrando definiÃ§Ãµes de polÃ­tica internas</summary>
+<summary>Dica 1: Encontrando definições de política internas</summary>
 
 ```bash
 # Search for tag-related policies
@@ -205,7 +205,7 @@ az policy definition show --name "1e30110a-5ceb-460c-a204-c1c3969c6d62"
 </details>
 
 <details>
-<summary>Dica 2: Atribuindo uma polÃ­tica com parÃ¢metros</summary>
+<summary>Dica 2: Atribuindo uma política com parâmetros</summary>
 
 ```bash
 # Assign "Require a tag and its value on resources"
@@ -222,13 +222,13 @@ az policy assignment create \
 
 :::tip Dica
 
-AtribuiÃ§Ãµes de polÃ­tica podem levar **5-15 minutos** para entrar em vigor. Tenha paciÃªncia ao testar!
+Atribuições de política podem levar **5-15 minutos** para entrar em vigor. Tenha paciência ao testar!
 
 :::
 </details>
 
 <details>
-<summary>Dica 3: Criando uma iniciativa de polÃ­tica</summary>
+<summary>Dica 3: Criando uma iniciativa de política</summary>
 
 ```bash
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
@@ -283,7 +283,7 @@ az lock delete --name "PreventDeletion" --resource-group rg-policy-prod
 </details>
 
 <details>
-<summary>Dica 5: Verificando conformidade de polÃ­tica</summary>
+<summary>Dica 5: Verificando conformidade de política</summary>
 
 ```bash
 # View compliance state for a policy assignment
@@ -300,8 +300,8 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 
 ## Recursos de aprendizado
 
-- [VisÃ£o geral do Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/overview)
-- [DefiniÃ§Ãµes internas do Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies)
+- [Visão geral do Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/overview)
+- [Definições internas do Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies)
 - [Bloqueios de recursos](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources)
 - [Usar tags para organizar recursos](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources)
 - [Management groups](https://learn.microsoft.com/en-us/azure/governance/management-groups/overview)
@@ -309,39 +309,39 @@ az policy state trigger-scan --resource-group rg-policy-prod --no-wait
 
 ## Quebra & conserta
 
-ApÃ³s completar o desafio, tente estes cenÃ¡rios de soluÃ§Ã£o de problemas:
+Após completar o desafio, tente estes cenários de solução de problemas:
 
-1. **Bloqueio vs. PolÃ­tica**: VocÃª tem um bloqueio CanNotDelete em um grupo de recursos e uma Policy com efeito Deny nas exigÃªncias de tag. VocÃª tenta criar um recurso sem tags. Qual bloqueia primeiro? (Resposta: A Policy Ã© avaliada durante a implantaÃ§Ã£o; bloqueios se aplicam a operaÃ§Ãµes de exclusÃ£o/modificaÃ§Ã£o.)
+1. **Bloqueio vs. Política**: Você tem um bloqueio CanNotDelete em um grupo de recursos e uma Policy com efeito Deny nas exigências de tag. Você tenta criar um recurso sem tags. Qual bloqueia primeiro? (Resposta: A Policy é avaliada durante a implantação; bloqueios se aplicam a operações de exclusão/modificação.)
 
-2. **NÃ£o consigo excluir nada**: Aplique um bloqueio **ReadOnly** a um grupo de recursos, depois tente adicionar um novo recurso dentro dele. O que acontece? (O bloqueio ReadOnly impede quaisquer alteraÃ§Ãµes, incluindo a criaÃ§Ã£o de novos recursos dentro do grupo.)
+2. **Não consigo excluir nada**: Aplique um bloqueio **ReadOnly** a um grupo de recursos, depois tente adicionar um novo recurso dentro dele. O que acontece? (O bloqueio ReadOnly impede quaisquer alterações, incluindo a criação de novos recursos dentro do grupo.)
 
-3. **PolÃ­tica nÃ£o estÃ¡ funcionando**: VocÃª atribuiu uma polÃ­tica Deny hÃ¡ 2 minutos e ela nÃ£o estÃ¡ bloqueando nada ainda. Por quÃª? (A avaliaÃ§Ã£o de polÃ­tica pode levar atÃ© 15 minutos para novas atribuiÃ§Ãµes. Acione uma verificaÃ§Ã£o sob demanda com `az policy state trigger-scan`.)
+3. **Política não está funcionando**: Você atribuiu uma política Deny há 2 minutos e ela não está bloqueando nada ainda. Por quê? (A avaliação de política pode levar até 15 minutos para novas atribuições. Acione uma verificação sob demanda com `az policy state trigger-scan`.)
 
-4. **ConfusÃ£o com tag herdada**: VocÃª marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele nÃ£o tÃªm a tag. Isso Ã© esperado? (Sim | tags NÃƒO sÃ£o herdadas de grupos de recursos para recursos por padrÃ£o. Use a polÃ­tica `Inherit a tag from the resource group` para habilitar isso.)
+4. **Confusão com tag herdada**: Você marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele não têm a tag. Isso é esperado? (Sim | tags NÃƒO são herdadas de grupos de recursos para recursos por padrão. Use a política `Inherit a tag from the resource group` para habilitar isso.)
 
 ## Teste seus conhecimentos
 
 <details>
-<summary>1. Qual Ã© a diferenÃ§a entre os efeitos de polÃ­tica Deny, Audit e Append?</summary>
+<summary>1. Qual é a diferença entre os efeitos de política Deny, Audit e Append?</summary>
 
-- **Deny**: Bloqueia a criaÃ§Ã£o ou modificaÃ§Ã£o do recurso se nÃ£o estiver em conformidade. AplicaÃ§Ã£o rÃ­gida.
-- **Audit**: Permite o recurso mas cria uma entrada de conformidade. AplicaÃ§Ã£o flexÃ­vel | vocÃª vÃª violaÃ§Ãµes mas nÃ£o as bloqueia.
-- **Append**: Adiciona automaticamente campos ao recurso durante a criaÃ§Ã£o. Por exemplo, adicionar uma tag que estÃ¡ faltando.
+- **Deny**: Bloqueia a criação ou modificação do recurso se não estiver em conformidade. Aplicação rígida.
+- **Audit**: Permite o recurso mas cria uma entrada de conformidade. Aplicação flexível | você vê violações mas não as bloqueia.
+- **Append**: Adiciona automaticamente campos ao recurso durante a criação. Por exemplo, adicionar uma tag que está faltando.
 
-Outros efeitos incluem: **AuditIfNotExists**, **DeployIfNotExists** (remediaÃ§Ã£o automÃ¡tica), **Disabled** e **Modify**.
+Outros efeitos incluem: **AuditIfNotExists**, **DeployIfNotExists** (remediação automática), **Disabled** e **Modify**.
 
 **Dica para o exame**: Saiba quando usar Deny vs. Audit vs. DeployIfNotExists.
 
 </details>
 
 <details>
-<summary>2. Qual Ã© a diferenÃ§a entre uma definiÃ§Ã£o de polÃ­tica e uma iniciativa de polÃ­tica?</summary>
+<summary>2. Qual é a diferença entre uma definição de política e uma iniciativa de política?</summary>
 
-Uma **definiÃ§Ã£o de polÃ­tica** Ã© uma regra Ãºnica (ex: "exigir tag CostCenter").
+Uma **definição de política** é uma regra única (ex: "exigir tag CostCenter").
 
-Uma **iniciativa de polÃ­tica** (tambÃ©m chamada de **conjunto de polÃ­ticas**) Ã© uma coleÃ§Ã£o de definiÃ§Ãµes de polÃ­tica agrupadas. Isso facilita a atribuiÃ§Ã£o e o gerenciamento de mÃºltiplas polÃ­ticas relacionadas como uma Ãºnica unidade.
+Uma **iniciativa de política** (também chamada de **conjunto de políticas**) é uma coleção de definições de política agrupadas. Isso facilita a atribuição e o gerenciamento de múltiplas políticas relacionadas como uma única unidade.
 
-**Exemplo**: Uma iniciativa "Governance" pode incluir: exigir tags + localizaÃ§Ãµes permitidas + SKUs de VM permitidos.
+**Exemplo**: Uma iniciativa "Governance" pode incluir: exigir tags + localizações permitidas + SKUs de VM permitidos.
 
 </details>
 
@@ -360,30 +360,30 @@ Root Management Group (Tenant Root)
 ```
 
 - Cada assinatura pertence a **exatamente um** management group
-- PolÃ­ticas e RBAC atribuÃ­dos em um management group sÃ£o **herdados** por todos os management groups e assinaturas filhos
-- Profundidade mÃ¡xima: **6 nÃ­veis** (sem contar o root)
-- O management group root nÃ£o pode ser movido ou excluÃ­do
+- Políticas e RBAC atribuídos em um management group são **herdados** por todos os management groups e assinaturas filhos
+- Profundidade máxima: **6 níveis** (sem contar o root)
+- O management group root não pode ser movido ou excluído
 
 </details>
 
 <details>
-<summary>4. VocÃª pode aplicar um bloqueio de recurso a um recurso especÃ­fico (nÃ£o apenas a um grupo de recursos)?</summary>
+<summary>4. Você pode aplicar um bloqueio de recurso a um recurso específico (não apenas a um grupo de recursos)?</summary>
 
-**Sim!** Bloqueios de recurso podem ser aplicados em trÃªs nÃ­veis:
-- NÃ­vel de **assinatura** (afeta todos os grupos de recursos e recursos)
-- NÃ­vel de **grupo de recursos** (afeta todos os recursos no grupo)
-- NÃ­vel de **recurso individual** (afeta apenas aquele recurso)
+**Sim!** Bloqueios de recurso podem ser aplicados em três níveis:
+- Nível de **assinatura** (afeta todos os grupos de recursos e recursos)
+- Nível de **grupo de recursos** (afeta todos os recursos no grupo)
+- Nível de **recurso individual** (afeta apenas aquele recurso)
 
-Bloqueios sÃ£o herdados | um bloqueio no nÃ­vel do grupo de recursos se aplica a todos os recursos dentro dele. Para excluir um recurso bloqueado, vocÃª deve primeiro remover o bloqueio.
+Bloqueios são herdados | um bloqueio no nível do grupo de recursos se aplica a todos os recursos dentro dele. Para excluir um recurso bloqueado, você deve primeiro remover o bloqueio.
 
 </details>
 
 <details>
-<summary>5. Tags sÃ£o herdadas de grupos de recursos para recursos?</summary>
+<summary>5. Tags são herdadas de grupos de recursos para recursos?</summary>
 
-**NÃ£o!** Tags em um grupo de recursos **NÃƒO** sÃ£o automaticamente herdadas pelos recursos dentro dele. Esta Ã© uma pergunta de exame muito comum.
+**Não!** Tags em um grupo de recursos **NÃƒO** são automaticamente herdadas pelos recursos dentro dele. Esta é uma pergunta de exame muito comum.
 
-Para aplicar heranÃ§a de tags, use a polÃ­tica interna **"Inherit a tag from the resource group"** com o efeito **Modify**. Esta polÃ­tica copiarÃ¡ automaticamente tags do grupo de recursos para novos recursos criados dentro dele.
+Para aplicar herança de tags, use a política interna **"Inherit a tag from the resource group"** com o efeito **Modify**. Esta política copiará automaticamente tags do grupo de recursos para novos recursos criados dentro dele.
 
 </details>
 
@@ -411,4 +411,4 @@ rm -f initiative.json
 
 ---
 
-**PrÃ³ximo**: [Desafio 04 | Storage Accounts & Acesso](/docs/az-104/storage/challenge-04)
+**Próximo**: [Desafio 04 | Storage Accounts & Acesso](/docs/az-104/storage/challenge-04)

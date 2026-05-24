@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-title: "Desafio 15: Gerenciamento de dependÃªncias e verificaÃ§Ã£o de vulnerabilidades"
+title: "Desafio 15: Gerenciamento de dependências e verificação de vulnerabilidades"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 15: Gerenciamento de dependÃªncias e verificaÃ§Ã£o de vulnerabilidades
+# Desafio 15: Gerenciamento de dependências e verificação de vulnerabilidades
 
 :::info Plataforma: ambas
-Este desafio cobre fluxos de trabalho de seguranÃ§a de dependÃªncias tanto no GitHub quanto no Azure DevOps.
+Este desafio cobre fluxos de trabalho de segurança de dependências tanto no GitHub quanto no Azure DevOps.
 :::
 
 ## Habilidades do exame
@@ -16,26 +16,26 @@ Este desafio cobre fluxos de trabalho de seguranÃ§a de dependÃªncias tanto n
 - Recomendar ferramentas de gerenciamento de pacotes incluindo GitHub Packages e Azure Artifacts
 - Projetar e implementar feeds e views de pacotes para pacotes locais e upstream
 
-## CenÃ¡rio
+## Cenário
 
-A equipe de seguranÃ§a da Contoso executa uma auditoria trimestral e descobre que 3 dos 15 microsserviÃ§os em produÃ§Ã£o dependem de uma biblioteca com um CVE crÃ­tico (CVE-2024-29041, uma vulnerabilidade de path traversal no Express.js). Os problemas sÃ£o:
+A equipe de segurança da Contoso executa uma auditoria trimestral e descobre que 3 dos 15 microsserviços em produção dependem de uma biblioteca com um CVE crítico (CVE-2024-29041, uma vulnerabilidade de path traversal no Express.js). Os problemas são:
 
-- Nenhum processo automatizado detecta dependÃªncias vulnerÃ¡veis
-- Desenvolvedores nÃ£o sabem quais dependÃªncias transitivas apresentam risco
-- NÃ£o hÃ¡ polÃ­tica para conformidade de licenÃ§as (algumas equipes incluÃ­ram acidentalmente cÃ³digo licenciado sob GPL em serviÃ§os proprietÃ¡rios)
-- A remediaÃ§Ã£o leva semanas porque ninguÃ©m sabe quais serviÃ§os sÃ£o afetados
+- Nenhum processo automatizado detecta dependências vulneráveis
+- Desenvolvedores não sabem quais dependências transitivas apresentam risco
+- Não há política para conformidade de licenças (algumas equipes incluíram acidentalmente código licenciado sob GPL em serviços proprietários)
+- A remediação leva semanas porque ninguém sabe quais serviços são afetados
 
-VocÃª deve implementar uma estratÃ©gia abrangente de gerenciamento de dependÃªncias e verificaÃ§Ã£o de vulnerabilidades.
+Você deve implementar uma estratégia abrangente de gerenciamento de dependências e verificação de vulnerabilidades.
 
 ## Tarefas
 
-### Tarefa 1: Configurar Dependabot para atualizaÃ§Ãµes automÃ¡ticas de dependÃªncias
+### Tarefa 1: Configurar Dependabot para atualizações automáticas de dependências
 
-O Dependabot abre automaticamente pull requests para atualizar dependÃªncias em um cronograma.
+O Dependabot abre automaticamente pull requests para atualizar dependências em um cronograma.
 
-#### Passo 1: Criar o arquivo de configuraÃ§Ã£o do Dependabot
+#### Passo 1: Criar o arquivo de configuração do Dependabot
 
-No seu repositÃ³rio, crie `.github/dependabot.yml`:
+No seu repositório, crie `.github/dependabot.yml`:
 
 ```yaml
 version: 2
@@ -98,9 +98,9 @@ updates:
       - "dependencies"
 ```
 
-#### Passo 2: Verificar se o Dependabot estÃ¡ ativo
+#### Passo 2: Verificar se o Dependabot está ativo
 
-ApÃ³s enviar a configuraÃ§Ã£o:
+Após enviar a configuração:
 
 ```bash
 gh api /repos/contoso/auth-service/vulnerability-alerts --method PUT
@@ -113,17 +113,17 @@ gh api /repos/contoso/auth-service/dependabot/alerts \
   --jq '.[0:5] | .[] | {package: .security_advisory.summary, severity: .security_advisory.severity, state: .state}'
 ```
 
-### Tarefa 2: Configurar alertas de seguranÃ§a do Dependabot
+### Tarefa 2: Configurar alertas de segurança do Dependabot
 
-Alertas de seguranÃ§a diferem das atualizaÃ§Ãµes de versÃ£o. Eles sÃ£o acionados imediatamente quando um novo CVE Ã© publicado que afeta sua Ã¡rvore de dependÃªncias.
+Alertas de segurança diferem das atualizações de versão. Eles são acionados imediatamente quando um novo CVE é publicado que afeta sua árvore de dependências.
 
-#### Passo 1: Habilitar alertas de seguranÃ§a para a organizaÃ§Ã£o
+#### Passo 1: Habilitar alertas de segurança para a organização
 
 ```bash
 gh api --method PUT /orgs/contoso/dependabot/alerts
 ```
 
-Habilite para todos os repositÃ³rios:
+Habilite para todos os repositórios:
 
 ```bash
 gh api --method PUT /orgs/contoso \
@@ -132,14 +132,14 @@ gh api --method PUT /orgs/contoso \
   --field dependabot_alerts_enabled_for_new_repositories=true
 ```
 
-#### Passo 2: Listar alertas de seguranÃ§a atuais entre repositÃ³rios
+#### Passo 2: Listar alertas de segurança atuais entre repositórios
 
 ```bash
 gh api /orgs/contoso/dependabot/alerts \
   --jq '.[] | select(.state == "open") | {repo: .repository.name, package: .dependency.package.name, severity: .security_advisory.severity, cve: .security_advisory.cve_id}'
 ```
 
-Filtre apenas alertas de severidade crÃ­tica e alta:
+Filtre apenas alertas de severidade crítica e alta:
 
 ```bash
 gh api "/orgs/contoso/dependabot/alerts?severity=critical,high&state=open" \
@@ -155,11 +155,11 @@ gh api --method PATCH /repos/contoso/auth-service/dependabot/alerts/42 \
   --field dismissed_comment="This code path is not reachable in our configuration"
 ```
 
-### Tarefa 3: IntegraÃ§Ã£o do Azure Artifacts com Defender for DevOps
+### Tarefa 3: Integração do Azure Artifacts com Defender for DevOps
 
 #### Passo 1: Habilitar Microsoft Defender for DevOps
 
-Conecte sua organizaÃ§Ã£o Azure DevOps ao Defender for Cloud:
+Conecte sua organização Azure DevOps ao Defender for Cloud:
 
 ```bash
 az security devops azuredevopsorg create \
@@ -168,9 +168,9 @@ az security devops azuredevopsorg create \
   --org-name contoso
 ```
 
-#### Passo 2: Configurar a extensÃ£o Microsoft Security DevOps do Azure DevOps
+#### Passo 2: Configurar a extensão Microsoft Security DevOps do Azure DevOps
 
-Adicione a tarefa de verificaÃ§Ã£o de seguranÃ§a ao seu Azure Pipeline:
+Adicione a tarefa de verificação de segurança ao seu Azure Pipeline:
 
 ```yaml
 trigger:
@@ -194,7 +194,7 @@ steps:
 
 #### Passo 3: Configurar alertas de vulnerabilidade de pacotes do Azure Artifacts
 
-Habilite a verificaÃ§Ã£o de pacotes no seu feed do Azure Artifacts:
+Habilite a verificação de pacotes no seu feed do Azure Artifacts:
 
 ```bash
 az rest --method patch \
@@ -205,9 +205,9 @@ az rest --method patch \
   }'
 ```
 
-### Tarefa 4: VerificaÃ§Ã£o de conformidade de licenÃ§as
+### Tarefa 4: Verificação de conformidade de licenças
 
-#### Passo 1: Criar uma polÃ­tica de licenÃ§as com GitHub Actions
+#### Passo 1: Criar uma política de licenças com GitHub Actions
 
 Crie `.github/workflows/license-check.yml`:
 
@@ -245,7 +245,7 @@ jobs:
           fi
 ```
 
-#### Passo 2: ValidaÃ§Ã£o de licenÃ§as NuGet
+#### Passo 2: Validação de licenças NuGet
 
 Para projetos .NET, use o `dotnet-project-licenses`:
 
@@ -271,9 +271,9 @@ Crie o `banned-licenses.json`:
 }
 ```
 
-### Tarefa 5: Criar um workflow de revisÃ£o de dependÃªncias no GitHub Actions
+### Tarefa 5: Criar um workflow de revisão de dependências no GitHub Actions
 
-A action de revisÃ£o de dependÃªncias Ã© executada em pull requests e bloqueia o merge se novas dependÃªncias introduzirem vulnerabilidades ou licenÃ§as nÃ£o permitidas.
+A action de revisão de dependências é executada em pull requests e bloqueia o merge se novas dependências introduzirem vulnerabilidades ou licenças não permitidas.
 
 Crie `.github/workflows/dependency-review.yml`:
 
@@ -305,9 +305,9 @@ jobs:
           head-ref: ${{ github.event.pull_request.head.sha }}
 ```
 
-### Tarefa 6: Implementar listas de permissÃ£o e bloqueio de dependÃªncias
+### Tarefa 6: Implementar listas de permissão e bloqueio de dependências
 
-#### Passo 1: Lista de permissÃ£o npm com .npmrc
+#### Passo 1: Lista de permissão npm com .npmrc
 
 Restrinja registros apenas a fontes aprovadas:
 
@@ -316,11 +316,11 @@ Restrinja registros apenas a fontes aprovadas:
 registry=https://pkgs.dev.azure.com/contoso/ContosoServices/_packaging/contoso-packages/npm/registry/
 ```
 
-Isso impede que desenvolvedores busquem acidentalmente pacotes diretamente do npm pÃºblico.
+Isso impede que desenvolvedores busquem acidentalmente pacotes diretamente do npm público.
 
 #### Passo 2: Mapeamento de fontes de pacotes NuGet
 
-No `nuget.config`, mapeie padrÃµes de pacotes especÃ­ficos para fontes especÃ­ficas:
+No `nuget.config`, mapeie padrões de pacotes específicos para fontes específicas:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -343,9 +343,9 @@ No `nuget.config`, mapeie padrÃµes de pacotes especÃ­ficos para fontes espec
 </configuration>
 ```
 
-#### Passo 3: Lista de bloqueio de dependÃªncias no GitHub Actions
+#### Passo 3: Lista de bloqueio de dependências no GitHub Actions
 
-Bloqueie pacotes especÃ­ficos conhecidos como maliciosos de serem introduzidos:
+Bloqueie pacotes específicos conhecidos como maliciosos de serem introduzidos:
 
 ```yaml
 - name: Check for banned packages
@@ -362,9 +362,9 @@ Bloqueie pacotes especÃ­ficos conhecidos como maliciosos de serem introduzidos
     echo "No banned packages detected"
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### CenÃ¡rio: PR do Dependabot quebra o build devido a breaking change
+### Cenário: PR do Dependabot quebra o build devido a breaking change
 
 O Dependabot abre um PR para atualizar `@contoso/auth-sdk` de 1.2.0 para 2.0.0. O pipeline de CI falha com:
 
@@ -373,22 +373,22 @@ TypeError: AuthClient.validateToken is not a function
     at Object.<anonymous> (src/middleware/auth.js:15:32)
 ```
 
-O PR do Dependabot Ã© um de 12 atualizaÃ§Ãµes de dependÃªncias abertas. A equipe precisa de uma estratÃ©gia para lidar com isso.
+O PR do Dependabot é um de 12 atualizações de dependências abertas. A equipe precisa de uma estratégia para lidar com isso.
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz**: O Dependabot atualizou um pacote atravÃ©s de uma fronteira de versÃ£o major, introduzindo uma alteraÃ§Ã£o quebrante na API. O mÃ©todo `validateToken` foi renomeado para `verifyToken` na versÃ£o 2.0.0.
+**Causa raiz**: O Dependabot atualizou um pacote através de uma fronteira de versão major, introduzindo uma alteração quebrante na API. O método `validateToken` foi renomeado para `verifyToken` na versão 2.0.0.
 
-**CorreÃ§Ã£o imediata**: Feche o PR do Dependabot e fixe na faixa de versÃ£o segura:
+**Correção imediata**: Feche o PR do Dependabot e fixe na faixa de versão segura:
 
 ```bash
 gh pr close 847 --comment "Breaking change in v2.0.0. Pinning to 1.x until migration is complete."
 ```
 
-**Passo 1: Prevenir bumps de versÃ£o major via configuraÃ§Ã£o do Dependabot**
+**Passo 1: Prevenir bumps de versão major via configuração do Dependabot**
 
-Atualize o `.github/dependabot.yml` para ignorar atualizaÃ§Ãµes de versÃ£o major para pacotes crÃ­ticos:
+Atualize o `.github/dependabot.yml` para ignorar atualizações de versão major para pacotes críticos:
 
 ```yaml
 updates:
@@ -401,9 +401,9 @@ updates:
         update-types: ["version-update:semver-major"]
 ```
 
-**Passo 2: Fixar a faixa de versÃ£o no package.json**
+**Passo 2: Fixar a faixa de versão no package.json**
 
-Use uma faixa tilde para permitir apenas atualizaÃ§Ãµes de patch:
+Use uma faixa tilde para permitir apenas atualizações de patch:
 
 ```json
 {
@@ -413,7 +413,7 @@ Use uma faixa tilde para permitir apenas atualizaÃ§Ãµes de patch:
 }
 ```
 
-Ou use uma faixa caret para permitir minor e patch, mas nÃ£o major:
+Ou use uma faixa caret para permitir minor e patch, mas não major:
 
 ```json
 {
@@ -423,9 +423,9 @@ Ou use uma faixa caret para permitir minor e patch, mas nÃ£o major:
 }
 ```
 
-**Passo 3: Criar um plano de migraÃ§Ã£o para a atualizaÃ§Ã£o major**
+**Passo 3: Criar um plano de migração para a atualização major**
 
-Rastreie a alteraÃ§Ã£o quebrante como um item de trabalho separado em vez de depender do Dependabot:
+Rastreie a alteração quebrante como um item de trabalho separado em vez de depender do Dependabot:
 
 ```bash
 gh issue create \
@@ -435,9 +435,9 @@ gh issue create \
   --assignee "@contoso/backend-team"
 ```
 
-**Passo 4: Adicionar verificaÃ§Ãµes de CI que detectem breaking changes antecipadamente**
+**Passo 4: Adicionar verificações de CI que detectem breaking changes antecipadamente**
 
-Certifique-se de que sua suÃ­te de testes cubra os pontos de integraÃ§Ã£o. Adicione um smoke test:
+Certifique-se de que sua suíte de testes cubra os pontos de integração. Adicione um smoke test:
 
 ```javascript
 const { AuthClient } = require('@contoso/auth-sdk');
@@ -447,9 +447,9 @@ assert(typeof client.validateToken === 'function',
   'auth-sdk API contract violated: validateToken must exist');
 ```
 
-**Passo 5: Agrupar atualizaÃ§Ãµes de dependÃªncias relacionadas**
+**Passo 5: Agrupar atualizações de dependências relacionadas**
 
-Configure o Dependabot para agrupar atualizaÃ§Ãµes minor/patch para que breaking changes fiquem isoladas:
+Configure o Dependabot para agrupar atualizações minor/patch para que breaking changes fiquem isoladas:
 
 ```yaml
 groups:
@@ -461,26 +461,26 @@ groups:
       - "patch"
 ```
 
-Isso garante que bumps de versÃ£o major apareÃ§am como PRs individuais que sÃ£o fÃ¡ceis de identificar e adiar.
+Isso garante que bumps de versão major apareçam como PRs individuais que são fáceis de identificar e adiar.
 
 </details>
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Uma configuraÃ§Ã£o do Dependabot tem 'schedule.interval: \"weekly\"' e 'open-pull-requests-limit: 5'. O que acontece quando existem 8 dependÃªncias desatualizadas?",
+    question: "Uma configuração do Dependabot tem 'schedule.interval: \"weekly\"' e 'open-pull-requests-limit: 5'. O que acontece quando existem 8 dependências desatualizadas?",
     options: [
       "O Dependabot abre 8 PRs simultaneamente",
-      "O Dependabot abre 5 PRs e enfileira os 3 restantes para o prÃ³ximo ciclo",
+      "O Dependabot abre 5 PRs e enfileira os 3 restantes para o próximo ciclo",
       "O Dependabot abre 5 PRs e ignora os 3 restantes permanentemente",
-      "A configuraÃ§Ã£o Ã© invÃ¡lida e o Dependabot nÃ£o serÃ¡ executado"
+      "A configuração é inválida e o Dependabot não será executado"
     ],
     correctIndex: 1,
-    explanation: "Quando o nÃºmero de dependÃªncias desatualizadas excede o open-pull-requests-limit, o Dependabot abre PRs atÃ© o limite e enfileira as atualizaÃ§Ãµes restantes. Elas serÃ£o abertas conforme PRs existentes forem mergeados ou fechados, ou na prÃ³xima execuÃ§Ã£o agendada se houver capacidade disponÃ­vel."
+    explanation: "Quando o número de dependências desatualizadas excede o open-pull-requests-limit, o Dependabot abre PRs até o limite e enfileira as atualizações restantes. Elas serão abertas conforme PRs existentes forem mergeados ou fechados, ou na próxima execução agendada se houver capacidade disponível."
   },
   {
-    question: "Qual action do GitHub Actions bloqueia o merge de PR quando uma nova dependÃªncia introduz uma vulnerabilidade conhecida?",
+    question: "Qual action do GitHub Actions bloqueia o merge de PR quando uma nova dependência introduz uma vulnerabilidade conhecida?",
     options: [
       "actions/codeql-action",
       "actions/dependency-review-action",
@@ -488,35 +488,35 @@ Isso garante que bumps de versÃ£o major apareÃ§am como PRs individuais que s
       "actions/security-scan"
     ],
     correctIndex: 1,
-    explanation: "A actions/dependency-review-action Ã© construÃ­da especificamente para anÃ¡lise de dependÃªncias em pull requests. Ela compara as alteraÃ§Ãµes de dependÃªncias em um PR contra bancos de dados de vulnerabilidades conhecidas e pode bloquear o merge com base em limites de severidade e polÃ­ticas de licenÃ§a."
+    explanation: "A actions/dependency-review-action é construída especificamente para análise de dependências em pull requests. Ela compara as alterações de dependências em um PR contra bancos de dados de vulnerabilidades conhecidas e pode bloquear o merge com base em limites de severidade e políticas de licença."
   },
   {
-    question: "No mapeamento de fontes de pacotes NuGet, o que acontece se um pacote nÃ£o corresponder a nenhum padrÃ£o configurado?",
+    question: "No mapeamento de fontes de pacotes NuGet, o que acontece se um pacote não corresponder a nenhum padrão configurado?",
     options: [
-      "Ele Ã© baixado de todas as fontes configuradas",
+      "Ele é baixado de todas as fontes configuradas",
       "O restore falha com um erro",
       "Ele faz fallback para o nuget.org automaticamente",
       "Ele usa a primeira fonte da lista"
     ],
     correctIndex: 1,
-    explanation: "Quando o mapeamento de fontes de pacotes NuGet estÃ¡ configurado e um pacote nÃ£o corresponde a nenhum padrÃ£o, o restore falha. Este Ã© um recurso de seguranÃ§a que impede que fontes de pacotes nÃ£o intencionais sejam usadas. VocÃª deve mapear explicitamente cada padrÃ£o de pacote para uma fonte aprovada."
+    explanation: "Quando o mapeamento de fontes de pacotes NuGet está configurado e um pacote não corresponde a nenhum padrão, o restore falha. Este é um recurso de segurança que impede que fontes de pacotes não intencionais sejam usadas. Você deve mapear explicitamente cada padrão de pacote para uma fonte aprovada."
   },
   {
-    question: "Uma equipe quer remediar automaticamente CVEs crÃ­ticos mas revisar manualmente todas as outras atualizaÃ§Ãµes de dependÃªncias. Qual configuraÃ§Ã£o do Dependabot alcanÃ§a isso?",
+    question: "Uma equipe quer remediar automaticamente CVEs críticos mas revisar manualmente todas as outras atualizações de dependências. Qual configuração do Dependabot alcança isso?",
     options: [
       "Definir 'schedule.interval: \"daily\"' com 'open-pull-requests-limit: 1'",
-      "Habilitar atualizaÃ§Ãµes de seguranÃ§a do Dependabot (automÃ¡ticas) e configurar atualizaÃ§Ãµes de versÃ£o com regras 'ignore' para nÃ£o-crÃ­ticos",
-      "Definir 'fail-on-severity: critical' na action de revisÃ£o de dependÃªncias",
-      "Configurar 'groups' para agrupar todas as atualizaÃ§Ãµes nÃ£o-crÃ­ticas"
+      "Habilitar atualizações de segurança do Dependabot (automáticas) e configurar atualizações de versão com regras 'ignore' para não-críticos",
+      "Definir 'fail-on-severity: critical' na action de revisão de dependências",
+      "Configurar 'groups' para agrupar todas as atualizações não-críticas"
     ],
     correctIndex: 1,
-    explanation: "O Dependabot possui dois recursos independentes: atualizaÃ§Ãµes de seguranÃ§a (acionadas imediatamente por publicaÃ§Ãµes de CVE, sempre automÃ¡ticas) e atualizaÃ§Ãµes de versÃ£o (agendadas, configurÃ¡veis). Habilitar atualizaÃ§Ãµes de seguranÃ§a trata CVEs crÃ­ticos automaticamente, enquanto a configuraÃ§Ã£o de atualizaÃ§Ã£o de versÃ£o controla a atualizaÃ§Ã£o rotineira de dependÃªncias."
+    explanation: "O Dependabot possui dois recursos independentes: atualizações de segurança (acionadas imediatamente por publicações de CVE, sempre automáticas) e atualizações de versão (agendadas, configuráveis). Habilitar atualizações de segurança trata CVEs críticos automaticamente, enquanto a configuração de atualização de versão controla a atualização rotineira de dependências."
   }
 ]} />
 
 ## Limpeza
 
-Remova a configuraÃ§Ã£o do Dependabot:
+Remova a configuração do Dependabot:
 
 ```bash
 rm .github/dependabot.yml
@@ -533,13 +533,13 @@ git add -A && git commit -m "Remove dependency scanning workflows"
 git push origin main
 ```
 
-Desabilite os alertas do Dependabot para o repositÃ³rio:
+Desabilite os alertas do Dependabot para o repositório:
 
 ```bash
 gh api --method DELETE /repos/contoso/auth-service/vulnerability-alerts
 ```
 
-Remova a ferramenta de verificaÃ§Ã£o de licenÃ§as:
+Remova a ferramenta de verificação de licenças:
 
 ```bash
 npm uninstall -g license-checker

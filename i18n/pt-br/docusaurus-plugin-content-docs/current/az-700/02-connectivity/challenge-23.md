@@ -4,7 +4,7 @@ title: "Desafio 23: Virtual WAN Roteamento & Integração com NVA"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 23: Roteamento Virtual WAN e integraÃ§Ã£o com NVA
+# Challenge 23: Roteamento Virtual WAN e integração com NVA
 
 :::info Tempo e custo estimados
 
@@ -12,24 +12,24 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso implantou o Azure Virtual WAN com um hub Standard e vÃ¡rios spokes conectados (do Challenge 22). Agora eles precisam de roteamento avanÃ§ado: isolar VNets de spokes de desenvolvimento dos spokes de produÃ§Ã£o, rotear todo o trÃ¡fego de internet por meio de um Network Virtual Appliance (NVA) centralizado para inspeÃ§Ã£o e controlar quais spokes podem se comunicar entre si.
+A Contoso implantou o Azure Virtual WAN com um hub Standard e vários spokes conectados (do Challenge 22). Agora eles precisam de roteamento avançado: isolar VNets de spokes de desenvolvimento dos spokes de produção, rotear todo o tráfego de internet por meio de um Network Virtual Appliance (NVA) centralizado para inspeção e controlar quais spokes podem se comunicar entre si.
 
 Seus requisitos:
-- Os spokes de produÃ§Ã£o (vnet-prod-1, vnet-prod-2) devem se comunicar entre si e com serviÃ§os compartilhados
-- Os spokes de desenvolvimento (vnet-dev-1, vnet-dev-2) devem ser isolados da produÃ§Ã£o
-- Todo o trÃ¡fego de internet de ambos os ambientes deve ser roteado por um firewall/NVA centralizado
-- O NVA Ã© implantado como uma aplicaÃ§Ã£o gerenciada do Azure Marketplace dentro do hub virtual
+- Os spokes de produção (vnet-prod-1, vnet-prod-2) devem se comunicar entre si e com serviços compartilhados
+- Os spokes de desenvolvimento (vnet-dev-1, vnet-dev-2) devem ser isolados da produção
+- Todo o tráfego de internet de ambos os ambientes deve ser roteado por um firewall/NVA centralizado
+- O NVA é implantado como uma aplicação gerenciada do Azure Marketplace dentro do hub virtual
 
 ## Habilidades de exame avaliadas
 
-| Habilidade | DescriÃ§Ã£o |
+| Habilidade | Descrição |
 |------------|-----------|
-| Configurar roteamento do hub virtual | Criar tabelas de rotas personalizadas, rotas estÃ¡ticas e associaÃ§Ãµes de roteamento |
-| Integrar NVA de terceiros | Implantar e rotear trÃ¡fego por NVAs no hub virtual |
+| Configurar roteamento do hub virtual | Criar tabelas de rotas personalizadas, rotas estáticas e associações de roteamento |
+| Integrar NVA de terceiros | Implantar e rotear tráfego por NVAs no hub virtual |
 
-## VisÃ£o geral da arquitetura
+## Visão geral da arquitetura
 
 ```text
                     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
@@ -54,32 +54,32 @@ Seus requisitos:
 
 ## Conceitos-chave
 
-### Comportamento padrÃ£o de roteamento do Virtual WAN
+### Comportamento padrão de roteamento do Virtual WAN
 
-Quando uma conexÃ£o VNet Ã© criada sem configuraÃ§Ã£o explÃ­cita de roteamento:
-- Ela Ã© **associada** Ã  `defaultRouteTable`
+Quando uma conexão VNet é criada sem configuração explícita de roteamento:
+- Ela é **associada** Ã  `defaultRouteTable`
 - Ela **propaga** rotas para a `defaultRouteTable`
 - Todos os spokes aprendem as rotas uns dos outros (conectividade full mesh)
 
 ### Tabelas de rotas personalizadas para isolamento
 
-Para isolar grupos de spokes, vocÃª cria tabelas de rotas personalizadas e configura:
-- **AssociaÃ§Ã£o**: Qual tabela de rotas uma conexÃ£o usa para consultar rotas (determina para onde o trÃ¡fego Ã© enviado)
-- **PropagaÃ§Ã£o**: Quais tabelas de rotas aprendem as rotas da conexÃ£o (determina quem pode alcanÃ§Ã¡-la)
+Para isolar grupos de spokes, você cria tabelas de rotas personalizadas e configura:
+- **Associação**: Qual tabela de rotas uma conexão usa para consultar rotas (determina para onde o tráfego é enviado)
+- **Propagação**: Quais tabelas de rotas aprendem as rotas da conexão (determina quem pode alcançá-la)
 
-### IntenÃ§Ã£o de roteamento e polÃ­ticas de roteamento
+### Intenção de roteamento e políticas de roteamento
 
-A intenÃ§Ã£o de roteamento simplifica a configuraÃ§Ã£o de roteamento permitindo que vocÃª defina:
-- **PolÃ­tica de trÃ¡fego de internet**: Roteia 0.0.0.0/0 para um recurso de prÃ³ximo salto (Azure Firewall ou NVA)
-- **PolÃ­tica de trÃ¡fego privado**: Roteia prefixos RFC 1918 (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) para um recurso de prÃ³ximo salto
+A intenção de roteamento simplifica a configuração de roteamento permitindo que você defina:
+- **Política de tráfego de internet**: Roteia 0.0.0.0/0 para um recurso de próximo salto (Azure Firewall ou NVA)
+- **Política de tráfego privado**: Roteia prefixos RFC 1918 (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) para um recurso de próximo salto
 
-Quando a intenÃ§Ã£o de roteamento estÃ¡ habilitada, ela tem precedÃªncia sobre rotas estÃ¡ticas individuais na defaultRouteTable.
+Quando a intenção de roteamento está habilitada, ela tem precedência sobre rotas estáticas individuais na defaultRouteTable.
 
 ---
 
-## Tarefa 1: Entender o roteamento padrÃ£o
+## Tarefa 1: Entender o roteamento padrão
 
-Antes de fazer alteraÃ§Ãµes, examine a configuraÃ§Ã£o de roteamento padrÃ£o para entender o comportamento base.
+Antes de fazer alterações, examine a configuração de roteamento padrão para entender o comportamento base.
 
 ### Azure CLI
 
@@ -135,7 +135,7 @@ Get-AzVirtualHubVnetConnection `
 
 ## Tarefa 2: Criar tabelas de rotas personalizadas para isolamento
 
-Crie tabelas de rotas separadas para cargas de trabalho de produÃ§Ã£o e desenvolvimento. Labels permitem que vocÃª referencie grupos de tabelas de rotas durante a configuraÃ§Ã£o de propagaÃ§Ã£o.
+Crie tabelas de rotas separadas para cargas de trabalho de produção e desenvolvimento. Labels permitem que você referencie grupos de tabelas de rotas durante a configuração de propagação.
 
 ### Azure CLI
 
@@ -181,9 +181,9 @@ New-AzVHubRouteTable `
 
 ---
 
-## Tarefa 3: Associar conexÃµes de spoke com tabelas de rotas personalizadas
+## Tarefa 3: Associar conexões de spoke com tabelas de rotas personalizadas
 
-Atualize conexÃµes existentes ou crie novas com configuraÃ§Ã£o explÃ­cita de roteamento. Spokes de produÃ§Ã£o associam-se ao RT_PROD e propagam apenas para o RT_PROD. Spokes de desenvolvimento associam-se ao RT_DEV e propagam apenas para o RT_DEV.
+Atualize conexões existentes ou crie novas com configuração explícita de roteamento. Spokes de produção associam-se ao RT_PROD e propagam apenas para o RT_PROD. Spokes de desenvolvimento associam-se ao RT_DEV e propagam apenas para o RT_DEV.
 
 ### Azure CLI
 
@@ -302,9 +302,9 @@ New-AzVirtualHubVnetConnection `
 
 ---
 
-## Tarefa 4: Adicionar rotas estÃ¡ticas a uma tabela de rotas do hub
+## Tarefa 4: Adicionar rotas estáticas a uma tabela de rotas do hub
 
-Adicione uma rota estÃ¡tica para forÃ§ar o trÃ¡fego destinado Ã  internet (0.0.0.0/0) por meio de um NVA ou Azure Firewall. O prÃ³ximo salto Ã© especificado como um ID de recurso.
+Adicione uma rota estática para forçar o tráfego destinado Ã  internet (0.0.0.0/0) por meio de um NVA ou Azure Firewall. O próximo salto é especificado como um ID de recurso.
 
 ### Azure CLI
 
@@ -351,9 +351,9 @@ Update-AzVHubRouteTable `
 
 ---
 
-## Tarefa 5: Configurar intenÃ§Ã£o de roteamento e polÃ­ticas de roteamento
+## Tarefa 5: Configurar intenção de roteamento e políticas de roteamento
 
-A intenÃ§Ã£o de roteamento fornece uma maneira declarativa de configurar polÃ­ticas de roteamento que se aplicam a todas as conexÃµes no hub. Esta Ã© a abordagem recomendada para enviar trÃ¡fego por meio de uma soluÃ§Ã£o de seguranÃ§a.
+A intenção de roteamento fornece uma maneira declarativa de configurar políticas de roteamento que se aplicam a todas as conexões no hub. Esta é a abordagem recomendada para enviar tráfego por meio de uma solução de segurança.
 
 ### Azure CLI
 
@@ -395,19 +395,19 @@ New-AzRoutingIntent `
   -RoutingPolicy @($internetPolicy, $privatePolicy)
 ```
 
-:::warning RestriÃ§Ãµes da intenÃ§Ã£o de roteamento
-Quando a intenÃ§Ã£o de roteamento estÃ¡ habilitada em um hub:
-- Todas as conexÃµes nesse hub terÃ£o seu prÃ³ximo salto para trÃ¡fego de internet e/ou privado definido para o recurso especificado (Azure Firewall ou NVA)
-- VocÃª nÃ£o pode configurar rotas estÃ¡ticas na defaultRouteTable que conflitem com a intenÃ§Ã£o de roteamento
-- A intenÃ§Ã£o de roteamento se aplica a todas as conexÃµes novas e existentes no hub
-- VocÃª deve usar um tipo de prÃ³ximo salto suportado: Azure Firewall ou um NVA gerenciado do Marketplace
+:::warning Restrições da intenção de roteamento
+Quando a intenção de roteamento está habilitada em um hub:
+- Todas as conexões nesse hub terão seu próximo salto para tráfego de internet e/ou privado definido para o recurso especificado (Azure Firewall ou NVA)
+- Você não pode configurar rotas estáticas na defaultRouteTable que conflitem com a intenção de roteamento
+- A intenção de roteamento se aplica a todas as conexões novas e existentes no hub
+- Você deve usar um tipo de próximo salto suportado: Azure Firewall ou um NVA gerenciado do Marketplace
 :::
 
 ---
 
-## Tarefa 6: ImplantaÃ§Ã£o de NVA no hub virtual (conceitual)
+## Tarefa 6: Implantação de NVA no hub virtual (conceitual)
 
-NVAs de terceiros podem ser implantados diretamente no hub virtual a partir do Azure Marketplace. Isso Ã© diferente de implantar um NVA em uma VNet spoke â€” NVAs integrados ao hub participam diretamente na infraestrutura de roteamento do hub.
+NVAs de terceiros podem ser implantados diretamente no hub virtual a partir do Azure Marketplace. Isso é diferente de implantar um NVA em uma VNet spoke â€” NVAs integrados ao hub participam diretamente na infraestrutura de roteamento do hub.
 
 ### Parceiros NVA suportados (exemplos)
 
@@ -415,24 +415,24 @@ NVAs de terceiros podem ser implantados diretamente no hub virtual a partir do A
 |------------|---------|-------------|
 | Barracuda Networks | CloudGen WAN | SD-WAN, firewall |
 | Cisco | Viptela SD-WAN | SD-WAN |
-| Fortinet | FortiGate | Firewall de prÃ³xima geraÃ§Ã£o |
-| Palo Alto Networks | Cloud NGFW | Firewall de prÃ³xima geraÃ§Ã£o |
+| Fortinet | FortiGate | Firewall de próxima geração |
+| Palo Alto Networks | Cloud NGFW | Firewall de próxima geração |
 | Versa Networks | SD-WAN | SD-WAN |
 
-### Etapas de implantaÃ§Ã£o (baseadas no portal)
+### Etapas de implantação (baseadas no portal)
 
-A implantaÃ§Ã£o de NVA no hub Ã© gerenciada por meio do Azure Marketplace e do plano de gerenciamento do parceiro:
+A implantação de NVA no hub é gerenciada por meio do Azure Marketplace e do plano de gerenciamento do parceiro:
 
-1. Navegue atÃ© o hub virtual no Portal do Azure
-2. Selecione **Provedores de seguranÃ§a de terceiros** ou **Network Virtual Appliance**
+1. Navegue até o hub virtual no Portal do Azure
+2. Selecione **Provedores de segurança de terceiros** ou **Network Virtual Appliance**
 3. Escolha o fornecedor de NVA no Marketplace
-4. Selecione unidades de infraestrutura (anÃ¡logas a unidades de escala para throughput)
-5. Conclua a configuraÃ§Ã£o especÃ­fica do fornecedor
-6. O NVA Ã© implantado como uma aplicaÃ§Ã£o gerenciada dentro do hub
+4. Selecione unidades de infraestrutura (análogas a unidades de escala para throughput)
+5. Conclua a configuração específica do fornecedor
+6. O NVA é implantado como uma aplicação gerenciada dentro do hub
 
-### Usando NVA como prÃ³ximo salto no roteamento
+### Usando NVA como próximo salto no roteamento
 
-Uma vez implantado, o ID de recurso do NVA pode ser usado como prÃ³ximo salto em tabelas de rotas e intenÃ§Ã£o de roteamento:
+Uma vez implantado, o ID de recurso do NVA pode ser usado como próximo salto em tabelas de rotas e intenção de roteamento:
 
 ```bash
 # Reference the NVA in a static route
@@ -451,15 +451,15 @@ az network vhub route-table route add \
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio 1: Spoke na tabela de rotas errada
+### Cenário 1: Spoke na tabela de rotas errada
 
-**Sintoma:** Uma VM de produÃ§Ã£o (em vnet-prod-1) nÃ£o consegue alcanÃ§ar serviÃ§os compartilhados que estÃ£o na defaultRouteTable, mas pode alcanÃ§ar outros spokes de produÃ§Ã£o.
+**Sintoma:** Uma VM de produção (em vnet-prod-1) não consegue alcançar serviços compartilhados que estão na defaultRouteTable, mas pode alcançar outros spokes de produção.
 
-**Causa raiz:** A conexÃ£o de produÃ§Ã£o estÃ¡ associada ao RT_PROD e propaga apenas para o RT_PROD. As VNets de serviÃ§os compartilhados propagam apenas para a defaultRouteTable. NÃ£o hÃ¡ troca de rotas entre RT_PROD e defaultRouteTable.
+**Causa raiz:** A conexão de produção está associada ao RT_PROD e propaga apenas para o RT_PROD. As VNets de serviços compartilhados propagam apenas para a defaultRouteTable. Não há troca de rotas entre RT_PROD e defaultRouteTable.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 ```bash
 # Check what routes RT_PROD contains
 az network vhub route-table route list \
@@ -475,7 +475,7 @@ az network vhub connection show \
   --query "routingConfiguration.propagatedRouteTables"
 ```
 
-**CorreÃ§Ã£o:** Garanta que a VNet de serviÃ§os compartilhados propague para a defaultRouteTable e o RT_PROD:
+**Correção:** Garanta que a VNet de serviços compartilhados propague para a defaultRouteTable e o RT_PROD:
 ```bash
 # Update shared services to propagate to both route tables
 DEFAULT_RT_ID=$(az network vhub route-table show \
@@ -494,13 +494,13 @@ az network vhub connection update \
 
 ---
 
-### CenÃ¡rio 2: IntenÃ§Ã£o de roteamento conflita com rotas estÃ¡ticas
+### Cenário 2: Intenção de roteamento conflita com rotas estáticas
 
-**Sintoma:** ApÃ³s habilitar a intenÃ§Ã£o de roteamento, rotas estÃ¡ticas configuradas manualmente na defaultRouteTable param de funcionar. O trÃ¡fego nÃ£o segue mais o caminho esperado.
+**Sintoma:** Após habilitar a intenção de roteamento, rotas estáticas configuradas manualmente na defaultRouteTable param de funcionar. O tráfego não segue mais o caminho esperado.
 
-**Causa raiz:** A intenÃ§Ã£o de roteamento tem precedÃªncia sobre rotas estÃ¡ticas na defaultRouteTable. Quando a intenÃ§Ã£o de roteamento estÃ¡ configurada para trÃ¡fego privado, ela programa automaticamente as rotas 10.0.0.0/8, 172.16.0.0/12 e 192.168.0.0/16. Rotas estÃ¡ticas manuais 0.0.0.0/0 se tornam redundantes.
+**Causa raiz:** A intenção de roteamento tem precedência sobre rotas estáticas na defaultRouteTable. Quando a intenção de roteamento está configurada para tráfego privado, ela programa automaticamente as rotas 10.0.0.0/8, 172.16.0.0/12 e 192.168.0.0/16. Rotas estáticas manuais 0.0.0.0/0 se tornam redundantes.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 ```bash
 # Check routing intent status
 az network vhub routing-intent show \
@@ -514,7 +514,7 @@ az network vhub get-effective-routes \
   --resource-group $RG
 ```
 
-**CorreÃ§Ã£o:** Remova rotas estÃ¡ticas conflitantes da defaultRouteTable. Use a intenÃ§Ã£o de roteamento como o Ãºnico mecanismo para direcionamento de trÃ¡fego:
+**Correção:** Remova rotas estáticas conflitantes da defaultRouteTable. Use a intenção de roteamento como o único mecanismo para direcionamento de tráfego:
 ```bash
 # Remove the conflicting static route (by index, starting at 1)
 az network vhub route-table route remove \
@@ -526,13 +526,13 @@ az network vhub route-table route remove \
 
 ---
 
-### CenÃ¡rio 3: PrÃ³ximo salto NVA inalcanÃ§Ã¡vel
+### Cenário 3: Próximo salto NVA inalcançável
 
-**Sintoma:** O trÃ¡fego destinado ao NVA Ã© descartado. A tabela de rotas mostra o prÃ³ximo salto correto, mas a conectividade falha.
+**Sintoma:** O tráfego destinado ao NVA é descartado. A tabela de rotas mostra o próximo salto correto, mas a conectividade falha.
 
-**Causa raiz:** A aplicaÃ§Ã£o gerenciada do NVA nÃ£o concluiu o provisionamento ou as unidades de infraestrutura do NVA estÃ£o definidas como 0 (efetivamente desabilitadas).
+**Causa raiz:** A aplicação gerenciada do NVA não concluiu o provisionamento ou as unidades de infraestrutura do NVA estão definidas como 0 (efetivamente desabilitadas).
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 ```bash
 # Check the NVA provisioning state
 az network virtual-appliance show \
@@ -541,7 +541,7 @@ az network virtual-appliance show \
   --query "{provisioningState:provisioningState, deploymentType:deploymentType}"
 ```
 
-**CorreÃ§Ã£o:** Verifique se o NVA estÃ¡ no estado Succeeded e tem pelo menos 2 unidades de infraestrutura configuradas. Se o NVA estiver com problemas, verifique o portal de gerenciamento do fornecedor para problemas no nÃ­vel do appliance.
+**Correção:** Verifique se o NVA está no estado Succeeded e tem pelo menos 2 unidades de infraestrutura configuradas. Se o NVA estiver com problemas, verifique o portal de gerenciamento do fornecedor para problemas no nível do appliance.
 
 ---
 
@@ -559,7 +559,7 @@ Remove-AzResourceGroup -Name "rg-vwan-challenge22" -Force -AsJob
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

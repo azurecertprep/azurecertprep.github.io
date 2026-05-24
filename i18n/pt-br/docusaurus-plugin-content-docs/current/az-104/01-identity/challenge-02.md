@@ -17,53 +17,53 @@ import TabItem from '@theme/TabItem';
 
 :::
 
-## IntroduÃ§Ã£o
+## Introdução
 
-Agora que a Contoso Ltd. tem usuÃ¡rios e grupos no Entra ID, vocÃª precisa controlar **quem pode fazer o quÃª** no Azure. O VP de Engenharia acabou de perguntar: "Por que o estagiÃ¡rio consegue ver nossa assinatura de produÃ§Ã£o?" Hora de trancar tudo com Role-Based Access Control.
+Agora que a Contoso Ltd. tem usuários e grupos no Entra ID, você precisa controlar **quem pode fazer o quê** no Azure. O VP de Engenharia acabou de perguntar: "Por que o estagiário consegue ver nossa assinatura de produção?" Hora de trancar tudo com Role-Based Access Control.
 
-RBAC Ã© o guardiÃ£o do Azure. Cada aÃ§Ã£o | criar uma VM, ler uma conta de armazenamento, excluir um grupo de recursos | Ã© controlada por funÃ§Ãµes atribuÃ­das a identidades em escopos especÃ­ficos. Se errar nisso, vocÃª vai bloquear sua equipe ou expor seu ambiente.
+RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armazenamento, excluir um grupo de recursos | é controlada por funções atribuídas a identidades em escopos específicos. Se errar nisso, você vai bloquear sua equipe ou expor seu ambiente.
 
 ## Habilidades do exame cobertas
 
-- Gerenciar funÃ§Ãµes internas do Azure
-- Atribuir funÃ§Ãµes em diferentes escopos (grupo de gerenciamento, assinatura, grupo de recursos, recurso)
-- Interpretar atribuiÃ§Ãµes de acesso
-- Criar e atribuir funÃ§Ãµes personalizadas
-- Gerenciar atribuiÃ§Ãµes de funÃ§Ãµes do Microsoft Entra
+- Gerenciar funções internas do Azure
+- Atribuir funções em diferentes escopos (grupo de gerenciamento, assinatura, grupo de recursos, recurso)
+- Interpretar atribuições de acesso
+- Criar e atribuir funções personalizadas
+- Gerenciar atribuições de funções do Microsoft Entra
 
-## ReferÃªncia sysadmin â†” Azure
+## Referência sysadmin â†” Azure
 
-| On-Prem / Sysadmin | Equivalente no Azure | ObservaÃ§Ãµes |
+| On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
-| PermissÃµes NTFS (Controle Total) | FunÃ§Ã£o Owner | Acesso total + pode atribuir funÃ§Ãµes |
-| PermissÃµes NTFS (Modificar) | FunÃ§Ã£o Contributor | Acesso total mas nÃ£o pode atribuir funÃ§Ãµes |
-| PermissÃµes NTFS (Leitura) | FunÃ§Ã£o Reader | Visualizar tudo, alterar nada |
+| Permissões NTFS (Controle Total) | Função Owner | Acesso total + pode atribuir funções |
+| Permissões NTFS (Modificar) | Função Contributor | Acesso total mas não pode atribuir funções |
+| Permissões NTFS (Leitura) | Função Reader | Visualizar tudo, alterar nada |
 | Grupo Domain Admins | Owner no escopo da assinatura | Acesso administrativo amplo |
-| PermissÃµes delegadas em pastas | RBAC no escopo do grupo de recursos | Controle de acesso com escopo definido |
-| icacls / cacls | az role assignment | Gerenciamento de permissÃµes via CLI |
-| "Deny" ACE no NTFS | Deny assignments | NegaÃ§Ã£o explÃ­cita (raro, geralmente via Blueprints) |
-| DelegaÃ§Ã£o personalizada no AD | FunÃ§Ãµes RBAC personalizadas | DefiniÃ§Ãµes granulares de permissÃ£o |
+| Permissões delegadas em pastas | RBAC no escopo do grupo de recursos | Controle de acesso com escopo definido |
+| icacls / cacls | az role assignment | Gerenciamento de permissões via CLI |
+| "Deny" ACE no NTFS | Deny assignments | Negação explícita (raro, geralmente via Blueprints) |
+| Delegação personalizada no AD | Funções RBAC personalizadas | Definições granulares de permissão |
 
-## DescriÃ§Ã£o
+## Descrição
 
-### Parte 1: explorar funÃ§Ãµes internas
+### Parte 1: explorar funções internas
 
-1. Listar as 4 funÃ§Ãµes internas fundamentais e entender o que cada uma permite:
-   - **Owner** | Acesso total a todos os recursos + pode atribuir funÃ§Ãµes a outros
-   - **Contributor** | Acesso total a todos os recursos mas nÃ£o pode atribuir funÃ§Ãµes
-   - **Reader** | Visualizar todos os recursos mas nÃ£o pode fazer alteraÃ§Ãµes
-   - **User Access Administrator** | Gerenciar acesso de usuÃ¡rios aos recursos do Azure
+1. Listar as 4 funções internas fundamentais e entender o que cada uma permite:
+   - **Owner** | Acesso total a todos os recursos + pode atribuir funções a outros
+   - **Contributor** | Acesso total a todos os recursos mas não pode atribuir funções
+   - **Reader** | Visualizar todos os recursos mas não pode fazer alterações
+   - **User Access Administrator** | Gerenciar acesso de usuários aos recursos do Azure
 
-2. Explorar funÃ§Ãµes internas adicionais relevantes para o exame:
+2. Explorar funções internas adicionais relevantes para o exame:
    - Virtual Machine Contributor
    - Storage Blob Data Reader
    - Network Contributor
 
-### Parte 2: atribuir funÃ§Ãµes em diferentes escopos
+### Parte 2: atribuir funções em diferentes escopos
 
-:::warning AtenÃ§Ã£o
+:::warning Atenção
 
-Para estas tarefas, vocÃª precisarÃ¡ de um grupo de recursos. Crie um chamado `rg-rbac-challenge` na sua assinatura primeiro.
+Para estas tarefas, você precisará de um grupo de recursos. Crie um chamado `rg-rbac-challenge` na sua assinatura primeiro.
 
 :::
 3. Criar um grupo de recursos para este desafio:
@@ -72,48 +72,48 @@ Para estas tarefas, vocÃª precisarÃ¡ de um grupo de recursos. Crie um chamad
 az group create --name rg-rbac-challenge --location eastus
 ```
 
-4. Atribuir a funÃ§Ã£o **Reader** para Alice no escopo da **assinatura**
-5. Atribuir a funÃ§Ã£o **Contributor** para o grupo `IT-Team` no escopo do **grupo de recursos** (`rg-rbac-challenge`)
-6. Atribuir a funÃ§Ã£o **Virtual Machine Contributor** para Bob no escopo do **grupo de recursos**
+4. Atribuir a função **Reader** para Alice no escopo da **assinatura**
+5. Atribuir a função **Contributor** para o grupo `IT-Team` no escopo do **grupo de recursos** (`rg-rbac-challenge`)
+6. Atribuir a função **Virtual Machine Contributor** para Bob no escopo do **grupo de recursos**
 
 ### Parte 3: verificar & interpretar acesso
 
-7. Listar todas as atribuiÃ§Ãµes de funÃ§Ã£o para Alice | ela deve ter Reader no nÃ­vel da assinatura e (herdado via IT-Team) Contributor no nÃ­vel do grupo de recursos
+7. Listar todas as atribuições de função para Alice | ela deve ter Reader no nível da assinatura e (herdado via IT-Team) Contributor no nível do grupo de recursos
 8. Verificar o acesso efetivo do Bob no grupo de recursos
-9. Listar todas as atribuiÃ§Ãµes de funÃ§Ã£o no escopo do grupo de recursos
+9. Listar todas as atribuições de função no escopo do grupo de recursos
 
-### Parte 4: criar uma funÃ§Ã£o personalizada
+### Parte 4: criar uma função personalizada
 
-10. Criar uma funÃ§Ã£o personalizada chamada `VM-Reader` com as seguintes permissÃµes:
-    - **AÃ§Ãµes permitidas**: `Microsoft.Compute/virtualMachines/read`, `Microsoft.Compute/virtualMachines/instanceView/read`, `Microsoft.Network/networkInterfaces/read`
+10. Criar uma função personalizada chamada `VM-Reader` com as seguintes permissões:
+    - **Ações permitidas**: `Microsoft.Compute/virtualMachines/read`, `Microsoft.Compute/virtualMachines/instanceView/read`, `Microsoft.Network/networkInterfaces/read`
     - **Escopo**: Sua assinatura
-    - Esta funÃ§Ã£o deve permitir apenas a leitura de informaÃ§Ãµes de VM, sem modificar nada
+    - Esta função deve permitir apenas a leitura de informações de VM, sem modificar nada
 
-11. Atribuir a funÃ§Ã£o personalizada `VM-Reader` para Carol no escopo do grupo de recursos
+11. Atribuir a função personalizada `VM-Reader` para Carol no escopo do grupo de recursos
 
 ### Parte 5: auditar acesso
 
-12. Gerar um relatÃ³rio de todas as atribuiÃ§Ãµes de funÃ§Ã£o na sua assinatura
-13. Encontrar todos os usuÃ¡rios com a funÃ§Ã£o **Owner** em qualquer escopo
+12. Gerar um relatório de todas as atribuições de função na sua assinatura
+13. Encontrar todos os usuários com a função **Owner** em qualquer escopo
 
-## CritÃ©rios de sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-02"
   items={[
-    "Consegue explicar a diferenÃ§a entre as 4 funÃ§Ãµes internas fundamentais",
-    "Alice tem a funÃ§Ã£o Reader no escopo da assinatura",
-    "O grupo IT-Team tem a funÃ§Ã£o Contributor no escopo do grupo de recursos",
-    "Bob tem a funÃ§Ã£o Virtual Machine Contributor no escopo do grupo de recursos",
-    "A funÃ§Ã£o personalizada VM-Reader existe com permissÃµes somente leitura para VMs",
-    "Carol tem a funÃ§Ã£o personalizada VM-Reader atribuÃ­da",
-    "Consegue listar e interpretar atribuiÃ§Ãµes de funÃ§Ã£o usando CLI ou Portal"
+    "Consegue explicar a diferença entre as 4 funções internas fundamentais",
+    "Alice tem a função Reader no escopo da assinatura",
+    "O grupo IT-Team tem a função Contributor no escopo do grupo de recursos",
+    "Bob tem a função Virtual Machine Contributor no escopo do grupo de recursos",
+    "A função personalizada VM-Reader existe com permissões somente leitura para VMs",
+    "Carol tem a função personalizada VM-Reader atribuída",
+    "Consegue listar e interpretar atribuições de função usando CLI ou Portal"
   ]}
 />
 ## Dicas
 
 <details>
-<summary>Dica 1: Listando funÃ§Ãµes internas</summary>
+<summary>Dica 1: Listando funções internas</summary>
 
 <Tabs>
 <TabItem value="cli" label="Azure CLI">
@@ -144,10 +144,10 @@ Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. VÃ¡ para sua **Subscription** â†’ **Access control (IAM)**
+1. Vá para sua **Subscription** â†’ **Access control (IAM)**
 2. Clique na aba **Roles**
 3. Pesquise por "Owner", "Contributor", "Reader"
-4. Clique em qualquer funÃ§Ã£o â†’ **View** para ver suas permissÃµes
+4. Clique em qualquer função â†’ **View** para ver suas permissões
 
 </TabItem>
 </Tabs>
@@ -155,7 +155,7 @@ Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 </details>
 
 <details>
-<summary>Dica 2: Atribuindo funÃ§Ãµes em diferentes escopos</summary>
+<summary>Dica 2: Atribuindo funções em diferentes escopos</summary>
 
 ```bash
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
@@ -194,7 +194,7 @@ az role assignment list --all -o table
 </details>
 
 <details>
-<summary>Dica 4: Criando uma funÃ§Ã£o personalizada</summary>
+<summary>Dica 4: Criando uma função personalizada</summary>
 
 ```bash
 SUBSCRIPTION_ID=$(az account show --query id -o tsv)
@@ -237,51 +237,51 @@ az role assignment list --all --role "Owner" \
 
 ## Recursos de aprendizado
 
-- [FunÃ§Ãµes internas do Azure](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
-- [Atribuir funÃ§Ãµes do Azure usando Azure CLI](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli)
-- [Criar funÃ§Ãµes personalizadas](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles-cli)
-- [Entender definiÃ§Ãµes de funÃ§Ãµes](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
+- [Funções internas do Azure](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
+- [Atribuir funções do Azure usando Azure CLI](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli)
+- [Criar funções personalizadas](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles-cli)
+- [Entender definições de funções](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
 - [Entender escopo para Azure RBAC](https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview)
 
 ## Quebra & conserta
 
-ApÃ³s completar o desafio, tente estes cenÃ¡rios de soluÃ§Ã£o de problemas:
+Após completar o desafio, tente estes cenários de solução de problemas:
 
-1. **EscalaÃ§Ã£o de permissÃ£o bloqueada**: FaÃ§a login como Bob (que tem VM Contributor) e tente atribuir a funÃ§Ã£o Reader a outro usuÃ¡rio no grupo de recursos. O que acontece? Qual funÃ§Ã£o o Bob precisa para atribuir funÃ§Ãµes?
+1. **Escalação de permissão bloqueada**: Faça login como Bob (que tem VM Contributor) e tente atribuir a função Reader a outro usuário no grupo de recursos. O que acontece? Qual função o Bob precisa para atribuir funções?
 
-2. **PermissÃµes conflitantes**: Atribua a Alice tanto **Reader** no escopo da assinatura quanto **Contributor** no escopo do grupo de recursos. Qual Ã© o acesso efetivo dela no grupo de recursos? (RBAC Ã© aditivo | ela recebe Contributor naquele RG.)
+2. **Permissões conflitantes**: Atribua a Alice tanto **Reader** no escopo da assinatura quanto **Contributor** no escopo do grupo de recursos. Qual é o acesso efetivo dela no grupo de recursos? (RBAC é aditivo | ela recebe Contributor naquele RG.)
 
-3. **NegaÃ§Ã£o misteriosa de acesso**: Carol tem a funÃ§Ã£o personalizada `VM-Reader` mas alega que nÃ£o consegue ver VMs no Portal. Verifique:
-   - A funÃ§Ã£o estÃ¡ atribuÃ­da no escopo correto?
-   - A funÃ§Ã£o inclui `Microsoft.Resources/subscriptions/resourceGroups/read`?
-   - VocÃª esqueceu `Microsoft.Compute/virtualMachines/*/read` para sub-recursos?
+3. **Negação misteriosa de acesso**: Carol tem a função personalizada `VM-Reader` mas alega que não consegue ver VMs no Portal. Verifique:
+   - A função está atribuída no escopo correto?
+   - A função inclui `Microsoft.Resources/subscriptions/resourceGroups/read`?
+   - Você esqueceu `Microsoft.Compute/virtualMachines/*/read` para sub-recursos?
 
-4. **AtribuiÃ§Ãµes Ã³rfÃ£s**: Exclua a conta da Alice, depois liste as atribuiÃ§Ãµes de funÃ§Ã£o. VocÃª verÃ¡ uma atribuiÃ§Ã£o com um principal "Unknown" ou "Identity not found". Como vocÃª limpa essas atribuiÃ§Ãµes?
+4. **Atribuições órfãs**: Exclua a conta da Alice, depois liste as atribuições de função. Você verá uma atribuição com um principal "Unknown" ou "Identity not found". Como você limpa essas atribuições?
 
 ## Teste seus conhecimentos
 
 <details>
-<summary>1. Qual Ã© a diferenÃ§a principal entre Owner e Contributor?</summary>
+<summary>1. Qual é a diferença principal entre Owner e Contributor?</summary>
 
-A funÃ§Ã£o **Owner** pode fazer tudo que o **Contributor** pode, alÃ©m de poder **gerenciar atribuiÃ§Ãµes de funÃ§Ã£o** (atribuir/remover funÃ§Ãµes para outros usuÃ¡rios). A funÃ§Ã£o Contributor tem explicitamente `Microsoft.Authorization/*/Write` e `Microsoft.Authorization/*/Delete` em suas `NotActions`.
+A função **Owner** pode fazer tudo que o **Contributor** pode, além de poder **gerenciar atribuições de função** (atribuir/remover funções para outros usuários). A função Contributor tem explicitamente `Microsoft.Authorization/*/Write` e `Microsoft.Authorization/*/Delete` em suas `NotActions`.
 
-**Dica para o exame**: Se uma questÃ£o perguntar "quem pode conceder acesso a outros?", a resposta Ã© **Owner** ou **User Access Administrator**.
-
-</details>
-
-<details>
-<summary>2. O que Ã© uma deny assignment e como Ã© diferente de NotActions?</summary>
-
-**Deny assignments** sÃ£o bloqueios explÃ­citos que impedem usuÃ¡rios de realizar aÃ§Ãµes especÃ­ficas, mesmo que uma funÃ§Ã£o conceda acesso. Elas tÃªm precedÃªncia sobre atribuiÃ§Ãµes de funÃ§Ã£o. Deny assignments sÃ³ podem ser criadas pelo **Azure Blueprints** ou **managed apps** | vocÃª nÃ£o pode criÃ¡-las diretamente.
-
-**NotActions** simplesmente subtraem permissÃµes da lista de `Actions` dentro de uma definiÃ§Ã£o de funÃ§Ã£o. Elas nÃ£o negam explicitamente nada | se outra funÃ§Ã£o conceder a permissÃ£o, o usuÃ¡rio ainda a terÃ¡.
-
-**Ordem de precedÃªncia**: Deny ExplÃ­cito â†’ NotActions â†’ Allow
+**Dica para o exame**: Se uma questão perguntar "quem pode conceder acesso a outros?", a resposta é **Owner** ou **User Access Administrator**.
 
 </details>
 
 <details>
-<summary>3. Como funciona a heranÃ§a de funÃ§Ãµes entre escopos?</summary>
+<summary>2. O que é uma deny assignment e como é diferente de NotActions?</summary>
+
+**Deny assignments** são bloqueios explícitos que impedem usuários de realizar ações específicas, mesmo que uma função conceda acesso. Elas têm precedência sobre atribuições de função. Deny assignments só podem ser criadas pelo **Azure Blueprints** ou **managed apps** | você não pode criá-las diretamente.
+
+**NotActions** simplesmente subtraem permissões da lista de `Actions` dentro de uma definição de função. Elas não negam explicitamente nada | se outra função conceder a permissão, o usuário ainda a terá.
+
+**Ordem de precedência**: Deny Explícito â†’ NotActions â†’ Allow
+
+</details>
+
+<details>
+<summary>3. Como funciona a herança de funções entre escopos?</summary>
 
 RBAC usa uma **hierarquia de escopos**:
 
@@ -289,33 +289,33 @@ RBAC usa uma **hierarquia de escopos**:
 Management Group â†’ Subscription â†’ Resource Group â†’ Resource
 ```
 
-Uma funÃ§Ã£o atribuÃ­da em um **escopo superior** Ã© herdada por todos os **escopos inferiores**. Por exemplo:
-- Reader no nÃ­vel da assinatura = Reader em cada grupo de recursos e recurso nessa assinatura
+Uma função atribuída em um **escopo superior** é herdada por todos os **escopos inferiores**. Por exemplo:
+- Reader no nível da assinatura = Reader em cada grupo de recursos e recurso nessa assinatura
 - Contributor em um grupo de recursos = Contributor em cada recurso nesse grupo
 
-**PermissÃµes sÃ£o aditivas** | se vocÃª tem Reader na assinatura e Contributor em um grupo de recursos, seu acesso efetivo naquele RG Ã© Contributor (a combinaÃ§Ã£o mais permissiva).
+**Permissões são aditivas** | se você tem Reader na assinatura e Contributor em um grupo de recursos, seu acesso efetivo naquele RG é Contributor (a combinação mais permissiva).
 
 </details>
 
 <details>
-<summary>4. Quantas funÃ§Ãµes personalizadas vocÃª pode criar por tenant?</summary>
+<summary>4. Quantas funções personalizadas você pode criar por tenant?</summary>
 
-Cada tenant do Microsoft Entra ID pode ter atÃ© **5.000 funÃ§Ãµes personalizadas**. FunÃ§Ãµes personalizadas podem ter escopo em uma ou mais assinaturas ou grupos de gerenciamento dentro do tenant.
+Cada tenant do Microsoft Entra ID pode ter até **5.000 funções personalizadas**. Funções personalizadas podem ter escopo em uma ou mais assinaturas ou grupos de gerenciamento dentro do tenant.
 
-FunÃ§Ãµes personalizadas requerem **Microsoft Entra ID P1 ou P2** para atribuiÃ§Ãµes a service principals, mas funcionam com o nÃ­vel gratuito para atribuiÃ§Ãµes a usuÃ¡rios.
+Funções personalizadas requerem **Microsoft Entra ID P1 ou P2** para atribuições a service principals, mas funcionam com o nível gratuito para atribuições a usuários.
 
 </details>
 
 <details>
-<summary>5. VocÃª pode atribuir funÃ§Ãµes RBAC a service principals e managed identities?</summary>
+<summary>5. Você pode atribuir funções RBAC a service principals e managed identities?</summary>
 
-**Sim!** FunÃ§Ãµes RBAC podem ser atribuÃ­das a:
-- **UsuÃ¡rios** (membros e convidados do Entra ID)
-- **Grupos** (grupos de seguranÃ§a e grupos do Microsoft 365)
-- **Service principals** (registros de aplicaÃ§Ã£o)
-- **Managed identities** (atribuÃ­das pelo sistema e atribuÃ­das pelo usuÃ¡rio)
+**Sim!** Funções RBAC podem ser atribuídas a:
+- **Usuários** (membros e convidados do Entra ID)
+- **Grupos** (grupos de segurança e grupos do Microsoft 365)
+- **Service principals** (registros de aplicação)
+- **Managed identities** (atribuídas pelo sistema e atribuídas pelo usuário)
 
-Este Ã© um cenÃ¡rio comum de exame: "Atribua a funÃ§Ã£o Storage Blob Data Contributor a uma managed identity para que um aplicativo possa acessar blob storage sem armazenar credenciais."
+Este é um cenário comum de exame: "Atribua a função Storage Blob Data Contributor a uma managed identity para que um aplicativo possa acessar blob storage sem armazenar credenciais."
 
 </details>
 
@@ -346,4 +346,4 @@ rm -f vm-reader-role.json
 
 ---
 
-**PrÃ³ximo**: [Desafio 03 | Azure Policy & GovernanÃ§a](/docs/az-104/identity/challenge-03)
+**Próximo**: [Desafio 03 | Azure Policy & Governança](/docs/az-104/identity/challenge-03)

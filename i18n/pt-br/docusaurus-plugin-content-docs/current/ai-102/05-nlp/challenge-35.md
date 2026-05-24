@@ -10,38 +10,38 @@ import TabItem from '@theme/TabItem';
 # Desafio 35: Text-to-Speech e SSML
 
 :::info Tempo Estimado
-**45 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
+**45 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Implementar sÃ­ntese de text-to-speech
-- Melhorar a saÃ­da de fala com SSML (Speech Synthesis Markup Language)
-- Configurar seleÃ§Ã£o de voz e formatos de saÃ­da de Ã¡udio
+- Implementar síntese de text-to-speech
+- Melhorar a saída de fala com SSML (Speech Synthesis Markup Language)
+- Configurar seleção de voz e formatos de saída de áudio
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Azure Text-to-Speech (TTS) converte texto em Ã¡udio com som natural:
+O Azure Text-to-Speech (TTS) converte texto em áudio com som natural:
 
-| Recurso | DescriÃ§Ã£o |
+| Recurso | Descrição |
 |---------|-----------|
 | **Vozes neurais** | Vozes geradas por IA (400+ em 140 idiomas) |
-| **SSML** | MarcaÃ§Ã£o XML para controlar prosÃ³dia, Ãªnfase, pausas |
-| **Formatos de Ã¡udio** | WAV, MP3, OGG, PCM raw |
-| **Viseme** | Dados de posiÃ§Ã£o da boca para animaÃ§Ã£o de avatar |
-| **Custom Neural Voice** | Treine uma voz Ãºnica (requer aprovaÃ§Ã£o) |
+| **SSML** | Marcação XML para controlar prosódia, ênfase, pausas |
+| **Formatos de áudio** | WAV, MP3, OGG, PCM raw |
+| **Viseme** | Dados de posição da boca para animação de avatar |
+| **Custom Neural Voice** | Treine uma voz única (requer aprovação) |
 
 Elementos SSML: `<speak>`, `<voice>`, `<prosody>`, `<emphasis>`, `<break>`, `<say-as>`, `<phoneme>`
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura do Azure
 - Recurso Azure Speech
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-cognitiveservices-speech` (v1.38+)
-- Dispositivo de saÃ­da de Ã¡udio (alto-falante) ou saÃ­da em arquivo
+- Dispositivo de saída de áudio (alto-falante) ou saída em arquivo
 
-## ImplementaÃ§Ã£o
+## Implementação
 
-### Tarefa 1: Text-to-Speech BÃ¡sico
+### Tarefa 1: Text-to-Speech Básico
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -107,7 +107,7 @@ if (result.Reason == ResultReason.SynthesizingAudioCompleted)
 </TabItem>
 </Tabs>
 
-### Tarefa 2: SSML para Controle AvanÃ§ado de Fala
+### Tarefa 2: SSML para Controle Avançado de Fala
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -185,7 +185,7 @@ Console.WriteLine($"SSML result: {result.Reason}, {result.AudioData.Length} byte
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Listar Vozes DisponÃ­veis
+### Tarefa 3: Listar Vozes Disponíveis
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -231,7 +231,7 @@ curl -s "https://${REGION}.tts.speech.microsoft.com/cognitiveservices/v1" \
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Speech synthesized successfully!
@@ -252,30 +252,30 @@ Available en-US voices (148):
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Sem saÃ­da de Ã¡udio | 0 bytes gerados | Nome de voz invÃ¡lido | Use o `short_name` exato da lista de vozes |
-| Erro de parse SSML | SÃ­ntese cancelada | XML malformado | Valide a estrutura SSML; verifique URIs de namespace |
-| Voz nÃ£o encontrada | Erro de cancelamento | Voz nÃ£o disponÃ­vel na regiÃ£o | Verifique disponibilidade da voz por regiÃ£o |
-| Qualidade de Ã¡udio ruim | Som robÃ³tico | Usando vozes standard antigas | Mude para vozes Neural (sufixo `*Neural`) |
-| Arquivo muito grande | Bytes de Ã¡udio excessivos | Formato de saÃ­da errado | Use formato comprimido (MP3/OGG) em vez de PCM raw |
+| Sem saída de áudio | 0 bytes gerados | Nome de voz inválido | Use o `short_name` exato da lista de vozes |
+| Erro de parse SSML | Síntese cancelada | XML malformado | Valide a estrutura SSML; verifique URIs de namespace |
+| Voz não encontrada | Erro de cancelamento | Voz não disponível na região | Verifique disponibilidade da voz por região |
+| Qualidade de áudio ruim | Som robótico | Usando vozes standard antigas | Mude para vozes Neural (sufixo `*Neural`) |
+| Arquivo muito grande | Bytes de áudio excessivos | Formato de saída errado | Use formato comprimido (MP3/OGG) em vez de PCM raw |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© o propÃ³sito do elemento SSML <prosody>?",
+    question: "Qual é o propósito do elemento SSML <prosody>?",
     options: [
       "Selecionar qual voz usar",
-      "Inserir silÃªncio entre palavras",
-      "Controlar velocidade, tom e volume da saÃ­da de fala",
-      "Especificar o formato de saÃ­da de Ã¡udio"
+      "Inserir silêncio entre palavras",
+      "Controlar velocidade, tom e volume da saída de fala",
+      "Especificar o formato de saída de áudio"
     ],
     correctAnswer: 2,
-    explanation: "O elemento <prosody> controla caracterÃ­sticas da fala: rate (velocidade), pitch (tom) e volume. Os atributos aceitam porcentagens ou valores predefinidos."
+    explanation: "O elemento <prosody> controla características da fala: rate (velocidade), pitch (tom) e volume. Os atributos aceitam porcentagens ou valores predefinidos."
   },
   {
-    question: "Qual mÃ©todo vocÃª usa para sintetizar fala a partir de SSML?",
+    question: "Qual método você usa para sintetizar fala a partir de SSML?",
     options: [
       "speak_ssml_async(ssml)",
       "speak_text_async(ssml)",
@@ -283,40 +283,40 @@ Available en-US voices (148):
       "speak_async(ssml, mode='ssml')"
     ],
     correctAnswer: 0,
-    explanation: "Use speak_ssml_async() para entrada SSML e speak_text_async() para texto puro. O mÃ©todo SSML analisa a marcaÃ§Ã£o XML para controle de voz."
+    explanation: "Use speak_ssml_async() para entrada SSML e speak_text_async() para texto puro. O método SSML analisa a marcação XML para controle de voz."
   },
   {
     question: "O que o elemento SSML <say-as> faz?",
     options: [
       "Define um alias para uma palavra",
-      "Controla como tipos especÃ­ficos de conteÃºdo sÃ£o pronunciados (datas, nÃºmeros, caracteres, moeda)",
-      "Adiciona Ãªnfase a uma palavra",
-      "Muda a voz no meio da sentenÃ§a"
+      "Controla como tipos específicos de conteúdo são pronunciados (datas, números, caracteres, moeda)",
+      "Adiciona ênfase a uma palavra",
+      "Muda a voz no meio da sentença"
     ],
     correctAnswer: 1,
-    explanation: "<say-as> controla a pronÃºncia de conteÃºdo estruturado. interpret-as='date' lÃª datas corretamente, 'characters' soletra letras, 'currency' lÃª valores monetÃ¡rios."
+    explanation: "<say-as> controla a pronúncia de conteúdo estruturado. interpret-as='date' lê datas corretamente, 'characters' soletra letras, 'currency' lê valores monetários."
   },
   {
-    question: "Quais formatos de saÃ­da de Ã¡udio estÃ£o disponÃ­veis para text-to-speech?",
+    question: "Quais formatos de saída de áudio estão disponíveis para text-to-speech?",
     options: [
       "Apenas arquivos WAV",
       "Apenas MP3",
-      "Apenas streaming â€” sem saÃ­da em arquivo",
+      "Apenas streaming â€” sem saída em arquivo",
       "WAV, MP3, OGG Opus, PCM raw e outros formatos comprimidos"
     ],
     correctAnswer: 3,
-    explanation: "TTS suporta muitos formatos: WAV/PCM nÃ£o comprimido, MP3 e OGG Opus comprimidos em vÃ¡rias taxas de bits e taxas de amostragem, configurÃ¡veis via SpeechSynthesisOutputFormat."
+    explanation: "TTS suporta muitos formatos: WAV/PCM não comprimido, MP3 e OGG Opus comprimidos em várias taxas de bits e taxas de amostragem, configuráveis via SpeechSynthesisOutputFormat."
   },
   {
-    question: "Como vocÃª insere uma pausa na fala sintetizada?",
+    question: "Como você insere uma pausa na fala sintetizada?",
     options: [
-      "Adicione espaÃ§os no texto",
-      "Use o mÃ©todo pause() entre segmentos de texto",
+      "Adicione espaços no texto",
+      "Use o método pause() entre segmentos de texto",
       "Use o elemento SSML <break time='500ms'/>",
       "Adicione '...' no texto"
     ],
     correctAnswer: 2,
-    explanation: "O elemento <break> insere silÃªncio. Especifique a duraÃ§Ã£o com time='500ms' ou time='1s'. VocÃª tambÃ©m pode usar strength='weak|medium|strong' para pausas relativas."
+    explanation: "O elemento <break> insere silêncio. Especifique a duração com time='500ms' ou time='1s'. Você também pode usar strength='weak|medium|strong' para pausas relativas."
   }
 ]} />
 
@@ -328,7 +328,7 @@ az group delete --name rg-ai102-speech --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Text-to-speech](https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech)
-- [ReferÃªncia do SSML](https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-structure)
+- [Visão geral do Text-to-speech](https://learn.microsoft.com/azure/ai-services/speech-service/text-to-speech)
+- [Referência do SSML](https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-structure)
 - [Galeria de vozes](https://speech.microsoft.com/portal/voicegallery)
-- [Formatos de saÃ­da de Ã¡udio](https://learn.microsoft.com/azure/ai-services/speech-service/rest-text-to-speech#audio-outputs)
+- [Formatos de saída de áudio](https://learn.microsoft.com/azure/ai-services/speech-service/rest-text-to-speech#audio-outputs)

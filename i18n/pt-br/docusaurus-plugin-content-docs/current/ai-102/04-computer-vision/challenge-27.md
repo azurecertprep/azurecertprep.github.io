@@ -10,37 +10,37 @@ import TabItem from '@theme/TabItem';
 # Desafio 27: OCR - Extrair Texto de Imagens
 
 :::info Tempo Estimado
-**45 min** | **Custo**: $1-3 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de VisÃ£o Computacional (10-15%)
+**45 min** | **Custo**: $1-3 (estimado) | **Domínio**: Implementar Soluções de Visão Computacional (10-15%)
 :::
 
 ## Habilidades do exame abordadas
 - Extrair texto de imagens usando o recurso Read do Azure AI Vision
 - Converter texto manuscrito em texto digital
-- Processar documentos de mÃºltiplas pÃ¡ginas
+- Processar documentos de múltiplas páginas
 
-## VisÃ£o Geral
+## Visão Geral
 
 O recurso **Read** do Azure AI Vision (parte do Image Analysis 4.0) extrai texto impresso e manuscrito de imagens e documentos. A hierarquia do texto:
 
 ```text
-Imagem â†’ Blocks â†’ Lines â†’ Words (com polÃ­gonos delimitadores e confianÃ§a)
+Imagem â†’ Blocks â†’ Lines â†’ Words (com polígonos delimitadores e confiança)
 ```
 
-CaracterÃ­sticas principais:
+Características principais:
 - Suporta 164+ idiomas para texto impresso, 9 idiomas para manuscrito
-- Lida com texto rotacionado, inclinado e com ruÃ­do
-- Retorna polÃ­gonos delimitadores para cada elemento de texto
-- API sÃ­ncrona para imagens individuais
+- Lida com texto rotacionado, inclinado e com ruído
+- Retorna polígonos delimitadores para cada elemento de texto
+- API síncrona para imagens individuais
 
-Para PDFs de mÃºltiplas pÃ¡ginas, use o modelo Read do Azure AI Document Intelligence.
+Para PDFs de múltiplas páginas, use o modelo Read do Azure AI Document Intelligence.
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure
 - Recurso Azure AI Services
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-ai-vision-imageanalysis` (v1.0+)
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Extrair Texto Impresso de Imagens
 
@@ -164,7 +164,7 @@ curl -s "${ENDPOINT}/computervision/imageanalysis:analyze?features=read&api-vers
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Processar Documento de MÃºltiplas PÃ¡ginas com Document Intelligence
+### Tarefa 3: Processar Documento de Múltiplas Páginas com Document Intelligence
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -223,7 +223,7 @@ curl -s "${OPERATION_URL}" \
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Extracted Text:
@@ -250,41 +250,41 @@ Document contains 3 pages
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Nenhum texto detectado | Resultados vazios | Imagem muito pequena ou baixa qualidade | MÃ­n 50x50 px; garanta resoluÃ§Ã£o adequada (300 DPI para impressÃ£o) |
-| Idioma errado detectado | Texto ilegÃ­vel | AutodetecÃ§Ã£o falhou para scripts raros | Especifique o parÃ¢metro `language` na requisiÃ§Ã£o |
-| ConfianÃ§a baixa nas palavras | Resultados incertos | Qualidade da escrita manual ou fontes incomuns | Aceite limiares mais baixos para manuscrito; prÃ©-processe a imagem |
+| Nenhum texto detectado | Resultados vazios | Imagem muito pequena ou baixa qualidade | Mín 50x50 px; garanta resolução adequada (300 DPI para impressão) |
+| Idioma errado detectado | Texto ilegível | Autodetecção falhou para scripts raros | Especifique o parâmetro `language` na requisição |
+| Confiança baixa nas palavras | Resultados incertos | Qualidade da escrita manual ou fontes incomuns | Aceite limiares mais baixos para manuscrito; pré-processe a imagem |
 | 413 Request Entity Too Large | Arquivo rejeitado | Imagem excede o limite de 20MB | Comprima ou redimensione a imagem antes do envio |
-| PolÃ­gonos delimitadores incorretos | Boxes desalinhados | RotaÃ§Ã£o da imagem nÃ£o detectada | Use auto-rotaÃ§Ã£o ou prÃ©-processe para corrigir inclinaÃ§Ã£o |
+| Polígonos delimitadores incorretos | Boxes desalinhados | Rotação da imagem não detectada | Use auto-rotação ou pré-processe para corrigir inclinação |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a hierarquia de texto retornada pelo recurso Read do Azure AI Vision?",
+    question: "Qual é a hierarquia de texto retornada pelo recurso Read do Azure AI Vision?",
     options: [
       "Document â†’ Paragraphs â†’ Sentences â†’ Words",
       "Pages â†’ Columns â†’ Rows â†’ Characters",
-      "Blocks â†’ Lines â†’ Words (cada um com polÃ­gonos delimitadores e confianÃ§a)",
+      "Blocks â†’ Lines â†’ Words (cada um com polígonos delimitadores e confiança)",
       "Regions â†’ Paragraphs â†’ Lines â†’ Characters"
     ],
     correctAnswer: 2,
-    explanation: "O recurso Read retorna: Blocks (regiÃµes de texto) â†’ Lines (linhas de texto) â†’ Words (palavras individuais com polÃ­gonos delimitadores e scores de confianÃ§a)."
+    explanation: "O recurso Read retorna: Blocks (regiões de texto) â†’ Lines (linhas de texto) â†’ Words (palavras individuais com polígonos delimitadores e scores de confiança)."
   },
   {
-    question: "Qual Ã© o tamanho mÃ¡ximo de imagem suportado pelo recurso Read do Image Analysis?",
+    question: "Qual é o tamanho máximo de imagem suportado pelo recurso Read do Image Analysis?",
     options: [
-      "20MB com mÃ­nimo de 50x50 pixels",
+      "20MB com mínimo de 50x50 pixels",
       "5MB",
       "100MB",
-      "10MB com mÃ­nimo de 100x100 pixels"
+      "10MB com mínimo de 100x100 pixels"
     ],
     correctAnswer: 0,
-    explanation: "O Image Analysis suporta imagens de atÃ© 20MB com dimensÃ£o mÃ­nima de 50x50 pixels."
+    explanation: "O Image Analysis suporta imagens de até 20MB com dimensão mínima de 50x50 pixels."
   },
   {
-    question: "Para documentos PDF de mÃºltiplas pÃ¡ginas, qual serviÃ§o Azure vocÃª deve usar para extraÃ§Ã£o de texto?",
+    question: "Para documentos PDF de múltiplas páginas, qual serviço Azure você deve usar para extração de texto?",
     options: [
       "Recurso Read do Azure AI Vision Image Analysis",
       "Azure AI Document Intelligence com o modelo prebuilt-read",
@@ -292,29 +292,29 @@ Document contains 3 pages
       "API OCR v3.2 do Azure AI Vision"
     ],
     correctAnswer: 1,
-    explanation: "O modelo prebuilt-read do Document Intelligence lida com PDFs de mÃºltiplas pÃ¡ginas com resultados por pÃ¡gina. O Read do Image Analysis Ã© para imagens individuais."
+    explanation: "O modelo prebuilt-read do Document Intelligence lida com PDFs de múltiplas páginas com resultados por página. O Read do Image Analysis é para imagens individuais."
   },
   {
     question: "Como a API indica incerteza no reconhecimento de texto manuscrito?",
     options: [
       "Marca palavras com uma flag 'uncertain'",
-      "Retorna sugestÃµes alternativas de texto",
-      "Destaca regiÃµes incertas em vermelho",
-      "Cada palavra tem um score de confianÃ§a (0.0-1.0); manuscrito tipicamente pontua mais baixo que impresso"
+      "Retorna sugestões alternativas de texto",
+      "Destaca regiões incertas em vermelho",
+      "Cada palavra tem um score de confiança (0.0-1.0); manuscrito tipicamente pontua mais baixo que impresso"
     ],
     correctAnswer: 3,
-    explanation: "Cada palavra inclui um score de confianÃ§a de 0.0 a 1.0. Texto manuscrito tipicamente retorna scores de confianÃ§a mais baixos que texto impresso devido Ã  variabilidade."
+    explanation: "Cada palavra inclui um score de confiança de 0.0 a 1.0. Texto manuscrito tipicamente retorna scores de confiança mais baixos que texto impresso devido Ã  variabilidade."
   },
   {
-    question: "Qual header Content-Type vocÃª deve usar ao enviar um arquivo de imagem local para OCR?",
+    question: "Qual header Content-Type você deve usar ao enviar um arquivo de imagem local para OCR?",
     options: [
-      "application/octet-stream com dados binÃ¡rios brutos",
+      "application/octet-stream com dados binários brutos",
       "application/json com imagem codificada em base64",
       "multipart/form-data com anexo de arquivo",
       "image/jpeg ou image/png correspondente ao formato do arquivo"
     ],
     correctAnswer: 0,
-    explanation: "Ao enviar dados binÃ¡rios de imagem diretamente, use Content-Type: application/octet-stream. Ao enviar uma URL de imagem, use application/json."
+    explanation: "Ao enviar dados binários de imagem diretamente, use Content-Type: application/octet-stream. Ao enviar uma URL de imagem, use application/json."
   }
 ]} />
 
@@ -327,5 +327,5 @@ az group delete --name rg-ai102-vision --yes --no-wait
 ## Saiba Mais
 
 - [Ler texto de imagens](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-ocr)
-- [InÃ­cio rÃ¡pido do Image Analysis](https://learn.microsoft.com/azure/ai-services/computer-vision/quickstarts-sdk/image-analysis-client-library-40)
+- [Início rápido do Image Analysis](https://learn.microsoft.com/azure/ai-services/computer-vision/quickstarts-sdk/image-analysis-client-library-40)
 - [Modelo Read do Document Intelligence](https://learn.microsoft.com/azure/ai-services/document-intelligence/concept-read)

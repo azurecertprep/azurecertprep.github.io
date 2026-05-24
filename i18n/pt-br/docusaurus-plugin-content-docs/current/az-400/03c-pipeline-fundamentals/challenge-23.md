@@ -1,25 +1,25 @@
 ---
 sidebar_position: 5
-title: "Desafio 23: Elementos reutilizÃ¡veis de pipeline"
+title: "Desafio 23: Elementos reutilizáveis de pipeline"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 23: Elementos reutilizÃ¡veis de pipeline
+# Desafio 23: Elementos reutilizáveis de pipeline
 
-:::info Plataforma: comparaÃ§Ã£o
-Este desafio compara padrÃµes reutilizÃ¡veis entre GitHub Actions e Azure Pipelines.
+:::info Plataforma: comparação
+Este desafio compara padrões reutilizáveis entre GitHub Actions e Azure Pipelines.
 :::
 
 ## Habilidades do exame
 
-- Criar elementos reutilizÃ¡veis de pipeline, incluindo templates YAML, task groups, variÃ¡veis e grupos de variÃ¡veis
+- Criar elementos reutilizáveis de pipeline, incluindo templates YAML, task groups, variáveis e grupos de variáveis
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd gerencia 15 microsserviÃ§os, todos seguindo o mesmo padrÃ£o de build-test-deploy. Atualmente, cada serviÃ§o tem sua prÃ³pria definiÃ§Ã£o completa de pipeline, e uma mudanÃ§a recente na polÃ­tica de seguranÃ§a (adiÃ§Ã£o de varredura de contÃªiner) exigiu a ediÃ§Ã£o de todos os 15 arquivos. A equipe de DevOps precisa centralizar a lÃ³gica comum de pipeline em componentes reutilizÃ¡veis para reduzir a duplicaÃ§Ã£o e o esforÃ§o de manutenÃ§Ã£o.
+A Contoso Ltd gerencia 15 microsserviços, todos seguindo o mesmo padrão de build-test-deploy. Atualmente, cada serviço tem sua própria definição completa de pipeline, e uma mudança recente na política de segurança (adição de varredura de contêiner) exigiu a edição de todos os 15 arquivos. A equipe de DevOps precisa centralizar a lógica comum de pipeline em componentes reutilizáveis para reduzir a duplicação e o esforço de manutenção.
 
-Os serviÃ§os seguem uma estrutura padrÃ£o:
+Os serviços seguem uma estrutura padrão:
 
 ```text
 contoso-{service-name}/
@@ -29,11 +29,11 @@ contoso-{service-name}/
   package.json (or *.csproj)
 ```
 
-Todos os serviÃ§os fazem deploy para Azure Container Apps usando o mesmo padrÃ£o de staging e depois produÃ§Ã£o.
+Todos os serviços fazem deploy para Azure Container Apps usando o mesmo padrão de staging e depois produção.
 
-## Tarefa 1: Workflows reutilizÃ¡veis do GitHub com workflow_call
+## Tarefa 1: Workflows reutilizáveis do GitHub com workflow_call
 
-Crie um workflow reutilizÃ¡vel centralizado em um repositÃ³rio compartilhado (`contoso/.github`):
+Crie um workflow reutilizável centralizado em um repositório compartilhado (`contoso/.github`):
 
 ```yaml
 # .github/workflows/reusable-node-ci-cd.yml
@@ -219,7 +219,7 @@ jobs:
             --image ${{ env.REGISTRY }}/contoso/${{ inputs.image-name }}:${{ needs.docker.outputs.image-tag }}
 ```
 
-Chame o workflow reutilizÃ¡vel a partir do repositÃ³rio de cada serviÃ§o:
+Chame o workflow reutilizável a partir do repositório de cada serviço:
 
 ```yaml
 # contoso-order-service/.github/workflows/ci-cd.yml
@@ -247,7 +247,7 @@ jobs:
 
 ## Tarefa 2: Composite actions do GitHub
 
-Crie uma composite action para lÃ³gica compartilhada de build (usada dentro de um Ãºnico workflow ou entre repositÃ³rios):
+Crie uma composite action para lógica compartilhada de build (usada dentro de um único workflow ou entre repositórios):
 
 ```yaml
 # contoso/.github/actions/dotnet-build-test/action.yml
@@ -345,7 +345,7 @@ jobs:
 
 ## Tarefa 3: Templates YAML do Azure Pipelines
 
-Crie templates nos nÃ­veis de step, job e stage:
+Crie templates nos níveis de step, job e stage:
 
 ### Template de step
 
@@ -538,7 +538,7 @@ stages:
                       echo "Deployment healthy at https://${FQDN}"
 ```
 
-## Tarefa 4: Uso de templates com parÃ¢metros e inserÃ§Ã£o condicional
+## Tarefa 4: Uso de templates com parâmetros e inserção condicional
 
 Monte um pipeline completo a partir de templates:
 
@@ -631,9 +631,9 @@ stages:
       condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))"
 ```
 
-## Tarefa 5: Grupos de variÃ¡veis e integraÃ§Ã£o com biblioteca
+## Tarefa 5: Grupos de variáveis e integração com biblioteca
 
-Configure grupos de variÃ¡veis para configuraÃ§Ã£o centralizada:
+Configure grupos de variáveis para configuração centralizada:
 
 ```bash
 # Create variable group with inline variables
@@ -669,7 +669,7 @@ az pipelines variable-group create \
     LogLevel=Warning
 ```
 
-Referencie grupos de variÃ¡veis em templates:
+Referencie grupos de variáveis em templates:
 
 ```yaml
 # Variables can be scoped at pipeline, stage, or job level
@@ -692,17 +692,17 @@ stages:
 
 ## Tarefa 6: Task groups versus templates YAML
 
-Task groups sÃ£o o equivalente clÃ¡ssico de pipelines dos templates YAML:
+Task groups são o equivalente clássico de pipelines dos templates YAML:
 
-| Recurso | Task groups (clÃ¡ssico) | Templates YAML |
+| Recurso | Task groups (clássico) | Templates YAML |
 |---------|----------------------|----------------|
-| Interface | Designer visual | CÃ³digo (YAML) |
-| Controle de versÃ£o | Embutido (rascunhos, versÃµes) | Versionamento baseado em Git |
-| Compartilhamento | Dentro do projeto ou organizaÃ§Ã£o | Entre repositÃ³rios via resources |
-| ParÃ¢metros | Inputs tipados na UI | ParÃ¢metros YAML com tipos |
+| Interface | Designer visual | Código (YAML) |
+| Controle de versão | Embutido (rascunhos, versões) | Versionamento baseado em Git |
+| Compartilhamento | Dentro do projeto ou organização | Entre repositórios via resources |
+| Parâmetros | Inputs tipados na UI | Parâmetros YAML com tipos |
 | Aninhamento | Suportado | Suportado (templates chamando templates) |
-| LÃ³gica condicional | Limitada (condiÃ§Ãµes customizadas) | Suporte completo a expressÃµes |
-| Escopo de reutilizaÃ§Ã£o | Apenas nÃ­vel de step | NÃ­vel de step, job ou stage |
+| Lógica condicional | Limitada (condições customizadas) | Suporte completo a expressões |
+| Escopo de reutilização | Apenas nível de step | Nível de step, job ou stage |
 
 Convertendo um task group para um template YAML:
 
@@ -747,9 +747,9 @@ steps:
     displayName: "Evaluate scan results"
 ```
 
-## Tarefa 7: Compartilhamento de templates entre repositÃ³rios
+## Tarefa 7: Compartilhamento de templates entre repositórios
 
-### GitHub: PadrÃ£o de repositÃ³rio de templates
+### GitHub: Padrão de repositório de templates
 
 ```text
 # Organization template repository structure:
@@ -768,7 +768,7 @@ contoso/.github/
       action.yml
 ```
 
-Os serviÃ§os referenciam templates pelo caminho do repositÃ³rio:
+Os serviços referenciam templates pelo caminho do repositório:
 
 ```yaml
 # In any contoso/* repository
@@ -778,7 +778,7 @@ jobs:
     # Pin to a tag/release for stability
 ```
 
-### Azure DevOps: Recurso de repositÃ³rio de templates
+### Azure DevOps: Recurso de repositório de templates
 
 ```yaml
 # In the consuming pipeline:
@@ -796,7 +796,7 @@ stages:
       environment: "production"
 ```
 
-Estrutura do repositÃ³rio de templates:
+Estrutura do repositório de templates:
 
 ```text
 pipeline-templates/
@@ -815,11 +815,11 @@ pipeline-templates/
     common.yml
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: HeranÃ§a de secrets em workflow reutilizÃ¡vel
+### Exercício 1: Herança de secrets em workflow reutilizável
 
-Uma chamada de workflow reutilizÃ¡vel falha porque os secrets nÃ£o estÃ£o disponÃ­veis:
+Uma chamada de workflow reutilizável falha porque os secrets não estão disponíveis:
 
 ```yaml
 # Calling workflow
@@ -833,9 +833,9 @@ jobs:
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Passe explicitamente os secrets necessÃ¡rios ou use `secrets: inherit`:
+**Correção:** Passe explicitamente os secrets necessários ou use `secrets: inherit`:
 
 ```yaml
 jobs:
@@ -851,7 +851,7 @@ jobs:
 
 </details>
 
-### ExercÃ­cio 2: Incompatibilidade de tipo de parÃ¢metro no template
+### Exercício 2: Incompatibilidade de tipo de parâmetro no template
 
 Um template do Azure Pipelines falha com erro "Unexpected value":
 
@@ -870,9 +870,9 @@ parameters:
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Passe um objeto (lista), nÃ£o uma string:
+**Correção:** Passe um objeto (lista), não uma string:
 
 ```yaml
 - template: deploy.yml
@@ -884,7 +884,7 @@ parameters:
 
 </details>
 
-### ExercÃ­cio 3: Falha na resoluÃ§Ã£o de referÃªncia do template
+### Exercício 3: Falha na resolução de referência do template
 
 ```yaml
 resources:
@@ -900,9 +900,9 @@ steps:
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Use o caminho completo da ref:
+**Correção:** Use o caminho completo da ref:
 
 ```yaml
 resources:
@@ -914,52 +914,52 @@ resources:
 ```
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a principal diferenÃ§a entre um workflow reutilizÃ¡vel do GitHub e uma composite action?",
+    question: "Qual é a principal diferença entre um workflow reutilizável do GitHub e uma composite action?",
     options: [
-      "Workflows reutilizÃ¡veis sÃ³ podem estar no mesmo repositÃ³rio; composite actions podem ser compartilhadas",
-      "Workflows reutilizÃ¡veis executam como jobs separados com seu prÃ³prio runner; composite actions executam como steps no job do chamador",
-      "Composite actions suportam secrets; workflows reutilizÃ¡veis nÃ£o",
-      "Workflows reutilizÃ¡veis sÃ£o limitados a 5 jobs; composite actions nÃ£o tÃªm limites"
+      "Workflows reutilizáveis só podem estar no mesmo repositório; composite actions podem ser compartilhadas",
+      "Workflows reutilizáveis executam como jobs separados com seu próprio runner; composite actions executam como steps no job do chamador",
+      "Composite actions suportam secrets; workflows reutilizáveis não",
+      "Workflows reutilizáveis são limitados a 5 jobs; composite actions não têm limites"
     ],
     correctIndex: 1,
-    explanation: "Um workflow reutilizÃ¡vel (disparado via workflow_call) executa como um ou mais jobs completos em seus prÃ³prios runners com workspaces independentes. Uma composite action executa como um conjunto de steps dentro do job chamador, compartilhando o runner, workspace e variÃ¡veis de ambiente. Essa distinÃ§Ã£o afeta como o estado Ã© compartilhado, o desempenho (sem spin-up de novo runner para composite), e o que cada um pode acessar."
+    explanation: "Um workflow reutilizável (disparado via workflow_call) executa como um ou mais jobs completos em seus próprios runners com workspaces independentes. Uma composite action executa como um conjunto de steps dentro do job chamador, compartilhando o runner, workspace e variáveis de ambiente. Essa distinção afeta como o estado é compartilhado, o desempenho (sem spin-up de novo runner para composite), e o que cada um pode acessar."
   },
   {
-    question: "No Azure Pipelines, como vocÃª referencia um template de um repositÃ³rio diferente?",
+    question: "No Azure Pipelines, como você referencia um template de um repositório diferente?",
     options: [
-      "Usar 'extends' com a URL do repositÃ³rio diretamente no caminho do template",
-      "Declarar o repositÃ³rio em 'resources.repositories' e usar o sufixo '@alias' no caminho do template",
-      "Usar declaraÃ§Ãµes 'import' no topo do arquivo YAML",
-      "Arquivos de template devem estar no mesmo repositÃ³rio"
+      "Usar 'extends' com a URL do repositório diretamente no caminho do template",
+      "Declarar o repositório em 'resources.repositories' e usar o sufixo '@alias' no caminho do template",
+      "Usar declarações 'import' no topo do arquivo YAML",
+      "Arquivos de template devem estar no mesmo repositório"
     ],
     correctIndex: 1,
-    explanation: "Templates externos requerem uma declaraÃ§Ã£o de recurso de repositÃ³rio com um alias. O template Ã© entÃ£o referenciado usando a sintaxe template: path/to/file.yml@alias. O alias corresponde ao campo repository na seÃ§Ã£o resources. Isso permite fixar em refs especÃ­ficas (branches ou tags) para controle de versÃ£o."
+    explanation: "Templates externos requerem uma declaração de recurso de repositório com um alias. O template é então referenciado usando a sintaxe template: path/to/file.yml@alias. O alias corresponde ao campo repository na seção resources. Isso permite fixar em refs específicas (branches ou tags) para controle de versão."
   },
   {
-    question: "O que acontece quando vocÃª usa 'secrets: inherit' em uma chamada de workflow reutilizÃ¡vel do GitHub?",
+    question: "O que acontece quando você usa 'secrets: inherit' em uma chamada de workflow reutilizável do GitHub?",
     options: [
-      "Apenas secrets no nÃ­vel da organizaÃ§Ã£o sÃ£o passados",
-      "Todos os secrets disponÃ­veis para o workflow chamador sÃ£o automaticamente passados para o workflow reutilizÃ¡vel",
-      "Um novo conjunto de secrets Ã© gerado para o workflow reutilizÃ¡vel",
-      "Apenas secrets explicitamente listados na definiÃ§Ã£o de 'secrets' do workflow reutilizÃ¡vel sÃ£o passados"
+      "Apenas secrets no nível da organização são passados",
+      "Todos os secrets disponíveis para o workflow chamador são automaticamente passados para o workflow reutilizável",
+      "Um novo conjunto de secrets é gerado para o workflow reutilizável",
+      "Apenas secrets explicitamente listados na definição de 'secrets' do workflow reutilizável são passados"
     ],
     correctIndex: 1,
-    explanation: "secrets: inherit passa todos os secrets que o workflow chamador tem acesso (secrets do repositÃ³rio, secrets do environment e secrets da organizaÃ§Ã£o) para o workflow reutilizÃ¡vel. Sem secrets: inherit, vocÃª deve passar explicitamente cada secret. Note que secrets: inherit tambÃ©m passa o GITHUB_TOKEN com as permissÃµes do workflow chamador."
+    explanation: "secrets: inherit passa todos os secrets que o workflow chamador tem acesso (secrets do repositório, secrets do environment e secrets da organização) para o workflow reutilizável. Sem secrets: inherit, você deve passar explicitamente cada secret. Note que secrets: inherit também passa o GITHUB_TOKEN com as permissões do workflow chamador."
   },
   {
-    question: "Qual tipo de template do Azure Pipelines permite definir stages reutilizÃ¡veis que incluem deployment jobs com environments?",
+    question: "Qual tipo de template do Azure Pipelines permite definir stages reutilizáveis que incluem deployment jobs com environments?",
     options: [
       "Template de step",
       "Template de job",
       "Template de stage",
-      "Template de variÃ¡vel"
+      "Template de variável"
     ],
     correctIndex: 2,
-    explanation: "Templates de stage podem encapsular stages inteiros incluindo deployment jobs, referÃªncias de environment e portÃµes de aprovaÃ§Ã£o. Eles sÃ£o o tipo de template de mais alto nÃ­vel e podem conter jobs e steps dentro deles. Isso permite padronizar o padrÃ£o completo de deploy (environment, estratÃ©gia, verificaÃ§Ãµes de aprovaÃ§Ã£o) entre mÃºltiplos pipelines."
+    explanation: "Templates de stage podem encapsular stages inteiros incluindo deployment jobs, referências de environment e portões de aprovação. Eles são o tipo de template de mais alto nível e podem conter jobs e steps dentro deles. Isso permite padronizar o padrão completo de deploy (environment, estratégia, verificações de aprovação) entre múltiplos pipelines."
   }
 ]} />
 

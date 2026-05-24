@@ -6,56 +6,56 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 # Desafio 21: ExpressRoute Microsoft peering e criptografia
 
-:::caution Modo de simulaÃ§Ã£o
-Este desafio Ã© baseado em simulaÃ§Ã£o. O ExpressRoute requer um provedor de conectividade fÃ­sica e custa $55--$10.000+/mÃªs. VocÃª aprenderÃ¡ os comandos CLI, padrÃµes de configuraÃ§Ã£o e saÃ­das esperadas sem implantar recursos reais.
+:::caution Modo de simulação
+Este desafio é baseado em simulação. O ExpressRoute requer um provedor de conectividade física e custa $55--$10.000+/mês. Você aprenderá os comandos CLI, padrões de configuração e saídas esperadas sem implantar recursos reais.
 :::
 
 :::info Tempo e custo estimados
-**45--60 minutos** | **Sem custo (simulaÃ§Ã£o)** | **Peso no exame: 20--25%**
+**45--60 minutos** | **Sem custo (simulação)** | **Peso no exame: 20--25%**
 :::
 
 ## Objetivos
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Configurar Microsoft peering em um circuito ExpressRoute
 - Criar e configurar filtros de rota com valores de comunidade BGP
 - Associar filtros de rota ao Microsoft peering
-- Recomendar configuraÃ§Ãµes de anÃºncio de rotas
+- Recomendar configurações de anúncio de rotas
 - Configurar criptografia MACsec no ExpressRoute Direct
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso usa o Microsoft 365 e serviÃ§os Azure PaaS (Azure Storage, Azure SQL Database) extensivamente. Eles querem rotear o trÃ¡fego para esses serviÃ§os pelo circuito ExpressRoute existente, em vez da internet pÃºblica, aproveitando a largura de banda dedicada e a latÃªncia previsÃ­vel.
+A Contoso usa o Microsoft 365 e serviços Azure PaaS (Azure Storage, Azure SQL Database) extensivamente. Eles querem rotear o tráfego para esses serviços pelo circuito ExpressRoute existente, em vez da internet pública, aproveitando a largura de banda dedicada e a latência previsível.
 
-Eles tambÃ©m possuem uma conexÃ£o ExpressRoute Direct que requer criptografia MACsec para conformidade regulatÃ³ria â€” todos os dados que trafegam pelo link fÃ­sico devem ser criptografados na Camada 2.
+Eles também possuem uma conexão ExpressRoute Direct que requer criptografia MACsec para conformidade regulatória â€” todos os dados que trafegam pelo link físico devem ser criptografados na Camada 2.
 
 ---
 
 ## Tarefa 1: Configurar Microsoft peering
 
-O Microsoft peering fornece conectividade aos serviÃ§os online da Microsoft (Microsoft 365, Dynamics 365) e serviÃ§os Azure PaaS (Azure Storage, Azure SQL Database, Azure Cosmos DB) atravÃ©s de endereÃ§os IP pÃºblicos.
+O Microsoft peering fornece conectividade aos serviços online da Microsoft (Microsoft 365, Dynamics 365) e serviços Azure PaaS (Azure Storage, Azure SQL Database, Azure Cosmos DB) através de endereços IP públicos.
 
 ### Requisitos do Microsoft peering
 
 | Requisito | Detalhe |
 |---|---|
-| Prefixos IP pÃºblicos | VocÃª deve possuir IPs pÃºblicos registrados em RIR/IRR |
-| Sub-rede primÃ¡ria | Sub-rede pÃºblica IPv4 /30 para o link BGP primÃ¡rio |
-| Sub-rede secundÃ¡ria | Sub-rede pÃºblica IPv4 /30 para o link BGP secundÃ¡rio |
-| ASN do cliente | Seu nÃºmero AS pÃºblico ou privado |
-| ID de VLAN | Tag VLAN Ãºnica (diferente do private peering) |
-| Registro de roteamento | RIR onde seus prefixos/ASN estÃ£o registrados |
-| Filtro de rota | NecessÃ¡rio para receber quaisquer anÃºncios de rotas |
+| Prefixos IP públicos | Você deve possuir IPs públicos registrados em RIR/IRR |
+| Sub-rede primária | Sub-rede pública IPv4 /30 para o link BGP primário |
+| Sub-rede secundária | Sub-rede pública IPv4 /30 para o link BGP secundário |
+| ASN do cliente | Seu número AS público ou privado |
+| ID de VLAN | Tag VLAN única (diferente do private peering) |
+| Registro de roteamento | RIR onde seus prefixos/ASN estão registrados |
+| Filtro de rota | Necessário para receber quaisquer anúncios de rotas |
 
 ### Private peering vs Microsoft peering
 
 | Aspecto | Private peering | Microsoft peering |
 |---|---|---|
-| EndereÃ§amento IP | IPs privados RFC 1918 | IPs pÃºblicos (registrados em RIR) |
-| ServiÃ§os alcanÃ§ados | VNets do Azure (IaaS, PaaS via Private Endpoints) | Microsoft 365, endpoints pÃºblicos Azure PaaS |
-| Filtro de rota necessÃ¡rio | NÃ£o | Sim (obrigatÃ³rio desde agosto de 2017) |
-| Caso de uso | Conectividade hÃ­brida para VMs, aplicativos internos | Acesso direto ao Microsoft SaaS/PaaS |
+| Endereçamento IP | IPs privados RFC 1918 | IPs públicos (registrados em RIR) |
+| Serviços alcançados | VNets do Azure (IaaS, PaaS via Private Endpoints) | Microsoft 365, endpoints públicos Azure PaaS |
+| Filtro de rota necessário | Não | Sim (obrigatório desde agosto de 2017) |
+| Caso de uso | Conectividade híbrida para VMs, aplicativos internos | Acesso direto ao Microsoft SaaS/PaaS |
 
 ### Criar Microsoft peering
 
@@ -73,18 +73,18 @@ az network express-route peering create \
   --routing-registry-name ARIN
 ```
 
-**Detalhes dos parÃ¢metros:**
+**Detalhes dos parâmetros:**
 
-| ParÃ¢metro | Valor | Finalidade |
+| Parâmetro | Valor | Finalidade |
 |---|---|---|
-| `--peering-type` | MicrosoftPeering | Especifica Microsoft peering (nÃ£o private) |
-| `--primary-peer-subnet` | 203.0.113.0/30 | /30 pÃºblico para o link BGP primÃ¡rio |
-| `--secondary-peer-subnet` | 203.0.113.4/30 | /30 pÃºblico para o link BGP secundÃ¡rio |
-| `--advertised-public-prefixes` | 203.0.113.0/24 | Prefixos que vocÃª possui e deseja anunciar |
+| `--peering-type` | MicrosoftPeering | Especifica Microsoft peering (não private) |
+| `--primary-peer-subnet` | 203.0.113.0/30 | /30 público para o link BGP primário |
+| `--secondary-peer-subnet` | 203.0.113.4/30 | /30 público para o link BGP secundário |
+| `--advertised-public-prefixes` | 203.0.113.0/24 | Prefixos que você possui e deseja anunciar |
 | `--customer-asn` | 65020 | Seu ASN registrado no registro de roteamento |
-| `--routing-registry-name` | ARIN | Onde seus prefixos estÃ£o registrados |
+| `--routing-registry-name` | ARIN | Onde seus prefixos estão registrados |
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -109,36 +109,36 @@ az network express-route peering create \
 }
 ```
 
-**Importante:** O campo `advertisedPublicPrefixesState` mostra `ValidationNeeded`. A Microsoft valida que vocÃª possui os prefixos anunciados verificando nos registros RIR/IRR. Essa validaÃ§Ã£o pode levar de minutos a dias, dependendo do registro.
+**Importante:** O campo `advertisedPublicPrefixesState` mostra `ValidationNeeded`. A Microsoft valida que você possui os prefixos anunciados verificando nos registros RIR/IRR. Essa validação pode levar de minutos a dias, dependendo do registro.
 
 ---
 
 ## Tarefa 2: Criar e configurar filtros de rota
 
-Desde agosto de 2017, o Microsoft peering nÃ£o anuncia nenhuma rota atÃ© que um filtro de rota seja anexado. Os filtros de rota usam valores de comunidade BGP para selecionar quais prefixos de serviÃ§o da Microsoft vocÃª deseja receber.
+Desde agosto de 2017, o Microsoft peering não anuncia nenhuma rota até que um filtro de rota seja anexado. Os filtros de rota usam valores de comunidade BGP para selecionar quais prefixos de serviço da Microsoft você deseja receber.
 
-### Entendendo as comunidades BGP para serviÃ§os Microsoft
+### Entendendo as comunidades BGP para serviços Microsoft
 
-Os valores de comunidade BGP identificam grupos de prefixos pertencentes a serviÃ§os especÃ­ficos da Microsoft:
+Os valores de comunidade BGP identificam grupos de prefixos pertencentes a serviços específicos da Microsoft:
 
-| ServiÃ§o | Valor da comunidade BGP | DescriÃ§Ã£o |
+| Serviço | Valor da comunidade BGP | Descrição |
 |---|---|---|
 | Exchange Online | 12076:5010 | Prefixos do Microsoft 365 Exchange |
 | SharePoint Online | 12076:5020 | Prefixos do Microsoft 365 SharePoint |
 | Skype for Business | 12076:5030 | Prefixos legados do Skype/Teams |
-| Microsoft Teams | 12076:5031 | Prefixos especÃ­ficos do Teams |
+| Microsoft Teams | 12076:5031 | Prefixos específicos do Teams |
 | Dynamics 365 | 12076:5040 | Prefixos do Dynamics 365 |
-| Azure Storage | 12076:52xx | Prefixos de contas de armazenamento (especÃ­ficos por regiÃ£o) |
-| Azure SQL | 12076:51xx | Prefixos do SQL Database (especÃ­ficos por regiÃ£o) |
-| Outros Azure PaaS | 12076:51xx--52xx | Prefixos regionais de serviÃ§os |
+| Azure Storage | 12076:52xx | Prefixos de contas de armazenamento (específicos por região) |
+| Azure SQL | 12076:51xx | Prefixos do SQL Database (específicos por região) |
+| Outros Azure PaaS | 12076:51xx--52xx | Prefixos regionais de serviços |
 
-### Listar comunidades BGP disponÃ­veis
+### Listar comunidades BGP disponíveis
 
 ```bash
 az network route-filter rule list-service-communities --output table
 ```
 
-**SaÃ­da esperada (resumida):**
+**Saída esperada (resumida):**
 
 ```text
 Name                        BgpCommunities                   Prefixes
@@ -160,7 +160,7 @@ az network route-filter create \
   --location westus2
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -173,9 +173,9 @@ az network route-filter create \
 }
 ```
 
-### Etapa 2: Criar uma regra de filtro para permitir serviÃ§os especÃ­ficos
+### Etapa 2: Criar uma regra de filtro para permitir serviços específicos
 
-Um filtro de rota pode ter apenas uma regra, e a regra deve ser do tipo `Allow`. No entanto, essa Ãºnica regra pode conter mÃºltiplos valores de comunidade BGP.
+Um filtro de rota pode ter apenas uma regra, e a regra deve ser do tipo `Allow`. No entanto, essa única regra pode conter múltiplos valores de comunidade BGP.
 
 ```bash
 az network route-filter rule create \
@@ -186,15 +186,15 @@ az network route-filter rule create \
   --communities 12076:5010 12076:5040 12076:51026
 ```
 
-**Detalhes dos parÃ¢metros:**
+**Detalhes dos parâmetros:**
 
-| ParÃ¢metro | Valor | Finalidade |
+| Parâmetro | Valor | Finalidade |
 |---|---|---|
 | `--filter-name` | rf-contoso-mspeering | O filtro de rota ao qual adicionar a regra |
-| `--access` | Allow | Apenas Allow Ã© suportado (sem regras Deny) |
-| `--communities` | Lista separada por espaÃ§os | Valores de comunidade BGP para serviÃ§os a receber |
+| `--access` | Allow | Apenas Allow é suportado (sem regras Deny) |
+| `--communities` | Lista separada por espaços | Valores de comunidade BGP para serviços a receber |
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -225,7 +225,7 @@ az network express-route peering update \
   --route-filter rf-contoso-mspeering
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -241,7 +241,7 @@ az network express-route peering update \
 
 ### Atualizar o filtro de rota para adicionar mais comunidades
 
-Se vocÃª precisar adicionar mais serviÃ§os posteriormente, atualize a regra existente:
+Se você precisar adicionar mais serviços posteriormente, atualize a regra existente:
 
 ```bash
 az network route-filter rule update \
@@ -251,7 +251,7 @@ az network route-filter rule update \
   --add communities "12076:5020"
 ```
 
-### Desanexar um filtro de rota (interrompe todos os anÃºncios)
+### Desanexar um filtro de rota (interrompe todos os anúncios)
 
 ```bash
 az network express-route peering update \
@@ -261,25 +261,25 @@ az network express-route peering update \
   --remove routeFilter
 ```
 
-Uma vez desanexado, nenhum prefixo Ã© anunciado atravÃ©s da sessÃ£o BGP para o Microsoft peering.
+Uma vez desanexado, nenhum prefixo é anunciado através da sessão BGP para o Microsoft peering.
 
 ---
 
-## Tarefa 4: Melhores prÃ¡ticas de anÃºncio de rotas
+## Tarefa 4: Melhores práticas de anúncio de rotas
 
-### O que vocÃª deve anunciar
+### O que você deve anunciar
 
-- Apenas prefixos que vocÃª possui e que estÃ£o registrados em um RIR/IRR
-- Prefixos especÃ­ficos /24 ou mais longos para seus intervalos de IP pÃºblico
-- Apenas sub-redes que precisam se comunicar diretamente com serviÃ§os Microsoft
+- Apenas prefixos que você possui e que estão registrados em um RIR/IRR
+- Prefixos específicos /24 ou mais longos para seus intervalos de IP público
+- Apenas sub-redes que precisam se comunicar diretamente com serviços Microsoft
 
-### O que vocÃª NÃƒO deve anunciar
+### O que você NÃƒO deve anunciar
 
-| Anti-padrÃ£o | Risco |
+| Anti-padrão | Risco |
 |---|---|
-| 0.0.0.0/0 (rota padrÃ£o) | Atrai todo o trÃ¡fego da internet para sua rede |
-| EndereÃ§os RFC 1918 | NÃ£o roteÃ¡veis no Microsoft peering (apenas IPs pÃºblicos) |
-| Prefixos que vocÃª nÃ£o possui | Falha na validaÃ§Ã£o; potencial sequestro de rotas |
+| 0.0.0.0/0 (rota padrão) | Atrai todo o tráfego da internet para sua rede |
+| Endereços RFC 1918 | Não roteáveis no Microsoft peering (apenas IPs públicos) |
+| Prefixos que você não possui | Falha na validação; potencial sequestro de rotas |
 | Prefixos muito amplos (ex.: /8) | Rejeitados pelos filtros de prefixo da Microsoft |
 
 ### Verificar rotas anunciadas e recebidas
@@ -293,7 +293,7 @@ az network express-route list-route-tables \
   --peering-name MicrosoftPeering
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -319,7 +319,7 @@ az network express-route list-route-tables \
   --query "value[?starts_with(path, '12076')]"
 ```
 
-**SaÃ­da esperada (rotas que a Microsoft anuncia para vocÃª):**
+**Saída esperada (rotas que a Microsoft anuncia para você):**
 
 ```json
 [
@@ -344,13 +344,13 @@ az network express-route list-route-tables \
 
 ## Tarefa 5: Configurar criptografia MACsec no ExpressRoute Direct
 
-O MACsec (IEEE 802.1AE) fornece criptografia ponto a ponto na Camada 2 entre seus dispositivos de rede e os roteadores de borda da Microsoft. Ele estÃ¡ disponÃ­vel apenas em conexÃµes ExpressRoute Direct.
+O MACsec (IEEE 802.1AE) fornece criptografia ponto a ponto na Camada 2 entre seus dispositivos de rede e os roteadores de borda da Microsoft. Ele está disponível apenas em conexões ExpressRoute Direct.
 
-### PrÃ©-requisitos do MACsec
+### Pré-requisitos do MACsec
 
 | Requisito | Detalhe |
 |---|---|
-| Tipo de conexÃ£o | Apenas ExpressRoute Direct |
+| Tipo de conexão | Apenas ExpressRoute Direct |
 | Armazenamento de chaves | Azure Key Vault (para segredos CAK e CKN) |
 | Conjuntos de cifras | GcmAes128, GcmAes256, GcmAesXpn128, GcmAesXpn256 |
 | Estado SCI | Pode ser habilitado ou desabilitado |
@@ -359,8 +359,8 @@ O MACsec (IEEE 802.1AE) fornece criptografia ponto a ponto na Camada 2 entre seu
 
 O MACsec usa duas chaves:
 
-- **CKN (Connectivity Key Name):** Identifica a associaÃ§Ã£o de seguranÃ§a. Armazenado como um segredo no Azure Key Vault.
-- **CAK (Connectivity Association Key):** A prÃ³pria chave de criptografia. TambÃ©m armazenada como um segredo no Azure Key Vault.
+- **CKN (Connectivity Key Name):** Identifica a associação de segurança. Armazenado como um segredo no Azure Key Vault.
+- **CAK (Connectivity Association Key):** A própria chave de criptografia. Também armazenada como um segredo no Azure Key Vault.
 
 Ambas devem ser armazenadas no Azure Key Vault. O recurso ExpressRoute Direct referencia os identificadores de segredo do Key Vault.
 
@@ -388,7 +388,7 @@ az keyvault secret set \
 
 ### Etapa 2: Conceder acesso ao service principal do ExpressRoute ao Key Vault
 
-O serviÃ§o ExpressRoute precisa de acesso para ler os segredos. O object ID do service principal do ExpressRoute varia por tenant.
+O serviço ExpressRoute precisa de acesso para ler os segredos. O object ID do service principal do ExpressRoute varia por tenant.
 
 ```bash
 # Grant GET permission on secrets to the ExpressRoute service
@@ -400,7 +400,7 @@ az keyvault set-policy \
 
 ### Etapa 3: Habilitar MACsec nos links do ExpressRoute Direct
 
-O MACsec Ã© configurado por link na porta do ExpressRoute Direct. VocÃª deve configurar ambos os links.
+O MACsec é configurado por link na porta do ExpressRoute Direct. Você deve configurar ambos os links.
 
 ```bash
 # Enable MACsec on link1
@@ -413,7 +413,7 @@ az network express-route port link update \
   --macsec-cipher GcmAes256
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -445,7 +445,7 @@ az network express-route port link update \
 
 ### Etapa 4: Habilitar SCI (opcional)
 
-O Secure Channel Identifier (SCI) Ã© usado quando hÃ¡ mÃºltiplos canais lÃ³gicos em um Ãºnico link fÃ­sico:
+O Secure Channel Identifier (SCI) é usado quando há múltiplos canais lógicos em um único link físico:
 
 ```bash
 az network express-route port link update \
@@ -455,20 +455,20 @@ az network express-route port link update \
   --macsec-sci-state Enabled
 ```
 
-### Cifras MACsec disponÃ­veis
+### Cifras MACsec disponíveis
 
 | Cifra | Comprimento da chave | Suporte XPN | Caso de uso |
 |---|---|---|---|
-| GcmAes128 | 128 bits | NÃ£o | Criptografia padrÃ£o, menor overhead |
-| GcmAes256 | 256 bits | NÃ£o | Criptografia mais forte |
-| GcmAesXpn128 | 128 bits | Sim | SessÃµes de longa duraÃ§Ã£o (numeraÃ§Ã£o de pacotes estendida) |
-| GcmAesXpn256 | 256 bits | Sim | SeguranÃ§a mÃ¡xima com sessÃµes de longa duraÃ§Ã£o |
+| GcmAes128 | 128 bits | Não | Criptografia padrão, menor overhead |
+| GcmAes256 | 256 bits | Não | Criptografia mais forte |
+| GcmAesXpn128 | 128 bits | Sim | Sessões de longa duração (numeração de pacotes estendida) |
+| GcmAesXpn256 | 256 bits | Sim | Segurança máxima com sessões de longa duração |
 
-O XPN (Extended Packet Numbering) previne o esgotamento do nÃºmero de pacotes em links de alta vazÃ£o. A 100 Gbps, nÃºmeros de pacotes padrÃ£o de 32 bits podem estourar em minutos. O XPN usa nÃºmeros de pacotes de 64 bits.
+O XPN (Extended Packet Numbering) previne o esgotamento do número de pacotes em links de alta vazão. A 100 Gbps, números de pacotes padrão de 32 bits podem estourar em minutos. O XPN usa números de pacotes de 64 bits.
 
 ---
 
-## Tarefa 6: Verificar a configuraÃ§Ã£o completa
+## Tarefa 6: Verificar a configuração completa
 
 ### Verificar o status do Microsoft peering
 
@@ -481,7 +481,7 @@ az network express-route peering show \
   --output json
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -495,7 +495,7 @@ az network express-route peering show \
 }
 ```
 
-### Verificar configuraÃ§Ã£o MACsec nas portas Direct
+### Verificar configuração MACsec nas portas Direct
 
 ```bash
 az network express-route port link list \
@@ -505,7 +505,7 @@ az network express-route port link list \
   --output table
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```text
 Name    AdminState  MACsecCipher  SCIState
@@ -516,15 +516,15 @@ link2   Enabled     GcmAes256     Disabled
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio A: Microsoft peering sem filtro de rota (nenhuma rota recebida)
+### Cenário A: Microsoft peering sem filtro de rota (nenhuma rota recebida)
 
-**Sintoma:** O Microsoft peering estÃ¡ configurado e mostra "Enabled", mas vocÃª nÃ£o estÃ¡ recebendo nenhuma rota da Microsoft. A tabela de rotas do peering estÃ¡ vazia.
+**Sintoma:** O Microsoft peering está configurado e mostra "Enabled", mas você não está recebendo nenhuma rota da Microsoft. A tabela de rotas do peering está vazia.
 
-**Causa raiz:** Desde agosto de 2017, o Microsoft peering requer que um filtro de rota seja anexado antes que quaisquer prefixos sejam anunciados. Sem um filtro de rota, zero rotas sÃ£o enviadas.
+**Causa raiz:** Desde agosto de 2017, o Microsoft peering requer que um filtro de rota seja anexado antes que quaisquer prefixos sejam anunciados. Sem um filtro de rota, zero rotas são enviadas.
 
-**ResoluÃ§Ã£o:**
+**Resolução:**
 
 ```bash
 # Create and attach a route filter
@@ -547,13 +547,13 @@ az network express-route peering update \
   --route-filter rf-contoso-mspeering
 ```
 
-### CenÃ¡rio B: Valores de comunidade BGP incorretos
+### Cenário B: Valores de comunidade BGP incorretos
 
-**Sintoma:** O filtro de rota estÃ¡ anexado, mas vocÃª sÃ³ vÃª algumas rotas esperadas, nÃ£o todos os serviÃ§os necessÃ¡rios.
+**Sintoma:** O filtro de rota está anexado, mas você só vê algumas rotas esperadas, não todos os serviços necessários.
 
-**Causa raiz:** Os valores de comunidade na regra do filtro de rota nÃ£o incluem a comunidade para o serviÃ§o ausente.
+**Causa raiz:** Os valores de comunidade na regra do filtro de rota não incluem a comunidade para o serviço ausente.
 
-**ResoluÃ§Ã£o:** Liste as comunidades disponÃ­veis e adicione a correta:
+**Resolução:** Liste as comunidades disponíveis e adicione a correta:
 
 ```bash
 # List communities to find the right value
@@ -569,13 +569,13 @@ az network route-filter rule update \
   --add communities "12076:5020"
 ```
 
-### CenÃ¡rio C: Incompatibilidade de cifra MACsec
+### Cenário C: Incompatibilidade de cifra MACsec
 
-**Sintoma:** O link do ExpressRoute Direct mostra `adminState: Enabled`, mas nenhum trÃ¡fego passa. O LED do link fÃ­sico estÃ¡ ligado, mas os frames de dados sÃ£o descartados.
+**Sintoma:** O link do ExpressRoute Direct mostra `adminState: Enabled`, mas nenhum tráfego passa. O LED do link físico está ligado, mas os frames de dados são descartados.
 
-**Causa raiz:** A cifra MACsec configurada no lado do Azure (ex.: GcmAes256) nÃ£o corresponde Ã  cifra configurada no seu roteador CE (ex.: GcmAes128). Ambos os lados devem usar o mesmo conjunto de cifras e valores CKN/CAK correspondentes.
+**Causa raiz:** A cifra MACsec configurada no lado do Azure (ex.: GcmAes256) não corresponde Ã  cifra configurada no seu roteador CE (ex.: GcmAes128). Ambos os lados devem usar o mesmo conjunto de cifras e valores CKN/CAK correspondentes.
 
-**ResoluÃ§Ã£o:** Verifique e alinhe a cifra em ambos os lados:
+**Resolução:** Verifique e alinhe a cifra em ambos os lados:
 
 ```bash
 # Check current Azure-side configuration
@@ -595,7 +595,7 @@ az network express-route port link show \
 }
 ```
 
-Em seguida, verifique se seu roteador CE usa a mesma cifra (GcmAes256) e valores de chave correspondentes. Atualize o lado do Azure se necessÃ¡rio:
+Em seguida, verifique se seu roteador CE usa a mesma cifra (GcmAes256) e valores de chave correspondentes. Atualize o lado do Azure se necessário:
 
 ```bash
 az network express-route port link update \
@@ -607,7 +607,7 @@ az network express-route port link update \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

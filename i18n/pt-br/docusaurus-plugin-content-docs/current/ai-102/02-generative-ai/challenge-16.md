@@ -1,48 +1,48 @@
 ---
 sidebar_position: 7
-title: "Desafio 16: Azure OpenAI: Provisionamento e ConfiguraÃ§Ã£o"
+title: "Desafio 16: Azure OpenAI: Provisionamento e Configuração"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 16: Azure OpenAI: Provisionamento e ConfiguraÃ§Ã£o
+# Desafio 16: Azure OpenAI: Provisionamento e Configuração
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$1.00 (estimado) | **DomÃ­nio**: Generative AI Solutions (15-20%)
+**45-60 min** | **Custo**: ~$1.00 (estimado) | **Domínio**: Generative AI Solutions (15-20%)
 :::
 
 ## Habilidades do exame cobertas
 - Provisionar um recurso Azure OpenAI
 - Selecionar e implantar um modelo Azure OpenAI
-- Configurar limites de taxa e gerenciar tipos de implantaÃ§Ã£o
+- Configurar limites de taxa e gerenciar tipos de implantação
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Azure OpenAI Service fornece acesso via REST API aos poderosos modelos de linguagem da OpenAI, incluindo GPT-4o, GPT-4o-mini e modelos de embedding. O provisionamento requer a seleÃ§Ã£o do SKU apropriado (S0 para consumo padrÃ£o) e o entendimento das opÃ§Ãµes de implantaÃ§Ã£o disponÃ­veis: **Standard** (infraestrutura compartilhada, pagamento por token), **Global Standard** (roteamento otimizado entre regiÃµes) e **Provisioned Throughput Units (PTU)** para capacidade garantida.
+O Azure OpenAI Service fornece acesso via REST API aos poderosos modelos de linguagem da OpenAI, incluindo GPT-4o, GPT-4o-mini e modelos de embedding. O provisionamento requer a seleção do SKU apropriado (S0 para consumo padrão) e o entendimento das opções de implantação disponíveis: **Standard** (infraestrutura compartilhada, pagamento por token), **Global Standard** (roteamento otimizado entre regiões) e **Provisioned Throughput Units (PTU)** para capacidade garantida.
 
-Cada implantaÃ§Ã£o estÃ¡ sujeita a limites de taxa medidos em Tokens Per Minute (TPM) e Requests Per Minute (RPM). Quando os limites sÃ£o excedidos, o serviÃ§o retorna respostas HTTP 429 com headers `Retry-After`. AplicaÃ§Ãµes em produÃ§Ã£o devem implementar estratÃ©gias de retry com exponential backoff para lidar com o throttling de forma elegante.
+Cada implantação está sujeita a limites de taxa medidos em Tokens Per Minute (TPM) e Requests Per Minute (RPM). Quando os limites são excedidos, o serviço retorna respostas HTTP 429 com headers `Retry-After`. Aplicações em produção devem implementar estratégias de retry com exponential backoff para lidar com o throttling de forma elegante.
 
-As versÃµes da API seguem o formato `YYYY-MM-DD` com sufixos preview para recursos prÃ©-GA. As aplicaÃ§Ãµes devem usar versÃµes estÃ¡veis da API (ex.: `2024-10-21`) e planejar a aposentadoria de versÃµes, que Ã© anunciada com pelo menos 90 dias de antecedÃªncia.
+As versões da API seguem o formato `YYYY-MM-DD` com sufixos preview para recursos pré-GA. As aplicações devem usar versões estáveis da API (ex.: `2024-10-21`) e planejar a aposentadoria de versões, que é anunciada com pelo menos 90 dias de antecedência.
 
 ## Arquitetura
 
-Este desafio provisiona um recurso Azure OpenAI, implanta modelos com configuraÃ§Ãµes especÃ­ficas de capacidade e testa o comportamento de rate-limiting e estratÃ©gias de retry.
+Este desafio provisiona um recurso Azure OpenAI, implanta modelos com configurações específicas de capacidade e testa o comportamento de rate-limiting e estratégias de retry.
 
 ![Challenge 16 topology](/img/ai-102/challenge-16-topology.svg)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure com acesso ao Azure OpenAI aprovado
 - Azure CLI 2.60+ instalado
 - Python 3.9+ com pacotes `openai` e `azure-identity`
 - .NET 8 SDK com pacote NuGet `Azure.AI.OpenAI`
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Provisionar Recurso Azure OpenAI
 
-Crie um recurso Azure OpenAI com o SKU S0 em uma regiÃ£o suportada.
+Crie um recurso Azure OpenAI com o SKU S0 em uma região suportada.
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -153,9 +153,9 @@ curl -X POST "https://aoai-challenge16.openai.azure.com/openai/deployments/gpt-4
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Implantar GPT-4o com Capacidade EspecÃ­fica
+### Tarefa 2: Implantar GPT-4o com Capacidade Específica
 
-Implante um modelo GPT-4o com tipo de implantaÃ§Ã£o Standard e configure a capacidade de TPM.
+Implante um modelo GPT-4o com tipo de implantação Standard e configure a capacidade de TPM.
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -255,7 +255,7 @@ az cognitiveservices account deployment list \
 
 ### Tarefa 3: Testar Limites de Taxa e Implementar Exponential Backoff
 
-Envie requisiÃ§Ãµes para observar o comportamento de rate limiting e implemente a lÃ³gica de retry adequada.
+Envie requisições para observar o comportamento de rate limiting e implemente a lógica de retry adequada.
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -401,7 +401,7 @@ curl -i -X POST "https://aoai-challenge16.openai.azure.com/openai/deployments/gp
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Comparar ImplantaÃ§Ãµes Standard vs Global Standard
+### Tarefa 4: Comparar Implantações Standard vs Global Standard
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -526,7 +526,7 @@ done
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Connected successfully: Hello! Connection confirmed.
@@ -547,32 +547,32 @@ Global Standard Deployment:
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| CriaÃ§Ã£o do recurso falha | Erro `InvalidApiProperties` | RegiÃ£o nÃ£o suporta Azure OpenAI | Use uma regiÃ£o suportada (eastus, eastus2, westus, etc.) |
-| ImplantaÃ§Ã£o falha | `ModelNotAvailable` | Modelo nÃ£o disponÃ­vel na regiÃ£o selecionada | Verifique a matriz de disponibilidade de modelos ou mude a regiÃ£o |
-| API retorna 401 | `Access denied due to invalid subscription key` | Chave incorreta ou endpoint incompatÃ­vel | Verifique se a chave corresponde ao recurso; confira a URL do endpoint |
+| Criação do recurso falha | Erro `InvalidApiProperties` | Região não suporta Azure OpenAI | Use uma região suportada (eastus, eastus2, westus, etc.) |
+| Implantação falha | `ModelNotAvailable` | Modelo não disponível na região selecionada | Verifique a matriz de disponibilidade de modelos ou mude a região |
+| API retorna 401 | `Access denied due to invalid subscription key` | Chave incorreta ou endpoint incompatível | Verifique se a chave corresponde ao recurso; confira a URL do endpoint |
 | API retorna 429 | `Rate limit is exceeded` | Limite de TPM ou RPM excedido | Implemente exponential backoff; aumente a capacidade |
-| API retorna 404 | `Resource not found` | Nome da implantaÃ§Ã£o errado na requisiÃ§Ã£o | Verifique se o nome da implantaÃ§Ã£o estÃ¡ exatamente correto |
+| API retorna 404 | `Resource not found` | Nome da implantação errado na requisição | Verifique se o nome da implantação está exatamente correto |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ch16-q1",
-    question: "Qual SKU Ã© necessÃ¡rio ao criar um recurso Azure OpenAI via Azure CLI?",
+    question: "Qual SKU é necessário ao criar um recurso Azure OpenAI via Azure CLI?",
     options: [
       "F0 (Camada gratuita)",
-      "S0 (Camada padrÃ£o)",
+      "S0 (Camada padrão)",
       "P1 (Camada premium)",
-      "B1 (Camada bÃ¡sica)"
+      "B1 (Camada básica)"
     ],
     correctAnswer: 1,
-    explanation: "O Azure OpenAI Service usa o SKU S0. NÃ£o existe camada gratuita para o Azure OpenAI. O parÃ¢metro --sku deve ser definido como S0 ao usar az cognitiveservices account create --kind OpenAI."
+    explanation: "O Azure OpenAI Service usa o SKU S0. Não existe camada gratuita para o Azure OpenAI. O parâmetro --sku deve ser definido como S0 ao usar az cognitiveservices account create --kind OpenAI."
   },
   {
     id: "ch16-q2",
-    question: "Qual tipo de implantaÃ§Ã£o oferece capacidade de throughput garantida com custo mensal fixo?",
+    question: "Qual tipo de implantação oferece capacidade de throughput garantida com custo mensal fixo?",
     options: [
       "Standard",
       "Global Standard",
@@ -580,7 +580,7 @@ Global Standard Deployment:
       "Data Zone Standard"
     ],
     correctAnswer: 2,
-    explanation: "Provisioned Throughput Units (PTU) fornecem capacidade de computaÃ§Ã£o dedicada com throughput garantido e custos mensais previsÃ­veis, ideal para workloads de produÃ§Ã£o com padrÃµes de trÃ¡fego consistentes."
+    explanation: "Provisioned Throughput Units (PTU) fornecem capacidade de computação dedicada com throughput garantido e custos mensais previsíveis, ideal para workloads de produção com padrões de tráfego consistentes."
   },
   {
     id: "ch16-q3",
@@ -592,31 +592,31 @@ Global Standard Deployment:
       "Rate-Limit-Reset"
     ],
     correctAnswer: 1,
-    explanation: "O header Retry-After especifica o nÃºmero de segundos para esperar antes de fazer outra requisiÃ§Ã£o. O header x-ratelimit-remaining-tokens mostra a cota restante, mas nÃ£o indica o tempo de retry."
+    explanation: "O header Retry-After especifica o número de segundos para esperar antes de fazer outra requisição. O header x-ratelimit-remaining-tokens mostra a cota restante, mas não indica o tempo de retry."
   },
   {
     id: "ch16-q4",
-    question: "Qual Ã© a unidade de capacidade para implantaÃ§Ãµes Standard ao configurar limites de taxa?",
+    question: "Qual é a unidade de capacidade para implantações Standard ao configurar limites de taxa?",
     options: [
       "Requests Per Second (RPS)",
       "Tokens Per Minute (TPM) em milhares",
-      "ConexÃµes simultÃ¢neas",
-      "Unidades de computaÃ§Ã£o GPU"
+      "Conexões simultâneas",
+      "Unidades de computação GPU"
     ],
     correctAnswer: 1,
-    explanation: "ImplantaÃ§Ãµes Standard sÃ£o configuradas com capacidade medida em milhares de Tokens Per Minute (TPM). Por exemplo, --sku-capacity 30 significa 30.000 TPM. Os limites de RPM sÃ£o derivados do TPM."
+    explanation: "Implantações Standard são configuradas com capacidade medida em milhares de Tokens Per Minute (TPM). Por exemplo, --sku-capacity 30 significa 30.000 TPM. Os limites de RPM são derivados do TPM."
   },
   {
     id: "ch16-q5",
-    question: "Qual formato de versÃ£o da API o Azure OpenAI usa, e o que acontece quando uma versÃ£o Ã© aposentada?",
+    question: "Qual formato de versão da API o Azure OpenAI usa, e o que acontece quando uma versão é aposentada?",
     options: [
-      "Versionamento semÃ¢ntico (v1.2.3); versÃµes aposentadas retornam 410 Gone",
-      "Baseado em data (YYYY-MM-DD); versÃµes aposentadas retornam 404 Not Found",
-      "Baseado em data (YYYY-MM-DD); versÃµes aposentadas sÃ£o atualizadas automaticamente para a Ãºltima versÃ£o estÃ¡vel",
-      "Versionamento inteiro (v1, v2); versÃµes aposentadas continuam funcionando indefinidamente"
+      "Versionamento semântico (v1.2.3); versões aposentadas retornam 410 Gone",
+      "Baseado em data (YYYY-MM-DD); versões aposentadas retornam 404 Not Found",
+      "Baseado em data (YYYY-MM-DD); versões aposentadas são atualizadas automaticamente para a última versão estável",
+      "Versionamento inteiro (v1, v2); versões aposentadas continuam funcionando indefinidamente"
     ],
     correctAnswer: 2,
-    explanation: "O Azure OpenAI usa versÃµes de API baseadas em data (ex.: 2024-10-21). Quando uma versÃ£o Ã© aposentada (com aviso de 90 dias), as requisiÃ§Ãµes usando essa versÃ£o sÃ£o automaticamente roteadas para a Ãºltima versÃ£o estÃ¡vel GA."
+    explanation: "O Azure OpenAI usa versões de API baseadas em data (ex.: 2024-10-21). Quando uma versão é aposentada (com aviso de 90 dias), as requisições usando essa versão são automaticamente roteadas para a última versão estável GA."
   }
 ]} />
 

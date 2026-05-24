@@ -4,41 +4,41 @@ title: "Desafio 06: VNet Peering & Gateway Transit"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 06: Emparelhamento de VNet e trÃ¢nsito de gateway
+# Challenge 06: Emparelhamento de VNet e trânsito de gateway
 
 :::info Tempo e custo estimados
 
-**90-120 minutos** | **~$1,50/hora** (VPN Gateway Ã© o principal fator de custo) | **Peso no exame: 20-25%**
+**90-120 minutos** | **~$1,50/hora** (VPN Gateway é o principal fator de custo) | **Peso no exame: 20-25%**
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso possui uma rede hub-spoke onde a VNet hub contÃ©m um VPN Gateway conectando ao ambiente local (on-premises). As VNets spoke precisam acessar recursos locais atravÃ©s do VPN Gateway do hub (trÃ¢nsito de gateway). AlÃ©m disso, alguns spokes precisam se comunicar entre si via hub (encadeamento de serviÃ§os atravÃ©s de um NVA), jÃ¡ que o emparelhamento de VNet Ã© nÃ£o transitivo por padrÃ£o.
+A Contoso possui uma rede hub-spoke onde a VNet hub contém um VPN Gateway conectando ao ambiente local (on-premises). As VNets spoke precisam acessar recursos locais através do VPN Gateway do hub (trânsito de gateway). Além disso, alguns spokes precisam se comunicar entre si via hub (encadeamento de serviços através de um NVA), já que o emparelhamento de VNet é não transitivo por padrão.
 
 ## Objetivos de aprendizagem
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Criar uma topologia hub-spoke com emparelhamento de VNet
-- Configurar trÃ¢nsito de gateway para que VNets spoke usem o VPN Gateway do hub
-- Explicar e demonstrar a natureza nÃ£o transitiva do emparelhamento de VNet
-- Implementar encadeamento de serviÃ§os com rotas definidas pelo usuÃ¡rio (UDRs) e um dispositivo virtual de rede (NVA)
-- Configurar emparelhamento global de VNet entre regiÃµes
+- Configurar trânsito de gateway para que VNets spoke usem o VPN Gateway do hub
+- Explicar e demonstrar a natureza não transitiva do emparelhamento de VNet
+- Implementar encadeamento de serviços com rotas definidas pelo usuário (UDRs) e um dispositivo virtual de rede (NVA)
+- Configurar emparelhamento global de VNet entre regiões
 - Verificar o status do emparelhamento, rotas efetivas e conectividade de ponta a ponta
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Uma assinatura Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- Um grupo de recursos para este laboratÃ³rio (ou permissÃ£o para criar um)
-- CompreensÃ£o bÃ¡sica de roteamento IP e espaÃ§os de endereÃ§amento
+- Um grupo de recursos para este laboratório (ou permissão para criar um)
+- Compreensão básica de roteamento IP e espaços de endereçamento
 
 ---
 
 ## Tarefa 1: Criar a topologia hub-spoke com emparelhamento de VNet
 
-Construa uma VNet hub e duas VNets spoke, depois estabeleÃ§a conexÃµes de emparelhamento entre o hub e cada spoke.
+Construa uma VNet hub e duas VNets spoke, depois estabeleça conexões de emparelhamento entre o hub e cada spoke.
 
 ### Etapa 1: Criar o grupo de recursos
 
@@ -150,7 +150,7 @@ az network vnet peering create \
 
 ### Etapa 7: Verificar o status do emparelhamento
 
-Ambos os lados devem mostrar `Connected` para que o trÃ¡fego flua:
+Ambos os lados devem mostrar `Connected` para que o tráfego flua:
 
 ```bash
 az network vnet peering list \
@@ -170,17 +170,17 @@ az network vnet peering show \
 
 :::tip Nota para o exame
 
-O emparelhamento deve ser criado em ambos os lados. Se apenas um lado for criado, o estado serÃ¡ `Initiated` nesse lado e `Disconnected` no outro. O trÃ¡fego nÃ£o flui atÃ© que ambos os lados atinjam o estado `Connected`.
+O emparelhamento deve ser criado em ambos os lados. Se apenas um lado for criado, o estado será `Initiated` nesse lado e `Disconnected` no outro. O tráfego não flui até que ambos os lados atinjam o estado `Connected`.
 
 :::
 
 ---
 
-## Tarefa 2: Configurar trÃ¢nsito de gateway
+## Tarefa 2: Configurar trânsito de gateway
 
-Configure o VPN Gateway do hub e habilite o trÃ¢nsito de gateway para que as VNets spoke possam alcanÃ§ar redes locais atravÃ©s do gateway do hub.
+Configure o VPN Gateway do hub e habilite o trânsito de gateway para que as VNets spoke possam alcançar redes locais através do gateway do hub.
 
-### Etapa 1: Criar um IP pÃºblico para o VPN Gateway
+### Etapa 1: Criar um IP público para o VPN Gateway
 
 ```bash
 az network public-ip create \
@@ -215,9 +215,9 @@ az network vnet-gateway show \
     --output tsv
 ```
 
-Aguarde atÃ© que a saÃ­da mostre `Succeeded` antes de prosseguir.
+Aguarde até que a saída mostre `Succeeded` antes de prosseguir.
 
-### Etapa 3: Atualizar emparelhamento hub-para-spoke para permitir trÃ¢nsito de gateway
+### Etapa 3: Atualizar emparelhamento hub-para-spoke para permitir trânsito de gateway
 
 ```bash
 az network vnet peering update \
@@ -255,11 +255,11 @@ az network vnet peering update \
 
 :::warning Importante
 
-A configuraÃ§Ã£o `useRemoteGateways` falharÃ¡ se a VNet hub nÃ£o tiver um gateway implantado e em estado de provisionamento `Succeeded`. VocÃª deve aguardar a conclusÃ£o da criaÃ§Ã£o do VPN Gateway antes de definir este flag no emparelhamento do spoke.
+A configuração `useRemoteGateways` falhará se a VNet hub não tiver um gateway implantado e em estado de provisionamento `Succeeded`. Você deve aguardar a conclusão da criação do VPN Gateway antes de definir este flag no emparelhamento do spoke.
 
 :::
 
-### Etapa 5: Verificar a configuraÃ§Ã£o de trÃ¢nsito de gateway
+### Etapa 5: Verificar a configuração de trânsito de gateway
 
 ```bash
 az network vnet peering show \
@@ -281,15 +281,15 @@ az network vnet peering show \
 
 :::tip Nota para o exame
 
-O trÃ¢nsito de gateway permite que VNets spoke usem o gateway do hub como se fosse seu prÃ³prio. O lado do hub define `allowGatewayTransit=true` e cada spoke define `useRemoteGateways=true`. Uma VNet nÃ£o pode usar gateways remotos se jÃ¡ tiver seu prÃ³prio gateway implantado. O emparelhamento global suporta trÃ¢nsito de gateway apenas com gateways VpnGw1 ou superior (nÃ£o SKU Basic).
+O trânsito de gateway permite que VNets spoke usem o gateway do hub como se fosse seu próprio. O lado do hub define `allowGatewayTransit=true` e cada spoke define `useRemoteGateways=true`. Uma VNet não pode usar gateways remotos se já tiver seu próprio gateway implantado. O emparelhamento global suporta trânsito de gateway apenas com gateways VpnGw1 ou superior (não SKU Basic).
 
 :::
 
 ---
 
-## Tarefa 3: Demonstrar a nÃ£o transitividade do emparelhamento de VNet
+## Tarefa 3: Demonstrar a não transitividade do emparelhamento de VNet
 
-O emparelhamento Ã© nÃ£o transitivo: mesmo que Spoke1 esteja emparelhado com Hub e Hub esteja emparelhado com Spoke2, Spoke1 nÃ£o consegue alcanÃ§ar Spoke2 automaticamente. Esta tarefa demonstra esse comportamento implantando VMs e verificando rotas efetivas.
+O emparelhamento é não transitivo: mesmo que Spoke1 esteja emparelhado com Hub e Hub esteja emparelhado com Spoke2, Spoke1 não consegue alcançar Spoke2 automaticamente. Esta tarefa demonstra esse comportamento implantando VMs e verificando rotas efetivas.
 
 ### Etapa 1: Implantar uma VM de teste no spoke1
 
@@ -323,7 +323,7 @@ az vm create \
 
 ### Etapa 3: Verificar rotas efetivas na NIC da VM spoke1
 
-ApÃ³s a VM ser provisionada, recupere as rotas efetivas para verificar quais destinos a VM spoke1 pode alcanÃ§ar:
+Após a VM ser provisionada, recupere as rotas efetivas para verificar quais destinos a VM spoke1 pode alcançar:
 
 ```bash
 az network nic show-effective-route-table \
@@ -332,11 +332,11 @@ az network nic show-effective-route-table \
     --output table
 ```
 
-VocÃª verÃ¡ rotas para:
-- `10.1.0.0/16` (VNet local) com prÃ³ximo salto `VnetLocal`
-- `10.0.0.0/16` (VNet hub via emparelhamento) com prÃ³ximo salto `VNetPeering`
+Você verá rotas para:
+- `10.1.0.0/16` (VNet local) com próximo salto `VnetLocal`
+- `10.0.0.0/16` (VNet hub via emparelhamento) com próximo salto `VNetPeering`
 
-VocÃª NÃƒO verÃ¡ uma rota para `10.2.0.0/16` (spoke2). Isso confirma a nÃ£o transitividade: spoke1 pode alcanÃ§ar o hub, mas nÃ£o spoke2 atravÃ©s do hub.
+Você NÃƒO verá uma rota para `10.2.0.0/16` (spoke2). Isso confirma a não transitividade: spoke1 pode alcançar o hub, mas não spoke2 através do hub.
 
 ### Etapa 4: Tentar conectividade do spoke1 para spoke2
 
@@ -348,19 +348,19 @@ az network watcher test-connectivity \
     --dest-port 22
 ```
 
-Este teste deve retornar `ConnectionStatus: Unreachable` porque nÃ£o hÃ¡ emparelhamento direto ou rota entre os dois spokes.
+Este teste deve retornar `ConnectionStatus: Unreachable` porque não há emparelhamento direto ou rota entre os dois spokes.
 
 :::tip Nota para o exame
 
-O emparelhamento de VNet Ã© sempre nÃ£o transitivo. Se VNet A estÃ¡ emparelhada com VNet B e VNet B estÃ¡ emparelhada com VNet C, VNet A nÃ£o tem caminho para VNet C a menos que vocÃª (a) emparelhe A diretamente com C, ou (b) roteie o trÃ¡fego atravÃ©s de um NVA ou Azure Firewall na VNet B usando UDRs (encadeamento de serviÃ§os).
+O emparelhamento de VNet é sempre não transitivo. Se VNet A está emparelhada com VNet B e VNet B está emparelhada com VNet C, VNet A não tem caminho para VNet C a menos que você (a) emparelhe A diretamente com C, ou (b) roteie o tráfego através de um NVA ou Azure Firewall na VNet B usando UDRs (encadeamento de serviços).
 
 :::
 
 ---
 
-## Tarefa 4: Implementar encadeamento de serviÃ§os com UDRs
+## Tarefa 4: Implementar encadeamento de serviços com UDRs
 
-Habilite a comunicaÃ§Ã£o spoke-a-spoke roteando o trÃ¡fego atravÃ©s de um dispositivo virtual de rede (NVA) na VNet hub.
+Habilite a comunicação spoke-a-spoke roteando o tráfego através de um dispositivo virtual de rede (NVA) na VNet hub.
 
 ### Etapa 1: Implantar um NVA no hub
 
@@ -379,7 +379,7 @@ az vm create \
 
 ### Etapa 2: Habilitar encaminhamento de IP na NIC do NVA
 
-O NVA deve encaminhar pacotes que nÃ£o sÃ£o destinados a ele mesmo. Habilite o encaminhamento de IP na camada de rede do Azure:
+O NVA deve encaminhar pacotes que não são destinados a ele mesmo. Habilite o encaminhamento de IP na camada de rede do Azure:
 
 ```bash
 az network nic update \
@@ -388,7 +388,7 @@ az network nic update \
     --ip-forwarding true
 ```
 
-TambÃ©m habilite o encaminhamento de IP dentro da VM Linux:
+Também habilite o encaminhamento de IP dentro da VM Linux:
 
 ```bash
 az vm run-command invoke \
@@ -407,7 +407,7 @@ az network route-table create \
     --location eastus2
 ```
 
-Adicione uma rota direcionando o trÃ¡fego do spoke2 para o NVA:
+Adicione uma rota direcionando o tráfego do spoke2 para o NVA:
 
 ```bash
 az network route-table route create \
@@ -465,7 +465,7 @@ az network nic show-effective-route-table \
     --output table
 ```
 
-VocÃª deve agora ver uma rota para `10.2.0.0/16` com tipo de prÃ³ximo salto `VirtualAppliance` e endereÃ§o de prÃ³ximo salto `10.0.1.4`.
+Você deve agora ver uma rota para `10.2.0.0/16` com tipo de próximo salto `VirtualAppliance` e endereço de próximo salto `10.0.1.4`.
 
 ### Etapa 7: Testar conectividade spoke-a-spoke
 
@@ -477,11 +477,11 @@ az network watcher test-connectivity \
     --dest-port 22
 ```
 
-O status da conexÃ£o deve agora mostrar `Reachable` (assumindo que os NSGs permitem o trÃ¡fego e o NVA estÃ¡ encaminhando pacotes).
+O status da conexão deve agora mostrar `Reachable` (assumindo que os NSGs permitem o tráfego e o NVA está encaminhando pacotes).
 
 :::warning Importante
 
-Para que o encadeamento de serviÃ§os funcione, `--allow-forwarded-traffic` deve ser definido como `true` em AMBOS os lados de CADA conexÃ£o de emparelhamento. O trÃ¡fego do spoke1 destinado ao spoke2 entra no hub como trÃ¡fego encaminhado (jÃ¡ que o hub nÃ£o Ã© o destino original). Se `allowForwardedTraffic` for false no emparelhamento hub-para-spoke2, o hub nÃ£o encaminharÃ¡ esse trÃ¡fego para spoke2.
+Para que o encadeamento de serviços funcione, `--allow-forwarded-traffic` deve ser definido como `true` em AMBOS os lados de CADA conexão de emparelhamento. O tráfego do spoke1 destinado ao spoke2 entra no hub como tráfego encaminhado (já que o hub não é o destino original). Se `allowForwardedTraffic` for false no emparelhamento hub-para-spoke2, o hub não encaminhará esse tráfego para spoke2.
 
 :::
 
@@ -489,9 +489,9 @@ Para que o encadeamento de serviÃ§os funcione, `--allow-forwarded-traffic` dev
 
 ## Tarefa 5: Configurar emparelhamento global de VNet
 
-Crie uma VNet em uma regiÃ£o diferente e estabeleÃ§a emparelhamento global (entre regiÃµes) com o hub.
+Crie uma VNet em uma região diferente e estabeleça emparelhamento global (entre regiões) com o hub.
 
-### Etapa 1: Criar uma VNet em uma segunda regiÃ£o
+### Etapa 1: Criar uma VNet em uma segunda região
 
 ```bash
 az network vnet create \
@@ -540,7 +540,7 @@ az network vnet peering show \
     --output json
 ```
 
-### Etapa 5: Implantar uma VM e testar latÃªncia
+### Etapa 5: Implantar uma VM e testar latência
 
 ```bash
 az vm create \
@@ -556,11 +556,11 @@ az vm create \
     --no-wait
 ```
 
-O trÃ¡fego de emparelhamento entre regiÃµes percorre a rede backbone da Microsoft. Espere latÃªncia mais alta (tipicamente 30-80ms entre Leste dos EUA e Oeste da Europa) comparado ao emparelhamento na mesma regiÃ£o (menos de 2ms).
+O tráfego de emparelhamento entre regiões percorre a rede backbone da Microsoft. Espere latência mais alta (tipicamente 30-80ms entre Leste dos EUA e Oeste da Europa) comparado ao emparelhamento na mesma região (menos de 2ms).
 
 :::tip Nota para o exame
 
-O emparelhamento global de VNet suporta todos os recursos do emparelhamento regional com estas ressalvas: (1) VPN Gateways com SKU Basic nÃ£o suportam trÃ¢nsito de gateway sobre emparelhamento global (VpnGw1 ou superior Ã© necessÃ¡rio), (2) balanceadores de carga internos Basic nÃ£o sÃ£o acessÃ­veis sobre emparelhamento global (use SKU Standard), e (3) a largura de banda pode ser menor que o emparelhamento na mesma regiÃ£o dependendo dos tamanhos das VMs.
+O emparelhamento global de VNet suporta todos os recursos do emparelhamento regional com estas ressalvas: (1) VPN Gateways com SKU Basic não suportam trânsito de gateway sobre emparelhamento global (VpnGw1 ou superior é necessário), (2) balanceadores de carga internos Basic não são acessíveis sobre emparelhamento global (use SKU Standard), e (3) a largura de banda pode ser menor que o emparelhamento na mesma região dependendo dos tamanhos das VMs.
 
 :::
 
@@ -568,7 +568,7 @@ O emparelhamento global de VNet suporta todos os recursos do emparelhamento regi
 
 ## Tarefa 6: Verificar status do emparelhamento, rotas efetivas e conectividade
 
-Confirme que a topologia geral funciona revisando o status do emparelhamento em todas as conexÃµes e validando a propagaÃ§Ã£o de rotas.
+Confirme que a topologia geral funciona revisando o status do emparelhamento em todas as conexões e validando a propagação de rotas.
 
 ### Etapa 1: Listar todos os emparelhamentos na VNet hub
 
@@ -589,9 +589,9 @@ az network nic show-effective-route-table \
     --output table
 ```
 
-O NVA deve ver rotas para todas as VNets emparelhadas (10.1.0.0/16, 10.2.0.0/16, 10.3.0.0/16) com tipo de prÃ³ximo salto `VNetPeering` ou `VNetGlobalPeering`.
+O NVA deve ver rotas para todas as VNets emparelhadas (10.1.0.0/16, 10.2.0.0/16, 10.3.0.0/16) com tipo de próximo salto `VNetPeering` ou `VNetGlobalPeering`.
 
-### Etapa 3: Verificar que spoke1 tem rotas para on-premises via trÃ¢nsito de gateway
+### Etapa 3: Verificar que spoke1 tem rotas para on-premises via trânsito de gateway
 
 Se o VPN Gateway aprendeu rotas locais (por exemplo, 192.168.0.0/16 via BGP), verifique se spoke1 as herda:
 
@@ -603,9 +603,9 @@ az network nic show-effective-route-table \
     --output table
 ```
 
-Rotas aprendidas do gateway aparecerÃ£o com source `VirtualNetworkGateway` porque `useRemoteGateways=true` faz com que o spoke herde a tabela de rotas do gateway do hub.
+Rotas aprendidas do gateway aparecerão com source `VirtualNetworkGateway` porque `useRemoteGateways=true` faz com que o spoke herde a tabela de rotas do gateway do hub.
 
-### Etapa 4: Executar uma verificaÃ§Ã£o completa de conectividade
+### Etapa 4: Executar uma verificação completa de conectividade
 
 ```bash
 # Spoke1 to Hub NVA (should succeed - direct peering)
@@ -625,11 +625,11 @@ az network watcher test-connectivity \
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio 1: Emparelhamento preso no estado "Initiated"
+### Cenário 1: Emparelhamento preso no estado "Initiated"
 
-Um colega criou emparelhamento do hub para uma nova VNet spoke, mas o trÃ¡fego nÃ£o estÃ¡ fluindo. VocÃª verifica o estado do emparelhamento:
+Um colega criou emparelhamento do hub para uma nova VNet spoke, mas o tráfego não está fluindo. Você verifica o estado do emparelhamento:
 
 ```bash
 az network vnet peering show \
@@ -640,11 +640,11 @@ az network vnet peering show \
     --output tsv
 ```
 
-SaÃ­da: `Initiated`
+Saída: `Initiated`
 
 **Causa raiz:** O emparelhamento foi criado apenas no lado do hub. O emparelhamento reverso (spoke para hub) nunca foi criado.
 
-**CorreÃ§Ã£o:** Crie o emparelhamento ausente no lado do spoke:
+**Correção:** Crie o emparelhamento ausente no lado do spoke:
 
 ```bash
 az network vnet peering create \
@@ -656,19 +656,19 @@ az network vnet peering create \
     --allow-forwarded-traffic true
 ```
 
-ApÃ³s ambos os lados existirem, o estado transiciona para `Connected` em ambos os emparelhamentos.
+Após ambos os lados existirem, o estado transiciona para `Connected` em ambos os emparelhamentos.
 
-### CenÃ¡rio 2: TrÃ¢nsito de gateway falha no emparelhamento do spoke
+### Cenário 2: Trânsito de gateway falha no emparelhamento do spoke
 
-VocÃª tenta habilitar `useRemoteGateways` em um emparelhamento de spoke, mas recebe um erro:
+Você tenta habilitar `useRemoteGateways` em um emparelhamento de spoke, mas recebe um erro:
 
 ```text
 "Cannot use remote gateways because the referenced virtual network has no gateways"
 ```
 
-**Causa raiz:** O VPN Gateway na VNet hub ainda nÃ£o foi implantado ou ainda estÃ¡ em estado de provisionamento.
+**Causa raiz:** O VPN Gateway na VNet hub ainda não foi implantado ou ainda está em estado de provisionamento.
 
-**CorreÃ§Ã£o:** Verifique se o gateway existe e estÃ¡ totalmente provisionado:
+**Correção:** Verifique se o gateway existe e está totalmente provisionado:
 
 ```bash
 az network vnet-gateway show \
@@ -678,15 +678,15 @@ az network vnet-gateway show \
     --output tsv
 ```
 
-Aguarde atÃ© que mostre `Succeeded`, depois tente novamente habilitar `useRemoteGateways`. Se o gateway nÃ£o existir, implante-o primeiro (veja Tarefa 2, Etapa 2).
+Aguarde até que mostre `Succeeded`, depois tente novamente habilitar `useRemoteGateways`. Se o gateway não existir, implante-o primeiro (veja Tarefa 2, Etapa 2).
 
-### CenÃ¡rio 3: TrÃ¡fego spoke-a-spoke bloqueado apesar das UDRs
+### Cenário 3: Tráfego spoke-a-spoke bloqueado apesar das UDRs
 
-As tabelas de rotas estÃ£o corretamente configuradas apontando para o NVA, e o NVA tem encaminhamento de IP habilitado. No entanto, o trÃ¡fego do spoke1 para spoke2 ainda falha.
+As tabelas de rotas estão corretamente configuradas apontando para o NVA, e o NVA tem encaminhamento de IP habilitado. No entanto, o tráfego do spoke1 para spoke2 ainda falha.
 
-**Causa raiz:** O emparelhamento hub-para-spoke2 tem `allowForwardedTraffic` definido como `false`. O hub recebe o pacote do spoke1 e o roteia para o NVA, mas quando o NVA encaminha o pacote para spoke2, o emparelhamento o descarta porque trÃ¡fego encaminhado nÃ£o Ã© permitido.
+**Causa raiz:** O emparelhamento hub-para-spoke2 tem `allowForwardedTraffic` definido como `false`. O hub recebe o pacote do spoke1 e o roteia para o NVA, mas quando o NVA encaminha o pacote para spoke2, o emparelhamento o descarta porque tráfego encaminhado não é permitido.
 
-**CorreÃ§Ã£o:** Atualize o emparelhamento para permitir trÃ¡fego encaminhado:
+**Correção:** Atualize o emparelhamento para permitir tráfego encaminhado:
 
 ```bash
 az network vnet peering update \
@@ -696,7 +696,7 @@ az network vnet peering update \
     --set allowForwardedTraffic=true
 ```
 
-TambÃ©m verifique se o emparelhamento spoke2-para-hub permite trÃ¡fego encaminhado (necessÃ¡rio para o trÃ¡fego de retorno):
+Também verifique se o emparelhamento spoke2-para-hub permite tráfego encaminhado (necessário para o tráfego de retorno):
 
 ```bash
 az network vnet peering update \
@@ -710,7 +710,7 @@ az network vnet peering update \
 
 ## Limpeza de recursos
 
-Exclua o grupo de recursos para remover todos os recursos do laboratÃ³rio e parar de incorrer em cobranÃ§as (especialmente o VPN Gateway):
+Exclua o grupo de recursos para remover todos os recursos do laboratório e parar de incorrer em cobranças (especialmente o VPN Gateway):
 
 ```bash
 az group delete \
@@ -721,7 +721,7 @@ az group delete \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

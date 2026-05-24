@@ -10,36 +10,36 @@ import TabItem from '@theme/TabItem';
 # Desafio 08: Gerenciamento de Custos para AI Services
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$0 (somente anÃ¡lise) | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
+**45-60 min** | **Custo**: ~$0 (somente análise) | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
 - Gerenciar custos para Microsoft Foundry Services
-- Planejar capacidade usando modelos de preÃ§o (pay-per-call vs provisioned throughput)
-- Implementar estratÃ©gias de otimizaÃ§Ã£o de custos para cargas de trabalho de IA
+- Planejar capacidade usando modelos de preço (pay-per-call vs provisioned throughput)
+- Implementar estratégias de otimização de custos para cargas de trabalho de IA
 
-## VisÃ£o Geral
+## Visão Geral
 
-Gerenciar custos para Azure AI services requer compreensÃ£o de mÃºltiplos modelos de preÃ§o: pay-per-call para implantaÃ§Ãµes padrÃ£o, cobranÃ§a baseada em tokens para modelos de linguagem e Provisioned Throughput Units (PTU) para capacidade garantida. Sem planejamento cuidadoso, cargas de trabalho de IA podem gerar custos inesperados, especialmente com aplicaÃ§Ãµes de IA generativa de alto volume.
+Gerenciar custos para Azure AI services requer compreensão de múltiplos modelos de preço: pay-per-call para implantações padrão, cobrança baseada em tokens para modelos de linguagem e Provisioned Throughput Units (PTU) para capacidade garantida. Sem planejamento cuidadoso, cargas de trabalho de IA podem gerar custos inesperados, especialmente com aplicações de IA generativa de alto volume.
 
-Neste desafio, vocÃª aprenderÃ¡ a estimar custos de tokens usando a biblioteca `tiktoken`, consultar o Azure Cost Management para anÃ¡lise de gastos com IA, criar alertas de orÃ§amento para evitar gastos excessivos e implementar estratÃ©gias de cache para reduzir chamadas de API redundantes. Essas habilidades sÃ£o crÃ­ticas para operar soluÃ§Ãµes de IA em escala dentro de restriÃ§Ãµes orÃ§amentÃ¡rias.
+Neste desafio, você aprenderá a estimar custos de tokens usando a biblioteca `tiktoken`, consultar o Azure Cost Management para análise de gastos com IA, criar alertas de orçamento para evitar gastos excessivos e implementar estratégias de cache para reduzir chamadas de API redundantes. Essas habilidades são críticas para operar soluções de IA em escala dentro de restrições orçamentárias.
 
-Entender os trade-offs entre pay-as-you-go e preÃ§o PTU ajuda arquitetos a escolher o modelo certo â€” PTU fornece custos previsÃ­veis e throughput garantido para cargas de trabalho sustentadas, enquanto pay-per-call Ã© mais econÃ´mico para cenÃ¡rios com picos ou baixo volume.
+Entender os trade-offs entre pay-as-you-go e preço PTU ajuda arquitetos a escolher o modelo certo â€” PTU fornece custos previsíveis e throughput garantido para cargas de trabalho sustentadas, enquanto pay-per-call é mais econômico para cenários com picos ou baixo volume.
 
 ## Arquitetura
 
-O gerenciamento de custos combina APIs do Azure Cost Management, alertas de orÃ§amento e cache em nÃ­vel de aplicaÃ§Ã£o para otimizar gastos com IA.
+O gerenciamento de custos combina APIs do Azure Cost Management, alertas de orçamento e cache em nível de aplicação para otimizar gastos com IA.
 
 ![Challenge 08 topology](/img/ai-102/challenge-08-topology.svg)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
-- Assinatura Azure com acesso ao Cost Management (funÃ§Ã£o Reader no mÃ­nimo)
+- Assinatura Azure com acesso ao Cost Management (função Reader no mínimo)
 - Um recurso Azure OpenAI com um modelo implantado (para estimativa de tokens)
 - Python com pacote `tiktoken` instalado
 - Azure CLI instalado
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Estimar Custos de Tokens com tiktoken
 
@@ -376,7 +376,7 @@ curl -s -X POST \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Criar Alerta de OrÃ§amento para Gastos com IA
+### Tarefa 3: Criar Alerta de Orçamento para Gastos com IA
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -769,7 +769,7 @@ echo "5. PTU for sustained workloads: Predictable pricing at scale"
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 === Single Request Estimate ===
@@ -801,30 +801,30 @@ Budget created: ai-services-monthly-budget
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Contagem de tokens diverge da cobranÃ§a real | Tokens estimados diferem do relatÃ³rio de uso | Usando codificaÃ§Ã£o tiktoken errada para o modelo | Use `o200k_base` para GPT-4o, `cl100k_base` para GPT-4/3.5 |
-| Alerta de orÃ§amento nÃ£o dispara | Nenhum e-mail quando o limite Ã© excedido | Filtro do orÃ§amento nÃ£o corresponde ao nome do serviÃ§o exatamente | Verifique se os nomes dos serviÃ§os correspondem exatamente aos valores de dimensÃ£o do Cost Management |
-| Taxa de acerto do cache muito baixa | A maioria das requisiÃ§Ãµes ignora o cache | Temperature > 0 produz saÃ­das diferentes para o mesmo prompt | Defina temperature=0 para requisiÃ§Ãµes cacheÃ¡veis, ou faÃ§a cache apenas de embeddings |
-| Consulta de custos nÃ£o retorna resultados | Resposta vazia do Cost Management | Dados ainda nÃ£o disponÃ­veis (atÃ© 24h de atraso) | Dados de custo tÃªm atraso de ingestÃ£o de 8-24h; consulte dados do dia anterior |
-| PTU subutilizado | Pagando por capacidade PTU mas uso baixo | Carga de trabalho Ã© intermitente, nÃ£o sustentada | Mude para pay-as-you-go para cargas intermitentes; PTU Ã© adequado para throughput constante |
+| Contagem de tokens diverge da cobrança real | Tokens estimados diferem do relatório de uso | Usando codificação tiktoken errada para o modelo | Use `o200k_base` para GPT-4o, `cl100k_base` para GPT-4/3.5 |
+| Alerta de orçamento não dispara | Nenhum e-mail quando o limite é excedido | Filtro do orçamento não corresponde ao nome do serviço exatamente | Verifique se os nomes dos serviços correspondem exatamente aos valores de dimensão do Cost Management |
+| Taxa de acerto do cache muito baixa | A maioria das requisições ignora o cache | Temperature > 0 produz saídas diferentes para o mesmo prompt | Defina temperature=0 para requisições cacheáveis, ou faça cache apenas de embeddings |
+| Consulta de custos não retorna resultados | Resposta vazia do Cost Management | Dados ainda não disponíveis (até 24h de atraso) | Dados de custo têm atraso de ingestão de 8-24h; consulte dados do dia anterior |
+| PTU subutilizado | Pagando por capacidade PTU mas uso baixo | Carga de trabalho é intermitente, não sustentada | Mude para pay-as-you-go para cargas intermitentes; PTU é adequado para throughput constante |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Quando vocÃª deve escolher Provisioned Throughput Units (PTU) em vez de preÃ§o pay-per-call para Azure OpenAI?",
+    question: "Quando você deve escolher Provisioned Throughput Units (PTU) em vez de preço pay-per-call para Azure OpenAI?",
     options: [
-      "Para ambientes de desenvolvimento e teste com uso mÃ­nimo",
-      "Para cargas de trabalho sustentadas e previsÃ­veis que requerem throughput garantido",
+      "Para ambientes de desenvolvimento e teste com uso mínimo",
+      "Para cargas de trabalho sustentadas e previsíveis que requerem throughput garantido",
       "Para jobs de processamento em lote que executam uma vez por semana",
-      "Para aplicaÃ§Ãµes com menos de 100 requisiÃ§Ãµes por dia"
+      "Para aplicações com menos de 100 requisições por dia"
     ],
     correctAnswer: 1,
-    explanation: "O preÃ§o PTU Ã© ideal para cargas de trabalho sustentadas e previsÃ­veis que necessitam de throughput garantido. PTU fornece capacidade reservada a um custo mensal fixo, tornando-o mais econÃ´mico que pay-per-call quando a utilizaÃ§Ã£o Ã© consistentemente alta. Cargas de trabalho de baixo volume ou intermitentes sÃ£o melhor atendidas por pay-per-call."
+    explanation: "O preço PTU é ideal para cargas de trabalho sustentadas e previsíveis que necessitam de throughput garantido. PTU fornece capacidade reservada a um custo mensal fixo, tornando-o mais econômico que pay-per-call quando a utilização é consistentemente alta. Cargas de trabalho de baixo volume ou intermitentes são melhor atendidas por pay-per-call."
   },
   {
-    question: "Qual biblioteca Python Ã© usada para contar tokens para modelos Azure OpenAI antes de enviar requisiÃ§Ãµes?",
+    question: "Qual biblioteca Python é usada para contar tokens para modelos Azure OpenAI antes de enviar requisições?",
     options: [
       "openai-tokens",
       "tiktoken",
@@ -832,21 +832,21 @@ Budget created: ai-services-monthly-budget
       "azure-ai-tokenizer"
     ],
     correctAnswer: 1,
-    explanation: "A biblioteca tiktoken (desenvolvida pela OpenAI) Ã© a ferramenta padrÃ£o para contar tokens para modelos GPT. Ela suporta mÃºltiplas codificaÃ§Ãµes: o200k_base para modelos GPT-4o e cl100k_base para GPT-4 e GPT-3.5-turbo."
+    explanation: "A biblioteca tiktoken (desenvolvida pela OpenAI) é a ferramenta padrão para contar tokens para modelos GPT. Ela suporta múltiplas codificações: o200k_base para modelos GPT-4o e cl100k_base para GPT-4 e GPT-3.5-turbo."
   },
   {
-    question: "Qual Ã© o principal benefÃ­cio de implementar cache de respostas para chamadas da API Azure OpenAI?",
+    question: "Qual é o principal benefício de implementar cache de respostas para chamadas da API Azure OpenAI?",
     options: [
       "Melhora a qualidade das respostas geradas por IA",
-      "Elimina a necessidade de autenticaÃ§Ã£o da API",
-      "Reduz custos evitando chamadas de API redundantes para prompts idÃªnticos",
-      "Aumenta o limite de tokens para cada requisiÃ§Ã£o"
+      "Elimina a necessidade de autenticação da API",
+      "Reduz custos evitando chamadas de API redundantes para prompts idênticos",
+      "Aumenta o limite de tokens para cada requisição"
     ],
     correctAnswer: 2,
-    explanation: "O cache de respostas armazena respostas anteriores da API e as retorna para requisiÃ§Ãµes idÃªnticas, evitando chamadas de API redundantes. Isso reduz tanto custos (menos tokens cobrados) quanto latÃªncia. O cache funciona melhor com configuraÃ§Ãµes determinÃ­sticas (temperature=0) onde prompts idÃªnticos produzem saÃ­das idÃªnticas."
+    explanation: "O cache de respostas armazena respostas anteriores da API e as retorna para requisições idênticas, evitando chamadas de API redundantes. Isso reduz tanto custos (menos tokens cobrados) quanto latência. O cache funciona melhor com configurações determinísticas (temperature=0) onde prompts idênticos produzem saídas idênticas."
   },
   {
-    question: "Qual Ã© o atraso tÃ­pico antes que os dados do Azure Cost Management estejam disponÃ­veis para consulta?",
+    question: "Qual é o atraso típico antes que os dados do Azure Cost Management estejam disponíveis para consulta?",
     options: [
       "Tempo real (< 1 minuto)",
       "1-4 horas",
@@ -854,10 +854,10 @@ Budget created: ai-services-monthly-budget
       "48-72 horas"
     ],
     correctAnswer: 2,
-    explanation: "Os dados do Azure Cost Management tipicamente tÃªm um atraso de ingestÃ£o de 8-24 horas. Dados de uso dos Azure AI services sÃ£o coletados, processados e disponibilizados para consulta dentro desse perÃ­odo. Para monitoramento quase em tempo real, use mÃ©tricas do Azure Monitor."
+    explanation: "Os dados do Azure Cost Management tipicamente têm um atraso de ingestão de 8-24 horas. Dados de uso dos Azure AI services são coletados, processados e disponibilizados para consulta dentro desse período. Para monitoramento quase em tempo real, use métricas do Azure Monitor."
   },
   {
-    question: "Qual tipo de limite de notificaÃ§Ã£o de orÃ§amento alerta vocÃª ANTES de realmente exceder seu orÃ§amento?",
+    question: "Qual tipo de limite de notificação de orçamento alerta você ANTES de realmente exceder seu orçamento?",
     options: [
       "Actual",
       "Forecasted",
@@ -865,7 +865,7 @@ Budget created: ai-services-monthly-budget
       "Estimated"
     ],
     correctAnswer: 1,
-    explanation: "O tipo de limite 'Forecasted' usa a previsÃ£o de gastos do Azure para alertÃ¡-lo quando seu gasto projetado no final do perÃ­odo deve exceder o limite. Isso fornece aviso antecipado antes de vocÃª realmente atingir o limite, diferentemente de 'Actual' que sÃ³ dispara apÃ³s o limite ser ultrapassado."
+    explanation: "O tipo de limite 'Forecasted' usa a previsão de gastos do Azure para alertá-lo quando seu gasto projetado no final do período deve exceder o limite. Isso fornece aviso antecipado antes de você realmente atingir o limite, diferentemente de 'Actual' que só dispara após o limite ser ultrapassado."
   }
 ]} />
 

@@ -7,37 +7,37 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 # Desafio 38: Capstone de pipeline ponta a ponta
 
-:::info Plataforma: comparaÃ§Ã£o
-Este Ã© o desafio capstone do DomÃ­nio 3. Ele integra gerenciamento de pacotes, testes, fundamentos de pipeline, estratÃ©gias de deploy, IaC e operaÃ§Ãµes em um Ãºnico exercÃ­cio abrangente. Tempo estimado: 60-90 minutos.
+:::info Plataforma: comparação
+Este é o desafio capstone do Domínio 3. Ele integra gerenciamento de pacotes, testes, fundamentos de pipeline, estratégias de deploy, IaC e operações em um único exercício abrangente. Tempo estimado: 60-90 minutos.
 :::
 
 ## Habilidades do exame mapeadas
 
-Este desafio cobre todas as habilidades do DomÃ­nio 3 (Projetar e Implementar Pipelines):
+Este desafio cobre todas as habilidades do Domínio 3 (Projetar e Implementar Pipelines):
 
 - Configurar e gerenciar feeds de pacotes (Desafios 13-15)
-- Projetar e implementar validaÃ§Ã£o de qualidade em pipelines (Desafios 16-18)
+- Projetar e implementar validação de qualidade em pipelines (Desafios 16-18)
 - Projetar e implementar pipelines usando GitHub Actions e Azure Pipelines (Desafios 19-24)
-- Projetar e implementar deploys com exposiÃ§Ã£o progressiva e rollback (Desafios 25-30)
-- Definir uma estratÃ©gia de IaC com testes automatizados e deploy (Desafios 31-33)
-- Otimizar saÃºde, custo e desempenho do pipeline (Desafios 34-37)
+- Projetar e implementar deploys com exposição progressiva e rollback (Desafios 25-30)
+- Definir uma estratégia de IaC com testes automatizados e deploy (Desafios 31-33)
+- Otimizar saúde, custo e desempenho do pipeline (Desafios 34-37)
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd estÃ¡ lanÃ§ando um novo microsserviÃ§o: o **Notification Service**. Esta API Node.js gerencia notificaÃ§Ãµes por e-mail, SMS e push para todas as aplicaÃ§Ãµes da Contoso. VocÃª Ã© o engenheiro DevOps responsÃ¡vel por construir o pipeline CI/CD completo do zero.
+A Contoso Ltd está lançando um novo microsserviço: o **Notification Service**. Esta API Node.js gerencia notificações por e-mail, SMS e push para todas as aplicações da Contoso. Você é o engenheiro DevOps responsável por construir o pipeline CI/CD completo do zero.
 
 **Requisitos:**
 
-- CÃ³digo-fonte: repositÃ³rio GitHub com API Node.js 20 Express
-- Pacote: O serviÃ§o depende de um pacote npm compartilhado `@contoso/notification-sdk`
-- Gates de qualidade: Lint, testes unitÃ¡rios (cobertura mÃ­nima de 80%), testes de integraÃ§Ã£o, varredura de seguranÃ§a
+- Código-fonte: repositório GitHub com API Node.js 20 Express
+- Pacote: O serviço depende de um pacote npm compartilhado `@contoso/notification-sdk`
+- Gates de qualidade: Lint, testes unitários (cobertura mínima de 80%), testes de integração, varredura de segurança
 - Container: Imagem Docker enviada ao Azure Container Registry
-- Deploy: Staging (automÃ¡tico), ProduÃ§Ã£o (aprovaÃ§Ã£o manual com slot swap blue-green)
+- Deploy: Staging (automático), Produção (aprovação manual com slot swap blue-green)
 - Infraestrutura: Implantada via Bicep (IaC validada no pipeline)
-- Observabilidade: Smoke tests, anotaÃ§Ã£o de deploy no Application Insights
-- OperaÃ§Ãµes: Cache, jobs paralelos, retenÃ§Ã£o de artefatos de 7 dias
+- Observabilidade: Smoke tests, anotação de deploy no Application Insights
+- Operações: Cache, jobs paralelos, retenção de artefatos de 7 dias
 
-**Estrutura do repositÃ³rio:**
+**Estrutura do repositório:**
 
 ```text
 contoso-notification-service/
@@ -84,7 +84,7 @@ contoso-notification-service/
 
 ## Tarefa 1: Configurar gerenciamento de pacotes
 
-Configure a dependÃªncia do pacote npm compartilhado com autenticaÃ§Ã£o adequada:
+Configure a dependência do pacote npm compartilhado com autenticação adequada:
 
 ```json
 // package.json
@@ -149,7 +149,7 @@ No pipeline, autentique-se no registro de pacotes:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Tarefa 2: Criar a composite action para configuraÃ§Ã£o do projeto
+## Tarefa 2: Criar a composite action para configuração do projeto
 
 Crie `.github/actions/setup-project/action.yml`:
 
@@ -232,7 +232,7 @@ env:
 
 jobs:
   # ============================================================
-  # ESTÃGIO 1: Gates de qualidade (lint + varredura de seguranÃ§a)
+  # ESTÁGIO 1: Gates de qualidade (lint + varredura de segurança)
   # ============================================================
   lint:
     name: Lint and format check
@@ -262,7 +262,7 @@ jobs:
           exit-code: "1"
 
   # ============================================================
-  # ESTÃGIO 2: Testes com gate de cobertura (shards paralelos)
+  # ESTÁGIO 2: Testes com gate de cobertura (shards paralelos)
   # ============================================================
   test-unit:
     name: Unit tests (shard ${{ matrix.shard }})
@@ -364,7 +364,7 @@ jobs:
             });
 
   # ============================================================
-  # ESTÃGIO 3: Construir imagem de container e enviar ao ACR
+  # ESTÁGIO 3: Construir imagem de container e enviar ao ACR
   # ============================================================
   build-image:
     name: Build and push container image
@@ -419,7 +419,7 @@ jobs:
             NODE_VERSION=${{ env.NODE_VERSION }}
 
   # ============================================================
-  # ESTÃGIO 4: Validar e implantar infraestrutura (IaC)
+  # ESTÁGIO 4: Validar e implantar infraestrutura (IaC)
   # ============================================================
   validate-infra:
     name: Validate infrastructure
@@ -455,7 +455,7 @@ jobs:
             --parameters imageTag=${{ needs.build-image.outputs.image_version }}
 
   # ============================================================
-  # ESTÃGIO 5: Deploy para staging (automÃ¡tico)
+  # ESTÁGIO 5: Deploy para staging (automático)
   # ============================================================
   deploy-staging:
     name: Deploy to staging
@@ -527,7 +527,7 @@ jobs:
             }'
 
   # ============================================================
-  # ESTÃGIO 6: Deploy para produÃ§Ã£o (aprovaÃ§Ã£o manual, blue-green)
+  # ESTÁGIO 6: Deploy para produção (aprovação manual, blue-green)
   # ============================================================
   deploy-production:
     name: Deploy to production (blue-green)
@@ -768,7 +768,7 @@ resource stagingSlot 'Microsoft.Web/sites/slots@2023-01-01' = if (enableStagingS
 output appUrl string = 'https://${app.properties.defaultHostName}'
 ```
 
-## Tarefa 6: Configurar ambientes e aprovaÃ§Ãµes
+## Tarefa 6: Configurar ambientes e aprovações
 
 ```bash
 # Create GitHub environments with protection rules
@@ -790,9 +790,9 @@ gh secret set AZURE_TENANT_ID --body "{tenant-id}"
 gh secret set AZURE_SUBSCRIPTION_ID --body "{subscription-id}"
 ```
 
-## Tarefa 7: Verificar operaÃ§Ãµes (retenÃ§Ã£o, mÃ©tricas)
+## Tarefa 7: Verificar operações (retenção, métricas)
 
-Confirme que os aspectos operacionais estÃ£o implementados:
+Confirme que os aspectos operacionais estão implementados:
 
 ```yaml
 # Retention is configured via retention-days on artifacts (Task 3 uses 7 days)
@@ -815,9 +815,9 @@ Confirme que os aspectos operacionais estÃ£o implementados:
             console.log(`Deployment status: ${{ needs.deploy-production.result }}`);
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: Corrigir o gate de cobertura com falha
+### Exercício 1: Corrigir o gate de cobertura com falha
 
 O pipeline falha no gate de cobertura com "80% exigido, obteve 78.5%". Um desenvolvedor sugere diminuir o threshold. Em vez disso, encontre e corrija a causa raiz:
 
@@ -834,9 +834,9 @@ O pipeline falha no gate de cobertura com "80% exigido, obteve 78.5%". Um desenv
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Adicione a cobertura de teste faltante em vez de diminuir o threshold:
+**Correção:** Adicione a cobertura de teste faltante em vez de diminuir o threshold:
 
 ```typescript
 // tests/unit/services/push.service.test.ts - Add missing tests
@@ -870,9 +870,9 @@ describe('PushService', () => {
 
 </details>
 
-### ExercÃ­cio 2: Corrigir o slot swap blue-green quebrado
+### Exercício 2: Corrigir o slot swap blue-green quebrado
 
-O deploy em produÃ§Ã£o reporta sucesso, mas os usuÃ¡rios veem a versÃ£o antiga. O slot swap parece reverter imediatamente:
+O deploy em produção reporta sucesso, mas os usuários veem a versão antiga. O slot swap parece reverter imediatamente:
 
 ```yaml
 # BROKEN: Health check fails on new version, triggering immediate rollback
@@ -891,9 +891,9 @@ O deploy em produÃ§Ã£o reporta sucesso, mas os usuÃ¡rios veem a versÃ£o 
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```yaml
 # FIXED: Add proper warmup delay and retry logic before checking health
@@ -932,52 +932,52 @@ O deploy em produÃ§Ã£o reporta sucesso, mas os usuÃ¡rios veem a versÃ£o 
 
 </details>
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Em um pipeline multi-estÃ¡gio com shards de teste paralelos, como a cobertura de testes deve ser agregada?",
+    question: "Em um pipeline multi-estágio com shards de teste paralelos, como a cobertura de testes deve ser agregada?",
     options: [
       "Usar o valor de cobertura mais alto de qualquer shard individual",
-      "Mesclar o JSON de cobertura de todos os shards usando uma ferramenta como nyc merge e entÃ£o gerar um relatÃ³rio combinado",
-      "Calcular a mÃ©dia das porcentagens de cobertura de cada shard",
-      "Medir a cobertura apenas no Ãºltimo shard que executa por Ãºltimo"
+      "Mesclar o JSON de cobertura de todos os shards usando uma ferramenta como nyc merge e então gerar um relatório combinado",
+      "Calcular a média das porcentagens de cobertura de cada shard",
+      "Medir a cobertura apenas no último shard que executa por último"
     ],
     correctIndex: 1,
-    explanation: "Cada shard executa apenas um subconjunto dos testes e cobre caminhos de cÃ³digo diferentes. Os relatÃ³rios de cobertura individuais sÃ£o incompletos. Eles devem ser mesclados (usando nyc merge, istanbul merge ou similar) para produzir uma visÃ£o precisa da cobertura total. Em seguida, o relatÃ³rio combinado Ã© verificado contra o threshold. Calcular a mÃ©dia das porcentagens dos shards seria incorreto porque os shards podem se sobrepor na cobertura."
+    explanation: "Cada shard executa apenas um subconjunto dos testes e cobre caminhos de código diferentes. Os relatórios de cobertura individuais são incompletos. Eles devem ser mesclados (usando nyc merge, istanbul merge ou similar) para produzir uma visão precisa da cobertura total. Em seguida, o relatório combinado é verificado contra o threshold. Calcular a média das porcentagens dos shards seria incorreto porque os shards podem se sobrepor na cobertura."
   },
   {
-    question: "Por que o pipeline faz deploy da imagem de container no slot de staging antes de fazer swap para produÃ§Ã£o?",
+    question: "Por que o pipeline faz deploy da imagem de container no slot de staging antes de fazer swap para produção?",
     options: [
-      "O slot de staging Ã© mais barato de executar do que o slot de produÃ§Ã£o",
-      "Isso permite deploy com zero downtime: a nova versÃ£o aquece no slot de staging antes de receber trÃ¡fego de produÃ§Ã£o via swap",
+      "O slot de staging é mais barato de executar do que o slot de produção",
+      "Isso permite deploy com zero downtime: a nova versão aquece no slot de staging antes de receber tráfego de produção via swap",
       "O Azure exige que todos os deploys passem primeiro por um slot de staging",
       "O slot de staging tem health checks menos rigorosos"
     ],
     correctIndex: 1,
-    explanation: "O deploy blue-green via slot swap garante zero downtime. A nova versÃ£o Ã© implantada no slot de staging onde inicia, carrega caches e aquece compiladores JIT sem afetar os usuÃ¡rios de produÃ§Ã£o. Somente apÃ³s o slot de staging estar saudÃ¡vel o swap redireciona o trÃ¡fego. Se a nova versÃ£o falhar, reverter Ã© instantÃ¢neo jÃ¡ que a versÃ£o antiga ainda estÃ¡ rodando no slot que agora Ã© o staging."
+    explanation: "O deploy blue-green via slot swap garante zero downtime. A nova versão é implantada no slot de staging onde inicia, carrega caches e aquece compiladores JIT sem afetar os usuários de produção. Somente após o slot de staging estar saudável o swap redireciona o tráfego. Se a nova versão falhar, reverter é instantâneo já que a versão antiga ainda está rodando no slot que agora é o staging."
   },
   {
-    question: "Qual Ã© o propÃ³sito da anotaÃ§Ã£o de deploy do Application Insights no pipeline?",
+    question: "Qual é o propósito da anotação de deploy do Application Insights no pipeline?",
     options: [
-      "Ela aciona rollback automÃ¡tico se o Application Insights detectar erros",
-      "Ela cria um marcador visual nos grÃ¡ficos de mÃ©tricas correlacionando deploys com mudanÃ§as no comportamento da aplicaÃ§Ã£o",
-      "Ela configura a taxa de amostragem do Application Insights para a nova versÃ£o",
-      "Ela envia uma notificaÃ§Ã£o para a equipe de desenvolvimento sobre o deploy"
+      "Ela aciona rollback automático se o Application Insights detectar erros",
+      "Ela cria um marcador visual nos gráficos de métricas correlacionando deploys com mudanças no comportamento da aplicação",
+      "Ela configura a taxa de amostragem do Application Insights para a nova versão",
+      "Ela envia uma notificação para a equipe de desenvolvimento sobre o deploy"
     ],
     correctIndex: 1,
-    explanation: "As anotaÃ§Ãµes de deploy criam marcadores verticais nos grÃ¡ficos de telemetria do Application Insights (tempos de resposta, taxas de erro, volumes de requisiÃ§Ã£o). Isso torna imediatamente visÃ­vel quando um deploy se correlaciona com uma mudanÃ§a no comportamento da aplicaÃ§Ã£o, ajudando as equipes a determinar rapidamente se um deploy causou uma regressÃ£o ou melhoria."
+    explanation: "As anotações de deploy criam marcadores verticais nos gráficos de telemetria do Application Insights (tempos de resposta, taxas de erro, volumes de requisição). Isso torna imediatamente visível quando um deploy se correlaciona com uma mudança no comportamento da aplicação, ajudando as equipes a determinar rapidamente se um deploy causou uma regressão ou melhoria."
   },
   {
-    question: "Neste pipeline capstone, o que impede um commit quebrado de chegar Ã  produÃ§Ã£o?",
+    question: "Neste pipeline capstone, o que impede um commit quebrado de chegar Ã  produção?",
     options: [
-      "Apenas o gate de aprovaÃ§Ã£o manual antes da produÃ§Ã£o",
-      "MÃºltiplas camadas: lint, verificaÃ§Ã£o de tipos, testes unitÃ¡rios com gate de cobertura, testes de integraÃ§Ã£o, varredura de seguranÃ§a, validaÃ§Ã£o de IaC, smoke tests no staging e aprovaÃ§Ã£o manual",
+      "Apenas o gate de aprovação manual antes da produção",
+      "Múltiplas camadas: lint, verificação de tipos, testes unitários com gate de cobertura, testes de integração, varredura de segurança, validação de IaC, smoke tests no staging e aprovação manual",
       "O health check do Dockerfile",
-      "Apenas as regras de proteÃ§Ã£o de branch"
+      "Apenas as regras de proteção de branch"
     ],
     correctIndex: 1,
-    explanation: "Defesa em profundidade Ã© aplicada: qualidade de cÃ³digo (lint + verificaÃ§Ã£o de tipos), corretude (testes unitÃ¡rios com mÃ­nimo de 80% de cobertura), validade de integraÃ§Ã£o (testes de integraÃ§Ã£o), seguranÃ§a (npm audit + Trivy), validade de infraestrutura (Bicep lint + validate + what-if), verificaÃ§Ã£o de deploy (smoke tests no staging) e julgamento humano (aprovaÃ§Ã£o manual). Cada camada captura diferentes categorias de problemas, e todas devem passar antes que a produÃ§Ã£o receba a mudanÃ§a."
+    explanation: "Defesa em profundidade é aplicada: qualidade de código (lint + verificação de tipos), corretude (testes unitários com mínimo de 80% de cobertura), validade de integração (testes de integração), segurança (npm audit + Trivy), validade de infraestrutura (Bicep lint + validate + what-if), verificação de deploy (smoke tests no staging) e julgamento humano (aprovação manual). Cada camada captura diferentes categorias de problemas, e todas devem passar antes que a produção receba a mudança."
   }
 ]} />
 

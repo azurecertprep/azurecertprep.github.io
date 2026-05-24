@@ -5,7 +5,7 @@ sidebar_label: "Challenge 35"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 35: Pontos de extremidade privados para mÃºltiplos serviÃ§os
+# Desafio 35: Pontos de extremidade privados para múltiplos serviços
 
 :::info Tempo e custo estimados
 
@@ -13,9 +13,9 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Enterprise estÃ¡ padronizando o acesso privado para todos os serviÃ§os PaaS consumidos por suas aplicaÃ§Ãµes de linha de negÃ³cios. A equipe de seguranÃ§a exige que todos os serviÃ§os Azure utilizados por cargas de trabalho de produÃ§Ã£o sejam acessÃ­veis exclusivamente por pontos de extremidade privados, com o acesso pÃºblico desabilitado. VocÃª deve configurar pontos de extremidade privados para seis serviÃ§os diferentes, cada um com seu sub-recurso (group-id) e nome de zona DNS privatelink corretos.
+A Contoso Enterprise está padronizando o acesso privado para todos os serviços PaaS consumidos por suas aplicações de linha de negócios. A equipe de segurança exige que todos os serviços Azure utilizados por cargas de trabalho de produção sejam acessíveis exclusivamente por pontos de extremidade privados, com o acesso público desabilitado. Você deve configurar pontos de extremidade privados para seis serviços diferentes, cada um com seu sub-recurso (group-id) e nome de zona DNS privatelink corretos.
 
 **Arquitetura:**
 
@@ -48,28 +48,28 @@ A Contoso Enterprise estÃ¡ padronizando o acesso privado para todos os serviÃ
 
 ## Objetivos de aprendizagem
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
-- Mapear serviÃ§os Azure para seus group-ids de sub-recurso corretos
-- Identificar o nome correto da zona DNS privatelink para cada tipo de serviÃ§o
+- Mapear serviços Azure para seus group-ids de sub-recurso corretos
+- Identificar o nome correto da zona DNS privatelink para cada tipo de serviço
 - Criar pontos de extremidade privados para Storage (blob/file), SQL Database, Key Vault, Web App e Cosmos DB
-- Verificar a resoluÃ§Ã£o DNS para cada ponto de extremidade privado
-- Desabilitar o acesso pÃºblico nos serviÃ§os apÃ³s confirmar que os pontos de extremidade privados estÃ£o funcionando
+- Verificar a resolução DNS para cada ponto de extremidade privado
+- Desabilitar o acesso público nos serviços após confirmar que os pontos de extremidade privados estão funcionando
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Uma assinatura Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com mÃ³dulo Az instalado (`Install-Module Az -Force`)
-- ConclusÃ£o do Challenge 34 (familiaridade com conceitos de PE e DNS)
+- PowerShell com módulo Az instalado (`Install-Module Az -Force`)
+- Conclusão do Challenge 34 (familiaridade com conceitos de PE e DNS)
 
 ## Conceitos-chave para o AZ-700
 
-### Mapeamento de serviÃ§o para group-id e zona DNS
+### Mapeamento de serviço para group-id e zona DNS
 
-Esta Ã© a tabela de referÃªncia crÃ­tica para o exame. Cada serviÃ§o possui um group-id especÃ­fico e requer uma zona DNS privatelink especÃ­fica:
+Esta é a tabela de referência crítica para o exame. Cada serviço possui um group-id específico e requer uma zona DNS privatelink específica:
 
-| ServiÃ§o | Tipo de recurso | group-id | Nome da zona DNS privada |
+| Serviço | Tipo de recurso | group-id | Nome da zona DNS privada |
 |---------|----------------|----------|--------------------------|
 | Storage (Blob) | Microsoft.Storage/storageAccounts | `blob` | `privatelink.blob.core.windows.net` |
 | Storage (File) | Microsoft.Storage/storageAccounts | `file` | `privatelink.file.core.windows.net` |
@@ -82,11 +82,11 @@ Esta Ã© a tabela de referÃªncia crÃ­tica para o exame. Cada serviÃ§o pos
 
 :::warning Armadilhas comuns no exame
 
-- SQL Database usa o group-id `sqlServer` (nÃ£o `sql` ou `database`)
-- A zona DNS do SQL Database Ã© `privatelink.database.windows.net` (nÃ£o `privatelink.sql.database.windows.net`)
-- A zona DNS do Key Vault Ã© `privatelink.vaultcore.azure.net` (nÃ£o `privatelink.keyvault.azure.net`)
-- O group-id da SQL API do Cosmos DB Ã© `Sql` (S maiÃºsculo) (nÃ£o `sql` ou `cosmosdb`)
-- O group-id do Web App Ã© `sites` (nÃ£o `webapp` ou `app`)
+- SQL Database usa o group-id `sqlServer` (não `sql` ou `database`)
+- A zona DNS do SQL Database é `privatelink.database.windows.net` (não `privatelink.sql.database.windows.net`)
+- A zona DNS do Key Vault é `privatelink.vaultcore.azure.net` (não `privatelink.keyvault.azure.net`)
+- O group-id da SQL API do Cosmos DB é `Sql` (S maiúsculo) (não `sql` ou `cosmosdb`)
+- O group-id do Web App é `sites` (não `webapp` ou `app`)
 - Storage requer PEs separados para cada sub-recurso (blob, file, table, queue)
 
 :::
@@ -140,7 +140,7 @@ New-AzVirtualNetwork `
 
 ---
 
-## Tarefa 2: Criar os serviÃ§os de destino
+## Tarefa 2: Criar os serviços de destino
 
 ### Azure CLI
 
@@ -238,7 +238,7 @@ New-AzCosmosDBAccount `
 
 ---
 
-## Tarefa 3: Criar pontos de extremidade privados para cada serviÃ§o
+## Tarefa 3: Criar pontos de extremidade privados para cada serviço
 
 ### Azure CLI
 
@@ -361,7 +361,7 @@ New-AzPrivateEndpoint `
 
 ---
 
-## Tarefa 4: Criar todas as zonas DNS privadas necessÃ¡rias e vinculÃ¡-las
+## Tarefa 4: Criar todas as zonas DNS privadas necessárias e vinculá-las
 
 ### Azure CLI
 
@@ -435,7 +435,7 @@ az network private-endpoint dns-zone-group create \
 
 ---
 
-## Tarefa 5: Verificar a resoluÃ§Ã£o DNS para cada serviÃ§o
+## Tarefa 5: Verificar a resolução DNS para cada serviço
 
 ```bash
 # From a VM inside vnet-enterprise, verify each service resolves to a private IP
@@ -467,9 +467,9 @@ nslookup cosmos-contoso-pe01.documents.azure.com
 
 ---
 
-## Tarefa 6: Desabilitar o acesso pÃºblico apÃ³s verificaÃ§Ã£o do PE
+## Tarefa 6: Desabilitar o acesso público após verificação do PE
 
-Somente desabilite o acesso pÃºblico apÃ³s confirmar que os pontos de extremidade privados estÃ£o funcionando corretamente.
+Somente desabilite o acesso público após confirmar que os pontos de extremidade privados estão funcionando corretamente.
 
 ### Azure CLI
 
@@ -505,21 +505,21 @@ az webapp update \
     --set publicNetworkAccess=Disabled
 ```
 
-:::warning Ordem das operaÃ§Ãµes
+:::warning Ordem das operações
 
-Sempre verifique se a resoluÃ§Ã£o DNS do ponto de extremidade privado estÃ¡ funcionando antes de desabilitar o acesso pÃºblico. Se vocÃª desabilitar o acesso pÃºblico primeiro e o PE/DNS estiver mal configurado, vocÃª perderÃ¡ toda a conectividade com o serviÃ§o (incluindo o plano de gerenciamento em alguns casos). Este Ã© um dos incidentes de produÃ§Ã£o mais comuns com pontos de extremidade privados.
+Sempre verifique se a resolução DNS do ponto de extremidade privado está funcionando antes de desabilitar o acesso público. Se você desabilitar o acesso público primeiro e o PE/DNS estiver mal configurado, você perderá toda a conectividade com o serviço (incluindo o plano de gerenciamento em alguns casos). Este é um dos incidentes de produção mais comuns com pontos de extremidade privados.
 
 :::
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio 1: group-id incorreto utilizado
+### Cenário 1: group-id incorreto utilizado
 
-**Sintoma:** O ponto de extremidade privado do Cosmos DB aparece como conectado, mas a aplicaÃ§Ã£o nÃ£o consegue alcanÃ§ar o endpoint da SQL API.
+**Sintoma:** O ponto de extremidade privado do Cosmos DB aparece como conectado, mas a aplicação não consegue alcançar o endpoint da SQL API.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network private-endpoint show \
@@ -529,9 +529,9 @@ az network private-endpoint show \
     --output tsv
 ```
 
-**Causa raiz:** O group-id foi definido como `sql` (minÃºsculo) em vez de `Sql` (S maiÃºsculo), ou um group-id diferente como `MongoDB` foi usado para uma conta com SQL API.
+**Causa raiz:** O group-id foi definido como `sql` (minúsculo) em vez de `Sql` (S maiúsculo), ou um group-id diferente como `MongoDB` foi usado para uma conta com SQL API.
 
-**CorreÃ§Ã£o:** Exclua e recrie o PE com o group-id correto:
+**Correção:** Exclua e recrie o PE com o group-id correto:
 
 ```bash
 az network private-endpoint delete \
@@ -550,11 +550,11 @@ az network private-endpoint create \
 
 ---
 
-### CenÃ¡rio 2: Nome de zona DNS incorreto para SQL
+### Cenário 2: Nome de zona DNS incorreto para SQL
 
-**Sintoma:** `nslookup sql-contoso-pe01.database.windows.net` retorna o IP pÃºblico mesmo com o PE existente e a zona DNS criada.
+**Sintoma:** `nslookup sql-contoso-pe01.database.windows.net` retorna o IP público mesmo com o PE existente e a zona DNS criada.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # List DNS zones and check for typo
@@ -566,7 +566,7 @@ az network private-dns zone list \
 
 **Causa raiz:** A zona DNS foi criada como `privatelink.sql.database.windows.net` (incorreto) em vez de `privatelink.database.windows.net` (correto).
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 # Delete the incorrect zone
@@ -598,11 +598,11 @@ az network private-endpoint dns-zone-group create \
 
 ---
 
-### CenÃ¡rio 3: Desabilitar acesso pÃºblico antes do PE estar pronto
+### Cenário 3: Desabilitar acesso público antes do PE estar pronto
 
-**Sintoma:** ApÃ³s desabilitar o acesso pÃºblico na conta de armazenamento, todas as aplicaÃ§Ãµes (incluindo as na VNet) perdem a conectividade.
+**Sintoma:** Após desabilitar o acesso público na conta de armazenamento, todas as aplicações (incluindo as na VNet) perdem a conectividade.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Verify PE connection status
@@ -619,9 +619,9 @@ az network private-endpoint dns-zone-group list \
     --output table
 ```
 
-**Causa raiz:** O acesso pÃºblico foi desabilitado antes que o grupo de zona DNS fosse configurado, entÃ£o o DNS ainda resolve para um IP pÃºblico (que agora estÃ¡ bloqueado).
+**Causa raiz:** O acesso público foi desabilitado antes que o grupo de zona DNS fosse configurado, então o DNS ainda resolve para um IP público (que agora está bloqueado).
 
-**CorreÃ§Ã£o:** Reabilite o acesso pÃºblico temporariamente, corrija o DNS e depois desabilite novamente:
+**Correção:** Reabilite o acesso público temporariamente, corrija o DNS e depois desabilite novamente:
 
 ```bash
 # Re-enable public access
@@ -647,7 +647,7 @@ az storage account update \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
@@ -728,7 +728,7 @@ az storage account update \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para interromper a cobranÃ§a:
+Remova todos os recursos criados neste desafio para interromper a cobrança:
 
 ```bash
 az group delete --name rg-multiservice-pe --yes --no-wait
@@ -740,16 +740,16 @@ Remove-AzResourceGroup -Name "rg-multiservice-pe" -Force -AsJob
 
 :::danger Aviso de custo
 
-Este desafio cria mÃºltiplos recursos cobrÃ¡veis: pontos de extremidade privados (~$0.01/h cada), um App Service Plan (P1V2 ~$0.035/h), um SQL Database (S0 ~$0.02/h), uma conta Cosmos DB (~$0.008/h mÃ­nimo) e um Key Vault. O custo total estimado Ã© de aproximadamente $0.05/h. Exclua o grupo de recursos imediatamente apÃ³s concluir o laboratÃ³rio.
+Este desafio cria múltiplos recursos cobráveis: pontos de extremidade privados (~$0.01/h cada), um App Service Plan (P1V2 ~$0.035/h), um SQL Database (S0 ~$0.02/h), uma conta Cosmos DB (~$0.008/h mínimo) e um Key Vault. O custo total estimado é de aproximadamente $0.05/h. Exclua o grupo de recursos imediatamente após concluir o laboratório.
 
 :::
 
 ---
 
-## ReferÃªncias adicionais
+## Referências adicionais
 
 - [Valores de zona DNS do Azure Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns)
-- [ReferÃªncia de sub-recurso (group-id) do Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview#private-link-resource)
+- [Referência de sub-recurso (group-id) do Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview#private-link-resource)
 - [Usar pontos de extremidade privados para Azure Storage](https://learn.microsoft.com/en-us/azure/storage/common/storage-private-endpoints)
 - [Private endpoint do Azure SQL](https://learn.microsoft.com/en-us/azure/azure-sql/database/private-endpoint-overview)
 - [Private link do Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/private-link-service)

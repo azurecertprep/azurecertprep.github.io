@@ -4,7 +4,7 @@ title: "Desafio 18: Autenticação P2S (Certificado, RADIUS, Entra ID)"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 18: AutenticaÃ§Ã£o P2S (certificado, RADIUS, Entra ID)
+# Challenge 18: Autenticação P2S (certificado, RADIUS, Entra ID)
 
 :::info Tempo e custo estimados
 
@@ -12,20 +12,20 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso possui trÃªs grupos distintos de usuÃ¡rios que necessitam de acesso VPN ponto a site com diferentes mecanismos de autenticaÃ§Ã£o. Administradores de TI utilizam autenticaÃ§Ã£o baseada em certificado para forte confianÃ§a no nÃ­vel do dispositivo, funcionÃ¡rios gerais se autenticam via Microsoft Entra ID para logon Ãºnico e integraÃ§Ã£o com acesso condicional, e prestadores externos utilizam autenticaÃ§Ã£o RADIUS contra uma infraestrutura existente de Network Policy Server (NPS). AlÃ©m disso, executivos requerem Always On VPN para manter conectividade persistente sem interaÃ§Ã£o do usuÃ¡rio.
+A Contoso possui três grupos distintos de usuários que necessitam de acesso VPN ponto a site com diferentes mecanismos de autenticação. Administradores de TI utilizam autenticação baseada em certificado para forte confiança no nível do dispositivo, funcionários gerais se autenticam via Microsoft Entra ID para logon único e integração com acesso condicional, e prestadores externos utilizam autenticação RADIUS contra uma infraestrutura existente de Network Policy Server (NPS). Além disso, executivos requerem Always On VPN para manter conectividade persistente sem interação do usuário.
 
 ## Habilidades de exame abordadas
 
-| Habilidade | DescriÃ§Ã£o |
+| Habilidade | Descrição |
 |-------|-------------|
-| Selecionar um mÃ©todo de autenticaÃ§Ã£o apropriado | Escolher entre certificado, Entra ID e RADIUS com base nos requisitos |
-| Configurar autenticaÃ§Ã£o RADIUS | Integrar um servidor RADIUS/NPS com o Gateway VPN |
-| Configurar autenticaÃ§Ã£o usando Microsoft Entra ID | Configurar autenticaÃ§Ã£o Entra ID (Azure AD) para VPN P2S |
-| Especificar requisitos do Azure para Always On VPN | Entender os requisitos de IKEv2 + certificado de mÃ¡quina |
+| Selecionar um método de autenticação apropriado | Escolher entre certificado, Entra ID e RADIUS com base nos requisitos |
+| Configurar autenticação RADIUS | Integrar um servidor RADIUS/NPS com o Gateway VPN |
+| Configurar autenticação usando Microsoft Entra ID | Configurar autenticação Entra ID (Azure AD) para VPN P2S |
+| Especificar requisitos do Azure para Always On VPN | Entender os requisitos de IKEv2 + certificado de máquina |
 
-## VisÃ£o geral da arquitetura
+## Visão geral da arquitetura
 
 ```text
 Authentication Methods for P2S VPN
@@ -45,17 +45,17 @@ Authentication Methods for P2S VPN
   Executives   ----[Always On / IKEv2 + Machine Cert]---->
 ```
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Um Gateway VPN implantado com P2S habilitado (do Challenge 17)
-- Para tarefas do Entra ID: funÃ§Ã£o de Administrador Global ou Administrador de Aplicativos no Microsoft Entra ID
-- Para tarefas RADIUS: apenas entendimento conceitual (servidor NPS nÃ£o implantado no laboratÃ³rio)
+- Para tarefas do Entra ID: função de Administrador Global ou Administrador de Aplicativos no Microsoft Entra ID
+- Para tarefas RADIUS: apenas entendimento conceitual (servidor NPS não implantado no laboratório)
 
 ---
 
-## Tarefa 1: Configurar autenticaÃ§Ã£o baseada em certificado
+## Tarefa 1: Configurar autenticação baseada em certificado
 
-A autenticaÃ§Ã£o por certificado Ã© o mÃ©todo de autenticaÃ§Ã£o P2S padrÃ£o. VocÃª gera um certificado raiz autoassinado, faz upload da chave pÃºblica para o gateway e emite certificados de cliente assinados por essa raiz.
+A autenticação por certificado é o método de autenticação P2S padrão. Você gera um certificado raiz autoassinado, faz upload da chave pública para o gateway e emite certificados de cliente assinados por essa raiz.
 
 ### Etapa 1a: Gerar certificados raiz e de cliente
 
@@ -129,7 +129,7 @@ Add-AzVpnClientRootCertificate -VpnClientRootCertificateName "ContosoP2SRootCert
   -PublicCertData $rootCertBase64
 ```
 
-### Etapa 1c: Configurar o gateway para autenticaÃ§Ã£o por certificado
+### Etapa 1c: Configurar o gateway para autenticação por certificado
 
 #### Azure CLI
 
@@ -155,14 +155,14 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
 ```
 
 :::tip Dica de exame
-Com autenticaÃ§Ã£o por certificado, a chave pÃºblica do certificado raiz Ã© carregada no gateway. Cada cliente conectando deve ter um certificado de cliente instalado que foi emitido pela CA raiz carregada. O gateway valida a cadeia de certificados durante a conexÃ£o.
+Com autenticação por certificado, a chave pública do certificado raiz é carregada no gateway. Cada cliente conectando deve ter um certificado de cliente instalado que foi emitido pela CA raiz carregada. O gateway valida a cadeia de certificados durante a conexão.
 :::
 
 ---
 
 ## Tarefa 2: Revogar um certificado de cliente
 
-Quando um dispositivo Ã© perdido ou um funcionÃ¡rio sai da empresa, vocÃª deve revogar o certificado de cliente para impedir acesso futuro Ã  VPN.
+Quando um dispositivo é perdido ou um funcionário sai da empresa, você deve revogar o certificado de cliente para impedir acesso futuro Ã  VPN.
 
 ### Azure CLI
 
@@ -197,18 +197,18 @@ az network vnet-gateway show \
 
 ---
 
-## Tarefa 3: Configurar autenticaÃ§Ã£o Microsoft Entra ID
+## Tarefa 3: Configurar autenticação Microsoft Entra ID
 
-A autenticaÃ§Ã£o Entra ID fornece logon Ãºnico, polÃ­ticas de acesso condicional e autenticaÃ§Ã£o multifator (MFA) para conexÃµes VPN P2S. Este mÃ©todo requer o tipo de tÃºnel OpenVPN.
+A autenticação Entra ID fornece logon único, políticas de acesso condicional e autenticação multifator (MFA) para conexões VPN P2S. Este método requer o tipo de túnel OpenVPN.
 
-### PrÃ©-requisitos para autenticaÃ§Ã£o Entra ID
+### Pré-requisitos para autenticação Entra ID
 
-1. LocatÃ¡rio Microsoft Entra com acesso de Administrador Global
+1. Locatário Microsoft Entra com acesso de Administrador Global
 2. O Gateway VPN deve estar configurado com o protocolo OpenVPN
-3. O aplicativo Azure VPN Client deve estar registrado em seu locatÃ¡rio
-4. Os usuÃ¡rios devem usar o Azure VPN Client (nÃ£o o cliente VPN nativo do SO)
+3. O aplicativo Azure VPN Client deve estar registrado em seu locatário
+4. Os usuários devem usar o Azure VPN Client (não o cliente VPN nativo do SO)
 
-### Etapa 3a: Garantir que OpenVPN estÃ¡ configurado no gateway
+### Etapa 3a: Garantir que OpenVPN está configurado no gateway
 
 ```bash
 # OpenVPN is required for Entra ID authentication
@@ -219,7 +219,7 @@ az network vnet-gateway update \
   --client-protocol OpenVPN
 ```
 
-### Etapa 3b: Atribuir autenticaÃ§Ã£o Entra ID (AAD) ao gateway
+### Etapa 3b: Atribuir autenticação Entra ID (AAD) ao gateway
 
 #### Azure CLI
 
@@ -257,7 +257,7 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
   -VpnClientProtocol "OpenVPN"
 ```
 
-### Etapa 3c: Verificar configuraÃ§Ã£o do Entra ID
+### Etapa 3c: Verificar configuração do Entra ID
 
 ```bash
 # Show the AAD configuration on the gateway
@@ -266,7 +266,7 @@ az network vnet-gateway aad show \
   --gateway-name $GW_NAME
 ```
 
-### Etapa 3d: Remover autenticaÃ§Ã£o Entra ID (se necessÃ¡rio)
+### Etapa 3d: Remover autenticação Entra ID (se necessário)
 
 ```bash
 az network vnet-gateway aad remove \
@@ -274,7 +274,7 @@ az network vnet-gateway aad remove \
   --gateway-name $GW_NAME
 ```
 
-### IDs de audiÃªncia por nuvem Azure
+### IDs de audiência por nuvem Azure
 
 | Nuvem | ID do aplicativo Azure VPN Client |
 |-------|------------------------|
@@ -282,15 +282,15 @@ az network vnet-gateway aad remove \
 | Azure Government | `51bb15d4-3a4f-4ebf-9dca-40096fe32426` |
 | Azure China 21Vianet | `49f817b6-84ae-4cc0-928c-73f27289b3aa` |
 
-:::warning RestriÃ§Ã£o crÃ­tica
-A autenticaÃ§Ã£o Entra ID funciona SOMENTE com o tipo de tÃºnel OpenVPN. Se o seu gateway estiver configurado apenas com IKEv2 ou SSTP, a autenticaÃ§Ã£o Entra ID nÃ£o pode ser utilizada. VocÃª deve adicionar ou mudar para OpenVPN antes de habilitar a autenticaÃ§Ã£o Entra ID.
+:::warning Restrição crítica
+A autenticação Entra ID funciona SOMENTE com o tipo de túnel OpenVPN. Se o seu gateway estiver configurado apenas com IKEv2 ou SSTP, a autenticação Entra ID não pode ser utilizada. Você deve adicionar ou mudar para OpenVPN antes de habilitar a autenticação Entra ID.
 :::
 
 ---
 
-## Tarefa 4: Configurar autenticaÃ§Ã£o RADIUS
+## Tarefa 4: Configurar autenticação RADIUS
 
-A autenticaÃ§Ã£o RADIUS permite que vocÃª aproveite a infraestrutura existente de Network Policy Server (NPS) para autenticaÃ§Ã£o VPN. Isso Ã© comum quando organizaÃ§Ãµes jÃ¡ possuem polÃ­ticas NPS para controle de acesso Ã  rede.
+A autenticação RADIUS permite que você aproveite a infraestrutura existente de Network Policy Server (NPS) para autenticação VPN. Isso é comum quando organizações já possuem políticas NPS para controle de acesso Ã  rede.
 
 ### Etapa 4a: Configurar o gateway para RADIUS
 
@@ -322,7 +322,7 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
   -RadiusServerSecret (ConvertTo-SecureString "YourRadiusSharedSecret123!" -AsPlainText -Force)
 ```
 
-### Etapa 4b: Gerar configuraÃ§Ã£o do cliente para RADIUS com EAP-MSCHAPv2
+### Etapa 4b: Gerar configuração do cliente para RADIUS com EAP-MSCHAPv2
 
 ```bash
 # Generate VPN client config for RADIUS with username/password auth
@@ -332,7 +332,7 @@ az network vnet-gateway vpn-client generate \
   --authentication-method EAPMSCHAPv2
 ```
 
-### Etapa 4c: Gerar configuraÃ§Ã£o do cliente para RADIUS com certificado (EAP-TLS)
+### Etapa 4c: Gerar configuração do cliente para RADIUS com certificado (EAP-TLS)
 
 ```bash
 # Generate VPN client config for RADIUS with certificate auth
@@ -346,22 +346,22 @@ az network vnet-gateway vpn-client generate \
 
 | Componente | Requisito |
 |-----------|------------|
-| Servidor NPS | Deve ser acessÃ­vel pela rede a partir da VNet do Gateway VPN |
+| Servidor NPS | Deve ser acessível pela rede a partir da VNet do Gateway VPN |
 | Chave compartilhada | Deve coincidir exatamente entre o gateway e o servidor NPS |
-| PolÃ­ticas NPS | Devem incluir uma polÃ­tica de rede permitindo conexÃµes VPN |
-| NPS como cliente RADIUS | O IP pÃºblico do Gateway VPN deve ser registrado como cliente RADIUS no NPS |
-| Porta | NPS escuta em UDP 1812 (autenticaÃ§Ã£o) e 1813 (contabilizaÃ§Ã£o) |
-| Alta disponibilidade | Configure dois servidores RADIUS para redundÃ¢ncia |
+| Políticas NPS | Devem incluir uma política de rede permitindo conexões VPN |
+| NPS como cliente RADIUS | O IP público do Gateway VPN deve ser registrado como cliente RADIUS no NPS |
+| Porta | NPS escuta em UDP 1812 (autenticação) e 1813 (contabilização) |
+| Alta disponibilidade | Configure dois servidores RADIUS para redundância |
 
 :::note Conectividade RADIUS
-O servidor RADIUS deve ser acessÃ­vel a partir da sub-rede do gateway. Se o servidor NPS estiver on-premises, vocÃª precisa de uma conexÃ£o VPN site a site ou ExpressRoute entre a VNet do Azure e a rede on-premises antes que a autenticaÃ§Ã£o RADIUS funcione para clientes P2S.
+O servidor RADIUS deve ser acessível a partir da sub-rede do gateway. Se o servidor NPS estiver on-premises, você precisa de uma conexão VPN site a site ou ExpressRoute entre a VNet do Azure e a rede on-premises antes que a autenticação RADIUS funcione para clientes P2S.
 :::
 
 ---
 
-## Tarefa 5: Configurar multi-autenticaÃ§Ã£o
+## Tarefa 5: Configurar multi-autenticação
 
-O Azure VPN Gateway suporta a configuraÃ§Ã£o de mÃºltiplos mÃ©todos de autenticaÃ§Ã£o simultaneamente, permitindo que diferentes grupos de usuÃ¡rios se autentiquem de maneiras diferentes.
+O Azure VPN Gateway suporta a configuração de múltiplos métodos de autenticação simultaneamente, permitindo que diferentes grupos de usuários se autentiquem de maneiras diferentes.
 
 ### Azure CLI
 
@@ -389,26 +389,26 @@ az network vnet-gateway create \
 ```
 
 :::tip Dica de exame
-Multi-autenticaÃ§Ã£o (combinando AAD + Certificado + Radius) requer o tipo de tÃºnel OpenVPN. O parÃ¢metro `--vpn-auth-type` aceita valores separados por espaÃ§o: `AAD`, `Certificate` e `Radius`.
+Multi-autenticação (combinando AAD + Certificado + Radius) requer o tipo de túnel OpenVPN. O parâmetro `--vpn-auth-type` aceita valores separados por espaço: `AAD`, `Certificate` e `Radius`.
 :::
 
 ---
 
 ## Tarefa 6: Configurar requisitos do Always On VPN
 
-O Always On VPN garante que um dispositivo Windows 10/11 autorizado mantenha uma conexÃ£o VPN persistente sem exigir interaÃ§Ã£o do usuÃ¡rio.
+O Always On VPN garante que um dispositivo Windows 10/11 autorizado mantenha uma conexão VPN persistente sem exigir interação do usuário.
 
 ### Requisitos do Always On VPN
 
 | Requisito | Detalhe |
 |-------------|--------|
-| Tipo de tÃºnel | IKEv2 (obrigatÃ³rio para tÃºnel de dispositivo) |
-| AutenticaÃ§Ã£o | Certificado de mÃ¡quina (tÃºnel de dispositivo) + Certificado de usuÃ¡rio ou Entra ID (tÃºnel de usuÃ¡rio) |
+| Tipo de túnel | IKEv2 (obrigatório para túnel de dispositivo) |
+| Autenticação | Certificado de máquina (túnel de dispositivo) + Certificado de usuário ou Entra ID (túnel de usuário) |
 | SO do cliente | Windows 10/11 Enterprise ou Education |
-| ConfiguraÃ§Ã£o | Implantado via Intune, SCCM ou PowerShell VPNv2 CSP |
-| Dois tÃºneis | TÃºnel de dispositivo (antes do logon) + TÃºnel de usuÃ¡rio (apÃ³s logon) |
+| Configuração | Implantado via Intune, SCCM ou PowerShell VPNv2 CSP |
+| Dois túneis | Túnel de dispositivo (antes do logon) + Túnel de usuário (após logon) |
 
-### Tipos de tÃºnel Always On VPN
+### Tipos de túnel Always On VPN
 
 ```text
 +-------------------------------------------------------+
@@ -424,7 +424,7 @@ O Always On VPN garante que um dispositivo Windows 10/11 autorizado mantenha uma
 +-------------------------------------------------------+
 ```
 
-### ConfiguraÃ§Ã£o do gateway para Always On VPN
+### Configuração do gateway para Always On VPN
 
 ```bash
 # Gateway must support IKEv2 for device tunnel
@@ -444,48 +444,48 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
   -VpnClientProtocol "IkeV2", "OpenVPN"
 ```
 
-:::warning RestriÃ§Ãµes do Always On VPN
-- O tÃºnel de dispositivo requer IKEv2 e autenticaÃ§Ã£o por certificado de mÃ¡quina exclusivamente
-- O tÃºnel de dispositivo nÃ£o pode usar autenticaÃ§Ã£o Entra ID ou RADIUS
-- SSTP nÃ£o pode ser usado para tÃºneis de dispositivo Always On VPN
-- O dispositivo deve ser associado ao domÃ­nio e executar Windows 10/11 Enterprise ou Education
+:::warning Restrições do Always On VPN
+- O túnel de dispositivo requer IKEv2 e autenticação por certificado de máquina exclusivamente
+- O túnel de dispositivo não pode usar autenticação Entra ID ou RADIUS
+- SSTP não pode ser usado para túneis de dispositivo Always On VPN
+- O dispositivo deve ser associado ao domínio e executar Windows 10/11 Enterprise ou Education
 :::
 
 ---
 
-## Tarefa 7: ComparaÃ§Ã£o de mÃ©todos de autenticaÃ§Ã£o
+## Tarefa 7: Comparação de métodos de autenticação
 
-### Matriz de decisÃ£o
+### Matriz de decisão
 
-| CritÃ©rio | Certificado | Entra ID | RADIUS |
+| Critério | Certificado | Entra ID | RADIUS |
 |----------|:-----------:|:--------:|:------:|
-| Tipos de tÃºnel suportados | OpenVPN, IKEv2, SSTP | Apenas OpenVPN | OpenVPN, IKEv2, SSTP |
-| Suporte a MFA | NÃ£o (apenas confianÃ§a de dispositivo) | Sim (Acesso Condicional) | Sim (polÃ­tica NPS) |
-| Acesso Condicional | NÃ£o | Sim | Parcial (via NPS) |
-| ExperiÃªncia SSO | NÃ£o | Sim | NÃ£o |
-| Requer infraestrutura adicional | NÃ£o | Entra ID P1/P2 para CA | Servidor NPS |
-| Gerenciamento de certificados | Manual ou PKI | Nenhum | Depende do mÃ©todo EAP |
-| MÃ©todo de revogaÃ§Ã£o | Upload de thumbprint | Desabilitar conta de usuÃ¡rio | PolÃ­tica NPS |
-| TÃºnel de dispositivo Always On | Sim | NÃ£o | NÃ£o |
-| Aplicativo cliente necessÃ¡rio | Nativo ou OpenVPN | Azure VPN Client | Nativo ou OpenVPN |
+| Tipos de túnel suportados | OpenVPN, IKEv2, SSTP | Apenas OpenVPN | OpenVPN, IKEv2, SSTP |
+| Suporte a MFA | Não (apenas confiança de dispositivo) | Sim (Acesso Condicional) | Sim (política NPS) |
+| Acesso Condicional | Não | Sim | Parcial (via NPS) |
+| Experiência SSO | Não | Sim | Não |
+| Requer infraestrutura adicional | Não | Entra ID P1/P2 para CA | Servidor NPS |
+| Gerenciamento de certificados | Manual ou PKI | Nenhum | Depende do método EAP |
+| Método de revogação | Upload de thumbprint | Desabilitar conta de usuário | Política NPS |
+| Túnel de dispositivo Always On | Sim | Não | Não |
+| Aplicativo cliente necessário | Nativo ou OpenVPN | Azure VPN Client | Nativo ou OpenVPN |
 
-### Quando usar cada mÃ©todo
+### Quando usar cada método
 
-- **Certificado**: Melhor para confianÃ§a no nÃ­vel do dispositivo, tÃºneis de dispositivo Always On VPN e ambientes sem Entra ID P1/P2
-- **Entra ID**: Melhor para autenticaÃ§Ã£o centrada no usuÃ¡rio com SSO, MFA e acesso condicional; requer Azure VPN Client
-- **RADIUS**: Melhor para organizaÃ§Ãµes com infraestrutura NPS existente, polÃ­ticas complexas de acesso Ã  rede ou provedores de identidade de terceiros
+- **Certificado**: Melhor para confiança no nível do dispositivo, túneis de dispositivo Always On VPN e ambientes sem Entra ID P1/P2
+- **Entra ID**: Melhor para autenticação centrada no usuário com SSO, MFA e acesso condicional; requer Azure VPN Client
+- **RADIUS**: Melhor para organizações com infraestrutura NPS existente, políticas complexas de acesso Ã  rede ou provedores de identidade de terceiros
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio 1: Entra ID configurado com IKEv2 (incompatÃ­vel)
+### Cenário 1: Entra ID configurado com IKEv2 (incompatível)
 
-**Sintoma:** ApÃ³s configurar a autenticaÃ§Ã£o Entra ID, os usuÃ¡rios recebem erros "Authentication method not supported".
+**Sintoma:** Após configurar a autenticação Entra ID, os usuários recebem erros "Authentication method not supported".
 
-**Causa raiz:** O gateway estÃ¡ configurado apenas com o protocolo IKEv2. A autenticaÃ§Ã£o Entra ID requer OpenVPN.
+**Causa raiz:** O gateway está configurado apenas com o protocolo IKEv2. A autenticação Entra ID requer OpenVPN.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network vnet-gateway show \
@@ -494,7 +494,7 @@ az network vnet-gateway show \
   --query "vpnClientConfiguration.vpnClientProtocols"
 ```
 
-**CorreÃ§Ã£o:** Mude para ou adicione o protocolo OpenVPN:
+**Correção:** Mude para ou adicione o protocolo OpenVPN:
 
 ```bash
 az network vnet-gateway update \
@@ -503,13 +503,13 @@ az network vnet-gateway update \
   --client-protocol OpenVPN
 ```
 
-### CenÃ¡rio 2: Certificado de cliente expirado
+### Cenário 2: Certificado de cliente expirado
 
-**Sintoma:** UsuÃ¡rios que se conectavam com sucesso anteriormente agora recebem erros "Certificate has expired".
+**Sintoma:** Usuários que se conectavam com sucesso anteriormente agora recebem erros "Certificate has expired".
 
-**Causa raiz:** O certificado de cliente ultrapassou sua data de expiraÃ§Ã£o.
+**Causa raiz:** O certificado de cliente ultrapassou sua data de expiração.
 
-**CorreÃ§Ã£o:** Gere e instale um novo certificado de cliente a partir da mesma CA raiz:
+**Correção:** Gere e instale um novo certificado de cliente a partir da mesma CA raiz:
 
 ```powershell
 # Retrieve the existing root cert from the local store
@@ -530,13 +530,13 @@ New-SelfSignedCertificate -Type Custom `
   -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2")
 ```
 
-### CenÃ¡rio 3: Servidor RADIUS inacessÃ­vel
+### Cenário 3: Servidor RADIUS inacessível
 
-**Sintoma:** Todas as conexÃµes VPN P2S falham com erros de timeout. ConexÃµes baseadas em certificado funcionam normalmente.
+**Sintoma:** Todas as conexões VPN P2S falham com erros de timeout. Conexões baseadas em certificado funcionam normalmente.
 
-**Causa raiz:** O servidor NPS/RADIUS em 10.60.1.10 estÃ¡ inacessÃ­vel a partir da sub-rede do Gateway VPN. Causas comuns incluem regras NSG bloqueando UDP 1812/1813 ou o servidor RADIUS estando offline.
+**Causa raiz:** O servidor NPS/RADIUS em 10.60.1.10 está inacessível a partir da sub-rede do Gateway VPN. Causas comuns incluem regras NSG bloqueando UDP 1812/1813 ou o servidor RADIUS estando offline.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check the RADIUS server configuration on the gateway
@@ -546,18 +546,18 @@ az network vnet-gateway show \
   --query "vpnClientConfiguration.radiusServerAddress"
 ```
 
-**CorreÃ§Ã£o:** Verifique a conectividade de rede entre a sub-rede do gateway e o servidor RADIUS:
+**Correção:** Verifique a conectividade de rede entre a sub-rede do gateway e o servidor RADIUS:
 1. Garanta que nenhum NSG bloqueie UDP 1812/1813 entre GatewaySubnet e o servidor RADIUS
 2. Verifique se a chave compartilhada coincide no gateway e no servidor NPS
-3. Confirme que o IP pÃºblico do gateway estÃ¡ registrado como cliente RADIUS no servidor NPS
+3. Confirme que o IP público do gateway está registrado como cliente RADIUS no servidor NPS
 
-### CenÃ¡rio 4: Valor de audiÃªncia do Entra ID incorreto
+### Cenário 4: Valor de audiência do Entra ID incorreto
 
-**Sintoma:** Os usuÃ¡rios se autenticam no navegador, mas o Azure VPN Client exibe "Access denied - invalid audience."
+**Sintoma:** Os usuários se autenticam no navegador, mas o Azure VPN Client exibe "Access denied - invalid audience."
 
-**Causa raiz:** O valor `--audience` configurado no gateway nÃ£o corresponde ao registro do aplicativo Azure VPN.
+**Causa raiz:** O valor `--audience` configurado no gateway não corresponde ao registro do aplicativo Azure VPN.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 # Correct the audience value for Azure Public cloud
@@ -584,7 +584,7 @@ Remove-AzResourceGroup -Name "rg-p2s-lab" -Force -AsJob
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

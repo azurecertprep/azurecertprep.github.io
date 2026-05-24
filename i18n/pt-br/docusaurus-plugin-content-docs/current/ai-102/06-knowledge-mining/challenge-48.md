@@ -10,26 +10,26 @@ import TabItem from '@theme/TabItem';
 # Desafio 48: Pipeline de Processamento Multi-Formato
 
 :::info Tempo Estimado
-**90-120 min** | **Custo**: ~$3.00 (Search Basic + AI Services + Storage) | **DomÃ­nio**: Knowledge Mining & Extraction (15-20%)
+**90-120 min** | **Custo**: ~$3.00 (Search Basic + AI Services + Storage) | **Domínio**: Knowledge Mining & Extraction (15-20%)
 :::
 
-:::tip Capstone do DomÃ­nio 6
-Este desafio integra todos os conceitos do DomÃ­nio 6: indexaÃ§Ã£o do AI Search, skillsets, Document Intelligence, Content Understanding e knowledge store â€” em um pipeline completo de processamento de documentos de ponta a ponta.
+:::tip Capstone do Domínio 6
+Este desafio integra todos os conceitos do Domínio 6: indexação do AI Search, skillsets, Document Intelligence, Content Understanding e knowledge store â€” em um pipeline completo de processamento de documentos de ponta a ponta.
 :::
 
 ## Habilidades do exame cobertas
 
 | Habilidade | Peso |
 |-------|--------|
-| Projetar pipelines de ingestÃ£o de documentos de ponta a ponta | Alto |
-| Processar mÃºltiplos formatos de documentos (PDF, imagens, Ã¡udio) | Alto |
+| Projetar pipelines de ingestão de documentos de ponta a ponta | Alto |
+| Processar múltiplos formatos de documentos (PDF, imagens, áudio) | Alto |
 | Combinar AI Search com Document Intelligence | Alto |
-| Construir cadeias de enriquecimento com mÃºltiplas skills | Alto |
-| Armazenar e consultar resultados processados | MÃ©dio |
+| Construir cadeias de enriquecimento com múltiplas skills | Alto |
+| Armazenar e consultar resultados processados | Médio |
 
-## VisÃ£o Geral
+## Visão Geral
 
-O processamento de documentos empresariais requer o tratamento de diversos tipos de conteÃºdo por meio de um pipeline unificado:
+O processamento de documentos empresariais requer o tratamento de diversos tipos de conteúdo por meio de um pipeline unificado:
 
 ```text
 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
@@ -47,17 +47,17 @@ O processamento de documentos empresariais requer o tratamento de diversos tipos
 ```
 
 ### Componentes do pipeline:
-1. **IngestÃ£o**: Upload de documentos multi-formato para o Blob Storage
-2. **ExtraÃ§Ã£o**: Document Intelligence extrai a estrutura de PDFs/formulÃ¡rios
+1. **Ingestão**: Upload de documentos multi-formato para o Blob Storage
+2. **Extração**: Document Intelligence extrai a estrutura de PDFs/formulários
 3. **Enriquecimento**: Skillset do AI Search adiciona enriquecimento NLP (entidades, keyphrases, idioma)
-4. **Processamento personalizado**: Content Understanding lida com imagens e classificaÃ§Ã£o
-5. **Armazenamento**: Resultados vÃ£o para o Ã­ndice de pesquisa (consultas) + knowledge store (analytics)
+4. **Processamento personalizado**: Content Understanding lida com imagens e classificação
+5. **Armazenamento**: Resultados vão para o índice de pesquisa (consultas) + knowledge store (analytics)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
-- Desafios 40-47 concluÃ­dos (ou conhecimento equivalente)
+- Desafios 40-47 concluídos (ou conhecimento equivalente)
 - Azure AI Search (tier Basic)
-- Azure AI Services (multi-serviÃ§o, S0)
+- Azure AI Services (multi-serviço, S0)
 - Azure Document Intelligence (S0)
 - Azure Storage Account
 - Python 3.9+ com:
@@ -66,7 +66,7 @@ O processamento de documentos empresariais requer o tratamento de diversos tipos
   - `azure-storage-blob>=12.0.0`
   - `openai>=1.0.0`
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Configurar a infraestrutura
 
@@ -123,7 +123,7 @@ DOC_ENDPOINT=$(az cognitiveservices account show --name $DOC_INTEL --resource-gr
 DOC_KEY=$(az cognitiveservices account keys list --name $DOC_INTEL --resource-group $RG --query "key1" -o tsv)
 ```
 
-### Tarefa 2: Criar um Ã­ndice de pesquisa unificado
+### Tarefa 2: Criar um índice de pesquisa unificado
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -467,7 +467,7 @@ curl -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/unified-conte
 </TabItem>
 </Tabs>
 
-### Tarefa 5: Consultar o Ã­ndice unificado
+### Tarefa 5: Consultar o índice unificado
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -529,7 +529,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/unified-co
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 === Pipeline Query Results ===
@@ -553,76 +553,76 @@ Results:
 
 ## Quebra & conserta
 
-| # | CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|
-| 1 | Processamento de PDF falha para documentos digitalizados | Document Intelligence retorna conteÃºdo vazio | PDF contÃ©m apenas imagens, sem texto selecionÃ¡vel | Use `prebuilt-read` com OCR ou defina `imageAction` na configuraÃ§Ã£o do indexer |
-| 2 | Incompatibilidade nas dimensÃµes do vetor | Upload falha: "vector dimensions don't match" | Modelo de embedding mudou entre execuÃ§Ãµes de indexaÃ§Ã£o (ada-002 vs 3-small) | Garanta que todos os documentos usem o mesmo modelo de embedding; reconstrua o Ã­ndice se o modelo mudar |
-| 3 | Pesquisa cross-format retorna resultados enviesados | PDFs sempre ficam melhor ranqueados que imagens | ConteÃºdo de PDF Ã© mais longo, gerando scores BM25 mais altos | Use ranking semÃ¢ntico para normalizar; considere ajuste de relevÃ¢ncia separado por tipo de fonte |
-| 4 | Knowledge store com dados faltando | ProjeÃ§Ãµes de tabela vazias para conteÃºdo de imagem | Imagens nÃ£o produzem dados estruturados de tabela | Projete projeÃ§Ãµes por tipo de conteÃºdo; use projeÃ§Ãµes condicionais ou skillsets separados |
-| 5 | Gargalo de throughput no pipeline | Processar 1000 documentos leva horas | Processamento sequencial; sem paralelismo | Use processamento em lote, operaÃ§Ãµes assÃ­ncronas e aumente `maxFailedItems`/`batchSize` do indexer |
+| 1 | Processamento de PDF falha para documentos digitalizados | Document Intelligence retorna conteúdo vazio | PDF contém apenas imagens, sem texto selecionável | Use `prebuilt-read` com OCR ou defina `imageAction` na configuração do indexer |
+| 2 | Incompatibilidade nas dimensões do vetor | Upload falha: "vector dimensions don't match" | Modelo de embedding mudou entre execuções de indexação (ada-002 vs 3-small) | Garanta que todos os documentos usem o mesmo modelo de embedding; reconstrua o índice se o modelo mudar |
+| 3 | Pesquisa cross-format retorna resultados enviesados | PDFs sempre ficam melhor ranqueados que imagens | Conteúdo de PDF é mais longo, gerando scores BM25 mais altos | Use ranking semântico para normalizar; considere ajuste de relevância separado por tipo de fonte |
+| 4 | Knowledge store com dados faltando | Projeções de tabela vazias para conteúdo de imagem | Imagens não produzem dados estruturados de tabela | Projete projeções por tipo de conteúdo; use projeções condicionais ou skillsets separados |
+| 5 | Gargalo de throughput no pipeline | Processar 1000 documentos leva horas | Processamento sequencial; sem paralelismo | Use processamento em lote, operações assíncronas e aumente `maxFailedItems`/`batchSize` do indexer |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ai102-48-q1",
-    question: "VocÃª estÃ¡ construindo um pipeline que processa PDFs, imagens e arquivos de Ã¡udio em um Ãºnico Ã­ndice de pesquisa. Qual Ã© a MELHOR abordagem para lidar com esses diferentes formatos?",
+    question: "Você está construindo um pipeline que processa PDFs, imagens e arquivos de áudio em um único índice de pesquisa. Qual é a MELHOR abordagem para lidar com esses diferentes formatos?",
     options: [
-      "Converter todos os arquivos para PDF primeiro e depois processar com um Ãºnico modelo do Document Intelligence",
-      "Usar um Ãºnico indexer do AI Search que lida com todos os formatos nativamente",
-      "Usar extratores especÃ­ficos por formato (Doc Intelligence para PDFs, Content Understanding para imagens) e um Ã­ndice de pesquisa unificado",
-      "Criar Ã­ndices separados para cada formato e federar consultas entre eles"
+      "Converter todos os arquivos para PDF primeiro e depois processar com um único modelo do Document Intelligence",
+      "Usar um único indexer do AI Search que lida com todos os formatos nativamente",
+      "Usar extratores específicos por formato (Doc Intelligence para PDFs, Content Understanding para imagens) e um índice de pesquisa unificado",
+      "Criar índices separados para cada formato e federar consultas entre eles"
     ],
     correctIndex: 2,
-    explanation: "A melhor abordagem usa serviÃ§os especializados para cada formato (Document Intelligence se destaca em PDFs estruturados, Content Understanding em imagens/multimodal) e armazena todos os resultados em um Ã­ndice de pesquisa unificado. Isso aproveita os pontos fortes de cada serviÃ§o enquanto fornece um Ãºnico endpoint de consulta."
+    explanation: "A melhor abordagem usa serviços especializados para cada formato (Document Intelligence se destaca em PDFs estruturados, Content Understanding em imagens/multimodal) e armazena todos os resultados em um índice de pesquisa unificado. Isso aproveita os pontos fortes de cada serviço enquanto fornece um único endpoint de consulta."
   },
   {
     id: "ai102-48-q2",
-    question: "Seu pipeline gera embeddings para documentos antes da indexaÃ§Ã£o. Um novo modelo de embedding Ã© lanÃ§ado com melhor desempenho. O que vocÃª deve fazer?",
+    question: "Seu pipeline gera embeddings para documentos antes da indexação. Um novo modelo de embedding é lançado com melhor desempenho. O que você deve fazer?",
     options: [
-      "Gerar novos embeddings apenas para documentos recÃ©m-adicionados",
-      "Regenerar embeddings para TODOS os documentos existentes e reindexÃ¡-los",
-      "Atualizar as dimensÃµes do vetor no Ã­ndice e os vetores existentes se adaptarÃ£o",
+      "Gerar novos embeddings apenas para documentos recém-adicionados",
+      "Regenerar embeddings para TODOS os documentos existentes e reindexá-los",
+      "Atualizar as dimensões do vetor no índice e os vetores existentes se adaptarão",
       "Adicionar um novo campo de vetor para o novo modelo mantendo o antigo"
     ],
     correctIndex: 1,
-    explanation: "Modelos de embedding produzem vetores em espaÃ§os diferentes. VocÃª nÃ£o pode misturar vetores de modelos diferentes no mesmo campo â€” os cÃ¡lculos de similaridade seriam sem sentido. VocÃª deve regenerar o embedding de todos os documentos existentes com o novo modelo e reindexar. Adicionar um novo campo (opÃ§Ã£o D) funciona mas desperdiÃ§a armazenamento."
+    explanation: "Modelos de embedding produzem vetores em espaços diferentes. Você não pode misturar vetores de modelos diferentes no mesmo campo â€” os cálculos de similaridade seriam sem sentido. Você deve regenerar o embedding de todos os documentos existentes com o novo modelo e reindexar. Adicionar um novo campo (opção D) funciona mas desperdiça armazenamento."
   },
   {
     id: "ai102-48-q3",
-    question: "Um PDF processado pelo Document Intelligence retorna 50 pÃ¡ginas de conteÃºdo. VocÃª precisa indexÃ¡-lo para busca vetorial. Qual etapa de prÃ©-processamento Ã© recomendada?",
+    question: "Um PDF processado pelo Document Intelligence retorna 50 páginas de conteúdo. Você precisa indexá-lo para busca vetorial. Qual etapa de pré-processamento é recomendada?",
     options: [
-      "Dividir o conteÃºdo em segmentos menores (ex.: 500-1000 tokens cada) e criar entradas separadas no Ã­ndice por chunk",
-      "Indexar todo o conteÃºdo de 50 pÃ¡ginas como um Ãºnico vetor",
-      "Indexar apenas a primeira pÃ¡gina",
-      "Comprimir o conteÃºdo usando sumarizaÃ§Ã£o antes do embedding"
+      "Dividir o conteúdo em segmentos menores (ex.: 500-1000 tokens cada) e criar entradas separadas no índice por chunk",
+      "Indexar todo o conteúdo de 50 páginas como um único vetor",
+      "Indexar apenas a primeira página",
+      "Comprimir o conteúdo usando sumarização antes do embedding"
     ],
     correctIndex: 0,
-    explanation: "Modelos de embedding tÃªm limites de tokens e funcionam melhor com conteÃºdo focado. Dividir documentos em segmentos menores (tipicamente 500-1000 tokens) com sobreposiÃ§Ã£o garante que cada vetor represente uma parte coerente do conteÃºdo. Isso melhora drasticamente a relevÃ¢ncia de recuperaÃ§Ã£o para cenÃ¡rios de RAG."
+    explanation: "Modelos de embedding têm limites de tokens e funcionam melhor com conteúdo focado. Dividir documentos em segmentos menores (tipicamente 500-1000 tokens) com sobreposição garante que cada vetor represente uma parte coerente do conteúdo. Isso melhora drasticamente a relevância de recuperação para cenários de RAG."
   },
   {
     id: "ai102-48-q4",
-    question: "VocÃª quer consultar seu Ã­ndice unificado por 'todas as faturas da Contoso com valor acima de $1000'. Qual combinaÃ§Ã£o de recursos de pesquisa Ã© mais apropriada?",
+    question: "Você quer consultar seu índice unificado por 'todas as faturas da Contoso com valor acima de $1000'. Qual combinação de recursos de pesquisa é mais apropriada?",
     options: [
       "Busca vetorial pura com a consulta como embedding",
-      "Apenas busca semÃ¢ntica",
-      "Sintaxe Lucene completa com correspondÃªncia por regex",
+      "Apenas busca semântica",
+      "Sintaxe Lucene completa com correspondência por regex",
       "Busca por palavra-chave para 'Contoso' combinada com um filtro OData em um campo estruturado de valor"
     ],
     correctIndex: 3,
-    explanation: "Esta consulta tem dois componentes: uma correspondÃªncia de texto ('Contoso') melhor atendida por busca por palavra-chave, e uma condiÃ§Ã£o numÃ©rica ('acima de $1000') melhor atendida por filtro OData em um campo estruturado. Combinar search_text com $filter dÃ¡ resultados precisos. A busca vetorial sozinha nÃ£o consegue fazer comparaÃ§Ãµes numÃ©ricas."
+    explanation: "Esta consulta tem dois componentes: uma correspondência de texto ('Contoso') melhor atendida por busca por palavra-chave, e uma condição numérica ('acima de $1000') melhor atendida por filtro OData em um campo estruturado. Combinar search_text com $filter dá resultados precisos. A busca vetorial sozinha não consegue fazer comparações numéricas."
   },
   {
     id: "ai102-48-q5",
-    question: "Seu pipeline processa 10.000 documentos diariamente. A etapa de extraÃ§Ã£o do Document Intelligence Ã© o gargalo. Como vocÃª escala isso?",
+    question: "Seu pipeline processa 10.000 documentos diariamente. A etapa de extração do Document Intelligence é o gargalo. Como você escala isso?",
     options: [
       "Usar processamento em lote com chamadas de API concorrentes respeitando os limites de taxa",
-      "Implantar mÃºltiplos recursos de Document Intelligence em regiÃµes diferentes",
-      "Fazer upgrade para um SKU superior (S0 jÃ¡ estÃ¡ â€” solicitar aumento de cota)",
-      "Todas as alternativas acima sÃ£o estratÃ©gias vÃ¡lidas de escalabilidade"
+      "Implantar múltiplos recursos de Document Intelligence em regiões diferentes",
+      "Fazer upgrade para um SKU superior (S0 já está â€” solicitar aumento de cota)",
+      "Todas as alternativas acima são estratégias válidas de escalabilidade"
     ],
     correctIndex: 3,
-    explanation: "Todas as trÃªs abordagens sÃ£o vÃ¡lidas. Chamadas de API concorrentes maximizam o throughput dentro dos limites de taxa. MÃºltiplos recursos regionais fornecem distribuiÃ§Ã£o geogrÃ¡fica e maior throughput agregado. Cotas mais altas removem restriÃ§Ãµes de limite de taxa. Na prÃ¡tica, combine todas as trÃªs para escala empresarial."
+    explanation: "Todas as três abordagens são válidas. Chamadas de API concorrentes maximizam o throughput dentro dos limites de taxa. Múltiplos recursos regionais fornecem distribuição geográfica e maior throughput agregado. Cotas mais altas removem restrições de limite de taxa. Na prática, combine todas as três para escala empresarial."
   }
 ]} />
 
@@ -634,7 +634,7 @@ az group delete --name rg-ai102-pipeline --yes --no-wait
 
 ## Saiba Mais
 
-- [IntegraÃ§Ã£o AI Search + Document Intelligence](https://learn.microsoft.com/azure/search/cognitive-search-skill-document-intelligence-layout)
-- [EstratÃ©gias de chunking para busca vetorial](https://learn.microsoft.com/azure/search/vector-search-how-to-chunk-documents)
+- [Integração AI Search + Document Intelligence](https://learn.microsoft.com/azure/search/cognitive-search-skill-document-intelligence-layout)
+- [Estratégias de chunking para busca vetorial](https://learn.microsoft.com/azure/search/vector-search-how-to-chunk-documents)
 - [Agendamento de indexers e processamento em lote](https://learn.microsoft.com/azure/search/search-howto-schedule-indexers)
-- [AnÃ¡lise multimodal com Content Understanding](https://learn.microsoft.com/azure/ai-services/content-understanding/overview)
+- [Análise multimodal com Content Understanding](https://learn.microsoft.com/azure/ai-services/content-understanding/overview)

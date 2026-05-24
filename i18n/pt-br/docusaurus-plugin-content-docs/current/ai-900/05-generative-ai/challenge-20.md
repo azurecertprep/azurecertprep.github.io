@@ -8,42 +8,42 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 # Desafio 20: Azure OpenAI Service
 
 :::info Tempo Estimado
-**25-30 min** | **Custo**: Gratuito | **DomÃ­nio**: IA Generativa (15-20%)
+**25-30 min** | **Custo**: Gratuito | **Domínio**: IA Generativa (15-20%)
 :::
 
 ## Habilidades do exame abordadas
 
 - Identificar recursos e capacidades do Azure OpenAI Service
 - Descrever modelos do Azure OpenAI (GPT-4, GPT-3.5, DALL-E, Whisper)
-- Identificar endpoints e implantaÃ§Ãµes do Azure OpenAI
+- Identificar endpoints e implantações do Azure OpenAI
 
-## VisÃ£o geral
+## Visão geral
 
-O **Azure OpenAI Service** fornece acesso aos poderosos modelos de linguagem da OpenAI (GPT-4, GPT-4o, GPT-3.5-Turbo), geraÃ§Ã£o de imagens (DALL-E) e transcriÃ§Ã£o de Ã¡udio (Whisper) atravÃ©s da plataforma de nuvem empresarial do Azure. Ele combina as capacidades de IA de ponta da OpenAI com os recursos de seguranÃ§a, conformidade, rede e IA responsÃ¡vel do Azure.
+O **Azure OpenAI Service** fornece acesso aos poderosos modelos de linguagem da OpenAI (GPT-4, GPT-4o, GPT-3.5-Turbo), geração de imagens (DALL-E) e transcrição de áudio (Whisper) através da plataforma de nuvem empresarial do Azure. Ele combina as capacidades de IA de ponta da OpenAI com os recursos de segurança, conformidade, rede e IA responsável do Azure.
 
-Diferente de usar a OpenAI diretamente, o Azure OpenAI fornece benefÃ­cios empresariais: seus dados permanecem dentro do perÃ­metro de conformidade do Azure, vocÃª obtÃ©m autenticaÃ§Ã£o via Azure Active Directory (Microsoft Entra ID), conectividade de rede privada, filtragem de conteÃºdo integrada e disponibilidade regional com garantias de SLA. Isso o torna adequado para cargas de trabalho de produÃ§Ã£o em indÃºstrias regulamentadas.
+Diferente de usar a OpenAI diretamente, o Azure OpenAI fornece benefícios empresariais: seus dados permanecem dentro do perímetro de conformidade do Azure, você obtém autenticação via Azure Active Directory (Microsoft Entra ID), conectividade de rede privada, filtragem de conteúdo integrada e disponibilidade regional com garantias de SLA. Isso o torna adequado para cargas de trabalho de produção em indústrias regulamentadas.
 
-Para usar o Azure OpenAI, vocÃª primeiro cria um recurso Azure OpenAI, depois **implanta** modelos especÃ­ficos dentro dele. Cada implantaÃ§Ã£o recebe seu prÃ³prio endpoint que as aplicaÃ§Ãµes chamam. VocÃª pode ter mÃºltiplas implantaÃ§Ãµes (modelos diferentes ou o mesmo modelo com configuraÃ§Ãµes diferentes) dentro de um Ãºnico recurso. O **Azure OpenAI Studio** (agora parte do Azure AI Foundry) fornece um playground para testar prompts antes de integrÃ¡-los em aplicaÃ§Ãµes.
+Para usar o Azure OpenAI, você primeiro cria um recurso Azure OpenAI, depois **implanta** modelos específicos dentro dele. Cada implantação recebe seu próprio endpoint que as aplicações chamam. Você pode ter múltiplas implantações (modelos diferentes ou o mesmo modelo com configurações diferentes) dentro de um único recurso. O **Azure OpenAI Studio** (agora parte do Azure AI Foundry) fornece um playground para testar prompts antes de integrá-los em aplicações.
 
 ## Explorar
 
 ### Tarefa 1: Entender os modelos do Azure OpenAI
 
-O Azure OpenAI oferece vÃ¡rias famÃ­lias de modelos para diferentes casos de uso:
+O Azure OpenAI oferece várias famílias de modelos para diferentes casos de uso:
 
 | Modelo | Capacidades | Melhor Para |
 |--------|------------|-------------|
-| **GPT-4o** | Texto + visÃ£o, modelo mais rÃ¡pido da classe GPT-4 | Chat de uso geral, multimodal (texto + imagem) |
-| **GPT-4** | RaciocÃ­nio avanÃ§ado, tarefas complexas | AnÃ¡lise complexa, escrita criativa, conteÃºdo longo |
-| **GPT-4 Turbo** | Janela de contexto grande (128K tokens) | Processar documentos longos, instruÃ§Ãµes detalhadas |
-| **GPT-3.5-Turbo** | GeraÃ§Ã£o de texto rÃ¡pida e econÃ´mica | Chat simples, geraÃ§Ã£o de conteÃºdo, classificaÃ§Ã£o |
-| **DALL-E** | GeraÃ§Ã£o de imagens a partir de descriÃ§Ãµes textuais | Criar ilustraÃ§Ãµes, arte conceitual, mockups de design |
-| **Whisper** | TranscriÃ§Ã£o de Ã¡udio (fala para texto) | TranscriÃ§Ã£o de reuniÃµes, geraÃ§Ã£o de legendas |
-| **Modelos de Text Embedding** | Converter texto em representaÃ§Ãµes vetoriais | Busca semÃ¢ntica, similaridade de documentos |
+| **GPT-4o** | Texto + visão, modelo mais rápido da classe GPT-4 | Chat de uso geral, multimodal (texto + imagem) |
+| **GPT-4** | Raciocínio avançado, tarefas complexas | Análise complexa, escrita criativa, conteúdo longo |
+| **GPT-4 Turbo** | Janela de contexto grande (128K tokens) | Processar documentos longos, instruções detalhadas |
+| **GPT-3.5-Turbo** | Geração de texto rápida e econômica | Chat simples, geração de conteúdo, classificação |
+| **DALL-E** | Geração de imagens a partir de descrições textuais | Criar ilustrações, arte conceitual, mockups de design |
+| **Whisper** | Transcrição de áudio (fala para texto) | Transcrição de reuniões, geração de legendas |
+| **Modelos de Text Embedding** | Converter texto em representações vetoriais | Busca semântica, similaridade de documentos |
 
 ### Tarefa 2: Explore o Playground do Azure OpenAI Studio
 
-O **Playground do Azure OpenAI Studio** (acessÃ­vel em [oai.azure.com](https://oai.azure.com)) permite que vocÃª interaja com modelos implantados. Aqui estÃ¡ o que vocÃª veria:
+O **Playground do Azure OpenAI Studio** (acessível em [oai.azure.com](https://oai.azure.com)) permite que você interaja com modelos implantados. Aqui está o que você veria:
 
 **Interface do Chat Playground**:
 ```text
@@ -64,15 +64,15 @@ O **Playground do Azure OpenAI Studio** (acessÃ­vel em [oai.azure.com](https:/
 ```
 
 **Componentes principais do playground**:
-- **System message** â€” InstruÃ§Ãµes que definem o comportamento e persona da IA
-- **Temperature** â€” Controla aleatoriedade (0-2, padrÃ£o ~0.7)
-- **Max tokens** â€” Comprimento mÃ¡ximo da resposta
+- **System message** â€” Instruções que definem o comportamento e persona da IA
+- **Temperature** â€” Controla aleatoriedade (0-2, padrão ~0.7)
+- **Max tokens** â€” Comprimento máximo da resposta
 - **Top-p** â€” Controle alternativo de aleatoriedade (0-1)
 - **Deployment** â€” Qual modelo implantado usar
 
-### Tarefa 3: Entender implantaÃ§Ãµes e endpoints
+### Tarefa 3: Entender implantações e endpoints
 
-O Azure OpenAI usa um modelo de implantaÃ§Ã£o para gerenciar o acesso:
+O Azure OpenAI usa um modelo de implantação para gerenciar o acesso:
 
 ```text
 Azure OpenAI Resource (my-openai-resource)
@@ -82,10 +82,10 @@ Azure OpenAI Resource (my-openai-resource)
 ```
 
 **Conceitos-chave**:
-- **Resource** â€” O recurso Azure que contÃ©m suas implantaÃ§Ãµes
-- **Deployment** â€” Uma instÃ¢ncia de modelo especÃ­fica com seu prÃ³prio nome e endpoint
-- **Endpoint** â€” A URL que as aplicaÃ§Ãµes chamam para acessar o modelo
-- **API key / Microsoft Entra auth** â€” MÃ©todos de autenticaÃ§Ã£o para acessar implantaÃ§Ãµes
+- **Resource** â€” O recurso Azure que contém suas implantações
+- **Deployment** â€” Uma instância de modelo específica com seu próprio nome e endpoint
+- **Endpoint** â€” A URL que as aplicações chamam para acessar o modelo
+- **API key / Microsoft Entra auth** â€” Métodos de autenticação para acessar implantações
 
 **Estrutura do endpoint**:
 ```text
@@ -94,17 +94,17 @@ https://{resource-name}.openai.azure.com/openai/deployments/{deployment-name}/ch
 
 ### Tarefa 4: Comparar Chat Completions vs. Completions
 
-O Azure OpenAI fornece diferentes padrÃµes de API:
+O Azure OpenAI fornece diferentes padrões de API:
 
 | API | Formato | Caso de Uso |
 |-----|---------|-------------|
 | **Chat Completions** | Array de mensagens (roles: system, user, assistant) | IA conversacional, maioria dos casos de uso modernos |
-| **Completions** (legado) | Texto de prompt Ãºnico | Completar texto simples |
+| **Completions** (legado) | Texto de prompt único | Completar texto simples |
 | **Embeddings** | Texto de entrada â†’ array vetorial | Busca, similaridade, agrupamento |
-| **Images** (DALL-E) | DescriÃ§Ã£o textual â†’ imagem | GeraÃ§Ã£o de imagens |
-| **Audio** (Whisper) | Arquivo de Ã¡udio â†’ texto | TranscriÃ§Ã£o |
+| **Images** (DALL-E) | Descrição textual â†’ imagem | Geração de imagens |
+| **Audio** (Whisper) | Arquivo de áudio â†’ texto | Transcrição |
 
-**Formato de mensagens do Chat Completions** (o padrÃ£o mais comum):
+**Formato de mensagens do Chat Completions** (o padrão mais comum):
 ```json
 {
   "messages": [
@@ -116,8 +116,8 @@ O Azure OpenAI fornece diferentes padrÃµes de API:
 }
 ```
 
-Os **roles** sÃ£o:
-- `system` â€” Define o comportamento/persona da IA (oculto do usuÃ¡rio)
+Os **roles** são:
+- `system` â€” Define o comportamento/persona da IA (oculto do usuário)
 - `user` â€” As mensagens do humano
 - `assistant` â€” As respostas anteriores da IA (para contexto multi-turno)
 
@@ -141,71 +141,71 @@ az cognitiveservices account list-models \
 
 ## Conceitos-Chave
 
-| Conceito | DefiniÃ§Ã£o |
+| Conceito | Definição |
 |----------|-----------|
-| Azure OpenAI Service | Acesso hospedado no Azure a modelos da OpenAI com seguranÃ§a e conformidade empresarial |
-| Deployment | Uma instÃ¢ncia de modelo especÃ­fica dentro de um recurso Azure OpenAI com seu prÃ³prio endpoint |
-| System message | InstruÃ§Ãµes que definem o comportamento, persona e restriÃ§Ãµes do assistente de IA |
-| Token | A unidade bÃ¡sica de processamento de texto (~Â¾ de uma palavra); determina custo e limites de contexto |
+| Azure OpenAI Service | Acesso hospedado no Azure a modelos da OpenAI com segurança e conformidade empresarial |
+| Deployment | Uma instância de modelo específica dentro de um recurso Azure OpenAI com seu próprio endpoint |
+| System message | Instruções que definem o comportamento, persona e restrições do assistente de IA |
+| Token | A unidade básica de processamento de texto (~Â¾ de uma palavra); determina custo e limites de contexto |
 | Chat Completions API | O formato de API baseado em mensagens usando roles system/user/assistant |
-| Filtragem de conteÃºdo | Recurso integrado do Azure OpenAI que bloqueia conteÃºdo prejudicial em entradas e saÃ­das |
+| Filtragem de conteúdo | Recurso integrado do Azure OpenAI que bloqueia conteúdo prejudicial em entradas e saídas |
 
-## EquÃ­vocos Comuns
+## Equívocos Comuns
 
-| EquÃ­voco | Realidade |
+| Equívoco | Realidade |
 |----------|-----------|
-| Azure OpenAI e a API da OpenAI sÃ£o idÃªnticos | Azure OpenAI adiciona recursos empresariais (conformidade, rede, filtros de conteÃºdo, autenticaÃ§Ã£o Entra ID) nÃ£o disponÃ­veis na API direta da OpenAI |
-| VocÃª pode usar qualquer modelo imediatamente sem implantaÃ§Ã£o | VocÃª deve implantar um modelo antes de poder usÃ¡-lo â€” implantaÃ§Ãµes criam o endpoint que sua aplicaÃ§Ã£o chama |
-| GPT-4 Ã© sempre melhor que GPT-3.5 para toda tarefa | GPT-3.5 Ã© mais rÃ¡pido e barato; para tarefas simples (classificaÃ§Ã£o, extraÃ§Ã£o) pode ser suficiente e mais econÃ´mico |
-| Azure OpenAI armazena e treina com seus dados | Por padrÃ£o, Azure OpenAI NÃƒO usa seus dados para retreinar modelos; seus dados permanecem dentro do seu perÃ­metro de conformidade |
-| DALL-E e GPT usam a mesma arquitetura de modelo | DALL-E usa modelos de difusÃ£o para geraÃ§Ã£o de imagens; GPT usa modelos transformer para texto â€” sÃ£o arquiteturas diferentes |
+| Azure OpenAI e a API da OpenAI são idênticos | Azure OpenAI adiciona recursos empresariais (conformidade, rede, filtros de conteúdo, autenticação Entra ID) não disponíveis na API direta da OpenAI |
+| Você pode usar qualquer modelo imediatamente sem implantação | Você deve implantar um modelo antes de poder usá-lo â€” implantações criam o endpoint que sua aplicação chama |
+| GPT-4 é sempre melhor que GPT-3.5 para toda tarefa | GPT-3.5 é mais rápido e barato; para tarefas simples (classificação, extração) pode ser suficiente e mais econômico |
+| Azure OpenAI armazena e treina com seus dados | Por padrão, Azure OpenAI NÃƒO usa seus dados para retreinar modelos; seus dados permanecem dentro do seu perímetro de conformidade |
+| DALL-E e GPT usam a mesma arquitetura de modelo | DALL-E usa modelos de difusão para geração de imagens; GPT usa modelos transformer para texto â€” são arquiteturas diferentes |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck
   questions={[
     {
       id: 'ai900-20-q1',
-      question: 'O que vocÃª deve criar antes que aplicaÃ§Ãµes possam acessar um modelo do Azure OpenAI?',
-      options: ['Uma mÃ¡quina virtual', 'Uma implantaÃ§Ã£o de modelo dentro do recurso Azure OpenAI', 'Um conjunto de dados de treinamento personalizado', 'Uma assinatura Azure separada para IA'],
+      question: 'O que você deve criar antes que aplicações possam acessar um modelo do Azure OpenAI?',
+      options: ['Uma máquina virtual', 'Uma implantação de modelo dentro do recurso Azure OpenAI', 'Um conjunto de dados de treinamento personalizado', 'Uma assinatura Azure separada para IA'],
       correctAnswer: 1,
-      explanation: 'Antes que aplicaÃ§Ãµes possam chamar um modelo do Azure OpenAI, vocÃª deve criar uma implantaÃ§Ã£o (deployment). Uma implantaÃ§Ã£o Ã© uma instÃ¢ncia de modelo especÃ­fica com seu prÃ³prio nome e URL de endpoint que aplicaÃ§Ãµes usam para enviar requisiÃ§Ãµes.'
+      explanation: 'Antes que aplicações possam chamar um modelo do Azure OpenAI, você deve criar uma implantação (deployment). Uma implantação é uma instância de modelo específica com seu próprio nome e URL de endpoint que aplicações usam para enviar requisições.'
     },
     {
       id: 'ai900-20-q2',
-      question: 'Qual modelo do Azure OpenAI vocÃª usaria para gerar imagens a partir de descriÃ§Ãµes textuais?',
+      question: 'Qual modelo do Azure OpenAI você usaria para gerar imagens a partir de descrições textuais?',
       options: ['GPT-4o', 'GPT-3.5-Turbo', 'DALL-E', 'Whisper'],
       correctAnswer: 2,
-      explanation: 'DALL-E Ã© o modelo de geraÃ§Ã£o de imagens no Azure OpenAI. Ele cria imagens a partir de descriÃ§Ãµes textuais (prompts). Modelos GPT geram texto, e Whisper transcreve Ã¡udio.'
+      explanation: 'DALL-E é o modelo de geração de imagens no Azure OpenAI. Ele cria imagens a partir de descrições textuais (prompts). Modelos GPT geram texto, e Whisper transcreve áudio.'
     },
     {
       id: 'ai900-20-q3',
-      question: 'Qual Ã© o propÃ³sito da "system message" no Azure OpenAI Chat Completions?',
-      options: ['Autenticar a requisiÃ§Ã£o de API', 'Definir a conta de cobranÃ§a para a requisiÃ§Ã£o', 'Especificar o nome da implantaÃ§Ã£o', 'Definir o comportamento, persona e restriÃ§Ãµes do assistente de IA'],
+      question: 'Qual é o propósito da "system message" no Azure OpenAI Chat Completions?',
+      options: ['Autenticar a requisição de API', 'Definir a conta de cobrança para a requisição', 'Especificar o nome da implantação', 'Definir o comportamento, persona e restrições do assistente de IA'],
       correctAnswer: 3,
-      explanation: 'A system message define o comportamento e persona da IA â€” por exemplo, "VocÃª Ã© um agente de atendimento ao cliente prestativo que sÃ³ discute nossos produtos." Ela fornece contexto e restriÃ§Ãµes para como o modelo deve responder.'
+      explanation: 'A system message define o comportamento e persona da IA â€” por exemplo, "Você é um agente de atendimento ao cliente prestativo que só discute nossos produtos." Ela fornece contexto e restrições para como o modelo deve responder.'
     },
     {
       id: 'ai900-20-q4',
-      question: 'Qual Ã© um benefÃ­cio chave de usar o Azure OpenAI Service em vez da API direta da OpenAI?',
-      options: ['Azure OpenAI fornece seguranÃ§a empresarial, conformidade e filtragem de conteÃºdo', 'Azure OpenAI Ã© sempre gratuito', 'Azure OpenAI oferece mais modelos que a OpenAI', 'Azure OpenAI gera respostas mais rÃ¡pidas'],
+      question: 'Qual é um benefício chave de usar o Azure OpenAI Service em vez da API direta da OpenAI?',
+      options: ['Azure OpenAI fornece segurança empresarial, conformidade e filtragem de conteúdo', 'Azure OpenAI é sempre gratuito', 'Azure OpenAI oferece mais modelos que a OpenAI', 'Azure OpenAI gera respostas mais rápidas'],
       correctAnswer: 0,
-      explanation: 'Azure OpenAI fornece recursos empresariais incluindo certificaÃ§Ãµes de conformidade Azure, autenticaÃ§Ã£o Microsoft Entra ID, rede privada, filtragem de conteÃºdo integrada e residÃªncia de dados regional â€” tornando-o adequado para indÃºstrias regulamentadas.'
+      explanation: 'Azure OpenAI fornece recursos empresariais incluindo certificações de conformidade Azure, autenticação Microsoft Entra ID, rede privada, filtragem de conteúdo integrada e residência de dados regional â€” tornando-o adequado para indústrias regulamentadas.'
     },
     {
       id: 'ai900-20-q5',
-      question: 'Qual modelo do Azure OpenAI Ã© mais adequado para transcrever uma reuniÃ£o gravada em texto?',
+      question: 'Qual modelo do Azure OpenAI é mais adequado para transcrever uma reunião gravada em texto?',
       options: ['GPT-4', 'DALL-E', 'Whisper', 'Text Embedding'],
       correctAnswer: 2,
-      explanation: 'Whisper Ã© o modelo de transcriÃ§Ã£o de Ã¡udio no Azure OpenAI. Ele converte Ã¡udio de fala em texto (fala para texto), tornando-o ideal para transcrever reuniÃµes, entrevistas e outras gravaÃ§Ãµes.'
+      explanation: 'Whisper é o modelo de transcrição de áudio no Azure OpenAI. Ele converte áudio de fala em texto (fala para texto), tornando-o ideal para transcrever reuniões, entrevistas e outras gravações.'
     }
   ]}
 />
 
 ## Saiba Mais
 
-- [O que Ã© Azure OpenAI Service?](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview)
+- [O que é Azure OpenAI Service?](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview)
 - [Modelos do Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models)
 - [Cotas e limites do Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits)
 - [Azure OpenAI Studio](https://oai.azure.com)
-- [ReferÃªncia da API Chat Completions](https://learn.microsoft.com/en-us/azure/ai-services/openai/reference)
+- [Referência da API Chat Completions](https://learn.microsoft.com/en-us/azure/ai-services/openai/reference)

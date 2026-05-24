@@ -10,37 +10,37 @@ import TabItem from '@theme/TabItem';
 # Desafio 17: Engenharia de Prompts e Templates
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$0,50 (estimado) | **DomÃ­nio**: SoluÃ§Ãµes de IA Generativa (15-20%)
+**45-60 min** | **Custo**: ~$0,50 (estimado) | **Domínio**: Soluções de IA Generativa (15-20%)
 :::
 
 ## Habilidades do exame cobertas
 - Enviar prompts para modelos de IA generativa
 - Utilizar templates de prompt
-- Aplicar tÃ©cnicas de engenharia de prompt para resultados otimizados
+- Aplicar técnicas de engenharia de prompt para resultados otimizados
 
-## VisÃ£o Geral
+## Visão Geral
 
-Engenharia de prompt Ã© a prÃ¡tica de projetar e otimizar entradas para modelos de linguagem para obter as saÃ­das desejadas. A API de chat completions do Azure OpenAI usa um formato de mensagem estruturado com trÃªs papÃ©is: **system** (define o comportamento e as restriÃ§Ãµes), **user** (fornece a solicitaÃ§Ã£o) e **assistant** (modela respostas anteriores para contexto). Entender como configurar essas mensagens de forma eficaz Ã© fundamental para construir aplicaÃ§Ãµes de IA confiÃ¡veis.
+Engenharia de prompt é a prática de projetar e otimizar entradas para modelos de linguagem para obter as saídas desejadas. A API de chat completions do Azure OpenAI usa um formato de mensagem estruturado com três papéis: **system** (define o comportamento e as restrições), **user** (fornece a solicitação) e **assistant** (modela respostas anteriores para contexto). Entender como configurar essas mensagens de forma eficaz é fundamental para construir aplicações de IA confiáveis.
 
-ParÃ¢metros-chave controlam a geraÃ§Ã£o de resposta: **temperature** (0-2, controla a aleatoriedade), **top_p** (limiar de amostragem por nÃºcleo), **max_tokens** (limite de comprimento da saÃ­da), **frequency_penalty** (-2 a 2, reduz repetiÃ§Ã£o) e **presence_penalty** (-2 a 2, incentiva diversidade de tÃ³picos). Esses parÃ¢metros interagem entre si â€” por exemplo, temperature e top_p ambos afetam a aleatoriedade, entÃ£o a Microsoft recomenda ajustar um de cada vez.
+Parâmetros-chave controlam a geração de resposta: **temperature** (0-2, controla a aleatoriedade), **top_p** (limiar de amostragem por núcleo), **max_tokens** (limite de comprimento da saída), **frequency_penalty** (-2 a 2, reduz repetição) e **presence_penalty** (-2 a 2, incentiva diversidade de tópicos). Esses parâmetros interagem entre si â€” por exemplo, temperature e top_p ambos afetam a aleatoriedade, então a Microsoft recomenda ajustar um de cada vez.
 
-TÃ©cnicas avanÃ§adas incluem **few-shot prompting** (fornecer exemplos no prompt), **chain-of-thought** (solicitar raciocÃ­nio passo a passo) e **structured outputs** (usar modo JSON ou response_format para garantir saÃ­da parseÃ¡vel). Templates de prompt permitem padrÃµes reutilizÃ¡veis com substituiÃ§Ã£o de variÃ¡veis, possibilitando comportamento consistente em diferentes cenÃ¡rios de aplicaÃ§Ã£o.
+Técnicas avançadas incluem **few-shot prompting** (fornecer exemplos no prompt), **chain-of-thought** (solicitar raciocínio passo a passo) e **structured outputs** (usar modo JSON ou response_format para garantir saída parseável). Templates de prompt permitem padrões reutilizáveis com substituição de variáveis, possibilitando comportamento consistente em diferentes cenários de aplicação.
 
 ## Arquitetura
 
-Este desafio explora a construÃ§Ã£o de prompts, ajuste de parÃ¢metros e abordagens baseadas em templates para construir interaÃ§Ãµes de IA generativa consistentes e confiÃ¡veis.
+Este desafio explora a construção de prompts, ajuste de parâmetros e abordagens baseadas em templates para construir interações de IA generativa consistentes e confiáveis.
 
 ![Topologia do Desafio 17](/img/ai-102/challenge-17-topology.svg)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Recurso Azure OpenAI com GPT-4o implantado (do Desafio 16)
 - Python 3.9+ com pacote `openai` instalado
 - .NET 8 SDK com pacote NuGet `Azure.AI.OpenAI`
-- VariÃ¡veis de ambiente `AZURE_OPENAI_ENDPOINT` e `AZURE_OPENAI_KEY` configuradas
+- Variáveis de ambiente `AZURE_OPENAI_ENDPOINT` e `AZURE_OPENAI_KEY` configuradas
 
-## ImplementaÃ§Ã£o
+## Implementação
 
-### Tarefa 1: Configurar System Prompts e PapÃ©is de Mensagem
+### Tarefa 1: Configurar System Prompts e Papéis de Mensagem
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -180,7 +180,7 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/co
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Experimentar com Temperature e ParÃ¢metros de Amostragem
+### Tarefa 2: Experimentar com Temperature e Parâmetros de Amostragem
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -497,7 +497,7 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/co
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Usar Modo JSON para SaÃ­da Estruturada
+### Tarefa 4: Usar Modo JSON para Saída Estruturada
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -667,7 +667,7 @@ curl -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/co
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```python
 Classification: Account Management
@@ -697,40 +697,40 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Modo JSON retorna erro | `response_format is not supported` | Modelo ou versÃ£o da API nÃ£o suporta modo JSON | Use GPT-4o com versÃ£o da API 2024-10-21+ |
-| SaÃ­da JSON Ã© invÃ¡lida | JSON parcial ou truncado | `max_tokens` muito baixo para a resposta | Aumente `max_tokens` ou simplifique o schema solicitado |
-| Few-shot nÃ£o funciona | Modelo ignora exemplos | Exemplos inconsistentes ou muito poucos | Garanta 3+ exemplos diversos com formato consistente |
-| Temperature 0 varia | SaÃ­das ligeiramente diferentes com temp=0 | Comportamento esperado devido a ponto flutuante | Use o parÃ¢metro `seed` para reprodutibilidade |
-| System prompt ignorado | Modelo nÃ£o segue as restriÃ§Ãµes | Mensagem do usuÃ¡rio sobrescreve mensagem de sistema | Reforce as restriÃ§Ãµes no system message; use instruÃ§Ãµes mais explÃ­citas |
+| Modo JSON retorna erro | `response_format is not supported` | Modelo ou versão da API não suporta modo JSON | Use GPT-4o com versão da API 2024-10-21+ |
+| Saída JSON é inválida | JSON parcial ou truncado | `max_tokens` muito baixo para a resposta | Aumente `max_tokens` ou simplifique o schema solicitado |
+| Few-shot não funciona | Modelo ignora exemplos | Exemplos inconsistentes ou muito poucos | Garanta 3+ exemplos diversos com formato consistente |
+| Temperature 0 varia | Saídas ligeiramente diferentes com temp=0 | Comportamento esperado devido a ponto flutuante | Use o parâmetro `seed` para reprodutibilidade |
+| System prompt ignorado | Modelo não segue as restrições | Mensagem do usuário sobrescreve mensagem de sistema | Reforce as restrições no system message; use instruções mais explícitas |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
     id: "ch17-q1",
-    question: "Qual Ã© a abordagem recomendada quando vocÃª quer baixa aleatoriedade e alta qualidade nas respostas do Azure OpenAI?",
+    question: "Qual é a abordagem recomendada quando você quer baixa aleatoriedade e alta qualidade nas respostas do Azure OpenAI?",
     options: [
       "Definir temperature=0 e top_p=0 simultaneamente",
       "Definir top_p=0.1 e temperature=2",
-      "Definir temperature=0 e deixar top_p no valor padrÃ£o (1)",
+      "Definir temperature=0 e deixar top_p no valor padrão (1)",
       "Definir frequency_penalty=2 e presence_penalty=2"
     ],
     correctAnswer: 2,
-    explanation: "A Microsoft recomenda ajustar temperature OU top_p, nÃ£o ambos. Definir temperature=0 dÃ¡ resultados determinÃ­sticos. Definir top_p=0 impediria qualquer seleÃ§Ã£o de token. A abordagem recomendada Ã© temperature=0 com top_p no valor padrÃ£o de 1."
+    explanation: "A Microsoft recomenda ajustar temperature OU top_p, não ambos. Definir temperature=0 dá resultados determinísticos. Definir top_p=0 impediria qualquer seleção de token. A abordagem recomendada é temperature=0 com top_p no valor padrão de 1."
   },
   {
     id: "ch17-q2",
-    question: "Na API de chat completions, qual Ã© o propÃ³sito de incluir mensagens assistant no array de mensagens?",
+    question: "Na API de chat completions, qual é o propósito de incluir mensagens assistant no array de mensagens?",
     options: [
-      "Fornecer histÃ³rico de conversa e exemplos para few-shot prompting",
-      "Definir as restriÃ§Ãµes de comportamento do sistema",
-      "Configurar o formato de saÃ­da para JSON",
-      "Aumentar o rate limit da requisiÃ§Ã£o"
+      "Fornecer histórico de conversa e exemplos para few-shot prompting",
+      "Definir as restrições de comportamento do sistema",
+      "Configurar o formato de saída para JSON",
+      "Aumentar o rate limit da requisição"
     ],
     correctAnswer: 0,
-    explanation: "Mensagens assistant representam respostas anteriores do modelo. Elas servem dois propÃ³sitos: fornecer histÃ³rico de conversa para chat multi-turno e fornecer respostas de exemplo em padrÃµes de few-shot prompting onde pares user/assistant demonstram o comportamento desejado."
+    explanation: "Mensagens assistant representam respostas anteriores do modelo. Elas servem dois propósitos: fornecer histórico de conversa para chat multi-turno e fornecer respostas de exemplo em padrões de few-shot prompting onde pares user/assistant demonstram o comportamento desejado."
   },
   {
     id: "ch17-q3",
@@ -742,11 +742,11 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
       "O max_tokens deve ser pelo menos 1000"
     ],
     correctAnswer: 1,
-    explanation: "Ao usar o modo JSON, a mensagem system ou user deve mencionar explicitamente que a resposta deve estar em formato JSON. A API retornarÃ¡ um erro se o modo JSON estiver habilitado mas 'JSON' nÃ£o for mencionado nas mensagens. Isso garante o uso intencional do recurso."
+    explanation: "Ao usar o modo JSON, a mensagem system ou user deve mencionar explicitamente que a resposta deve estar em formato JSON. A API retornará um erro se o modo JSON estiver habilitado mas 'JSON' não for mencionado nas mensagens. Isso garante o uso intencional do recurso."
   },
   {
     id: "ch17-q4",
-    question: "Qual parÃ¢metro reduz a probabilidade do modelo repetir as mesmas palavras ou frases que jÃ¡ usou?",
+    question: "Qual parâmetro reduz a probabilidade do modelo repetir as mesmas palavras ou frases que já usou?",
     options: [
       "presence_penalty",
       "top_p",
@@ -754,19 +754,19 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
       "frequency_penalty"
     ],
     correctAnswer: 3,
-    explanation: "frequency_penalty (intervalo de -2 a 2) reduz a repetiÃ§Ã£o proporcionalmente Ã  frequÃªncia com que um token apareceu. Quanto mais uma palavra Ã© repetida, mais ela Ã© penalizada. presence_penalty penaliza tokens que apareceram de qualquer forma (independente da frequÃªncia), incentivando novos tÃ³picos."
+    explanation: "frequency_penalty (intervalo de -2 a 2) reduz a repetição proporcionalmente Ã  frequência com que um token apareceu. Quanto mais uma palavra é repetida, mais ela é penalizada. presence_penalty penaliza tokens que apareceram de qualquer forma (independente da frequência), incentivando novos tópicos."
   },
   {
     id: "ch17-q5",
-    question: "Qual Ã© a diferenÃ§a principal entre zero-shot e few-shot prompting?",
+    question: "Qual é a diferença principal entre zero-shot e few-shot prompting?",
     options: [
-      "Zero-shot nÃ£o fornece exemplos; few-shot inclui pares de entrada/saÃ­da de exemplo no prompt",
+      "Zero-shot não fornece exemplos; few-shot inclui pares de entrada/saída de exemplo no prompt",
       "Zero-shot usa temperature=0; few-shot usa temperature>0",
       "Zero-shot funciona apenas com GPT-3.5; few-shot requer GPT-4",
-      "Zero-shot Ã© sÃ­ncrono; few-shot Ã© assÃ­ncrono"
+      "Zero-shot é síncrono; few-shot é assíncrono"
     ],
     correctAnswer: 0,
-    explanation: "Zero-shot prompting dÃ¡ ao modelo uma tarefa sem exemplos, confiando no seu treinamento. Few-shot prompting inclui pares de entrada/saÃ­da de exemplo no prompt (como pares de mensagens user/assistant) para demonstrar o formato e comportamento desejados, melhorando a consistÃªncia."
+    explanation: "Zero-shot prompting dá ao modelo uma tarefa sem exemplos, confiando no seu treinamento. Few-shot prompting inclui pares de entrada/saída de exemplo no prompt (como pares de mensagens user/assistant) para demonstrar o formato e comportamento desejados, melhorando a consistência."
   }
 ]} />
 
@@ -777,8 +777,8 @@ az group delete --name rg-ai102-challenge17 --yes --no-wait
 ```
 
 ## Saiba Mais
-- [TÃ©cnicas de engenharia de prompt](https://learn.microsoft.com/azure/ai-services/openai/concepts/prompt-engineering)
-- [ReferÃªncia da API de chat completions](https://learn.microsoft.com/azure/ai-services/openai/reference#chat-completions)
-- [Modo JSON e saÃ­das estruturadas](https://learn.microsoft.com/azure/ai-services/openai/how-to/structured-outputs)
+- [Técnicas de engenharia de prompt](https://learn.microsoft.com/azure/ai-services/openai/concepts/prompt-engineering)
+- [Referência da API de chat completions](https://learn.microsoft.com/azure/ai-services/openai/reference#chat-completions)
+- [Modo JSON e saídas estruturadas](https://learn.microsoft.com/azure/ai-services/openai/how-to/structured-outputs)
 - [Framework de mensagem de sistema](https://learn.microsoft.com/azure/ai-services/openai/concepts/system-message)
 - [Aprendizado few-shot com Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/concepts/advanced-prompt-engineering)

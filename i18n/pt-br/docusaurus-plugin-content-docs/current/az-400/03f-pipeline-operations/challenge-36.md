@@ -1,35 +1,35 @@
 ---
 sidebar_position: 3
-title: "Desafio 36: EstratÃ©gias de retenÃ§Ã£o"
-sidebar_label: "Desafio 36: EstratÃ©gias de retenÃ§Ã£o"
+title: "Desafio 36: Estratégias de retenção"
+sidebar_label: "Desafio 36: Estratégias de retenção"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 
-# Desafio 36: EstratÃ©gias de retenÃ§Ã£o
+# Desafio 36: Estratégias de retenção
 
-:::info Plataforma: comparaÃ§Ã£o
-Este desafio abrange o gerenciamento de retenÃ§Ã£o tanto do GitHub Actions/Packages quanto do Azure Pipelines/Artifacts.
+:::info Plataforma: comparação
+Este desafio abrange o gerenciamento de retenção tanto do GitHub Actions/Packages quanto do Azure Pipelines/Artifacts.
 :::
 
 ## Habilidades do exame mapeadas
 
-- Projetar e implementar uma estratÃ©gia de retenÃ§Ã£o para artefatos de pipeline e dependÃªncias
+- Projetar e implementar uma estratégia de retenção para artefatos de pipeline e dependências
 
-## CenÃ¡rio
+## Cenário
 
-O projeto Azure DevOps da Contoso Ltd acumulou 500 GB de armazenamento de artefatos que cresce 50 GB por mÃªs. Seus repositÃ³rios GitHub tambÃ©m tÃªm armazenamento de artefatos inchado. O detalhamento:
+O projeto Azure DevOps da Contoso Ltd acumulou 500 GB de armazenamento de artefatos que cresce 50 GB por mês. Seus repositórios GitHub também têm armazenamento de artefatos inchado. O detalhamento:
 
-- Artefatos de execuÃ§Ã£o de pipeline (saÃ­das de build, resultados de teste): 200 GB
-- Feed do Azure Artifacts (pacotes npm): 180 GB (incluindo 3 anos de versÃµes prÃ©-release)
-- Imagens de contÃªiner no ACR: 120 GB
+- Artefatos de execução de pipeline (saídas de build, resultados de teste): 200 GB
+- Feed do Azure Artifacts (pacotes npm): 180 GB (incluindo 3 anos de versões pré-release)
+- Imagens de contêiner no ACR: 120 GB
 - Artefatos de release retidos indefinidamente: crescendo sem controle
 
-Os custos mensais de armazenamento sÃ£o $150 e subindo. A equipe de conformidade exige que artefatos de release de produÃ§Ã£o sejam mantidos por 1 ano, mas artefatos de dev/test precisam apenas de 7 dias. Projete e implemente uma estratÃ©gia abrangente de retenÃ§Ã£o.
+Os custos mensais de armazenamento são $150 e subindo. A equipe de conformidade exige que artefatos de release de produção sejam mantidos por 1 ano, mas artefatos de dev/test precisam apenas de 7 dias. Projete e implemente uma estratégia abrangente de retenção.
 
-## Tarefa 1: Configurar polÃ­ticas de retenÃ§Ã£o de artefatos no Azure Pipelines
+## Tarefa 1: Configurar políticas de retenção de artefatos no Azure Pipelines
 
-Defina polÃ­ticas de retenÃ§Ã£o no nÃ­vel do projeto e do pipeline:
+Defina políticas de retenção no nível do projeto e do pipeline:
 
 ```bash
 # View current project retention settings
@@ -71,7 +71,7 @@ jobs:
 # - Days to keep runs with release artifacts: 365
 ```
 
-Substitua a retenÃ§Ã£o no nÃ­vel da execuÃ§Ã£o para builds importantes:
+Substitua a retenção no nível da execução para builds importantes:
 
 ```yaml
   # For release builds, extend retention
@@ -106,9 +106,9 @@ Substitua a retenÃ§Ã£o no nÃ­vel da execuÃ§Ã£o para builds importantes
             Invoke-RestMethod -Uri $uri -Method POST -Headers $headers -Body $body
 ```
 
-## Tarefa 2: Configurar retenÃ§Ã£o de artefatos do GitHub Actions
+## Tarefa 2: Configurar retenção de artefatos do GitHub Actions
 
-Defina retenÃ§Ã£o padrÃ£o e por artefato para GitHub Actions:
+Defina retenção padrão e por artefato para GitHub Actions:
 
 ```yaml
 # Organization/repo level: Settings > Actions > General > Artifact and log retention
@@ -175,9 +175,9 @@ gh api repos/{owner}/{repo}/actions/artifacts \
   --jq '[.artifacts[].size_in_bytes] | add / 1073741824 | "Total: \(.) GB"'
 ```
 
-## Tarefa 3: RetenÃ§Ã£o de releases (manter releases de produÃ§Ã£o por mais tempo)
+## Tarefa 3: Retenção de releases (manter releases de produção por mais tempo)
 
-Implemente retenÃ§Ã£o em camadas baseada no ambiente:
+Implemente retenção em camadas baseada no ambiente:
 
 ```yaml
 # azure-pipelines.yml - Multi-stage with tiered retention
@@ -240,7 +240,7 @@ stages:
                       Invoke-RestMethod -Uri $uri -Method POST -Headers $headers -Body $body
 ```
 
-Para GitHub, use releases com retenÃ§Ã£o baseada em tags:
+Para GitHub, use releases com retenção baseada em tags:
 
 ```bash
 # Create a GitHub Release for production deployments (retained indefinitely)
@@ -260,9 +260,9 @@ gh release list --json tagName,isPrerelease --jq '.[] | select(.isPrerelease) | 
   xargs -I {} gh release delete {} --yes --cleanup-tag
 ```
 
-## Tarefa 4: RetenÃ§Ã£o de versÃµes de pacotes no Azure Artifacts e GitHub Packages
+## Tarefa 4: Retenção de versões de pacotes no Azure Artifacts e GitHub Packages
 
-Configure retenÃ§Ã£o para feeds de pacotes:
+Configure retenção para feeds de pacotes:
 
 ```bash
 # Azure Artifacts - View feed storage
@@ -302,9 +302,9 @@ gh api /orgs/contoso/packages/container/contoso-api/versions \
   xargs -I {} gh api --method DELETE /orgs/contoso/packages/container/contoso-api/versions/{}
 ```
 
-## Tarefa 5: PolÃ­ticas de limpeza de feeds (remover versÃµes prÃ©-release antigas)
+## Tarefa 5: Políticas de limpeza de feeds (remover versões pré-release antigas)
 
-Configure views de retenÃ§Ã£o e limpeza do Azure Artifacts:
+Configure views de retenção e limpeza do Azure Artifacts:
 
 ```bash
 # Azure Artifacts uses "views" for retention:
@@ -389,7 +389,7 @@ steps:
         done
 ```
 
-## Tarefa 6: AnÃ¡lise de custos de armazenamento e otimizaÃ§Ã£o
+## Tarefa 6: Análise de custos de armazenamento e otimização
 
 Analise o uso atual de armazenamento e identifique economias:
 
@@ -430,22 +430,22 @@ az acr task create \
   --context /dev/null
 ```
 
-Calcule as economias com a implementaÃ§Ã£o da retenÃ§Ã£o:
+Calcule as economias com a implementação da retenção:
 
 ```text
-AnÃ¡lise de custos de armazenamento:
-- Total atual: 500 GB a ~$0.30/GB/mÃªs = $150/mÃªs
-- ApÃ³s polÃ­ticas de retenÃ§Ã£o:
-  - Artefatos de pipeline: 200 GB -> 30 GB (retenÃ§Ã£o de 7 dias para CI, 365 para releases)
-  - Feed de pacotes: 180 GB -> 50 GB (manter 5 versÃµes por pacote)
-  - Imagens de contÃªiner: 120 GB -> 40 GB (manter 20 tags, purgar sem tag)
-- Novo total: 120 GB a $0.30/GB/mÃªs = $36/mÃªs
-- Economia mensal: $114/mÃªs ($1.368/ano)
+Análise de custos de armazenamento:
+- Total atual: 500 GB a ~$0.30/GB/mês = $150/mês
+- Após políticas de retenção:
+  - Artefatos de pipeline: 200 GB -> 30 GB (retenção de 7 dias para CI, 365 para releases)
+  - Feed de pacotes: 180 GB -> 50 GB (manter 5 versões por pacote)
+  - Imagens de contêiner: 120 GB -> 40 GB (manter 20 tags, purgar sem tag)
+- Novo total: 120 GB a $0.30/GB/mês = $36/mês
+- Economia mensal: $114/mês ($1.368/ano)
 ```
 
 ## Tarefa 7: Implementando gerenciamento de ciclo de vida via Azure CLI e REST API
 
-Automatize o gerenciamento de retenÃ§Ã£o com scripts e APIs:
+Automatize o gerenciamento de retenção com scripts e APIs:
 
 ```bash
 # Azure Pipelines - Delete old pipeline runs (keep last 100)
@@ -546,11 +546,11 @@ jobs:
           delete-only-pre-release-versions: true
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: Corrigir o vazamento de retenÃ§Ã£o
+### Exercício 1: Corrigir o vazamento de retenção
 
-Artefatos de release de produÃ§Ã£o estÃ£o sendo excluÃ­dos apÃ³s 30 dias apesar de uma polÃ­tica de 365 dias. Diagnostique:
+Artefatos de release de produção estão sendo excluídos após 30 dias apesar de uma política de 365 dias. Diagnostique:
 
 ```yaml
 # BROKEN: Retention lease is created but never protects the artifact
@@ -575,9 +575,9 @@ Artefatos de release de produÃ§Ã£o estÃ£o sendo excluÃ­dos apÃ³s 30 di
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```yaml
 - task: PowerShell@2
@@ -605,9 +605,9 @@ Artefatos de release de produÃ§Ã£o estÃ£o sendo excluÃ­dos apÃ³s 30 di
 
 </details>
 
-### ExercÃ­cio 2: Corrigir o ACR purge excluindo imagens de produÃ§Ã£o
+### Exercício 2: Corrigir o ACR purge excluindo imagens de produção
 
-A tarefa automatizada de ACR purge estÃ¡ excluindo imagens que estÃ£o em execuÃ§Ã£o na produÃ§Ã£o:
+A tarefa automatizada de ACR purge está excluindo imagens que estão em execução na produção:
 
 ```bash
 # BROKEN: Purges all images older than 7 days regardless of use
@@ -619,9 +619,9 @@ az acr run --registry contosoregistry --cmd "acr purge \
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 # FIXED: Only purge untagged images and keep specific tag patterns
@@ -640,52 +640,52 @@ az acr run --registry contosoregistry --cmd "acr purge \
 ```
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "O que Ã© um retention lease no Azure Pipelines?",
+    question: "O que é um retention lease no Azure Pipelines?",
     options: [
-      "Uma licenÃ§a que determina quantos pipelines podem ser executados simultaneamente",
-      "Um bloqueio programÃ¡tico que impede que uma execuÃ§Ã£o de pipeline e seus artefatos sejam excluÃ­dos pelas polÃ­ticas de retenÃ§Ã£o",
-      "Uma cota de armazenamento atribuÃ­da a cada definiÃ§Ã£o de pipeline",
-      "Uma permissÃ£o com tempo limitado para acessar artefatos de pipeline"
+      "Uma licença que determina quantos pipelines podem ser executados simultaneamente",
+      "Um bloqueio programático que impede que uma execução de pipeline e seus artefatos sejam excluídos pelas políticas de retenção",
+      "Uma cota de armazenamento atribuída a cada definição de pipeline",
+      "Uma permissão com tempo limitado para acessar artefatos de pipeline"
     ],
     correctIndex: 1,
-    explanation: "Um retention lease Ã© um bloqueio gerenciado por API que substitui as configuraÃ§Ãµes de retenÃ§Ã£o no nÃ­vel do projeto para execuÃ§Ãµes de pipeline especÃ­ficas. Quando um lease estÃ¡ ativo, a execuÃ§Ã£o e seus artefatos sÃ£o protegidos contra exclusÃ£o automÃ¡tica independentemente do perÃ­odo de retenÃ§Ã£o configurado. Leases possuem uma propriedade daysValid que define quanto tempo a proteÃ§Ã£o dura."
+    explanation: "Um retention lease é um bloqueio gerenciado por API que substitui as configurações de retenção no nível do projeto para execuções de pipeline específicas. Quando um lease está ativo, a execução e seus artefatos são protegidos contra exclusão automática independentemente do período de retenção configurado. Leases possuem uma propriedade daysValid que define quanto tempo a proteção dura."
   },
   {
-    question: "Como a retenÃ§Ã£o de artefatos deve diferir entre builds de CI e releases de produÃ§Ã£o?",
+    question: "Como a retenção de artefatos deve diferir entre builds de CI e releases de produção?",
     options: [
-      "Todos os artefatos devem ter a mesma retenÃ§Ã£o independentemente do ambiente",
-      "Artefatos de CI/PR devem ter retenÃ§Ã£o curta (1-7 dias); artefatos de release de produÃ§Ã£o devem ter retenÃ§Ã£o longa (90-365 dias)",
-      "Artefatos de CI devem ser mantidos por mais tempo porque sÃ£o necessÃ¡rios para depuraÃ§Ã£o",
-      "Artefatos de produÃ§Ã£o devem ser excluÃ­dos imediatamente apÃ³s o deploy para economizar espaÃ§o"
+      "Todos os artefatos devem ter a mesma retenção independentemente do ambiente",
+      "Artefatos de CI/PR devem ter retenção curta (1-7 dias); artefatos de release de produção devem ter retenção longa (90-365 dias)",
+      "Artefatos de CI devem ser mantidos por mais tempo porque são necessários para depuração",
+      "Artefatos de produção devem ser excluídos imediatamente após o deploy para economizar espaço"
     ],
     correctIndex: 1,
-    explanation: "Artefatos de CI e PR sÃ£o transitÃ³rios e necessÃ¡rios apenas durante o ciclo de revisÃ£o/merge (alguns dias no mÃ¡ximo). Artefatos de release de produÃ§Ã£o podem ser necessÃ¡rios para rollback, auditoria ou conformidade e devem ser retidos por meses ou anos dependendo dos requisitos regulatÃ³rios. Essa abordagem em camadas otimiza custos de armazenamento enquanto atende Ã s necessidades de conformidade."
+    explanation: "Artefatos de CI e PR são transitórios e necessários apenas durante o ciclo de revisão/merge (alguns dias no máximo). Artefatos de release de produção podem ser necessários para rollback, auditoria ou conformidade e devem ser retidos por meses ou anos dependendo dos requisitos regulatórios. Essa abordagem em camadas otimiza custos de armazenamento enquanto atende Ã s necessidades de conformidade."
   },
   {
-    question: "Qual Ã© a abordagem recomendada para gerenciar a retenÃ§Ã£o de imagens de contÃªiner no Azure Container Registry?",
+    question: "Qual é a abordagem recomendada para gerenciar a retenção de imagens de contêiner no Azure Container Registry?",
     options: [
       "Excluir imagens manualmente quando o armazenamento estiver cheio",
-      "Usar tarefas ACR purge com filtros para remover automaticamente manifestos sem tag e tags antigas, mantendo um nÃºmero mÃ­nimo",
-      "Excluir o repositÃ³rio inteiro e reenviar apenas as imagens necessÃ¡rias",
+      "Usar tarefas ACR purge com filtros para remover automaticamente manifestos sem tag e tags antigas, mantendo um número mínimo",
+      "Excluir o repositório inteiro e reenviar apenas as imagens necessárias",
       "Usar imagens base menores para reduzir o armazenamento"
     ],
     correctIndex: 1,
-    explanation: "As tarefas ACR purge (agendadas via az acr task) fornecem gerenciamento automatizado de ciclo de vida. Elas suportam filtros regex para padrÃµes de tags, --ago para limpeza baseada em idade, --keep para contagem mÃ­nima de retenÃ§Ã£o, e --untagged para manifestos pendentes. Isso garante que imagens crÃ­ticas para produÃ§Ã£o sejam preservadas enquanto artefatos de build antigos sÃ£o limpos automaticamente."
+    explanation: "As tarefas ACR purge (agendadas via az acr task) fornecem gerenciamento automatizado de ciclo de vida. Elas suportam filtros regex para padrões de tags, --ago para limpeza baseada em idade, --keep para contagem mínima de retenção, e --untagged para manifestos pendentes. Isso garante que imagens críticas para produção sejam preservadas enquanto artefatos de build antigos são limpos automaticamente."
   },
   {
-    question: "Por que Ã© importante excluir imagens de contÃªiner sem tag de um registro?",
+    question: "Por que é importante excluir imagens de contêiner sem tag de um registro?",
     options: [
-      "Imagens sem tag causam vulnerabilidades de seguranÃ§a",
-      "Imagens sem tag consomem armazenamento sem servir a nenhum propÃ³sito, pois nÃ£o podem ser baixadas por tag",
+      "Imagens sem tag causam vulnerabilidades de segurança",
+      "Imagens sem tag consomem armazenamento sem servir a nenhum propósito, pois não podem ser baixadas por tag",
       "Imagens sem tag tornam a API do registro mais lenta",
-      "Imagens sem tag impedem novos pushes para o mesmo repositÃ³rio"
+      "Imagens sem tag impedem novos pushes para o mesmo repositório"
     ],
     correctIndex: 1,
-    explanation: "Quando uma nova imagem Ã© enviada com uma tag existente, a imagem anterior fica \"sem tag\" (seu manifesto permanece, mas nÃ£o tem referÃªncia de tag). Esses manifestos pendentes acumulam armazenamento mas nÃ£o podem ser baixados por nome, tornando-os desperdÃ­cio. A limpeza regular de imagens sem tag Ã© uma prÃ¡tica recomendada para higiene do registro de contÃªineres e controle de custos."
+    explanation: "Quando uma nova imagem é enviada com uma tag existente, a imagem anterior fica \"sem tag\" (seu manifesto permanece, mas não tem referência de tag). Esses manifestos pendentes acumulam armazenamento mas não podem ser baixados por nome, tornando-os desperdício. A limpeza regular de imagens sem tag é uma prática recomendada para higiene do registro de contêineres e controle de custos."
   }
 ]} />
 

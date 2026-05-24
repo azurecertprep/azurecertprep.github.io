@@ -10,38 +10,38 @@ import TabItem from '@theme/TabItem';
 # Desafio 07: Monitorar Recursos do Azure AI
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: ~$0.50 (ingestÃ£o do Log Analytics) | **DomÃ­nio**: Planejar e Gerenciar SoluÃ§Ãµes de IA (20-25%)
+**45-60 min** | **Custo**: ~$0.50 (ingestão do Log Analytics) | **Domínio**: Planejar e Gerenciar Soluções de IA (20-25%)
 :::
 
 ## Habilidades do exame cobertas
 - Monitorar um recurso do Azure AI
-- Configurar definiÃ§Ãµes de diagnÃ³stico para Azure AI Services
-- Consultar mÃ©tricas e logs usando Azure Monitor e KQL
+- Configurar definições de diagnóstico para Azure AI Services
+- Consultar métricas e logs usando Azure Monitor e KQL
 
-## VisÃ£o Geral
+## Visão Geral
 
-Monitorar recursos do Azure AI Ã© essencial para manter a confiabilidade, rastrear padrÃµes de uso e detectar problemas antes que impactem os usuÃ¡rios. O Azure Monitor fornece uma plataforma unificada para coletar mÃ©tricas, logs e rastreamentos de serviÃ§os de IA, incluindo latÃªncia, contagem de requisiÃ§Ãµes, taxas de erro e consumo de tokens.
+Monitorar recursos do Azure AI é essencial para manter a confiabilidade, rastrear padrões de uso e detectar problemas antes que impactem os usuários. O Azure Monitor fornece uma plataforma unificada para coletar métricas, logs e rastreamentos de serviços de IA, incluindo latência, contagem de requisições, taxas de erro e consumo de tokens.
 
-Neste desafio, vocÃª vai configurar definiÃ§Ãµes de diagnÃ³stico para rotear logs e mÃ©tricas para um workspace do Log Analytics, escrever consultas KQL para analisar o comportamento do serviÃ§o e configurar regras de alerta para limites crÃ­ticos. VocÃª vai trabalhar com mÃ©tricas-chave como `TotalCalls`, `TotalErrors`, `Latency` e `TokenTransaction`.
+Neste desafio, você vai configurar definições de diagnóstico para rotear logs e métricas para um workspace do Log Analytics, escrever consultas KQL para analisar o comportamento do serviço e configurar regras de alerta para limites críticos. Você vai trabalhar com métricas-chave como `TotalCalls`, `TotalErrors`, `Latency` e `TokenTransaction`.
 
-Entender o pipeline de monitoramento â€” desde as definiÃ§Ãµes de diagnÃ³stico, passando pelo Log Analytics atÃ© os alertas â€” Ã© uma habilidade essencial para gerenciar implantaÃ§Ãµes de IA em produÃ§Ã£o em escala.
+Entender o pipeline de monitoramento â€” desde as definições de diagnóstico, passando pelo Log Analytics até os alertas â€” é uma habilidade essencial para gerenciar implantações de IA em produção em escala.
 
 ## Arquitetura
 
-As definiÃ§Ãµes de diagnÃ³stico roteiam mÃ©tricas e logs dos Azure AI Services para o Log Analytics, permitindo consultas KQL e regras de alerta.
+As definições de diagnóstico roteiam métricas e logs dos Azure AI Services para o Log Analytics, permitindo consultas KQL e regras de alerta.
 
 ![Challenge 07 topology](/img/ai-102/challenge-07-topology.svg)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Assinatura Azure com um recurso Azure AI Services
-- Workspace do Log Analytics (ou serÃ¡ criado um)
+- Workspace do Log Analytics (ou será criado um)
 - Azure CLI instalado
 - Role de Contributor no grupo de recursos
 
-## ImplementaÃ§Ã£o
+## Implementação
 
-### Tarefa 1: Criar Workspace do Log Analytics e Habilitar DefiniÃ§Ãµes de DiagnÃ³stico
+### Tarefa 1: Criar Workspace do Log Analytics e Habilitar Definições de Diagnóstico
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -216,7 +216,7 @@ echo "Diagnostic settings enabled"
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Consultar MÃ©tricas via Azure Monitor REST API
+### Tarefa 2: Consultar Métricas via Azure Monitor REST API
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -537,7 +537,7 @@ az monitor log-analytics query \
 </TabItem>
 </Tabs>
 
-### Tarefa 4: Criar Regra de Alerta para Alta LatÃªncia
+### Tarefa 4: Criar Regra de Alerta para Alta Latência
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -735,7 +735,7 @@ az monitor metrics alert list \
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 === Operations Summary ===
@@ -757,19 +757,19 @@ token-spike-alert       3         True     total TokenTransaction > 100000
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Nenhum log aparecendo no Log Analytics | Consultas KQL retornam resultados vazios | DefiniÃ§Ãµes de diagnÃ³stico nÃ£o habilitadas ou recentes (atraso de ingestÃ£o de 5-15 min) | Verifique se as definiÃ§Ãµes de diagnÃ³stico existem; aguarde o atraso de ingestÃ£o |
-| Alerta de mÃ©trica nunca dispara | Nenhuma notificaÃ§Ã£o de alerta apesar da alta latÃªncia | Namespace de mÃ©trica ou tipo de agregaÃ§Ã£o incorreto | Verifique o namespace `Microsoft.CognitiveServices/accounts` e a agregaÃ§Ã£o correta |
-| Erro "No access" na consulta do Log Analytics | 403 ao consultar o workspace | Role `Log Analytics Reader` ausente no workspace | Atribua a role `Log Analytics Reader` Ã  identidade que estÃ¡ consultando |
-| Dados de mÃ©tricas incompletos | Algumas mÃ©tricas mostram lacunas | O SKU do recurso nÃ£o emite todas as mÃ©tricas | Verifique o tier S0; o tier gratuito tem emissÃ£o limitada de mÃ©tricas |
-| Alerta dispara com muita frequÃªncia | RuÃ­do/fadiga de alertas | Tamanho da janela muito pequeno ou limite muito baixo | Aumente o `window-size` ou ajuste o limite para reduzir falsos positivos |
+| Nenhum log aparecendo no Log Analytics | Consultas KQL retornam resultados vazios | Definições de diagnóstico não habilitadas ou recentes (atraso de ingestão de 5-15 min) | Verifique se as definições de diagnóstico existem; aguarde o atraso de ingestão |
+| Alerta de métrica nunca dispara | Nenhuma notificação de alerta apesar da alta latência | Namespace de métrica ou tipo de agregação incorreto | Verifique o namespace `Microsoft.CognitiveServices/accounts` e a agregação correta |
+| Erro "No access" na consulta do Log Analytics | 403 ao consultar o workspace | Role `Log Analytics Reader` ausente no workspace | Atribua a role `Log Analytics Reader` Ã  identidade que está consultando |
+| Dados de métricas incompletos | Algumas métricas mostram lacunas | O SKU do recurso não emite todas as métricas | Verifique o tier S0; o tier gratuito tem emissão limitada de métricas |
+| Alerta dispara com muita frequência | Ruído/fadiga de alertas | Tamanho da janela muito pequeno ou limite muito baixo | Aumente o `window-size` ou ajuste o limite para reduzir falsos positivos |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual mÃ©trica do Azure Monitor rastreia o nÃºmero total de tokens processados por um recurso Azure OpenAI?",
+    question: "Qual métrica do Azure Monitor rastreia o número total de tokens processados por um recurso Azure OpenAI?",
     options: [
       "TotalCalls",
       "ProcessedTokens",
@@ -777,10 +777,10 @@ token-spike-alert       3         True     total TokenTransaction > 100000
       "TokenUsage"
     ],
     correctAnswer: 2,
-    explanation: "A mÃ©trica TokenTransaction rastreia o nÃºmero total de tokens processados (tanto tokens de prompt quanto de completion) pelo Azure OpenAI e outros Azure AI Services que usam cobranÃ§a baseada em tokens."
+    explanation: "A métrica TokenTransaction rastreia o número total de tokens processados (tanto tokens de prompt quanto de completion) pelo Azure OpenAI e outros Azure AI Services que usam cobrança baseada em tokens."
   },
   {
-    question: "Qual Ã© o atraso tÃ­pico de ingestÃ£o para logs aparecerem em um workspace do Log Analytics apÃ³s as definiÃ§Ãµes de diagnÃ³stico serem habilitadas?",
+    question: "Qual é o atraso típico de ingestão para logs aparecerem em um workspace do Log Analytics após as definições de diagnóstico serem habilitadas?",
     options: [
       "Imediato (< 1 segundo)",
       "5-15 minutos",
@@ -788,10 +788,10 @@ token-spike-alert       3         True     total TokenTransaction > 100000
       "24 horas"
     ],
     correctAnswer: 1,
-    explanation: "O Log Analytics tipicamente tem um atraso de ingestÃ£o de 5-15 minutos desde quando os logs sÃ£o gerados atÃ© quando aparecem no workspace e podem ser consultados via KQL."
+    explanation: "O Log Analytics tipicamente tem um atraso de ingestão de 5-15 minutos desde quando os logs são gerados até quando aparecem no workspace e podem ser consultados via KQL."
   },
   {
-    question: "Qual tabela KQL contÃ©m logs de diagnÃ³stico dos recursos Azure Cognitive Services?",
+    question: "Qual tabela KQL contém logs de diagnóstico dos recursos Azure Cognitive Services?",
     options: [
       "CognitiveServicesLogs",
       "AIServicesMetrics",
@@ -799,21 +799,21 @@ token-spike-alert       3         True     total TokenTransaction > 100000
       "AzureDiagnostics"
     ],
     correctAnswer: 3,
-    explanation: "Os logs de diagnÃ³stico do Azure Cognitive Services sÃ£o armazenados na tabela AzureDiagnostics no Log Analytics. VocÃª filtra por ResourceProvider == 'MICROSOFT.COGNITIVESERVICES' para isolar os logs do serviÃ§o de IA."
+    explanation: "Os logs de diagnóstico do Azure Cognitive Services são armazenados na tabela AzureDiagnostics no Log Analytics. Você filtra por ResourceProvider == 'MICROSOFT.COGNITIVESERVICES' para isolar os logs do serviço de IA."
   },
   {
-    question: "Ao criar uma regra de alerta de mÃ©trica, o que o parÃ¢metro 'window size' controla?",
+    question: "Ao criar uma regra de alerta de métrica, o que o parâmetro 'window size' controla?",
     options: [
-      "O intervalo de tempo sobre o qual a mÃ©trica Ã© agregada para avaliaÃ§Ã£o",
-      "Quanto tempo o alerta permanece ativo apÃ³s disparar",
-      "O nÃºmero mÃ¡ximo de notificaÃ§Ãµes a enviar",
+      "O intervalo de tempo sobre o qual a métrica é agregada para avaliação",
+      "Quanto tempo o alerta permanece ativo após disparar",
+      "O número máximo de notificações a enviar",
       "O atraso antes da regra de alerta se tornar ativa"
     ],
     correctAnswer: 0,
-    explanation: "O window size define o perÃ­odo de retrospectiva sobre o qual os valores da mÃ©trica sÃ£o agregados (por exemplo, mÃ©dia sobre 15 minutos). A frequÃªncia de avaliaÃ§Ã£o determina com que frequÃªncia essa janela Ã© verificada."
+    explanation: "O window size define o período de retrospectiva sobre o qual os valores da métrica são agregados (por exemplo, média sobre 15 minutos). A frequência de avaliação determina com que frequência essa janela é verificada."
   },
   {
-    question: "Qual categoria de log deve ser habilitada nas definiÃ§Ãµes de diagnÃ³stico para capturar detalhes de requisiÃ§Ã£o e resposta da API para Azure AI Services?",
+    question: "Qual categoria de log deve ser habilitada nas definições de diagnóstico para capturar detalhes de requisição e resposta da API para Azure AI Services?",
     options: [
       "Audit",
       "AllMetrics",
@@ -821,7 +821,7 @@ token-spike-alert       3         True     total TokenTransaction > 100000
       "OperationalLogs"
     ],
     correctAnswer: 2,
-    explanation: "A categoria RequestResponse captura informaÃ§Ãµes detalhadas sobre requisiÃ§Ãµes e respostas da API, incluindo cÃ³digos de status, duraÃ§Ã£o e, para o Azure OpenAI, contagens de tokens. A categoria Audit captura operaÃ§Ãµes do plano de controle como regeneraÃ§Ã£o de chaves."
+    explanation: "A categoria RequestResponse captura informações detalhadas sobre requisições e respostas da API, incluindo códigos de status, duração e, para o Azure OpenAI, contagens de tokens. A categoria Audit captura operações do plano de controle como regeneração de chaves."
   }
 ]} />
 

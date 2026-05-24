@@ -4,49 +4,49 @@ title: "Desafio 20: ExpressRoute Avançado [SIMULAÇÃO]"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 20: Recursos avanÃ§ados do ExpressRoute
+# Desafio 20: Recursos avançados do ExpressRoute
 
-:::caution Modo de simulaÃ§Ã£o
-Este desafio Ã© baseado em simulaÃ§Ã£o. O ExpressRoute requer um provedor de conectividade fÃ­sica e custa $55--$10.000+/mÃªs. VocÃª aprenderÃ¡ os comandos CLI, padrÃµes de configuraÃ§Ã£o e saÃ­das esperadas sem implantar recursos reais.
+:::caution Modo de simulação
+Este desafio é baseado em simulação. O ExpressRoute requer um provedor de conectividade física e custa $55--$10.000+/mês. Você aprenderá os comandos CLI, padrões de configuração e saídas esperadas sem implantar recursos reais.
 :::
 
 :::info Tempo e custo estimados
-**45--60 minutos** | **Sem custo (simulaÃ§Ã£o)** | **Peso no exame: 20--25%**
+**45--60 minutos** | **Sem custo (simulação)** | **Peso no exame: 20--25%**
 :::
 
 ## Objetivos
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Projetar e implementar o ExpressRoute Global Reach
-- Habilitar o FastPath em uma conexÃ£o ExpressRoute
+- Habilitar o FastPath em uma conexão ExpressRoute
 - Configurar Bidirectional Forwarding Detection (BFD) sobre ExpressRoute
-- Projetar ExpressRoute geo-redundante para recuperaÃ§Ã£o de desastres
-- Explicar quando o ExpressRoute Direct Ã© apropriado
+- Projetar ExpressRoute geo-redundante para recuperação de desastres
+- Explicar quando o ExpressRoute Direct é apropriado
 
-## CenÃ¡rio
+## Cenário
 
 A Contoso expandiu globalmente. Agora eles possuem:
 
-- **EscritÃ³rio no Leste dos EUA** conectado via ExpressRoute atravÃ©s da Equinix em Washington DC
-- **EscritÃ³rio na Europa** conectado via ExpressRoute atravÃ©s da Interxion em AmsterdÃ£
+- **Escritório no Leste dos EUA** conectado via ExpressRoute através da Equinix em Washington DC
+- **Escritório na Europa** conectado via ExpressRoute através da Interxion em Amsterdã
 
-Atualmente, o trÃ¡fego entre os dois escritÃ³rios faz hairpin atravÃ©s do Azure (o escritÃ³rio dos EUA entra no Azure, atravessa o backbone da Microsoft, sai para o escritÃ³rio europeu). Eles precisam do ExpressRoute Global Reach para rotear o trÃ¡fego entre escritÃ³rios diretamente pelo backbone da Microsoft sem entrar nas VNets do Azure.
+Atualmente, o tráfego entre os dois escritórios faz hairpin através do Azure (o escritório dos EUA entra no Azure, atravessa o backbone da Microsoft, sai para o escritório europeu). Eles precisam do ExpressRoute Global Reach para rotear o tráfego entre escritórios diretamente pelo backbone da Microsoft sem entrar nas VNets do Azure.
 
-AlÃ©m disso, seu aplicativo de negociaÃ§Ã£o financeira sensÃ­vel Ã  latÃªncia requer o FastPath para ignorar o gateway ExpressRoute no caminho de dados. Eles tambÃ©m desejam BFD para detecÃ§Ã£o de failover em menos de um segundo.
+Além disso, seu aplicativo de negociação financeira sensível Ã  latência requer o FastPath para ignorar o gateway ExpressRoute no caminho de dados. Eles também desejam BFD para detecção de failover em menos de um segundo.
 
 ---
 
 ## Tarefa 1: Configurar o ExpressRoute Global Reach
 
-O Global Reach permite que dois circuitos ExpressRoute troquem rotas entre seus peerings privados. O trÃ¡fego flui diretamente pelo backbone da Microsoft, ignorando completamente as VNets do Azure.
+O Global Reach permite que dois circuitos ExpressRoute troquem rotas entre seus peerings privados. O tráfego flui diretamente pelo backbone da Microsoft, ignorando completamente as VNets do Azure.
 
-### PrÃ©-requisitos para o Global Reach
+### Pré-requisitos para o Global Reach
 
 - Ambos os circuitos devem ter o Azure private peering configurado
-- Ambos os circuitos devem estar em **regiÃµes suportadas** (nem todas as regiÃµes suportam o Global Reach)
-- Os circuitos devem estar em locais de peering diferentes (nÃ£o Ã© possÃ­vel usar Global Reach entre dois circuitos no mesmo local de peering)
-- O SKU Premium Ã© necessÃ¡rio se os circuitos estiverem em regiÃµes geopolÃ­ticas diferentes
+- Ambos os circuitos devem estar em **regiões suportadas** (nem todas as regiões suportam o Global Reach)
+- Os circuitos devem estar em locais de peering diferentes (não é possível usar Global Reach entre dois circuitos no mesmo local de peering)
+- O SKU Premium é necessário se os circuitos estiverem em regiões geopolíticas diferentes
 
 ### Etapa 1: Identificar ambos os circuitos
 
@@ -59,7 +59,7 @@ az network express-route show \
   --output json
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -78,7 +78,7 @@ az network express-route show \
   --output json
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -88,7 +88,7 @@ az network express-route show \
 }
 ```
 
-### Etapa 2: Criar a conexÃ£o Global Reach
+### Etapa 2: Criar a conexão Global Reach
 
 O comando `az network express-route peering connection create` estabelece o Global Reach entre dois circuitos. Ele opera no private peering do circuito iniciador e referencia o circuito par.
 
@@ -102,16 +102,16 @@ az network express-route peering connection create \
   --address-prefix 172.16.100.0/29
 ```
 
-**Detalhes dos parÃ¢metros:**
+**Detalhes dos parâmetros:**
 
-| ParÃ¢metro | Finalidade |
+| Parâmetro | Finalidade |
 |---|---|
 | `--circuit-name` | O circuito iniciador (local) |
 | `--peering-name` | Deve ser `AzurePrivatePeering` (o Global Reach funciona apenas sobre private peering) |
 | `--peer-circuit` | ID de recurso completo do private peering do circuito remoto |
-| `--address-prefix` | Uma sub-rede /29 usada para o tÃºnel do Global Reach (nÃ£o deve ser do seu espaÃ§o de endereÃ§os existente) |
+| `--address-prefix` | Uma sub-rede /29 usada para o túnel do Global Reach (não deve ser do seu espaço de endereços existente) |
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -136,7 +136,7 @@ az network express-route peering connection list \
   --output table
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```text
 Name                  CircuitConnectionStatus  AddressPrefix     ProvisioningState
@@ -146,7 +146,7 @@ globalreach-us-to-eu  Connected                172.16.100.0/29   Succeeded
 
 ### Global Reach entre assinaturas
 
-Se o circuito par estiver em uma assinatura diferente, vocÃª precisa de uma chave de autorizaÃ§Ã£o:
+Se o circuito par estiver em uma assinatura diferente, você precisa de uma chave de autorização:
 
 ```bash
 # On the peer circuit's subscription, create an authorization
@@ -170,19 +170,19 @@ az network express-route peering connection create \
 
 ## Tarefa 2: Habilitar o FastPath
 
-O FastPath melhora o desempenho do caminho de dados enviando o trÃ¡fego de rede diretamente para as VMs na rede virtual, ignorando o gateway ExpressRoute. O gateway ainda Ã© necessÃ¡rio para operaÃ§Ãµes do plano de controle (troca de rotas), mas os pacotes de dados tomam um atalho.
+O FastPath melhora o desempenho do caminho de dados enviando o tráfego de rede diretamente para as VMs na rede virtual, ignorando o gateway ExpressRoute. O gateway ainda é necessário para operações do plano de controle (troca de rotas), mas os pacotes de dados tomam um atalho.
 
 ### Requisitos do FastPath
 
 | Requisito | Detalhe |
 |---|---|
-| SKU do gateway | Ultra Performance, ErGw3AZ ou ErGwScale (mÃ­nimo 10 unidades de escala) |
+| SKU do gateway | Ultra Performance, ErGw3AZ ou ErGwScale (mínimo 10 unidades de escala) |
 | Tipo de circuito | Qualquer circuito ExpressRoute |
 | Private peering | Deve estar configurado |
 
-O FastPath **nÃ£o Ã© suportado** com os SKUs de gateway ErGw1AZ (Standard) ou ErGw2AZ (High Performance).
+O FastPath **não é suportado** com os SKUs de gateway ErGw1AZ (Standard) ou ErGw2AZ (High Performance).
 
-### Habilitar o FastPath em uma nova conexÃ£o
+### Habilitar o FastPath em uma nova conexão
 
 ```bash
 az network vpn-connection create \
@@ -193,7 +193,7 @@ az network vpn-connection create \
   --express-route-gateway-bypass true
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -208,7 +208,7 @@ az network vpn-connection create \
 }
 ```
 
-### Habilitar o FastPath em uma conexÃ£o existente
+### Habilitar o FastPath em uma conexão existente
 
 ```bash
 az network vpn-connection update \
@@ -217,7 +217,7 @@ az network vpn-connection update \
   --express-route-gateway-bypass true
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -228,27 +228,27 @@ az network vpn-connection update \
 }
 ```
 
-### LimitaÃ§Ãµes do FastPath para entender no exame
+### Limitações do FastPath para entender no exame
 
-- O FastPath nÃ£o suporta UDRs de VNet peering no GatewaySubnet (sem ExpressRoute Direct)
-- O FastPath com Private Link Ã© suportado apenas em circuitos ExpressRoute Direct (10 Gbps ou 100 Gbps)
-- O suporte a VNet peering com FastPath requer conexÃµes ExpressRoute Direct
-- O gateway continua sendo necessÃ¡rio para o plano de controle (troca de rotas BGP)
+- O FastPath não suporta UDRs de VNet peering no GatewaySubnet (sem ExpressRoute Direct)
+- O FastPath com Private Link é suportado apenas em circuitos ExpressRoute Direct (10 Gbps ou 100 Gbps)
+- O suporte a VNet peering com FastPath requer conexões ExpressRoute Direct
+- O gateway continua sendo necessário para o plano de controle (troca de rotas BGP)
 
 ---
 
 ## Tarefa 3: Configurar Bidirectional Forwarding Detection (BFD)
 
-O BFD fornece detecÃ§Ã£o de falha de link em menos de um segundo entre os roteadores Microsoft Enterprise Edge (MSEE) e seus roteadores CE/PE locais. Sem o BFD, os timers de hold do BGP podem levar atÃ© 180 segundos para detectar uma falha.
+O BFD fornece detecção de falha de link em menos de um segundo entre os roteadores Microsoft Enterprise Edge (MSEE) e seus roteadores CE/PE locais. Sem o BFD, os timers de hold do BGP podem levar até 180 segundos para detectar uma falha.
 
 ### Como o BFD funciona com o ExpressRoute
 
-- O BFD Ã© habilitado **por padrÃ£o** em todas as interfaces de private peering e Microsoft peering recÃ©m-criadas no lado do MSEE
-- VocÃª sÃ³ precisa configurar o BFD no **seu** roteador CE/PE para completar a sessÃ£o BFD
-- O intervalo do BFD no MSEE Ã© configurado para 300 milissegundos
-- NÃ£o hÃ¡ comando Azure CLI para habilitar o BFD no MSEE; Ã© automÃ¡tico
+- O BFD é habilitado **por padrão** em todas as interfaces de private peering e Microsoft peering recém-criadas no lado do MSEE
+- Você só precisa configurar o BFD no **seu** roteador CE/PE para completar a sessão BFD
+- O intervalo do BFD no MSEE é configurado para 300 milissegundos
+- Não há comando Azure CLI para habilitar o BFD no MSEE; é automático
 
-### ConfiguraÃ§Ã£o do BFD no roteador do cliente (exemplo Cisco IOS XE)
+### Configuração do BFD no roteador do cliente (exemplo Cisco IOS XE)
 
 ```text
 interface TenGigabitEthernet2/0/0.200
@@ -266,22 +266,22 @@ router bgp 65020
   exit-address-family
 ```
 
-**ParÃ¢metros-chave do BFD:**
+**Parâmetros-chave do BFD:**
 
-| ParÃ¢metro | Valor | Significado |
+| Parâmetro | Valor | Significado |
 |---|---|---|
-| `interval` | 300 ms | Intervalo de transmissÃ£o para pacotes BFD |
-| `min_rx` | 300 ms | Intervalo mÃ­nimo de recebimento |
+| `interval` | 300 ms | Intervalo de transmissão para pacotes BFD |
+| `min_rx` | 300 ms | Intervalo mínimo de recebimento |
 | `multiplier` | 3 | Perder 3 pacotes antes de declarar link inativo |
-| **Tempo de detecÃ§Ã£o** | 900 ms | 300 ms * 3 = detecÃ§Ã£o em menos de um segundo |
+| **Tempo de detecção** | 900 ms | 300 ms * 3 = detecção em menos de um segundo |
 
-### NegociaÃ§Ã£o de timers do BFD
+### Negociação de timers do BFD
 
-Entre os pares BFD, o mais lento dos dois determina a taxa de transmissÃ£o real. Os intervalos de BFD do MSEE sÃ£o configurados para 300 milissegundos. VocÃª pode configurar valores mais altos no seu lado (forÃ§ando detecÃ§Ã£o mais lenta), mas nÃ£o pode configurÃ¡-los abaixo de 300 ms.
+Entre os pares BFD, o mais lento dos dois determina a taxa de transmissão real. Os intervalos de BFD do MSEE são configurados para 300 milissegundos. Você pode configurar valores mais altos no seu lado (forçando detecção mais lenta), mas não pode configurá-los abaixo de 300 ms.
 
 ### Habilitando o BFD em peerings existentes
 
-Para circuitos configurados com private peering antes de agosto de 2018, ou Microsoft peering antes de janeiro de 2020, vocÃª deve redefinir o peering para habilitar o BFD no lado do MSEE:
+Para circuitos configurados com private peering antes de agosto de 2018, ou Microsoft peering antes de janeiro de 2020, você deve redefinir o peering para habilitar o BFD no lado do MSEE:
 
 ```bash
 # Reset the peering to enable BFD (for legacy peerings only)
@@ -305,9 +305,9 @@ az network express-route peering create \
 
 ## Tarefa 4: Projetar ExpressRoute geo-redundante
 
-Para recuperaÃ§Ã£o de desastres, a Microsoft recomenda implantar circuitos ExpressRoute em pelo menos dois locais de peering diferentes. Isso garante que a conectividade sobreviva a uma falha em um Ãºnico local.
+Para recuperação de desastres, a Microsoft recomenda implantar circuitos ExpressRoute em pelo menos dois locais de peering diferentes. Isso garante que a conectividade sobreviva a uma falha em um único local.
 
-### PadrÃ£o de design de redundÃ¢ncia
+### Padrão de design de redundância
 
 ```text
                     +-----------------------+
@@ -334,7 +334,7 @@ Para recuperaÃ§Ã£o de desastres, a Microsoft recomenda implantar circuitos E
               +-------------+   +-------------+
 ```
 
-### Criar o segundo circuito para redundÃ¢ncia
+### Criar o segundo circuito para redundância
 
 ```bash
 az network express-route create \
@@ -368,23 +368,23 @@ az network vpn-connection create \
   --routing-weight 5
 ```
 
-O parÃ¢metro `--routing-weight` influencia a preferÃªncia de caminho quando ambos os circuitos anunciam as mesmas rotas. Peso maior Ã© preferido.
+O parâmetro `--routing-weight` influencia a preferência de caminho quando ambos os circuitos anunciam as mesmas rotas. Peso maior é preferido.
 
 ---
 
 ## Tarefa 5: ExpressRoute Direct
 
-O ExpressRoute Direct fornece portas fÃ­sicas dedicadas de 10 Gbps ou 100 Gbps diretamente na borda da Microsoft. Ã‰ diferente do ExpressRoute padrÃ£o, onde vocÃª se conecta atravÃ©s de um provedor.
+O ExpressRoute Direct fornece portas físicas dedicadas de 10 Gbps ou 100 Gbps diretamente na borda da Microsoft. Ã‰ diferente do ExpressRoute padrão, onde você se conecta através de um provedor.
 
 ### Quando usar o ExpressRoute Direct
 
-| CenÃ¡rio | Por que usar Direct |
+| Cenário | Por que usar Direct |
 |---|---|
-| IngestÃ£o massiva de dados (multi-terabyte) | Necessidade de largura de banda sustentada de 10+ Gbps |
-| Requisito de criptografia MACsec | DisponÃ­vel apenas em portas Direct |
-| Isolamento fÃ­sico estrito | Seu prÃ³prio par de portas dedicado |
-| MÃºltiplos circuitos na mesma porta | Criar mÃºltiplos circuitos lÃ³gicos a partir de uma porta |
-| Conformidade regulatÃ³ria | Os dados nÃ£o trafegam pela infraestrutura compartilhada do provedor |
+| Ingestão massiva de dados (multi-terabyte) | Necessidade de largura de banda sustentada de 10+ Gbps |
+| Requisito de criptografia MACsec | Disponível apenas em portas Direct |
+| Isolamento físico estrito | Seu próprio par de portas dedicado |
+| Múltiplos circuitos na mesma porta | Criar múltiplos circuitos lógicos a partir de uma porta |
+| Conformidade regulatória | Os dados não trafegam pela infraestrutura compartilhada do provedor |
 
 ### Criar um recurso ExpressRoute Direct
 
@@ -393,7 +393,7 @@ O ExpressRoute Direct fornece portas fÃ­sicas dedicadas de 10 Gbps ou 100 Gbps
 az network express-route port location list --output table
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```text
 Name                   AvailableBandwidths    Address
@@ -414,7 +414,7 @@ az network express-route port create \
   --location eastus
 ```
 
-**SaÃ­da esperada:**
+**Saída esperada:**
 
 ```json
 {
@@ -464,13 +464,13 @@ az network express-route create \
   --location eastus
 ```
 
-Observe que ao usar o ExpressRoute Direct, vocÃª nÃ£o especifica `--provider` ou `--peering-location` porque estÃ¡ se conectando diretamente Ã  Microsoft (vocÃª Ã© efetivamente seu prÃ³prio provedor).
+Observe que ao usar o ExpressRoute Direct, você não especifica `--provider` ou `--peering-location` porque está se conectando diretamente Ã  Microsoft (você é efetivamente seu próprio provedor).
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio A: Global Reach entre circuitos no mesmo local de peering
+### Cenário A: Global Reach entre circuitos no mesmo local de peering
 
 **Sintoma:** `az network express-route peering connection create` falha com um erro.
 
@@ -481,17 +481,17 @@ Observe que ao usar o ExpressRoute Direct, vocÃª nÃ£o especifica `--provider
 Global Reach requires circuits at different peering locations.
 ```
 
-**Causa raiz:** Ambos os circuitos usam o mesmo local de peering (por exemplo, ambos em "Washington DC"). O Global Reach requer que os circuitos estejam em locais de peering diferentes para que o trÃ¡fego atravesse o backbone da Microsoft.
+**Causa raiz:** Ambos os circuitos usam o mesmo local de peering (por exemplo, ambos em "Washington DC"). O Global Reach requer que os circuitos estejam em locais de peering diferentes para que o tráfego atravesse o backbone da Microsoft.
 
-**ResoluÃ§Ã£o:** Use circuitos em locais de peering diferentes, ou use VNet peering com gateways para circuitos no mesmo local.
+**Resolução:** Use circuitos em locais de peering diferentes, ou use VNet peering com gateways para circuitos no mesmo local.
 
-### CenÃ¡rio B: FastPath com SKU de gateway nÃ£o suportado
+### Cenário B: FastPath com SKU de gateway não suportado
 
-**Sintoma:** A conexÃ£o Ã© criada com `--express-route-gateway-bypass true`, mas o trÃ¡fego ainda atravessa o gateway.
+**Sintoma:** A conexão é criada com `--express-route-gateway-bypass true`, mas o tráfego ainda atravessa o gateway.
 
-**Causa raiz:** O gateway usa ErGw1AZ (Standard) ou ErGw2AZ (High Performance), que nÃ£o suportam o FastPath.
+**Causa raiz:** O gateway usa ErGw1AZ (Standard) ou ErGw2AZ (High Performance), que não suportam o FastPath.
 
-**ResoluÃ§Ã£o:** Atualize o gateway para ErGw3AZ ou Ultra Performance:
+**Resolução:** Atualize o gateway para ErGw3AZ ou Ultra Performance:
 
 ```bash
 # Note: Gateway SKU upgrade requires recreation in most cases
@@ -501,23 +501,23 @@ az network vnet-gateway update \
   --sku ErGw3AZ
 ```
 
-### CenÃ¡rio C: BFD nÃ£o detectando falha rapidamente
+### Cenário C: BFD não detectando falha rapidamente
 
 **Sintoma:** A falha do link leva 60+ segundos para ser detectada apesar do BFD estar configurado no roteador CE.
 
-**Causa raiz:** PossÃ­veis problemas:
-1. O BFD estÃ¡ configurado na interface mas nÃ£o vinculado Ã  sessÃ£o BGP (`fall-over bfd` ausente)
-2. O multiplicador estÃ¡ configurado muito alto (por exemplo, multiplicador 20 com intervalo de 300 ms = detecÃ§Ã£o em 6 segundos)
-3. O peering foi configurado antes de agosto de 2018 e o BFD nÃ£o estÃ¡ habilitado no MSEE
+**Causa raiz:** Possíveis problemas:
+1. O BFD está configurado na interface mas não vinculado Ã  sessão BGP (`fall-over bfd` ausente)
+2. O multiplicador está configurado muito alto (por exemplo, multiplicador 20 com intervalo de 300 ms = detecção em 6 segundos)
+3. O peering foi configurado antes de agosto de 2018 e o BFD não está habilitado no MSEE
 
-**ResoluÃ§Ã£o:**
-- Verifique se a sessÃ£o BGP referencia o BFD: `neighbor x.x.x.x fall-over bfd`
+**Resolução:**
+- Verifique se a sessão BGP referencia o BFD: `neighbor x.x.x.x fall-over bfd`
 - Configure o timer apropriado: `bfd interval 300 min_rx 300 multiplier 3`
 - Se for um peering legado, redefina e recrie-o para habilitar o BFD no lado do MSEE
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

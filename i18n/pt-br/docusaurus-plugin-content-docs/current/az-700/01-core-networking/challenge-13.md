@@ -4,23 +4,23 @@ title: "Desafio 13: DDoS Protection & Recomendações de Segurança de Rede"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 13: DDoS Protection e recomendaÃ§Ãµes de seguranÃ§a de rede
+# Desafio 13: DDoS Protection e recomendações de segurança de rede
 
 :::info Tempo e custo estimados
 
-**60-90 minutos** | **~$0,50-1/hora** (DDoS IP Protection em um Ãºnico IP pÃºblico) | **Peso no exame: 10-15%**
+**60-90 minutos** | **~$0,50-1/hora** (DDoS IP Protection em um único IP público) | **Peso no exame: 10-15%**
 
 :::
 
 :::danger Aviso de custo
 
-DDoS Network Protection custa **$2.944/mÃªs** (taxa fixa por plano). NÃƒO implante um plano DDoS Protection em uma assinatura de laboratÃ³rio. Este desafio usa **DDoS IP Protection** ($199/recurso/mÃªs) como alternativa acessÃ­vel e mostra comandos de Network Protection apenas para referÃªncia.
+DDoS Network Protection custa **$2.944/mês** (taxa fixa por plano). NÃƒO implante um plano DDoS Protection em uma assinatura de laboratório. Este desafio usa **DDoS IP Protection** ($199/recurso/mês) como alternativa acessível e mostra comandos de Network Protection apenas para referência.
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-As aplicaÃ§Ãµes web voltadas ao pÃºblico da Contoso tÃªm sido alvo de ataques DDoS volumÃ©tricos que saturaram a largura de banda e esgotaram os recursos da aplicaÃ§Ã£o. A equipe de seguranÃ§a precisa avaliar as opÃ§Ãµes de proteÃ§Ã£o contra DDoS, configurar a proteÃ§Ã£o apropriada para IPs pÃºblicos, configurar monitoramento e alertas para detecÃ§Ã£o de ataques e usar o Microsoft Defender for Cloud para identificar lacunas adicionais de seguranÃ§a de rede no ambiente.
+As aplicações web voltadas ao público da Contoso têm sido alvo de ataques DDoS volumétricos que saturaram a largura de banda e esgotaram os recursos da aplicação. A equipe de segurança precisa avaliar as opções de proteção contra DDoS, configurar a proteção apropriada para IPs públicos, configurar monitoramento e alertas para detecção de ataques e usar o Microsoft Defender for Cloud para identificar lacunas adicionais de segurança de rede no ambiente.
 
 **Arquitetura:**
 
@@ -38,72 +38,72 @@ Internet
 
 ## Objetivos de aprendizagem
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Comparar as camadas DDoS Infrastructure, IP Protection e Network Protection
-- Criar um plano DDoS Protection (Network Protection) e associÃ¡-lo a uma VNet
-- Habilitar DDoS IP Protection em um endereÃ§o IP pÃºblico especÃ­fico
-- Configurar logs de diagnÃ³stico e alertas de mÃ©tricas para detecÃ§Ã£o de ataques DDoS
-- Revisar recomendaÃ§Ãµes de seguranÃ§a de rede no Defender for Cloud Secure Score
-- Usar o Azure Resource Graph para consultar avaliaÃ§Ãµes de seguranÃ§a para recursos de rede
+- Criar um plano DDoS Protection (Network Protection) e associá-lo a uma VNet
+- Habilitar DDoS IP Protection em um endereço IP público específico
+- Configurar logs de diagnóstico e alertas de métricas para detecção de ataques DDoS
+- Revisar recomendações de segurança de rede no Defender for Cloud Secure Score
+- Usar o Azure Resource Graph para consultar avaliações de segurança para recursos de rede
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Uma assinatura do Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- Um endereÃ§o IP pÃºblico com SKU Standard (necessÃ¡rio para recursos de proteÃ§Ã£o DDoS)
-- Microsoft Defender for Cloud habilitado (a camada gratuita Ã© suficiente para avaliaÃ§Ãµes)
+- Um endereço IP público com SKU Standard (necessário para recursos de proteção DDoS)
+- Microsoft Defender for Cloud habilitado (a camada gratuita é suficiente para avaliações)
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
-| DDoS Infrastructure Protection | Gratuito, sempre ativo, proteÃ§Ã£o bÃ¡sica L3/L4 para todos os IPs pÃºblicos do Azure |
-| DDoS IP Protection | $199/recurso/mÃªs, por IP, inclui mÃ©tricas, alertas, relatÃ³rios de mitigaÃ§Ã£o |
-| DDoS Network Protection | $2.944/mÃªs fixo, plano por VNet, adiciona proteÃ§Ã£o de custos, equipe DDoS Rapid Response, desconto em WAF |
-| MÃ©tricas-chave | IfUnderDDoSAttack (0 ou 1), PacketsDroppedDDoS, BytesDroppedDDoS |
-| Namespace de mÃ©tricas | Microsoft.Network/publicIPAddresses |
-| Categorias de log de diagnÃ³stico | DDoSProtectionNotifications, DDoSMitigationFlowLogs, DDoSMitigationReports |
-| Gatilho de mitigaÃ§Ã£o | AutomÃ¡tico; os limites sÃ£o aprendidos a partir dos padrÃµes normais de trÃ¡fego |
-| Requisito de SKU Standard | DDoS IP Protection requer IPs pÃºblicos com SKU Standard (SKU Basic nÃ£o Ã© suportado) |
+| DDoS Infrastructure Protection | Gratuito, sempre ativo, proteção básica L3/L4 para todos os IPs públicos do Azure |
+| DDoS IP Protection | $199/recurso/mês, por IP, inclui métricas, alertas, relatórios de mitigação |
+| DDoS Network Protection | $2.944/mês fixo, plano por VNet, adiciona proteção de custos, equipe DDoS Rapid Response, desconto em WAF |
+| Métricas-chave | IfUnderDDoSAttack (0 ou 1), PacketsDroppedDDoS, BytesDroppedDDoS |
+| Namespace de métricas | Microsoft.Network/publicIPAddresses |
+| Categorias de log de diagnóstico | DDoSProtectionNotifications, DDoSMitigationFlowLogs, DDoSMitigationReports |
+| Gatilho de mitigação | Automático; os limites são aprendidos a partir dos padrões normais de tráfego |
+| Requisito de SKU Standard | DDoS IP Protection requer IPs públicos com SKU Standard (SKU Basic não é suportado) |
 
 ---
 
-## Tarefa 1: Entender as camadas de proteÃ§Ã£o DDoS
+## Tarefa 1: Entender as camadas de proteção DDoS
 
-Antes de implantar qualquer proteÃ§Ã£o, entenda as trÃªs camadas disponÃ­veis no Azure.
+Antes de implantar qualquer proteção, entenda as três camadas disponíveis no Azure.
 
 | Recurso | Infrastructure Protection | IP Protection | Network Protection |
 |---------|--------------------------|---------------|-------------------|
-| Custo | Gratuito | $199/recurso/mÃªs | $2.944/mÃªs (fixo) |
-| Escopo | Todos os recursos do Azure | Por IP pÃºblico | Por VNet (todos os IPs na VNet) |
-| MitigaÃ§Ã£o L3/L4 | Sim | Sim | Sim |
-| MÃ©tricas e alertas DDoS | NÃ£o | Sim | Sim |
-| Logs de fluxo de mitigaÃ§Ã£o | NÃ£o | Sim | Sim |
-| RelatÃ³rios de mitigaÃ§Ã£o | NÃ£o | Sim | Sim |
-| PolÃ­ticas de ajuste adaptativo | NÃ£o | Sim | Sim |
-| ProteÃ§Ã£o de custos (crÃ©ditos de excedente) | NÃ£o | NÃ£o | Sim |
-| Equipe DDoS Rapid Response (DRR) | NÃ£o | NÃ£o | Sim |
-| Desconto em WAF | NÃ£o | NÃ£o | Sim |
-| ProteÃ§Ã£o para atÃ© 100 IPs pÃºblicos | NÃ£o | NÃ£o (cobranÃ§a por IP) | Sim (incluso) |
+| Custo | Gratuito | $199/recurso/mês | $2.944/mês (fixo) |
+| Escopo | Todos os recursos do Azure | Por IP público | Por VNet (todos os IPs na VNet) |
+| Mitigação L3/L4 | Sim | Sim | Sim |
+| Métricas e alertas DDoS | Não | Sim | Sim |
+| Logs de fluxo de mitigação | Não | Sim | Sim |
+| Relatórios de mitigação | Não | Sim | Sim |
+| Políticas de ajuste adaptativo | Não | Sim | Sim |
+| Proteção de custos (créditos de excedente) | Não | Não | Sim |
+| Equipe DDoS Rapid Response (DRR) | Não | Não | Sim |
+| Desconto em WAF | Não | Não | Sim |
+| Proteção para até 100 IPs públicos | Não | Não (cobrança por IP) | Sim (incluso) |
 
 :::tip Nota para o exame
 
-O exame testa se vocÃª consegue identificar qual camada fornece um recurso especÃ­fico. Diferenciadores-chave: apenas Network Protection inclui garantias de proteÃ§Ã£o de custos e acesso Ã  equipe DDoS Rapid Response. IP Protection Ã© ideal para implantaÃ§Ãµes pequenas (menos de 15 IPs pÃºblicos, onde o custo por IP Ã© menor que a taxa fixa de Network Protection).
+O exame testa se você consegue identificar qual camada fornece um recurso específico. Diferenciadores-chave: apenas Network Protection inclui garantias de proteção de custos e acesso Ã  equipe DDoS Rapid Response. IP Protection é ideal para implantações pequenas (menos de 15 IPs públicos, onde o custo por IP é menor que a taxa fixa de Network Protection).
 
 :::
 
 ---
 
-## Tarefa 2: Criar um plano DDoS Protection (referÃªncia de Network Protection)
+## Tarefa 2: Criar um plano DDoS Protection (referência de Network Protection)
 
-:::danger NÃƒO execute isto em uma assinatura de laboratÃ³rio
+:::danger NÃƒO execute isto em uma assinatura de laboratório
 
-Os comandos a seguir criam um plano DDoS Network Protection que custa $2.944/mÃªs imediatamente apÃ³s a criaÃ§Ã£o. Esses comandos sÃ£o fornecidos apenas para referÃªncia de preparaÃ§Ã£o para o exame.
+Os comandos a seguir criam um plano DDoS Network Protection que custa $2.944/mês imediatamente após a criação. Esses comandos são fornecidos apenas para referência de preparação para o exame.
 
 :::
 
-### Etapa 1: Criar um plano DDoS Protection (apenas referÃªncia)
+### Etapa 1: Criar um plano DDoS Protection (apenas referência)
 
 ```bash
 # REFERENCE ONLY â€” costs $2,944/month
@@ -113,7 +113,7 @@ az network ddos-protection create \
     --location eastus
 ```
 
-### Etapa 2: Associar o plano a uma VNet (apenas referÃªncia)
+### Etapa 2: Associar o plano a uma VNet (apenas referência)
 
 ```bash
 # REFERENCE ONLY â€” associates the paid plan with a VNet
@@ -124,7 +124,7 @@ az network vnet update \
     --ddos-protection true
 ```
 
-### Etapa 3: Verificar o status de proteÃ§Ã£o (apenas referÃªncia)
+### Etapa 3: Verificar o status de proteção (apenas referência)
 
 ```bash
 az network vnet show \
@@ -134,7 +134,7 @@ az network vnet show \
     --output table
 ```
 
-### Etapa 4: Desabilitar DDoS Network Protection em uma VNet (apenas referÃªncia)
+### Etapa 4: Desabilitar DDoS Network Protection em uma VNet (apenas referência)
 
 ```bash
 # Disassociate to stop billing
@@ -146,9 +146,9 @@ az network vnet update \
 
 ---
 
-## Tarefa 3: Habilitar DDoS IP Protection (adequado para laboratÃ³rio)
+## Tarefa 3: Habilitar DDoS IP Protection (adequado para laboratório)
 
-DDoS IP Protection Ã© a opÃ§Ã£o econÃ´mica para laboratÃ³rios. Ele fornece as mesmas mÃ©tricas, alertas e recursos de mitigaÃ§Ã£o que o Network Protection, mas Ã© cobrado por IP pÃºblico a $199/mÃªs.
+DDoS IP Protection é a opção econômica para laboratórios. Ele fornece as mesmas métricas, alertas e recursos de mitigação que o Network Protection, mas é cobrado por IP público a $199/mês.
 
 ### Etapa 1: Criar o grupo de recursos e a VNet
 
@@ -166,7 +166,7 @@ az network vnet create \
     --subnet-prefixes 10.0.1.0/24
 ```
 
-### Etapa 2: Criar um IP pÃºblico com SKU Standard com DDoS IP Protection habilitado
+### Etapa 2: Criar um IP público com SKU Standard com DDoS IP Protection habilitado
 
 ```bash
 az network public-ip create \
@@ -180,16 +180,16 @@ az network public-ip create \
 
 :::note
 
-O parÃ¢metro `--ddos-protection-mode` aceita trÃªs valores:
-- **Enabled** â€” DDoS IP Protection estÃ¡ ativo neste IP pÃºblico ($199/mÃªs)
-- **Disabled** â€” apenas Infrastructure Protection gratuito (padrÃ£o para novos IPs)
-- **VirtualNetworkInherited** â€” herda a proteÃ§Ã£o de um plano DDoS Network Protection na VNet
+O parâmetro `--ddos-protection-mode` aceita três valores:
+- **Enabled** â€” DDoS IP Protection está ativo neste IP público ($199/mês)
+- **Disabled** â€” apenas Infrastructure Protection gratuito (padrão para novos IPs)
+- **VirtualNetworkInherited** â€” herda a proteção de um plano DDoS Network Protection na VNet
 
 :::
 
-### Etapa 3: Habilitar DDoS IP Protection em um IP pÃºblico existente
+### Etapa 3: Habilitar DDoS IP Protection em um IP público existente
 
-Se vocÃª jÃ¡ possui um IP pÃºblico sem proteÃ§Ã£o DDoS:
+Se você já possui um IP público sem proteção DDoS:
 
 ```bash
 az network public-ip update \
@@ -198,7 +198,7 @@ az network public-ip update \
     --ddos-protection-mode Enabled
 ```
 
-### Etapa 4: Verificar o status de proteÃ§Ã£o DDoS
+### Etapa 4: Verificar o status de proteção DDoS
 
 ```bash
 az network public-ip show \
@@ -208,9 +208,9 @@ az network public-ip show \
     --output json
 ```
 
-A saÃ­da esperada deve mostrar `"protectionMode": "Enabled"` em `ddosSettings`.
+A saída esperada deve mostrar `"protectionMode": "Enabled"` em `ddosSettings`.
 
-### Etapa 5: Desabilitar DDoS IP Protection (para parar a cobranÃ§a)
+### Etapa 5: Desabilitar DDoS IP Protection (para parar a cobrança)
 
 ```bash
 az network public-ip update \
@@ -221,9 +221,9 @@ az network public-ip update \
 
 ---
 
-## Tarefa 4: Configurar logs de diagnÃ³stico e alertas de mÃ©tricas
+## Tarefa 4: Configurar logs de diagnóstico e alertas de métricas
 
-A proteÃ§Ã£o DDoS expÃµe telemetria por meio do Azure Monitor. VocÃª precisa de configuraÃ§Ãµes de diagnÃ³stico para capturar logs de ataque e alertas de mÃ©tricas para notificar sua equipe quando um ataque for detectado.
+A proteção DDoS expõe telemetria por meio do Azure Monitor. Você precisa de configurações de diagnóstico para capturar logs de ataque e alertas de métricas para notificar sua equipe quando um ataque for detectado.
 
 ### Etapa 1: Criar um workspace do Log Analytics
 
@@ -234,7 +234,7 @@ az monitor log-analytics workspace create \
     --location eastus
 ```
 
-### Etapa 2: Obter o ID do recurso de IP pÃºblico
+### Etapa 2: Obter o ID do recurso de IP público
 
 ```bash
 PIP_ID=$(az network public-ip show \
@@ -244,7 +244,7 @@ PIP_ID=$(az network public-ip show \
     --output tsv)
 ```
 
-### Etapa 3: Criar configuraÃ§Ãµes de diagnÃ³stico para logs DDoS
+### Etapa 3: Criar configurações de diagnóstico para logs DDoS
 
 ```bash
 WORKSPACE_ID=$(az monitor log-analytics workspace show \
@@ -267,13 +267,13 @@ az monitor diagnostic-settings create \
 
 :::note Categorias de log explicadas
 
-- **DDoSProtectionNotifications** â€” alertas quando a mitigaÃ§Ã£o inicia e para (ataque detectado/resolvido)
-- **DDoSMitigationFlowLogs** â€” detalhes por fluxo de pacotes descartados e encaminhados durante a mitigaÃ§Ã£o ativa
-- **DDoSMitigationReports** â€” relatÃ³rios resumidos pÃ³s-ataque com estatÃ­sticas agregadas
+- **DDoSProtectionNotifications** â€” alertas quando a mitigação inicia e para (ataque detectado/resolvido)
+- **DDoSMitigationFlowLogs** â€” detalhes por fluxo de pacotes descartados e encaminhados durante a mitigação ativa
+- **DDoSMitigationReports** â€” relatórios resumidos pós-ataque com estatísticas agregadas
 
 :::
 
-### Etapa 4: Verificar configuraÃ§Ãµes de diagnÃ³stico
+### Etapa 4: Verificar configurações de diagnóstico
 
 ```bash
 az monitor diagnostic-settings list \
@@ -281,9 +281,9 @@ az monitor diagnostic-settings list \
     --output table
 ```
 
-### Etapa 5: Criar um alerta de mÃ©trica para detecÃ§Ã£o de ataque DDoS
+### Etapa 5: Criar um alerta de métrica para detecção de ataque DDoS
 
-A mÃ©trica `IfUnderDDoSAttack` Ã© 1 quando um ataque estÃ¡ ativo e 0 caso contrÃ¡rio. Esta Ã© a mÃ©trica principal para alertas.
+A métrica `IfUnderDDoSAttack` é 1 quando um ataque está ativo e 0 caso contrário. Esta é a métrica principal para alertas.
 
 ```bash
 az monitor metrics alert create \
@@ -313,19 +313,19 @@ az monitor metrics alert create \
 
 :::tip Nota para o exame
 
-As mÃ©tricas DDoS sÃ£o expostas no recurso de **endereÃ§o IP pÃºblico** (namespace `Microsoft.Network/publicIPAddresses`), nÃ£o no recurso de VNet ou plano DDoS. Este Ã© um erro comum na configuraÃ§Ã£o de alertas. Os nomes das mÃ©tricas incluem `IfUnderDDoSAttack`, `PacketsDroppedDDoS`, `BytesDroppedDDoS`, `PacketsForwardedDDoS` e variantes especÃ­ficas de protocolo (TCP, UDP).
+As métricas DDoS são expostas no recurso de **endereço IP público** (namespace `Microsoft.Network/publicIPAddresses`), não no recurso de VNet ou plano DDoS. Este é um erro comum na configuração de alertas. Os nomes das métricas incluem `IfUnderDDoSAttack`, `PacketsDroppedDDoS`, `BytesDroppedDDoS`, `PacketsForwardedDDoS` e variantes específicas de protocolo (TCP, UDP).
 
 :::
 
 ---
 
-## Tarefa 5: Revisar recomendaÃ§Ãµes de seguranÃ§a de rede no Defender for Cloud
+## Tarefa 5: Revisar recomendações de segurança de rede no Defender for Cloud
 
-O Microsoft Defender for Cloud avalia continuamente seu ambiente em relaÃ§Ã£o Ã s melhores prÃ¡ticas de seguranÃ§a e produz recomendaÃ§Ãµes que afetam seu Secure Score.
+O Microsoft Defender for Cloud avalia continuamente seu ambiente em relação Ã s melhores práticas de segurança e produz recomendações que afetam seu Secure Score.
 
-### Etapa 1: Listar avaliaÃ§Ãµes de seguranÃ§a via Azure Resource Graph
+### Etapa 1: Listar avaliações de segurança via Azure Resource Graph
 
-A maneira mais eficaz de consultar recomendaÃ§Ãµes do Defender for Cloud programaticamente Ã© via Azure Resource Graph, que consulta a tabela `SecurityResources`:
+A maneira mais eficaz de consultar recomendações do Defender for Cloud programaticamente é via Azure Resource Graph, que consulta a tabela `SecurityResources`:
 
 ```bash
 az graph query -q "
@@ -345,7 +345,7 @@ az graph query -q "
 
 :::note
 
-O comando `az graph` requer a extensÃ£o `resource-graph`. Instale-a com:
+O comando `az graph` requer a extensão `resource-graph`. Instale-a com:
 
 ```bash
 az extension add --name resource-graph
@@ -353,7 +353,7 @@ az extension add --name resource-graph
 
 :::
 
-### Etapa 2: Filtrar por recomendaÃ§Ãµes relacionadas a DDoS
+### Etapa 2: Filtrar por recomendações relacionadas a DDoS
 
 ```bash
 az graph query -q "
@@ -369,7 +369,7 @@ az graph query -q "
 "
 ```
 
-RecomendaÃ§Ãµes comuns relacionadas a DDoS incluem:
+Recomendações comuns relacionadas a DDoS incluem:
 - "Virtual networks should be protected by Azure DDoS Protection"
 - "Public IP addresses should have DDoS protection enabled"
 
@@ -387,7 +387,7 @@ az graph query -q "
 "
 ```
 
-### Etapa 4: Identificar avaliaÃ§Ãµes de rede nÃ£o saudÃ¡veis com orientaÃ§Ã£o de remediaÃ§Ã£o
+### Etapa 4: Identificar avaliações de rede não saudáveis com orientação de remediação
 
 ```bash
 az graph query -q "
@@ -407,7 +407,7 @@ az graph query -q "
 
 :::tip Nota para o exame
 
-Os **caminhos de ataque** do Defender for Cloud mostram cadeias de vulnerabilidades que um atacante poderia explorar para alcanÃ§ar recursos sensÃ­veis. Por exemplo: VM exposta Ã  internet com regra NSG aberta, executando software desatualizado, com acesso a uma conta de armazenamento contendo dados sensÃ­veis. Os caminhos de ataque sÃ£o visualizados no portal em Defender for Cloud > Attack path analysis. O acesso via CLI Ã© limitado; este Ã© principalmente um recurso baseado no portal testado conceitualmente no exame.
+Os **caminhos de ataque** do Defender for Cloud mostram cadeias de vulnerabilidades que um atacante poderia explorar para alcançar recursos sensíveis. Por exemplo: VM exposta Ã  internet com regra NSG aberta, executando software desatualizado, com acesso a uma conta de armazenamento contendo dados sensíveis. Os caminhos de ataque são visualizados no portal em Defender for Cloud > Attack path analysis. O acesso via CLI é limitado; este é principalmente um recurso baseado no portal testado conceitualmente no exame.
 
 :::
 
@@ -415,9 +415,9 @@ Os **caminhos de ataque** do Defender for Cloud mostram cadeias de vulnerabilida
 
 ## Tarefa 6: Usar o Security Explorer para identificar recursos de rede em risco
 
-O Security Explorer (Cloud Security Explorer) no Defender for Cloud permite que vocÃª construa consultas baseadas em grafos para encontrar recursos que correspondam a condiÃ§Ãµes especÃ­ficas. Embora o Security Explorer completo seja baseado no portal, vocÃª pode replicar consultas comuns usando o Azure Resource Graph.
+O Security Explorer (Cloud Security Explorer) no Defender for Cloud permite que você construa consultas baseadas em grafos para encontrar recursos que correspondam a condições específicas. Embora o Security Explorer completo seja baseado no portal, você pode replicar consultas comuns usando o Azure Resource Graph.
 
-### Etapa 1: Encontrar IPs pÃºblicos sem proteÃ§Ã£o DDoS
+### Etapa 1: Encontrar IPs públicos sem proteção DDoS
 
 ```bash
 az graph query -q "
@@ -462,7 +462,7 @@ az graph query -q "
 "
 ```
 
-### Etapa 4: Correlacionar IPs pÃºblicos com seus recursos vinculados
+### Etapa 4: Correlacionar IPs públicos com seus recursos vinculados
 
 ```bash
 az graph query -q "
@@ -478,19 +478,19 @@ az graph query -q "
 
 :::tip Nota para o exame
 
-O **Cloud Security Explorer** no Defender for Cloud usa um modelo de grafos onde vocÃª pode consultar relacionamentos como "IP pÃºblico estÃ¡ exposto Ã  internet E estÃ¡ vinculado a uma VM E a VM possui vulnerabilidades de alta severidade." Isso Ã© diferente do Azure Resource Graph, que consulta metadados de recursos. O exame pode perguntar sobre cenÃ¡rios de consulta do Security Explorer conceitualmente, nÃ£o sobre sintaxe de consulta especÃ­fica.
+O **Cloud Security Explorer** no Defender for Cloud usa um modelo de grafos onde você pode consultar relacionamentos como "IP público está exposto Ã  internet E está vinculado a uma VM E a VM possui vulnerabilidades de alta severidade." Isso é diferente do Azure Resource Graph, que consulta metadados de recursos. O exame pode perguntar sobre cenários de consulta do Security Explorer conceitualmente, não sobre sintaxe de consulta específica.
 
 :::
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio 1: IP pÃºblico sem proteÃ§Ã£o DDoS
+### Cenário 1: IP público sem proteção DDoS
 
-**Sintoma:** Durante uma revisÃ£o de simulaÃ§Ã£o de ataque DDoS, a equipe descobre que o IP pÃºblico crÃ­tico do frontend nÃ£o possui mÃ©tricas DDoS disponÃ­veis e nenhuma telemetria de proteÃ§Ã£o.
+**Sintoma:** Durante uma revisão de simulação de ataque DDoS, a equipe descobre que o IP público crítico do frontend não possui métricas DDoS disponíveis e nenhuma telemetria de proteção.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network public-ip show \
@@ -499,9 +499,9 @@ az network public-ip show \
     --query "ddosSettings"
 ```
 
-Se `protectionMode` Ã© `null` ou `Disabled`, apenas a Infrastructure Protection gratuita estÃ¡ ativa. Nenhuma mÃ©trica ou log Ã© gerado.
+Se `protectionMode` é `null` ou `Disabled`, apenas a Infrastructure Protection gratuita está ativa. Nenhuma métrica ou log é gerado.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 az network public-ip update \
@@ -510,13 +510,13 @@ az network public-ip update \
     --ddos-protection-mode Enabled
 ```
 
-### CenÃ¡rio 2: Regra de alerta usa namespace de mÃ©trica incorreto
+### Cenário 2: Regra de alerta usa namespace de métrica incorreto
 
-**Sintoma:** O alerta DDoS nunca dispara mesmo durante trÃ¡fego de ataque confirmado. A regra de alerta foi criada, mas mostra "No data" no portal.
+**Sintoma:** O alerta DDoS nunca dispara mesmo durante tráfego de ataque confirmado. A regra de alerta foi criada, mas mostra "No data" no portal.
 
-**Causa raiz:** O escopo do alerta aponta para o recurso de VNet ou plano DDoS em vez do endereÃ§o IP pÃºblico. As mÃ©tricas DDoS sÃ£o emitidas pelo recurso de IP pÃºblico, nÃ£o pela VNet.
+**Causa raiz:** O escopo do alerta aponta para o recurso de VNet ou plano DDoS em vez do endereço IP público. As métricas DDoS são emitidas pelo recurso de IP público, não pela VNet.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az monitor metrics alert show \
@@ -525,9 +525,9 @@ az monitor metrics alert show \
     --query "scopes"
 ```
 
-Se o escopo contÃ©m `/providers/Microsoft.Network/virtualNetworks/` ou `/providers/Microsoft.Network/ddosProtectionPlans/`, o alerta estÃ¡ apontando para o recurso errado.
+Se o escopo contém `/providers/Microsoft.Network/virtualNetworks/` ou `/providers/Microsoft.Network/ddosProtectionPlans/`, o alerta está apontando para o recurso errado.
 
-**CorreÃ§Ã£o:** Exclua e recrie o alerta com o escopo correto (o ID do recurso de IP pÃºblico):
+**Correção:** Exclua e recrie o alerta com o escopo correto (o ID do recurso de IP público):
 
 ```bash
 az monitor metrics alert delete \
@@ -550,13 +550,13 @@ az monitor metrics alert create \
     --description "DDoS attack detected on pip-web-frontend"
 ```
 
-### CenÃ¡rio 3: Logs de diagnÃ³stico DDoS nÃ£o aparecem no Log Analytics
+### Cenário 3: Logs de diagnóstico DDoS não aparecem no Log Analytics
 
-**Sintoma:** ApÃ³s habilitar o DDoS IP Protection, a equipe configurou as configuraÃ§Ãµes de diagnÃ³stico, mas nenhum log aparece no workspace mesmo apÃ³s um ataque simulado.
+**Sintoma:** Após habilitar o DDoS IP Protection, a equipe configurou as configurações de diagnóstico, mas nenhum log aparece no workspace mesmo após um ataque simulado.
 
-**Causa raiz:** A configuraÃ§Ã£o de diagnÃ³stico usa nomes de categorias de log incorretos (erros de digitaÃ§Ã£o ou nomes de categorias desatualizados).
+**Causa raiz:** A configuração de diagnóstico usa nomes de categorias de log incorretos (erros de digitação ou nomes de categorias desatualizados).
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az monitor diagnostic-settings show \
@@ -565,9 +565,9 @@ az monitor diagnostic-settings show \
     --query "logs[].{category:category, enabled:enabled}"
 ```
 
-Verifique se as categorias correspondem exatamente: `DDoSProtectionNotifications`, `DDoSMitigationFlowLogs`, `DDoSMitigationReports`. Erros comuns incluem usar `DDOSProtectionNotifications` (capitalizaÃ§Ã£o incorreta) ou `DDoSFlowLogs` (nome incorreto).
+Verifique se as categorias correspondem exatamente: `DDoSProtectionNotifications`, `DDoSMitigationFlowLogs`, `DDoSMitigationReports`. Erros comuns incluem usar `DDOSProtectionNotifications` (capitalização incorreta) ou `DDoSFlowLogs` (nome incorreto).
 
-**CorreÃ§Ã£o:** Exclua e recrie com os nomes de categoria corretos:
+**Correção:** Exclua e recrie com os nomes de categoria corretos:
 
 ```bash
 az monitor diagnostic-settings delete \
@@ -601,7 +601,7 @@ az group delete \
 
 :::warning
 
-Se vocÃª habilitou o DDoS IP Protection e nÃ£o excluir o IP pÃºblico, continuarÃ¡ sendo cobrado $199/mÃªs por esse recurso. Verifique se a exclusÃ£o foi concluÃ­da:
+Se você habilitou o DDoS IP Protection e não excluir o IP público, continuará sendo cobrado $199/mês por esse recurso. Verifique se a exclusão foi concluída:
 
 ```bash
 az group show --name rg-ddos-lab 2>/dev/null || echo "Resource group deleted"
@@ -611,7 +611,7 @@ az group show --name rg-ddos-lab 2>/dev/null || echo "Resource group deleted"
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

@@ -4,17 +4,17 @@ title: "Desafio 11: Diagnósticos do Network Watcher"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 11: DiagnÃ³sticos do Network Watcher
+# Challenge 11: Diagnósticos do Network Watcher
 
 :::info Tempo e custo estimados
 
-**60-90 minutos** | **~$1-2/hora** (duas VMs B1s em execuÃ§Ã£o) | **Peso no exame: 10-15%**
+**60-90 minutos** | **~$1-2/hora** (duas VMs B1s em execução) | **Peso no exame: 10-15%**
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A equipe de operaÃ§Ãµes da Contoso recebe chamados sobre VMs que nÃ£o conseguem se conectar a serviÃ§os. Eles precisam usar as ferramentas de diagnÃ³stico do Azure Network Watcher para identificar e resolver sistematicamente problemas de conectividade de rede -- desde configuraÃ§Ãµes incorretas de NSG atÃ© problemas de roteamento e falhas de DNS. Neste desafio, vocÃª usarÃ¡ IP flow verify, next hop, connection troubleshoot, captura de pacotes e diagnÃ³sticos de NSG para diagnosticar e corrigir problemas comuns de rede.
+A equipe de operações da Contoso recebe chamados sobre VMs que não conseguem se conectar a serviços. Eles precisam usar as ferramentas de diagnóstico do Azure Network Watcher para identificar e resolver sistematicamente problemas de conectividade de rede -- desde configurações incorretas de NSG até problemas de roteamento e falhas de DNS. Neste desafio, você usará IP flow verify, next hop, connection troubleshoot, captura de pacotes e diagnósticos de NSG para diagnosticar e corrigir problemas comuns de rede.
 
 **Topologia de rede:**
 
@@ -31,37 +31,37 @@ A equipe de operaÃ§Ãµes da Contoso recebe chamados sobre VMs que nÃ£o cons
 
 ## Objetivos de aprendizagem
 
-ApÃ³s completar este desafio, vocÃª serÃ¡ capaz de:
+Após completar este desafio, você será capaz de:
 
-- Verificar se o Network Watcher estÃ¡ habilitado para uma regiÃ£o
-- Usar IP flow verify para determinar se as regras de NSG permitem ou negam trÃ¡fego especÃ­fico
-- Usar next hop para determinar para onde o trÃ¡fego Ã© roteado para um determinado destino
+- Verificar se o Network Watcher está habilitado para uma região
+- Usar IP flow verify para determinar se as regras de NSG permitem ou negam tráfego específico
+- Usar next hop para determinar para onde o tráfego é roteado para um determinado destino
 - Usar connection troubleshoot para testar a conectividade de ponta a ponta entre recursos
 - Capturar pacotes usando a captura de pacotes do Network Watcher
-- Usar diagnÃ³sticos de NSG para ver todas as regras avaliadas para um fluxo de trÃ¡fego especÃ­fico
+- Usar diagnósticos de NSG para ver todas as regras avaliadas para um fluxo de tráfego específico
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Uma assinatura do Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- Conhecimento bÃ¡sico de NSGs e roteamento (de desafios anteriores)
+- Conhecimento básico de NSGs e roteamento (de desafios anteriores)
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
-| Network Watcher | Habilitado automaticamente por regiÃ£o no resource group NetworkWatcherRG |
-| IP flow verify | Testa um Ãºnico fluxo de 5 tuplas contra regras de NSG; retorna Allow ou Deny mais o nome da regra |
-| Next hop | Retorna o tipo de prÃ³ximo salto e o IP para o trÃ¡fego de uma VM para um determinado destino |
-| Connection troubleshoot | Teste de alcanÃ§abilidade de ponta a ponta com anÃ¡lise de caminho salto a salto |
-| Captura de pacotes | Requer a extensÃ£o de VM do Network Watcher Agent na VM de destino |
-| DiagnÃ³sticos de NSG | Mostra TODAS as regras avaliadas (nÃ£o apenas a vencedora) para um determinado fluxo |
+| Network Watcher | Habilitado automaticamente por região no resource group NetworkWatcherRG |
+| IP flow verify | Testa um único fluxo de 5 tuplas contra regras de NSG; retorna Allow ou Deny mais o nome da regra |
+| Next hop | Retorna o tipo de próximo salto e o IP para o tráfego de uma VM para um determinado destino |
+| Connection troubleshoot | Teste de alcançabilidade de ponta a ponta com análise de caminho salto a salto |
+| Captura de pacotes | Requer a extensão de VM do Network Watcher Agent na VM de destino |
+| Diagnósticos de NSG | Mostra TODAS as regras avaliadas (não apenas a vencedora) para um determinado fluxo |
 
 ---
 
-## Tarefa 1: Criar o ambiente de laboratÃ³rio
+## Tarefa 1: Criar o ambiente de laboratório
 
-Configure a VNet, sub-redes, NSGs e VMs para testes de diagnÃ³stico.
+Configure a VNet, sub-redes, NSGs e VMs para testes de diagnóstico.
 
 ### Etapa 1: Criar o resource group
 
@@ -89,7 +89,7 @@ az network vnet subnet create \
     --address-prefixes 10.0.2.0/24
 ```
 
-### Etapa 3: Criar NSGs com restriÃ§Ãµes intencionais
+### Etapa 3: Criar NSGs com restrições intencionais
 
 ```bash
 # NSG for web subnet: allows HTTP/HTTPS inbound, denies SSH from app subnet
@@ -208,20 +208,20 @@ az network vnet subnet update \
 
 ---
 
-## Tarefa 2: Verificar se o Network Watcher estÃ¡ habilitado
+## Tarefa 2: Verificar se o Network Watcher está habilitado
 
-O Network Watcher Ã© habilitado automaticamente para cada regiÃ£o do Azure quando vocÃª cria ou atualiza uma rede virtual. Verifique se ele existe.
+O Network Watcher é habilitado automaticamente para cada região do Azure quando você cria ou atualiza uma rede virtual. Verifique se ele existe.
 
-### Etapa 1: Listar instÃ¢ncias do Network Watcher
+### Etapa 1: Listar instâncias do Network Watcher
 
 ```bash
 az network watcher list \
     --output table
 ```
 
-VocÃª deve ver uma entrada para `eastus` no resource group `NetworkWatcherRG`.
+Você deve ver uma entrada para `eastus` no resource group `NetworkWatcherRG`.
 
-### Etapa 2: Se nÃ£o estiver presente, habilitar o Network Watcher manualmente
+### Etapa 2: Se não estiver presente, habilitar o Network Watcher manualmente
 
 ```bash
 az network watcher configure \
@@ -232,7 +232,7 @@ az network watcher configure \
 
 :::tip Nota para o exame
 
-O Network Watcher Ã© habilitado automaticamente por regiÃ£o quando vocÃª implanta recursos de rede. Ele reside no resource group `NetworkWatcherRG`. VocÃª nÃ£o precisa criÃ¡-lo manualmente na maioria dos casos, mas deve conhecer o comando `az network watcher configure` para cenÃ¡rios em que ele foi desabilitado.
+O Network Watcher é habilitado automaticamente por região quando você implanta recursos de rede. Ele reside no resource group `NetworkWatcherRG`. Você não precisa criá-lo manualmente na maioria dos casos, mas deve conhecer o comando `az network watcher configure` para cenários em que ele foi desabilitado.
 
 :::
 
@@ -240,7 +240,7 @@ O Network Watcher Ã© habilitado automaticamente por regiÃ£o quando vocÃª i
 
 ## Tarefa 3: Usar IP flow verify para verificar regras de NSG
 
-O IP flow verify testa se um pacote especÃ­fico (definido por uma 5-tupla) Ã© permitido ou negado pelas regras de NSG em uma determinada VM.
+O IP flow verify testa se um pacote específico (definido por uma 5-tupla) é permitido ou negado pelas regras de NSG em uma determinada VM.
 
 ### Etapa 1: Testar HTTP de entrada para vm-web (deve ser permitido)
 
@@ -254,7 +254,7 @@ az network watcher test-ip-flow \
     --remote 203.0.113.50:60000
 ```
 
-SaÃ­da esperada: `Access: Allow` com o nome da regra `AllowHTTP`.
+Saída esperada: `Access: Allow` com o nome da regra `AllowHTTP`.
 
 ### Etapa 2: Testar SSH de entrada da sub-rede app para vm-web (deve ser negado)
 
@@ -268,9 +268,9 @@ az network watcher test-ip-flow \
     --remote 10.0.2.4:50000
 ```
 
-SaÃ­da esperada: `Access: Deny` com o nome da regra `DenySSHFromApp`.
+Saída esperada: `Access: Deny` com o nome da regra `DenySSHFromApp`.
 
-### Etapa 3: Testar saÃ­da para internet a partir de vm-app (deve ser negado)
+### Etapa 3: Testar saída para internet a partir de vm-app (deve ser negado)
 
 ```bash
 az network watcher test-ip-flow \
@@ -282,9 +282,9 @@ az network watcher test-ip-flow \
     --remote 8.8.8.8:443
 ```
 
-SaÃ­da esperada: `Access: Deny` com o nome da regra `DenyInternetOutbound`.
+Saída esperada: `Access: Deny` com o nome da regra `DenyInternetOutbound`.
 
-### Etapa 4: Testar trÃ¡fego de entrada em uma porta sem regra explÃ­cita
+### Etapa 4: Testar tráfego de entrada em uma porta sem regra explícita
 
 ```bash
 az network watcher test-ip-flow \
@@ -296,11 +296,11 @@ az network watcher test-ip-flow \
     --remote 203.0.113.50:60000
 ```
 
-SaÃ­da esperada: `Access: Deny` com o nome da regra `defaultSecurityRules/DenyAllInBound` -- a regra padrÃ£o de negar tudo captura o trÃ¡fego nÃ£o correspondido por nenhuma regra explÃ­cita.
+Saída esperada: `Access: Deny` com o nome da regra `defaultSecurityRules/DenyAllInBound` -- a regra padrão de negar tudo captura o tráfego não correspondido por nenhuma regra explícita.
 
 :::tip Nota para o exame
 
-Os parÃ¢metros `--local` e `--remote` usam o formato `IP:PORTA`. Use `*` para a porta quando a direÃ§Ã£o torna a porta irrelevante (por exemplo, `*` para a porta local em testes de saÃ­da, ou `*` para a porta remota em testes de entrada).
+Os parâmetros `--local` e `--remote` usam o formato `IP:PORTA`. Use `*` para a porta quando a direção torna a porta irrelevante (por exemplo, `*` para a porta local em testes de saída, ou `*` para a porta remota em testes de entrada).
 
 :::
 
@@ -308,9 +308,9 @@ Os parÃ¢metros `--local` e `--remote` usam o formato `IP:PORTA`. Use `*` para 
 
 ## Tarefa 4: Usar next hop para determinar o roteamento
 
-O next hop avalia as rotas efetivas de uma VM e retorna para onde o trÃ¡fego para um destino especÃ­fico serÃ¡ enviado.
+O next hop avalia as rotas efetivas de uma VM e retorna para onde o tráfego para um destino específico será enviado.
 
-### Etapa 1: Verificar o prÃ³ximo salto para trÃ¡fego com destino Ã  internet a partir de vm-app
+### Etapa 1: Verificar o próximo salto para tráfego com destino Ã  internet a partir de vm-app
 
 ```bash
 az network watcher show-next-hop \
@@ -320,9 +320,9 @@ az network watcher show-next-hop \
     --dest-ip 8.8.8.8
 ```
 
-Resultado esperado: `nextHopType: Internet` -- a rota de sistema padrÃ£o direciona o trÃ¡fego para a internet mesmo que o NSG o bloqueie na Camada 4.
+Resultado esperado: `nextHopType: Internet` -- a rota de sistema padrão direciona o tráfego para a internet mesmo que o NSG o bloqueie na Camada 4.
 
-### Etapa 2: Verificar o prÃ³ximo salto para trÃ¡fego destinado a 172.16.1.10 (rota blackhole)
+### Etapa 2: Verificar o próximo salto para tráfego destinado a 172.16.1.10 (rota blackhole)
 
 ```bash
 az network watcher show-next-hop \
@@ -332,9 +332,9 @@ az network watcher show-next-hop \
     --dest-ip 172.16.1.10
 ```
 
-Resultado esperado: `nextHopType: None` -- a UDR com `next-hop-type None` descarta esse trÃ¡fego na camada de roteamento.
+Resultado esperado: `nextHopType: None` -- a UDR com `next-hop-type None` descarta esse tráfego na camada de roteamento.
 
-### Etapa 3: Verificar o prÃ³ximo salto para trÃ¡fego dentro da VNet
+### Etapa 3: Verificar o próximo salto para tráfego dentro da VNet
 
 ```bash
 az network watcher show-next-hop \
@@ -344,11 +344,11 @@ az network watcher show-next-hop \
     --dest-ip 10.0.1.4
 ```
 
-Resultado esperado: `nextHopType: VnetLocal` -- o trÃ¡fego intra-VNet usa a rota local da VNet.
+Resultado esperado: `nextHopType: VnetLocal` -- o tráfego intra-VNet usa a rota local da VNet.
 
 :::tip Nota para o exame
 
-O next hop avalia o roteamento independentemente dos NSGs. Um prÃ³ximo salto de `Internet` nÃ£o significa que o trÃ¡fego alcanÃ§arÃ¡ a internet -- as regras de NSG ainda podem bloqueÃ¡-lo. Use next hop para diagnosticar problemas de roteamento e IP flow verify para diagnosticar problemas de NSG.
+O next hop avalia o roteamento independentemente dos NSGs. Um próximo salto de `Internet` não significa que o tráfego alcançará a internet -- as regras de NSG ainda podem bloqueá-lo. Use next hop para diagnosticar problemas de roteamento e IP flow verify para diagnosticar problemas de NSG.
 
 :::
 
@@ -369,9 +369,9 @@ az network watcher test-connectivity \
     --dest-port 80
 ```
 
-Isso testa se vm-app consegue alcanÃ§ar vm-web na porta 80 (TCP). A saÃ­da inclui o status da conexÃ£o, latÃªncia e detalhes dos saltos.
+Isso testa se vm-app consegue alcançar vm-web na porta 80 (TCP). A saída inclui o status da conexão, latência e detalhes dos saltos.
 
-### Etapa 2: Testar conectividade de vm-app para um endereÃ§o na internet
+### Etapa 2: Testar conectividade de vm-app para um endereço na internet
 
 ```bash
 az network watcher test-connectivity \
@@ -382,9 +382,9 @@ az network watcher test-connectivity \
     --dest-port 443
 ```
 
-Resultado esperado: `connectionStatus: Unreachable` porque o NSG `DenyInternetOutbound` bloqueia o trÃ¡fego de saÃ­da para a internet a partir de vm-app.
+Resultado esperado: `connectionStatus: Unreachable` porque o NSG `DenyInternetOutbound` bloqueia o tráfego de saída para a internet a partir de vm-app.
 
-### Etapa 3: Testar conectividade de vm-web para um endereÃ§o na internet
+### Etapa 3: Testar conectividade de vm-web para um endereço na internet
 
 ```bash
 az network watcher test-connectivity \
@@ -395,11 +395,11 @@ az network watcher test-connectivity \
     --dest-port 443
 ```
 
-Resultado esperado: `connectionStatus: Reachable` -- vm-web nÃ£o possui regra de negaÃ§Ã£o de saÃ­da, entÃ£o o acesso Ã  internet funciona.
+Resultado esperado: `connectionStatus: Reachable` -- vm-web não possui regra de negação de saída, então o acesso Ã  internet funciona.
 
 :::note
 
-O connection troubleshoot requer a extensÃ£o de VM do Network Watcher Agent na VM de origem. O Azure a instala automaticamente quando vocÃª executa o comando pela primeira vez. Se a extensÃ£o estiver ausente e nÃ£o puder ser instalada, o comando falha.
+O connection troubleshoot requer a extensão de VM do Network Watcher Agent na VM de origem. O Azure a instala automaticamente quando você executa o comando pela primeira vez. Se a extensão estiver ausente e não puder ser instalada, o comando falha.
 
 :::
 
@@ -407,9 +407,9 @@ O connection troubleshoot requer a extensÃ£o de VM do Network Watcher Agent na
 
 ## Tarefa 6: Capturar pacotes com o Network Watcher
 
-A captura de pacotes registra o trÃ¡fego de rede em uma VM para anÃ¡lise offline. Ela requer a extensÃ£o do Network Watcher Agent.
+A captura de pacotes registra o tráfego de rede em uma VM para análise offline. Ela requer a extensão do Network Watcher Agent.
 
-### Etapa 1: Instalar a extensÃ£o do Network Watcher Agent em vm-web
+### Etapa 1: Instalar a extensão do Network Watcher Agent em vm-web
 
 ```bash
 az vm extension set \
@@ -431,11 +431,11 @@ az storage account create \
 
 :::note
 
-Salve o nome da conta de armazenamento da saÃ­da -- vocÃª precisarÃ¡ dele na prÃ³xima etapa.
+Salve o nome da conta de armazenamento da saída -- você precisará dele na próxima etapa.
 
 :::
 
-### Etapa 3: Iniciar uma sessÃ£o de captura de pacotes
+### Etapa 3: Iniciar uma sessão de captura de pacotes
 
 ```bash
 az network watcher packet-capture create \
@@ -446,7 +446,7 @@ az network watcher packet-capture create \
     --time-limit 60
 ```
 
-Substitua `<storage-account-name>` pelo nome da Etapa 2. Isso captura trÃ¡fego por no mÃ¡ximo 60 segundos.
+Substitua `<storage-account-name>` pelo nome da Etapa 2. Isso captura tráfego por no máximo 60 segundos.
 
 ### Etapa 4: Verificar o status da captura de pacotes
 
@@ -456,7 +456,7 @@ az network watcher packet-capture show \
     --location eastus
 ```
 
-A saÃ­da mostra o estado de provisionamento e o status da captura (Running, Stopped ou Failed).
+A saída mostra o estado de provisionamento e o status da captura (Running, Stopped ou Failed).
 
 ### Etapa 5: Parar a captura de pacotes
 
@@ -478,21 +478,21 @@ az network watcher packet-capture create \
     --filters '[{"protocol":"TCP","localPort":"80"}]'
 ```
 
-Filtros reduzem o tamanho da captura registrando apenas o trÃ¡fego que corresponde aos critÃ©rios especificados.
+Filtros reduzem o tamanho da captura registrando apenas o tráfego que corresponde aos critérios especificados.
 
 :::tip Nota para o exame
 
-A captura de pacotes requer a extensÃ£o de VM do Network Watcher Agent instalada na VM de destino. Para Linux Ã© `NetworkWatcherAgentLinux`; para Windows Ã© `NetworkWatcherAgentWindows`. Sem ela, a criaÃ§Ã£o da captura falha com um erro de extensÃ£o.
+A captura de pacotes requer a extensão de VM do Network Watcher Agent instalada na VM de destino. Para Linux é `NetworkWatcherAgentLinux`; para Windows é `NetworkWatcherAgentWindows`. Sem ela, a criação da captura falha com um erro de extensão.
 
 :::
 
 ---
 
-## Tarefa 7: Usar diagnÃ³sticos de NSG para ver todas as regras avaliadas
+## Tarefa 7: Usar diagnósticos de NSG para ver todas as regras avaliadas
 
-Os diagnÃ³sticos de NSG mostram cada regra que foi avaliada para um determinado fluxo, nÃ£o apenas o resultado final. Isso Ã© Ãºtil para entender a precedÃªncia de regras.
+Os diagnósticos de NSG mostram cada regra que foi avaliada para um determinado fluxo, não apenas o resultado final. Isso é útil para entender a precedência de regras.
 
-### Etapa 1: Executar diagnÃ³sticos de NSG para HTTP de entrada em vm-web
+### Etapa 1: Executar diagnósticos de NSG para HTTP de entrada em vm-web
 
 ```bash
 az network watcher run-configuration-diagnostic \
@@ -506,9 +506,9 @@ az network watcher run-configuration-diagnostic \
     --port 80
 ```
 
-A saÃ­da mostra todas as regras de NSG avaliadas em ordem, indicando qual regra correspondeu e se o trÃ¡fego foi permitido ou negado.
+A saída mostra todas as regras de NSG avaliadas em ordem, indicando qual regra correspondeu e se o tráfego foi permitido ou negado.
 
-### Etapa 2: Executar diagnÃ³sticos de NSG para SSH da sub-rede app para vm-web
+### Etapa 2: Executar diagnósticos de NSG para SSH da sub-rede app para vm-web
 
 ```bash
 az network watcher run-configuration-diagnostic \
@@ -522,7 +522,7 @@ az network watcher run-configuration-diagnostic \
     --port 22
 ```
 
-Esperado: a saÃ­da mostra que a regra `DenySSHFromApp` correspondeu na prioridade 200, negando o trÃ¡fego.
+Esperado: a saída mostra que a regra `DenySSHFromApp` correspondeu na prioridade 200, negando o tráfego.
 
 ### Etapa 3: Visualizar a topologia de rede do resource group
 
@@ -531,25 +531,25 @@ az network watcher show-topology \
     --resource-group rg-nw-diag-lab
 ```
 
-Isso retorna uma representaÃ§Ã£o JSON de todos os recursos de rede e seus relacionamentos (VNets, sub-redes, NICs, NSGs, VMs).
+Isso retorna uma representação JSON de todos os recursos de rede e seus relacionamentos (VNets, sub-redes, NICs, NSGs, VMs).
 
 :::tip Nota para o exame
 
-Os diagnÃ³sticos de NSG (`run-configuration-diagnostic`) diferem do IP flow verify. O IP flow verify informa o resultado final de Allow/Deny. Os diagnÃ³sticos de NSG mostram a cadeia completa de avaliaÃ§Ã£o de regras, o que Ã© Ãºtil para entender por que uma regra de prioridade mais alta nÃ£o correspondeu ou para auditar todas as regras aplicadas a um fluxo.
+Os diagnósticos de NSG (`run-configuration-diagnostic`) diferem do IP flow verify. O IP flow verify informa o resultado final de Allow/Deny. Os diagnósticos de NSG mostram a cadeia completa de avaliação de regras, o que é útil para entender por que uma regra de prioridade mais alta não correspondeu ou para auditar todas as regras aplicadas a um fluxo.
 
 :::
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-Esses cenÃ¡rios representam falhas comuns de diagnÃ³stico que vocÃª encontrarÃ¡ em produÃ§Ã£o e no exame.
+Esses cenários representam falhas comuns de diagnóstico que você encontrará em produção e no exame.
 
-### CenÃ¡rio 1: IP flow verify mostra Deny mas o usuÃ¡rio espera que o trÃ¡fego flua
+### Cenário 1: IP flow verify mostra Deny mas o usuário espera que o tráfego flua
 
-**Sintoma:** Um desenvolvedor relata que vm-web nÃ£o consegue receber trÃ¡fego na porta 8080 da internet, mesmo acreditando que existe uma regra de permissÃ£o.
+**Sintoma:** Um desenvolvedor relata que vm-web não consegue receber tráfego na porta 8080 da internet, mesmo acreditando que existe uma regra de permissão.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network watcher test-ip-flow \
@@ -565,7 +565,7 @@ Resultado: `Access: Deny`, regra: `defaultSecurityRules/DenyAllInBound`.
 
 **Causa raiz:** A regra `AllowHTTP` permite apenas as portas 80 e 443. A porta 8080 nunca foi adicionada.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 az network nsg rule create \
@@ -581,11 +581,11 @@ az network nsg rule create \
     --destination-port-ranges 8080
 ```
 
-### CenÃ¡rio 2: Next hop mostra None (o trÃ¡fego estÃ¡ sendo descartado)
+### Cenário 2: Next hop mostra None (o tráfego está sendo descartado)
 
-**Sintoma:** vm-app nÃ£o consegue alcanÃ§ar uma rede parceira em 172.16.5.10. O connection troubleshoot relata Unreachable.
+**Sintoma:** vm-app não consegue alcançar uma rede parceira em 172.16.5.10. O connection troubleshoot relata Unreachable.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network watcher show-next-hop \
@@ -597,9 +597,9 @@ az network watcher show-next-hop \
 
 Resultado: `nextHopType: None` -- a tabela de rotas possui uma rota `None` para 172.16.0.0/12.
 
-**Causa raiz:** Uma UDR blackhole foi aplicada para todo o intervalo 172.16.0.0/12, que descarta todo o trÃ¡fego para esse CIDR, incluindo a rede parceira legÃ­tima.
+**Causa raiz:** Uma UDR blackhole foi aplicada para todo o intervalo 172.16.0.0/12, que descarta todo o tráfego para esse CIDR, incluindo a rede parceira legítima.
 
-**CorreÃ§Ã£o:** Remova a rota blackhole excessivamente ampla e adicione uma rota especÃ­fica para a rede parceira:
+**Correção:** Remova a rota blackhole excessivamente ampla e adicione uma rota específica para a rede parceira:
 
 ```bash
 az network route-table route delete \
@@ -616,11 +616,11 @@ az network route-table route create \
     --next-hop-ip-address 10.0.1.4
 ```
 
-### CenÃ¡rio 3: Captura de pacotes falha porque a extensÃ£o da VM nÃ£o estÃ¡ instalada
+### Cenário 3: Captura de pacotes falha porque a extensão da VM não está instalada
 
-**Sintoma:** A execuÃ§Ã£o de `az network watcher packet-capture create` contra vm-app falha com um erro sobre a extensÃ£o ausente.
+**Sintoma:** A execução de `az network watcher packet-capture create` contra vm-app falha com um erro sobre a extensão ausente.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az vm extension list \
@@ -629,9 +629,9 @@ az vm extension list \
     --output table
 ```
 
-Resultado: Nenhuma extensÃ£o `NetworkWatcherAgentLinux` estÃ¡ presente.
+Resultado: Nenhuma extensão `NetworkWatcherAgentLinux` está presente.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 az vm extension set \
@@ -641,7 +641,7 @@ az vm extension set \
     --publisher Microsoft.Azure.NetworkWatcher
 ```
 
-ApÃ³s instalar a extensÃ£o, tente novamente o comando de captura de pacotes.
+Após instalar a extensão, tente novamente o comando de captura de pacotes.
 
 ---
 
@@ -658,7 +658,7 @@ az group delete \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

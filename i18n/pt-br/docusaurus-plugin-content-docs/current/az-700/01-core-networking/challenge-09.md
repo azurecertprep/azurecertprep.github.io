@@ -4,23 +4,23 @@ title: "Desafio 09: Azure Route Server & Integração com NVA"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 09: Azure Route Server e integraÃ§Ã£o com NVA
+# Challenge 09: Azure Route Server e integração com NVA
 
 :::info Tempo e custo estimados
 
-**90-120 minutos** | **~$3-5/hora** (Route Server + VM NVA em execuÃ§Ã£o) | **Peso no exame: 10-15%**
+**90-120 minutos** | **~$3-5/hora** (Route Server + VM NVA em execução) | **Peso no exame: 10-15%**
 
 :::
 
-:::note PrÃ©-requisito
+:::note Pré-requisito
 
-O Challenge 08 cobre rotas definidas pelo usuÃ¡rio e tunelamento forÃ§ado. Este desafio se baseia nessa fundaÃ§Ã£o, substituindo a manutenÃ§Ã£o estÃ¡tica de UDRs pela troca dinÃ¢mica de rotas BGP via Azure Route Server. CompreensÃ£o dos fundamentos de BGP (ASN, peering, anÃºncio de rotas) Ã© Ãºtil.
+O Challenge 08 cobre rotas definidas pelo usuário e tunelamento forçado. Este desafio se baseia nessa fundação, substituindo a manutenção estática de UDRs pela troca dinâmica de rotas BGP via Azure Route Server. Compreensão dos fundamentos de BGP (ASN, peering, anúncio de rotas) é útil.
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso implanta NVAs de terceiros (Cisco, Palo Alto) em sua VNet hub para inspeÃ§Ã£o de trÃ¡fego. Atualmente, toda vez que as rotas locais mudam, a equipe de rede precisa atualizar manualmente as UDRs. Eles querem implementar o Azure Route Server para estabelecer peering BGP entre os NVAs e a malha de roteamento do Azure, habilitando a troca dinÃ¢mica de rotas sem manutenÃ§Ã£o manual de UDRs.
+A Contoso implanta NVAs de terceiros (Cisco, Palo Alto) em sua VNet hub para inspeção de tráfego. Atualmente, toda vez que as rotas locais mudam, a equipe de rede precisa atualizar manualmente as UDRs. Eles querem implementar o Azure Route Server para estabelecer peering BGP entre os NVAs e a malha de roteamento do Azure, habilitando a troca dinâmica de rotas sem manutenção manual de UDRs.
 
 **Topologia de rede:**
 
@@ -42,36 +42,36 @@ On-Premises (172.16.0.0/16, 172.17.0.0/16)
 
 ## Objetivos de aprendizagem
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Implantar o Azure Route Server em uma RouteServerSubnet dedicada
 - Configurar peering BGP entre o Route Server e um NVA
-- Verificar a propagaÃ§Ã£o de rotas do NVA para as redes virtuais do Azure
-- Habilitar trÃ¢nsito branch-to-branch para troca de rotas entre VPN Gateway e NVA
+- Verificar a propagação de rotas do NVA para as redes virtuais do Azure
+- Habilitar trânsito branch-to-branch para troca de rotas entre VPN Gateway e NVA
 - Inspecionar rotas efetivas nas NICs de VMs para confirmar rotas aprendidas dinamicamente
-- Diagnosticar falhas de peering BGP e problemas de propagaÃ§Ã£o de rotas
+- Diagnosticar falhas de peering BGP e problemas de propagação de rotas
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Uma assinatura Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- CompreensÃ£o bÃ¡sica de conceitos BGP (ASN, peering, anÃºncio de rotas)
+- Compreensão básica de conceitos BGP (ASN, peering, anúncio de rotas)
 - Familiaridade com UDRs (do Challenge 08)
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
-| RouteServerSubnet | Sub-rede dedicada; tamanho mÃ­nimo /27; nÃ£o pode ter NSGs ou UDRs associados |
-| ASN do Route Server | Fixo em 65515; nÃ£o pode ser alterado |
-| RestriÃ§Ã£o de ASN do NVA | O NVA NÃƒO deve usar 65515, 65517, 65518, 65519 ou 65520 (reservados pelo Azure) |
-| Limite de peers BGP | MÃ¡ximo de 16 peers BGP por Route Server |
-| Limite de rotas por peer | MÃ¡ximo de 4.000 rotas por peer BGP (sessÃ£o cai se excedido) |
+| RouteServerSubnet | Sub-rede dedicada; tamanho mínimo /27; não pode ter NSGs ou UDRs associados |
+| ASN do Route Server | Fixo em 65515; não pode ser alterado |
+| Restrição de ASN do NVA | O NVA NÃƒO deve usar 65515, 65517, 65518, 65519 ou 65520 (reservados pelo Azure) |
+| Limite de peers BGP | Máximo de 16 peers BGP por Route Server |
+| Limite de rotas por peer | Máximo de 4.000 rotas por peer BGP (sessão cai se excedido) |
 | Branch-to-branch | Quando habilitado, o Route Server troca rotas entre NVA e gateway VPN/ExpressRoute |
-| Apenas plano de controle | O Route Server troca rotas BGP, mas NÃƒO estÃ¡ no caminho de dados |
-| Peering de instÃ¢ncia dupla | O NVA deve fazer peering com ambas as instÃ¢ncias do Route Server para alta disponibilidade |
-| PropagaÃ§Ã£o de rotas | Rotas aprendidas pelo Route Server sÃ£o propagadas para todas as VMs na VNet e VNets emparelhadas |
-| Requisito de IP pÃºblico | O Route Server requer um IP pÃºblico SKU Standard para conectividade do plano de gerenciamento |
+| Apenas plano de controle | O Route Server troca rotas BGP, mas NÃƒO está no caminho de dados |
+| Peering de instância dupla | O NVA deve fazer peering com ambas as instâncias do Route Server para alta disponibilidade |
+| Propagação de rotas | Rotas aprendidas pelo Route Server são propagadas para todas as VMs na VNet e VNets emparelhadas |
+| Requisito de IP público | O Route Server requer um IP público SKU Standard para conectividade do plano de gerenciamento |
 
 ---
 
@@ -147,7 +147,7 @@ az network vnet peering create \
 
 :::warning Importante
 
-O flag `--use-remote-gateways true` no peering do spoke requer que um gateway ou Route Server exista na VNet hub. Se vocÃª criar o peering antes de implantar o Route Server, o comando pode falhar. Implante o Route Server primeiro (Tarefa 2) e depois crie o peering com esse flag, ou atualize o peering posteriormente.
+O flag `--use-remote-gateways true` no peering do spoke requer que um gateway ou Route Server exista na VNet hub. Se você criar o peering antes de implantar o Route Server, o comando pode falhar. Implante o Route Server primeiro (Tarefa 2) e depois crie o peering com esse flag, ou atualize o peering posteriormente.
 
 :::
 
@@ -168,7 +168,7 @@ az vm create \
     --generate-ssh-keys
 ```
 
-Habilite o encaminhamento de IP na NIC do NVA (necessÃ¡rio para rotear trÃ¡fego):
+Habilite o encaminhamento de IP na NIC do NVA (necessário para rotear tráfego):
 
 ```bash
 NVA_NIC_ID=$(az vm show \
@@ -203,9 +203,9 @@ az vm create \
 
 ## Tarefa 2: Implantar o Azure Route Server
 
-### Etapa 1: Criar um IP pÃºblico Standard para o Route Server
+### Etapa 1: Criar um IP público Standard para o Route Server
 
-O Route Server requer um IP pÃºblico SKU Standard para conectividade do plano de gerenciamento.
+O Route Server requer um IP público SKU Standard para conectividade do plano de gerenciamento.
 
 ```bash
 az network public-ip create \
@@ -240,13 +240,13 @@ az network routeserver create \
     --public-ip-address pip-routeserver
 ```
 
-:::note Tempo de implantaÃ§Ã£o
+:::note Tempo de implantação
 
-A implantaÃ§Ã£o do Route Server pode levar de 15 a 30 minutos para ser concluÃ­da. O comando bloqueia atÃ© que o provisionamento termine.
+A implantação do Route Server pode levar de 15 a 30 minutos para ser concluída. O comando bloqueia até que o provisionamento termine.
 
 :::
 
-### Etapa 4: Verificar a implantaÃ§Ã£o do Route Server
+### Etapa 4: Verificar a implantação do Route Server
 
 ```bash
 az network routeserver show \
@@ -256,14 +256,14 @@ az network routeserver show \
     --output table
 ```
 
-A saÃ­da esperada mostra:
+A saída esperada mostra:
 - `provisioningState`: Succeeded
-- `virtualRouterAsn`: 65515 (fixo, nÃ£o pode ser alterado)
-- `virtualRouterIps`: Dois endereÃ§os IP (ex.: 10.0.1.4 e 10.0.1.5) representando as duas instÃ¢ncias do Route Server
+- `virtualRouterAsn`: 65515 (fixo, não pode ser alterado)
+- `virtualRouterIps`: Dois endereços IP (ex.: 10.0.1.4 e 10.0.1.5) representando as duas instâncias do Route Server
 
 :::tip Nota para o exame
 
-O Route Server sempre usa o ASN 65515. Ele expÃµe dois IPs de peer para alta disponibilidade. Seu NVA deve estabelecer sessÃµes BGP com AMBOS os IPs para garantir que as rotas sejam aprendidas corretamente mesmo durante manutenÃ§Ã£o.
+O Route Server sempre usa o ASN 65515. Ele expõe dois IPs de peer para alta disponibilidade. Seu NVA deve estabelecer sessões BGP com AMBOS os IPs para garantir que as rotas sejam aprendidas corretamente mesmo durante manutenção.
 
 :::
 
@@ -273,7 +273,7 @@ O Route Server sempre usa o ASN 65515. Ele expÃµe dois IPs de peer para alta d
 
 ### Etapa 1: Criar peering BGP no Route Server
 
-Configure o Route Server para fazer peering com o NVA. O NVA usa ASN 65001 (nÃ£o deve conflitar com o 65515 do Route Server).
+Configure o Route Server para fazer peering com o NVA. O NVA usa ASN 65001 (não deve conflitar com o 65515 do Route Server).
 
 ```bash
 az network routeserver peering create \
@@ -297,7 +297,7 @@ az network routeserver peering show \
 
 ### Etapa 3: Configurar FRRouting no NVA
 
-Conecte-se via SSH na VM do NVA e instale o FRRouting para estabelecer a sessÃ£o BGP de volta ao Route Server. Use os dois IPs de peer do Route Server obtidos na Tarefa 2, Etapa 4.
+Conecte-se via SSH na VM do NVA e instale o FRRouting para estabelecer a sessão BGP de volta ao Route Server. Use os dois IPs de peer do Route Server obtidos na Tarefa 2, Etapa 4.
 
 ```bash
 ssh azureuser@<NVA_PUBLIC_IP>
@@ -315,7 +315,7 @@ sudo sed -i 's/bgpd=no/bgpd=yes/' /etc/frr/daemons
 sudo systemctl restart frr
 ```
 
-Configure o peering BGP com ambas as instÃ¢ncias do Route Server (substitua os IPs pelos IPs de peer do seu Route Server):
+Configure o peering BGP com ambas as instâncias do Route Server (substitua os IPs pelos IPs de peer do seu Route Server):
 
 ```bash
 sudo vtysh
@@ -344,21 +344,21 @@ exit
 
 :::note Por que ebgp-multihop
 
-O Route Server e o NVA estÃ£o em sub-redes diferentes dentro da mesma VNet. Como eles nÃ£o estÃ£o diretamente conectados na Camada 2, Ã© necessÃ¡rio eBGP multi-hop. O Azure Route Server requer BGP externo multi-hop de todos os NVAs emparelhados.
+O Route Server e o NVA estão em sub-redes diferentes dentro da mesma VNet. Como eles não estão diretamente conectados na Camada 2, é necessário eBGP multi-hop. O Azure Route Server requer BGP externo multi-hop de todos os NVAs emparelhados.
 
 :::
 
-### Etapa 4: Verificar o status da sessÃ£o BGP no NVA
+### Etapa 4: Verificar o status da sessão BGP no NVA
 
 ```bash
 sudo vtysh -c "show bgp summary"
 ```
 
-A saÃ­da esperada deve mostrar dois vizinhos estabelecidos (as duas instÃ¢ncias do Route Server) com o estado mostrando uma contagem de rotas em vez de "Active" ou "Connect".
+A saída esperada deve mostrar dois vizinhos estabelecidos (as duas instâncias do Route Server) com o estado mostrando uma contagem de rotas em vez de "Active" ou "Connect".
 
 ---
 
-## Tarefa 4: Verificar a propagaÃ§Ã£o de rotas
+## Tarefa 4: Verificar a propagação de rotas
 
 ### Etapa 1: Visualizar rotas aprendidas pelo Route Server a partir do NVA
 
@@ -369,7 +369,7 @@ az network routeserver peering list-learned-routes \
     --name peer-nva
 ```
 
-A saÃ­da esperada inclui as rotas anunciadas pelo NVA: 172.16.0.0/16 e 172.17.0.0/16, com next hop 10.0.2.4 e AS path contendo 65001.
+A saída esperada inclui as rotas anunciadas pelo NVA: 172.16.0.0/16 e 172.17.0.0/16, com next hop 10.0.2.4 e AS path contendo 65001.
 
 ### Etapa 2: Visualizar rotas anunciadas pelo Route Server ao NVA
 
@@ -380,7 +380,7 @@ az network routeserver peering list-advertised-routes \
     --name peer-nva
 ```
 
-Isso mostra os espaÃ§os de endereÃ§o da VNet (10.0.0.0/16 e 10.1.0.0/16 do spoke emparelhado) que o Route Server anuncia ao NVA.
+Isso mostra os espaços de endereço da VNet (10.0.0.0/16 e 10.1.0.0/16 do spoke emparelhado) que o Route Server anuncia ao NVA.
 
 ### Etapa 3: Verificar rotas efetivas na NIC da VM de carga de trabalho do spoke
 
@@ -398,7 +398,7 @@ az network nic show-effective-route-table \
     --output table
 ```
 
-Esperado: VocÃª deve ver entradas para 172.16.0.0/16 e 172.17.0.0/16 com tipo de next hop `VirtualAppliance` e endereÃ§o de next hop `10.0.2.4`. Essas rotas foram aprendidas dinamicamente via BGP atravÃ©s do Route Server, nÃ£o configuradas manualmente via UDR.
+Esperado: Você deve ver entradas para 172.16.0.0/16 e 172.17.0.0/16 com tipo de next hop `VirtualAppliance` e endereço de next hop `10.0.2.4`. Essas rotas foram aprendidas dinamicamente via BGP através do Route Server, não configuradas manualmente via UDR.
 
 ### Etapa 4: Confirmar com o next-hop do Network Watcher
 
@@ -410,21 +410,21 @@ az network watcher show-next-hop \
     --dest-ip 172.16.1.10
 ```
 
-Esperado: o tipo de next hop Ã© `VirtualAppliance` com IP de next hop `10.0.2.4` (o NVA).
+Esperado: o tipo de next hop é `VirtualAppliance` com IP de next hop `10.0.2.4` (o NVA).
 
-:::tip DiferenÃ§a-chave em relaÃ§Ã£o Ã s UDRs
+:::tip Diferença-chave em relação Ã s UDRs
 
-Com o Route Server, essas rotas apareceram automaticamente quando o NVA as anunciou via BGP. Nenhuma criaÃ§Ã£o manual de tabela de rotas ou associaÃ§Ã£o de sub-rede foi necessÃ¡ria. Quando as rotas locais mudam, o NVA atualiza seu anÃºncio BGP e o Route Server propaga as mudanÃ§as automaticamente.
+Com o Route Server, essas rotas apareceram automaticamente quando o NVA as anunciou via BGP. Nenhuma criação manual de tabela de rotas ou associação de sub-rede foi necessária. Quando as rotas locais mudam, o NVA atualiza seu anúncio BGP e o Route Server propaga as mudanças automaticamente.
 
 :::
 
 ---
 
-## Tarefa 5: Habilitar trÃ¢nsito branch-to-branch
+## Tarefa 5: Habilitar trânsito branch-to-branch
 
-O branch-to-branch permite que o VPN Gateway e o NVA troquem rotas atravÃ©s do Route Server. Sem isso, o VPN Gateway nÃ£o aprende rotas anunciadas pelo NVA e vice-versa.
+O branch-to-branch permite que o VPN Gateway e o NVA troquem rotas através do Route Server. Sem isso, o VPN Gateway não aprende rotas anunciadas pelo NVA e vice-versa.
 
-### Etapa 1: Habilitar trÃ¡fego branch-to-branch
+### Etapa 1: Habilitar tráfego branch-to-branch
 
 ```bash
 az network routeserver update \
@@ -433,7 +433,7 @@ az network routeserver update \
     --allow-b2b-traffic true
 ```
 
-### Etapa 2: Verificar a configuraÃ§Ã£o
+### Etapa 2: Verificar a configuração
 
 ```bash
 az network routeserver show \
@@ -443,22 +443,22 @@ az network routeserver show \
     --output table
 ```
 
-Esperado: `allowBranchToBranchTraffic` Ã© `true`.
+Esperado: `allowBranchToBranchTraffic` é `true`.
 
 ### Etapa 3: Entender o efeito
 
 Com branch-to-branch habilitado:
-- Rotas do VPN Gateway (prefixos locais) sÃ£o compartilhadas com o NVA via Route Server
-- Rotas do NVA sÃ£o compartilhadas com o VPN Gateway via Route Server
+- Rotas do VPN Gateway (prefixos locais) são compartilhadas com o NVA via Route Server
+- Rotas do NVA são compartilhadas com o VPN Gateway via Route Server
 - O ambiente local pode aprender sobre rotas anunciadas pelo NVA e vice-versa
 
 Sem branch-to-branch:
 - O Route Server apenas propaga rotas do NVA para VMs na VNet e VNets emparelhadas
 - VPN Gateway e NVA operam independentemente, sem troca de rotas entre eles
 
-:::warning LimitaÃ§Ã£o
+:::warning Limitação
 
-O nÃºmero total de rotas anunciadas do espaÃ§o de endereÃ§o da rede virtual e do Route Server em direÃ§Ã£o a um circuito ExpressRoute (quando o branch-to-branch estÃ¡ habilitado) nÃ£o deve exceder 1.000. Planeje seus anÃºncios de rotas cuidadosamente em ambientes com muitos prefixos.
+O número total de rotas anunciadas do espaço de endereço da rede virtual e do Route Server em direção a um circuito ExpressRoute (quando o branch-to-branch está habilitado) não deve exceder 1.000. Planeje seus anúncios de rotas cuidadosamente em ambientes com muitos prefixos.
 
 :::
 
@@ -466,7 +466,7 @@ O nÃºmero total de rotas anunciadas do espaÃ§o de endereÃ§o da rede virtua
 
 ## Tarefa 6: Testar o comportamento de failover
 
-Quando um NVA fica indisponÃ­vel, a sessÃ£o BGP cai e as rotas sÃ£o retiradas. Isso demonstra a natureza de autocorreÃ§Ã£o do roteamento dinÃ¢mico.
+Quando um NVA fica indisponível, a sessão BGP cai e as rotas são retiradas. Isso demonstra a natureza de autocorreção do roteamento dinâmico.
 
 ### Etapa 1: Confirmar que as rotas atuais existem
 
@@ -476,7 +476,7 @@ az network nic show-effective-route-table \
     --output table | grep "172.16"
 ```
 
-VocÃª deve ver a rota 172.16.0.0/16 com next hop 10.0.2.4.
+Você deve ver a rota 172.16.0.0/16 com next hop 10.0.2.4.
 
 ### Etapa 2: Simular falha do NVA (parar a VM)
 
@@ -486,9 +486,9 @@ az vm deallocate \
     --name vm-nva
 ```
 
-### Etapa 3: Aguardar a expiraÃ§Ã£o do hold timer BGP
+### Etapa 3: Aguardar a expiração do hold timer BGP
 
-O Route Server usa um timer de keepalive BGP de 60 segundos e um hold timer de 180 segundos. ApÃ³s aproximadamente 180 segundos sem mensagens de keepalive, a sessÃ£o BGP Ã© declarada como inativa e as rotas sÃ£o retiradas.
+O Route Server usa um timer de keepalive BGP de 60 segundos e um hold timer de 180 segundos. Após aproximadamente 180 segundos sem mensagens de keepalive, a sessão BGP é declarada como inativa e as rotas são retiradas.
 
 Aguarde 3-4 minutos e verifique as rotas efetivas novamente:
 
@@ -498,9 +498,9 @@ az network nic show-effective-route-table \
     --output table | grep "172.16"
 ```
 
-Esperado: As rotas 172.16.0.0/16 e 172.17.0.0/16 nÃ£o devem mais aparecer na tabela de rotas efetivas, demonstrando a retirada automÃ¡tica de rotas.
+Esperado: As rotas 172.16.0.0/16 e 172.17.0.0/16 não devem mais aparecer na tabela de rotas efetivas, demonstrando a retirada automática de rotas.
 
-### Etapa 4: Restaurar o NVA e verificar a recuperaÃ§Ã£o de rotas
+### Etapa 4: Restaurar o NVA e verificar a recuperação de rotas
 
 ```bash
 az vm start \
@@ -508,7 +508,7 @@ az vm start \
     --name vm-nva
 ```
 
-ApÃ³s a VM inicializar e o FRRouting restabelecer a sessÃ£o BGP (aguarde 2-3 minutos para boot mais convergÃªncia BGP):
+Após a VM inicializar e o FRRouting restabelecer a sessão BGP (aguarde 2-3 minutos para boot mais convergência BGP):
 
 ```bash
 az network routeserver peering list-learned-routes \
@@ -517,27 +517,27 @@ az network routeserver peering list-learned-routes \
     --name peer-nva
 ```
 
-As rotas devem reaparecer quando a sessÃ£o BGP for restabelecida.
+As rotas devem reaparecer quando a sessão BGP for restabelecida.
 
 :::tip Nota para o exame
 
-O Route Server nÃ£o requer intervenÃ§Ã£o manual quando um NVA falha ou se recupera. Os timers BGP gerenciam o ciclo de vida da sessÃ£o automaticamente. Esta Ã© a principal vantagem sobre UDRs estÃ¡ticas, que requerem atualizaÃ§Ãµes manuais ou automaÃ§Ã£o personalizada via chamadas de API do Azure.
+O Route Server não requer intervenção manual quando um NVA falha ou se recupera. Os timers BGP gerenciam o ciclo de vida da sessão automaticamente. Esta é a principal vantagem sobre UDRs estáticas, que requerem atualizações manuais ou automação personalizada via chamadas de API do Azure.
 
 :::
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-Esses cenÃ¡rios representam configuraÃ§Ãµes incorretas comuns encontradas em produÃ§Ã£o e no exame.
+Esses cenários representam configurações incorretas comuns encontradas em produção e no exame.
 
-### CenÃ¡rio 1: NVA usa ASN 65515
+### Cenário 1: NVA usa ASN 65515
 
-**Sintoma:** A criaÃ§Ã£o do peering BGP falha ou a sessÃ£o BGP nunca se estabelece.
+**Sintoma:** A criação do peering BGP falha ou a sessão BGP nunca se estabelece.
 
-**Causa raiz:** O NVA estÃ¡ configurado com ASN 65515, que Ã© o mesmo ASN usado pelo Route Server. O BGP requer ASNs diferentes para peering eBGP. O Azure reserva os ASNs 65515, 65517, 65518, 65519 e 65520.
+**Causa raiz:** O NVA está configurado com ASN 65515, que é o mesmo ASN usado pelo Route Server. O BGP requer ASNs diferentes para peering eBGP. O Azure reserva os ASNs 65515, 65517, 65518, 65519 e 65520.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network routeserver peering show \
@@ -553,7 +553,7 @@ No NVA, verifique o ASN configurado:
 sudo vtysh -c "show running-config" | grep "router bgp"
 ```
 
-**CorreÃ§Ã£o:** Altere a configuraÃ§Ã£o BGP do NVA para usar um ASN nÃ£o reservado (ex.: 65001):
+**Correção:** Altere a configuração BGP do NVA para usar um ASN não reservado (ex.: 65001):
 
 ```bash
 sudo vtysh
@@ -586,13 +586,13 @@ az network routeserver peering create \
     --peer-asn 65001
 ```
 
-### CenÃ¡rio 2: Rotas nÃ£o propagam para VNets spoke
+### Cenário 2: Rotas não propagam para VNets spoke
 
-**Sintoma:** As rotas do NVA aparecem nas rotas efetivas da VNet hub, mas nÃ£o na VNet spoke.
+**Sintoma:** As rotas do NVA aparecem nas rotas efetivas da VNet hub, mas não na VNet spoke.
 
-**Causa raiz:** O peering de VNet do lado do spoke nÃ£o tem "Use Remote Gateways or Route Server" habilitado.
+**Causa raiz:** O peering de VNet do lado do spoke não tem "Use Remote Gateways or Route Server" habilitado.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network vnet peering show \
@@ -603,9 +603,9 @@ az network vnet peering show \
     --output table
 ```
 
-Se `useRemoteGateways` for `false`, as rotas do Route Server nÃ£o sÃ£o propagadas para o spoke.
+Se `useRemoteGateways` for `false`, as rotas do Route Server não são propagadas para o spoke.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 az network vnet peering update \
@@ -615,7 +615,7 @@ az network vnet peering update \
     --use-remote-gateways true
 ```
 
-Verifique tambÃ©m se o peering hub-to-spoke permite trÃ¢nsito de gateway:
+Verifique também se o peering hub-to-spoke permite trânsito de gateway:
 
 ```bash
 az network vnet peering update \
@@ -625,13 +625,13 @@ az network vnet peering update \
     --allow-gateway-transit true
 ```
 
-### CenÃ¡rio 3: VPN Gateway nÃ£o aprende rotas do NVA
+### Cenário 3: VPN Gateway não aprende rotas do NVA
 
-**Sintoma:** O ambiente local nÃ£o consegue alcanÃ§ar destinos anunciados pelo NVA, mesmo que o NVA esteja emparelhado com o Route Server e as rotas estejam visÃ­veis na VNet.
+**Sintoma:** O ambiente local não consegue alcançar destinos anunciados pelo NVA, mesmo que o NVA esteja emparelhado com o Route Server e as rotas estejam visíveis na VNet.
 
-**Causa raiz:** O trÃ¡fego branch-to-branch nÃ£o estÃ¡ habilitado no Route Server. Sem isso, o Route Server nÃ£o troca rotas entre o NVA e o VPN Gateway.
+**Causa raiz:** O tráfego branch-to-branch não está habilitado no Route Server. Sem isso, o Route Server não troca rotas entre o NVA e o VPN Gateway.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 az network routeserver show \
@@ -640,9 +640,9 @@ az network routeserver show \
     --query "allowBranchToBranchTraffic"
 ```
 
-Se o resultado for `false`, as rotas nÃ£o sÃ£o trocadas entre o gateway e o NVA.
+Se o resultado for `false`, as rotas não são trocadas entre o gateway e o NVA.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 az network routeserver update \
@@ -666,7 +666,7 @@ az group delete \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {

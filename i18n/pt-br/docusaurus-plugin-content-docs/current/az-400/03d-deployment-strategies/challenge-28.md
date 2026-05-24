@@ -9,18 +9,18 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Habilidades do exame mapeadas
 
-- Implementar deployment de aplicaÃ§Ã£o usando containers, binÃ¡rios e scripts
+- Implementar deployment de aplicação usando containers, binários e scripts
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd estÃ¡ containerizando sua aplicaÃ§Ã£o monolÃ­tica de e-commerce em trÃªs microsserviÃ§os: Product Catalog API, Order Processing Service e Notification Service. A equipe precisa construir um pipeline de CI/CD abrangente que lide com build de imagens de container, escaneamento de vulnerabilidades, gerenciamento de registry e deployment tanto para Azure Container Apps quanto para Azure Kubernetes Service.
+A Contoso Ltd está containerizando sua aplicação monolítica de e-commerce em três microsserviços: Product Catalog API, Order Processing Service e Notification Service. A equipe precisa construir um pipeline de CI/CD abrangente que lide com build de imagens de container, escaneamento de vulnerabilidades, gerenciamento de registry e deployment tanto para Azure Container Apps quanto para Azure Kubernetes Service.
 
 **Detalhes do ambiente:**
 - Azure Container Registry: `acrcontosoprod`
 - Azure Container Apps Environment: `cae-contoso-prod`
 - Cluster AKS: `aks-contoso-prod`
 - Resource group: `rg-contoso-containers`
-- RegiÃ£o: East US 2
+- Região: East US 2
 
 ---
 
@@ -146,7 +146,7 @@ az acr config content-trust update \
   --status enabled
 ```
 
-### EstratÃ©gia de tagging
+### Estratégia de tagging
 
 ```bash
 # Build with multiple tags: semver + git SHA + latest
@@ -163,7 +163,7 @@ az acr build \
   src/ProductCatalog/
 ```
 
-### Configurar polÃ­ticas de retenÃ§Ã£o e limpeza
+### Configurar políticas de retenção e limpeza
 
 ```bash
 # Set retention policy (delete untagged manifests after 7 days)
@@ -601,9 +601,9 @@ docker manifest inspect acrcontosoprod.azurecr.io/product-catalog-api:latest
 
 ---
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### ExercÃ­cio 1: Falha de autenticaÃ§Ã£o no ACR no pipeline
+### Exercício 1: Falha de autenticação no ACR no pipeline
 
 **Sintoma:** O workflow do GitHub Actions falha com `unauthorized: authentication required` ao fazer push para o ACR.
 
@@ -617,12 +617,12 @@ az role assignment list \
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz:** O service principal no secret AZURE_CREDENTIALS possui apenas a role `AcrPull`, nÃ£o `AcrPush`.
+**Causa raiz:** O service principal no secret AZURE_CREDENTIALS possui apenas a role `AcrPull`, não `AcrPush`.
 
 
-**CorreÃ§Ã£o:**
+**Correção:**
 ```bash
 # Assign AcrPush role to the service principal
 SP_ID=$(az ad sp show --id <app-id> --query id -o tsv)
@@ -635,9 +635,9 @@ az role assignment create \
 
 </details>
 
-### ExercÃ­cio 2: Container app falhando health checks apÃ³s deployment
+### Exercício 2: Container app falhando health checks após deployment
 
-**Sintoma:** ApÃ³s fazer deploy de uma nova imagem no Azure Container Apps, a revisÃ£o nunca se torna ativa. Os logs mostram tentativas repetidas de reinicializaÃ§Ã£o.
+**Sintoma:** Após fazer deploy de uma nova imagem no Azure Container Apps, a revisão nunca se torna ativa. Os logs mostram tentativas repetidas de reinicialização.
 
 **Investigar:**
 ```bash
@@ -656,12 +656,12 @@ az containerapp logs show \
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz:** O Dockerfile expÃµe a porta 8080 mas o ingress do Container App estÃ¡ configurado para a porta 80.
+**Causa raiz:** O Dockerfile expõe a porta 8080 mas o ingress do Container App está configurado para a porta 80.
 
 
-**CorreÃ§Ã£o:**
+**Correção:**
 ```bash
 az containerapp update \
   --name ca-product-catalog \
@@ -676,18 +676,18 @@ az containerapp ingress update \
 
 </details>
 
-### ExercÃ­cio 3: Escaneamento do Trivy bloqueando deployment com falso positivo
+### Exercício 3: Escaneamento do Trivy bloqueando deployment com falso positivo
 
-**Sintoma:** O pipeline falha porque o Trivy reporta uma vulnerabilidade CRITICAL em um pacote da imagem base que nÃ£o tem correÃ§Ã£o disponÃ­vel ainda.
+**Sintoma:** O pipeline falha porque o Trivy reporta uma vulnerabilidade CRITICAL em um pacote da imagem base que não tem correção disponível ainda.
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa raiz:** A vulnerabilidade estÃ¡ em um pacote de sistema na imagem base sem correÃ§Ã£o upstream.
+**Causa raiz:** A vulnerabilidade está em um pacote de sistema na imagem base sem correção upstream.
 
 
-**CorreÃ§Ã£o:** Crie um arquivo `.trivyignore` na raiz do projeto:
+**Correção:** Crie um arquivo `.trivyignore` na raiz do projeto:
 ```text
 # No fix available - tracked in issue #1234
 CVE-2024-XXXXX
@@ -708,11 +708,11 @@ Atualize o workflow para referenciar o arquivo de ignore:
 
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "A Contoso quer construir imagens de container em seu pipeline de CI e fazer push para o Azure Container Registry. O pipeline usa um service principal para autenticaÃ§Ã£o. Qual Ã© a role RBAC MÃNIMA necessÃ¡ria no ACR para o service principal fazer push de imagens?",
+    question: "A Contoso quer construir imagens de container em seu pipeline de CI e fazer push para o Azure Container Registry. O pipeline usa um service principal para autenticação. Qual é a role RBAC MÍNIMA necessária no ACR para o service principal fazer push de imagens?",
     options: [
       "Reader",
       "AcrPull",
@@ -720,40 +720,40 @@ Atualize o workflow para referenciar o arquivo de ignore:
       "Contributor"
     ],
     correctIndex: 2,
-    explanation: "A role AcrPush concede permissÃ£o para fazer push (escrita) e pull (leitura) de imagens do ACR. AcrPull permite apenas leitura. Contributor Ã© excessivamente permissiva e inclui acesso ao plano de gerenciamento. Reader nÃ£o fornece acesso ao plano de dados de imagens de container."
+    explanation: "A role AcrPush concede permissão para fazer push (escrita) e pull (leitura) de imagens do ACR. AcrPull permite apenas leitura. Contributor é excessivamente permissiva e inclui acesso ao plano de gerenciamento. Reader não fornece acesso ao plano de dados de imagens de container."
   },
   {
-    question: "Um container implantado no Azure Container Apps continua reiniciando. A aplicaÃ§Ã£o escuta na porta 8080, mas o ingress do Container App estÃ¡ configurado com 'targetPort: 80'. Qual Ã© a correÃ§Ã£o correta?",
+    question: "Um container implantado no Azure Container Apps continua reiniciando. A aplicação escuta na porta 8080, mas o ingress do Container App está configurado com 'targetPort: 80'. Qual é a correção correta?",
     options: [
-      "Alterar a aplicaÃ§Ã£o para escutar na porta 80",
+      "Alterar a aplicação para escutar na porta 80",
       "Atualizar a porta alvo do ingress do Container App para 8080",
       "Adicionar uma regra de mapeamento de porta no ambiente do Container Apps",
       "Configurar um proxy reverso entre a porta 80 e 8080"
     ],
     correctIndex: 1,
-    explanation: "O targetPort no ingress do Azure Container Apps deve corresponder Ã  porta em que a aplicaÃ§Ã£o do container escuta. Se a aplicaÃ§Ã£o estÃ¡ configurada para escutar na porta 8080 (via ASPNETCORE_URLS ou Dockerfile EXPOSE), o ingress do Container App deve rotear para essa mesma porta."
+    explanation: "O targetPort no ingress do Azure Container Apps deve corresponder Ã  porta em que a aplicação do container escuta. Se a aplicação está configurada para escutar na porta 8080 (via ASPNETCORE_URLS ou Dockerfile EXPOSE), o ingress do Container App deve rotear para essa mesma porta."
   },
   {
-    question: "A Contoso constrÃ³i suas imagens de container com tags 'semver' (ex: '1.2.3') e tags 'sha' (ex: 'abc1234'). Nos manifestos Kubernetes de produÃ§Ã£o, qual tipo de tag deve ser referenciado para deployments reproduzÃ­veis?",
+    question: "A Contoso constrói suas imagens de container com tags 'semver' (ex: '1.2.3') e tags 'sha' (ex: 'abc1234'). Nos manifestos Kubernetes de produção, qual tipo de tag deve ser referenciado para deployments reproduzíveis?",
     options: [
-      "Tag 'latest' para atualizaÃ§Ãµes automÃ¡ticas",
-      "Tag de versÃ£o major semver (ex: '1')",
+      "Tag 'latest' para atualizações automáticas",
+      "Tag de versão major semver (ex: '1')",
       "Tag baseada em Git SHA (ex: 'abc1234')",
-      "Tag de versÃ£o minor semver (ex: '1.2')"
+      "Tag de versão minor semver (ex: '1.2')"
     ],
     correctIndex: 2,
-    explanation: "Tags baseadas em SHA sÃ£o imutÃ¡veis e correlacionam diretamente a um commit especÃ­fico, garantindo reprodutibilidade. Uma tag SHA especÃ­fica sempre aponta para exatamente uma imagem. Tags semver podem ser sobrescritas (movendo 1.2.3 para uma imagem diferente), e latest Ã© mutÃ¡vel por definiÃ§Ã£o. Para deployments de produÃ§Ã£o, referÃªncias imutÃ¡veis garantem que vocÃª pode rastrear exatamente qual cÃ³digo estÃ¡ executando."
+    explanation: "Tags baseadas em SHA são imutáveis e correlacionam diretamente a um commit específico, garantindo reprodutibilidade. Uma tag SHA específica sempre aponta para exatamente uma imagem. Tags semver podem ser sobrescritas (movendo 1.2.3 para uma imagem diferente), e latest é mutável por definição. Para deployments de produção, referências imutáveis garantem que você pode rastrear exatamente qual código está executando."
   },
   {
     question: "A Contoso precisa que suas imagens de container executem tanto em arquiteturas AMD64 (VMs na nuvem) quanto ARM64 (dispositivos edge). O que deve ser configurado no pipeline de CI para produzir imagens para ambas as plataformas?",
     options: [
       "Construir a imagem duas vezes com Dockerfiles diferentes para cada arquitetura",
-      "Usar Docker Buildx com 'platforms: linux/amd64,linux/arm64' e emulaÃ§Ã£o QEMU",
+      "Usar Docker Buildx com 'platforms: linux/amd64,linux/arm64' e emulação QEMU",
       "Criar registries de container separados para cada arquitetura",
       "Usar containers Windows que suportam ambas as arquiteturas nativamente"
     ],
     correctIndex: 1,
-    explanation: "O Docker Buildx suporta builds multi-plataforma usando QEMU para emulaÃ§Ã£o cross-platform. Um Ãºnico comando docker buildx build --platform linux/amd64,linux/arm64 produz uma lista de manifestos contendo imagens para ambas as arquiteturas. A imagem correta Ã© automaticamente baixada com base na arquitetura do cliente."
+    explanation: "O Docker Buildx suporta builds multi-plataforma usando QEMU para emulação cross-platform. Um único comando docker buildx build --platform linux/amd64,linux/arm64 produz uma lista de manifestos contendo imagens para ambas as arquiteturas. A imagem correta é automaticamente baixada com base na arquitetura do cliente."
   }
 ]} />
 

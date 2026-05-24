@@ -12,21 +12,21 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 - Configurar Microsoft Defender for Cloud DevOps Security
 - Integrar GitHub Advanced Security com Microsoft Defender for Cloud
 
-## CenÃ¡rio
+## Cenário
 
-A CISO da Contoso Ltd quer um painel Ãºnico para todas as descobertas de seguranÃ§a em seus 30 repositÃ³rios GitHub e 15 repositÃ³rios Azure DevOps. Atualmente, cada plataforma tem seu prÃ³prio painel de seguranÃ§a, tornando impossÃ­vel obter uma visÃ£o agregada de risco ou impor polÃ­ticas de seguranÃ§a consistentes. VocÃª deve implementar o Microsoft Defender for Cloud DevOps Security para unificar o gerenciamento de postura de seguranÃ§a em ambas as plataformas.
+A CISO da Contoso Ltd quer um painel único para todas as descobertas de segurança em seus 30 repositórios GitHub e 15 repositórios Azure DevOps. Atualmente, cada plataforma tem seu próprio painel de segurança, tornando impossível obter uma visão agregada de risco ou impor políticas de segurança consistentes. Você deve implementar o Microsoft Defender for Cloud DevOps Security para unificar o gerenciamento de postura de segurança em ambas as plataformas.
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Assinatura Azure com acesso de Contributor
 - Microsoft Defender for Cloud habilitado (plano Defender CSPM ou Defender for DevOps)
-- OrganizaÃ§Ã£o GitHub com acesso de administrador
-- OrganizaÃ§Ã£o Azure DevOps com acesso de Project Collection Administrator
+- Organização GitHub com acesso de administrador
+- Organização Azure DevOps com acesso de Project Collection Administrator
 - Azure CLI instalado
 
 ## Tarefas
 
-### Tarefa 1: Conectar organizaÃ§Ã£o GitHub ao Microsoft Defender for Cloud
+### Tarefa 1: Conectar organização GitHub ao Microsoft Defender for Cloud
 
 ```bash
 # Ensure Microsoft Defender for Cloud is registered
@@ -59,7 +59,7 @@ az security security-connector show \
   --query "{name:name, state:properties.hierarchyIdentifier, health:properties.environmentData}"
 ```
 
-### Tarefa 2: Conectar organizaÃ§Ã£o Azure DevOps ao Defender for Cloud
+### Tarefa 2: Conectar organização Azure DevOps ao Defender for Cloud
 
 ```bash
 # Navigate to Azure Portal:
@@ -116,9 +116,9 @@ Template ARM para o conector:
 }
 ```
 
-### Tarefa 3: Configurar gerenciamento de postura de seguranÃ§a DevOps
+### Tarefa 3: Configurar gerenciamento de postura de segurança DevOps
 
-ApÃ³s os conectores serem estabelecidos, configure o que serÃ¡ verificado:
+Após os conectores serem estabelecidos, configure o que será verificado:
 
 ```bash
 # View DevOps security posture recommendations
@@ -131,19 +131,19 @@ az security assessment list \
 # - Scanning frequency: Every 24 hours (default)
 ```
 
-VerificaÃ§Ãµes de postura de seguranÃ§a que o Defender realiza automaticamente:
+Verificações de postura de segurança que o Defender realiza automaticamente:
 
-| VerificaÃ§Ã£o | DescriÃ§Ã£o | Plataforma |
+| Verificação | Descrição | Plataforma |
 |-------|-------------|----------|
-| Code scanning nÃ£o habilitado | RepositÃ³rios sem CodeQL ou equivalente | GitHub, Azure DevOps |
-| Secret scanning nÃ£o habilitado | RepositÃ³rios sem varredura de segredos | GitHub |
-| Dependabot nÃ£o habilitado | RepositÃ³rios sem alertas de dependÃªncia | GitHub |
-| ProteÃ§Ã£o de branch ausente | Branch padrÃ£o desprotegido | GitHub, Azure DevOps |
-| PermissÃµes excessivas | ConexÃµes de serviÃ§o com permissÃµes excessivas | Azure DevOps |
-| Sem revisores obrigatÃ³rios | PRs podem fazer merge sem revisÃ£o | GitHub, Azure DevOps |
-| RepositÃ³rios inativos com acesso | RepositÃ³rios obsoletos ainda acessÃ­veis | GitHub |
+| Code scanning não habilitado | Repositórios sem CodeQL ou equivalente | GitHub, Azure DevOps |
+| Secret scanning não habilitado | Repositórios sem varredura de segredos | GitHub |
+| Dependabot não habilitado | Repositórios sem alertas de dependência | GitHub |
+| Proteção de branch ausente | Branch padrão desprotegido | GitHub, Azure DevOps |
+| Permissões excessivas | Conexões de serviço com permissões excessivas | Azure DevOps |
+| Sem revisores obrigatórios | PRs podem fazer merge sem revisão | GitHub, Azure DevOps |
+| Repositórios inativos com acesso | Repositórios obsoletos ainda acessíveis | GitHub |
 
-### Tarefa 4: Visualizar e classificar descobertas de seguranÃ§a no painel do Defender
+### Tarefa 4: Visualizar e classificar descobertas de segurança no painel do Defender
 
 ```bash
 # Get all DevOps security recommendations
@@ -163,32 +163,32 @@ az security alert list \
 No Portal do Azure:
 
 1. Microsoft Defender for Cloud > DevOps Security
-2. Visualize o inventÃ¡rio unificado de todos os repositÃ³rios conectados
-3. Filtre por: Severidade (CrÃ­tica/Alta/MÃ©dia/Baixa), Tipo de descoberta, RepositÃ³rio
+2. Visualize o inventário unificado de todos os repositórios conectados
+3. Filtre por: Severidade (Crítica/Alta/Média/Baixa), Tipo de descoberta, Repositório
 4. Para cada descoberta:
-   - Visualize o cÃ³digo/configuraÃ§Ã£o afetado
-   - Veja a orientaÃ§Ã£o de remediaÃ§Ã£o
+   - Visualize o código/configuração afetado
+   - Veja a orientação de remediação
    - Atribua a um membro da equipe
-   - Defina substituiÃ§Ã£o de severidade se necessÃ¡rio
+   - Defina substituição de severidade se necessário
 
-### Tarefa 5: Configurar anotaÃ§Ãµes de pull request do Defender
+### Tarefa 5: Configurar anotações de pull request do Defender
 
-Habilite anotaÃ§Ãµes de PR para que os desenvolvedores vejam as descobertas de seguranÃ§a diretamente em seus pull requests:
+Habilite anotações de PR para que os desenvolvedores vejam as descobertas de segurança diretamente em seus pull requests:
 
 Para GitHub:
 
 1. Defender for Cloud > Environment settings > GitHub connector
 2. Configure > Pull request annotations: Habilitar
-3. Limite de severidade: Alta e CrÃ­tica (ignorar MÃ©dia/Baixa em PRs)
-4. Comportamento da anotaÃ§Ã£o: Apenas comentÃ¡rio (nÃ£o bloquear merge)
+3. Limite de severidade: Alta e Crítica (ignorar Média/Baixa em PRs)
+4. Comportamento da anotação: Apenas comentário (não bloquear merge)
 
 Para Azure DevOps:
 
 1. Defender for Cloud > Environment settings > Azure DevOps connector
 2. Configure > Pull request annotations: Habilitar
-3. Configure a extensÃ£o Microsoft Security DevOps Azure DevOps
+3. Configure a extensão Microsoft Security DevOps Azure DevOps
 
-Instale a extensÃ£o no Azure Pipelines:
+Instale a extensão no Azure Pipelines:
 
 ```yaml
 # azure-pipelines.yml - Add security scanning with PR annotations
@@ -241,9 +241,9 @@ jobs:
           sarif_file: ${{ steps.msdo.outputs.sarifFile }}
 ```
 
-### Tarefa 6: Configurar alertas e polÃ­ticas de seguranÃ§a
+### Tarefa 6: Configurar alertas e políticas de segurança
 
-Configure regras de alerta para descobertas de seguranÃ§a crÃ­ticas:
+Configure regras de alerta para descobertas de segurança críticas:
 
 ```bash
 # Create an action group for security notifications
@@ -262,7 +262,7 @@ az monitor action-group create \
 # - Frequency: Real-time for Critical, Daily digest for High
 ```
 
-Crie uma Azure Policy para governanÃ§a de seguranÃ§a DevOps:
+Crie uma Azure Policy para governança de segurança DevOps:
 
 ```bash
 # Assign built-in policy: "GitHub repositories should have code scanning enabled"
@@ -280,20 +280,20 @@ az policy assignment create \
   --scope "/subscriptions/<sub-id>/resourceGroups/rg-contoso-defender-devops"
 ```
 
-### Tarefa 7: Integrar com Azure Policy para governanÃ§a
+### Tarefa 7: Integrar com Azure Policy para governança
 
-Crie uma regra de governanÃ§a para atribuir automaticamente as descobertas:
+Crie uma regra de governança para atribuir automaticamente as descobertas:
 
 1. Defender for Cloud > Environment settings > Governance rules
 2. Crie a regra:
    - Nome: "DevOps Critical Findings"
    - Escopo: Todos os conectores DevOps
    - Prioridade: 1
-   - CondiÃ§Ãµes: Severidade = CrÃ­tica
-   - ProprietÃ¡rio: security-team@contoso.com
-   - Prazo de remediaÃ§Ã£o: 7 dias
-   - PerÃ­odo de carÃªncia: 3 dias
-   - NotificaÃ§Ãµes: Email semanal
+   - Condições: Severidade = Crítica
+   - Proprietário: security-team@contoso.com
+   - Prazo de remediação: 7 dias
+   - Período de carência: 3 dias
+   - Notificações: Email semanal
 
 ```bash
 # View compliance status across all DevOps resources
@@ -306,7 +306,7 @@ az security assessment list \
   -o json > devops-security-posture.json
 ```
 
-Construa um painel de seguranÃ§a no Azure Workbooks:
+Construa um painel de segurança no Azure Workbooks:
 
 ```text
 // KQL query for DevOps security findings over time
@@ -316,15 +316,15 @@ SecurityRecommendation
 | render timechart
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### CenÃ¡rio de quebra 1: Conector GitHub mostra status "Disconnected"
+### Cenário de quebra 1: Conector GitHub mostra status "Disconnected"
 
-O conector GitHub do Defender for Cloud mostra status nÃ£o saudÃ¡vel e nenhuma nova descoberta estÃ¡ sendo coletada.
+O conector GitHub do Defender for Cloud mostra status não saudável e nenhuma nova descoberta está sendo coletada.
 
-**Causa:** A autorizaÃ§Ã£o do GitHub App foi revogada por um administrador da organizaÃ§Ã£o, ou o aplicativo foi desinstalado da organizaÃ§Ã£o.
+**Causa:** A autorização do GitHub App foi revogada por um administrador da organização, ou o aplicativo foi desinstalado da organização.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check connector status
@@ -336,28 +336,28 @@ az security security-connector show \
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
-1. Navegue atÃ© Defender for Cloud > Environment settings > GitHub connector
+1. Navegue até Defender for Cloud > Environment settings > GitHub connector
 2. Clique em "Reauthorize"
 3. Reinstale o Microsoft Defender for Cloud GitHub App se ele foi removido
 4. Verifique no GitHub: Organization Settings > Installed GitHub Apps > Microsoft Defender for Cloud
 
 </details>
 
-### CenÃ¡rio de quebra 2: AnotaÃ§Ãµes de PR nÃ£o aparecem no Azure DevOps
+### Cenário de quebra 2: Anotações de PR não aparecem no Azure DevOps
 
-A tarefa MicrosoftSecurityDevOps@1 executa com sucesso, mas nenhuma anotaÃ§Ã£o aparece nos pull requests.
+A tarefa MicrosoftSecurityDevOps@1 executa com sucesso, mas nenhuma anotação aparece nos pull requests.
 
-**Causa:** O pipeline estÃ¡ executando no push para main (nÃ£o no trigger de PR), ou os resultados SARIF nÃ£o estÃ£o sendo publicados corretamente.
+**Causa:** O pipeline está executando no push para main (não no trigger de PR), ou os resultados SARIF não estão sendo publicados corretamente.
 
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**CorreÃ§Ã£o:** Garanta que o pipeline Ã© acionado em pull requests e publica os resultados:
+**Correção:** Garanta que o pipeline é acionado em pull requests e publica os resultados:
 
 ```yaml
 trigger: none  # Do not run on push
@@ -379,52 +379,52 @@ steps:
 ```
 
 </details>
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "A Contoso quer visualizar descobertas de seguranÃ§a de repositÃ³rios GitHub e Azure DevOps em um Ãºnico painel. O que eles devem configurar?",
+    question: "A Contoso quer visualizar descobertas de segurança de repositórios GitHub e Azure DevOps em um único painel. O que eles devem configurar?",
     options: [
       "Exportar alertas de cada plataforma para uma caixa de email compartilhada",
-      "Conectar ambas as plataformas ao Microsoft Defender for Cloud usando conectores de seguranÃ§a DevOps",
-      "Espelhar todo o cÃ³digo para uma Ãºnica plataforma e verificar lÃ¡",
+      "Conectar ambas as plataformas ao Microsoft Defender for Cloud usando conectores de segurança DevOps",
+      "Espelhar todo o código para uma única plataforma e verificar lá",
       "Usar um SIEM de terceiros para agregar alertas"
     ],
     correctIndex: 1,
-    explanation: "O Microsoft Defender for Cloud DevOps Security fornece conectores nativos para GitHub e Azure DevOps. Uma vez conectados, todas as descobertas de seguranÃ§a (varredura de cÃ³digo, vulnerabilidades de dependÃªncia, varredura de segredos, configuraÃ§Ãµes incorretas de IaC) aparecem no painel unificado do Defender for Cloud com classificaÃ§Ãµes de severidade consistentes e orientaÃ§Ã£o de remediaÃ§Ã£o."
+    explanation: "O Microsoft Defender for Cloud DevOps Security fornece conectores nativos para GitHub e Azure DevOps. Uma vez conectados, todas as descobertas de segurança (varredura de código, vulnerabilidades de dependência, varredura de segredos, configurações incorretas de IaC) aparecem no painel unificado do Defender for Cloud com classificações de severidade consistentes e orientação de remediação."
   },
   {
-    question: "ApÃ³s conectar o GitHub ao Defender for Cloud, qual descoberta de postura de seguranÃ§a o Defender detectaria automaticamente?",
+    question: "Após conectar o GitHub ao Defender for Cloud, qual descoberta de postura de segurança o Defender detectaria automaticamente?",
     options: [
-      "Uma vulnerabilidade de SQL injection no cÃ³digo da aplicaÃ§Ã£o",
-      "Um repositÃ³rio sem proteÃ§Ã£o de branch no branch padrÃ£o",
+      "Uma vulnerabilidade de SQL injection no código da aplicação",
+      "Um repositório sem proteção de branch no branch padrão",
       "Um certificado SSL expirado em um servidor web",
-      "Um grupo de seguranÃ§a de rede de VM Azure configurado incorretamente"
+      "Um grupo de segurança de rede de VM Azure configurado incorretamente"
     ],
     correctIndex: 1,
-    explanation: "O gerenciamento de postura de seguranÃ§a DevOps verifica problemas no nÃ­vel de configuraÃ§Ã£o, como proteÃ§Ã£o de branch ausente, varredura de cÃ³digo desabilitada, falta de revisores obrigatÃ³rios e varredura de segredos desabilitada. Ele nÃ£o verifica o cÃ³digo em busca de vulnerabilidades diretamente (isso Ã© trabalho do CodeQL) nem inspeciona a infraestrutura Azure (isso Ã© o gerenciamento de postura de seguranÃ§a na nuvem do Defender for Cloud)."
+    explanation: "O gerenciamento de postura de segurança DevOps verifica problemas no nível de configuração, como proteção de branch ausente, varredura de código desabilitada, falta de revisores obrigatórios e varredura de segredos desabilitada. Ele não verifica o código em busca de vulnerabilidades diretamente (isso é trabalho do CodeQL) nem inspeciona a infraestrutura Azure (isso é o gerenciamento de postura de segurança na nuvem do Defender for Cloud)."
   },
   {
-    question: "A Contoso quer que descobertas de seguranÃ§a crÃ­ticas em pull requests bloqueiem o merge. Qual configuraÃ§Ã£o alcanÃ§a isso para repositÃ³rios GitHub?",
+    question: "A Contoso quer que descobertas de segurança críticas em pull requests bloqueiem o merge. Qual configuração alcança isso para repositórios GitHub?",
     options: [
-      "Configurar anotaÃ§Ãµes de PR do Defender com comportamento \"Block\"",
-      "Criar uma verificaÃ§Ã£o de status obrigatÃ³ria que usa a aÃ§Ã£o Microsoft Security DevOps com cÃ³digo de saÃ­da diferente de zero em descobertas crÃ­ticas",
-      "Definir proteÃ§Ã£o de branch para exigir aprovaÃ§Ã£o do Defender",
+      "Configurar anotações de PR do Defender com comportamento \"Block\"",
+      "Criar uma verificação de status obrigatória que usa a ação Microsoft Security DevOps com código de saída diferente de zero em descobertas críticas",
+      "Definir proteção de branch para exigir aprovação do Defender",
       "Configurar Dependabot para bloquear merges"
     ],
     correctIndex: 1,
-    explanation: "A microsoft/security-devops-action pode ser configurada para falhar (cÃ³digo de saÃ­da diferente de zero) quando descobertas crÃ­ticas sÃ£o detectadas. Quando este job Ã© definido como uma verificaÃ§Ã£o de status obrigatÃ³ria na proteÃ§Ã£o de branch, o PR nÃ£o pode fazer merge atÃ© que as descobertas crÃ­ticas sejam resolvidas. As anotaÃ§Ãµes de PR do Defender sozinhas apenas adicionam comentÃ¡rios, mas nÃ£o bloqueiam merges."
+    explanation: "A microsoft/security-devops-action pode ser configurada para falhar (código de saída diferente de zero) quando descobertas críticas são detectadas. Quando este job é definido como uma verificação de status obrigatória na proteção de branch, o PR não pode fazer merge até que as descobertas críticas sejam resolvidas. As anotações de PR do Defender sozinhas apenas adicionam comentários, mas não bloqueiam merges."
   },
   {
-    question: "Qual Ã© o principal benefÃ­cio de conectar o Azure DevOps ao Microsoft Defender for Cloud comparado a usar apenas o GHAzDO (GitHub Advanced Security for Azure DevOps)?",
+    question: "Qual é o principal benefício de conectar o Azure DevOps ao Microsoft Defender for Cloud comparado a usar apenas o GHAzDO (GitHub Advanced Security for Azure DevOps)?",
     options: [
-      "O Defender fornece varredura CodeQL que o GHAzDO nÃ£o fornece",
-      "O Defender fornece uma visÃ£o unificada entre mÃºltiplas plataformas e integra descobertas com a postura de seguranÃ§a na nuvem",
-      "O Defender Ã© gratuito enquanto o GHAzDO requer uma licenÃ§a",
-      "O Defender verifica o cÃ³digo mais rÃ¡pido que o GHAzDO"
+      "O Defender fornece varredura CodeQL que o GHAzDO não fornece",
+      "O Defender fornece uma visão unificada entre múltiplas plataformas e integra descobertas com a postura de segurança na nuvem",
+      "O Defender é gratuito enquanto o GHAzDO requer uma licença",
+      "O Defender verifica o código mais rápido que o GHAzDO"
     ],
     correctIndex: 1,
-    explanation: "Embora o GHAzDO forneÃ§a excelente varredura dentro do Azure DevOps, o Defender for Cloud adiciona visibilidade entre plataformas (GitHub + Azure DevOps + recursos de nuvem em um Ãºnico painel), regras de governanÃ§a para atribuiÃ§Ã£o automÃ¡tica e rastreamento de SLA, integraÃ§Ã£o com Azure Policy e correlaÃ§Ã£o entre descobertas de seguranÃ§a DevOps e postura de seguranÃ§a da infraestrutura na nuvem."
+    explanation: "Embora o GHAzDO forneça excelente varredura dentro do Azure DevOps, o Defender for Cloud adiciona visibilidade entre plataformas (GitHub + Azure DevOps + recursos de nuvem em um único painel), regras de governança para atribuição automática e rastreamento de SLA, integração com Azure Policy e correlação entre descobertas de segurança DevOps e postura de segurança da infraestrutura na nuvem."
   }
 ]} />
 

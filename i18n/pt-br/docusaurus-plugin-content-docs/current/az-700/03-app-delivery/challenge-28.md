@@ -14,19 +14,19 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 :::
 
 :::warning Alerta de custo
-O Application Gateway v2 Ã© cobrado por hora, mesmo quando ocioso. O SKU WAF_v2 custa aproximadamente $0,443/hora-de-gateway mais $0,0144/hora-de-unidade-de-capacidade. Exclua o gateway imediatamente apÃ³s concluir este desafio para evitar cobranÃ§as inesperadas.
+O Application Gateway v2 é cobrado por hora, mesmo quando ocioso. O SKU WAF_v2 custa aproximadamente $0,443/hora-de-gateway mais $0,0144/hora-de-unidade-de-capacidade. Exclua o gateway imediatamente após concluir este desafio para evitar cobranças inesperadas.
 :::
 
-## CenÃ¡rio
+## Cenário
 
-VocÃª Ã© o engenheiro de rede da Contoso SaaS, uma empresa que hospeda mÃºltiplas aplicaÃ§Ãµes web atrÃ¡s de um Ãºnico Application Gateway. A plataforma atende duas marcas distintas de clientes:
+Você é o engenheiro de rede da Contoso SaaS, uma empresa que hospeda múltiplas aplicações web atrás de um único Application Gateway. A plataforma atende duas marcas distintas de clientes:
 
 - **contoso.com** - Site corporativo principal com um frontend de marketing e um backend de API em `/api/*`
-- **fabrikam.com** - Portal de parceiros com um site de documentaÃ§Ã£o estÃ¡tico e um endpoint de webhook em `/hooks/*`
+- **fabrikam.com** - Portal de parceiros com um site de documentação estático e um endpoint de webhook em `/hooks/*`
 
-Sua tarefa Ã© implantar uma instÃ¢ncia do Application Gateway v2 com ouvintes multi-site, pools de back-end dedicados para cada aplicaÃ§Ã£o e regras de roteamento baseadas em caminho que direcionam o trÃ¡fego para o back-end correto com base no caminho da URL.
+Sua tarefa é implantar uma instância do Application Gateway v2 com ouvintes multi-site, pools de back-end dedicados para cada aplicação e regras de roteamento baseadas em caminho que direcionam o tráfego para o back-end correto com base no caminho da URL.
 
-## VisÃ£o geral da arquitetura
+## Visão geral da arquitetura
 
 ```text
 Internet
@@ -44,17 +44,17 @@ Internet
     /*    -> Web Pool       /*      -> Docs Pool
 ```
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Assinatura do Azure com acesso de Contributor
-- Azure CLI 2.50+ ou mÃ³dulo Azure PowerShell Az 10.0+
-- Uma rede virtual com uma sub-rede dedicada para o Application Gateway (mÃ­nimo /24 recomendado)
+- Azure CLI 2.50+ ou módulo Azure PowerShell Az 10.0+
+- Uma rede virtual com uma sub-rede dedicada para o Application Gateway (mínimo /24 recomendado)
 
 ---
 
 ## Tarefa 1: Criar a infraestrutura de rede
 
-O Application Gateway requer uma sub-rede dedicada sem outros recursos implantados nela. O nome da sub-rede nÃ£o precisa ser "AppGwSubnet", mas essa Ã© a convenÃ§Ã£o comum.
+O Application Gateway requer uma sub-rede dedicada sem outros recursos implantados nela. O nome da sub-rede não precisa ser "AppGwSubnet", mas essa é a convenção comum.
 
 ### Azure CLI
 
@@ -123,10 +123,10 @@ $pip = New-AzPublicIpAddress `
 
 ### Portal
 
-1. Navegue atÃ© **Criar um recurso** e pesquise por **Application Gateway**
-2. Na guia **BÃ¡sico**, selecione sua assinatura e grupo de recursos
-3. Em **Detalhes da instÃ¢ncia**, forneÃ§a um nome e selecione a regiÃ£o
-4. Em **Rede virtual**, crie uma nova VNet com o espaÃ§o de endereÃ§o 10.0.0.0/16
+1. Navegue até **Criar um recurso** e pesquise por **Application Gateway**
+2. Na guia **Básico**, selecione sua assinatura e grupo de recursos
+3. Em **Detalhes da instância**, forneça um nome e selecione a região
+4. Em **Rede virtual**, crie uma nova VNet com o espaço de endereço 10.0.0.0/16
 5. Crie uma sub-rede dedicada chamada AppGwSubnet com o prefixo 10.0.0.0/24
 
 ---
@@ -224,7 +224,7 @@ New-AzApplicationGateway `
 
 ## Tarefa 3: Configurar ouvintes multi-site
 
-Os ouvintes multi-site usam o parÃ¢metro `--host-name` para corresponder solicitaÃ§Ãµes de entrada com base no cabeÃ§alho Host. Cada ouvinte se vincula ao mesmo IP de frontend e porta, mas roteia para back-ends diferentes com base no nome do host.
+Os ouvintes multi-site usam o parâmetro `--host-name` para corresponder solicitações de entrada com base no cabeçalho Host. Cada ouvinte se vincula ao mesmo IP de frontend e porta, mas roteia para back-ends diferentes com base no nome do host.
 
 ### Azure CLI
 
@@ -292,7 +292,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ## Tarefa 4: Criar pools de back-end
 
-Cada componente de aplicaÃ§Ã£o recebe seu prÃ³prio pool de back-end. Os pools de back-end podem conter endereÃ§os IP, FQDNs, Conjuntos de Dimensionamento de MÃ¡quinas Virtuais ou App Services.
+Cada componente de aplicação recebe seu próprio pool de back-end. Os pools de back-end podem conter endereços IP, FQDNs, Conjuntos de Dimensionamento de Máquinas Virtuais ou App Services.
 
 ### Azure CLI
 
@@ -356,9 +356,9 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ---
 
-## Tarefa 5: Configurar configuraÃ§Ãµes HTTP com investigaÃ§Ã£o personalizada
+## Tarefa 5: Configurar configurações HTTP com investigação personalizada
 
-As configuraÃ§Ãµes HTTP definem como o Application Gateway se comunica com os servidores de back-end. Uma investigaÃ§Ã£o de integridade personalizada permite especificar um caminho, condiÃ§Ãµes de correspondÃªncia e intervalo.
+As configurações HTTP definem como o Application Gateway se comunica com os servidores de back-end. Uma investigação de integridade personalizada permite especificar um caminho, condições de correspondência e intervalo.
 
 ### Azure CLI
 
@@ -448,7 +448,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 
 ## Tarefa 6: Criar regras de roteamento baseadas em caminho
 
-O roteamento baseado em caminho usa mapas de caminho de URL para direcionar solicitaÃ§Ãµes a diferentes pools de back-end com base no padrÃ£o de caminho da URL.
+O roteamento baseado em caminho usa mapas de caminho de URL para direcionar solicitações a diferentes pools de back-end com base no padrão de caminho da URL.
 
 ### Azure CLI
 
@@ -565,22 +565,22 @@ Get-AzApplicationGatewayBackendHealth `
 
 ### Portal
 
-1. Navegue atÃ© o recurso do Application Gateway
+1. Navegue até o recurso do Application Gateway
 2. Selecione **Integridade do back-end** no menu Ã  esquerda em **Monitoramento**
 3. Revise o status de integridade de cada pool de back-end e servidores individuais
-4. Um servidor saudÃ¡vel mostra o cÃ³digo de status 200 e o status "Healthy"
+4. Um servidor saudável mostra o código de status 200 e o status "Healthy"
 
 ---
 
-## ExercÃ­cios de quebra e correÃ§Ã£o
+## Exercícios de quebra e correção
 
-### Problema 1: Conflito de ouvinte multi-site (cabeÃ§alho host ausente)
+### Problema 1: Conflito de ouvinte multi-site (cabeçalho host ausente)
 
-**Sintoma**: SolicitaÃ§Ãµes para fabrikam.com sÃ£o roteadas inesperadamente para os pools de back-end do contoso.com.
+**Sintoma**: Solicitações para fabrikam.com são roteadas inesperadamente para os pools de back-end do contoso.com.
 
-**Causa raiz**: O ouvinte do fabrikam.com foi criado sem o parÃ¢metro `--host-name`, tornando-o um ouvinte bÃ¡sico que captura todo o trÃ¡fego nÃ£o correspondido. Quando dois ouvintes compartilham o mesmo IP de frontend e porta sem cabeÃ§alhos host distintos, a prioridade de roteamento determina qual ouvinte recebe o trÃ¡fego.
+**Causa raiz**: O ouvinte do fabrikam.com foi criado sem o parâmetro `--host-name`, tornando-o um ouvinte básico que captura todo o tráfego não correspondido. Quando dois ouvintes compartilham o mesmo IP de frontend e porta sem cabeçalhos host distintos, a prioridade de roteamento determina qual ouvinte recebe o tráfego.
 
-**CorreÃ§Ã£o**: Atualize o ouvinte para incluir o nome de host correto:
+**Correção**: Atualize o ouvinte para incluir o nome de host correto:
 
 ```bash
 az network application-gateway http-listener update \
@@ -590,13 +590,13 @@ az network application-gateway http-listener update \
   --host-name "fabrikam.com"
 ```
 
-### Problema 2: Mapa de caminho nÃ£o correspondendo
+### Problema 2: Mapa de caminho não correspondendo
 
-**Sintoma**: SolicitaÃ§Ãµes para `contoso.com/api/users` sÃ£o roteadas para o pool web padrÃ£o em vez do pool de API.
+**Sintoma**: Solicitações para `contoso.com/api/users` são roteadas para o pool web padrão em vez do pool de API.
 
-**Causa raiz**: A regra de caminho foi configurada como `/api` em vez de `/api/*`. Sem o curinga, apenas correspondÃªncias exatas com `/api` serÃ£o roteadas para o pool de API. Subcaminhos como `/api/users` sÃ£o encaminhados para o back-end padrÃ£o.
+**Causa raiz**: A regra de caminho foi configurada como `/api` em vez de `/api/*`. Sem o curinga, apenas correspondências exatas com `/api` serão roteadas para o pool de API. Subcaminhos como `/api/users` são encaminhados para o back-end padrão.
 
-**CorreÃ§Ã£o**: Atualize a regra do mapa de caminho de URL para incluir o curinga:
+**Correção**: Atualize a regra do mapa de caminho de URL para incluir o curinga:
 
 ```bash
 az network application-gateway url-path-map update \
@@ -607,15 +607,15 @@ az network application-gateway url-path-map update \
   --default-http-settings settings-web
 ```
 
-Em seguida, recrie a regra de caminho com o padrÃ£o curinga correto `/api/*`.
+Em seguida, recrie a regra de caminho com o padrão curinga correto `/api/*`.
 
 ### Problema 3: Pool de back-end usando porta incorreta
 
-**Sintoma**: A integridade do back-end mostra todos os servidores como nÃ£o saudÃ¡veis com erros de tempo limite de conexÃ£o.
+**Sintoma**: A integridade do back-end mostra todos os servidores como não saudáveis com erros de tempo limite de conexão.
 
-**Causa raiz**: As configuraÃ§Ãµes HTTP para o back-end de API estÃ£o configuradas para investigar na porta 8080, mas os servidores de back-end escutam apenas na porta 80. A investigaÃ§Ã£o de integridade nÃ£o consegue estabelecer uma conexÃ£o porque nada estÃ¡ escutando na porta de destino.
+**Causa raiz**: As configurações HTTP para o back-end de API estão configuradas para investigar na porta 8080, mas os servidores de back-end escutam apenas na porta 80. A investigação de integridade não consegue estabelecer uma conexão porque nada está escutando na porta de destino.
 
-**CorreÃ§Ã£o**: Atualize as configuraÃ§Ãµes HTTP para usar a porta correta:
+**Correção**: Atualize as configurações HTTP para usar a porta correta:
 
 ```bash
 az network application-gateway http-settings update \
@@ -627,7 +627,7 @@ az network application-gateway http-settings update \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[{id:"q1", question:"Qual é o tamanho mínimo de sub-rede recomendado para uma implantação do Application Gateway v2?", options:["/28 (16 endereços)","/26 (64 endereços)","/24 (256 endereços) ✅","/29 (8 endereços)"], correctIndex:2, explanation:"A Microsoft recomenda uma sub-rede /24 para o Application Gateway v2. Embora o tamanho mínimo suportado seja /26, um /24 fornece espaço para escalar instâncias e crescimento futuro."},{id:"q2", question:"Em uma configuração multi-site, o que determina qual listener recebe uma requisição de entrada?", options:["O número de prioridade da regra de roteamento","O cabeçalho Host na requisição HTTP ✅","O endereço IP de origem do cliente","A ordem em que os listeners foram criados"], correctIndex:1, explanation:"Listeners multi-site correspondem requisições de entrada com base no valor do cabeçalho Host. Cada listener especifica um parâmetro host-name que é comparado com o cabeçalho Host para determinar o roteamento."},{id:"q3", question:"O que acontece quando a URL de uma requisição não corresponde a nenhuma regra de caminho em um mapa de caminhos de URL?", options:["A requisição é rejeitada com 404","A requisição é enviada para o backend pool padrão ✅","A requisição é encaminhada para a primeira regra de caminho","O gateway retorna 502 Bad Gateway"], correctIndex:1, explanation:"Quando nenhuma regra de caminho corresponde à URL de entrada, o Application Gateway roteia a requisição para o pool de endereços de backend padrão e as configurações HTTP padrão configuradas no mapa de caminhos de URL."},{id:"q4", question:"Qual tipo de regra de roteamento deve ser usado com mapas de caminhos de URL?", options:["Basic","PathBasedRouting ✅","MultiSite","WeightedRouting"], correctIndex:1, explanation:"O tipo de regra PathBasedRouting deve ser especificado ao associar uma regra de roteamento com um mapa de caminhos de URL. Regras Basic não podem referenciar mapas de caminhos de URL."},{id:"q5", question:"Qual é o efeito de definir --priority nas regras de roteamento do Application Gateway?", options:["Determina a ordem em que os certificados TLS são avaliados","Define o peso para balanceamento de carga entre backends","Determina a ordem de avaliação quando múltiplas regras podem corresponder ✅","Controla qual backend pool recebe mais tráfego"], correctIndex:2, explanation:"O valor de prioridade (1-20000, número menor = maior prioridade) determina a ordem em que as regras de roteamento são avaliadas quando múltiplas regras podem potencialmente corresponder a uma requisição de entrada."},{id:"q6", question:"Uma health probe está configurada com --match-body 'OK' e o backend retorna 'Server OK Ready'. Qual é o status de integridade?", options:["Íntegro, porque o corpo da resposta contém a string de correspondência ✅","Não íntegro, porque o corpo da resposta não é exatamente igual à string de correspondência","Não íntegro, porque texto extra após a string de correspondência não é permitido","Desconhecido, porque a correspondência de corpo requer um padrão regex exato"], correctIndex:0, explanation:"O parâmetro match-body verifica se o corpo da resposta CONTÉM a string especificada. Como 'Server OK Ready' contém 'OK', a probe é considerada íntegra."}]} />
 
@@ -645,17 +645,17 @@ Remove-AzResourceGroup -Name "rg-appgw-lab" -Force
 ```
 
 :::warning
-O Application Gateway v2 cobra aproximadamente $0,27/hora enquanto implantado. Sempre exclua seus recursos de laboratÃ³rio imediatamente apÃ³s concluir os exercÃ­cios para evitar custos desnecessÃ¡rios.
+O Application Gateway v2 cobra aproximadamente $0,27/hora enquanto implantado. Sempre exclua seus recursos de laboratório imediatamente após concluir os exercícios para evitar custos desnecessários.
 :::
 
 ---
 
-## Principais conclusÃµes
+## Principais conclusões
 
-- O Application Gateway requer uma **sub-rede dedicada** sem outros recursos; /24 Ã© o tamanho recomendado
-- Ouvintes multi-site diferenciam o trÃ¡fego usando o valor do **cabeÃ§alho Host** nas solicitaÃ§Ãµes de entrada
-- Regras de roteamento baseadas em caminho usam **mapas de caminho de URL** para direcionar solicitaÃ§Ãµes a diferentes pools de back-end com base no caminho da URL
-- PadrÃµes de caminho devem incluir **curingas** (ex.: `/api/*`) para corresponder subcaminhos; caminhos exatos correspondem apenas Ã  string literal
-- InvestigaÃ§Ãµes de integridade personalizadas suportam **condiÃ§Ãµes de correspondÃªncia** tanto para cÃ³digos de status quanto para conteÃºdo do corpo da resposta
-- Regras de roteamento requerem um valor de **prioridade**; nÃºmeros menores sÃ£o avaliados primeiro
+- O Application Gateway requer uma **sub-rede dedicada** sem outros recursos; /24 é o tamanho recomendado
+- Ouvintes multi-site diferenciam o tráfego usando o valor do **cabeçalho Host** nas solicitações de entrada
+- Regras de roteamento baseadas em caminho usam **mapas de caminho de URL** para direcionar solicitações a diferentes pools de back-end com base no caminho da URL
+- Padrões de caminho devem incluir **curingas** (ex.: `/api/*`) para corresponder subcaminhos; caminhos exatos correspondem apenas Ã  string literal
+- Investigações de integridade personalizadas suportam **condições de correspondência** tanto para códigos de status quanto para conteúdo do corpo da resposta
+- Regras de roteamento requerem um valor de **prioridade**; números menores são avaliados primeiro
 - Cada ouvinte pode ser associado a apenas **uma regra de roteamento**

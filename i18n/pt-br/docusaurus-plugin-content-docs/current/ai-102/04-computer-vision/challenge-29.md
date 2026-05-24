@@ -1,47 +1,47 @@
 ---
 sidebar_position: 7
-title: "Desafio 29: AnÃ¡lise de VÃ­deo com Video Indexer"
+title: "Desafio 29: Análise de Vídeo com Video Indexer"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 29: AnÃ¡lise de VÃ­deo com Video Indexer
+# Desafio 29: Análise de Vídeo com Video Indexer
 
 :::info Tempo Estimado
-**60 min** | **Custo**: $5-15 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de VisÃ£o Computacional (10-15%)
+**60 min** | **Custo**: $5-15 (estimado) | **Domínio**: Implementar Soluções de Visão Computacional (10-15%)
 :::
 
 ## Habilidades do exame abordadas
-- Usar o Azure AI Video Indexer para extrair insights de vÃ­deo
-- Extrair transcriÃ§Ãµes, rostos, tÃ³picos e sentimentos
-- Consultar conteÃºdo de vÃ­deo por palavra-chave e tempo
+- Usar o Azure AI Video Indexer para extrair insights de vídeo
+- Extrair transcrições, rostos, tópicos e sentimentos
+- Consultar conteúdo de vídeo por palavra-chave e tempo
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Azure AI Video Indexer extrai insights ricos de conteÃºdo de vÃ­deo e Ã¡udio:
+O Azure AI Video Indexer extrai insights ricos de conteúdo de vídeo e áudio:
 
-| Insight | DescriÃ§Ã£o |
+| Insight | Descrição |
 |---------|-----------|
-| **Transcript** | Fala-para-texto com identificaÃ§Ã£o de falante |
-| **OCR** | ExtraÃ§Ã£o de texto exibido na tela |
-| **Topics** | ExtraÃ§Ã£o de tÃ³picos baseada na Wikipedia |
-| **Keywords** | Termos-chave da transcriÃ§Ã£o |
-| **Faces** | DetecÃ§Ã£o e agrupamento facial (nÃ£o identificaÃ§Ã£o sem aprovaÃ§Ã£o) |
-| **Sentiments** | AnÃ¡lise de sentimento (positivo/negativo/neutro) do texto transcrito |
-| **Scenes/Shots** | SegmentaÃ§Ã£o visual de cenas |
-| **Labels** | RÃ³tulos de objetos visuais por frame |
+| **Transcript** | Fala-para-texto com identificação de falante |
+| **OCR** | Extração de texto exibido na tela |
+| **Topics** | Extração de tópicos baseada na Wikipedia |
+| **Keywords** | Termos-chave da transcrição |
+| **Faces** | Detecção e agrupamento facial (não identificação sem aprovação) |
+| **Sentiments** | Análise de sentimento (positivo/negativo/neutro) do texto transcrito |
+| **Scenes/Shots** | Segmentação visual de cenas |
+| **Labels** | Rótulos de objetos visuais por frame |
 
 A API usa um endpoint diferente: `https://api.videoindexer.ai`
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure
 - Conta Azure AI Video Indexer
 - Python 3.9+ com biblioteca `requests`
-- Arquivo de vÃ­deo ou URL
+- Arquivo de vídeo ou URL
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Configurar Conta do Video Indexer
 
@@ -57,7 +57,7 @@ az resource create \
   --properties '{}'
 ```
 
-### Tarefa 2: Enviar e Indexar VÃ­deo
+### Tarefa 2: Enviar e Indexar Vídeo
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -149,7 +149,7 @@ curl -s "https://api.videoindexer.ai/${LOCATION}/Accounts/${ACCOUNT_ID}/Videos/V
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Extrair Insights do VÃ­deo
+### Tarefa 3: Extrair Insights do Vídeo
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -209,7 +209,7 @@ search_video(video_id, "Azure AI")
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Access token acquired (length: 1247)
@@ -249,15 +249,15 @@ Search 'Azure AI': 4 matches
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| 401 Unauthorized | Acesso negado | Token expirado (vÃ¡lido por 1 hora) | Solicite novo token de acesso |
-| IndexaÃ§Ã£o travada em Processing | Nunca completa | VÃ­deo muito longo ou corrompido | Verifique o formato do vÃ­deo; tente um clipe mais curto |
-| TranscriÃ§Ã£o vazia | Nenhuma fala detectada | Faixa de Ã¡udio ausente ou muito baixa | Verifique se o Ã¡udio existe; confira o parÃ¢metro de idioma |
-| Nenhum rosto detectado | Insights de face vazios | Rostos muito pequenos ou obscurecidos | Garanta que rostos ocupem Ã¡rea suficiente no frame |
-| Busca nÃ£o retorna resultados | searchMatches vazio | VÃ­deo nÃ£o totalmente indexado | Aguarde state=Processed antes de buscar |
+| 401 Unauthorized | Acesso negado | Token expirado (válido por 1 hora) | Solicite novo token de acesso |
+| Indexação travada em Processing | Nunca completa | Vídeo muito longo ou corrompido | Verifique o formato do vídeo; tente um clipe mais curto |
+| Transcrição vazia | Nenhuma fala detectada | Faixa de áudio ausente ou muito baixa | Verifique se o áudio existe; confira o parâmetro de idioma |
+| Nenhum rosto detectado | Insights de face vazios | Rostos muito pequenos ou obscurecidos | Garanta que rostos ocupem área suficiente no frame |
+| Busca não retorna resultados | searchMatches vazio | Vídeo não totalmente indexado | Aguarde state=Processed antes de buscar |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
@@ -269,51 +269,51 @@ Search 'Azure AI': 4 matches
       "https://video.cognitive.microsoft.com"
     ],
     correctAnswer: 0,
-    explanation: "O Video Indexer usa sua prÃ³pria API dedicada em https://api.videoindexer.ai, separada do endpoint padrÃ£o dos Cognitive Services."
+    explanation: "O Video Indexer usa sua própria API dedicada em https://api.videoindexer.ai, separada do endpoint padrão dos Cognitive Services."
   },
   {
-    question: "Qual Ã© o fluxo de trabalho tÃ­pico para processar um vÃ­deo com o Video Indexer?",
+    question: "Qual é o fluxo de trabalho típico para processar um vídeo com o Video Indexer?",
     options: [
       "Upload â†’ Process â†’ Delete",
       "Create index â†’ Add video â†’ Query results",
       "Deploy model â†’ Send video â†’ Get predictions",
-      "Obter token de acesso â†’ Enviar vÃ­deo â†’ Aguardar conclusÃ£o â†’ Recuperar insights"
+      "Obter token de acesso â†’ Enviar vídeo â†’ Aguardar conclusão â†’ Recuperar insights"
     ],
     correctAnswer: 3,
-    explanation: "O fluxo de trabalho Ã©: autenticar (obter token) â†’ enviar vÃ­deo â†’ consultar status atÃ© 'Processed' â†’ recuperar insights estruturados via endpoint Index."
+    explanation: "O fluxo de trabalho é: autenticar (obter token) â†’ enviar vídeo â†’ consultar status até 'Processed' â†’ recuperar insights estruturados via endpoint Index."
   },
   {
-    question: "Quais insights o Video Indexer extrai da faixa de Ã¡udio?",
+    question: "Quais insights o Video Indexer extrai da faixa de áudio?",
     options: [
-      "Apenas transcriÃ§Ã£o fala-para-texto",
-      "Apenas palavras-chave e tÃ³picos",
-      "TranscriÃ§Ã£o com identificaÃ§Ã£o de falante, detecÃ§Ã£o de idioma e sentimento",
-      "O Ã¡udio nÃ£o Ã© analisado â€” apenas conteÃºdo visual"
+      "Apenas transcrição fala-para-texto",
+      "Apenas palavras-chave e tópicos",
+      "Transcrição com identificação de falante, detecção de idioma e sentimento",
+      "O áudio não é analisado â€” apenas conteúdo visual"
     ],
     correctAnswer: 2,
-    explanation: "O Video Indexer extrai transcriÃ§Ã£o com diarizaÃ§Ã£o de falantes (quem falou quando), detecÃ§Ã£o de idioma, palavras-chave, tÃ³picos e anÃ¡lise de sentimento baseada em texto do Ã¡udio."
+    explanation: "O Video Indexer extrai transcrição com diarização de falantes (quem falou quando), detecção de idioma, palavras-chave, tópicos e análise de sentimento baseada em texto do áudio."
   },
   {
-    question: "Como vocÃª busca conteÃºdo especÃ­fico dentro de um vÃ­deo indexado?",
+    question: "Como você busca conteúdo específico dentro de um vídeo indexado?",
     options: [
-      "Baixar o vÃ­deo e buscar localmente",
-      "Usar o parÃ¢metro searchText ao consultar o Ã­ndice do vÃ­deo",
-      "Criar um Ã­ndice de busca separado",
-      "Busca nÃ£o Ã© suportada â€” vocÃª deve ler a transcriÃ§Ã£o completa"
+      "Baixar o vídeo e buscar localmente",
+      "Usar o parâmetro searchText ao consultar o índice do vídeo",
+      "Criar um índice de busca separado",
+      "Busca não é suportada â€” você deve ler a transcrição completa"
     ],
     correctAnswer: 1,
-    explanation: "O Video Indexer suporta busca por palavras-chave via parÃ¢metro searchText, que encontra correspondÃªncias em transcriÃ§Ã£o, OCR, tÃ³picos e outros insights textuais com timestamps."
+    explanation: "O Video Indexer suporta busca por palavras-chave via parâmetro searchText, que encontra correspondências em transcrição, OCR, tópicos e outros insights textuais com timestamps."
   },
   {
-    question: "Qual preset de indexaÃ§Ã£o vocÃª deve usar para um vÃ­deo com fala e texto na tela?",
+    question: "Qual preset de indexação você deve usar para um vídeo com fala e texto na tela?",
     options: [
       "AudioOnly",
       "VideoOnly",
-      "Default (inclui anÃ¡lise de Ã¡udio e vÃ­deo)",
+      "Default (inclui análise de áudio e vídeo)",
       "BasicAudio"
     ],
     correctAnswer: 2,
-    explanation: "O preset 'Default' analisa tanto Ã¡udio (transcriÃ§Ã£o, falantes) quanto vÃ­deo (OCR, rostos, objetos, cenas). Use AudioOnly ou VideoOnly quando precisar de apenas uma faixa."
+    explanation: "O preset 'Default' analisa tanto áudio (transcrição, falantes) quanto vídeo (OCR, rostos, objetos, cenas). Use AudioOnly ou VideoOnly quando precisar de apenas uma faixa."
   }
 ]} />
 
@@ -325,6 +325,6 @@ az group delete --name rg-ai102-videoindexer --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Video Indexer](https://learn.microsoft.com/azure/azure-video-indexer/video-indexer-overview)
-- [ReferÃªncia da API do Video Indexer](https://api-portal.videoindexer.ai/)
-- [Enviar e indexar vÃ­deos](https://learn.microsoft.com/azure/azure-video-indexer/upload-index-videos)
+- [Visão geral do Video Indexer](https://learn.microsoft.com/azure/azure-video-indexer/video-indexer-overview)
+- [Referência da API do Video Indexer](https://api-portal.videoindexer.ai/)
+- [Enviar e indexar vídeos](https://learn.microsoft.com/azure/azure-video-indexer/upload-index-videos)

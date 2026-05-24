@@ -10,22 +10,22 @@ import TabItem from '@theme/TabItem';
 # Desafio 21: Fundamentos e Arquitetura de Agentes
 
 :::info Tempo Estimado
-**45-60 min** | **Custo**: $2-5 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes AgÃªnticas (5-10%)
+**45-60 min** | **Custo**: $2-5 (estimado) | **Domínio**: Implementar Soluções Agênticas (5-10%)
 :::
 
 ## Habilidades do exame cobertas
 - Entender o papel e casos de uso de um agente de IA
-- Configurar recursos necessÃ¡rios para soluÃ§Ãµes de agentes
+- Configurar recursos necessários para soluções de agentes
 - Implementar function calling com Azure OpenAI
 
-## VisÃ£o Geral
+## Visão Geral
 
-Agentes de IA vÃ£o alÃ©m de chatbots simples ao combinar raciocÃ­nio de LLM com a capacidade de **tomar aÃ§Ãµes**. Enquanto um chatbot responde perguntas a partir de seus dados de treinamento, um agente pode chamar ferramentas externas, executar cÃ³digo, consultar bancos de dados e orquestrar workflows de mÃºltiplas etapas de forma autÃ´noma.
+Agentes de IA vão além de chatbots simples ao combinar raciocínio de LLM com a capacidade de **tomar ações**. Enquanto um chatbot responde perguntas a partir de seus dados de treinamento, um agente pode chamar ferramentas externas, executar código, consultar bancos de dados e orquestrar workflows de múltiplas etapas de forma autônoma.
 
 Conceitos-chave:
-- **Tool/Function calling**: O modelo decide quais funÃ§Ãµes invocar com base na intenÃ§Ã£o do usuÃ¡rio
+- **Tool/Function calling**: O modelo decide quais funções invocar com base na intenção do usuário
 - **Planejamento**: Dividir tarefas complexas em etapas sequenciais
-- **MemÃ³ria**: Manter contexto de conversaÃ§Ã£o e estado entre interaÃ§Ãµes
+- **Memória**: Manter contexto de conversação e estado entre interações
 - **Grounding**: Conectar o modelo a fontes de dados em tempo real
 
 Este desafio implementa function calling com Azure OpenAI â€” a base de todas as arquiteturas de agentes.
@@ -47,13 +47,13 @@ Este desafio implementa function calling com Azure OpenAI â€” a base de tod
                            â”‚  6. Synthesize response
 ```
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure com acesso ao Azure OpenAI
 - Recurso Azure OpenAI com GPT-4o implantado
 - Python 3.9+ ou .NET 8
 - Pacotes: `openai>=1.0.0` (Python) ou `Azure.AI.OpenAI` (C#)
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Implantar Recurso e Modelo Azure OpenAI
 
@@ -486,7 +486,7 @@ if (parallelCompletion.FinishReason == ChatFinishReason.ToolCalls)
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 ============================================================
@@ -514,71 +514,71 @@ Parallel tool calls made: 2
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
 | `tool_call_id` ausente na resposta | `400 Bad Request` | Mensagem de resposta da ferramenta deve incluir o `tool_call_id` correspondente | Garanta que cada resposta de ferramenta referencia o `tool_call.id` correto |
-| FunÃ§Ã£o retorna nÃ£o-string | `TypeError` | O `content` da mensagem de ferramenta deve ser uma string JSON | Sempre use `json.dumps()` no valor de retorno da funÃ§Ã£o |
-| Loop infinito | Agente continua chamando ferramentas | Sem condiÃ§Ã£o de saÃ­da ou ferramenta retorna erro | Adicione contagem mÃ¡xima de iteraÃ§Ãµes; valide respostas das ferramentas |
-| `tool_choice: "required"` | Modelo sempre chama uma ferramenta mesmo quando desnecessÃ¡rio | ForÃ§ando uso de ferramenta | Use `"auto"` para deixar o modelo decidir; use `"required"` apenas para uso garantido de ferramenta |
-| Incompatibilidade de schema | Modelo gera tipos de argumento errados | Schema de parÃ¢metros da funÃ§Ã£o muito vago | Adicione descriptions, enums e exemplos ao schema de parÃ¢metros |
+| Função retorna não-string | `TypeError` | O `content` da mensagem de ferramenta deve ser uma string JSON | Sempre use `json.dumps()` no valor de retorno da função |
+| Loop infinito | Agente continua chamando ferramentas | Sem condição de saída ou ferramenta retorna erro | Adicione contagem máxima de iterações; valide respostas das ferramentas |
+| `tool_choice: "required"` | Modelo sempre chama uma ferramenta mesmo quando desnecessário | Forçando uso de ferramenta | Use `"auto"` para deixar o modelo decidir; use `"required"` apenas para uso garantido de ferramenta |
+| Incompatibilidade de schema | Modelo gera tipos de argumento errados | Schema de parâmetros da função muito vago | Adicione descriptions, enums e exemplos ao schema de parâmetros |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a principal diferenÃ§a entre um agente de IA e um chatbot?",
+    question: "Qual é a principal diferença entre um agente de IA e um chatbot?",
     options: [
       "Agentes usam GPT-4 enquanto chatbots usam GPT-3.5",
-      "Agentes podem tomar aÃ§Ãµes chamando ferramentas externas; chatbots apenas geram respostas de texto",
+      "Agentes podem tomar ações chamando ferramentas externas; chatbots apenas geram respostas de texto",
       "Agentes requerem Azure OpenAI enquanto chatbots funcionam com qualquer LLM",
-      "Agentes mantÃªm histÃ³rico de conversaÃ§Ã£o enquanto chatbots sÃ£o stateless"
+      "Agentes mantêm histórico de conversação enquanto chatbots são stateless"
     ],
     correctAnswer: 1,
-    explanation: "A caracterÃ­stica definidora de um agente de IA Ã© sua capacidade de tomar aÃ§Ãµes atravÃ©s de tool/function calling, executar cÃ³digo e interagir com sistemas externos â€” nÃ£o apenas gerar respostas de texto."
+    explanation: "A característica definidora de um agente de IA é sua capacidade de tomar ações através de tool/function calling, executar código e interagir com sistemas externos â€” não apenas gerar respostas de texto."
   },
   {
-    question: "No function calling do Azure OpenAI, o que acontece quando tool_choice Ã© definido como 'auto'?",
+    question: "No function calling do Azure OpenAI, o que acontece quando tool_choice é definido como 'auto'?",
     options: [
-      "O modelo sempre chama pelo menos uma funÃ§Ã£o",
-      "O modelo seleciona aleatoriamente uma funÃ§Ã£o para chamar",
-      "O modelo decide se deve chamar uma funÃ§Ã£o ou responder diretamente com base na mensagem do usuÃ¡rio",
-      "O modelo chama todas as funÃ§Ãµes definidas em paralelo"
+      "O modelo sempre chama pelo menos uma função",
+      "O modelo seleciona aleatoriamente uma função para chamar",
+      "O modelo decide se deve chamar uma função ou responder diretamente com base na mensagem do usuário",
+      "O modelo chama todas as funções definidas em paralelo"
     ],
     correctAnswer: 2,
-    explanation: "Com tool_choice='auto', o modelo analisa a intenÃ§Ã£o do usuÃ¡rio e decide se uma chamada de ferramenta Ã© necessÃ¡ria ou se pode responder diretamente a partir de seus dados de treinamento."
+    explanation: "Com tool_choice='auto', o modelo analisa a intenção do usuário e decide se uma chamada de ferramenta é necessária ou se pode responder diretamente a partir de seus dados de treinamento."
   },
   {
-    question: "Quando o modelo retorna tool_calls na resposta, o que vocÃª deve incluir na mensagem de ferramenta subsequente?",
+    question: "Quando o modelo retorna tool_calls na resposta, o que você deve incluir na mensagem de ferramenta subsequente?",
     options: [
-      "O tool_call_id e o resultado da funÃ§Ã£o como uma string JSON",
-      "O nome da funÃ§Ã£o e um novo system prompt",
-      "Apenas o resultado da funÃ§Ã£o â€” o modelo rastreia a chamada internamente",
-      "A mensagem original do usuÃ¡rio e o resultado da funÃ§Ã£o"
+      "O tool_call_id e o resultado da função como uma string JSON",
+      "O nome da função e um novo system prompt",
+      "Apenas o resultado da função â€” o modelo rastreia a chamada internamente",
+      "A mensagem original do usuário e o resultado da função"
     ],
     correctAnswer: 0,
-    explanation: "Cada mensagem de resposta de ferramenta deve incluir o tool_call_id (correspondendo Ã  chamada especÃ­fica) e o resultado da funÃ§Ã£o serializado como uma string JSON no campo content."
+    explanation: "Cada mensagem de resposta de ferramenta deve incluir o tool_call_id (correspondendo Ã  chamada específica) e o resultado da função serializado como uma string JSON no campo content."
   },
   {
-    question: "Como o Azure OpenAI lida com mÃºltiplas chamadas de ferramenta em uma Ãºnica resposta?",
+    question: "Como o Azure OpenAI lida com múltiplas chamadas de ferramenta em uma única resposta?",
     options: [
-      "NÃ£o Ã© suportado â€” apenas uma ferramenta pode ser chamada por turno",
-      "VocÃª deve habilitar parallel_tool_calls=true na requisiÃ§Ã£o",
-      "MÃºltiplas ferramentas sÃ£o chamadas sequencialmente com respostas intermediÃ¡rias",
-      "O modelo retorna mÃºltiplos tool_calls na mesma resposta; vocÃª executa todos e retorna todos os resultados antes da prÃ³xima completion"
+      "Não é suportado â€” apenas uma ferramenta pode ser chamada por turno",
+      "Você deve habilitar parallel_tool_calls=true na requisição",
+      "Múltiplas ferramentas são chamadas sequencialmente com respostas intermediárias",
+      "O modelo retorna múltiplos tool_calls na mesma resposta; você executa todos e retorna todos os resultados antes da próxima completion"
     ],
     correctAnswer: 3,
-    explanation: "O modelo pode retornar mÃºltiplos tool_calls em uma Ãºnica resposta (function calling paralelo). VocÃª executa todos eles e retorna todos os resultados em mensagens de ferramenta separadas antes de solicitar a prÃ³xima completion."
+    explanation: "O modelo pode retornar múltiplos tool_calls em uma única resposta (function calling paralelo). Você executa todos eles e retorna todos os resultados em mensagens de ferramenta separadas antes de solicitar a próxima completion."
   },
   {
-    question: "Qual Ã© o formato correto para definir parÃ¢metros de funÃ§Ã£o no array de tools?",
+    question: "Qual é o formato correto para definir parâmetros de função no array de tools?",
     options: [
-      "Uma definiÃ§Ã£o de interface TypeScript",
+      "Uma definição de interface TypeScript",
       "Um objeto JSON Schema com campos type, properties e required",
       "Uma string de type hints Python",
-      "Um fragmento de especificaÃ§Ã£o OpenAPI"
+      "Um fragmento de especificação OpenAPI"
     ],
     correctAnswer: 1,
-    explanation: "ParÃ¢metros de funÃ§Ã£o sÃ£o definidos usando o formato JSON Schema com 'type': 'object', 'properties' definindo cada parÃ¢metro, e 'required' listando parÃ¢metros obrigatÃ³rios."
+    explanation: "Parâmetros de função são definidos usando o formato JSON Schema com 'type': 'object', 'properties' definindo cada parâmetro, e 'required' listando parâmetros obrigatórios."
   }
 ]} />
 
@@ -591,5 +591,5 @@ az group delete --name rg-ai102-agents --yes --no-wait
 ## Saiba Mais
 
 - [Function calling do Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/how-to/function-calling)
-- [VisÃ£o geral de agentes de IA](https://learn.microsoft.com/azure/ai-services/agents/overview)
-- [ReferÃªncia da API de Chat Completions](https://learn.microsoft.com/azure/ai-services/openai/reference)
+- [Visão geral de agentes de IA](https://learn.microsoft.com/azure/ai-services/agents/overview)
+- [Referência da API de Chat Completions](https://learn.microsoft.com/azure/ai-services/openai/reference)

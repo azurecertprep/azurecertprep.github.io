@@ -5,7 +5,7 @@ sidebar_label: "Challenge 34"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 34: Private Endpoints e integraÃ§Ã£o DNS
+# Desafio 34: Private Endpoints e integração DNS
 
 :::info Tempo e custo estimados
 
@@ -13,9 +13,9 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-A MedSecure Health, uma empresa de saÃºde, estÃ¡ migrando seus serviÃ§os PaaS para acesso privado a fim de cumprir requisitos de residÃªncia de dados e seguranÃ§a. A equipe de conformidade exige que nenhum dado de paciente trafegue pela internet pÃºblica. VocÃª foi encarregado de configurar pontos de extremidade privados para a conta de Azure Storage (endpoint de blob) e garantir a resoluÃ§Ã£o DNS adequada para que aplicaÃ§Ãµes dentro da rede virtual resolvam o FQDN da conta de armazenamento para um endereÃ§o IP privado em vez de um pÃºblico.
+A MedSecure Health, uma empresa de saúde, está migrando seus serviços PaaS para acesso privado a fim de cumprir requisitos de residência de dados e segurança. A equipe de conformidade exige que nenhum dado de paciente trafegue pela internet pública. Você foi encarregado de configurar pontos de extremidade privados para a conta de Azure Storage (endpoint de blob) e garantir a resolução DNS adequada para que aplicações dentro da rede virtual resolvam o FQDN da conta de armazenamento para um endereço IP privado em vez de um público.
 
 **Arquitetura:**
 
@@ -47,48 +47,48 @@ A MedSecure Health, uma empresa de saÃºde, estÃ¡ migrando seus serviÃ§os P
 
 ## Objetivos de aprendizagem
 
-ApÃ³s concluir este desafio, vocÃª serÃ¡ capaz de:
+Após concluir este desafio, você será capaz de:
 
 - Criar um ponto de extremidade privado para um sub-recurso blob do Azure Storage
-- Criar e configurar uma zona DNS privatelink para resoluÃ§Ã£o automÃ¡tica de nomes
+- Criar e configurar uma zona DNS privatelink para resolução automática de nomes
 - Vincular uma zona DNS privada a uma rede virtual
-- Usar grupos de zona DNS para gerenciamento automÃ¡tico de registros DNS
-- Habilitar polÃ­ticas de rede em uma sub-rede de ponto de extremidade privado para permitir a aplicaÃ§Ã£o de NSG
-- Verificar que a resoluÃ§Ã£o DNS retorna o endereÃ§o IP privado
-- Entender os estados de conexÃ£o do ponto de extremidade privado (Pending, Approved, Rejected)
+- Usar grupos de zona DNS para gerenciamento automático de registros DNS
+- Habilitar políticas de rede em uma sub-rede de ponto de extremidade privado para permitir a aplicação de NSG
+- Verificar que a resolução DNS retorna o endereço IP privado
+- Entender os estados de conexão do ponto de extremidade privado (Pending, Approved, Rejected)
 
-## PrÃ©-requisitos
+## Pré-requisitos
 
 - Uma assinatura Azure com acesso de Contributor
 - Azure CLI instalado e autenticado (`az login`)
-- PowerShell com mÃ³dulo Az instalado (`Install-Module Az -Force`)
+- PowerShell com módulo Az instalado (`Install-Module Az -Force`)
 
 ## Conceitos-chave para o AZ-700
 
 | Conceito | Detalhe |
 |----------|---------|
-| Private Endpoint | Uma interface de rede com um IP privado que conecta vocÃª de forma privada a um serviÃ§o por meio do Azure Private Link |
-| Zona DNS privatelink | Uma zona DNS privada (ex.: `privatelink.blob.core.windows.net`) usada para substituir a resoluÃ§Ã£o DNS pÃºblica por IPs privados |
-| Grupo de zona DNS | Associa um ponto de extremidade privado a uma zona DNS privada para gerenciamento automÃ¡tico do ciclo de vida dos registros A |
+| Private Endpoint | Uma interface de rede com um IP privado que conecta você de forma privada a um serviço por meio do Azure Private Link |
+| Zona DNS privatelink | Uma zona DNS privada (ex.: `privatelink.blob.core.windows.net`) usada para substituir a resolução DNS pública por IPs privados |
+| Grupo de zona DNS | Associa um ponto de extremidade privado a uma zona DNS privada para gerenciamento automático do ciclo de vida dos registros A |
 | Link de rede virtual | Conecta uma zona DNS privada a uma VNet para que VMs nessa VNet possam resolver registros da zona |
-| PolÃ­ticas de rede | Por padrÃ£o, NSGs e UDRs estÃ£o desabilitados em sub-redes de PE; devem ser habilitados explicitamente via configuraÃ§Ã£o de sub-rede |
-| Estados de conexÃ£o | Pending (aguardando aprovaÃ§Ã£o), Approved (ativo), Rejected (negado pelo proprietÃ¡rio do serviÃ§o), Disconnected |
-| Sub-recurso (group-id) | Identifica qual parte de um serviÃ§o multi-endpoint conectar (ex.: `blob`, `file`, `table`, `queue`) |
+| Políticas de rede | Por padrão, NSGs e UDRs estão desabilitados em sub-redes de PE; devem ser habilitados explicitamente via configuração de sub-rede |
+| Estados de conexão | Pending (aguardando aprovação), Approved (ativo), Rejected (negado pelo proprietário do serviço), Disconnected |
+| Sub-recurso (group-id) | Identifica qual parte de um serviço multi-endpoint conectar (ex.: `blob`, `file`, `table`, `queue`) |
 
-### Cadeia de resoluÃ§Ã£o DNS para pontos de extremidade privados
+### Cadeia de resolução DNS para pontos de extremidade privados
 
 Quando um cliente em uma VNet vinculada resolve `stmedsecure.blob.core.windows.net`:
 
 1. O Azure DNS recebe a consulta
-2. O DNS pÃºblico retorna um CNAME para `stmedsecure.privatelink.blob.core.windows.net`
+2. O DNS público retorna um CNAME para `stmedsecure.privatelink.blob.core.windows.net`
 3. O Azure DNS verifica as zonas DNS privadas vinculadas
 4. A zona privatelink retorna o registro A apontando para o IP privado (ex.: 10.0.2.4)
 
-Sem a zona DNS privada vinculada Ã  VNet, a resoluÃ§Ã£o cai para o IP pÃºblico.
+Sem a zona DNS privada vinculada Ã  VNet, a resolução cai para o IP público.
 
 :::tip Nota de exame
 
-O exame frequentemente testa a cadeia de resoluÃ§Ã£o DNS. Lembre-se de que o DNS pÃºblico sempre retorna um CNAME para o subdomÃ­nio `privatelink`. Ã‰ a zona DNS privada (vinculada Ã  VNet) que resolve esse CNAME para o IP privado. Se a zona nÃ£o estiver vinculada, a consulta resolve para o IP pÃºblico.
+O exame frequentemente testa a cadeia de resolução DNS. Lembre-se de que o DNS público sempre retorna um CNAME para o subdomínio `privatelink`. Ã‰ a zona DNS privada (vinculada Ã  VNet) que resolve esse CNAME para o IP privado. Se a zona não estiver vinculada, a consulta resolve para o IP público.
 
 :::
 
@@ -232,15 +232,15 @@ New-AzPrivateEndpoint `
 ### Portal
 
 1. Pesquise **Private endpoints** e selecione **Create**
-2. Em **Basics**: selecione o grupo de recursos `rg-pe-lab`, nomeie como `pe-storage-blob`, regiÃ£o `East US 2`
+2. Em **Basics**: selecione o grupo de recursos `rg-pe-lab`, nomeie como `pe-storage-blob`, região `East US 2`
 3. Em **Resource**: tipo de recurso `Microsoft.Storage/storageAccounts`, selecione sua conta de armazenamento, sub-recurso de destino `blob`
 4. Em **Virtual Network**: selecione `vnet-medsecure`, sub-rede `snet-pe`
-5. Em **DNS**: configure na prÃ³xima tarefa
+5. Em **DNS**: configure na próxima tarefa
 6. Selecione **Review + create** e depois **Create**
 
-:::note Estados de conexÃ£o
+:::note Estados de conexão
 
-Ao criar um PE para um recurso em sua prÃ³pria assinatura, a conexÃ£o Ã© aprovada automaticamente (estado: Approved). Ao conectar-se a um recurso em outra assinatura ou a um Private Link Service, o estado inicia como Pending atÃ© que o proprietÃ¡rio do recurso o aprove.
+Ao criar um PE para um recurso em sua própria assinatura, a conexão é aprovada automaticamente (estado: Approved). Ao conectar-se a um recurso em outra assinatura ou a um Private Link Service, o estado inicia como Pending até que o proprietário do recurso o aprove.
 
 :::
 
@@ -303,15 +303,15 @@ New-AzPrivateDnsZoneGroup `
     -PrivateDnsZoneConfig $dnsZoneConfig
 ```
 
-:::tip Por que registration-enabled Ã© false
+:::tip Por que registration-enabled é false
 
-O parÃ¢metro `--registration-enabled false` significa que VMs na VNet vinculada NÃƒO registrarÃ£o automaticamente seus prÃ³prios registros DNS nesta zona. Isso Ã© correto para zonas privatelink â€” vocÃª deseja apenas os registros A do ponto de extremidade privado aqui, nÃ£o os nomes de host das VMs. Defina registration como true apenas em zonas destinadas ao registro automÃ¡tico de VMs (ex.: `contoso.internal`).
+O parâmetro `--registration-enabled false` significa que VMs na VNet vinculada NÃƒO registrarão automaticamente seus próprios registros DNS nesta zona. Isso é correto para zonas privatelink â€” você deseja apenas os registros A do ponto de extremidade privado aqui, não os nomes de host das VMs. Defina registration como true apenas em zonas destinadas ao registro automático de VMs (ex.: `contoso.internal`).
 
 :::
 
 ---
 
-## Tarefa 5: Verificar resoluÃ§Ã£o DNS
+## Tarefa 5: Verificar resolução DNS
 
 ### Azure CLI
 
@@ -348,9 +348,9 @@ nslookup stmedsecurelab01.blob.core.windows.net
 
 ---
 
-## Tarefa 6: Habilitar polÃ­ticas de rede na sub-rede de PE
+## Tarefa 6: Habilitar políticas de rede na sub-rede de PE
 
-Por padrÃ£o, polÃ­ticas de rede (NSGs e UDRs) estÃ£o desabilitadas em sub-redes que contÃªm pontos de extremidade privados. Para aplicar regras de NSG ao trÃ¡fego de/para seu ponto de extremidade privado, vocÃª deve habilitar explicitamente as polÃ­ticas de rede.
+Por padrão, políticas de rede (NSGs e UDRs) estão desabilitadas em sub-redes que contêm pontos de extremidade privados. Para aplicar regras de NSG ao tráfego de/para seu ponto de extremidade privado, você deve habilitar explicitamente as políticas de rede.
 
 ### Azure CLI
 
@@ -383,13 +383,13 @@ Set-AzVirtualNetworkSubnetConfig `
 $vnet | Set-AzVirtualNetwork
 ```
 
-:::warning Dupla negaÃ§Ã£o na CLI
+:::warning Dupla negação na CLI
 
-O parÃ¢metro da Azure CLI `--disable-private-endpoint-network-policies` usa uma dupla negaÃ§Ã£o:
-- `--disable-private-endpoint-network-policies true` = polÃ­ticas estÃ£o DESABILITADAS (padrÃ£o, NSGs NÃƒO se aplicam)
-- `--disable-private-endpoint-network-policies false` = polÃ­ticas estÃ£o HABILITADAS (NSGs SE aplicam)
+O parâmetro da Azure CLI `--disable-private-endpoint-network-policies` usa uma dupla negação:
+- `--disable-private-endpoint-network-policies true` = políticas estão DESABILITADAS (padrão, NSGs NÃƒO se aplicam)
+- `--disable-private-endpoint-network-policies false` = políticas estão HABILITADAS (NSGs SE aplicam)
 
-O equivalente em PowerShell Ã© mais claro: `-PrivateEndpointNetworkPoliciesFlag "Enabled"` ou `"Disabled"`.
+O equivalente em PowerShell é mais claro: `-PrivateEndpointNetworkPoliciesFlag "Enabled"` ou `"Disabled"`.
 
 :::
 
@@ -437,13 +437,13 @@ az network vnet subnet update \
 
 ---
 
-## CenÃ¡rios de quebra e correÃ§Ã£o
+## Cenários de quebra e correção
 
-### CenÃ¡rio 1: DNS nÃ£o resolve para o IP privado
+### Cenário 1: DNS não resolve para o IP privado
 
-**Sintoma:** `nslookup stmedsecurelab01.blob.core.windows.net` retorna o endereÃ§o IP pÃºblico em vez de 10.0.2.4.
+**Sintoma:** `nslookup stmedsecurelab01.blob.core.windows.net` retorna o endereço IP público em vez de 10.0.2.4.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check if the DNS zone exists
@@ -460,9 +460,9 @@ az network private-dns link vnet list \
     --output table
 ```
 
-**Causa raiz:** A zona DNS privada nÃ£o estÃ¡ vinculada Ã  VNet onde a VM cliente reside.
+**Causa raiz:** A zona DNS privada não está vinculada Ã  VNet onde a VM cliente reside.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 az network private-dns link vnet create \
@@ -475,11 +475,11 @@ az network private-dns link vnet create \
 
 ---
 
-### CenÃ¡rio 2: NSG bloqueando trÃ¡fego para o ponto de extremidade privado
+### Cenário 2: NSG bloqueando tráfego para o ponto de extremidade privado
 
-**Sintoma:** A aplicaÃ§Ã£o em snet-workloads nÃ£o consegue conectar-se ao armazenamento via PE, mas o DNS resolve corretamente para o IP privado.
+**Sintoma:** A aplicação em snet-workloads não consegue conectar-se ao armazenamento via PE, mas o DNS resolve corretamente para o IP privado.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check if network policies are enabled on the PE subnet
@@ -491,9 +491,9 @@ az network vnet subnet show \
     --output tsv
 ```
 
-**Causa raiz:** PolÃ­ticas de rede foram habilitadas na sub-rede e um NSG foi associado, mas o NSG nÃ£o possui uma regra Allow para o trÃ¡fego necessÃ¡rio. Quando as polÃ­ticas estÃ£o habilitadas, todas as regras padrÃ£o de NSG se aplicam ao trÃ¡fego do PE.
+**Causa raiz:** Políticas de rede foram habilitadas na sub-rede e um NSG foi associado, mas o NSG não possui uma regra Allow para o tráfego necessário. Quando as políticas estão habilitadas, todas as regras padrão de NSG se aplicam ao tráfego do PE.
 
-**CorreÃ§Ã£o:** Adicione uma regra Allow para a porta 443 a partir da sub-rede de origem, ou desabilite as polÃ­ticas de rede se a aplicaÃ§Ã£o de NSG nÃ£o for necessÃ¡ria:
+**Correção:** Adicione uma regra Allow para a porta 443 a partir da sub-rede de origem, ou desabilite as políticas de rede se a aplicação de NSG não for necessária:
 
 ```bash
 # Option A: Disable network policies (NSG rules will not apply to PE)
@@ -519,11 +519,11 @@ az network nsg rule create \
 
 ---
 
-### CenÃ¡rio 3: Ponto de extremidade privado travado no estado Pending
+### Cenário 3: Ponto de extremidade privado travado no estado Pending
 
-**Sintoma:** A conexÃ£o do ponto de extremidade privado mostra o estado `Pending` e o trÃ¡fego nÃ£o flui.
+**Sintoma:** A conexão do ponto de extremidade privado mostra o estado `Pending` e o tráfego não flui.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check connection state
@@ -534,9 +534,9 @@ az network private-endpoint show \
     --output tsv
 ```
 
-**Causa raiz:** O PE foi criado com `--manual-request true` ou o recurso de destino estÃ¡ em uma assinatura diferente, exigindo aprovaÃ§Ã£o manual do proprietÃ¡rio do recurso.
+**Causa raiz:** O PE foi criado com `--manual-request true` ou o recurso de destino está em uma assinatura diferente, exigindo aprovação manual do proprietário do recurso.
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 # Approve the pending connection (run from the storage account owner's context)
@@ -550,7 +550,7 @@ az network private-endpoint-connection approve \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
@@ -631,7 +631,7 @@ az network private-endpoint-connection approve \
 
 ## Limpeza
 
-Remova todos os recursos criados neste desafio para interromper a cobranÃ§a:
+Remova todos os recursos criados neste desafio para interromper a cobrança:
 
 ```bash
 az group delete --name rg-pe-lab --yes --no-wait
@@ -643,13 +643,13 @@ Remove-AzResourceGroup -Name "rg-pe-lab" -Force -AsJob
 
 :::danger Aviso de custo
 
-Private Endpoints geram cobranÃ§as de aproximadamente $0,01/hora por endpoint. Embora seja mÃ­nimo, certifique-se de fazer a limpeza apÃ³s concluir o laboratÃ³rio para evitar custos desnecessÃ¡rios. A conta de armazenamento tambÃ©m gera cobranÃ§as pelos dados armazenados.
+Private Endpoints geram cobranças de aproximadamente $0,01/hora por endpoint. Embora seja mínimo, certifique-se de fazer a limpeza após concluir o laboratório para evitar custos desnecessários. A conta de armazenamento também gera cobranças pelos dados armazenados.
 
 :::
 
 ---
 
-## ReferÃªncias adicionais
+## Referências adicionais
 
 - [What is a private endpoint?](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview)
 - [Azure Private Endpoint DNS configuration](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-dns)

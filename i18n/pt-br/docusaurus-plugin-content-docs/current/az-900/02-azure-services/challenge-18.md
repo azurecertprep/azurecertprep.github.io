@@ -1,44 +1,44 @@
 ---
 sidebar_position: 12
-title: "Desafio 18: SeguranÃ§a â€” Zero Trust, Defesa em Profundidade e Defender"
+title: "Desafio 18: Segurança â€” Zero Trust, Defesa em Profundidade e Defender"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 18: SeguranÃ§a â€” Zero Trust, Defesa em Profundidade e Defender
+# Desafio 18: Segurança â€” Zero Trust, Defesa em Profundidade e Defender
 
 :::info Tempo Estimado
-**20-30 min** | **Custo**: Gratuito | **DomÃ­nio**: Arquitetura e ServiÃ§os Azure (35-40%)
+**20-30 min** | **Custo**: Gratuito | **Domínio**: Arquitetura e Serviços Azure (35-40%)
 :::
 
 ## Habilidades do exame cobertas
 
 - Descrever o conceito de Zero Trust
-- Descrever o propÃ³sito do modelo defense-in-depth
-- Descrever o propÃ³sito do Microsoft Defender for Cloud
+- Descrever o propósito do modelo defense-in-depth
+- Descrever o propósito do Microsoft Defender for Cloud
 
-## VisÃ£o Geral
+## Visão Geral
 
-A seguranÃ§a no Azure Ã© construÃ­da sobre conceitos fundamentais: **Zero Trust** (nunca confie, sempre verifique), **defense-in-depth** (mÃºltiplas camadas de seguranÃ§a) e **Microsoft Defender for Cloud** (gerenciamento unificado de seguranÃ§a). Esses conceitos trabalham juntos para proteger seus recursos na nuvem.
+A segurança no Azure é construída sobre conceitos fundamentais: **Zero Trust** (nunca confie, sempre verifique), **defense-in-depth** (múltiplas camadas de segurança) e **Microsoft Defender for Cloud** (gerenciamento unificado de segurança). Esses conceitos trabalham juntos para proteger seus recursos na nuvem.
 
 ## Explorar
 
 ### Tarefa 1: Entender Zero Trust
 
-Zero Trust opera em trÃªs princÃ­pios:
+Zero Trust opera em três princípios:
 
-| PrincÃ­pio | DescriÃ§Ã£o | Exemplo |
+| Princípio | Descrição | Exemplo |
 |-----------|-----------|---------|
-| **Verificar explicitamente** | Sempre autenticar e autorizar com base em todos os dados disponÃ­veis | Verificar identidade do usuÃ¡rio, localizaÃ§Ã£o, saÃºde do dispositivo |
-| **Acesso com least privilege** | Dar permissÃµes mÃ­nimas necessÃ¡rias | Usar acesso just-in-time e just-enough-access |
-| **Assumir violaÃ§Ã£o** | Minimizar raio de explosÃ£o e verificar de ponta a ponta | Segmentar acesso, usar criptografia, verificar tudo |
+| **Verificar explicitamente** | Sempre autenticar e autorizar com base em todos os dados disponíveis | Verificar identidade do usuário, localização, saúde do dispositivo |
+| **Acesso com least privilege** | Dar permissões mínimas necessárias | Usar acesso just-in-time e just-enough-access |
+| **Assumir violação** | Minimizar raio de explosão e verificar de ponta a ponta | Segmentar acesso, usar criptografia, verificar tudo |
 
-**SeguranÃ§a tradicional**: "Confiar em tudo dentro da rede"
-**Zero Trust**: "NÃ£o confiar em nada, verificar tudo"
+**Segurança tradicional**: "Confiar em tudo dentro da rede"
+**Zero Trust**: "Não confiar em nada, verificar tudo"
 
 ### Tarefa 2: Entender defense-in-depth
 
-Defense-in-depth usa mÃºltiplas camadas de seguranÃ§a. Se uma camada falhar, a prÃ³xima camada captura a ameaÃ§a:
+Defense-in-depth usa múltiplas camadas de segurança. Se uma camada falhar, a próxima camada captura a ameaça:
 
 ```text
 Layer 1: Physical Security    â†’ Datacenter access controls
@@ -50,35 +50,35 @@ Layer 6: Application         â†’ Secure coding, vulnerability scanning
 Layer 7: Data                â†’ Encryption at rest and in transit
 ```
 
-**Insight principal**: Nenhuma camada Ãºnica fornece proteÃ§Ã£o completa. A seguranÃ§a requer TODAS as camadas trabalhando juntas.
+**Insight principal**: Nenhuma camada única fornece proteção completa. A segurança requer TODAS as camadas trabalhando juntas.
 
 ### Tarefa 3: Explorar Microsoft Defender for Cloud
 
 1. No Azure Portal, pesquise por **Microsoft Defender for Cloud**
-2. Explore as seÃ§Ãµes principais:
-   - **Overview**: PontuaÃ§Ã£o de postura de seguranÃ§a
-   - **Recommendations**: Melhorias de seguranÃ§a sugeridas
-   - **Security alerts**: AmeaÃ§as detectadas
-   - **Regulatory compliance**: Conformidade com padrÃµes
-3. Observe o **Secure Score** â€” uma classificaÃ§Ã£o percentual da sua postura de seguranÃ§a
+2. Explore as seções principais:
+   - **Overview**: Pontuação de postura de segurança
+   - **Recommendations**: Melhorias de segurança sugeridas
+   - **Security alerts**: Ameaças detectadas
+   - **Regulatory compliance**: Conformidade com padrões
+3. Observe o **Secure Score** â€” uma classificação percentual da sua postura de segurança
 
 **Defender for Cloud fornece:**
-- AvaliaÃ§Ã£o contÃ­nua de seguranÃ§a
-- RecomendaÃ§Ãµes de seguranÃ§a
-- ProteÃ§Ã£o contra ameaÃ§as com alertas
+- Avaliação contínua de segurança
+- Recomendações de segurança
+- Proteção contra ameaças com alertas
 - Rastreamento de conformidade (PCI-DSS, SOC, ISO 27001)
 - Acesso just-in-time a VMs
 
 ### Tarefa 4: Capacidades do Defender for Cloud
 
-| Recurso | DescriÃ§Ã£o | Custo |
+| Recurso | Descrição | Custo |
 |---------|-----------|-------|
-| **Secure Score** | Avaliar sua postura de seguranÃ§a (0-100%) | Gratuito |
-| **Recommendations** | CorreÃ§Ãµes de seguranÃ§a priorizadas | Gratuito |
-| **Enhanced protections** | Planos Defender para serviÃ§os especÃ­ficos | Pago (por recurso) |
-| **Regulatory compliance** | Mapear controles para padrÃµes de conformidade | Gratuito (bÃ¡sico) |
+| **Secure Score** | Avaliar sua postura de segurança (0-100%) | Gratuito |
+| **Recommendations** | Correções de segurança priorizadas | Gratuito |
+| **Enhanced protections** | Planos Defender para serviços específicos | Pago (por recurso) |
+| **Regulatory compliance** | Mapear controles para padrões de conformidade | Gratuito (básico) |
 
-**Planos Defender** (seguranÃ§a aprimorada para serviÃ§os especÃ­ficos):
+**Planos Defender** (segurança aprimorada para serviços específicos):
 - Defender for Servers
 - Defender for Storage
 - Defender for SQL
@@ -86,16 +86,16 @@ Layer 7: Data                â†’ Encryption at rest and in transit
 - Defender for App Service
 - Defender for Key Vault
 
-### Tarefa 5: Zero Trust na prÃ¡tica
+### Tarefa 5: Zero Trust na prática
 
-Como os serviÃ§os Azure implementam Zero Trust:
+Como os serviços Azure implementam Zero Trust:
 
-| Controle Zero Trust | ServiÃ§o Azure |
+| Controle Zero Trust | Serviço Azure |
 |--------------------|---------------|
 | Verificar identidade | Entra ID + MFA |
-| Verificar saÃºde do dispositivo | Intune + Conditional Access |
+| Verificar saúde do dispositivo | Intune + Conditional Access |
 | Least privilege | RBAC + PIM (Privileged Identity Management) |
-| Micro-segmentaÃ§Ã£o | NSGs + VNets + Private endpoints |
+| Micro-segmentação | NSGs + VNets + Private endpoints |
 | Criptografia | Azure Key Vault + TLS + disk encryption |
 | Monitorar e responder | Defender for Cloud + Sentinel |
 
@@ -111,53 +111,53 @@ az security assessment list --query "[0:5].{Name:displayName, Status:status.code
 
 ## Conceitos-Chave
 
-| Conceito | DescriÃ§Ã£o |
+| Conceito | Descrição |
 |----------|-----------|
-| **Zero Trust** | Nunca confie, sempre verifique â€” independentemente da localizaÃ§Ã£o na rede |
-| **Defense-in-depth** | MÃºltiplas camadas de seguranÃ§a protegendo recursos |
-| **Microsoft Defender for Cloud** | Gerenciamento unificado de seguranÃ§a e proteÃ§Ã£o contra ameaÃ§as |
-| **Secure Score** | Medida percentual da sua postura de seguranÃ§a |
-| **Least privilege** | Conceder permissÃµes mÃ­nimas necessÃ¡rias para a tarefa |
-| **Assume breach** | Projetar seguranÃ§a esperando que atacantes jÃ¡ estÃ£o dentro |
+| **Zero Trust** | Nunca confie, sempre verifique â€” independentemente da localização na rede |
+| **Defense-in-depth** | Múltiplas camadas de segurança protegendo recursos |
+| **Microsoft Defender for Cloud** | Gerenciamento unificado de segurança e proteção contra ameaças |
+| **Secure Score** | Medida percentual da sua postura de segurança |
+| **Least privilege** | Conceder permissões mínimas necessárias para a tarefa |
+| **Assume breach** | Projetar segurança esperando que atacantes já estão dentro |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck
   questions={[
     {
       id: 'az900-18-q1',
-      question: 'Qual princÃ­pio de seguranÃ§a afirma que vocÃª deve "nunca confiar, sempre verificar"?',
+      question: 'Qual princípio de segurança afirma que você deve "nunca confiar, sempre verificar"?',
       options: ['Defense-in-depth', 'Zero Trust', 'Least privilege', 'Responsabilidade compartilhada'],
       correctAnswer: 1,
-      explanation: 'Zero Trust Ã© o modelo de seguranÃ§a que elimina a confianÃ§a implÃ­cita e requer verificaÃ§Ã£o contÃ­nua de cada usuÃ¡rio, dispositivo e conexÃ£o, independentemente de estarem dentro ou fora da rede.'
+      explanation: 'Zero Trust é o modelo de segurança que elimina a confiança implícita e requer verificação contínua de cada usuário, dispositivo e conexão, independentemente de estarem dentro ou fora da rede.'
     },
     {
       id: 'az900-18-q2',
-      question: 'No modelo defense-in-depth, o que acontece se uma camada de seguranÃ§a for violada?',
-      options: ['Todos os dados sÃ£o imediatamente expostos', 'A prÃ³xima camada fornece proteÃ§Ã£o adicional', 'O sistema desliga automaticamente', 'A violaÃ§Ã£o Ã© impossÃ­vel com defense-in-depth'],
+      question: 'No modelo defense-in-depth, o que acontece se uma camada de segurança for violada?',
+      options: ['Todos os dados são imediatamente expostos', 'A próxima camada fornece proteção adicional', 'O sistema desliga automaticamente', 'A violação é impossível com defense-in-depth'],
       correctAnswer: 1,
-      explanation: 'Defense-in-depth usa mÃºltiplas camadas de seguranÃ§a. Se um atacante penetrar uma camada, ele ainda precisa superar camadas adicionais para alcanÃ§ar dados sensÃ­veis. Nenhuma falha de camada Ãºnica expÃµe tudo.'
+      explanation: 'Defense-in-depth usa múltiplas camadas de segurança. Se um atacante penetrar uma camada, ele ainda precisa superar camadas adicionais para alcançar dados sensíveis. Nenhuma falha de camada única expõe tudo.'
     },
     {
       id: 'az900-18-q3',
       question: 'O que o Secure Score do Microsoft Defender for Cloud mede?',
-      options: ['Largura de banda da rede', 'OtimizaÃ§Ã£o de custos', 'Postura de seguranÃ§a do seu ambiente', 'Performance da aplicaÃ§Ã£o'],
+      options: ['Largura de banda da rede', 'Otimização de custos', 'Postura de segurança do seu ambiente', 'Performance da aplicação'],
       correctAnswer: 2,
-      explanation: 'Secure Score Ã© uma porcentagem (0-100%) que mede sua postura de seguranÃ§a. PontuaÃ§Ãµes mais altas indicam melhores prÃ¡ticas de seguranÃ§a. RecomendaÃ§Ãµes ajudam a melhorar sua pontuaÃ§Ã£o.'
+      explanation: 'Secure Score é uma porcentagem (0-100%) que mede sua postura de segurança. Pontuações mais altas indicam melhores práticas de segurança. Recomendações ajudam a melhorar sua pontuação.'
     },
     {
       id: 'az900-18-q4',
-      question: 'Qual camada de defense-in-depth inclui firewalls e proteÃ§Ã£o DDoS?',
-      options: ['SeguranÃ§a fÃ­sica', 'Identidade e acesso', 'PerÃ­metro', 'Rede'],
+      question: 'Qual camada de defense-in-depth inclui firewalls e proteção DDoS?',
+      options: ['Segurança física', 'Identidade e acesso', 'Perímetro', 'Rede'],
       correctAnswer: 2,
-      explanation: 'A camada de perÃ­metro protege contra ataques no nÃ­vel de rede como DDoS e usa firewalls para filtrar trÃ¡fego na borda da sua rede.'
+      explanation: 'A camada de perímetro protege contra ataques no nível de rede como DDoS e usa firewalls para filtrar tráfego na borda da sua rede.'
     },
     {
       id: 'az900-18-q5',
-      question: 'Um princÃ­pio do Zero Trust afirma que usuÃ¡rios devem ter apenas as permissÃµes mÃ­nimas necessÃ¡rias para fazer seu trabalho. Como isso se chama?',
+      question: 'Um princípio do Zero Trust afirma que usuários devem ter apenas as permissões mínimas necessárias para fazer seu trabalho. Como isso se chama?',
       options: ['Assume breach', 'Verify explicitly', 'Least privilege access', 'Defense-in-depth'],
       correctAnswer: 2,
-      explanation: 'Least privilege access significa dar a usuÃ¡rios e aplicaÃ§Ãµes apenas as permissÃµes mÃ­nimas necessÃ¡rias para executar suas tarefas. Isso limita o raio de explosÃ£o se uma conta for comprometida.'
+      explanation: 'Least privilege access significa dar a usuários e aplicações apenas as permissões mínimas necessárias para executar suas tarefas. Isso limita o raio de explosão se uma conta for comprometida.'
     }
   ]}
 />

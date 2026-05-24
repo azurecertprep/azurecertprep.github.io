@@ -5,7 +5,7 @@ sidebar_label: "Challenge 48"
 ---
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Challenge 48: SegmentaÃ§Ã£o de rede e acesso Just-in-Time
+# Challenge 48: Segmentação de rede e acesso Just-in-Time
 
 :::info Tempo e custo estimados
 
@@ -13,19 +13,19 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::
 
-## CenÃ¡rio
+## Cenário
 
-Sua organizaÃ§Ã£o estÃ¡ implementando um design de rede de confianÃ§a zero (zero-trust). Todo acesso de gerenciamento Ã s VMs deve ser controlado por acesso Just-in-Time (JIT) atravÃ©s do Microsoft Defender for Cloud, e as sessÃµes administrativas devem passar pelo Azure Bastion. O Azure Virtual Network Manager (AVNM) aplica regras de administrador de seguranÃ§a em toda a organizaÃ§Ã£o que nÃ£o podem ser substituÃ­das por administradores locais de NSG â€” garantindo uma postura de negaÃ§Ã£o por padrÃ£o em todos os grupos de rede.
+Sua organização está implementando um design de rede de confiança zero (zero-trust). Todo acesso de gerenciamento Ã s VMs deve ser controlado por acesso Just-in-Time (JIT) através do Microsoft Defender for Cloud, e as sessões administrativas devem passar pelo Azure Bastion. O Azure Virtual Network Manager (AVNM) aplica regras de administrador de segurança em toda a organização que não podem ser substituídas por administradores locais de NSG â€” garantindo uma postura de negação por padrão em todos os grupos de rede.
 
-VocÃª deve demonstrar que:
-- O acesso direto SSH/RDP Ã s VMs Ã© negado por padrÃ£o
-- As regras de administrador de seguranÃ§a do AVNM tÃªm precedÃªncia sobre NSGs locais
-- O acesso JIT permite acesso temporÃ¡rio e auditado para gerenciamento
-- O Bastion fornece o Ãºnico caminho para administraÃ§Ã£o interativa de VMs
+Você deve demonstrar que:
+- O acesso direto SSH/RDP Ã s VMs é negado por padrão
+- As regras de administrador de segurança do AVNM têm precedência sobre NSGs locais
+- O acesso JIT permite acesso temporário e auditado para gerenciamento
+- O Bastion fornece o único caminho para administração interativa de VMs
 
 ---
 
-## VisÃ£o geral da arquitetura
+## Visão geral da arquitetura
 
 ```text
    +--------------------------------------------------+
@@ -131,7 +131,7 @@ $devVnet = New-AzVirtualNetwork -Name "vnet-dev" -ResourceGroupName $rg `
 
 ---
 
-## Tarefa 2: Criar grupos de rede com associaÃ§Ã£o dinÃ¢mica
+## Tarefa 2: Criar grupos de rede com associação dinâmica
 
 ### Azure CLI
 
@@ -169,9 +169,9 @@ az network manager group static-member create \
   --resource-id $DEV_VNET_ID
 ```
 
-:::tip AssociaÃ§Ã£o dinÃ¢mica via Azure Policy
+:::tip Associação dinâmica via Azure Policy
 
-Para implantaÃ§Ãµes em produÃ§Ã£o, use associaÃ§Ã£o dinÃ¢mica baseada em Azure Policy. VNets que correspondem a uma condiÃ§Ã£o (como uma tag) sÃ£o automaticamente adicionadas ao grupo de rede:
+Para implantações em produção, use associação dinâmica baseada em Azure Policy. VNets que correspondem a uma condição (como uma tag) são automaticamente adicionadas ao grupo de rede:
 
 ```json
 {
@@ -189,16 +189,16 @@ Para implantaÃ§Ãµes em produÃ§Ã£o, use associaÃ§Ã£o dinÃ¢mica base
 
 ---
 
-## Tarefa 3: Configurar regras de administrador de seguranÃ§a (negaÃ§Ã£o por padrÃ£o)
+## Tarefa 3: Configurar regras de administrador de segurança (negação por padrão)
 
-:::warning Conceito crÃ­tico do exame
+:::warning Conceito crítico do exame
 
-As regras de administrador de seguranÃ§a do AVNM sÃ£o avaliadas **antes** das regras de NSG. A ordem de avaliaÃ§Ã£o Ã©:
+As regras de administrador de segurança do AVNM são avaliadas **antes** das regras de NSG. A ordem de avaliação é:
 
-1. Regras de administrador de seguranÃ§a do AVNM (AlwaysAllow > Deny > Allow)
+1. Regras de administrador de segurança do AVNM (AlwaysAllow > Deny > Allow)
 2. Regras de NSG
 
-Uma regra **Deny** no AVNM nÃ£o pode ser substituÃ­da por uma regra Allow de NSG. Uma regra **AlwaysAllow** no AVNM ignora tanto as regras Deny de administrador de seguranÃ§a quanto as regras de NSG.
+Uma regra **Deny** no AVNM não pode ser substituída por uma regra Allow de NSG. Uma regra **AlwaysAllow** no AVNM ignora tanto as regras Deny de administrador de segurança quanto as regras de NSG.
 
 :::
 
@@ -314,12 +314,12 @@ New-AzNetworkManagerSecurityAdminRule `
 
 ### Etapas no portal
 
-1. Navegue atÃ© **Network Manager** e selecione sua instÃ¢ncia do AVNM.
-2. Em **ConfiguraÃ§Ãµes**, selecione **Security admin configurations** e clique em **Criar**.
-3. Adicione uma coleÃ§Ã£o de regras direcionada ao grupo de rede de produÃ§Ã£o.
+1. Navegue até **Network Manager** e selecione sua instância do AVNM.
+2. Em **Configurações**, selecione **Security admin configurations** e clique em **Criar**.
+3. Adicione uma coleção de regras direcionada ao grupo de rede de produção.
 4. Crie regras: Deny SSH (porta 22) e RDP (porta 3389) de entrada de qualquer origem.
 5. Crie uma regra AlwaysAllow para a sub-rede do Bastion como origem para as portas 22 e 3389.
-6. Implante a configuraÃ§Ã£o na regiÃ£o de destino.
+6. Implante a configuração na região de destino.
 
 ---
 
@@ -347,18 +347,18 @@ az network bastion create \
   --location $LOCATION
 ```
 
-:::tip ComparaÃ§Ã£o de SKUs do Bastion
+:::tip Comparação de SKUs do Bastion
 
 | Recurso | Basic | Standard |
 |---------|-------|----------|
-| ConexÃ£o via portal (SSH/RDP) | Sim | Sim |
-| Suporte a cliente nativo (az network bastion ssh/rdp) | NÃ£o | Sim |
-| TransferÃªncia de arquivos | NÃ£o | Sim |
-| Link compartilhÃ¡vel | NÃ£o | Sim |
-| Escalabilidade de hosts (2-50 instÃ¢ncias) | NÃ£o | Sim |
-| ConexÃ£o baseada em IP | NÃ£o | Sim |
+| Conexão via portal (SSH/RDP) | Sim | Sim |
+| Suporte a cliente nativo (az network bastion ssh/rdp) | Não | Sim |
+| Transferência de arquivos | Não | Sim |
+| Link compartilhável | Não | Sim |
+| Escalabilidade de hosts (2-50 instâncias) | Não | Sim |
+| Conexão baseada em IP | Não | Sim |
 
-O SKU Standard com `--enable-tunneling true` Ã© necessÃ¡rio para conectividade de cliente nativo via Azure CLI.
+O SKU Standard com `--enable-tunneling true` é necessário para conectividade de cliente nativo via Azure CLI.
 
 :::
 
@@ -390,9 +390,9 @@ New-AzBastion -Name "bastion-prod" -ResourceGroupName $rg `
 
 ## Tarefa 5: Configurar acesso Just-in-Time para VMs
 
-:::info PrÃ©-requisitos
+:::info Pré-requisitos
 
-O acesso JIT para VMs requer **Microsoft Defender for Servers Plan 2** (ou seguranÃ§a aprimorada do Defender for Cloud). A VM deve ter um NSG associado Ã  sua sub-rede ou NIC.
+O acesso JIT para VMs requer **Microsoft Defender for Servers Plan 2** (ou segurança aprimorada do Defender for Cloud). A VM deve ter um NSG associado Ã  sua sub-rede ou NIC.
 
 :::
 
@@ -425,9 +425,9 @@ az network vnet subnet update \
   --network-security-group nsg-prod-workload
 ```
 
-### Configurar polÃ­tica JIT via REST API
+### Configurar política JIT via REST API
 
-A Azure CLI nÃ£o fornece um comando direto para criar polÃ­ticas JIT. Use `az rest` para chamar a API do Defender for Cloud:
+A Azure CLI não fornece um comando direto para criar políticas JIT. Use `az rest` para chamar a API do Defender for Cloud:
 
 ```bash
 # Create JIT access policy
@@ -484,7 +484,7 @@ az rest --method post \
   }'
 ```
 
-### Listar polÃ­ticas JIT
+### Listar políticas JIT
 
 ```bash
 # List existing JIT policies
@@ -495,15 +495,15 @@ az security jit-policy list \
 
 ### Etapas no portal
 
-1. Navegue atÃ© **Microsoft Defender for Cloud** e selecione **Workload protections**.
+1. Navegue até **Microsoft Defender for Cloud** e selecione **Workload protections**.
 2. Selecione **Just-in-time VM access** no menu Ã  esquerda.
 3. Clique na VM para configurar e selecione **Enable JIT**.
-4. Configure as portas (22, 3389), duraÃ§Ã£o mÃ¡xima de solicitaÃ§Ã£o (3 horas) e IPs de origem permitidos.
-5. Para solicitar acesso: selecione a VM, clique em **Request access**, especifique a justificativa e a duraÃ§Ã£o.
+4. Configure as portas (22, 3389), duração máxima de solicitação (3 horas) e IPs de origem permitidos.
+5. Para solicitar acesso: selecione a VM, clique em **Request access**, especifique a justificativa e a duração.
 
 ---
 
-## Tarefa 6: Validar o design de confianÃ§a zero (zero-trust)
+## Tarefa 6: Validar o design de confiança zero (zero-trust)
 
 ### Verificar se o AVNM bloqueia acesso direto
 
@@ -558,13 +558,13 @@ az network bastion ssh \
 
 ## Quebra & conserta
 
-### CenÃ¡rio 1: Regra de administrador de seguranÃ§a do AVNM bloqueia o Bastion
+### Cenário 1: Regra de administrador de segurança do AVNM bloqueia o Bastion
 
-**Sintoma:** O Azure Bastion nÃ£o consegue se conectar Ã s VMs mesmo apÃ³s a implantaÃ§Ã£o bem-sucedida do Bastion.
+**Sintoma:** O Azure Bastion não consegue se conectar Ã s VMs mesmo após a implantação bem-sucedida do Bastion.
 
-**Causa raiz:** A regra Deny do AVNM bloqueia todo o trÃ¡fego SSH/RDP de entrada, incluindo o trÃ¡fego da AzureBastionSubnet. Nenhuma exceÃ§Ã£o AlwaysAllow foi criada para o prefixo de origem do Bastion.
+**Causa raiz:** A regra Deny do AVNM bloqueia todo o tráfego SSH/RDP de entrada, incluindo o tráfego da AzureBastionSubnet. Nenhuma exceção AlwaysAllow foi criada para o prefixo de origem do Bastion.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check effective security admin rules
@@ -580,7 +580,7 @@ az network vnet subnet show \
   --query addressPrefix -o tsv
 ```
 
-**CorreÃ§Ã£o:** Adicione uma regra AlwaysAllow com a sub-rede do Bastion como origem:
+**Correção:** Adicione uma regra AlwaysAllow com a sub-rede do Bastion como origem:
 
 ```bash
 az network manager security-admin-config rule-collection rule create \
@@ -608,13 +608,13 @@ az network manager post-commit \
 
 ---
 
-### CenÃ¡rio 2: SolicitaÃ§Ã£o JIT falhando
+### Cenário 2: Solicitação JIT falhando
 
-**Sintoma:** As solicitaÃ§Ãµes de acesso JIT retornam um erro ou a opÃ§Ã£o JIT nÃ£o estÃ¡ disponÃ­vel para a VM.
+**Sintoma:** As solicitações de acesso JIT retornam um erro ou a opção JIT não está disponível para a VM.
 
-**Causa raiz:** O Microsoft Defender for Servers (Plan 2) nÃ£o estÃ¡ habilitado na assinatura, ou a VM nÃ£o tem um NSG associado.
+**Causa raiz:** O Microsoft Defender for Servers (Plan 2) não está habilitado na assinatura, ou a VM não tem um NSG associado.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check Defender for Cloud pricing tier
@@ -629,7 +629,7 @@ az network vnet subnet show \
   --query networkSecurityGroup.id -o tsv
 ```
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 # Enable Defender for Servers (if not enabled)
@@ -645,13 +645,13 @@ az network vnet subnet update \
 
 ---
 
-### CenÃ¡rio 3: Cliente nativo do Bastion nÃ£o funciona
+### Cenário 3: Cliente nativo do Bastion não funciona
 
-**Sintoma:** O comando `az network bastion ssh` falha com um erro sobre recursos nÃ£o suportados.
+**Sintoma:** O comando `az network bastion ssh` falha com um erro sobre recursos não suportados.
 
-**Causa raiz:** O Bastion foi implantado com SKU Basic (tunelamento/cliente nativo requer SKU Standard), ou o flag `--enable-tunneling` nÃ£o foi definido.
+**Causa raiz:** O Bastion foi implantado com SKU Basic (tunelamento/cliente nativo requer SKU Standard), ou o flag `--enable-tunneling` não foi definido.
 
-**DiagnÃ³stico:**
+**Diagnóstico:**
 
 ```bash
 # Check Bastion SKU and tunneling status
@@ -661,7 +661,7 @@ az network bastion show \
   --query "{sku: sku.name, tunneling: enableTunneling}"
 ```
 
-**CorreÃ§Ã£o:**
+**Correção:**
 
 ```bash
 # Upgrade Bastion to Standard SKU with tunneling
@@ -674,7 +674,7 @@ az network bastion update \
 
 ---
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
@@ -767,6 +767,6 @@ Remove-AzResourceGroup -Name "rg-avnm-lab" -Force -AsJob
 
 :::danger Aviso de custo
 
-Este laboratÃ³rio implanta o Azure Bastion (SKU Standard) que custa aproximadamente **$0,25/hora** alÃ©m das VMs. Exclua o grupo de recursos imediatamente apÃ³s concluir o laboratÃ³rio. AlÃ©m disso, desabilite o Defender for Servers se vocÃª o habilitou apenas para este laboratÃ³rio para evitar cobranÃ§as contÃ­nuas (~$15/servidor/mÃªs).
+Este laboratório implanta o Azure Bastion (SKU Standard) que custa aproximadamente **$0,25/hora** além das VMs. Exclua o grupo de recursos imediatamente após concluir o laboratório. Além disso, desabilite o Defender for Servers se você o habilitou apenas para este laboratório para evitar cobranças contínuas (~$15/servidor/mês).
 
 :::

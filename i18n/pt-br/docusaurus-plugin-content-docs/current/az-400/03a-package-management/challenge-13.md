@@ -7,7 +7,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 # Desafio 13: GitHub Packages e Azure Artifacts
 
-:::info Plataforma: comparaÃ§Ã£o
+:::info Plataforma: comparação
 Este desafio compara o GitHub Packages e o Azure Artifacts lado a lado.
 :::
 
@@ -16,15 +16,15 @@ Este desafio compara o GitHub Packages e o Azure Artifacts lado a lado.
 - Recomendar ferramentas de gerenciamento de pacotes incluindo GitHub Packages e Azure Artifacts
 - Projetar e implementar feeds e views de pacotes para pacotes locais e upstream
 
-## CenÃ¡rio
+## Cenário
 
-A Contoso Ltd possui 15 microsserviÃ§os que compartilham 4 bibliotecas internas (auth-sdk, logging-sdk, data-models e api-contracts). Atualmente, as equipes copiam cÃ³digo-fonte entre repositÃ³rios. O VP de Engenharia deseja uma soluÃ§Ã£o centralizada de gerenciamento de pacotes com:
+A Contoso Ltd possui 15 microsserviços que compartilham 4 bibliotecas internas (auth-sdk, logging-sdk, data-models e api-contracts). Atualmente, as equipes copiam código-fonte entre repositórios. O VP de Engenharia deseja uma solução centralizada de gerenciamento de pacotes com:
 - Hospedagem privada de pacotes
-- VerificaÃ§Ã£o de vulnerabilidades em dependÃªncias
+- Verificação de vulnerabilidades em dependências
 - Controle de acesso por equipe
 - Suporte para pacotes npm e NuGet
 
-Seu trabalho Ã© avaliar tanto o GitHub Packages quanto o Azure Artifacts, configurar cada plataforma e recomendar a melhor opÃ§Ã£o para o ecossistema multi-linguagem da Contoso.
+Seu trabalho é avaliar tanto o GitHub Packages quanto o Azure Artifacts, configurar cada plataforma e recomendar a melhor opção para o ecossistema multi-linguagem da Contoso.
 
 ## Tarefas
 
@@ -37,7 +37,7 @@ mkdir contoso-auth-sdk && cd contoso-auth-sdk
 npm init -y
 ```
 
-Edite o `package.json` para definir o escopo do pacote para sua organizaÃ§Ã£o GitHub:
+Edite o `package.json` para definir o escopo do pacote para sua organização GitHub:
 
 ```json
 {
@@ -55,7 +55,7 @@ Edite o `package.json` para definir o escopo do pacote para sua organizaÃ§Ã£
 }
 ```
 
-#### Passo 2: Configurar autenticaÃ§Ã£o
+#### Passo 2: Configurar autenticação
 
 Crie um arquivo `.npmrc` na raiz do projeto para apontar para o GitHub Packages:
 
@@ -70,7 +70,7 @@ Gere um token de acesso pessoal com os escopos `read:packages` e `write:packages
 gh auth token
 ```
 
-Ou defina o token como variÃ¡vel de ambiente:
+Ou defina o token como variável de ambiente:
 
 ```bash
 export GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -90,7 +90,7 @@ gh api /orgs/contoso/packages/npm/auth-sdk
 
 #### Passo 4: Consumir o pacote em outro projeto
 
-No repositÃ³rio do microsserviÃ§o consumidor, crie um `.npmrc`:
+No repositório do microsserviço consumidor, crie um `.npmrc`:
 
 ```ini
 @contoso:registry=https://npm.pkg.github.com
@@ -103,16 +103,16 @@ Instale o pacote:
 npm install @contoso/auth-sdk
 ```
 
-#### Passo 5: Definir visibilidade e permissÃµes do pacote
+#### Passo 5: Definir visibilidade e permissões do pacote
 
-Defina o pacote como interno (visÃ­vel para todos os membros da organizaÃ§Ã£o):
+Defina o pacote como interno (visível para todos os membros da organização):
 
 ```bash
 gh api --method PUT /orgs/contoso/packages/npm/auth-sdk/visibility \
   -f visibility=internal
 ```
 
-Conceda acesso de escrita a uma equipe especÃ­fica:
+Conceda acesso de escrita a uma equipe específica:
 
 ```bash
 gh api --method PUT /orgs/contoso/packages/npm/auth-sdk/teams/backend-team \
@@ -161,7 +161,7 @@ az artifacts feed create \
 
 #### Passo 2: Configurar fontes upstream
 
-Adicione o npmjs.com como fonte upstream para que pacotes pÃºblicos sejam proxeados atravÃ©s do seu feed:
+Adicione o npmjs.com como fonte upstream para que pacotes públicos sejam proxeados através do seu feed:
 
 ```bash
 az rest --method post \
@@ -225,7 +225,7 @@ dotnet nuget push ./nupkgs/*.nupkg \
   --api-key az
 ```
 
-#### Passo 5: Definir permissÃµes do feed
+#### Passo 5: Definir permissões do feed
 
 Conceda Ã  equipe backend acesso de contribuidor (pode publicar e consumir):
 
@@ -238,13 +238,13 @@ az rest --method patch \
   }]'
 ```
 
-FunÃ§Ãµes de feed no Azure Artifacts:
+Funções de feed no Azure Artifacts:
 - **Reader**: Pode consumir pacotes do feed
 - **Collaborator**: Pode consumir pacotes e salvar pacotes de fontes upstream
-- **Contributor**: Pode publicar novos pacotes e versÃµes
-- **Owner**: Controle total incluindo exclusÃ£o do feed e gerenciamento de permissÃµes
+- **Contributor**: Pode publicar novos pacotes e versões
+- **Owner**: Controle total incluindo exclusão do feed e gerenciamento de permissões
 
-#### Passo 6: Criar views (prÃ©-lanÃ§amento e lanÃ§amento)
+#### Passo 6: Criar views (pré-lançamento e lançamento)
 
 ```bash
 az rest --method post \
@@ -264,7 +264,7 @@ az rest --method post \
   }'
 ```
 
-Promova uma versÃ£o de pacote para a view de release:
+Promova uma versão de pacote para a view de release:
 
 ```bash
 az rest --method post \
@@ -276,18 +276,18 @@ az rest --method post \
 
 ### Tarefa 3: Configurar fontes upstream
 
-Fontes upstream permitem que seu feed privado faÃ§a proxy de registros pÃºblicos. Quando um desenvolvedor solicita um pacote que nÃ£o existe localmente, o feed o busca na fonte upstream configurada e o armazena em cache.
+Fontes upstream permitem que seu feed privado faça proxy de registros públicos. Quando um desenvolvedor solicita um pacote que não existe localmente, o feed o busca na fonte upstream configurada e o armazena em cache.
 
 #### Passo 1: Entender o comportamento das fontes upstream
 
-- Primeira solicitaÃ§Ã£o: O pacote Ã© buscado do upstream e salvo no feed local
-- SolicitaÃ§Ãµes subsequentes: O pacote Ã© servido do cache do feed local
-- Se o upstream ficar offline, os pacotes em cache permanecem disponÃ­veis
-- Novas versÃµes do upstream sÃ£o buscadas sob demanda
+- Primeira solicitação: O pacote é buscado do upstream e salvo no feed local
+- Solicitações subsequentes: O pacote é servido do cache do feed local
+- Se o upstream ficar offline, os pacotes em cache permanecem disponíveis
+- Novas versões do upstream são buscadas sob demanda
 
 #### Passo 2: Configurar ordem de prioridade
 
-Fontes upstream sÃ£o avaliadas em ordem de prioridade. Coloque seu feed interno primeiro para que pacotes internos tenham precedÃªncia sobre pacotes pÃºblicos com o mesmo nome:
+Fontes upstream são avaliadas em ordem de prioridade. Coloque seu feed interno primeiro para que pacotes internos tenham precedência sobre pacotes públicos com o mesmo nome:
 
 ```bash
 az rest --method patch \
@@ -310,26 +310,26 @@ az rest --method patch \
   }'
 ```
 
-#### Passo 3: Testar a resoluÃ§Ã£o upstream
+#### Passo 3: Testar a resolução upstream
 
-Instale um pacote pÃºblico atravÃ©s do seu feed:
+Instale um pacote público através do seu feed:
 
 ```bash
 npm install lodash --registry https://pkgs.dev.azure.com/contoso/ContosoServices/_packaging/contoso-packages/npm/registry/
 ```
 
-Verifique se ele foi armazenado em cache no seu feed consultando o conteÃºdo do feed no Azure DevOps ou via API:
+Verifique se ele foi armazenado em cache no seu feed consultando o conteúdo do feed no Azure DevOps ou via API:
 
 ```bash
 az rest --method get \
   --uri "https://feeds.dev.azure.com/contoso/ContosoServices/_apis/packaging/feeds/contoso-packages/npm/packages?api-version=7.1-preview.1"
 ```
 
-## ExercÃ­cios de quebra e conserto
+## Exercícios de quebra e conserto
 
-### CenÃ¡rio: PublicaÃ§Ã£o de pacote falha com 403
+### Cenário: Publicação de pacote falha com 403
 
-Um desenvolvedor relata que nÃ£o consegue publicar no GitHub Package Registry. O erro Ã©:
+Um desenvolvedor relata que não consegue publicar no GitHub Package Registry. O erro é:
 
 ```bash
 npm ERR! 403 Forbidden - PUT https://npm.pkg.github.com/@contoso/auth-sdk
@@ -337,17 +337,17 @@ npm ERR! 403 Forbidden - PUT https://npm.pkg.github.com/@contoso/auth-sdk
 
 Diagnostique e corrija o problema. Causas comuns:
 
-1. PermissÃ£o `packages: write` ausente no workflow
-2. Nome do pacote nÃ£o corresponde ao escopo do proprietÃ¡rio do repositÃ³rio
+1. Permissão `packages: write` ausente no workflow
+2. Nome do pacote não corresponde ao escopo do proprietário do repositório
 3. `.npmrc` apontando para o registro errado
-4. Token nÃ£o possui o escopo `write:packages`
+4. Token não possui o escopo `write:packages`
 
 <details>
-<summary>Mostrar soluÃ§Ã£o</summary>
+<summary>Mostrar solução</summary>
 
-**Causa 1: PermissÃµes ausentes no workflow do GitHub Actions**
+**Causa 1: Permissões ausentes no workflow do GitHub Actions**
 
-O arquivo de workflow deve declarar explicitamente permissÃµes de escrita de pacotes:
+O arquivo de workflow deve declarar explicitamente permissões de escrita de pacotes:
 
 ```yaml
 permissions:
@@ -355,15 +355,15 @@ permissions:
   packages: write
 ```
 
-Sem isso, o `GITHUB_TOKEN` assume permissÃ£o somente leitura para pacotes em workflows acionados por pull requests de forks.
+Sem isso, o `GITHUB_TOKEN` assume permissão somente leitura para pacotes em workflows acionados por pull requests de forks.
 
 **Causa 2: Incompatibilidade de escopo do pacote**
 
-O GitHub Packages exige que o escopo do pacote (`@contoso/`) corresponda ao proprietÃ¡rio do repositÃ³rio. Verifique o nome do pacote:
+O GitHub Packages exige que o escopo do pacote (`@contoso/`) corresponda ao proprietário do repositório. Verifique o nome do pacote:
 
 ```bash
 cat package.json | grep name
-# Deve retornar: "@contoso/auth-sdk" onde "contoso" corresponde Ã  org/usuÃ¡rio dono do repo
+# Deve retornar: "@contoso/auth-sdk" onde "contoso" corresponde Ã  org/usuário dono do repo
 ```
 
 Corrija atualizando o `package.json`:
@@ -374,9 +374,9 @@ Corrija atualizando o `package.json`:
 }
 ```
 
-**Causa 3: ConfiguraÃ§Ã£o incorreta do .npmrc**
+**Causa 3: Configuração incorreta do .npmrc**
 
-Verifique qual registro o npm estÃ¡ usando:
+Verifique qual registro o npm está usando:
 
 ```bash
 npm config get registry
@@ -390,7 +390,7 @@ Certifique-se de que o `.npmrc` contenha:
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-**Causa 4: Token sem os escopos necessÃ¡rios**
+**Causa 4: Token sem os escopos necessários**
 
 Verifique os escopos do token:
 
@@ -398,7 +398,7 @@ Verifique os escopos do token:
 gh auth status
 ```
 
-Se estiver usando um PAT clÃ¡ssico, regenere com o escopo `write:packages`. Se estiver usando um PAT de granularidade fina, certifique-se de que o token tenha permissÃµes de escrita de pacotes para o repositÃ³rio alvo.
+Se estiver usando um PAT clássico, regenere com o escopo `write:packages`. Se estiver usando um PAT de granularidade fina, certifique-se de que o token tenha permissões de escrita de pacotes para o repositório alvo.
 
 Para testar com um token novo:
 
@@ -410,7 +410,7 @@ npm publish
 
 </details>
 
-## VerificaÃ§Ã£o de conhecimento
+## Verificação de conhecimento
 
 <KnowledgeCheck questions={[
   {
@@ -422,10 +422,10 @@ npm publish
       "npm, Maven e pip"
     ],
     correctIndex: 0,
-    explanation: "O GitHub Packages suporta npm, Maven, NuGet, Docker (imagens de contÃªiner) e RubyGems. Pacotes Python (pip) nÃ£o sÃ£o suportados nativamente pelo GitHub Packages."
+    explanation: "O GitHub Packages suporta npm, Maven, NuGet, Docker (imagens de contêiner) e RubyGems. Pacotes Python (pip) não são suportados nativamente pelo GitHub Packages."
   },
   {
-    question: "Qual Ã© o nÃºmero mÃ¡ximo de fontes upstream em um Ãºnico feed do Azure Artifacts?",
+    question: "Qual é o número máximo de fontes upstream em um único feed do Azure Artifacts?",
     options: [
       "1",
       "5",
@@ -433,10 +433,10 @@ npm publish
       "10"
     ],
     correctIndex: 2,
-    explanation: "O Azure Artifacts nÃ£o impÃµe um limite rÃ­gido no nÃºmero de fontes upstream por feed. VocÃª pode configurar quantas forem necessÃ¡rias, embora consideraÃ§Ãµes de desempenho se apliquem com nÃºmeros muito grandes."
+    explanation: "O Azure Artifacts não impõe um limite rígido no número de fontes upstream por feed. Você pode configurar quantas forem necessárias, embora considerações de desempenho se apliquem com números muito grandes."
   },
   {
-    question: "Uma empresa precisa de verificaÃ§Ã£o de vulnerabilidades de pacotes integrada ao pipeline. Qual soluÃ§Ã£o oferece isso nativamente?",
+    question: "Uma empresa precisa de verificação de vulnerabilidades de pacotes integrada ao pipeline. Qual solução oferece isso nativamente?",
     options: [
       "Azure Artifacts com Defender for Cloud",
       "GitHub Packages com Dependabot",
@@ -444,18 +444,18 @@ npm publish
       "Nenhuma - requer ferramentas de terceiros"
     ],
     correctIndex: 2,
-    explanation: "Ambas as plataformas fornecem verificaÃ§Ã£o de vulnerabilidades nativa. O GitHub usa o Dependabot para alertas de seguranÃ§a e PRs automatizados. O Azure integra-se com o Microsoft Defender for DevOps para verificar dependÃªncias vulnerÃ¡veis."
+    explanation: "Ambas as plataformas fornecem verificação de vulnerabilidades nativa. O GitHub usa o Dependabot para alertas de segurança e PRs automatizados. O Azure integra-se com o Microsoft Defender for DevOps para verificar dependências vulneráveis."
   },
   {
-    question: "O que acontece quando um pacote em uma fonte upstream do Azure Artifacts Ã© consumido pela primeira vez?",
+    question: "O que acontece quando um pacote em uma fonte upstream do Azure Artifacts é consumido pela primeira vez?",
     options: [
-      "Ele Ã© sempre buscado do upstream a cada solicitaÃ§Ã£o",
-      "Uma cÃ³pia Ã© salva no feed local",
-      "Ele fica disponÃ­vel apenas na view de prÃ©-lanÃ§amento",
-      "Requer aprovaÃ§Ã£o manual"
+      "Ele é sempre buscado do upstream a cada solicitação",
+      "Uma cópia é salva no feed local",
+      "Ele fica disponível apenas na view de pré-lançamento",
+      "Requer aprovação manual"
     ],
     correctIndex: 1,
-    explanation: "Quando um pacote de uma fonte upstream Ã© solicitado pela primeira vez, o Azure Artifacts faz o download e salva uma cÃ³pia no feed local. SolicitaÃ§Ãµes subsequentes sÃ£o servidas a partir da cÃ³pia em cache, proporcionando resiliÃªncia contra indisponibilidade do upstream."
+    explanation: "Quando um pacote de uma fonte upstream é solicitado pela primeira vez, o Azure Artifacts faz o download e salva uma cópia no feed local. Solicitações subsequentes são servidas a partir da cópia em cache, proporcionando resiliência contra indisponibilidade do upstream."
   }
 ]} />
 
@@ -467,7 +467,7 @@ Remova o pacote do GitHub:
 gh api --method DELETE /orgs/contoso/packages/npm/auth-sdk
 ```
 
-Se a exclusÃ£o por versÃ£o for necessÃ¡ria:
+Se a exclusão por versão for necessária:
 
 ```bash
 # List versions
@@ -487,14 +487,14 @@ az artifacts feed delete \
   --yes
 ```
 
-Remova a configuraÃ§Ã£o local do npm:
+Remova a configuração local do npm:
 
 ```bash
 rm .npmrc
 dotnet nuget remove source contoso-packages
 ```
 
-Remova os diretÃ³rios locais do projeto:
+Remova os diretórios locais do projeto:
 
 ```bash
 rm -rf contoso-auth-sdk

@@ -1,48 +1,48 @@
 ---
 sidebar_position: 3
-title: "Desafio 32: DetecÃ§Ã£o e RedaÃ§Ã£o de PII"
+title: "Desafio 32: Detecção e Redação de PII"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 32: DetecÃ§Ã£o e RedaÃ§Ã£o de PII
+# Desafio 32: Detecção e Redação de PII
 
 :::info Tempo Estimado
-**40 min** | **Custo**: $1-2 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes de NLP (15-20%)
+**40 min** | **Custo**: $1-2 (estimado) | **Domínio**: Implementar Soluções de NLP (15-20%)
 :::
 
 ## Habilidades do exame abordadas
-- Detectar PII (InformaÃ§Ãµes de IdentificaÃ§Ã£o Pessoal) em texto
-- Redigir dados sensÃ­veis de documentos
-- Configurar categorias de PII para detecÃ§Ã£o direcionada
+- Detectar PII (Informações de Identificação Pessoal) em texto
+- Redigir dados sensíveis de documentos
+- Configurar categorias de PII para detecção direcionada
 
-## VisÃ£o Geral
+## Visão Geral
 
-A DetecÃ§Ã£o de PII identifica e opcionalmente redige informaÃ§Ãµes sensÃ­veis em texto. As categorias incluem:
+A Detecção de PII identifica e opcionalmente redige informações sensíveis em texto. As categorias incluem:
 
 | Categoria | Exemplos |
 |-----------|----------|
 | `Person` | Nomes |
 | `Email` | email@domain.com |
 | `PhoneNumber` | +1-555-123-4567 |
-| `Address` | EndereÃ§os |
-| `SSN` | NÃºmeros de Seguro Social (EUA) |
-| `CreditCardNumber` | NÃºmeros de cartÃ£o de crÃ©dito |
-| `IPAddress` | EndereÃ§os IP |
+| `Address` | Endereços |
+| `SSN` | Números de Seguro Social (EUA) |
+| `CreditCardNumber` | Números de cartão de crédito |
+| `IPAddress` | Endereços IP |
 | `Organization` | Nomes de empresas (quando PII) |
 | `DateTime` | Datas de nascimento |
 
-A API retorna tanto as entidades detectadas quanto uma versÃ£o de **texto redigido** com PII substituÃ­do por rÃ³tulos de categoria de entidade.
+A API retorna tanto as entidades detectadas quanto uma versão de **texto redigido** com PII substituído por rótulos de categoria de entidade.
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura do Azure
 - Recurso Azure AI Language
 - Python 3.9+ ou .NET 8
 - Pacote: `azure-ai-textanalytics` (v5.3+)
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Detectar PII em Texto
 
@@ -133,7 +133,7 @@ curl -s "${ENDPOINT}/language/:analyze-text?api-version=2023-04-01" \
 </TabItem>
 </Tabs>
 
-### Tarefa 2: Filtrar por Categorias EspecÃ­ficas de PII
+### Tarefa 2: Filtrar por Categorias Específicas de PII
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -181,7 +181,7 @@ curl -s "${ENDPOINT}/language/:analyze-text?api-version=2023-04-01" \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: PII EspecÃ­fico de DomÃ­nio (PHI para SaÃºde)
+### Tarefa 3: PII Específico de Domínio (PHI para Saúde)
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -210,7 +210,7 @@ for result in results:
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Document 0:
@@ -238,71 +238,71 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| PII nÃ£o detectado | Entidade nÃ£o encontrada | Formato incomum ou baixa confianÃ§a | Diminua o threshold; verifique formatos suportados |
-| RedaÃ§Ã£o excessiva | Texto nÃ£o-PII removido | DetecÃ§Ã£o de categoria ampla | Use `categories_filter` para direcionar tipos especÃ­ficos de PII |
-| Categoria errada | Email detectado como URL | PadrÃµes ambÃ­guos | Categorias se sobrepÃµem; verifique confianÃ§a e use filtragem |
-| Formato de redaÃ§Ã£o errado | Asteriscos ao invÃ©s de rÃ³tulos | A redaÃ§Ã£o padrÃ£o usa caracteres `*` | O texto redigido substitui PII por asteriscos por padrÃ£o |
-| PHI nÃ£o detectado | Entidades de saÃºde nÃ£o encontradas | Usando domÃ­nio padrÃ£o | Defina `domain_filter="phi"` para detecÃ§Ã£o especÃ­fica de saÃºde |
+| PII não detectado | Entidade não encontrada | Formato incomum ou baixa confiança | Diminua o threshold; verifique formatos suportados |
+| Redação excessiva | Texto não-PII removido | Detecção de categoria ampla | Use `categories_filter` para direcionar tipos específicos de PII |
+| Categoria errada | Email detectado como URL | Padrões ambíguos | Categorias se sobrepõem; verifique confiança e use filtragem |
+| Formato de redação errado | Asteriscos ao invés de rótulos | A redação padrão usa caracteres `*` | O texto redigido substitui PII por asteriscos por padrão |
+| PHI não detectado | Entidades de saúde não encontradas | Usando domínio padrão | Defina `domain_filter="phi"` para detecção específica de saúde |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "O que a propriedade redacted_text contÃ©m?",
+    question: "O que a propriedade redacted_text contém?",
     options: [
-      "O texto original com PII detectado substituÃ­do por caracteres de asterisco correspondendo ao tamanho da entidade",
+      "O texto original com PII detectado substituído por caracteres de asterisco correspondendo ao tamanho da entidade",
       "O texto original com entidades PII destacadas",
-      "Um resumo do texto sem nenhuma informaÃ§Ã£o sensÃ­vel",
+      "Um resumo do texto sem nenhuma informação sensível",
       "O texto traduzido para um idioma diferente"
     ],
     correctAnswer: 0,
-    explanation: "redacted_text contÃ©m o texto original com todas as entidades PII detectadas substituÃ­das por caracteres de asterisco (*) correspondendo ao tamanho do texto PII original."
+    explanation: "redacted_text contém o texto original com todas as entidades PII detectadas substituídas por caracteres de asterisco (*) correspondendo ao tamanho do texto PII original."
   },
   {
-    question: "Como vocÃª limita a detecÃ§Ã£o de PII apenas a categorias especÃ­ficas como SSN e email?",
+    question: "Como você limita a detecção de PII apenas a categorias específicas como SSN e email?",
     options: [
       "Use um endpoint de API diferente para cada categoria",
       "Crie um modelo personalizado treinado apenas nessas categorias",
-      "A detecÃ§Ã£o de PII sempre retorna todas as categorias â€” filtre no lado do cliente",
-      "Passe um parÃ¢metro categories_filter com os valores de PiiEntityCategory desejados"
+      "A detecção de PII sempre retorna todas as categorias â€” filtre no lado do cliente",
+      "Passe um parâmetro categories_filter com os valores de PiiEntityCategory desejados"
     ],
     correctAnswer: 3,
-    explanation: "O parÃ¢metro categories_filter (SDK) ou piiCategories (REST) limita a detecÃ§Ã£o apenas Ã s categorias especificadas, reduzindo ruÃ­do de detecÃ§Ãµes indesejadas."
+    explanation: "O parâmetro categories_filter (SDK) ou piiCategories (REST) limita a detecção apenas Ã s categorias especificadas, reduzindo ruído de detecções indesejadas."
   },
   {
-    question: "Para que o filtro de domÃ­nio 'phi' Ã© usado?",
+    question: "Para que o filtro de domínio 'phi' é usado?",
     options: [
       "Detectar tentativas de phishing",
-      "Detectar Protected Health Information em texto mÃ©dico/de saÃºde",
-      "Detectar conteÃºdo filosÃ³fico",
-      "Detectar apenas endereÃ§os fÃ­sicos"
+      "Detectar Protected Health Information em texto médico/de saúde",
+      "Detectar conteúdo filosófico",
+      "Detectar apenas endereços físicos"
     ],
     correctAnswer: 1,
-    explanation: "O domÃ­nio 'phi' (Protected Health Information) ativa a detecÃ§Ã£o de PII especÃ­fica para saÃºde, incluindo nÃºmeros de prontuÃ¡rio mÃ©dico, datas de diagnÃ³stico e outras entidades relevantes para HIPAA."
+    explanation: "O domínio 'phi' (Protected Health Information) ativa a detecção de PII específica para saúde, incluindo números de prontuário médico, datas de diagnóstico e outras entidades relevantes para HIPAA."
   },
   {
-    question: "Quais informaÃ§Ãµes cada entidade PII detectada inclui?",
+    question: "Quais informações cada entidade PII detectada inclui?",
     options: [
       "Apenas o texto e a categoria",
-      "Apenas a posiÃ§Ã£o redigida",
-      "Texto, categoria, subcategoria, pontuaÃ§Ã£o de confianÃ§a, offset e tamanho",
-      "Texto, categoria e um ID Ãºnico de entidade"
+      "Apenas a posição redigida",
+      "Texto, categoria, subcategoria, pontuação de confiança, offset e tamanho",
+      "Texto, categoria e um ID único de entidade"
     ],
     correctAnswer: 2,
-    explanation: "Cada entidade PII inclui: o texto correspondido, categoria, subcategoria opcional, pontuaÃ§Ã£o de confianÃ§a (0.0-1.0), offset de caractere no documento e tamanho."
+    explanation: "Cada entidade PII inclui: o texto correspondido, categoria, subcategoria opcional, pontuação de confiança (0.0-1.0), offset de caractere no documento e tamanho."
   },
   {
-    question: "A detecÃ§Ã£o de PII pode processar mÃºltiplos documentos em uma Ãºnica requisiÃ§Ã£o?",
+    question: "A detecção de PII pode processar múltiplos documentos em uma única requisição?",
     options: [
-      "NÃ£o â€” apenas um documento por requisiÃ§Ã£o",
-      "Sim â€” documentos ilimitados por requisiÃ§Ã£o",
-      "Sim â€” operaÃ§Ãµes em lote suportam atÃ© 25 documentos por requisiÃ§Ã£o",
+      "Não â€” apenas um documento por requisição",
+      "Sim â€” documentos ilimitados por requisição",
+      "Sim â€” operações em lote suportam até 25 documentos por requisição",
       "Apenas se os documentos estiverem no mesmo idioma"
     ],
     correctAnswer: 2,
-    explanation: "A detecÃ§Ã£o de PII suporta operaÃ§Ãµes em lote com atÃ© 25 documentos (ou 125.000 caracteres totais) por requisiÃ§Ã£o. Cada documento pode estar em um idioma diferente."
+    explanation: "A detecção de PII suporta operações em lote com até 25 documentos (ou 125.000 caracteres totais) por requisição. Cada documento pode estar em um idioma diferente."
   }
 ]} />
 
@@ -314,6 +314,6 @@ az group delete --name rg-ai102-nlp --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral da detecÃ§Ã£o de PII](https://learn.microsoft.com/azure/ai-services/language-service/personally-identifiable-information/overview)
+- [Visão geral da detecção de PII](https://learn.microsoft.com/azure/ai-services/language-service/personally-identifiable-information/overview)
 - [Categorias de PII suportadas](https://learn.microsoft.com/azure/ai-services/language-service/personally-identifiable-information/concepts/entity-categories)
 - [Biblioteca cliente de Text Analytics](https://learn.microsoft.com/python/api/overview/azure/ai-textanalytics-readme)

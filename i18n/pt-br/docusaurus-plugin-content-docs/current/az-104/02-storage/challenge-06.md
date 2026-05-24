@@ -8,7 +8,7 @@ import SuccessChecklist from '@site/src/components/SuccessChecklist';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 06: seguranÃ§a de Storage & ciclo de vida
+# Desafio 06: segurança de Storage & ciclo de vida
 
 :::info Tempo e Custo Estimados
 
@@ -17,35 +17,35 @@ import TabItem from '@theme/TabItem';
 
 :::
 
-## IntroduÃ§Ã£o
+## Introdução
 
-A conta do Azure Storage da Contoso triplicou no Ãºltimo trimestre. O culpado: ninguÃ©m estÃ¡ limpando dados antigos. Arquivos de log de 2023 estÃ£o na camada Hot junto com dados de produÃ§Ã£o atuais, e nÃ£o hÃ¡ polÃ­tica automatizada para mover dados envelhecendo para camadas mais baratas. AlÃ©m disso, a equipe de seguranÃ§a quer acesso baseado em identidade para Azure Files em vez de chaves compartilhadas, e a equipe de conformidade precisa de dados replicados para uma segunda regiÃ£o.
+A conta do Azure Storage da Contoso triplicou no último trimestre. O culpado: ninguém está limpando dados antigos. Arquivos de log de 2023 estão na camada Hot junto com dados de produção atuais, e não há política automatizada para mover dados envelhecendo para camadas mais baratas. Além disso, a equipe de segurança quer acesso baseado em identidade para Azure Files em vez de chaves compartilhadas, e a equipe de conformidade precisa de dados replicados para uma segunda região.
 
-Sua missÃ£o: implementar polÃ­ticas de gerenciamento de ciclo de vida para controlar custos, configurar acesso baseado em identidade e configurar replicaÃ§Ã£o de objetos entre regiÃµes para continuidade de negÃ³cios.
+Sua missão: implementar políticas de gerenciamento de ciclo de vida para controlar custos, configurar acesso baseado em identidade e configurar replicação de objetos entre regiões para continuidade de negócios.
 
 ## Habilidades do exame cobertas
 
 - Configurar acesso baseado em identidade para Azure Files
-- Criar e configurar polÃ­ticas de acesso armazenadas
-- Configurar polÃ­ticas de gerenciamento de ciclo de vida
-- Configurar replicaÃ§Ã£o de objetos entre storage accounts
+- Criar e configurar políticas de acesso armazenadas
+- Configurar políticas de gerenciamento de ciclo de vida
+- Configurar replicação de objetos entre storage accounts
 
-## ReferÃªncia sysadmin â†” Azure
+## Referência sysadmin â†” Azure
 
-| On-Prem / Sysadmin | Equivalente no Azure | ObservaÃ§Ãµes |
+| On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
-| Cotas de servidor de arquivos & polÃ­ticas de arquivamento | Gerenciamento de ciclo de vida | Automatizar transiÃ§Ãµes de camada & exclusÃ£o |
-| DFS Replication | ReplicaÃ§Ã£o de objetos | ReplicaÃ§Ã£o assÃ­ncrona de blob entre regiÃµes |
-| ACLs NTFS em compartilhamentos de arquivos | Acesso baseado em identidade (Entra ID) | PermissÃµes por usuÃ¡rio/grupo no compartilhamento |
-| PolÃ­ticas de retenÃ§Ã£o de dados | Regras de gerenciamento de ciclo de vida | Limpeza automatizada de dados por idade |
-| Arquivamento em fita | Migrar para camada Archive apÃ³s N dias | Armazenamento frio, horas para recuperar |
-| Backup para site de DR | GRS + ReplicaÃ§Ã£o de objetos | RedundÃ¢ncia geogrÃ¡fica |
+| Cotas de servidor de arquivos & políticas de arquivamento | Gerenciamento de ciclo de vida | Automatizar transições de camada & exclusão |
+| DFS Replication | Replicação de objetos | Replicação assíncrona de blob entre regiões |
+| ACLs NTFS em compartilhamentos de arquivos | Acesso baseado em identidade (Entra ID) | Permissões por usuário/grupo no compartilhamento |
+| Políticas de retenção de dados | Regras de gerenciamento de ciclo de vida | Limpeza automatizada de dados por idade |
+| Arquivamento em fita | Migrar para camada Archive após N dias | Armazenamento frio, horas para recuperar |
+| Backup para site de DR | GRS + Replicação de objetos | Redundância geográfica |
 
-## DescriÃ§Ã£o
+## Descrição
 
 ### Parte 1: configurar o ambiente
 
-1. Criar duas storage accounts em regiÃµes diferentes (necessÃ¡rio para replicaÃ§Ã£o de objetos):
+1. Criar duas storage accounts em regiões diferentes (necessário para replicação de objetos):
 
 ```bash
 RG="rg-lifecycle-challenge"
@@ -75,7 +75,7 @@ az storage account create \
   --access-tier Hot
 ```
 
-2. Habilitar versionamento de blob em ambas as contas (necessÃ¡rio para replicaÃ§Ã£o de objetos) e habilitar change feed na origem:
+2. Habilitar versionamento de blob em ambas as contas (necessário para replicação de objetos) e habilitar change feed na origem:
 
 ```bash
 # Enable versioning on both accounts
@@ -112,13 +112,13 @@ echo "Important document for replication test" > repl-test.txt
 az storage blob upload --container-name replicated-data --file repl-test.txt --name repl-test.txt --connection-string "$CONN_PRIMARY"
 ```
 
-### Parte 2: polÃ­ticas de gerenciamento de ciclo de vida
+### Parte 2: políticas de gerenciamento de ciclo de vida
 
-4. Criar uma polÃ­tica de gerenciamento de ciclo de vida com as seguintes regras:
+4. Criar uma política de gerenciamento de ciclo de vida com as seguintes regras:
 
-:::info InformaÃ§Ã£o
+:::info Informação
 
-**Gerenciamento de ciclo de vida** transiciona automaticamente blobs entre camadas e os exclui com base na idade. Esta Ã© a principal ferramenta para controlar custos de armazenamento em escala.
+**Gerenciamento de ciclo de vida** transiciona automaticamente blobs entre camadas e os exclui com base na idade. Esta é a principal ferramenta para controlar custos de armazenamento em escala.
 
 :::
 <Tabs>
@@ -217,23 +217,23 @@ az storage account management-policy create \
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. VÃ¡ para sua **Storage account** â†’ **Data management** â†’ **Lifecycle management**
+1. Vá para sua **Storage account** â†’ **Data management** â†’ **Lifecycle management**
 2. Clique em **+ Add a rule**
 3. **Regra 1**: Nome: `MoveToCoolAfter30Days`
    - Escopo: Limitar blobs com filtros â†’ Prefixo: `app-logs/`
-   - Base blobs: Mover para armazenamento Cool â†’ 30 dias apÃ³s Ãºltima modificaÃ§Ã£o
+   - Base blobs: Mover para armazenamento Cool â†’ 30 dias após última modificação
 4. **Regra 2**: Nome: `MoveToArchiveAfter90Days`
-   - Mesmo filtro â†’ Mover para armazenamento Archive â†’ 90 dias apÃ³s Ãºltima modificaÃ§Ã£o
+   - Mesmo filtro â†’ Mover para armazenamento Archive â†’ 90 dias após última modificação
 5. **Regra 3**: Nome: `DeleteAfter365Days`
-   - Mesmo filtro â†’ Excluir o blob â†’ 365 dias apÃ³s Ãºltima modificaÃ§Ã£o
+   - Mesmo filtro â†’ Excluir o blob â†’ 365 dias após última modificação
 6. **Regra 4**: Nome: `CleanupSnapshots`
-   - Sem filtro de prefixo â†’ Excluir snapshots â†’ 90 dias apÃ³s criaÃ§Ã£o
-   - Excluir versÃµes â†’ 90 dias apÃ³s criaÃ§Ã£o
+   - Sem filtro de prefixo â†’ Excluir snapshots â†’ 90 dias após criação
+   - Excluir versões â†’ 90 dias após criação
 
 </TabItem>
 </Tabs>
 
-5. Verificar a polÃ­tica de ciclo de vida:
+5. Verificar a política de ciclo de vida:
 
 ```bash
 az storage account management-policy show \
@@ -246,7 +246,7 @@ az storage account management-policy show \
 
 :::tip Dica
 
-O acesso baseado em identidade permite que usuÃ¡rios se autentiquem em compartilhamentos Azure Files usando suas credenciais do Entra ID em vez de chaves de storage account. Isso Ã© mais seguro e permite permissÃµes por usuÃ¡rio/grupo no estilo NTFS.
+O acesso baseado em identidade permite que usuários se autentiquem em compartilhamentos Azure Files usando suas credenciais do Entra ID em vez de chaves de storage account. Isso é mais seguro e permite permissões por usuário/grupo no estilo NTFS.
 
 :::
 6. Criar um compartilhamento de arquivos para acesso baseado em identidade:
@@ -259,7 +259,7 @@ az storage share-rm create \
   --quota 50
 ```
 
-7. Habilitar autenticaÃ§Ã£o do Entra ID Domain Services para a storage account:
+7. Habilitar autenticação do Entra ID Domain Services para a storage account:
 
 <Tabs>
 <TabItem value="cli" label="Azure CLI">
@@ -274,20 +274,20 @@ az storage account update \
 
 :::note
 
-A autenticaÃ§Ã£o completa via Entra ID Kerberos para Azure Files requer configuraÃ§Ã£o adicional incluindo a configuraÃ§Ã£o do ticket de concessÃ£o de ticket Kerberos e a configuraÃ§Ã£o de permissÃµes no nÃ­vel de compartilhamento e no nÃ­vel de diretÃ³rio/arquivo. Para este desafio, habilitar o sinalizador de recurso Ã© suficiente.
+A autenticação completa via Entra ID Kerberos para Azure Files requer configuração adicional incluindo a configuração do ticket de concessão de ticket Kerberos e a configuração de permissões no nível de compartilhamento e no nível de diretório/arquivo. Para este desafio, habilitar o sinalizador de recurso é suficiente.
 
 :::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. VÃ¡ para sua **Storage account** â†’ **File shares** â†’ **Active Directory**
+1. Vá para sua **Storage account** â†’ **File shares** â†’ **Active Directory**
 2. Em **Identity-based access**, clique em **Set up** ao lado de **Microsoft Entra Kerberos**
-3. Siga o assistente para habilitar a autenticaÃ§Ã£o do Entra ID
+3. Siga o assistente para habilitar a autenticação do Entra ID
 
 </TabItem>
 </Tabs>
 
-8. Atribuir permissÃµes RBAC no nÃ­vel do compartilhamento:
+8. Atribuir permissões RBAC no nível do compartilhamento:
 
 ```bash
 # Assign "Storage file Data SMB share contributor" role to a user or group
@@ -303,18 +303,18 @@ STORAGE_ID=$(az storage account show --name $STORAGE_PRIMARY --resource-group $R
 # --scope "$STORAGE_ID/fileServices/default/fileshares/secure-share"
 ```
 
-:::info InformaÃ§Ã£o
+:::info Informação
 
-O acesso baseado em identidade do Azure Files usa um **modelo de permissÃ£o de duas camadas**:
-1. **PermissÃµes no nÃ­vel do compartilhamento**: AtribuÃ­das via RBAC (Storage File Data SMB Share Reader/Contributor/Elevated Contributor)
-2. **PermissÃµes no nÃ­vel de diretÃ³rio/arquivo**: Configuradas usando ACLs NTFS do Windows apÃ³s montar o compartilhamento
+O acesso baseado em identidade do Azure Files usa um **modelo de permissão de duas camadas**:
+1. **Permissões no nível do compartilhamento**: Atribuídas via RBAC (Storage File Data SMB Share Reader/Contributor/Elevated Contributor)
+2. **Permissões no nível de diretório/arquivo**: Configuradas usando ACLs NTFS do Windows após montar o compartilhamento
 
-A permissÃ£o efetiva Ã© a **interseÃ§Ã£o** de ambas as camadas | um usuÃ¡rio precisa de acesso tanto no nÃ­vel do compartilhamento quanto no nÃ­vel do diretÃ³rio.
+A permissão efetiva é a **interseção** de ambas as camadas | um usuário precisa de acesso tanto no nível do compartilhamento quanto no nível do diretório.
 
 :::
-### Parte 4: replicaÃ§Ã£o de objetos
+### Parte 4: replicação de objetos
 
-9. Configurar replicaÃ§Ã£o de objetos da conta primÃ¡ria para a conta secundÃ¡ria:
+9. Configurar replicação de objetos da conta primária para a conta secundária:
 
 <Tabs>
 <TabItem value="cli" label="Azure CLI">
@@ -350,17 +350,17 @@ az storage account or-policy create \
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. VÃ¡ para a storage account de **destino** â†’ **Data management** â†’ **Object replication**
+1. Vá para a storage account de **destino** â†’ **Data management** â†’ **Object replication**
 2. Clique em **Set up replication rules**
 3. Selecione a storage account de **origem**
 4. Emparelhe os containers: `replicated-data` (origem) â†’ `replicated-data` (destino)
-5. Opcionalmente filtre por tempo de criaÃ§Ã£o ou prefixo
+5. Opcionalmente filtre por tempo de criação ou prefixo
 6. Clique em **Save**
 
 </TabItem>
 </Tabs>
 
-10. Verificar que a replicaÃ§Ã£o estÃ¡ configurada:
+10. Verificar que a replicação está configurada:
 
 ```bash
 # Check replication policies on the destination account
@@ -379,14 +379,14 @@ az storage blob list --container-name replicated-data --connection-string "$CONN
   --query "[].{Name:name, LastModified:properties.lastModified}" -o table
 ```
 
-:::warning AtenÃ§Ã£o
+:::warning Atenção
 
-A replicaÃ§Ã£o de objetos Ã© **assÃ­ncrona**. Pode levar vÃ¡rios minutos para os blobs aparecerem na conta de destino. NÃ£o hÃ¡ SLA sobre o tempo de replicaÃ§Ã£o para contas padrÃ£o.
+A replicação de objetos é **assíncrona**. Pode levar vários minutos para os blobs aparecerem na conta de destino. Não há SLA sobre o tempo de replicação para contas padrão.
 
 :::
-### Parte 5: polÃ­ticas de acesso armazenadas (Revisitadas)
+### Parte 5: políticas de acesso armazenadas (Revisitadas)
 
-12. Criar polÃ­ticas de acesso armazenadas para controle granular:
+12. Criar políticas de acesso armazenadas para controle granular:
 
 ```bash
 END_DATE=$(date -u -d "+7 days" '+%Y-%m-%dT%H:%MZ' 2>/dev/null || date -u -v+7d '+%Y-%m-%dT%H:%MZ')
@@ -408,7 +408,7 @@ az storage container policy create \
   --connection-string "$CONN_PRIMARY"
 ```
 
-13. Gerar tokens SAS a partir das polÃ­ticas de acesso armazenadas:
+13. Gerar tokens SAS a partir das políticas de acesso armazenadas:
 
 ```bash
 # SAS from the LogReadersPolicy
@@ -427,7 +427,7 @@ az storage blob list --container-name app-logs \
   --query "[].name" -o tsv
 ```
 
-14. Revogar acesso excluindo a polÃ­tica de acesso armazenada:
+14. Revogar acesso excluindo a política de acesso armazenada:
 
 ```bash
 # This immediately invalidates all SAS tokens linked to this policy
@@ -437,38 +437,38 @@ az storage container policy delete \
   --connection-string "$CONN_PRIMARY"
 ```
 
-## CritÃ©rios de sucesso
+## Critérios de sucesso
 
 <SuccessChecklist
   storageKey="az104-challenge-06"
   items={[
-    "Duas storage accounts existem em regiÃµes diferentes com versionamento habilitado",
-    "PolÃ­tica de gerenciamento de ciclo de vida tem 4 regras: Cool apÃ³s 30d, Archive apÃ³s 90d, Excluir apÃ³s 365d, Limpar snapshots apÃ³s 90d",
-    "PolÃ­tica de ciclo de vida tem como alvo o prefixo app-logs/",
+    "Duas storage accounts existem em regiões diferentes com versionamento habilitado",
+    "Política de gerenciamento de ciclo de vida tem 4 regras: Cool após 30d, Archive após 90d, Excluir após 365d, Limpar snapshots após 90d",
+    "Política de ciclo de vida tem como alvo o prefixo app-logs/",
     "Compartilhamento de arquivos secure-share existe com Entra ID Kerberos habilitado",
-    "ReplicaÃ§Ã£o de objetos estÃ¡ configurada da primÃ¡ria para a secundÃ¡ria para o container replicated-data",
-    "ReplicaÃ§Ã£o pode ser verificada (blob aparece no destino)",
-    "PolÃ­ticas de acesso armazenadas criadas e testadas",
-    "RevogaÃ§Ã£o de SAS via exclusÃ£o de polÃ­tica demonstrada"
+    "Replicação de objetos está configurada da primária para a secundária para o container replicated-data",
+    "Replicação pode ser verificada (blob aparece no destino)",
+    "Políticas de acesso armazenadas criadas e testadas",
+    "Revogação de SAS via exclusão de política demonstrada"
   ]}
 />
 ## Dicas
 
 <details>
-<summary>Dica 1: CondiÃ§Ãµes de regra de polÃ­tica de ciclo de vida</summary>
+<summary>Dica 1: Condições de regra de política de ciclo de vida</summary>
 
-Regras de ciclo de vida suportam estas condiÃ§Ãµes:
+Regras de ciclo de vida suportam estas condições:
 
-| CondiÃ§Ã£o | DescriÃ§Ã£o | Exemplo |
+| Condição | Descrição | Exemplo |
 |----------|-----------|---------|
-| `daysAfterModificationGreaterThan` | Dias desde a Ãºltima modificaÃ§Ã£o do blob | Mover para Cool apÃ³s 30 dias sem atividade |
-| `daysAfterCreationGreaterThan` | Dias desde a criaÃ§Ã£o do blob | Excluir arquivos temporÃ¡rios apÃ³s 7 dias |
-| `daysAfterLastAccessTimeGreaterThan` | Dias desde a Ãºltima leitura (requer rastreamento de acesso) | Arquivar dados nÃ£o lidos apÃ³s 60 dias |
-| `daysAfterLastTierChangeGreaterThan` | Dias desde a Ãºltima mudanÃ§a de camada | Prevenir mudanÃ§as rÃ¡pidas de camada |
+| `daysAfterModificationGreaterThan` | Dias desde a última modificação do blob | Mover para Cool após 30 dias sem atividade |
+| `daysAfterCreationGreaterThan` | Dias desde a criação do blob | Excluir arquivos temporários após 7 dias |
+| `daysAfterLastAccessTimeGreaterThan` | Dias desde a última leitura (requer rastreamento de acesso) | Arquivar dados não lidos após 60 dias |
+| `daysAfterLastTierChangeGreaterThan` | Dias desde a última mudança de camada | Prevenir mudanças rápidas de camada |
 
 :::tip Dica
 
-Para usar `daysAfterLastAccessTimeGreaterThan`, vocÃª deve habilitar o **rastreamento de tempo de Ãºltimo acesso** na storage account:
+Para usar `daysAfterLastAccessTimeGreaterThan`, você deve habilitar o **rastreamento de tempo de último acesso** na storage account:
 ```bash
 az storage account blob-service-properties update \
   --account-name $STORAGE_PRIMARY --resource-group $RG \
@@ -479,33 +479,33 @@ az storage account blob-service-properties update \
 </details>
 
 <details>
-<summary>Dica 2: PrÃ©-requisitos para replicaÃ§Ã£o de objetos</summary>
+<summary>Dica 2: Pré-requisitos para replicação de objetos</summary>
 
-A replicaÃ§Ã£o de objetos requer:
+A replicação de objetos requer:
 1. **Versionamento de blob** habilitado em ambas as contas de origem e destino
 2. **Change feed** habilitado na conta de origem
 3. Ambas as contas devem ser **StorageV2** (General Purpose v2) ou **BlobStorage**
-4. As contas podem estar em **regiÃµes diferentes** (replicaÃ§Ã£o entre regiÃµes)
-5. As contas podem estar em **assinaturas diferentes** (replicaÃ§Ã£o entre assinaturas)
-6. As contas **nÃ£o** devem ter uma polÃ­tica de imutabilidade no container de destino
+4. As contas podem estar em **regiões diferentes** (replicação entre regiões)
+5. As contas podem estar em **assinaturas diferentes** (replicação entre assinaturas)
+6. As contas **não** devem ter uma política de imutabilidade no container de destino
 
-A replicaÃ§Ã£o de objetos **nÃ£o** suporta:
-- Snapshots de blob (apenas a versÃ£o atual Ã© replicada)
+A replicação de objetos **não** suporta:
+- Snapshots de blob (apenas a versão atual é replicada)
 - Blobs na camada Archive
 - Blobs criptografados com chaves fornecidas pelo cliente
 
 </details>
 
 <details>
-<summary>Dica 3: ReferÃªncia de funÃ§Ãµes de acesso baseado em identidade</summary>
+<summary>Dica 3: Referência de funções de acesso baseado em identidade</summary>
 
-| FunÃ§Ã£o RBAC | NÃ­vel de PermissÃ£o |
+| Função RBAC | Nível de Permissão |
 |-------------|-------------------|
-| Storage File Data SMB Share Reader | Acesso de leitura a arquivos e diretÃ³rios |
-| Storage File Data SMB Share Contributor | Acesso de leitura, escrita, exclusÃ£o a arquivos e diretÃ³rios |
-| Storage File Data SMB Share Elevated Contributor | Acesso de leitura, escrita, exclusÃ£o, modificar ACLs NTFS |
+| Storage File Data SMB Share Reader | Acesso de leitura a arquivos e diretórios |
+| Storage File Data SMB Share Contributor | Acesso de leitura, escrita, exclusão a arquivos e diretórios |
+| Storage File Data SMB Share Elevated Contributor | Acesso de leitura, escrita, exclusão, modificar ACLs NTFS |
 
-Atribua essas funÃ§Ãµes no **escopo do compartilhamento de arquivos** (nÃ£o no escopo da storage account):
+Atribua essas funções no **escopo do compartilhamento de arquivos** (não no escopo da storage account):
 ```text
 /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Storage/storageAccounts/{account}/fileServices/default/fileshares/{share}
 ```
@@ -513,18 +513,18 @@ Atribua essas funÃ§Ãµes no **escopo do compartilhamento de arquivos** (nÃ£
 </details>
 
 <details>
-<summary>Dica 4: Limites da polÃ­tica de ciclo de vida</summary>
+<summary>Dica 4: Limites da política de ciclo de vida</summary>
 
-- MÃ¡ximo de **100 regras** por polÃ­tica
-- Cada regra pode ter mÃºltiplas aÃ§Ãµes (transiÃ§Ãµes de camada, exclusÃ£o)
-- AÃ§Ãµes sÃ£o processadas uma vez por dia (nÃ£o em tempo real)
-- Filtros de prefixo correspondem desde o inÃ­cio do nome do blob
-- VocÃª pode combinar filtros de prefixo com filtros de tag de Ã­ndice de blob
+- Máximo de **100 regras** por política
+- Cada regra pode ter múltiplas ações (transições de camada, exclusão)
+- Ações são processadas uma vez por dia (não em tempo real)
+- Filtros de prefixo correspondem desde o início do nome do blob
+- Você pode combinar filtros de prefixo com filtros de tag de índice de blob
 
 </details>
 
 <details>
-<summary>Dica 5: SoluÃ§Ã£o de problemas de replicaÃ§Ã£o de objetos</summary>
+<summary>Dica 5: Solução de problemas de replicação de objetos</summary>
 
 ```bash
 # Check replication status on a specific blob
@@ -547,106 +547,106 @@ az storage account or-policy rule list --account-name $STORAGE_SECONDARY --resou
 
 ## Recursos de aprendizado
 
-- [VisÃ£o geral do gerenciamento de ciclo de vida](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
-- [Configurar polÃ­tica de gerenciamento de ciclo de vida](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-policy-configure)
-- [VisÃ£o geral da replicaÃ§Ã£o de objetos](https://learn.microsoft.com/en-us/azure/storage/blobs/object-replication-overview)
+- [Visão geral do gerenciamento de ciclo de vida](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview)
+- [Configurar política de gerenciamento de ciclo de vida](https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-policy-configure)
+- [Visão geral da replicação de objetos](https://learn.microsoft.com/en-us/azure/storage/blobs/object-replication-overview)
 - [Acesso baseado em identidade para Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-active-directory-overview)
-- [PolÃ­ticas de acesso armazenadas](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy)
+- [Políticas de acesso armazenadas](https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy)
 - [Configurar Microsoft Entra Kerberos para Azure Files](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-identity-auth-azure-active-directory-enable)
 
 ## Quebra & conserta
 
-ApÃ³s completar o desafio, tente estes cenÃ¡rios de soluÃ§Ã£o de problemas:
+Após completar o desafio, tente estes cenários de solução de problemas:
 
-1. **Conflito de polÃ­tica de ciclo de vida**: Crie uma regra que move blobs para Archive apÃ³s 30 dias E outra regra que move blobs para Cool apÃ³s 60 dias. O que acontece? (A regra de Archive vence porque age primeiro. O ciclo de vida aplica a aÃ§Ã£o mais agressiva para uma determinada idade.)
+1. **Conflito de política de ciclo de vida**: Crie uma regra que move blobs para Archive após 30 dias E outra regra que move blobs para Cool após 60 dias. O que acontece? (A regra de Archive vence porque age primeiro. O ciclo de vida aplica a ação mais agressiva para uma determinada idade.)
 
-2. **ReplicaÃ§Ã£o nÃ£o estÃ¡ funcionando**: A replicaÃ§Ã£o de objetos estÃ¡ configurada mas os blobs nÃ£o estÃ£o aparecendo no destino. Verifique:
-   - O versionamento estÃ¡ habilitado em **ambas** as contas?
-   - O change feed estÃ¡ habilitado na conta de **origem**?
-   - O blob estÃ¡ na camada Archive? (Blobs arquivados nÃ£o sÃ£o replicados.)
-   - Tempo suficiente se passou? (A replicaÃ§Ã£o Ã© assÃ­ncrona, pode levar minutos.)
+2. **Replicação não está funcionando**: A replicação de objetos está configurada mas os blobs não estão aparecendo no destino. Verifique:
+   - O versionamento está habilitado em **ambas** as contas?
+   - O change feed está habilitado na conta de **origem**?
+   - O blob está na camada Archive? (Blobs arquivados não são replicados.)
+   - Tempo suficiente se passou? (A replicação é assíncrona, pode levar minutos.)
 
-3. **Token SAS ainda funciona apÃ³s exclusÃ£o da polÃ­tica**: VocÃª excluiu uma polÃ­tica de acesso armazenada, mas o token SAS daquela polÃ­tica deveria parar de funcionar. Teste isso. Se ainda funcionar, verifique se o SAS foi gerado com uma expiraÃ§Ã£o explÃ­cita (SAS autÃ´nomo) ou se era realmente vinculado Ã  polÃ­tica.
+3. **Token SAS ainda funciona após exclusão da política**: Você excluiu uma política de acesso armazenada, mas o token SAS daquela política deveria parar de funcionar. Teste isso. Se ainda funcionar, verifique se o SAS foi gerado com uma expiração explícita (SAS autônomo) ou se era realmente vinculado Ã  política.
 
-4. **Acesso baseado em identidade negado**: Um usuÃ¡rio tem `Storage File Data SMB Share Contributor` no nÃ­vel do compartilhamento mas recebe "Access Denied" ao abrir uma pasta. O que estÃ¡ errado? (ACLs NTFS no nÃ­vel do diretÃ³rio podem estar restringindo o acesso | lembre-se do modelo de duas camadas.)
+4. **Acesso baseado em identidade negado**: Um usuário tem `Storage File Data SMB Share Contributor` no nível do compartilhamento mas recebe "Access Denied" ao abrir uma pasta. O que está errado? (ACLs NTFS no nível do diretório podem estar restringindo o acesso | lembre-se do modelo de duas camadas.)
 
 ## Teste seus conhecimentos
 
 <details>
-<summary>1. Quais sÃ£o as condiÃ§Ãµes que vocÃª pode usar em regras de gerenciamento de ciclo de vida?</summary>
+<summary>1. Quais são as condições que você pode usar em regras de gerenciamento de ciclo de vida?</summary>
 
-**CondiÃ§Ãµes de base blob**:
-- `daysAfterModificationGreaterThan` | dias desde a Ãºltima modificaÃ§Ã£o
-- `daysAfterCreationGreaterThan` | dias desde a criaÃ§Ã£o
-- `daysAfterLastAccessTimeGreaterThan` | dias desde a Ãºltima leitura (requer rastreamento de acesso)
-- `daysAfterLastTierChangeGreaterThan` | dias desde a Ãºltima mudanÃ§a de camada
+**Condições de base blob**:
+- `daysAfterModificationGreaterThan` | dias desde a última modificação
+- `daysAfterCreationGreaterThan` | dias desde a criação
+- `daysAfterLastAccessTimeGreaterThan` | dias desde a última leitura (requer rastreamento de acesso)
+- `daysAfterLastTierChangeGreaterThan` | dias desde a última mudança de camada
 
-**CondiÃ§Ãµes de snapshot/versÃ£o**:
-- `daysAfterCreationGreaterThan` | dias desde a criaÃ§Ã£o do snapshot/versÃ£o
+**Condições de snapshot/versão**:
+- `daysAfterCreationGreaterThan` | dias desde a criação do snapshot/versão
 
-**OpÃ§Ãµes de filtro**:
+**Opções de filtro**:
 - `blobTypes` | filtrar por block blob, append blob
 - `prefixMatch` | filtrar por prefixo do nome do blob (ex: `logs/`)
-- `blobIndexMatch` | filtrar por tags de Ã­ndice de blob
+- `blobIndexMatch` | filtrar por tags de índice de blob
 
-**Dica para o exame**: Saiba a diferenÃ§a entre `daysAfterModification` e `daysAfterCreation`. Modification Ã© redefinido sempre que o blob Ã© escrito; creation Ã© definido uma vez.
+**Dica para o exame**: Saiba a diferença entre `daysAfterModification` e `daysAfterCreation`. Modification é redefinido sempre que o blob é escrito; creation é definido uma vez.
 
 </details>
 
 <details>
-<summary>2. Quais sÃ£o os prÃ©-requisitos para replicaÃ§Ã£o de objetos?</summary>
+<summary>2. Quais são os pré-requisitos para replicação de objetos?</summary>
 
 1. **Versionamento de blob** deve estar habilitado em ambas as contas de origem e destino
 2. **Change feed** deve estar habilitado na conta de origem
 3. Ambas as contas devem ser **General Purpose v2** (StorageV2) ou BlobStorage
-4. Origem e destino podem estar em **regiÃµes diferentes** e **assinaturas diferentes**
-5. O container de destino **nÃ£o** deve ter uma polÃ­tica de imutabilidade de blob
-6. Blobs na camada **Archive** **nÃ£o** sÃ£o replicados
-7. Blobs criptografados com **chaves fornecidas pelo cliente** nÃ£o sÃ£o replicados
-8. O `AllowCrossTenantReplication` da conta de origem deve ser true para cenÃ¡rios entre tenants
+4. Origem e destino podem estar em **regiões diferentes** e **assinaturas diferentes**
+5. O container de destino **não** deve ter uma política de imutabilidade de blob
+6. Blobs na camada **Archive** **não** são replicados
+7. Blobs criptografados com **chaves fornecidas pelo cliente** não são replicados
+8. O `AllowCrossTenantReplication` da conta de origem deve ser true para cenários entre tenants
 
 </details>
 
 <details>
-<summary>3. Qual Ã© o modelo de permissÃ£o de duas camadas para acesso baseado em identidade do Azure Files?</summary>
+<summary>3. Qual é o modelo de permissão de duas camadas para acesso baseado em identidade do Azure Files?</summary>
 
-**Camada 1: PermissÃµes no nÃ­vel do compartilhamento** (RBAC)
-- AtribuÃ­das usando funÃ§Ãµes Azure RBAC no escopo do compartilhamento de arquivos
-- FunÃ§Ãµes: Reader, Contributor, Elevated Contributor
+**Camada 1: Permissões no nível do compartilhamento** (RBAC)
+- Atribuídas usando funções Azure RBAC no escopo do compartilhamento de arquivos
+- Funções: Reader, Contributor, Elevated Contributor
 - Controla quem pode acessar o compartilhamento
 
-**Camada 2: PermissÃµes no nÃ­vel de diretÃ³rio/arquivo** (ACLs NTFS)
+**Camada 2: Permissões no nível de diretório/arquivo** (ACLs NTFS)
 - Configuradas usando ferramentas de ACL do Windows (icacls, propriedades do Windows Explorer)
 - Requer montar o compartilhamento primeiro
 - Controla acesso granular dentro do compartilhamento
 
-**PermissÃ£o efetiva = interseÃ§Ã£o de ambas as camadas**
+**Permissão efetiva = interseção de ambas as camadas**
 
-Um usuÃ¡rio deve ter acesso tanto no nÃ­vel do compartilhamento QUANTO no nÃ­vel do diretÃ³rio. Se RBAC concede Contributor mas ACLs NTFS negam leitura em uma pasta, o usuÃ¡rio nÃ£o pode ler aquela pasta.
-
-</details>
-
-<details>
-<summary>4. Com que frequÃªncia o gerenciamento de ciclo de vida Ã© executado?</summary>
-
-O gerenciamento de ciclo de vida Ã© executado **uma vez por dia**. O horÃ¡rio exato nÃ£o Ã© garantido | o Azure processa regras de ciclo de vida pelo menos uma vez a cada 24 horas, mas nÃ£o hÃ¡ SLA sobre o horÃ¡rio exato de execuÃ§Ã£o.
-
-Para uma polÃ­tica recÃ©m-criada ou modificada, a primeira execuÃ§Ã£o pode levar atÃ© **24 horas** para iniciar. Depois disso, Ã© executada diariamente.
-
-**Importante**: Isso significa que o gerenciamento de ciclo de vida **nÃ£o** Ã© adequado para gerenciamento de dados em tempo real. Se vocÃª precisa de mudanÃ§as de camada imediatas, use `az storage blob set-tier` ou a REST API diretamente.
+Um usuário deve ter acesso tanto no nível do compartilhamento QUANTO no nível do diretório. Se RBAC concede Contributor mas ACLs NTFS negam leitura em uma pasta, o usuário não pode ler aquela pasta.
 
 </details>
 
 <details>
-<summary>5. VocÃª pode replicar blobs entre storage accounts em assinaturas diferentes?</summary>
+<summary>4. Com que frequência o gerenciamento de ciclo de vida é executado?</summary>
 
-**Sim!** A replicaÃ§Ã£o de objetos suporta:
-- ReplicaÃ§Ã£o na **mesma regiÃ£o**
-- ReplicaÃ§Ã£o **entre regiÃµes**
-- ReplicaÃ§Ã£o **entre assinaturas**
-- ReplicaÃ§Ã£o **entre tenants** (se `AllowCrossTenantReplication` estiver habilitado)
+O gerenciamento de ciclo de vida é executado **uma vez por dia**. O horário exato não é garantido | o Azure processa regras de ciclo de vida pelo menos uma vez a cada 24 horas, mas não há SLA sobre o horário exato de execução.
 
-A conta de destino cria a polÃ­tica de replicaÃ§Ã£o e especÃ­fica a conta de origem. Ambas as contas devem atender aos prÃ©-requisitos (versionamento, change feed, etc.).
+Para uma política recém-criada ou modificada, a primeira execução pode levar até **24 horas** para iniciar. Depois disso, é executada diariamente.
+
+**Importante**: Isso significa que o gerenciamento de ciclo de vida **não** é adequado para gerenciamento de dados em tempo real. Se você precisa de mudanças de camada imediatas, use `az storage blob set-tier` ou a REST API diretamente.
+
+</details>
+
+<details>
+<summary>5. Você pode replicar blobs entre storage accounts em assinaturas diferentes?</summary>
+
+**Sim!** A replicação de objetos suporta:
+- Replicação na **mesma região**
+- Replicação **entre regiões**
+- Replicação **entre assinaturas**
+- Replicação **entre tenants** (se `AllowCrossTenantReplication` estiver habilitado)
+
+A conta de destino cria a política de replicação e específica a conta de origem. Ambas as contas devem atender aos pré-requisitos (versionamento, change feed, etc.).
 
 </details>
 
@@ -663,4 +663,4 @@ rm -f log-*.txt repl-test.txt new-repl-data.txt
 
 ---
 
-**PrÃ³ximo**: [Desafio 07 | ARM Templates & Bicep](/docs/az-104/compute/challenge-07)
+**Próximo**: [Desafio 07 | ARM Templates & Bicep](/docs/az-104/compute/challenge-07)

@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 # Desafio 22: Azure AI Agent Service
 
 :::info Tempo Estimado
-**60 min** | **Custo**: $3-8 (estimado) | **DomÃ­nio**: Implementar SoluÃ§Ãµes AgÃªnticas (5-10%)
+**60 min** | **Custo**: $3-8 (estimado) | **Domínio**: Implementar Soluções Agênticas (5-10%)
 :::
 
 ## Habilidades do exame cobertas
@@ -18,19 +18,19 @@ import TabItem from '@theme/TabItem';
 - Configurar ferramentas do agente (file search, code interpreter)
 - Gerenciar threads e runs para conversas do agente
 
-## VisÃ£o Geral
+## Visão Geral
 
-O Azure AI Agent Service fornece uma plataforma gerenciada para construir agentes de IA. Ele gerencia threads, execuÃ§Ã£o de ferramentas (file search, code interpreter, funÃ§Ãµes personalizadas), ciclo de vida de runs e gerenciamento de arquivos.
+O Azure AI Agent Service fornece uma plataforma gerenciada para construir agentes de IA. Ele gerencia threads, execução de ferramentas (file search, code interpreter, funções personalizadas), ciclo de vida de runs e gerenciamento de arquivos.
 
-A arquitetura: criar um agente â†’ criar uma thread â†’ adicionar mensagens â†’ criar um run â†’ fazer polling atÃ© completar â†’ ler respostas.
+A arquitetura: criar um agente â†’ criar uma thread â†’ adicionar mensagens â†’ criar um run â†’ fazer polling até completar â†’ ler respostas.
 
-## PrÃ©-requisitos
+## Pré-requisitos
 - Assinatura Azure
 - Hub e projeto Azure AI Foundry
 - Python 3.9+ ou .NET 8
 - Pacotes: `azure-ai-projects`, `azure-identity`
 
-## ImplementaÃ§Ã£o
+## Implementação
 
 ### Tarefa 1: Configurar o Projeto Azure AI Foundry
 
@@ -199,7 +199,7 @@ project_client.agents.delete_agent(code_agent.id)
 </TabItem>
 </Tabs>
 
-## SaÃ­da Esperada
+## Saída Esperada
 
 ```text
 Created agent: asst_ABC123
@@ -215,19 +215,19 @@ Monthly Cost Breakdown:
 
 ## Quebra & conserta
 
-| CenÃ¡rio | Sintoma | Causa Raiz | CorreÃ§Ã£o |
+| Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Run travado em `in_progress` | Timeout | IndexaÃ§Ã£o de arquivo grande ou latÃªncia do modelo | Use `create_and_process_run` com timeout; verifique o status do vector store |
-| Status `requires_action` | Run pausa | Agente precisa de resultados de chamada de funÃ§Ã£o | Envie outputs de ferramentas via `submit_tool_outputs` |
-| File search nÃ£o retorna nada | Resposta genÃ©rica | Arquivo ainda nÃ£o indexado | Aguarde o status `completed` do vector store antes de executar |
-| 404 na thread | Thread nÃ£o encontrada | ID da thread incorreto ou deletado | Verifique o ID da thread; threads persistem atÃ© serem explicitamente deletadas |
-| Erro de deployment do modelo | CriaÃ§Ã£o do agente falha | Modelo nÃ£o implantado no projeto | Implante o modelo via portal AI Foundry primeiro |
+| Run travado em `in_progress` | Timeout | Indexação de arquivo grande ou latência do modelo | Use `create_and_process_run` com timeout; verifique o status do vector store |
+| Status `requires_action` | Run pausa | Agente precisa de resultados de chamada de função | Envie outputs de ferramentas via `submit_tool_outputs` |
+| File search não retorna nada | Resposta genérica | Arquivo ainda não indexado | Aguarde o status `completed` do vector store antes de executar |
+| 404 na thread | Thread não encontrada | ID da thread incorreto ou deletado | Verifique o ID da thread; threads persistem até serem explicitamente deletadas |
+| Erro de deployment do modelo | Criação do agente falha | Modelo não implantado no projeto | Implante o modelo via portal AI Foundry primeiro |
 
-## VerificaÃ§Ã£o de Conhecimento
+## Verificação de Conhecimento
 
 <KnowledgeCheck questions={[
   {
-    question: "Qual Ã© a sequÃªncia correta para usar o Azure AI Agent Service?",
+    question: "Qual é a sequência correta para usar o Azure AI Agent Service?",
     options: [
       "Criar agente â†’ Criar thread â†’ Adicionar mensagem â†’ Criar run",
       "Criar thread â†’ Criar agente â†’ Adicionar mensagem â†’ Criar run",
@@ -235,51 +235,51 @@ Monthly Cost Breakdown:
       "Criar agente â†’ Criar run â†’ Criar thread â†’ Adicionar mensagem"
     ],
     correctAnswer: 0,
-    explanation: "O fluxo correto: criar um agente (define comportamento e ferramentas), criar uma thread (container de conversaÃ§Ã£o), adicionar mensagens Ã  thread, e entÃ£o criar um run (dispara o processamento do agente)."
+    explanation: "O fluxo correto: criar um agente (define comportamento e ferramentas), criar uma thread (container de conversação), adicionar mensagens Ã  thread, e então criar um run (dispara o processamento do agente)."
   },
   {
     question: "O que a ferramenta file_search fornece no Azure AI Agent Service?",
     options: [
       "Busca arquivos no sistema de arquivos local",
-      "Realiza busca semÃ¢ntica sobre arquivos enviados e indexados em um vector store",
+      "Realiza busca semântica sobre arquivos enviados e indexados em um vector store",
       "Lista todos os arquivos no projeto Azure",
       "Busca em containers do Azure Blob Storage"
     ],
     correctAnswer: 1,
-    explanation: "File search realiza busca semÃ¢ntica (vetorial) sobre documentos enviados e indexados em um vector store, habilitando RAG para o agente."
+    explanation: "File search realiza busca semântica (vetorial) sobre documentos enviados e indexados em um vector store, habilitando RAG para o agente."
   },
   {
-    question: "Qual Ã© o propÃ³sito da ferramenta code_interpreter?",
+    question: "Qual é o propósito da ferramenta code_interpreter?",
     options: [
-      "Traduz cÃ³digo entre linguagens de programaÃ§Ã£o",
-      "Interpreta linguagem natural e converte para cÃ³digo",
-      "Depura cÃ³digo enviado pelo usuÃ¡rio",
-      "Executa Python em um ambiente sandboxed para cÃ¡lculos, anÃ¡lises e geraÃ§Ã£o de arquivos"
+      "Traduz código entre linguagens de programação",
+      "Interpreta linguagem natural e converte para código",
+      "Depura código enviado pelo usuário",
+      "Executa Python em um ambiente sandboxed para cálculos, análises e geração de arquivos"
     ],
     correctAnswer: 3,
-    explanation: "Code interpreter executa cÃ³digo Python em um ambiente sandboxed, permitindo cÃ¡lculos, anÃ¡lise de dados, visualizaÃ§Ãµes e geraÃ§Ã£o de arquivos."
+    explanation: "Code interpreter executa código Python em um ambiente sandboxed, permitindo cálculos, análise de dados, visualizações e geração de arquivos."
   },
   {
-    question: "Como vocÃª deve lidar com o status 'requires_action' de um run?",
+    question: "Como você deve lidar com o status 'requires_action' de um run?",
     options: [
       "Cancelar e retentar o run",
-      "Criar um novo run com parÃ¢metros diferentes",
-      "Enviar outputs de ferramentas para as chamadas de funÃ§Ã£o solicitadas",
+      "Criar um novo run com parâmetros diferentes",
+      "Enviar outputs de ferramentas para as chamadas de função solicitadas",
       "Aguardar â€” ele se resolve automaticamente"
     ],
     correctAnswer: 2,
-    explanation: "Quando o status Ã© 'requires_action', o agente precisa de resultados de funÃ§Ãµes. Execute as funÃ§Ãµes solicitadas e envie os outputs via submit_tool_outputs."
+    explanation: "Quando o status é 'requires_action', o agente precisa de resultados de funções. Execute as funções solicitadas e envie os outputs via submit_tool_outputs."
   },
   {
-    question: "Qual Ã© a relaÃ§Ã£o entre agentes e threads?",
+    question: "Qual é a relação entre agentes e threads?",
     options: [
-      "Agentes e threads sÃ£o independentes â€” qualquer agente pode executar em qualquer thread",
-      "Cada agente sÃ³ pode processar uma thread",
-      "Cada thread Ã© permanentemente vinculada a um agente",
-      "Threads sÃ£o criadas automaticamente quando agentes sÃ£o criados"
+      "Agentes e threads são independentes â€” qualquer agente pode executar em qualquer thread",
+      "Cada agente só pode processar uma thread",
+      "Cada thread é permanentemente vinculada a um agente",
+      "Threads são criadas automaticamente quando agentes são criados"
     ],
     correctAnswer: 0,
-    explanation: "Agentes e threads sÃ£o recursos independentes. O mesmo agente pode processar muitas threads, e uma thread pode ser processada por diferentes agentes via runs separados."
+    explanation: "Agentes e threads são recursos independentes. O mesmo agente pode processar muitas threads, e uma thread pode ser processada por diferentes agentes via runs separados."
   }
 ]} />
 
@@ -291,7 +291,7 @@ az group delete --name rg-ai102-foundry-agents --yes --no-wait
 
 ## Saiba Mais
 
-- [VisÃ£o geral do Azure AI Agent Service](https://learn.microsoft.com/azure/ai-services/agents/overview)
-- [InÃ­cio rÃ¡pido: Criar um agente](https://learn.microsoft.com/azure/ai-services/agents/quickstart)
+- [Visão geral do Azure AI Agent Service](https://learn.microsoft.com/azure/ai-services/agents/overview)
+- [Início rápido: Criar um agente](https://learn.microsoft.com/azure/ai-services/agents/quickstart)
 - [Ferramenta file search](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/file-search)
 - [Ferramenta code interpreter](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/code-interpreter)
