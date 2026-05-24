@@ -42,6 +42,9 @@ Your Codespace comes pre-configured with:
 | **AZ-305** | Solutions Architect Expert | 50 | Available |
 | **AZ-400** | DevOps Engineer Expert | 51 | Available |
 | **SC-500** | Cloud and AI Security Engineer | 52 | Available |
+| **AZ-700** | Azure Network Engineer Associate | 49 | Available |
+| **AI-900** | Azure AI Fundamentals | 24 | Available |
+| **AI-102** | Azure AI Engineer Associate | 49 | Available |
 
 ## AZ-900: Azure Fundamentals
 
@@ -105,6 +108,53 @@ Your Codespace comes pre-configured with:
 | Capstone | All | 52 | End-to-end security scenario |
 
 **Estimated total cost: ~$5-10** (with cleanup after each challenge)
+
+## AZ-700: Azure Network Engineer Associate
+
+49 challenges covering **100% of the exam domains** (as of May 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Core Networking | 25-30% | 01-13 | VNets, peering, DNS, UDR, NVA, NAT Gateway, Network Watcher, Bastion |
+| Connectivity | 20-25% | 14-24 | S2S VPN, P2S VPN, ExpressRoute, Virtual WAN, hybrid troubleshooting |
+| App Delivery | 15-20% | 25-33 | Load Balancer, Traffic Manager, Application Gateway, Front Door |
+| Private Access | 10-15% | 34-39 | Private Endpoints, Private Link Service, Service Endpoints |
+| Network Security | 15-20% | 40-48 | NSG, Azure Firewall, Firewall Manager, WAF, NVA chaining |
+| Capstone | All | 49 | Enterprise multi-region network design |
+
+**Estimated total cost: ~$20-50** (VPN Gateways, ExpressRoute simulations)
+
+## AI-900: Azure AI Fundamentals
+
+24 exploration-based challenges covering **100% of the exam domains** (as of May 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| AI Workloads & Considerations | 15-20% | 01-04 | AI patterns, responsible AI, Azure AI services overview |
+| Machine Learning on Azure | 20-25% | 05-09 | Regression, classification, clustering, deep learning, Azure ML |
+| Computer Vision | 15-20% | 10-13 | Image classification, object detection, OCR, face detection |
+| Natural Language Processing | 15-20% | 14-18 | Text analytics, sentiment, speech, translation, Language services |
+| Generative AI | 20-25% | 19-24 | GenAI fundamentals, Azure OpenAI, AI Foundry, prompt engineering |
+
+**Format**: Exploration-based, $0 cost. Includes KnowledgeCheck quiz questions.
+
+## AI-102: Azure AI Engineer Associate
+
+49 hands-on challenges covering **100% of the exam domains** (as of May 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Plan & Manage AI Solutions | 20-25% | 01-10 | Service selection, provisioning, SDKs, CI/CD, monitoring, security |
+| Generative AI Solutions | 15-20% | 11-20 | AI Foundry, model deployment, RAG, prompt engineering, orchestration |
+| AI Agent Solutions | 5-10% | 21-23 | Agent architecture, Azure AI Agent Service, multi-agent |
+| Computer Vision Solutions | 10-15% | 24-30 | Image analysis, Custom Vision, OCR, Face, Video Indexer |
+| NLP Solutions | 15-20% | 31-39 | Text analytics, PII, translation, speech, CLU, custom QA |
+| Knowledge Mining & Document Intelligence | 15-20% | 40-48 | AI Search, skillsets, vector search, Document Intelligence |
+| Capstone | All | 49 | End-to-end enterprise AI solution |
+
+**Estimated total cost: ~$20-50** (Azure OpenAI, AI Search, Document Intelligence)
+
+> ⚠️ **Note:** AI-102 retires June 30, 2026. Plan your preparation accordingly.
 
 ### Challenge Format
 

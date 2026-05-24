@@ -166,6 +166,14 @@ const config = {
                 label: 'AZ-700: Network Engineer',
                 to: '/docs/az-700/overview',
               },
+              {
+                label: 'AI-900: Azure AI Fundamentals',
+                to: '/docs/ai-900/overview',
+              },
+              {
+                label: 'AI-102: Azure AI Engineer',
+                to: '/docs/ai-102/overview',
+              },
             ],
           },
           {
@@ -194,6 +202,14 @@ const config = {
               {
                 label: 'Microsoft Learn — AZ-700',
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-network-engineer-associate/',
+              },
+              {
+                label: 'Microsoft Learn — AI-900',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/',
+              },
+              {
+                label: 'Microsoft Learn — AI-102',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/',
               },
               {
                 label: 'Free Practice Assessment',
