@@ -108,7 +108,7 @@ import uuid
 
 # Custom Translator portal workflow:
 # 1. Create a workspace at https://portal.customtranslator.azure.ai
-# 2. Create a project (specify language pair: en â†’ es)
+# 2. Create a project (specify language pair: en → es)
 # 3. Upload parallel documents (training, tuning, testing)
 # 4. Train the model
 # 5. Publish the model (get Category ID)
@@ -123,7 +123,7 @@ print("""
 Custom Translation Training Results (example):
 ================================================
 Model: Medical-EN-ES-v1
-Language pair: English â†’ Spanish
+Language pair: English → Spanish
 Training sentences: 10,000
 BLEU Score (baseline): 42.5
 BLEU Score (custom):   58.3 (+15.8 improvement)
@@ -247,8 +247,8 @@ qa_client = QuestionAnsweringClient(
 # Query in different languages against the same knowledge base
 multilingual_queries = [
     ("What is Azure AI?", "en"),
-    ("Â¿Qué es Azure AI?", "es"),
-    ("Azure AIã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ", "ja"),
+    ("¿Qué es Azure AI?", "es"),
+    ("Azure AIとは何ですか？", "ja"),
     ("Qu'est-ce qu'Azure AI?", "fr")
 ]
 
@@ -277,7 +277,7 @@ curl -s "${ENDPOINT}/language/:query-knowledgebases?projectName=faq-knowledge-ba
   -H "Ocp-Apim-Subscription-Key: ${KEY}" \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "Â¿Qué es Azure AI?",
+    "question": "¿Qué es Azure AI?",
     "top": 1,
     "language": "es"
   }' | jq '.answers[0] | {answer: .answer[0:100], confidence: .confidenceScore}'
@@ -312,10 +312,10 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
 [en] Q: What is Azure AI?
      A: Azure AI Services is a collection of cloud-based AI APIs that help developers...
      Confidence: 0.953
-[es] Q: Â¿Qué es Azure AI?
+[es] Q: ¿Qué es Azure AI?
      A: Azure AI Services is a collection of cloud-based AI APIs...
      Confidence: 0.891
-[ja] Q: Azure AIã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ
+[ja] Q: Azure AIとは何ですか？
      A: Azure AI Services is a collection of cloud-based AI APIs...
      Confidence: 0.845
 ```
@@ -358,13 +358,13 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
   {
     question: "Que tipo de dados de treinamento o Custom Translator requer?",
     options: [
-      "Apenas texto no idioma de origem â€” o modelo aprende o idioma de destino automaticamente",
+      "Apenas texto no idioma de origem — o modelo aprende o idioma de destino automaticamente",
       "Um dicionário de terminologia",
       "Exemplos de tradução do Google Translate",
       "Dados paralelos: pares de sentenças alinhadas nos idiomas de origem e destino"
     ],
     correctAnswer: 3,
-    explanation: "O Custom Translator requer dados paralelos â€” pares alinhados de sentenças em ambos os idiomas. O modelo aprende padrões de domínio a partir desses exemplos alinhados."
+    explanation: "O Custom Translator requer dados paralelos — pares alinhados de sentenças em ambos os idiomas. O modelo aprende padrões de domínio a partir desses exemplos alinhados."
   },
   {
     question: "Como o Question Answering em múltiplos idiomas funciona?",
