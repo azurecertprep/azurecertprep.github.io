@@ -969,7 +969,7 @@ O deploy em produção reporta sucesso, mas os usuários veem a versão antiga. 
     explanation: "As anotações de deploy criam marcadores verticais nos gráficos de telemetria do Application Insights (tempos de resposta, taxas de erro, volumes de requisição). Isso torna imediatamente visível quando um deploy se correlaciona com uma mudança no comportamento da aplicação, ajudando as equipes a determinar rapidamente se um deploy causou uma regressão ou melhoria."
   },
   {
-    question: "Neste pipeline capstone, o que impede um commit quebrado de chegar Ã  produção?",
+    question: "Neste pipeline capstone, o que impede um commit quebrado de chegar à produção?",
     options: [
       "Apenas o gate de aprovação manual antes da produção",
       "Múltiplas camadas: lint, verificação de tipos, testes unitários com gate de cobertura, testes de integração, varredura de segurança, validação de IaC, smoke tests no staging e aprovação manual",

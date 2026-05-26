@@ -23,13 +23,13 @@ import TabItem from '@theme/TabItem';
 O Azure Speech Translation combina reconhecimento de fala e tradução de texto em um único pipeline:
 
 ```text
-Audio Input â†’ Speech Recognition â†’ Translation â†’ Text/Speech Output
+Audio Input → Speech Recognition → Translation → Text/Speech Output
 ```
 
 Principais diferenças em relação ao uso separado de STT + Translator:
-- **Chamada de API única** â€” menor latência
-- **Streaming** â€” resultados parciais em tempo real
-- **Speech-to-speech** â€” saída de áudio traduzido diretamente
+- **Chamada de API única** — menor latência
+- **Streaming** — resultados parciais em tempo real
+- **Speech-to-speech** — saída de áudio traduzido diretamente
 - Suporta 70+ idiomas para tradução speech-to-text
 
 Classes: `SpeechTranslationConfig`, `TranslationRecognizer`
@@ -42,7 +42,7 @@ Classes: `SpeechTranslationConfig`, `TranslationRecognizer`
 
 ## Implementação
 
-### Tarefa 1: Tradução de Fala em Disparo Ãšnico
+### Tarefa 1: Tradução de Fala em Disparo Único
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -244,7 +244,7 @@ Translations:
   [es] Los resultados trimestrales superaron las expectativas con un aumento del quince por ciento.
   [fr] Les résultats trimestriels ont dépassé les attentes avec une augmentation de quinze pour cent.
   [de] Die Quartalsergebnisse übertrafen die Erwartungen mit einem Anstieg von fünfzehn Prozent.
-  [ja] å››åŠæœŸã®çµæžœã¯15ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆã®å¢—åŠ ã§æœŸå¾…ã‚’ä¸Šå›žã‚Šã¾ã—ãŸã€‚
+  [ja] 四半期の結果は15パーセントの増加で期待を上回りました。
 
 Starting continuous translation...
   [Partial] The quarterly
@@ -261,7 +261,7 @@ Translated 3 segments
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Nenhuma tradução retornada | Dicionário de traduções vazio | Idioma de destino não adicionado Ã  configuração | Chame `add_target_language()` antes de criar o reconhecedor |
+| Nenhuma tradução retornada | Dicionário de traduções vazio | Idioma de destino não adicionado à configuração | Chame `add_target_language()` antes de criar o reconhecedor |
 | Idioma de origem errado | Reconhecimento ilegível | Idioma de origem incompatível | Defina o `speech_recognition_language` correto |
 | Síntese não funciona | Sem saída de áudio | Nome da voz não definido ou idioma incompatível | Defina `voice_name` correspondendo ao idioma de destino |
 | Resultados parciais ausentes | Sem feedback intermediário | Evento `recognizing` não conectado | Conecte ao evento `recognizing` para resultados em streaming |
@@ -301,7 +301,7 @@ Translated 3 segments
       "'recognizing' é para tradução; 'recognized' é apenas para o texto de origem"
     ],
     correctAnswer: 0,
-    explanation: "'recognizing' dispara com resultados intermediários (parciais) enquanto a fala está sendo processada â€” útil para legendas ao vivo. 'recognized' dispara com o resultado final e completo para cada elocução."
+    explanation: "'recognizing' dispara com resultados intermediários (parciais) enquanto a fala está sendo processada — útil para legendas ao vivo. 'recognized' dispara com o resultado final e completo para cada elocução."
   },
   {
     question: "Como você habilita a tradução speech-to-speech (saída sintetizada)?",
@@ -318,12 +318,12 @@ Translated 3 segments
     question: "Qual vantagem a tradução de fala tem sobre o uso separado de STT + Translator API?",
     options: [
       "Suporta mais idiomas",
-      "Ã‰ mais barato por caractere",
+      "É mais barato por caractere",
       "Melhor precisão de tradução",
       "Menor latência com resultados parciais em streaming em um único pipeline"
     ],
     correctAnswer: 3,
-    explanation: "A tradução de fala combina reconhecimento e tradução em um pipeline de streaming único, fornecendo menor latência e resultados parciais em tempo real â€” crítico para cenários de tradução ao vivo."
+    explanation: "A tradução de fala combina reconhecimento e tradução em um pipeline de streaming único, fornecendo menor latência e resultados parciais em tempo real — crítico para cenários de tradução ao vivo."
   }
 ]} />
 

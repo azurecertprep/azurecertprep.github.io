@@ -21,11 +21,11 @@ import TabItem from '@theme/TabItem';
 
 ## Visão Geral
 
-O Azure OpenAI Service requer implantação explícita do modelo antes de você poder fazer chamadas de inferência. Diferente dos serviços tradicionais do Azure AI (onde você cria um recurso e imediatamente obtém um endpoint), o Azure OpenAI separa a criação do recurso da implantação do modelo â€” dando a você controle sobre quais modelos estão disponíveis, sua capacidade e seu ciclo de vida de versões.
+O Azure OpenAI Service requer implantação explícita do modelo antes de você poder fazer chamadas de inferência. Diferente dos serviços tradicionais do Azure AI (onde você cria um recurso e imediatamente obtém um endpoint), o Azure OpenAI separa a criação do recurso da implantação do modelo — dando a você controle sobre quais modelos estão disponíveis, sua capacidade e seu ciclo de vida de versões.
 
 Este desafio cobre os três tipos de implantação que aparecem no exame AI-102: **Standard** (pago por token, regional), **Global Standard** (pago por token, roteamento global) e **Provisioned Throughput** (capacidade reservada, latência previsível). Você implantará modelos programaticamente, configurará capacidade em Tokens Por Minuto (TPM), gerenciará versões de modelos e entenderá as políticas de atualização que controlam transições automáticas de versão.
 
-O planejamento de capacidade é um tópico importante no exame â€” você precisa entender como TPM se traduz em throughput real, como monitorar utilização e quando escolher provisioned throughput em vez de implantações standard.
+O planejamento de capacidade é um tópico importante no exame — você precisa entender como TPM se traduz em throughput real, como monitorar utilização e quando escolher provisioned throughput em vez de implantações standard.
 
 ## Arquitetura
 
@@ -467,7 +467,7 @@ Response: Azure OpenAI supports three deployment types...
       "ManualUpgradeOnly"
     ],
     correctAnswer: 0,
-    explanation: "NoAutoUpgrade significa que a implantação nunca será atualizada automaticamente para uma versão mais recente do modelo â€” você deve atualizá-la manualmente, dando controle completo sobre o momento. OnceCurrentVersionExpired ainda faz atualização automática quando a versão é descontinuada. OnceNewDefaultVersionAvailable atualiza quando um novo padrão é designado. ManualUpgradeOnly não é uma opção válida."
+    explanation: "NoAutoUpgrade significa que a implantação nunca será atualizada automaticamente para uma versão mais recente do modelo — você deve atualizá-la manualmente, dando controle completo sobre o momento. OnceCurrentVersionExpired ainda faz atualização automática quando a versão é descontinuada. OnceNewDefaultVersionAvailable atualiza quando um novo padrão é designado. ManualUpgradeOnly não é uma opção válida."
   },
   {
     question: "Ao fazer uma chamada de API para o Azure OpenAI, qual valor você deve passar como parâmetro 'model' no SDK?",

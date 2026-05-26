@@ -14,7 +14,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Cenário
 
-A Contoso executa mais de 200 VMs atrás de um Load Balancer interno para processamento de backend. Essas VMs precisam de acesso de saída Ã  internet para atualizações de pacotes e chamadas de API, mas estão enfrentando falhas de conexão intermitentes causadas pelo esgotamento de portas SNAT. A equipe precisa implementar o NAT Gateway para fornecer conectividade de saída confiável e escalável sem expor as VMs ao tráfego de entrada da internet.
+A Contoso executa mais de 200 VMs atrás de um Load Balancer interno para processamento de backend. Essas VMs precisam de acesso de saída à internet para atualizações de pacotes e chamadas de API, mas estão enfrentando falhas de conexão intermitentes causadas pelo esgotamento de portas SNAT. A equipe precisa implementar o NAT Gateway para fornecer conectividade de saída confiável e escalável sem expor as VMs ao tráfego de entrada da internet.
 
 **Topologia atual:**
 
@@ -25,8 +25,8 @@ Internet
 Internal Load Balancer (no outbound rules)
     |
 Backend Subnet (10.0.1.0/24)
-    â”œâ”€â”€ VM-1 ... VM-200+
-    â””â”€â”€ No public IPs, no NAT Gateway
+    ├── VM-1 ... VM-200+
+    └── No public IPs, no NAT Gateway
 ```
 
 **Topologia desejada:**
@@ -37,8 +37,8 @@ Internet
 NAT Gateway (public-ip-nat: 52.x.x.x)
     |
 Backend Subnet (10.0.1.0/24)
-    â”œâ”€â”€ VM-1 ... VM-200+
-    â””â”€â”€ All outbound traffic uses NAT GW IP
+    ├── VM-1 ... VM-200+
+    └── All outbound traffic uses NAT GW IP
 ```
 
 ## Objetivos de aprendizagem
@@ -146,11 +146,11 @@ az network nat gateway show \
 
 ---
 
-## Tarefa 3: Associar o NAT Gateway Ã  sub-rede
+## Tarefa 3: Associar o NAT Gateway à sub-rede
 
 Uma vez que um NAT Gateway é associado a uma sub-rede, todo o tráfego de saída para a internet daquela sub-rede utiliza o IP público do NAT Gateway.
 
-### Etapa 1: Associar o NAT Gateway Ã  sub-rede de backend
+### Etapa 1: Associar o NAT Gateway à sub-rede de backend
 
 ```bash
 az network vnet subnet update \
@@ -177,7 +177,7 @@ Isso deve retornar o ID do recurso `natgw-backend`.
 
 ## Tarefa 4: Escalar a capacidade de saída com IPs públicos adicionais
 
-Um único IP público fornece 64.512 portas SNAT. Para mais de 200 VMs fazendo muitas conexões simultâneas, você pode precisar de mais. Ã‰ possível adicionar até 16 IPs públicos por NAT Gateway.
+Um único IP público fornece 64.512 portas SNAT. Para mais de 200 VMs fazendo muitas conexões simultâneas, você pode precisar de mais. É possível adicionar até 16 IPs públicos por NAT Gateway.
 
 ### Opção A: Adicionar IPs públicos individuais
 
@@ -327,7 +327,7 @@ Ordem de precedência: NAT Gateway > IP público de nível de instância > regra
 
 :::warning Descontinuação do acesso de saída padrão
 
-O Azure está descontinuando o acesso de saída padrão para novas implantações. Todas as novas VMs sem conectividade de saída explícita (NAT Gateway, regras de saída do LB ou PIP de nível de instância) não terão acesso de saída Ã  internet. Sempre configure a conectividade de saída explicitamente.
+O Azure está descontinuando o acesso de saída padrão para novas implantações. Todas as novas VMs sem conectividade de saída explícita (NAT Gateway, regras de saída do LB ou PIP de nível de instância) não terão acesso de saída à internet. Sempre configure a conectividade de saída explicitamente.
 
 :::
 
@@ -374,7 +374,7 @@ az network public-ip create \
 
 ### Cenário 2: IP de saída mudou inesperadamente após adicionar o NAT Gateway
 
-**Sintoma:** Uma VM anteriormente usava seu IP público de nível de instância (ex.: 20.x.x.x) para conexões de saída. Após o NAT Gateway ser associado Ã  sub-rede, o tráfego de saída agora usa o IP do NAT Gateway.
+**Sintoma:** Uma VM anteriormente usava seu IP público de nível de instância (ex.: 20.x.x.x) para conexões de saída. Após o NAT Gateway ser associado à sub-rede, o tráfego de saída agora usa o IP do NAT Gateway.
 
 **Causa raiz:** O NAT Gateway tem precedência sobre IPs públicos de nível de instância para tráfego de saída. Isso é por design. Quando uma sub-rede possui um NAT Gateway, todo o tráfego de saída para a internet daquela sub-rede usa o IP público do NAT Gateway, independentemente de as VMs individuais terem seus próprios IPs públicos.
 

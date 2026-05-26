@@ -23,11 +23,11 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Azure AI services provide a broad portfolio of cognitive capabilities through pre-built APIs and customizable models. Choosing the right service is criticalâ€”using Azure OpenAI for simple text extraction when Document Intelligence exists, or using Computer Vision for tasks better suited to GPT-4o multimodal, leads to unnecessary cost and complexity.
+Azure AI services provide a broad portfolio of cognitive capabilities through pre-built APIs and customizable models. Choosing the right service is critical—using Azure OpenAI for simple text extraction when Document Intelligence exists, or using Computer Vision for tasks better suited to GPT-4o multimodal, leads to unnecessary cost and complexity.
 
 This challenge walks you through the Azure AI service taxonomy, helps you build a mental decision tree, and verifies your ability to programmatically discover and validate available services in a subscription. You'll compare multi-service resources (which provide a single endpoint for multiple capabilities) against single-service resources (which offer service-specific features and isolation).
 
-Understanding the tradeoffs between service typesâ€”pricing tiers, regional availability, feature sets, and SLA differencesâ€”is essential for the AI-102 exam and real-world architecture decisions.
+Understanding the tradeoffs between service types—pricing tiers, regional availability, feature sets, and SLA differences—is essential for the AI-102 exam and real-world architecture decisions.
 
 ## Architecture
 

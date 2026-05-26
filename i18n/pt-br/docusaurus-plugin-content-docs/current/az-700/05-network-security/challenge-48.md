@@ -15,10 +15,10 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Cenário
 
-Sua organização está implementando um design de rede de confiança zero (zero-trust). Todo acesso de gerenciamento Ã s VMs deve ser controlado por acesso Just-in-Time (JIT) através do Microsoft Defender for Cloud, e as sessões administrativas devem passar pelo Azure Bastion. O Azure Virtual Network Manager (AVNM) aplica regras de administrador de segurança em toda a organização que não podem ser substituídas por administradores locais de NSG â€” garantindo uma postura de negação por padrão em todos os grupos de rede.
+Sua organização está implementando um design de rede de confiança zero (zero-trust). Todo acesso de gerenciamento às VMs deve ser controlado por acesso Just-in-Time (JIT) através do Microsoft Defender for Cloud, e as sessões administrativas devem passar pelo Azure Bastion. O Azure Virtual Network Manager (AVNM) aplica regras de administrador de segurança em toda a organização que não podem ser substituídas por administradores locais de NSG — garantindo uma postura de negação por padrão em todos os grupos de rede.
 
 Você deve demonstrar que:
-- O acesso direto SSH/RDP Ã s VMs é negado por padrão
+- O acesso direto SSH/RDP às VMs é negado por padrão
 - As regras de administrador de segurança do AVNM têm precedência sobre NSGs locais
 - O acesso JIT permite acesso temporário e auditado para gerenciamento
 - O Bastion fornece o único caminho para administração interativa de VMs
@@ -392,7 +392,7 @@ New-AzBastion -Name "bastion-prod" -ResourceGroupName $rg `
 
 :::info Pré-requisitos
 
-O acesso JIT para VMs requer **Microsoft Defender for Servers Plan 2** (ou segurança aprimorada do Defender for Cloud). A VM deve ter um NSG associado Ã  sua sub-rede ou NIC.
+O acesso JIT para VMs requer **Microsoft Defender for Servers Plan 2** (ou segurança aprimorada do Defender for Cloud). A VM deve ter um NSG associado à sua sub-rede ou NIC.
 
 :::
 
@@ -496,7 +496,7 @@ az security jit-policy list \
 ### Etapas no portal
 
 1. Navegue até **Microsoft Defender for Cloud** e selecione **Workload protections**.
-2. Selecione **Just-in-time VM access** no menu Ã  esquerda.
+2. Selecione **Just-in-time VM access** no menu à esquerda.
 3. Clique na VM para configurar e selecione **Enable JIT**.
 4. Configure as portas (22, 3389), duração máxima de solicitação (3 horas) e IPs de origem permitidos.
 5. Para solicitar acesso: selecione a VM, clique em **Request access**, especifique a justificativa e a duração.
@@ -560,7 +560,7 @@ az network bastion ssh \
 
 ### Cenário 1: Regra de administrador de segurança do AVNM bloqueia o Bastion
 
-**Sintoma:** O Azure Bastion não consegue se conectar Ã s VMs mesmo após a implantação bem-sucedida do Bastion.
+**Sintoma:** O Azure Bastion não consegue se conectar às VMs mesmo após a implantação bem-sucedida do Bastion.
 
 **Causa raiz:** A regra Deny do AVNM bloqueia todo o tráfego SSH/RDP de entrada, incluindo o tráfego da AzureBastionSubnet. Nenhuma exceção AlwaysAllow foi criada para o prefixo de origem do Bastion.
 

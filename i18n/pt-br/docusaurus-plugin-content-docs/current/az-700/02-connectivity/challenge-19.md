@@ -40,7 +40,7 @@ A Contoso decidiu que suas cargas de trabalho híbridas exigem a largura de band
 
 ## Tarefa 1: Entender os modelos de conectividade do ExpressRoute
 
-Antes de criar qualquer recurso, você deve escolher o modelo de conectividade que corresponde Ã  sua infraestrutura física.
+Antes de criar qualquer recurso, você deve escolher o modelo de conectividade que corresponde à sua infraestrutura física.
 
 | Modelo de conectividade | Descrição | Caso de uso |
 |---|---|---|
@@ -452,9 +452,9 @@ az network express-route show \
 
 **Sintoma:** O private peering mostra `state: Disabled` e a sessão BGP não se estabelece.
 
-**Causa raiz:** O VLAN ID configurado no Azure não corresponde Ã  tag VLAN configurada no roteador CE/PE.
+**Causa raiz:** O VLAN ID configurado no Azure não corresponde à tag VLAN configurada no roteador CE/PE.
 
-**Resolução:** Atualize o VLAN ID para corresponder Ã  configuração do seu roteador.
+**Resolução:** Atualize o VLAN ID para corresponder à configuração do seu roteador.
 
 ```bash
 az network express-route peering update \

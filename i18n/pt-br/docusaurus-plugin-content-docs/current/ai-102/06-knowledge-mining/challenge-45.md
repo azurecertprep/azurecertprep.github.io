@@ -1,13 +1,13 @@
 ---
 sidebar_position: 7
-title: "Desafio 45: Azure Document Intelligence â€” Modelos Pré-construídos"
+title: "Desafio 45: Azure Document Intelligence — Modelos Pré-construídos"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 45: Azure Document Intelligence â€” Modelos Pré-construídos
+# Desafio 45: Azure Document Intelligence — Modelos Pré-construídos
 
 :::info Tempo Estimado
 **45-60 min** | **Custo**: ~$1.00 (Document Intelligence camada S0 + transações) | **Domínio**: Knowledge Mining & Extraction (15-20%)
@@ -122,7 +122,7 @@ for document in result.documents:
             item_fields = item.value_object
             desc = item_fields.get("Description", {})
             amount = item_fields.get("Amount", {})
-            print(f"    {i+1}. {desc.value_string if desc else 'N/A'} â€” ${amount.value_currency.amount if amount else 'N/A'}")
+            print(f"    {i+1}. {desc.value_string if desc else 'N/A'} — ${amount.value_currency.amount if amount else 'N/A'}")
 ```
 
 </TabItem>
@@ -366,10 +366,10 @@ Confidence: 95.20%
   Due: 2024-02-15
 
   Line Items (4 items):
-    1. Consulting Services â€” $1500.00
-    2. Software License â€” $1200.00
-    3. Support Plan â€” $800.00
-    4. Training â€” $300.00
+    1. Consulting Services — $1500.00
+    2. Software License — $1200.00
+    3. Support Plan — $800.00
+    4. Training — $300.00
 ```
 
 ## Quebra & conserta
@@ -401,7 +401,7 @@ Confidence: 95.20%
     id: "ai102-45-q2",
     question: "A operação de análise do Document Intelligence retorna imediatamente com um cabeçalho Operation-Location. O que isso indica?",
     options: [
-      "A operação é assíncrona â€” você deve fazer polling na URL do Operation-Location para obter os resultados",
+      "A operação é assíncrona — você deve fazer polling na URL do Operation-Location para obter os resultados",
       "O documento era muito grande e foi rejeitado",
       "A análise está completa e os resultados estão no cabeçalho",
       "A requisição foi redirecionada para outro endpoint"
@@ -419,7 +419,7 @@ Confidence: 95.20%
       "Aceitar o valor já que qualquer extração é melhor que entrada manual"
     ],
     correctIndex: 2,
-    explanation: "A melhor prática é definir um limiar de confiança (tipicamente 0.8 ou 80%) e sinalizar campos abaixo dele para revisão humana. Uma confiança de 45% sugere que o modelo está incerto. Não rejeite o documento inteiro â€” outros campos podem ter alta confiança."
+    explanation: "A melhor prática é definir um limiar de confiança (tipicamente 0.8 ou 80%) e sinalizar campos abaixo dele para revisão humana. Uma confiança de 45% sugere que o modelo está incerto. Não rejeite o documento inteiro — outros campos podem ter alta confiança."
   },
   {
     id: "ai102-45-q4",

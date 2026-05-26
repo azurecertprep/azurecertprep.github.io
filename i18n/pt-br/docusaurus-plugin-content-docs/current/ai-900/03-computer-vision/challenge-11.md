@@ -22,9 +22,9 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 A detecção de objetos vai além da classificação de imagens, não apenas identificando QUAIS objetos estão em uma imagem, mas também ONDE eles estão localizados. Para cada objeto detectado, o modelo retorna uma **caixa delimitadora** (coordenadas de retângulo) e um **score de confiança**. Uma imagem pode conter múltiplos objetos de diferentes tipos.
 
-Pense na detecção de objetos como um fotógrafo de vida selvagem catalogando animais em uma foto. A classificação diz "esta foto contém elefantes." A detecção de objetos diz "há 3 elefantes: um no canto superior esquerdo, um no centro e um no canto inferior direito" â€” cada um marcado com um retângulo e um nível de confiança.
+Pense na detecção de objetos como um fotógrafo de vida selvagem catalogando animais em uma foto. A classificação diz "esta foto contém elefantes." A detecção de objetos diz "há 3 elefantes: um no canto superior esquerdo, um no centro e um no canto inferior direito" — cada um marcado com um retângulo e um nível de confiança.
 
-A diferença-chave em relação Ã  classificação: a classificação rotula a imagem inteira como uma coisa. A detecção de objetos encontra múltiplos objetos individuais dentro da imagem e diz exatamente onde cada um está. Isso é crítico para aplicações como direção autônoma (onde está cada carro, pedestre e placa de trânsito?) ou análise de varejo (quantas pessoas estão em cada corredor?).
+A diferença-chave em relação à classificação: a classificação rotula a imagem inteira como uma coisa. A detecção de objetos encontra múltiplos objetos individuais dentro da imagem e diz exatamente onde cada um está. Isso é crítico para aplicações como direção autônoma (onde está cada carro, pedestre e placa de trânsito?) ou análise de varejo (quantas pessoas estão em cada corredor?).
 
 ## Explorar
 
@@ -33,15 +33,15 @@ A diferença-chave em relação Ã  classificação: a classificação rotula a
 Uma caixa delimitadora define a localização de um objeto detectado usando coordenadas:
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                                 â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                 â”‚
-â”‚    â”‚  Dog     â”‚   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚
-â”‚    â”‚  0.94    â”‚   â”‚  Cat   â”‚   â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚  0.87  â”‚   â”‚
-â”‚                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
-â”‚                                 â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────────────────────┐
+│                                 │
+│    ┌──────────┐                 │
+│    │  Dog     │   ┌────────┐   │
+│    │  0.94    │   │  Cat   │   │
+│    └──────────┘   │  0.87  │   │
+│                   └────────┘   │
+│                                 │
+└─────────────────────────────────┘
 ```
 
 Cada detecção inclui:
@@ -89,9 +89,9 @@ Cada detecção inclui:
 
 :::tip Estratégia para o exame
 Procure estas palavras-chave nos cenários do exame:
-- "Localizar", "encontrar onde", "caixa delimitadora", "posição" â†’ Detecção de Objetos
-- "Quantos de X estão na imagem" â†’ Detecção de Objetos (contar requer localizar cada instância)
-- "O que é esta imagem?" (imagem inteira) â†’ Classificação
+- "Localizar", "encontrar onde", "caixa delimitadora", "posição" → Detecção de Objetos
+- "Quantos de X estão na imagem" → Detecção de Objetos (contar requer localizar cada instância)
+- "O que é esta imagem?" (imagem inteira) → Classificação
 :::
 
 ## Conceitos-Chave
@@ -101,7 +101,7 @@ Procure estas palavras-chave nos cenários do exame:
 | Detecção de objetos | Identificar e localizar múltiplos objetos dentro de uma imagem usando caixas delimitadoras |
 | Caixa delimitadora | Retângulo definido por coordenadas (x, y, largura, altura) que emoldura um objeto detectado |
 | Limiar de confiança | Score de confiança mínimo necessário para aceitar uma detecção como válida |
-| IoU (Intersection over Union) | Métrica que mede quanto uma caixa delimitadora prevista se sobrepõe Ã  localização verdadeira |
+| IoU (Intersection over Union) | Métrica que mede quanto uma caixa delimitadora prevista se sobrepõe à localização verdadeira |
 | Múltiplas detecções | Uma imagem pode conter muitos objetos; cada um recebe sua própria caixa e rótulo |
 | Custom Vision (Detecção de Objetos) | Serviço do Azure para treinar detectores de objetos personalizados com suas próprias imagens rotuladas |
 | Detecção em tempo real | Processar quadros de vídeo em tempo real para detectar objetos continuamente |
@@ -110,11 +110,11 @@ Procure estas palavras-chave nos cenários do exame:
 
 | Equívoco | Realidade |
 |----------|-----------|
-| "Detecção de objetos é apenas classificação de imagens com localizações" | São relacionados mas distintos. Classificação rotula a imagem inteira. Detecção de objetos encontra e localiza objetos individuais â€” lida com múltiplos objetos, objetos sobrepostos e objetos de diferentes tipos em uma imagem |
+| "Detecção de objetos é apenas classificação de imagens com localizações" | São relacionados mas distintos. Classificação rotula a imagem inteira. Detecção de objetos encontra e localiza objetos individuais — lida com múltiplos objetos, objetos sobrepostos e objetos de diferentes tipos em uma imagem |
 | "Detecção de objetos só pode encontrar um objeto por vez" | Detecção de objetos encontra TODOS os objetos em uma imagem simultaneamente. Uma cena de rua pode retornar 5 carros, 3 pessoas, 2 semáforos, todos com caixas delimitadoras separadas |
-| "Caixas delimitadoras sempre estão perfeitamente alinhadas com objetos" | Caixas delimitadoras são retângulos â€” elas aproximam a localização do objeto. Para formas irregulares, a caixa inclui algum fundo. Segmentação de instâncias fornece contornos precisos em nível de pixel |
+| "Caixas delimitadoras sempre estão perfeitamente alinhadas com objetos" | Caixas delimitadoras são retângulos — elas aproximam a localização do objeto. Para formas irregulares, a caixa inclui algum fundo. Segmentação de instâncias fornece contornos precisos em nível de pixel |
 | "Você precisa de vídeo para detecção de objetos" | Detecção de objetos funciona em imagens individuais. Quando aplicada a vídeo, processa quadros individuais. Vídeo em tempo real é apenas processamento rápido de imagens |
-| "Limiar de confiança mais alto é sempre melhor" | Limiares mais altos significam menos falsos positivos mas mais detecções perdidas. O limiar certo depende do caso de uso â€” um carro autônomo precisa detectar TODOS os pedestres (limiar menor, maior recall) |
+| "Limiar de confiança mais alto é sempre melhor" | Limiares mais altos significam menos falsos positivos mas mais detecções perdidas. O limiar certo depende do caso de uso — um carro autônomo precisa detectar TODOS os pedestres (limiar menor, maior recall) |
 
 ## Verificação de Conhecimento
 
@@ -146,14 +146,14 @@ Procure estas palavras-chave nos cenários do exame:
       question: 'Qual é a característica PRINCIPAL que distingue a detecção de objetos da classificação de imagens?',
       options: ['Detecção de objetos é mais precisa', 'Detecção de objetos só funciona com Custom Vision', 'Detecção de objetos só pode detectar um tipo de objeto', 'Detecção de objetos fornece a localização (caixa delimitadora) de cada objeto, não apenas rótulos'],
       correctAnswer: 3,
-      explanation: 'A característica definidora da detecção de objetos é a localização â€” ela diz ONDE cada objeto está (coordenadas da caixa delimitadora), não apenas o que a imagem contém. Classificação rotula a imagem inteira; detecção localiza objetos individuais.'
+      explanation: 'A característica definidora da detecção de objetos é a localização — ela diz ONDE cada objeto está (coordenadas da caixa delimitadora), não apenas o que a imagem contém. Classificação rotula a imagem inteira; detecção localiza objetos individuais.'
     },
     {
       id: 'ai900-11-q5',
       question: 'Uma única imagem processada por um modelo de detecção de objetos mostra uma cena de rua. Qual resultado é mais provável?',
       options: ['Um rótulo: "cena de rua"', 'Uma caixa delimitadora ao redor da imagem inteira', 'Múltiplas caixas delimitadoras: 3 carros, 2 pessoas, 1 semáforo, cada um com scores de confiança separados', 'Uma descrição textual da imagem'],
       correctAnswer: 2,
-      explanation: 'Detecção de objetos retorna múltiplas caixas delimitadoras â€” uma para cada objeto detectado. Uma cena de rua teria detecções separadas para cada carro, pessoa, placa, etc., cada uma com seu próprio rótulo, caixa delimitadora e score de confiança.'
+      explanation: 'Detecção de objetos retorna múltiplas caixas delimitadoras — uma para cada objeto detectado. Uma cena de rua teria detecções separadas para cada carro, pessoa, placa, etc., cada uma com seu próprio rótulo, caixa delimitadora e score de confiança.'
     }
   ]}
 />

@@ -23,7 +23,7 @@ A migração deve ser realizada com tempo de inatividade zero. Tanto os service 
 2. Configurar o DNS para resolver para IPs privados.
 3. Validar a conectividade através do Private Endpoint.
 4. Remover as regras de VNet do firewall da conta de armazenamento.
-5. Desabilitar o acesso Ã  rede pública.
+5. Desabilitar o acesso à rede pública.
 6. Remover os service endpoints da sub-rede.
 
 ### Ordem de migração (crítica)
@@ -302,7 +302,7 @@ New-AzPrivateDnsZoneGroup -ResourceGroupName $rg `
 1. Pesquise por **Private DNS zones** e selecione **+ Create**.
 2. Nome: `privatelink.blob.core.windows.net`, grupo de recursos: `rg-challenge39`.
 3. Após a criação, vá para **Virtual network links** e adicione um link para `vnet-production`.
-4. Volte ao Private Endpoint, selecione **DNS configuration** e adicione um grupo de zona DNS vinculado Ã  zona.
+4. Volte ao Private Endpoint, selecione **DNS configuration** e adicione um grupo de zona DNS vinculado à zona.
 
 ---
 
@@ -467,7 +467,7 @@ curl -s -o /dev/null -w "%{http_code}" \
 
 **Sintoma**: Após remover o service endpoint e as regras de VNet, as aplicações perdem conectividade com a conta de armazenamento. O DNS ainda resolve para o IP público, e o acesso público agora está negado.
 
-**Causa raiz**: A zona de DNS privado não foi criada, não foi vinculada Ã  VNet, ou o grupo de zona DNS não foi configurado no Private Endpoint. Sem o DNS adequado, o FQDN ainda resolve para o IP público.
+**Causa raiz**: A zona de DNS privado não foi criada, não foi vinculada à VNet, ou o grupo de zona DNS não foi configurado no Private Endpoint. Sem o DNS adequado, o FQDN ainda resolve para o IP público.
 
 **Correção (rollback)**:
 
@@ -541,7 +541,7 @@ az network vnet show \
 
 ### Cenário 3: Clientes locais quebrados após desabilitar acesso público
 
-**Sintoma**: Clientes locais que acessam a conta de armazenamento via VPN perdem conectividade após o acesso Ã  rede pública ser desabilitado. Eles anteriormente acessavam pelo endpoint público com regras de firewall baseadas em IP.
+**Sintoma**: Clientes locais que acessam a conta de armazenamento via VPN perdem conectividade após o acesso à rede pública ser desabilitado. Eles anteriormente acessavam pelo endpoint público com regras de firewall baseadas em IP.
 
 **Causa raiz**: O DNS local não foi atualizado para resolver o FQDN do armazenamento para o IP do Private Endpoint. Sem encaminhamento DNS para um Azure DNS Private Resolver ou encaminhador condicional, os clientes locais ainda resolvem para o IP público (que agora está bloqueado).
 
@@ -671,4 +671,4 @@ Private Endpoints custam aproximadamente **$0.01/hora** por endpoint mais cobran
 
 ## Resumo
 
-Neste desafio, você realizou uma migração com tempo de inatividade zero de service endpoints para Private Endpoints. Você aprendeu a importância crítica da ordem de migração -- implantar PE junto com SE, validar a resolução DNS antes de remover a infraestrutura de SE, e as armadilhas comuns que causam indisponibilidades (remoção prematura do SE, cache DNS, configuração DNS local ausente). Este padrão de migração é um tópico frequente no exame e uma tarefa comum no mundo real Ã  medida que as organizações adotam Private Endpoints para melhorar a postura de segurança.
+Neste desafio, você realizou uma migração com tempo de inatividade zero de service endpoints para Private Endpoints. Você aprendeu a importância crítica da ordem de migração -- implantar PE junto com SE, validar a resolução DNS antes de remover a infraestrutura de SE, e as armadilhas comuns que causam indisponibilidades (remoção prematura do SE, cache DNS, configuração DNS local ausente). Este padrão de migração é um tópico frequente no exame e uma tarefa comum no mundo real à medida que as organizações adotam Private Endpoints para melhorar a postura de segurança.

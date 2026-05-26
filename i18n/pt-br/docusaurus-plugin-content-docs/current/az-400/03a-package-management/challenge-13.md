@@ -227,7 +227,7 @@ dotnet nuget push ./nupkgs/*.nupkg \
 
 #### Passo 5: Definir permissões do feed
 
-Conceda Ã  equipe backend acesso de contribuidor (pode publicar e consumir):
+Conceda à equipe backend acesso de contribuidor (pode publicar e consumir):
 
 ```bash
 az rest --method patch \
@@ -363,7 +363,7 @@ O GitHub Packages exige que o escopo do pacote (`@contoso/`) corresponda ao prop
 
 ```bash
 cat package.json | grep name
-# Deve retornar: "@contoso/auth-sdk" onde "contoso" corresponde Ã  org/usuário dono do repo
+# Deve retornar: "@contoso/auth-sdk" onde "contoso" corresponde à org/usuário dono do repo
 ```
 
 Corrija atualizando o `package.json`:

@@ -368,7 +368,7 @@ requests
 
 Um novo microsserviço é implantado em um novo namespace do Kubernetes, mas o Container Insights não mostra logs nem métricas.
 
-**Causa:** O ConfigMap do Container Insights exclui certos namespaces da coleta de logs, ou o novo namespace foi adicionado Ã  lista de exclusão.
+**Causa:** O ConfigMap do Container Insights exclui certos namespaces da coleta de logs, ou o novo namespace foi adicionado à lista de exclusão.
 
 **Diagnóstico:**
 

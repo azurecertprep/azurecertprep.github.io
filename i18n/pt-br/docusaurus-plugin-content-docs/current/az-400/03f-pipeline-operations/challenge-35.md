@@ -671,7 +671,7 @@ O sharding de testes funciona, mas o relatório de cobertura mostra apenas 25% (
       "Sempre, porque self-hosted runners são mais rápidos",
       "Quando os custos mensais de runners hospedados excedem o custo de manter uma VM, ou quando você precisa de hardware/software especializado",
       "Apenas para deploys em produção",
-      "Quando você precisa de acesso Ã  internet pública"
+      "Quando você precisa de acesso à internet pública"
     ],
     correctIndex: 1,
     explanation: "Self-hosted runners fazem sentido economicamente quando o uso de runners hospedados excede o ponto de equilíbrio (custo total da VM + overhead de manutenção). Eles também oferecem benefícios como caches persistentes, hardware especializado (GPU, ARM), acesso a redes privadas e ferramentas pré-instaladas que de outra forma desacelerariam cada execução."

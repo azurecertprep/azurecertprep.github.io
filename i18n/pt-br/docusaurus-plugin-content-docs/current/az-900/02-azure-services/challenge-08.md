@@ -24,9 +24,9 @@ O Azure organiza recursos em uma hierarquia de quatro níveis. Entender essa hie
 
 ```text
 Management Groups
-  â””â”€â”€ Subscriptions
-        â””â”€â”€ Resource Groups
-              â””â”€â”€ Resources
+  └── Subscriptions
+        └── Resource Groups
+              └── Resources
 ```
 
 Cada nível herda configurações do nível acima. Políticas aplicadas em um management group fluem para todas as subscriptions, resource groups e recursos abaixo dele.
@@ -47,12 +47,12 @@ Cada nível herda configurações do nível acima. Políticas aplicadas em um ma
 1. No Portal Azure, pesquise por **Resource groups**
 2. Clique em **+ Create** para ver o formulário de criação:
    - Observe que você escolhe uma **Subscription** e uma **Region**
-   - Resource groups são gratuitos â€” são apenas containers
+   - Resource groups são gratuitos — são apenas containers
 3. Crie um resource group:
    - Nome: `rg-az900-learning`
    - Região: Sua região mais próxima
-   - Clique em **Review + create** â†’ **Create**
-4. Abra seu novo resource group â€” observe que está vazio (sem custo!)
+   - Clique em **Review + create** → **Create**
+4. Abra seu novo resource group — observe que está vazio (sem custo!)
 
 ### Tarefa 3: Entender subscriptions
 
@@ -79,13 +79,13 @@ Cada nível herda configurações do nível acima. Políticas aplicadas em um ma
 **Exemplo de hierarquia para uma grande organização:**
 ```text
 Tenant Root Group
-â”œâ”€â”€ Production
-â”‚   â”œâ”€â”€ Subscription: Prod-East
-â”‚   â””â”€â”€ Subscription: Prod-West
-â”œâ”€â”€ Development
-â”‚   â””â”€â”€ Subscription: Dev-Team
-â””â”€â”€ Sandbox
-    â””â”€â”€ Subscription: Individual-Testing
+├── Production
+│   ├── Subscription: Prod-East
+│   └── Subscription: Prod-West
+├── Development
+│   └── Subscription: Dev-Team
+└── Sandbox
+    └── Subscription: Individual-Testing
 ```
 
 ### Tarefa 5: Regras de resource groups
@@ -162,7 +162,7 @@ az group show --name rg-az900-learning --output table
     {
       id: 'az900-08-q5',
       question: 'Uma política é aplicada no nível do management group. Quais recursos ela afeta?',
-      options: ['Apenas recursos diretamente no management group', 'Todos os recursos em todas as subscriptions dentro daquele management group', 'Apenas a primeira subscription no grupo', 'Nenhum â€” políticas só funcionam no nível da subscription'],
+      options: ['Apenas recursos diretamente no management group', 'Todos os recursos em todas as subscriptions dentro daquele management group', 'Apenas a primeira subscription no grupo', 'Nenhum — políticas só funcionam no nível da subscription'],
       correctAnswer: 1,
       explanation: 'Políticas aplicadas no nível do management group são herdadas por todas as subscriptions, resource groups e recursos abaixo daquele management group na hierarquia.'
     }
@@ -171,6 +171,6 @@ az group show --name rg-az900-learning --output table
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe core architectural components](https://learn.microsoft.com/en-us/training/modules/describe-core-architectural-components-of-azure/)
 - [Azure Resource Manager overview](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)

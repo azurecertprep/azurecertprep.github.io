@@ -48,32 +48,32 @@ Example mono-repo structure:
 
 ```text
 contoso-platform/
-â”œâ”€â”€ services/
-â”‚   â”œâ”€â”€ user-service/
-â”‚   â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ tests/
-â”‚   â”‚   â”œâ”€â”€ Dockerfile
-â”‚   â”‚   â””â”€â”€ package.json
-â”‚   â”œâ”€â”€ order-service/
-â”‚   â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ tests/
-â”‚   â”‚   â”œâ”€â”€ Dockerfile
-â”‚   â”‚   â””â”€â”€ package.json
-â”‚   â””â”€â”€ payment-service/
-â”‚       â””â”€â”€ ...
-â”œâ”€â”€ libs/
-â”‚   â”œâ”€â”€ shared-types/
-â”‚   â”œâ”€â”€ common-utils/
-â”‚   â””â”€â”€ auth-middleware/
-â”œâ”€â”€ infrastructure/
-â”‚   â”œâ”€â”€ terraform/
-â”‚   â””â”€â”€ kubernetes/
-â”œâ”€â”€ tools/
-â”‚   â”œâ”€â”€ scripts/
-â”‚   â””â”€â”€ generators/
-â”œâ”€â”€ .github/workflows/
-â”œâ”€â”€ package.json (workspace root)
-â””â”€â”€ nx.json (or turborepo.json)
+├── services/
+│   ├── user-service/
+│   │   ├── src/
+│   │   ├── tests/
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── order-service/
+│   │   ├── src/
+│   │   ├── tests/
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   └── payment-service/
+│       └── ...
+├── libs/
+│   ├── shared-types/
+│   ├── common-utils/
+│   └── auth-middleware/
+├── infrastructure/
+│   ├── terraform/
+│   └── kubernetes/
+├── tools/
+│   ├── scripts/
+│   └── generators/
+├── .github/workflows/
+├── package.json (workspace root)
+└── nx.json (or turborepo.json)
 ```
 
 ### Task 2: Multi-repo advantages and disadvantages

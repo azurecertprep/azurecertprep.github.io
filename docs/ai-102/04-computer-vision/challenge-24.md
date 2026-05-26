@@ -33,7 +33,7 @@ Azure AI Vision Image Analysis 4.0 provides a unified API for extracting visual 
 | `read` | OCR text extraction |
 | `smartCrops` | Optimal crop regions for thumbnails |
 
-The API returns structured JSON with confidence scores (0.0â€“1.0) for each detected element.
+The API returns structured JSON with confidence scores (0.0–1.0) for each detected element.
 
 ## Prerequisites
 - Azure subscription

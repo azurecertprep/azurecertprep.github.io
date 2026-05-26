@@ -25,7 +25,7 @@ A equipe de engenharia precisa de um caminho de hotfix que possa implantar uma c
 - Frontend: Azure Static Web Apps `swa-contoso-store`
 - Resource group: `rg-contoso-prod`
 - Versão atual com problema: `v2.4.0` (tag: `release/2.4.0`)
-- Ãšltima versão estável conhecida: `v2.3.1` (tag: `release/2.3.1`)
+- Última versão estável conhecida: `v2.3.1` (tag: `release/2.3.1`)
 
 ---
 
@@ -755,7 +755,7 @@ az webapp traffic-routing clear \
 
 **Causa raiz:** A estrutura de arquivos em `main` mudou (refatoração moveu o código afetado), então o cherry-pick não pode ser aplicado de forma limpa.
 
-**Correção:** Em vez de um cherry-pick automatizado, crie um pull request com a correção lógica aplicada Ã  nova estrutura de arquivos:
+**Correção:** Em vez de um cherry-pick automatizado, crie um pull request com a correção lógica aplicada à nova estrutura de arquivos:
 ```bash
 # Create a branch from main and manually apply the fix
 git checkout main
@@ -800,7 +800,7 @@ gh pr create \
     explanation: "O branch de hotfix deve ser criado a partir da tag da release atual em produção. Isso garante que a correção seja aplicada exatamente ao código em execução em produção sem incluir funcionalidades não publicadas de main ou develop. Criar a partir da release anterior (v2.3.1) reverteria todas as alterações da v2.4.0, não apenas corrigiria o bug."
   },
   {
-    question: "A Contoso tem três serviços com dependências: Shared Library leva Ã  API que leva ao Frontend. O pipeline implanta os três. O que garante que o Frontend não seja implantado antes da API estar pronta?",
+    question: "A Contoso tem três serviços com dependências: Shared Library leva à API que leva ao Frontend. O pipeline implanta os três. O que garante que o Frontend não seja implantado antes da API estar pronta?",
     options: [
       "Configurar todos os deploys para executar em paralelo para velocidade",
       "Usar 'dependsOn' no pipeline para criar ordenação explícita de estágios",

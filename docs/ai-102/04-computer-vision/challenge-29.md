@@ -274,13 +274,13 @@ Search 'Azure AI': 4 matches
   {
     question: "What is the typical workflow for processing a video with Video Indexer?",
     options: [
-      "Upload â†’ Process â†’ Delete",
-      "Create index â†’ Add video â†’ Query results",
-      "Deploy model â†’ Send video â†’ Get predictions",
-      "Get access token â†’ Upload video â†’ Poll for completion â†’ Retrieve insights"
+      "Upload → Process → Delete",
+      "Create index → Add video → Query results",
+      "Deploy model → Send video → Get predictions",
+      "Get access token → Upload video → Poll for completion → Retrieve insights"
     ],
     correctAnswer: 3,
-    explanation: "The workflow is: authenticate (get token) â†’ upload video â†’ poll status until 'Processed' â†’ retrieve structured insights via the Index endpoint."
+    explanation: "The workflow is: authenticate (get token) → upload video → poll status until 'Processed' → retrieve structured insights via the Index endpoint."
   },
   {
     question: "Which insights does Video Indexer extract from the audio track?",
@@ -288,7 +288,7 @@ Search 'Azure AI': 4 matches
       "Only speech-to-text transcript",
       "Only keywords and topics",
       "Transcript with speaker identification, language detection, and sentiment",
-      "Audio is not analyzed â€” only visual content"
+      "Audio is not analyzed — only visual content"
     ],
     correctAnswer: 2,
     explanation: "Video Indexer extracts transcript with speaker diarization (who spoke when), language detection, keywords, topics, and text-based sentiment analysis from the audio."
@@ -299,7 +299,7 @@ Search 'Azure AI': 4 matches
       "Download the video and search locally",
       "Use the searchText parameter when querying the video index",
       "Create a separate search index",
-      "Search is not supported â€” you must read the full transcript"
+      "Search is not supported — you must read the full transcript"
     ],
     correctAnswer: 1,
     explanation: "Video Indexer supports keyword search via the searchText parameter, which finds matches across transcript, OCR, topics, and other textual insights with timestamps."

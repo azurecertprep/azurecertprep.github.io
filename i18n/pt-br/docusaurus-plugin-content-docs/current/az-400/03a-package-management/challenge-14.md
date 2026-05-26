@@ -23,7 +23,7 @@ A Contoso tem versionamento inconsistente entre suas 15 equipes de microsserviç
 - Falhas de rollback porque as equipes não conseguem identificar qual versão está implantada
 - Conflitos de dependência quando duas bibliotecas com alterações incompatíveis compartilham a mesma versão major
 - Incapacidade de configurar políticas automatizadas de atualização de dependências
-- Falhas de auditoria devido Ã  linhagem de artefatos não rastreável
+- Falhas de auditoria devido à linhagem de artefatos não rastreável
 
 O VP de Engenharia exige uma estratégia unificada de versionamento em todas as equipes. Sua tarefa é projetá-la e implementá-la.
 
@@ -468,7 +468,7 @@ Isso evita a condição de corrida completamente porque cada commit produz uma v
       "'$(System.JobAttempt)'"
     ],
     correctIndex: 1,
-    explanation: "A expressão counter() no Azure Pipelines fornece um inteiro atômico e auto-incremental com escopo em um prefixo. Ã‰ garantido que produz valores únicos mesmo quando múltiplas execuções de pipeline ocorrem simultaneamente. $(Build.BuildId) é único mas não sequencial por pacote."
+    explanation: "A expressão counter() no Azure Pipelines fornece um inteiro atômico e auto-incremental com escopo em um prefixo. É garantido que produz valores únicos mesmo quando múltiplas execuções de pipeline ocorrem simultaneamente. $(Build.BuildId) é único mas não sequencial por pacote."
   },
   {
     question: "Uma biblioteca com tag '2.1.0' recebe duas alterações: um novo método compatível com versões anteriores e uma correção de bug. Qual deve ser a próxima versão?",

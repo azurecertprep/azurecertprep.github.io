@@ -57,7 +57,7 @@ Your mission is to:
 3. Create the following security groups:
    - `IT-Team` | Members: Alice, Carol
    - `Finance-Team` | Members: Bob
-   - `All-Employees` | Members: Alice, Bob, Carol (use a dynamic membership rule based on department)
+   - `All-Employees` | Members: Alice, Bob, Carol (use static assignment, or as a bonus, convert to dynamic membership with rule `user.department -ne null`)
 
 ### Part 3: manage properties
 

@@ -34,7 +34,7 @@ O Azure AI Vision Spatial Analysis processa vídeo em tempo real de câmeras par
 | `cognitiveservices.vision.spatialanalysis-persondistance` | Monitorar distanciamento social |
 | `cognitiveservices.vision.spatialanalysis-personzonedwelltime` | Medir tempo gasto em zonas |
 
-Modelo de implantação: Vídeo â†’ Dispositivo IoT Edge (contêiner Spatial Analysis) â†’ IoT Hub â†’ Aplicação
+Modelo de implantação: Vídeo → Dispositivo IoT Edge (contêiner Spatial Analysis) → IoT Hub → Aplicação
 
 ## Pré-requisitos
 - Assinatura Azure
@@ -378,7 +378,7 @@ class SpatialEventProcessor:
             print(f"[{timestamp}] ZONE '{zone}': {count} people")
             
             if count > 5:
-                print(f"  âš ï¸ ALERT: Zone '{zone}' exceeds capacity!")
+                print(f"  ⚠️ ALERT: Zone '{zone}' exceeds capacity!")
         
         elif event_type == "personCrossingLineEvent":
             direction = props["direction"]
@@ -462,7 +462,7 @@ Distance violations: 1
       "Fornecendo coordenadas GPS de localizações físicas"
     ],
     correctAnswer: 2,
-    explanation: "Zonas são polígonos definidos com coordenadas normalizadas (0.0 a 1.0) relativas Ã s dimensões do frame da câmera, tornando-as independentes de resolução."
+    explanation: "Zonas são polígonos definidos com coordenadas normalizadas (0.0 a 1.0) relativas às dimensões do frame da câmera, tornando-as independentes de resolução."
   },
   {
     question: "Qual operação você usaria para contar quantas pessoas estão em uma seção da loja?",

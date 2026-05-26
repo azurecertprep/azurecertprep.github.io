@@ -20,7 +20,7 @@ O Challenge 24 do AZ-104 cobre conceitos básicos de UDR (criar uma tabela de ro
 
 ## Cenário
 
-A equipe de segurança da Contoso exige que TODO o tráfego destinado Ã  internet das VNets spoke do Azure passe por um firewall centralizado de Network Virtual Appliance (NVA) na VNet hub para inspeção. Além disso, tráfego específico destinado a redes locais deve usar NVAs diferentes com base no destino. A equipe de rede deve implementar roteamento multi-caminho com UDRs, configurar tunelamento forçado para conformidade e solucionar conflitos de roteamento entre rotas aprendidas por BGP e UDRs estáticas.
+A equipe de segurança da Contoso exige que TODO o tráfego destinado à internet das VNets spoke do Azure passe por um firewall centralizado de Network Virtual Appliance (NVA) na VNet hub para inspeção. Além disso, tráfego específico destinado a redes locais deve usar NVAs diferentes com base no destino. A equipe de rede deve implementar roteamento multi-caminho com UDRs, configurar tunelamento forçado para conformidade e solucionar conflitos de roteamento entre rotas aprendidas por BGP e UDRs estáticas.
 
 **Topologia de rede:**
 
@@ -30,14 +30,14 @@ On-Premises (192.168.0.0/16)
    VPN Gateway (with BGP)
         |
   Hub VNet (10.0.0.0/16)
-   â”œâ”€â”€ GatewaySubnet (10.0.0.0/27)
-   â”œâ”€â”€ NVA-A Subnet (10.0.1.0/24) â€” NVA-A: 10.0.1.4
-   â””â”€â”€ NVA-B Subnet (10.0.2.0/24) â€” NVA-B: 10.0.2.4
+   ├── GatewaySubnet (10.0.0.0/27)
+   ├── NVA-A Subnet (10.0.1.0/24) — NVA-A: 10.0.1.4
+   └── NVA-B Subnet (10.0.2.0/24) — NVA-B: 10.0.2.4
         |
   Peered to:
   Spoke VNet (10.1.0.0/16)
-   â”œâ”€â”€ Workload Subnet (10.1.1.0/24)
-   â””â”€â”€ App Subnet (10.1.2.0/24)
+   ├── Workload Subnet (10.1.1.0/24)
+   └── App Subnet (10.1.2.0/24)
 ```
 
 ## Objetivos de aprendizagem
@@ -234,7 +234,7 @@ A saída esperada mostra `DisableBgp: true`.
 
 :::tip Nota para o exame
 
-Quando `disableBgpRoutePropagation` é definido como `true`, rotas BGP do VPN Gateway ou ExpressRoute NÃƒO são propagadas para a sub-rede. Isso significa que as únicas rotas disponíveis são rotas do sistema e suas UDRs explícitas. Se você ainda precisar que a sub-rede alcance a rede local, você deve adicionar UDRs explícitas para esses prefixos.
+Quando `disableBgpRoutePropagation` é definido como `true`, rotas BGP do VPN Gateway ou ExpressRoute NÃO são propagadas para a sub-rede. Isso significa que as únicas rotas disponíveis são rotas do sistema e suas UDRs explícitas. Se você ainda precisar que a sub-rede alcance a rede local, você deve adicionar UDRs explícitas para esses prefixos.
 
 :::
 
@@ -242,7 +242,7 @@ Quando `disableBgpRoutePropagation` é definido como `true`, rotas BGP do VPN Ga
 
 ## Tarefa 3: Adicionar UDRs para tunelamento forçado
 
-O tunelamento forçado envia todo o tráfego destinado Ã  internet (0.0.0.0/0) para uma NVA ou gateway VPN em vez de diretamente para a internet. Este é um requisito de conformidade para muitas organizações.
+O tunelamento forçado envia todo o tráfego destinado à internet (0.0.0.0/0) para uma NVA ou gateway VPN em vez de diretamente para a internet. Este é um requisito de conformidade para muitas organizações.
 
 ### Etapa 1: Adicionar a rota de tunelamento forçado (rota padrão para NVA-A)
 
@@ -256,7 +256,7 @@ az network route-table route create \
     --next-hop-ip-address 10.0.1.4
 ```
 
-Esta rota substitui a rota padrão do sistema (0.0.0.0/0 para Internet) e força todo o tráfego destinado Ã  internet através da NVA-A em 10.0.1.4.
+Esta rota substitui a rota padrão do sistema (0.0.0.0/0 para Internet) e força todo o tráfego destinado à internet através da NVA-A em 10.0.1.4.
 
 ### Etapa 2: Adicionar rotas específicas para diferentes destinos locais
 
@@ -282,7 +282,7 @@ az network route-table route create \
     --next-hop-ip-address 10.0.2.4
 ```
 
-### Etapa 3: Adicionar rotas Ã  tabela de rotas da sub-rede de aplicação
+### Etapa 3: Adicionar rotas à tabela de rotas da sub-rede de aplicação
 
 ```bash
 az network route-table route create \
@@ -327,11 +327,11 @@ Os valores válidos de `--next-hop-type` são: `VirtualAppliance`, `VNetGateway`
 
 ---
 
-## Tarefa 4: Associar tabelas de rotas Ã s sub-redes spoke
+## Tarefa 4: Associar tabelas de rotas às sub-redes spoke
 
 Uma tabela de rotas não tem efeito até ser associada a uma ou mais sub-redes. Cada sub-rede pode ter no máximo uma tabela de rotas associada.
 
-### Etapa 1: Associar tabela de rotas Ã  sub-rede de carga de trabalho
+### Etapa 1: Associar tabela de rotas à sub-rede de carga de trabalho
 
 ```bash
 az network vnet subnet update \
@@ -341,7 +341,7 @@ az network vnet subnet update \
     --route-table rt-spoke-workload
 ```
 
-### Etapa 2: Associar tabela de rotas Ã  sub-rede de aplicação
+### Etapa 2: Associar tabela de rotas à sub-rede de aplicação
 
 ```bash
 az network vnet subnet update \
@@ -364,7 +364,7 @@ az network vnet subnet show \
 
 :::warning Importante
 
-Após associar a tabela de rotas de tunelamento forçado, as VMs na sub-rede perderão o acesso direto Ã  internet. O tráfego de saída para a internet será roteado para a NVA. Se a NVA não estiver configurada para encaminhar ou fazer NAT deste tráfego, a conectividade será interrompida. Este é o comportamento esperado para tunelamento forçado.
+Após associar a tabela de rotas de tunelamento forçado, as VMs na sub-rede perderão o acesso direto à internet. O tráfego de saída para a internet será roteado para a NVA. Se a NVA não estiver configurada para encaminhar ou fazer NAT deste tráfego, a conectividade será interrompida. Este é o comportamento esperado para tunelamento forçado.
 
 :::
 
@@ -458,7 +458,7 @@ A saída esperada deve mostrar:
 - `192.168.2.0/24` com next hop `VirtualAppliance` e IP `10.0.2.4` (origem: User)
 - `10.1.0.0/16` com next hop `VNetLocal` (origem: Default)
 
-### Etapa 2: Usar o Network Watcher next-hop para testar tráfego destinado Ã  internet
+### Etapa 2: Usar o Network Watcher next-hop para testar tráfego destinado à internet
 
 ```bash
 az network watcher show-next-hop \
@@ -468,7 +468,7 @@ az network watcher show-next-hop \
     --dest-ip 8.8.8.8
 ```
 
-Resultado esperado: `nextHopType: VirtualAppliance`, `nextHopIpAddress: 10.0.1.4` â€” confirmando que o tunelamento forçado está ativo.
+Resultado esperado: `nextHopType: VirtualAppliance`, `nextHopIpAddress: 10.0.1.4` — confirmando que o tunelamento forçado está ativo.
 
 ### Etapa 3: Testar roteamento para o site A local
 
@@ -533,7 +533,7 @@ az network nic show \
     --query "enableIPForwarding"
 ```
 
-Se a saída for `false`, pacotes que chegam Ã  NVA destinados a outros IPs são descartados silenciosamente.
+Se a saída for `false`, pacotes que chegam à NVA destinados a outros IPs são descartados silenciosamente.
 
 **Correção:**
 
@@ -544,7 +544,7 @@ az network nic update \
     --ip-forwarding true
 ```
 
-### Cenário 2: Acesso Ã  internet completamente interrompido
+### Cenário 2: Acesso à internet completamente interrompido
 
 **Sintoma:** A rota de tunelamento forçado (0.0.0.0/0 para VirtualAppliance) está configurada, mas a NVA está desligada ou não está fazendo NAT.
 
@@ -585,7 +585,7 @@ az network route-table route delete \
 
 **Diagnóstico:** Verifique as rotas efetivas na NIC da NVA. Se o caminho de retorno para 10.1.0.0/16 usa apenas a rota do sistema (emparelhamento de VNet), a NVA pode rotear o tráfego de retorno corretamente. No entanto, se a NVA envia tráfego para o spoke e há um salto intermediário, você precisa de UDRs para o caminho de retorno também.
 
-**Correção:** Adicione uma tabela de rotas Ã  sub-rede da NVA com rotas para tráfego de retorno (se necessário), ou garanta que a NVA seja o primeiro e último salto para fluxos inspecionados.
+**Correção:** Adicione uma tabela de rotas à sub-rede da NVA com rotas para tráfego de retorno (se necessário), ou garanta que a NVA seja o primeiro e último salto para fluxos inspecionados.
 
 ### Cenário 4: Rota BGP substitui UDR
 
@@ -639,7 +639,7 @@ Entender como o Azure seleciona rotas é crítico para o exame AZ-700:
 
 **Casos especiais:**
 - Se uma UDR e uma rota BGP têm o MESMO prefixo, a UDR vence
-- Se o BGP anuncia um prefixo MAIS ESPECÍFICO que sua UDR, a rota BGP vence devido Ã  correspondência de prefixo mais longo
+- Se o BGP anuncia um prefixo MAIS ESPECÍFICO que sua UDR, a rota BGP vence devido à correspondência de prefixo mais longo
 - Desabilitar a propagação BGP remove completamente as rotas BGP da consideração
 
 ---

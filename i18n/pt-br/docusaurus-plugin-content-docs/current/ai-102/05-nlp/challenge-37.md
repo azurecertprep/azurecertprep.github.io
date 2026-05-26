@@ -30,9 +30,9 @@ Conversational Language Understanding (CLU) é o substituto do LUIS (Language Un
 | **Utterance** | Texto de exemplo mapeado para intents/entidades para treinamento |
 
 Tipos de entidade:
-- **Learned** â€” Aprendida por machine learning a partir de exemplos rotulados
-- **List** â€” Conjunto definido de valores com sinônimos
-- **Prebuilt** â€” Tipos pré-treinados (datetime, number, temperature, etc.)
+- **Learned** — Aprendida por machine learning a partir de exemplos rotulados
+- **List** — Conjunto definido de valores com sinônimos
+- **Prebuilt** — Tipos pré-treinados (datetime, number, temperature, etc.)
 
 CLU usa o endpoint do serviço Language em: `https://{endpoint}.cognitiveservices.azure.com/language/`
 
@@ -395,7 +395,7 @@ Query: 'Cancel my reservation please'
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
 | Baixa confiança de intent | Intent errado previsto | Poucas utterances de treinamento por intent | Adicione 10-15+ utterances diversas por intent |
-| Entidade não extraída | Entidades ausentes na resposta | Offset/length de entidade incorreto no treinamento | Verifique se os offsets de caractere correspondem Ã s posições exatas do texto |
+| Entidade não extraída | Entidades ausentes na resposta | Offset/length de entidade incorreto no treinamento | Verifique se os offsets de caractere correspondem às posições exatas do texto |
 | Treinamento falha | Erros de validação | Utterances duplicadas ou spans de entidade inválidos | Verifique dados de treinamento para entidades sobrepostas e duplicatas |
 | Deploy falha | 409 Conflict | Nome de deployment já existe com modelo diferente | Delete o deployment existente ou use nome diferente |
 | Intent None corresponde a tudo | Disparo excessivo | Intent None tem exemplos muito similares a outros intents | Faça exemplos do intent None claramente não relacionados a todos os outros intents |
@@ -441,7 +441,7 @@ Query: 'Cancel my reservation please'
     options: [
       "Captura utterances que não correspondem a nenhum intent definido (consultas fora do escopo)",
       "Trata erros no modelo",
-      "Ã‰ automaticamente atribuído a utterances não treinadas",
+      "É automaticamente atribuído a utterances não treinadas",
       "Desabilita o reconhecimento de intent"
     ],
     correctAnswer: 0,

@@ -311,13 +311,17 @@ Configure Azure Artifacts retention views and cleanup:
 # @prerelease - pre-release versions
 # @release - promoted stable versions (longer retention)
 
-# Promote a package version to Release view (excluded from cleanup)
-az artifacts universal publish \
-  --feed contoso-npm \
-  --name contoso-shared \
-  --version 2.1.0 \
-  --description "Stable release" \
-  --path ./dist
+# Promote a package version to the @release view (excluded from cleanup)
+# Use the REST API to promote an existing package to a view:
+az devops invoke \
+  --area packaging \
+  --resource feed \
+  --org https://dev.azure.com/contoso \
+  --route-parameters feedId=contoso-npm \
+  --http-method PATCH \
+  --api-version 7.1 \
+  --in-file promote-payload.json
+# promote-payload.json: {"views":{"op":"add","path":"/views/-","value":"Release"}}
 
 # Configure feed retention policy via REST API
 # Keep maximum 5 versions per package (pre-release only)

@@ -731,7 +731,7 @@ Atualize o workflow para referenciar o arquivo de ignore:
       "Configurar um proxy reverso entre a porta 80 e 8080"
     ],
     correctIndex: 1,
-    explanation: "O targetPort no ingress do Azure Container Apps deve corresponder Ã  porta em que a aplicação do container escuta. Se a aplicação está configurada para escutar na porta 8080 (via ASPNETCORE_URLS ou Dockerfile EXPOSE), o ingress do Container App deve rotear para essa mesma porta."
+    explanation: "O targetPort no ingress do Azure Container Apps deve corresponder à porta em que a aplicação do container escuta. Se a aplicação está configurada para escutar na porta 8080 (via ASPNETCORE_URLS ou Dockerfile EXPOSE), o ingress do Container App deve rotear para essa mesma porta."
   },
   {
     question: "A Contoso constrói suas imagens de container com tags 'semver' (ex: '1.2.3') e tags 'sha' (ex: 'abc1234'). Nos manifestos Kubernetes de produção, qual tipo de tag deve ser referenciado para deployments reproduzíveis?",

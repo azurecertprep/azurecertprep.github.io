@@ -20,7 +20,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 **Azure AI Translator** é um serviço baseado em nuvem que traduz texto entre 100+ idiomas em tempo real. Ele potencializa cenários desde tradução simples de texto até tradução complexa de documentos preservando a formatação original. O serviço usa tradução neural de máquina (NMT), que produz traduções mais fluentes e naturais do que métodos estatísticos mais antigos.
 
-A tradução no Azure vem em várias formas. **Tradução de texto** lida com strings individuais ou lotes de texto via chamadas de API. **Tradução de documentos** processa documentos inteiros (PDF, Word, PowerPoint, etc.) mantendo seu layout, estilos e formatação originais. **Custom Translator** permite que organizações construam modelos de tradução específicos de domínio treinados em sua própria terminologia â€” essencial para indústrias como jurídica, médica ou manufatura onde tradução genérica pode não lidar corretamente com vocabulário especializado.
+A tradução no Azure vem em várias formas. **Tradução de texto** lida com strings individuais ou lotes de texto via chamadas de API. **Tradução de documentos** processa documentos inteiros (PDF, Word, PowerPoint, etc.) mantendo seu layout, estilos e formatação originais. **Custom Translator** permite que organizações construam modelos de tradução específicos de domínio treinados em sua própria terminologia — essencial para indústrias como jurídica, médica ou manufatura onde tradução genérica pode não lidar corretamente com vocabulário especializado.
 
 O Azure também fornece **tradução de fala**, parte do serviço Azure AI Speech, que traduz áudio falado de um idioma para outro em tempo real. Isso possibilita cenários como reuniões multilíngues ao vivo e tradução de conversação em tempo real entre pessoas falando diferentes idiomas.
 
@@ -45,17 +45,17 @@ Navegue para: [learn.microsoft.com/azure/ai-services/translator/language-support
 2. Observe que nem todos os recursos suportam todos os idiomas:
    - Tradução de texto: suporte mais amplo de idiomas
    - Tradução de documentos: um pouco menos idiomas
-   - Transliteração: converte script (ex.: Kanji japonês â†’ caracteres latinos)
+   - Transliteração: converte script (ex.: Kanji japonês → caracteres latinos)
 3. Alguns idiomas suportam tradução em ambas as direções; outros podem ser apenas unidirecionais
 
 **Recursos principais de idiomas**:
 
 | Recurso | Descrição | Exemplo |
 |---------|-----------|---------|
-| Tradução | Converter texto de um idioma para outro | Inglês â†’ Espanhol |
-| Transliteração | Converter texto de um script para outro | Hindi (Devanagari â†’ Latino) |
+| Tradução | Converter texto de um idioma para outro | Inglês → Espanhol |
+| Transliteração | Converter texto de um script para outro | Hindi (Devanagari → Latino) |
 | Detecção de idioma | Identificar idioma de origem automaticamente | Auto-detectar antes de traduzir |
-| Consulta ao dicionário | Obter traduções alternativas para uma palavra | "bank" â†’ "banco" (financeiro) ou "margem" (rio) |
+| Consulta ao dicionário | Obter traduções alternativas para uma palavra | "bank" → "banco" (financeiro) ou "margem" (rio) |
 
 ### Tarefa 3: Experimente o demo do Translator
 
@@ -70,9 +70,9 @@ Ou experimente o demo do Azure AI Translator no portal para ver:
 ```text
 Input:  "Cloud computing delivers IT resources over the internet."
 Source: English (auto-detected)
-Target: Spanish â†’ "La computación en la nube ofrece recursos de TI a través de internet."
-Target: French  â†’ "L'informatique en nuage fournit des ressources informatiques via Internet."
-Target: Japanese â†’ "ã‚¯ãƒ©ã‚¦ãƒ‰ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ãƒ†ã‚£ãƒ³ã‚°ã¯ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆã‚’é€šã˜ã¦ITãƒªã‚½ãƒ¼ã‚¹ã‚’æä¾›ã—ã¾ã™ã€‚"
+Target: Spanish → "La computación en la nube ofrece recursos de TI a través de internet."
+Target: French  → "L'informatique en nuage fournit des ressources informatiques via Internet."
+Target: Japanese → "クラウドコンピューティングは、インターネットを通じてITリソースを提供します。"
 ```
 
 ### Tarefa 4: Entenda o Custom Translator
@@ -122,7 +122,7 @@ az cognitiveservices account create \
 | Equívoco | Realidade |
 |----------|-----------|
 | Tradução automática é sempre perfeita | A qualidade da tradução varia por par de idiomas e domínio; conteúdo especializado pode precisar de modelos personalizados |
-| Você precisa especificar o idioma de origem | O Azure AI Translator pode auto-detectar o idioma de origem â€” você só precisa especificar o destino |
+| Você precisa especificar o idioma de origem | O Azure AI Translator pode auto-detectar o idioma de origem — você só precisa especificar o destino |
 | Tradução de documentos perde toda a formatação | Tradução de documentos especificamente preserva o layout, estilos e formatação originais |
 | Custom Translator requer milhões de exemplos | Pode produzir resultados úteis com apenas 10.000 sentenças paralelas, embora mais dados melhorem a qualidade |
 | Tradução e transliteração são a mesma coisa | Tradução muda o significado entre idiomas; transliteração muda o script mantendo o mesmo idioma |
@@ -136,7 +136,7 @@ az cognitiveservices account create \
       question: 'Uma empresa precisa traduzir 500 contratos em PDF do inglês para o alemão mantendo a formatação original intacta. Qual capacidade devem usar?',
       options: ['API de tradução de texto', 'Tradução de documentos', 'Custom Translator', 'Tradução de fala'],
       correctAnswer: 1,
-      explanation: 'Tradução de documentos processa documentos inteiros (PDF, Word, etc.) preservando seu layout, estilos e formatação originais â€” exatamente o que é necessário para traduzir contratos formatados.'
+      explanation: 'Tradução de documentos processa documentos inteiros (PDF, Word, etc.) preservando seu layout, estilos e formatação originais — exatamente o que é necessário para traduzir contratos formatados.'
     },
     {
       id: 'ai900-17-q2',
@@ -157,7 +157,7 @@ az cognitiveservices account create \
       question: 'Qual serviço do Azure fornece tradução de idioma falado em tempo real durante uma reunião multilíngue?',
       options: ['Azure AI Speech (tradução de fala)', 'Azure AI Language', 'Azure AI Translator (texto)', 'Azure AI Vision'],
       correctAnswer: 0,
-      explanation: 'Tradução de fala, parte do serviço Azure AI Speech, traduz áudio falado de um idioma para outro em tempo real â€” ideal para reuniões e conversações multilíngues ao vivo.'
+      explanation: 'Tradução de fala, parte do serviço Azure AI Speech, traduz áudio falado de um idioma para outro em tempo real — ideal para reuniões e conversações multilíngues ao vivo.'
     },
     {
       id: 'ai900-17-q5',

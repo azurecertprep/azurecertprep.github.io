@@ -23,10 +23,10 @@ Contoso Azure (10.1.0.0/16)              Woodgrove Bank (172.16.0.0/12)
                                          Compliance requirement:
 [VPN Gateway: VpnGw3]                      - IKE: AES256 / SHA384 / DHGroup14
      |                                     - IPsec: GCMAES256 / GCMAES256
-     |â”€â”€â”€â”€ Custom IPsec Policy â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ [Partner VPN Device]
+     |──── Custom IPsec Policy ────────── [Partner VPN Device]
      |                                       198.51.100.100
   vnet-hub
-    â””â”€â”€ GatewaySubnet (10.1.255.0/27)
+    └── GatewaySubnet (10.1.255.0/27)
 ```
 
 ## Objetivos de aprendizagem
@@ -410,7 +410,7 @@ az network vpn-connection ipsec-policy list \
     --output table
 ```
 
-**Correção:** Atualize a política para corresponder Ã  configuração do parceiro:
+**Correção:** Atualize a política para corresponder à configuração do parceiro:
 
 ```bash
 # Clear existing policy

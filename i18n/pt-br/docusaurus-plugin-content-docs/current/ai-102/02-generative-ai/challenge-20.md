@@ -22,9 +22,9 @@ import TabItem from '@theme/TabItem';
 
 Sistemas de IA em produção raramente dependem de um único modelo. **Orquestração multi-modelo** roteia requisições para diferentes modelos com base na complexidade da tarefa, restrições de custo ou requisitos de capacidade. Por exemplo, um roteador pode enviar tarefas simples de classificação para o GPT-4o-mini (rápido, barato) enquanto direciona raciocínio complexo para o GPT-4o (mais lento, mais capaz). Esse padrão otimiza o tradeoff custo-qualidade em um portfólio de aplicações.
 
-**Semantic Kernel** é o SDK de orquestração open-source da Microsoft que fornece abstrações para serviços de IA, plugins (funções que o modelo pode chamar) e planejadores que decompõem tarefas complexas em etapas. Ele suporta tanto Python quanto C#, integrando-se nativamente com o Azure OpenAI. Function calling (uso de ferramentas) permite que modelos invoquem ferramentas externas â€” APIs, bancos de dados ou código customizado â€” descrevendo as funções disponíveis e deixando o modelo decidir quando e como chamá-las.
+**Semantic Kernel** é o SDK de orquestração open-source da Microsoft que fornece abstrações para serviços de IA, plugins (funções que o modelo pode chamar) e planejadores que decompõem tarefas complexas em etapas. Ele suporta tanto Python quanto C#, integrando-se nativamente com o Azure OpenAI. Function calling (uso de ferramentas) permite que modelos invoquem ferramentas externas — APIs, bancos de dados ou código customizado — descrevendo as funções disponíveis e deixando o modelo decidir quando e como chamá-las.
 
-Para cenários de implantação na borda, os contêineres Azure AI empacotam modelos para operação offline ou de baixa latência. Modelos em contêineres operam independentemente de conectividade com a nuvem, sendo adequados para chãos de fábrica, veículos ou redes restritas onde o acesso Ã  nuvem é limitado ou proibido.
+Para cenários de implantação na borda, os contêineres Azure AI empacotam modelos para operação offline ou de baixa latência. Modelos em contêineres operam independentemente de conectividade com a nuvem, sendo adequados para chãos de fábrica, veículos ou redes restritas onde o acesso à nuvem é limitado ou proibido.
 
 ## Arquitetura
 
@@ -107,7 +107,7 @@ class ModelRouter:
 # Test the router
 router = ModelRouter()
 
-# Simple request â†’ routes to GPT-4o-mini
+# Simple request → routes to GPT-4o-mini
 result1 = router.route(
     [{"role": "user", "content": "What is Azure?"}],
     max_tokens=100
@@ -116,7 +116,7 @@ print(f"Simple: model={result1['model_used']}, "
       f"latency={result1['latency_ms']:.0f}ms")
 print(f"  Response: {result1['response'].choices[0].message.content[:80]}...\n")
 
-# Complex request â†’ routes to GPT-4o
+# Complex request → routes to GPT-4o
 result2 = router.route(
     [{"role": "user", "content": "Analyze the trade-offs between using Azure Functions Consumption plan vs Premium plan. Compare cost implications, cold start behavior, and scaling characteristics for a multi-step data processing pipeline."}],
     max_tokens=300
@@ -199,7 +199,7 @@ Console.WriteLine($"  Response: {result2.Content[0].Text[..Math.Min(80, result2.
 <TabItem value="rest" label="REST API">
 
 ```bash
-# Simple request â†’ route to gpt-4o-mini
+# Simple request → route to gpt-4o-mini
 echo "=== Simple Request (gpt-4o-mini) ==="
 time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-10-21" \
   -H "Content-Type: application/json" \
@@ -209,7 +209,7 @@ time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o
     "max_tokens": 100
   }' | jq -r '.choices[0].message.content'
 
-# Complex request â†’ route to gpt-4o
+# Complex request → route to gpt-4o
 echo ""
 echo "=== Complex Request (gpt-4o) ==="
 time curl -s -X POST "https://${AZURE_OPENAI_ENDPOINT}/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21" \
@@ -903,15 +903,15 @@ Complex: model=gpt-4o, latency=1250ms
 Calling: get_weather({"location": "Seattle", "unit": "celsius"})
 Calling: search_documents({"query": "Azure Functions"})
 
-Final answer: The weather in Seattle is currently 18Â°C and partly cloudy. I also found
+Final answer: The weather in Seattle is currently 18°C and partly cloudy. I also found
 documentation about Azure Functions in our knowledge base...
 
 === Multi-Step Analysis Pipeline ===
 Step 1: Summarizing...
 Summary:
-â€¢ Migration to Azure Data Factory planned for end of January
-â€¢ Excellent Q4 performance with 99.9% uptime
-â€¢ Rising compute costs need investigation (spot instances)
+• Migration to Azure Data Factory planned for end of January
+• Excellent Q4 performance with 99.9% uptime
+• Rising compute costs need investigation (spot instances)
 
 Step 2: Extracting actions...
 Actions:

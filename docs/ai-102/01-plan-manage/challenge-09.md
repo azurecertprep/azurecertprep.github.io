@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 
 Securing Azure AI resources involves multiple layers: protecting access keys, implementing network isolation, using managed identities for keyless authentication, and enforcing role-based access control. A compromise of AI service keys can lead to unauthorized usage, data exfiltration, and significant financial impact.
 
-In this challenge, you'll implement a comprehensive security posture for Azure AI services. You'll store keys in Azure Key Vault, implement zero-downtime key rotation, configure network rules with private endpoints, and transition from key-based authentication to managed identity â€” the recommended approach for production workloads.
+In this challenge, you'll implement a comprehensive security posture for Azure AI services. You'll store keys in Azure Key Vault, implement zero-downtime key rotation, configure network rules with private endpoints, and transition from key-based authentication to managed identity — the recommended approach for production workloads.
 
 The defense-in-depth approach combines identity (managed identity + RBAC), network (private endpoints + IP rules), and secrets management (Key Vault + rotation) to create a robust security boundary around your AI services.
 
@@ -245,9 +245,9 @@ def rotate_key_zero_downtime(key_to_rotate: str = "Key1"):
     """
     Zero-downtime key rotation strategy:
     1. Applications use Key1 (active)
-    2. Regenerate Key2 (inactive) â†’ new Key2
+    2. Regenerate Key2 (inactive) → new Key2
     3. Update applications to use Key2
-    4. Regenerate Key1 â†’ new Key1
+    4. Regenerate Key1 → new Key1
     5. Applications now use Key2, Key1 is fresh backup
     """
     print(f"=== Starting Zero-Downtime Key Rotation ===")
@@ -291,7 +291,7 @@ def rotate_key_zero_downtime(key_to_rotate: str = "Key1"):
         parameters={"keyName": active_key_name.capitalize()}
     )
     
-    print(f"\nâœ“ Rotation complete. Active key: {inactive_key_name}")
+    print(f"\n✓ Rotation complete. Active key: {inactive_key_name}")
 
 # Initialize active key tracking
 secret_client.set_secret("ai-services-active-key", "key1")
@@ -359,7 +359,7 @@ async Task RotateKeyZeroDowntime()
         : ServiceAccountKeyName.Key2;
     await account.Value.RegenerateKeyAsync(new ServiceAccountRegenerateKeyContent(oldKeyNameEnum));
     
-    Console.WriteLine($"\nâœ“ Rotation complete. Active key: {inactiveKeyName}");
+    Console.WriteLine($"\n✓ Rotation complete. Active key: {inactiveKeyName}");
 }
 
 await RotateKeyZeroDowntime();
@@ -432,7 +432,7 @@ else
     --name $AI_ACCOUNT --resource-group $RESOURCE_GROUP --key-name Key2
 fi
 
-echo "âœ“ Rotation complete. Active key: $INACTIVE_KEY"
+echo "✓ Rotation complete. Active key: $INACTIVE_KEY"
 ```
 
 </TabItem>
@@ -748,7 +748,7 @@ response = client.detect_language(documents=documents)
 for doc in response:
     if not doc.is_error:
         print(f"\nLanguage detected: {doc.primary_language.name}")
-        print("  âœ“ Authenticated via Managed Identity (keyless)")
+        print("  ✓ Authenticated via Managed Identity (keyless)")
 ```
 
 </TabItem>
@@ -803,7 +803,7 @@ foreach (var result in response)
     if (!result.HasError)
     {
         Console.WriteLine($"\nLanguage: {result.PrimaryLanguage.Name}");
-        Console.WriteLine("  âœ“ Authenticated via Managed Identity (keyless)");
+        Console.WriteLine("  ✓ Authenticated via Managed Identity (keyless)");
     }
 }
 ```
@@ -889,7 +889,7 @@ Step 3: Updating Key Vault with new key2...
 Step 4: Switching active key to key2...
 Step 5: Waiting for cache expiry...
 Step 6: Regenerating old key1...
-âœ“ Rotation complete. Active key: key2
+✓ Rotation complete. Active key: key2
 
 Managed Identity created: id-ai-services-reader
   Client ID: 12345678-abcd-efgh-ijkl-123456789012
@@ -897,7 +897,7 @@ Managed Identity created: id-ai-services-reader
 Role assigned: Cognitive Services User
 
 Language detected: English
-  âœ“ Authenticated via Managed Identity (keyless)
+  ✓ Authenticated via Managed Identity (keyless)
 ```
 
 ## Break & fix
@@ -930,7 +930,7 @@ Language detected: English
       "The key currently being used by applications (active key)",
       "The key NOT currently in use by applications (inactive key)",
       "Both keys simultaneously",
-      "It doesn't matter â€” either key can be regenerated first"
+      "It doesn't matter — either key can be regenerated first"
     ],
     correctAnswer: 1,
     explanation: "Always regenerate the inactive key first. This ensures applications continue working with the active key while the inactive key is safely regenerated. After updating applications to use the new key, you can then regenerate the old active key."
@@ -961,7 +961,7 @@ Language detected: English
     question: "When you set 'publicNetworkAccess' to 'Disabled' on an Azure AI resource, what happens to existing API key-based requests from the internet?",
     options: [
       "They continue to work because the key is still valid",
-      "They are blocked â€” only private endpoint traffic is allowed",
+      "They are blocked — only private endpoint traffic is allowed",
       "They are throttled to 1 request per minute",
       "They are redirected to the private endpoint automatically"
     ],

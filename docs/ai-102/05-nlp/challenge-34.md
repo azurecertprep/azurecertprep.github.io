@@ -294,7 +294,7 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
   {
     question: "What audio format does the Speech SDK expect for file input?",
     options: [
-      "Any audio format â€” it auto-converts",
+      "Any audio format — it auto-converts",
       "MP3 only",
       "WAV with PCM encoding (default: 16kHz, 16-bit, mono)",
       "FLAC or OGG Vorbis"
@@ -327,13 +327,13 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
   {
     question: "How do you handle the CancellationReason.Error in speech recognition?",
     options: [
-      "Ignore it â€” it's informational only",
+      "Ignore it — it's informational only",
       "Restart the recognizer automatically",
       "Check cancellation_details.error_details for the specific error (auth, network, format issue) and fix accordingly",
       "Switch to a different language"
     ],
     correctAnswer: 2,
-    explanation: "CancellationReason.Error indicates a real failure. Check error_details for specifics â€” common causes are invalid credentials, network issues, or unsupported audio format."
+    explanation: "CancellationReason.Error indicates a real failure. Check error_details for specifics — common causes are invalid credentials, network issues, or unsupported audio format."
   }
 ]} />
 

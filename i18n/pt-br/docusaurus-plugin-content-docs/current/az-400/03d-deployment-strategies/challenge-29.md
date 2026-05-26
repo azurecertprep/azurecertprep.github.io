@@ -482,7 +482,7 @@ ALTER TABLE dbo.Customers ALTER COLUMN FullName NVARCHAR(512) NOT NULL;
 |--------|----------------------------|------------------------|
 | v2.1 | Expand: Adicionar coluna `FullName` | Escrever em ambas as colunas antiga e nova |
 | v2.2 | Nenhuma | Ler apenas da nova coluna, parar de escrever na antiga |
-| v2.3 | Contract: Remover colunas antigas | Remover referências Ã s colunas antigas |
+| v2.3 | Contract: Remover colunas antigas | Remover referências às colunas antigas |
 
 ---
 

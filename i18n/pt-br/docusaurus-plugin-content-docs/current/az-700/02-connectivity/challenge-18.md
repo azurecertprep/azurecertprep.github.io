@@ -162,7 +162,7 @@ Com autenticação por certificado, a chave pública do certificado raiz é carr
 
 ## Tarefa 2: Revogar um certificado de cliente
 
-Quando um dispositivo é perdido ou um funcionário sai da empresa, você deve revogar o certificado de cliente para impedir acesso futuro Ã  VPN.
+Quando um dispositivo é perdido ou um funcionário sai da empresa, você deve revogar o certificado de cliente para impedir acesso futuro à VPN.
 
 ### Azure CLI
 
@@ -290,7 +290,7 @@ A autenticação Entra ID funciona SOMENTE com o tipo de túnel OpenVPN. Se o se
 
 ## Tarefa 4: Configurar autenticação RADIUS
 
-A autenticação RADIUS permite que você aproveite a infraestrutura existente de Network Policy Server (NPS) para autenticação VPN. Isso é comum quando organizações já possuem políticas NPS para controle de acesso Ã  rede.
+A autenticação RADIUS permite que você aproveite a infraestrutura existente de Network Policy Server (NPS) para autenticação VPN. Isso é comum quando organizações já possuem políticas NPS para controle de acesso à rede.
 
 ### Etapa 4a: Configurar o gateway para RADIUS
 
@@ -473,7 +473,7 @@ Set-AzVirtualNetworkGateway -VirtualNetworkGateway $gw `
 
 - **Certificado**: Melhor para confiança no nível do dispositivo, túneis de dispositivo Always On VPN e ambientes sem Entra ID P1/P2
 - **Entra ID**: Melhor para autenticação centrada no usuário com SSO, MFA e acesso condicional; requer Azure VPN Client
-- **RADIUS**: Melhor para organizações com infraestrutura NPS existente, políticas complexas de acesso Ã  rede ou provedores de identidade de terceiros
+- **RADIUS**: Melhor para organizações com infraestrutura NPS existente, políticas complexas de acesso à rede ou provedores de identidade de terceiros
 
 ---
 

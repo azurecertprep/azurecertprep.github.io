@@ -19,11 +19,11 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Visão geral
 
-O **Azure AI Foundry** (anteriormente Azure AI Studio) é a plataforma unificada da Microsoft para construir, avaliar e implantar aplicações de IA. Pense nele como a "loja única" para desenvolvimento de IA generativa no Azure. Ele reúne acesso a modelos, engenharia de prompt, ferramentas de avaliação e implantação â€” tudo em um único portal em [ai.azure.com](https://ai.azure.com).
+O **Azure AI Foundry** (anteriormente Azure AI Studio) é a plataforma unificada da Microsoft para construir, avaliar e implantar aplicações de IA. Pense nele como a "loja única" para desenvolvimento de IA generativa no Azure. Ele reúne acesso a modelos, engenharia de prompt, ferramentas de avaliação e implantação — tudo em um único portal em [ai.azure.com](https://ai.azure.com).
 
-A plataforma é organizada em torno de **hubs** e **projetos**. Um **hub** é um contêiner de nível superior que gerencia recursos compartilhados como computação, conexões e configurações de segurança em toda a sua organização. Um **projeto** vive dentro de um hub e é onde equipes individuais fazem seu trabalho de IA â€” selecionando modelos, testando prompts, construindo fluxos e implantando aplicações. Essa hierarquia hub-projeto permite governança empresarial enquanto dá flexibilidade Ã s equipes.
+A plataforma é organizada em torno de **hubs** e **projetos**. Um **hub** é um contêiner de nível superior que gerencia recursos compartilhados como computação, conexões e configurações de segurança em toda a sua organização. Um **projeto** vive dentro de um hub e é onde equipes individuais fazem seu trabalho de IA — selecionando modelos, testando prompts, construindo fluxos e implantando aplicações. Essa hierarquia hub-projeto permite governança empresarial enquanto dá flexibilidade às equipes.
 
-Um recurso de destaque é o **catálogo de modelos** â€” uma coleção curada de modelos de IA de múltiplos provedores. Além dos modelos GPT da OpenAI, você pode acessar modelos da Meta (Llama), Mistral, Microsoft (Phi), Cohere e outros. Isso permite que você compare e escolha o melhor modelo para seu caso de uso específico, considerando fatores como desempenho, custo e licenciamento.
+Um recurso de destaque é o **catálogo de modelos** — uma coleção curada de modelos de IA de múltiplos provedores. Além dos modelos GPT da OpenAI, você pode acessar modelos da Meta (Llama), Mistral, Microsoft (Phi), Cohere e outros. Isso permite que você compare e escolha o melhor modelo para seu caso de uso específico, considerando fatores como desempenho, custo e licenciamento.
 
 ## Explorar
 
@@ -33,19 +33,19 @@ O Azure AI Foundry usa uma estrutura hierárquica para organização:
 
 ```text
 Azure AI Foundry
-â””â”€â”€ Hub (recursos compartilhados, segurança, governança)
-    â”œâ”€â”€ Projeto A (equipe 1 - chatbot de clientes)
-    â”‚   â”œâ”€â”€ Implantações de modelos
-    â”‚   â”œâ”€â”€ Prompt flows
-    â”‚   â””â”€â”€ Avaliações
-    â”œâ”€â”€ Projeto B (equipe 2 - processamento de documentos)
-    â”‚   â”œâ”€â”€ Implantações de modelos
-    â”‚   â”œâ”€â”€ Prompt flows
-    â”‚   â””â”€â”€ Avaliações
-    â””â”€â”€ Recursos Compartilhados
-        â”œâ”€â”€ Instâncias de computação
-        â”œâ”€â”€ Conexões (para fontes de dados, APIs)
-        â””â”€â”€ Configurações de segurança
+└── Hub (recursos compartilhados, segurança, governança)
+    ├── Projeto A (equipe 1 - chatbot de clientes)
+    │   ├── Implantações de modelos
+    │   ├── Prompt flows
+    │   └── Avaliações
+    ├── Projeto B (equipe 2 - processamento de documentos)
+    │   ├── Implantações de modelos
+    │   ├── Prompt flows
+    │   └── Avaliações
+    └── Recursos Compartilhados
+        ├── Instâncias de computação
+        ├── Conexões (para fontes de dados, APIs)
+        └── Configurações de segurança
 ```
 
 | Componente | Propósito | Analogia |
@@ -57,7 +57,7 @@ Azure AI Foundry
 
 ### Tarefa 2: Explore o catálogo de modelos
 
-Navegue para: [ai.azure.com](https://ai.azure.com) â†’ **Model catalog**
+Navegue para: [ai.azure.com](https://ai.azure.com) → **Model catalog**
 
 O catálogo de modelos oferece modelos de múltiplos provedores:
 
@@ -70,11 +70,11 @@ O catálogo de modelos oferece modelos de múltiplos provedores:
 | Cohere | Command R+ | Busca empresarial, cenários RAG |
 
 **Recursos do catálogo de modelos**:
-- **Model cards** â€” Descrição, capacidades, limitações para cada modelo
-- **Benchmarks** â€” Comparações de desempenho entre tarefas
-- **Opções de implantação** â€” API serverless, computação gerenciada ou auto-hospedado
-- **Informações de licenciamento** â€” Termos de código aberto vs. proprietário
-- **Experimente** â€” Teste modelos diretamente no catálogo antes de implantar
+- **Model cards** — Descrição, capacidades, limitações para cada modelo
+- **Benchmarks** — Comparações de desempenho entre tarefas
+- **Opções de implantação** — API serverless, computação gerenciada ou auto-hospedado
+- **Informações de licenciamento** — Termos de código aberto vs. proprietário
+- **Experimente** — Teste modelos diretamente no catálogo antes de implantar
 
 ### Tarefa 3: Entender opções de implantação
 
@@ -90,30 +90,30 @@ O Azure AI Foundry oferece diferentes formas de implantar modelos:
 - Sem necessidade de provisionar computação
 - Pague apenas pelos tokens consumidos
 - Modelos da Meta, Mistral e outros disponíveis dessa forma
-- Rápido para configurar â€” obtenha um endpoint em minutos
+- Rápido para configurar — obtenha um endpoint em minutos
 
 ### Tarefa 4: Explore prompt flow e avaliação
 
 O Azure AI Foundry inclui ferramentas para construir e avaliar aplicações de IA:
 
-**Prompt Flow** â€” Ferramenta visual para construir fluxos de trabalho de aplicações LLM:
+**Prompt Flow** — Ferramenta visual para construir fluxos de trabalho de aplicações LLM:
 - Encadear múltiplas chamadas LLM juntas
 - Adicionar etapas de processamento de dados entre chamadas
 - Incluir lógica de ramificação
 - Conectar a fontes de dados externas
 - Testar e debugar fluxos visualmente
 
-**Avaliação** â€” Medir a qualidade de aplicações de IA:
-- **Fundamentação (Groundedness)** â€” As respostas são baseadas nos dados fornecidos?
-- **Relevância** â€” As respostas respondem Ã  pergunta?
-- **Coerência** â€” As respostas são logicamente estruturadas?
-- **Fluência** â€” A linguagem é natural?
-- **Segurança** â€” A saída evita conteúdo prejudicial?
+**Avaliação** — Medir a qualidade de aplicações de IA:
+- **Fundamentação (Groundedness)** — As respostas são baseadas nos dados fornecidos?
+- **Relevância** — As respostas respondem à pergunta?
+- **Coerência** — As respostas são logicamente estruturadas?
+- **Fluência** — A linguagem é natural?
+- **Segurança** — A saída evita conteúdo prejudicial?
 
-**Sua tarefa**: Considere um chatbot de suporte ao cliente. Quais métricas de avaliação seriam mais importantes? (Fundamentação e relevância â€” você quer respostas precisas baseadas em documentação real, não respostas alucinadas.)
+**Sua tarefa**: Considere um chatbot de suporte ao cliente. Quais métricas de avaliação seriam mais importantes? (Fundamentação e relevância — você quer respostas precisas baseadas em documentação real, não respostas alucinadas.)
 
 :::tip Dica para o exame
-Para o exame, lembre-se que o Azure AI Foundry é a plataforma que reúne tudo â€” seleção de modelo, engenharia de prompt, avaliação e implantação. Não é um modelo em si, mas o ambiente onde você trabalha com modelos.
+Para o exame, lembre-se que o Azure AI Foundry é a plataforma que reúne tudo — seleção de modelo, engenharia de prompt, avaliação e implantação. Não é um modelo em si, mas o ambiente onde você trabalha com modelos.
 :::
 
 ## Conceitos-Chave
@@ -132,7 +132,7 @@ Para o exame, lembre-se que o Azure AI Foundry é a plataforma que reúne tudo �
 | Equívoco | Realidade |
 |----------|-----------|
 | Azure AI Foundry só oferece modelos da OpenAI | O catálogo de modelos inclui modelos da Meta, Mistral, Microsoft, Cohere e outros provedores |
-| Azure AI Foundry substitui o Azure OpenAI Service | Eles trabalham juntos â€” Azure OpenAI Service fornece os modelos; AI Foundry é a plataforma de desenvolvimento |
+| Azure AI Foundry substitui o Azure OpenAI Service | Eles trabalham juntos — Azure OpenAI Service fornece os modelos; AI Foundry é a plataforma de desenvolvimento |
 | Você precisa de um hub para cada projeto | Múltiplos projetos compartilham um único hub; o hub fornece governança e recursos compartilhados |
 | Todos os modelos no catálogo são gratuitos | Os modelos têm preços diferentes; alguns são pague-por-token, outros requerem computação dedicada |
 | Prompt flow requer programação | Prompt flow fornece uma interface visual de baixo código para construir fluxos de trabalho LLM (embora código possa ser adicionado) |
@@ -160,7 +160,7 @@ Para o exame, lembre-se que o Azure AI Foundry é a plataforma que reúne tudo �
       question: 'Uma empresa quer testar rapidamente um modelo Meta Llama sem provisionar nenhuma infraestrutura de computação. Qual opção de implantação devem escolher?',
       options: ['Computação Gerenciada', 'Implantação auto-hospedada', 'API Serverless (Models as a Service)', 'Azure Virtual Machine'],
       correctAnswer: 2,
-      explanation: 'API Serverless (Models as a Service) permite que você implante e use modelos sem provisionar infraestrutura de computação. Você paga por token consumido e pode ter um endpoint rodando em minutos â€” ideal para testes rápidos e cargas de trabalho variáveis.'
+      explanation: 'API Serverless (Models as a Service) permite que você implante e use modelos sem provisionar infraestrutura de computação. Você paga por token consumido e pode ter um endpoint rodando em minutos — ideal para testes rápidos e cargas de trabalho variáveis.'
     },
     {
       id: 'ai900-21-q4',
@@ -172,9 +172,9 @@ Para o exame, lembre-se que o Azure AI Foundry é a plataforma que reúne tudo �
     {
       id: 'ai900-21-q5',
       question: 'Qual afirmação sobre o Azure AI Foundry está correta?',
-      options: ['Ele só suporta modelos GPT da OpenAI', 'Ã‰ uma plataforma unificada para construir, avaliar e implantar aplicações de IA', 'Ele substitui todos os outros serviços Azure AI', 'Ele requer habilidades avançadas de programação para usar'],
+      options: ['Ele só suporta modelos GPT da OpenAI', 'É uma plataforma unificada para construir, avaliar e implantar aplicações de IA', 'Ele substitui todos os outros serviços Azure AI', 'Ele requer habilidades avançadas de programação para usar'],
       correctAnswer: 1,
-      explanation: 'Azure AI Foundry é a plataforma unificada da Microsoft que reúne seleção de modelo (de múltiplos provedores), engenharia de prompt, ferramentas de avaliação e capacidades de implantação â€” tudo em um ambiente em ai.azure.com.'
+      explanation: 'Azure AI Foundry é a plataforma unificada da Microsoft que reúne seleção de modelo (de múltiplos provedores), engenharia de prompt, ferramentas de avaliação e capacidades de implantação — tudo em um ambiente em ai.azure.com.'
     }
   ]}
 />

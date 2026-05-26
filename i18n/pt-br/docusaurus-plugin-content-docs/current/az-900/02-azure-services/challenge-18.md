@@ -1,11 +1,11 @@
 ---
 sidebar_position: 12
-title: "Desafio 18: Segurança â€” Zero Trust, Defesa em Profundidade e Defender"
+title: "Desafio 18: Segurança — Zero Trust, Defesa em Profundidade e Defender"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 18: Segurança â€” Zero Trust, Defesa em Profundidade e Defender
+# Desafio 18: Segurança — Zero Trust, Defesa em Profundidade e Defender
 
 :::info Tempo Estimado
 **20-30 min** | **Custo**: Gratuito | **Domínio**: Arquitetura e Serviços Azure (35-40%)
@@ -41,13 +41,13 @@ Zero Trust opera em três princípios:
 Defense-in-depth usa múltiplas camadas de segurança. Se uma camada falhar, a próxima camada captura a ameaça:
 
 ```text
-Layer 1: Physical Security    â†’ Datacenter access controls
-Layer 2: Identity & Access    â†’ Entra ID, MFA, Conditional Access
-Layer 3: Perimeter           â†’ DDoS protection, firewalls
-Layer 4: Network             â†’ NSGs, VNets, segmentation
-Layer 5: Compute             â†’ VM security, patching, endpoint protection
-Layer 6: Application         â†’ Secure coding, vulnerability scanning
-Layer 7: Data                â†’ Encryption at rest and in transit
+Layer 1: Physical Security    → Datacenter access controls
+Layer 2: Identity & Access    → Entra ID, MFA, Conditional Access
+Layer 3: Perimeter           → DDoS protection, firewalls
+Layer 4: Network             → NSGs, VNets, segmentation
+Layer 5: Compute             → VM security, patching, endpoint protection
+Layer 6: Application         → Secure coding, vulnerability scanning
+Layer 7: Data                → Encryption at rest and in transit
 ```
 
 **Insight principal**: Nenhuma camada única fornece proteção completa. A segurança requer TODAS as camadas trabalhando juntas.
@@ -60,7 +60,7 @@ Layer 7: Data                â†’ Encryption at rest and in transit
    - **Recommendations**: Melhorias de segurança sugeridas
    - **Security alerts**: Ameaças detectadas
    - **Regulatory compliance**: Conformidade com padrões
-3. Observe o **Secure Score** â€” uma classificação percentual da sua postura de segurança
+3. Observe o **Secure Score** — uma classificação percentual da sua postura de segurança
 
 **Defender for Cloud fornece:**
 - Avaliação contínua de segurança
@@ -113,7 +113,7 @@ az security assessment list --query "[0:5].{Name:displayName, Status:status.code
 
 | Conceito | Descrição |
 |----------|-----------|
-| **Zero Trust** | Nunca confie, sempre verifique â€” independentemente da localização na rede |
+| **Zero Trust** | Nunca confie, sempre verifique — independentemente da localização na rede |
 | **Defense-in-depth** | Múltiplas camadas de segurança protegendo recursos |
 | **Microsoft Defender for Cloud** | Gerenciamento unificado de segurança e proteção contra ameaças |
 | **Secure Score** | Medida percentual da sua postura de segurança |
@@ -164,7 +164,7 @@ az security assessment list --query "[0:5].{Name:displayName, Status:status.code
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe Azure identity, access, and security](https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/)
 - [Zero Trust documentation](https://learn.microsoft.com/en-us/security/zero-trust/)
 - [Microsoft Defender for Cloud](https://learn.microsoft.com/en-us/azure/defender-for-cloud/)

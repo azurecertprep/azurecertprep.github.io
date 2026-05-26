@@ -338,7 +338,7 @@ BLEU Score (custom):   58.3 (+15.8 improvement)
     options: [
       "Use um endpoint de API diferente",
       "Inclua o nome do modelo no corpo da requisição",
-      "Adicione o parâmetro 'category' com o Category ID do seu modelo Ã  requisição de tradução",
+      "Adicione o parâmetro 'category' com o Category ID do seu modelo à requisição de tradução",
       "Modelos personalizados são usados automaticamente uma vez publicados"
     ],
     correctAnswer: 2,

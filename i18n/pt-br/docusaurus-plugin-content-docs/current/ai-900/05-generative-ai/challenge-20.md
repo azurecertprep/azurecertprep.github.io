@@ -47,28 +47,28 @@ O **Playground do Azure OpenAI Studio** (acessível em [oai.azure.com](https://o
 
 **Interface do Chat Playground**:
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ System message:                                          â”‚
-â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚ â”‚ You are a helpful AI assistant that provides         â”‚ â”‚
-â”‚ â”‚ concise, accurate information.                       â”‚ â”‚
-â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â”‚                                                          â”‚
-â”‚ Parameters:              â”‚ Chat:                         â”‚
-â”‚  Temperature: 0.7        â”‚  User: What is Azure?         â”‚
-â”‚  Max tokens: 800         â”‚  AI: Azure is Microsoft's     â”‚
-â”‚  Top-p: 0.95            â”‚      cloud computing           â”‚
-â”‚  Deployment: gpt-4o     â”‚      platform...               â”‚
-â”‚                          â”‚                               â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────────────────────────────────────────────┐
+│ System message:                                          │
+│ ┌─────────────────────────────────────────────────────┐ │
+│ │ You are a helpful AI assistant that provides         │ │
+│ │ concise, accurate information.                       │ │
+│ └─────────────────────────────────────────────────────┘ │
+│                                                          │
+│ Parameters:              │ Chat:                         │
+│  Temperature: 0.7        │  User: What is Azure?         │
+│  Max tokens: 800         │  AI: Azure is Microsoft's     │
+│  Top-p: 0.95            │      cloud computing           │
+│  Deployment: gpt-4o     │      platform...               │
+│                          │                               │
+└─────────────────────────────────────────────────────────┘
 ```
 
 **Componentes principais do playground**:
-- **System message** â€” Instruções que definem o comportamento e persona da IA
-- **Temperature** â€” Controla aleatoriedade (0-2, padrão ~0.7)
-- **Max tokens** â€” Comprimento máximo da resposta
-- **Top-p** â€” Controle alternativo de aleatoriedade (0-1)
-- **Deployment** â€” Qual modelo implantado usar
+- **System message** — Instruções que definem o comportamento e persona da IA
+- **Temperature** — Controla aleatoriedade (0-2, padrão ~0.7)
+- **Max tokens** — Comprimento máximo da resposta
+- **Top-p** — Controle alternativo de aleatoriedade (0-1)
+- **Deployment** — Qual modelo implantado usar
 
 ### Tarefa 3: Entender implantações e endpoints
 
@@ -76,16 +76,16 @@ O Azure OpenAI usa um modelo de implantação para gerenciar o acesso:
 
 ```text
 Azure OpenAI Resource (my-openai-resource)
-â”œâ”€â”€ Deployment: "gpt4o-chat" (model: gpt-4o)
-â”œâ”€â”€ Deployment: "gpt35-support" (model: gpt-3.5-turbo)
-â””â”€â”€ Deployment: "dalle3-images" (model: dall-e-3)
+├── Deployment: "gpt4o-chat" (model: gpt-4o)
+├── Deployment: "gpt35-support" (model: gpt-3.5-turbo)
+└── Deployment: "dalle3-images" (model: dall-e-3)
 ```
 
 **Conceitos-chave**:
-- **Resource** â€” O recurso Azure que contém suas implantações
-- **Deployment** â€” Uma instância de modelo específica com seu próprio nome e endpoint
-- **Endpoint** â€” A URL que as aplicações chamam para acessar o modelo
-- **API key / Microsoft Entra auth** â€” Métodos de autenticação para acessar implantações
+- **Resource** — O recurso Azure que contém suas implantações
+- **Deployment** — Uma instância de modelo específica com seu próprio nome e endpoint
+- **Endpoint** — A URL que as aplicações chamam para acessar o modelo
+- **API key / Microsoft Entra auth** — Métodos de autenticação para acessar implantações
 
 **Estrutura do endpoint**:
 ```text
@@ -100,9 +100,9 @@ O Azure OpenAI fornece diferentes padrões de API:
 |-----|---------|-------------|
 | **Chat Completions** | Array de mensagens (roles: system, user, assistant) | IA conversacional, maioria dos casos de uso modernos |
 | **Completions** (legado) | Texto de prompt único | Completar texto simples |
-| **Embeddings** | Texto de entrada â†’ array vetorial | Busca, similaridade, agrupamento |
-| **Images** (DALL-E) | Descrição textual â†’ imagem | Geração de imagens |
-| **Audio** (Whisper) | Arquivo de áudio â†’ texto | Transcrição |
+| **Embeddings** | Texto de entrada → array vetorial | Busca, similaridade, agrupamento |
+| **Images** (DALL-E) | Descrição textual → imagem | Geração de imagens |
+| **Audio** (Whisper) | Arquivo de áudio → texto | Transcrição |
 
 **Formato de mensagens do Chat Completions** (o padrão mais comum):
 ```json
@@ -117,9 +117,9 @@ O Azure OpenAI fornece diferentes padrões de API:
 ```
 
 Os **roles** são:
-- `system` â€” Define o comportamento/persona da IA (oculto do usuário)
-- `user` â€” As mensagens do humano
-- `assistant` â€” As respostas anteriores da IA (para contexto multi-turno)
+- `system` — Define o comportamento/persona da IA (oculto do usuário)
+- `user` — As mensagens do humano
+- `assistant` — As respostas anteriores da IA (para contexto multi-turno)
 
 :::tip Alternativa via Azure CLI
 ```bash
@@ -146,7 +146,7 @@ az cognitiveservices account list-models \
 | Azure OpenAI Service | Acesso hospedado no Azure a modelos da OpenAI com segurança e conformidade empresarial |
 | Deployment | Uma instância de modelo específica dentro de um recurso Azure OpenAI com seu próprio endpoint |
 | System message | Instruções que definem o comportamento, persona e restrições do assistente de IA |
-| Token | A unidade básica de processamento de texto (~Â¾ de uma palavra); determina custo e limites de contexto |
+| Token | A unidade básica de processamento de texto (~¾ de uma palavra); determina custo e limites de contexto |
 | Chat Completions API | O formato de API baseado em mensagens usando roles system/user/assistant |
 | Filtragem de conteúdo | Recurso integrado do Azure OpenAI que bloqueia conteúdo prejudicial em entradas e saídas |
 
@@ -155,10 +155,10 @@ az cognitiveservices account list-models \
 | Equívoco | Realidade |
 |----------|-----------|
 | Azure OpenAI e a API da OpenAI são idênticos | Azure OpenAI adiciona recursos empresariais (conformidade, rede, filtros de conteúdo, autenticação Entra ID) não disponíveis na API direta da OpenAI |
-| Você pode usar qualquer modelo imediatamente sem implantação | Você deve implantar um modelo antes de poder usá-lo â€” implantações criam o endpoint que sua aplicação chama |
+| Você pode usar qualquer modelo imediatamente sem implantação | Você deve implantar um modelo antes de poder usá-lo — implantações criam o endpoint que sua aplicação chama |
 | GPT-4 é sempre melhor que GPT-3.5 para toda tarefa | GPT-3.5 é mais rápido e barato; para tarefas simples (classificação, extração) pode ser suficiente e mais econômico |
-| Azure OpenAI armazena e treina com seus dados | Por padrão, Azure OpenAI NÃƒO usa seus dados para retreinar modelos; seus dados permanecem dentro do seu perímetro de conformidade |
-| DALL-E e GPT usam a mesma arquitetura de modelo | DALL-E usa modelos de difusão para geração de imagens; GPT usa modelos transformer para texto â€” são arquiteturas diferentes |
+| Azure OpenAI armazena e treina com seus dados | Por padrão, Azure OpenAI NÃO usa seus dados para retreinar modelos; seus dados permanecem dentro do seu perímetro de conformidade |
+| DALL-E e GPT usam a mesma arquitetura de modelo | DALL-E usa modelos de difusão para geração de imagens; GPT usa modelos transformer para texto — são arquiteturas diferentes |
 
 ## Verificação de Conhecimento
 
@@ -183,14 +183,14 @@ az cognitiveservices account list-models \
       question: 'Qual é o propósito da "system message" no Azure OpenAI Chat Completions?',
       options: ['Autenticar a requisição de API', 'Definir a conta de cobrança para a requisição', 'Especificar o nome da implantação', 'Definir o comportamento, persona e restrições do assistente de IA'],
       correctAnswer: 3,
-      explanation: 'A system message define o comportamento e persona da IA â€” por exemplo, "Você é um agente de atendimento ao cliente prestativo que só discute nossos produtos." Ela fornece contexto e restrições para como o modelo deve responder.'
+      explanation: 'A system message define o comportamento e persona da IA — por exemplo, "Você é um agente de atendimento ao cliente prestativo que só discute nossos produtos." Ela fornece contexto e restrições para como o modelo deve responder.'
     },
     {
       id: 'ai900-20-q4',
       question: 'Qual é um benefício chave de usar o Azure OpenAI Service em vez da API direta da OpenAI?',
       options: ['Azure OpenAI fornece segurança empresarial, conformidade e filtragem de conteúdo', 'Azure OpenAI é sempre gratuito', 'Azure OpenAI oferece mais modelos que a OpenAI', 'Azure OpenAI gera respostas mais rápidas'],
       correctAnswer: 0,
-      explanation: 'Azure OpenAI fornece recursos empresariais incluindo certificações de conformidade Azure, autenticação Microsoft Entra ID, rede privada, filtragem de conteúdo integrada e residência de dados regional â€” tornando-o adequado para indústrias regulamentadas.'
+      explanation: 'Azure OpenAI fornece recursos empresariais incluindo certificações de conformidade Azure, autenticação Microsoft Entra ID, rede privada, filtragem de conteúdo integrada e residência de dados regional — tornando-o adequado para indústrias regulamentadas.'
     },
     {
       id: 'ai900-20-q5',

@@ -633,7 +633,7 @@ az network vnet peering update \
     question: "An NVA deployed in Azure is not forwarding traffic between subnets. The Azure NIC has IP forwarding enabled. What is the most likely cause?",
     options: [
       "The NSG on the NVA subnet is blocking traffic",
-      "IP forwarding is not enabled at the OS level inside the VM âœ…",
+      "IP forwarding is not enabled at the OS level inside the VM ✅",
       "The route table has an incorrect next-hop IP address",
       "The VNet peering is not configured"
     ],
@@ -646,7 +646,7 @@ az network vnet peering update \
     options: [
       "VnetLocal",
       "Internet",
-      "VirtualAppliance âœ…",
+      "VirtualAppliance ✅",
       "VirtualNetworkGateway"
     ],
     correctIndex: 2,
@@ -657,7 +657,7 @@ az network vnet peering update \
     question: "You have a hub-spoke topology with a VPN gateway in the hub. On-premises traffic to spoke VMs bypasses the NVA on the return path. What should you do?",
     options: [
       "Enable IP forwarding on the VPN gateway",
-      "Create a UDR on the GatewaySubnet pointing spoke prefixes to the NVA âœ…",
+      "Create a UDR on the GatewaySubnet pointing spoke prefixes to the NVA ✅",
       "Disable BGP route propagation on the spoke subnets",
       "Change the peering to use remote gateways"
     ],
@@ -670,7 +670,7 @@ az network vnet peering update \
     options: [
       "Allow virtual network access",
       "Use remote gateways",
-      "Allow forwarded traffic âœ…",
+      "Allow forwarded traffic ✅",
       "Allow gateway transit"
     ],
     correctIndex: 2,
@@ -681,7 +681,7 @@ az network vnet peering update \
     question: "You deploy two NVAs behind an internal Standard Load Balancer for high availability. What load balancing rule configuration allows ALL protocols and ports to be forwarded?",
     options: [
       "Protocol: TCP, Frontend port: 0, Backend port: 0",
-      "Protocol: All, Frontend port: 0, Backend port: 0 (HA Ports) âœ…",
+      "Protocol: All, Frontend port: 0, Backend port: 0 (HA Ports) ✅",
       "Protocol: UDP, Frontend port: *, Backend port: *",
       "Protocol: All, Frontend port: 443, Backend port: 443"
     ],
@@ -692,7 +692,7 @@ az network vnet peering update \
     id: "az700-47-q6",
     question: "Why should you set --disable-bgp-route-propagation true on the spoke route tables?",
     options: [
-      "To prevent BGP routes from the VPN gateway from overriding the UDR to the NVA âœ…",
+      "To prevent BGP routes from the VPN gateway from overriding the UDR to the NVA ✅",
       "To reduce the number of routes in the routing table",
       "To prevent spoke VMs from learning hub routes",
       "To enable faster convergence after NVA failover"

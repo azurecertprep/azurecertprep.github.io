@@ -24,7 +24,7 @@ import TabItem from '@theme/TabItem';
 A detecção de objetos localiza e classifica múltiplos objetos dentro de uma imagem usando bounding boxes. Diferente da classificação (que responde "o que é esta imagem?"), a detecção responde "quais objetos estão aqui e onde?"
 
 Conceitos-chave:
-- **Bounding box**: Retângulo definido por (left, top, width, height) como coordenadas normalizadas (0.0â€“1.0)
+- **Bounding box**: Retângulo definido por (left, top, width, height) como coordenadas normalizadas (0.0–1.0)
 - **IoU (Intersection over Union)**: Mede a sobreposição entre bounding boxes preditas e reais
 - **mAP (mean Average Precision)**: Métrica principal que calcula a média do AP em todas as classes de objetos
 
@@ -258,7 +258,7 @@ Objects found: 4
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Regiões rejeitadas | Coordenadas de região inválidas | Coordenadas fora do intervalo 0.0â€“1.0 | Normalize: left+width â‰¤ 1.0, top+height â‰¤ 1.0 |
+| Regiões rejeitadas | Coordenadas de região inválidas | Coordenadas fora do intervalo 0.0–1.0 | Normalize: left+width ≤ 1.0, top+height ≤ 1.0 |
 | mAP baixo | Precisão de detecção ruim | Rotulagem inconsistente de bounding boxes | Re-rotule com boxes ajustados e consistentes; mais dados de treinamento |
 | Detecções sobrepostas | Predições duplicadas | Sem limiar de NMS configurado | Aplique limiar de confiança; use Non-Maximum Suppression |
 | Treinamento falha | `BadRequestImageRegions` | Regiões muito pequenas ou ausentes | Tamanho mínimo da região ~5% da área da imagem |
@@ -270,13 +270,13 @@ Objects found: 4
   {
     question: "Como as coordenadas de bounding box são representadas na detecção de objetos do Custom Vision?",
     options: [
-      "Coordenadas normalizadas de 0.0 a 1.0 relativas Ã s dimensões da imagem (left, top, width, height)",
+      "Coordenadas normalizadas de 0.0 a 1.0 relativas às dimensões da imagem (left, top, width, height)",
       "Coordenadas absolutas em pixels (x, y, width, height)",
       "Valores percentuais de 0% a 100%",
       "Ponto central mais raio"
     ],
     correctAnswer: 0,
-    explanation: "O Custom Vision usa coordenadas normalizadas (0.0 a 1.0) para bounding boxes: left, top, width, height â€” todos relativos Ã s dimensões da imagem. Isso os torna independentes de resolução."
+    explanation: "O Custom Vision usa coordenadas normalizadas (0.0 a 1.0) para bounding boxes: left, top, width, height — todos relativos às dimensões da imagem. Isso os torna independentes de resolução."
   },
   {
     question: "O que o mAP (mean Average Precision) mede na detecção de objetos?",
@@ -317,10 +317,10 @@ Objects found: 4
       "Apenas o ponto central do objeto",
       "As coordenadas em pixels dos quatro cantos",
       "Um contorno poligonal da forma do objeto",
-      "Left, top, width e height do bounding box (normalizado 0.0â€“1.0) mais o tag ID"
+      "Left, top, width e height do bounding box (normalizado 0.0–1.0) mais o tag ID"
     ],
     correctAnswer: 3,
-    explanation: "Cada região requer: tag_id (qual classe de objeto), left, top, width, height â€” todos como valores normalizados entre 0.0 e 1.0 relativos Ã s dimensões da imagem."
+    explanation: "Cada região requer: tag_id (qual classe de objeto), left, top, width, height — todos como valores normalizados entre 0.0 e 1.0 relativos às dimensões da imagem."
   }
 ]} />
 

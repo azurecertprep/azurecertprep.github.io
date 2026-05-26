@@ -23,11 +23,11 @@ import TabItem from '@theme/TabItem';
 
 ## Visão Geral
 
-Os serviços Azure AI fornecem um amplo portfólio de capacidades cognitivas por meio de APIs pré-construídas e modelos personalizáveis. Escolher o serviço correto é críticoâ€”usar o Azure OpenAI para extração simples de texto quando o Document Intelligence existe, ou usar Computer Vision para tarefas mais adequadas ao GPT-4o multimodal, leva a custos e complexidade desnecessários.
+Os serviços Azure AI fornecem um amplo portfólio de capacidades cognitivas por meio de APIs pré-construídas e modelos personalizáveis. Escolher o serviço correto é crítico—usar o Azure OpenAI para extração simples de texto quando o Document Intelligence existe, ou usar Computer Vision para tarefas mais adequadas ao GPT-4o multimodal, leva a custos e complexidade desnecessários.
 
 Este desafio orienta você pela taxonomia dos serviços Azure AI, ajuda a construir uma árvore de decisão mental e verifica sua capacidade de descobrir e validar programaticamente os serviços disponíveis em uma assinatura. Você comparará recursos multi-serviço (que fornecem um único endpoint para múltiplas capacidades) com recursos de serviço único (que oferecem recursos específicos do serviço e isolamento).
 
-Compreender os trade-offs entre tipos de serviçoâ€”camadas de preço, disponibilidade regional, conjuntos de recursos e diferenças de SLAâ€”é essencial para o exame AI-102 e para decisões de arquitetura no mundo real.
+Compreender os trade-offs entre tipos de serviço—camadas de preço, disponibilidade regional, conjuntos de recursos e diferenças de SLA—é essencial para o exame AI-102 e para decisões de arquitetura no mundo real.
 
 ## Arquitetura
 
@@ -207,7 +207,7 @@ az cognitiveservices account list-skus \
 </TabItem>
 </Tabs>
 
-### Tarefa 3: Criar Recursos de Serviço Ãšnico e Comparar
+### Tarefa 3: Criar Recursos de Serviço Único e Comparar
 
 <Tabs>
 <TabItem value="python" label="Python SDK">

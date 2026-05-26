@@ -193,14 +193,14 @@ az monitor metrics alert create \
   --condition "avg Percentage CPU > 80" \
   --window-size 5m \
   --evaluation-frequency 1m \
-  --action ag-ops-team \
+  --action $(az monitor action-group show -g $RG -n ag-ops-team --query id -o tsv) \
   --severity 2 \
   --description "CPU usage exceeded 80% for 5 minutes"
 ```
 
 ### Task 8: create a Log alert
 
-Create an alert based on a KQL query | e.g., detect a specific error pattern in logs:
+Create an alert based on a KQL query — e.g., detect a specific error pattern in logs:
 
 <details>
 <summary>Hint</summary>

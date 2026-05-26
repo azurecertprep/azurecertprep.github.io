@@ -274,13 +274,13 @@ Search 'Azure AI': 4 matches
   {
     question: "Qual é o fluxo de trabalho típico para processar um vídeo com o Video Indexer?",
     options: [
-      "Upload â†’ Process â†’ Delete",
-      "Create index â†’ Add video â†’ Query results",
-      "Deploy model â†’ Send video â†’ Get predictions",
-      "Obter token de acesso â†’ Enviar vídeo â†’ Aguardar conclusão â†’ Recuperar insights"
+      "Upload → Process → Delete",
+      "Create index → Add video → Query results",
+      "Deploy model → Send video → Get predictions",
+      "Obter token de acesso → Enviar vídeo → Aguardar conclusão → Recuperar insights"
     ],
     correctAnswer: 3,
-    explanation: "O fluxo de trabalho é: autenticar (obter token) â†’ enviar vídeo â†’ consultar status até 'Processed' â†’ recuperar insights estruturados via endpoint Index."
+    explanation: "O fluxo de trabalho é: autenticar (obter token) → enviar vídeo → consultar status até 'Processed' → recuperar insights estruturados via endpoint Index."
   },
   {
     question: "Quais insights o Video Indexer extrai da faixa de áudio?",
@@ -288,7 +288,7 @@ Search 'Azure AI': 4 matches
       "Apenas transcrição fala-para-texto",
       "Apenas palavras-chave e tópicos",
       "Transcrição com identificação de falante, detecção de idioma e sentimento",
-      "O áudio não é analisado â€” apenas conteúdo visual"
+      "O áudio não é analisado — apenas conteúdo visual"
     ],
     correctAnswer: 2,
     explanation: "O Video Indexer extrai transcrição com diarização de falantes (quem falou quando), detecção de idioma, palavras-chave, tópicos e análise de sentimento baseada em texto do áudio."
@@ -299,7 +299,7 @@ Search 'Azure AI': 4 matches
       "Baixar o vídeo e buscar localmente",
       "Usar o parâmetro searchText ao consultar o índice do vídeo",
       "Criar um índice de busca separado",
-      "Busca não é suportada â€” você deve ler a transcrição completa"
+      "Busca não é suportada — você deve ler a transcrição completa"
     ],
     correctAnswer: 1,
     explanation: "O Video Indexer suporta busca por palavras-chave via parâmetro searchText, que encontra correspondências em transcrição, OCR, tópicos e outros insights textuais com timestamps."

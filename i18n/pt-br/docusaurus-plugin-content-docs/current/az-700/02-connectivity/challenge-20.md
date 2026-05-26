@@ -33,7 +33,7 @@ A Contoso expandiu globalmente. Agora eles possuem:
 
 Atualmente, o tráfego entre os dois escritórios faz hairpin através do Azure (o escritório dos EUA entra no Azure, atravessa o backbone da Microsoft, sai para o escritório europeu). Eles precisam do ExpressRoute Global Reach para rotear o tráfego entre escritórios diretamente pelo backbone da Microsoft sem entrar nas VNets do Azure.
 
-Além disso, seu aplicativo de negociação financeira sensível Ã  latência requer o FastPath para ignorar o gateway ExpressRoute no caminho de dados. Eles também desejam BFD para detecção de failover em menos de um segundo.
+Além disso, seu aplicativo de negociação financeira sensível à latência requer o FastPath para ignorar o gateway ExpressRoute no caminho de dados. Eles também desejam BFD para detecção de failover em menos de um segundo.
 
 ---
 
@@ -374,7 +374,7 @@ O parâmetro `--routing-weight` influencia a preferência de caminho quando ambo
 
 ## Tarefa 5: ExpressRoute Direct
 
-O ExpressRoute Direct fornece portas físicas dedicadas de 10 Gbps ou 100 Gbps diretamente na borda da Microsoft. Ã‰ diferente do ExpressRoute padrão, onde você se conecta através de um provedor.
+O ExpressRoute Direct fornece portas físicas dedicadas de 10 Gbps ou 100 Gbps diretamente na borda da Microsoft. É diferente do ExpressRoute padrão, onde você se conecta através de um provedor.
 
 ### Quando usar o ExpressRoute Direct
 
@@ -464,7 +464,7 @@ az network express-route create \
   --location eastus
 ```
 
-Observe que ao usar o ExpressRoute Direct, você não especifica `--provider` ou `--peering-location` porque está se conectando diretamente Ã  Microsoft (você é efetivamente seu próprio provedor).
+Observe que ao usar o ExpressRoute Direct, você não especifica `--provider` ou `--peering-location` porque está se conectando diretamente à Microsoft (você é efetivamente seu próprio provedor).
 
 ---
 
@@ -506,7 +506,7 @@ az network vnet-gateway update \
 **Sintoma:** A falha do link leva 60+ segundos para ser detectada apesar do BFD estar configurado no roteador CE.
 
 **Causa raiz:** Possíveis problemas:
-1. O BFD está configurado na interface mas não vinculado Ã  sessão BGP (`fall-over bfd` ausente)
+1. O BFD está configurado na interface mas não vinculado à sessão BGP (`fall-over bfd` ausente)
 2. O multiplicador está configurado muito alto (por exemplo, multiplicador 20 com intervalo de 300 ms = detecção em 6 segundos)
 3. O peering foi configurado antes de agosto de 2018 e o BFD não está habilitado no MSEE
 

@@ -18,7 +18,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Overview
 
-**Azure Resource Manager (ARM)** is the management layer that handles all requests to Azure. Whether you use the Portal, CLI, PowerShell, or REST API â€” everything goes through ARM. **ARM templates** allow you to define infrastructure as code (JSON or Bicep). **Azure Arc** extends Azure management to resources running outside of Azure (on-premises, other clouds).
+**Azure Resource Manager (ARM)** is the management layer that handles all requests to Azure. Whether you use the Portal, CLI, PowerShell, or REST API — everything goes through ARM. **ARM templates** allow you to define infrastructure as code (JSON or Bicep). **Azure Arc** extends Azure management to resources running outside of Azure (on-premises, other clouds).
 
 ## Explore
 
@@ -27,10 +27,10 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 ARM is the deployment and management service for Azure:
 
 ```text
-Azure Portal â”€â”€â”
-Azure CLI    â”€â”€â”¼â”€â”€â†’ Azure Resource Manager â”€â”€â†’ Azure Services
-PowerShell   â”€â”€â”¤           (ARM)
-REST API     â”€â”€â”˜
+Azure Portal ──┐
+Azure CLI    ──┼──→ Azure Resource Manager ──→ Azure Services
+PowerShell   ──┤           (ARM)
+REST API     ──┘
 ```
 
 **Key ARM features:**
@@ -130,7 +130,7 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
 
 | Concept | Description |
 |---------|-------------|
-| **ARM** | Azure Resource Manager â€” management layer for all Azure operations |
+| **ARM** | Azure Resource Manager — management layer for all Azure operations |
 | **ARM template** | JSON file defining Azure infrastructure declaratively |
 | **Bicep** | Simplified language that compiles to ARM templates |
 | **Infrastructure as Code (IaC)** | Manage infrastructure through version-controlled files |
@@ -161,7 +161,7 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
       question: 'What is the purpose of Azure Arc?',
       options: ['To create backup copies of Azure resources', 'To speed up network connections', 'To extend Azure management to on-premises and multi-cloud resources', 'To reduce Azure costs'],
       correctAnswer: 2,
-      explanation: 'Azure Arc extends Azure management, governance, and services to resources running outside of Azure â€” on-premises servers, other cloud providers, and edge environments.'
+      explanation: 'Azure Arc extends Azure management, governance, and services to resources running outside of Azure — on-premises servers, other cloud providers, and edge environments.'
     },
     {
       id: 'az900-22-q4',
@@ -182,7 +182,7 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
 
 ## Learn More
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
 - [Microsoft Learn: Describe features and tools for managing and deploying Azure resources](https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/)
 - [ARM templates documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/)
 - [Azure Arc documentation](https://learn.microsoft.com/en-us/azure/azure-arc/)

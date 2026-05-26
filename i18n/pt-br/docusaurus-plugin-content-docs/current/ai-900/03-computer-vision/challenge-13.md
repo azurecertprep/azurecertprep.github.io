@@ -20,7 +20,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Visão geral
 
-Detecção e análise facial é uma capacidade de visão computacional que encontra rostos humanos em imagens e pode analisar atributos faciais. Ã‰ importante entender três capacidades distintas: **detecção** (encontrar rostos), **análise** (determinar atributos como idade ou óculos) e **reconhecimento/identificação** (determinar QUEM a pessoa é).
+Detecção e análise facial é uma capacidade de visão computacional que encontra rostos humanos em imagens e pode analisar atributos faciais. É importante entender três capacidades distintas: **detecção** (encontrar rostos), **análise** (determinar atributos como idade ou óculos) e **reconhecimento/identificação** (determinar QUEM a pessoa é).
 
 Pense na detecção facial como um segurança em um evento. Primeiro, ele DETECTA rostos na multidão (encontra todas as pessoas). Depois, ele ANALISA atributos (idade aproximada para entrada com restrição de idade, se alguém está usando óculos de sol). Finalmente, ele pode RECONHECER pessoas específicas (verificando contra uma lista VIP). Cada passo é uma capacidade diferente.
 
@@ -32,7 +32,7 @@ Pense na detecção facial como um segurança em um evento. Primeiro, ele DETECT
 
 | Capacidade | O que faz | Acesso | Exemplo |
 |-----------|-----------|--------|---------|
-| **Detecção Facial** | Encontra rostos em uma imagem â€” retorna coordenadas da caixa delimitadora | Amplamente disponível | "Há 3 rostos nesta foto" |
+| **Detecção Facial** | Encontra rostos em uma imagem — retorna coordenadas da caixa delimitadora | Amplamente disponível | "Há 3 rostos nesta foto" |
 | **Análise Facial** | Determina atributos dos rostos detectados | Atributos limitados disponíveis | "Rosto 1: parece usar óculos, cabeça inclinada para a esquerda" |
 | **Verificação Facial** | Determina se dois rostos são da mesma pessoa | **Acesso restrito (aprovação necessária)** | "Essas duas fotos são da mesma pessoa? 92% de correspondência" |
 | **Identificação Facial** | Identifica QUEM é uma pessoa a partir de um grupo conhecido | **Acesso restrito (aprovação necessária)** | "Este é o Funcionário #4521" |
@@ -44,8 +44,8 @@ Quando o Azure AI Face detecta um rosto, ele retorna:
 | Dado retornado | Descrição |
 |----------------|-----------|
 | **Caixa delimitadora facial** | Coordenadas do retângulo mostrando onde o rosto está na imagem |
-| **Pontos de referência faciais** | Pontos-chave (ponta do nariz, cantos dos olhos, cantos da boca) â€” 27 pontos |
-| **Posição da cabeça** | Ã‚ngulos de rotação, guinada e inclinação da cabeça |
+| **Pontos de referência faciais** | Pontos-chave (ponta do nariz, cantos dos olhos, cantos da boca) — 27 pontos |
+| **Posição da cabeça** | Ângulos de rotação, guinada e inclinação da cabeça |
 | **Acessórios** | Se a pessoa usa óculos, chapéu |
 | **Desfoque** | Quão desfocada está a área do rosto |
 | **Exposição** | Se o rosto está bem iluminado, superexposto ou subexposto |
@@ -53,7 +53,7 @@ Quando o Azure AI Face detecta um rosto, ele retorna:
 | **Oclusão** | Se partes do rosto estão bloqueadas (testa, olhos, boca) |
 
 :::warning Recursos restritos
-A partir de junho de 2023, a Microsoft restringe o acesso Ã s seguintes capacidades da Face API:
+A partir de junho de 2023, a Microsoft restringe o acesso às seguintes capacidades da Face API:
 - **Identificação facial** (quem é esta pessoa?)
 - **Verificação facial** (estas são a mesma pessoa?)
 - Atributos de **reconhecimento de emoção**
@@ -78,29 +78,29 @@ Uma resposta típica da API de Detecção Facial se parece conceitualmente com:
 
 ```text
 Detection Results:
-â”œâ”€â”€ Face 1
-â”‚   â”œâ”€â”€ Bounding box: { left: 120, top: 80, width: 200, height: 250 }
-â”‚   â”œâ”€â”€ Face landmarks: { pupilLeft: {x, y}, pupilRight: {x, y}, noseTip: {x, y}, ... }
-â”‚   â”œâ”€â”€ Head pose: { roll: -2.1, yaw: 5.3, pitch: -1.8 }
-â”‚   â”œâ”€â”€ Accessories: { glasses: "ReadingGlasses" }
-â”‚   â”œâ”€â”€ Blur: { value: 0.1, blurLevel: "low" }
-â”‚   â””â”€â”€ Occlusion: { foreheadOccluded: false, eyeOccluded: false }
-â”œâ”€â”€ Face 2
-â”‚   â”œâ”€â”€ Bounding box: { left: 450, top: 95, width: 180, height: 230 }
-â”‚   â””â”€â”€ ...
+├── Face 1
+│   ├── Bounding box: { left: 120, top: 80, width: 200, height: 250 }
+│   ├── Face landmarks: { pupilLeft: {x, y}, pupilRight: {x, y}, noseTip: {x, y}, ... }
+│   ├── Head pose: { roll: -2.1, yaw: 5.3, pitch: -1.8 }
+│   ├── Accessories: { glasses: "ReadingGlasses" }
+│   ├── Blur: { value: 0.1, blurLevel: "low" }
+│   └── Occlusion: { foreheadOccluded: false, eyeOccluded: false }
+├── Face 2
+│   ├── Bounding box: { left: 450, top: 95, width: 180, height: 230 }
+│   └── ...
 ```
 
 **Pontos-chave**:
 - Múltiplos rostos podem ser detectados em uma imagem
 - Cada rosto recebe seu próprio conjunto de atributos
-- Detecção NÃƒO diz QUEM a pessoa é
+- Detecção NÃO diz QUEM a pessoa é
 - O faceId é temporário e expira após 24 horas
 
 :::tip Dica para o exame
 O exame testa se você entende:
-1. A DIFERENÃ‡A entre detecção, análise e reconhecimento
+1. A DIFERENÇA entre detecção, análise e reconhecimento
 2. Que identificação/verificação requer aprovação de ACESSO LIMITADO
-3. Que detecção facial encontra rostos mas NÃƒO identifica pessoas
+3. Que detecção facial encontra rostos mas NÃO identifica pessoas
 4. As considerações éticas em torno da tecnologia de reconhecimento facial
 :::
 
@@ -121,7 +121,7 @@ O exame testa se você entende:
 
 | Equívoco | Realidade |
 |----------|-----------|
-| "Detecção facial diz quem alguém é" | Detecção apenas ENCONTRA rostos e suas localizações. NÃƒO identifica pessoas. Identificação é uma capacidade separada e restrita |
+| "Detecção facial diz quem alguém é" | Detecção apenas ENCONTRA rostos e suas localizações. NÃO identifica pessoas. Identificação é uma capacidade separada e restrita |
 | "Qualquer pessoa pode usar reconhecimento facial com o Azure" | Identificação e verificação facial requerem aprovação de Acesso Limitado. A Microsoft restringe essas capacidades para prevenir uso indevido (IA Responsável) |
 | "Análise facial pode ler emoções com precisão" | Reconhecimento de emoções a partir de expressões faciais é cientificamente debatido e foi restringido pela Microsoft. Expressões faciais nem sempre refletem emoções internas |
 | "Detecção facial só funciona com fotos de frente" | O Azure AI Face pode detectar rostos em vários ângulos, embora a precisão seja maior com rostos frontais. Lida com visões de perfil e cabeças inclinadas |
@@ -143,7 +143,7 @@ O exame testa se você entende:
       question: 'Por que a Microsoft requer aprovação de Acesso Limitado para recursos de identificação e verificação facial?',
       options: ['Porque são caros de executar', 'Para prevenir uso indevido e manter os princípios de IA Responsável', 'Porque ainda estão em teste beta', 'Porque só funcionam em certas regiões do Azure'],
       correctAnswer: 1,
-      explanation: 'A Microsoft restringe identificação e verificação facial para prevenir potencial uso indevido (vigilância, viés, violações de privacidade). Isso reflete seu compromisso com IA Responsável â€” especificamente os princípios de equidade, privacidade e responsabilidade.'
+      explanation: 'A Microsoft restringe identificação e verificação facial para prevenir potencial uso indevido (vigilância, viés, violações de privacidade). Isso reflete seu compromisso com IA Responsável — especificamente os princípios de equidade, privacidade e responsabilidade.'
     },
     {
       id: 'ai900-13-q3',
@@ -154,10 +154,10 @@ O exame testa se você entende:
     },
     {
       id: 'ai900-13-q4',
-      question: 'Uma loja de varejo quer contar quantos clientes entram usando câmeras, mas NÃƒO precisa saber QUEM são os clientes. Qual capacidade é suficiente?',
+      question: 'Uma loja de varejo quer contar quantos clientes entram usando câmeras, mas NÃO precisa saber QUEM são os clientes. Qual capacidade é suficiente?',
       options: ['Identificação facial', 'Verificação facial', 'Detecção facial (ou detecção de pessoas com Azure AI Vision)', 'Análise facial'],
       correctAnswer: 2,
-      explanation: 'Para contar pessoas, você só precisa detectar rostos ou pessoas â€” não identificá-las. Detecção facial (ou detecção de pessoas do Azure AI Vision) encontra e conta pessoas sem identificar quem são, e não requer aprovação de Acesso Limitado.'
+      explanation: 'Para contar pessoas, você só precisa detectar rostos ou pessoas — não identificá-las. Detecção facial (ou detecção de pessoas do Azure AI Vision) encontra e conta pessoas sem identificar quem são, e não requer aprovação de Acesso Limitado.'
     },
     {
       id: 'ai900-13-q5',

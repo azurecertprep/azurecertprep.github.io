@@ -301,7 +301,7 @@ Available en-US voices (148):
     options: [
       "Only WAV files",
       "Only MP3",
-      "Only streaming â€” no file output",
+      "Only streaming — no file output",
       "WAV, MP3, OGG Opus, raw PCM, and other compressed formats"
     ],
     correctAnswer: 3,

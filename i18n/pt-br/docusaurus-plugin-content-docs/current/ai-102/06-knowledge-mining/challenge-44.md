@@ -30,7 +30,7 @@ O ranking semântico requer **tier Basic ou superior** para o Azure AI Search. A
 ## Visão Geral
 
 ### Ranking semântico
-O ranking semântico reclassifica os resultados iniciais de pesquisa por palavras-chave usando modelos de deep learning que entendem o significado e o contexto das consultas e documentos. Ele não altera quais documentos correspondem â€” ele reordena os principais resultados para melhor relevância.
+O ranking semântico reclassifica os resultados iniciais de pesquisa por palavras-chave usando modelos de deep learning que entendem o significado e o contexto das consultas e documentos. Ele não altera quais documentos correspondem — ele reordena os principais resultados para melhor relevância.
 
 ### Pesquisa vetorial
 A pesquisa vetorial encontra documentos com base na similaridade matemática entre embeddings vetoriais (representações numéricas densas). Diferente da pesquisa por palavras-chave, ela encontra conteúdo semanticamente similar mesmo sem termos compartilhados.
@@ -40,9 +40,9 @@ Combina a pontuação por palavras-chave (BM25) com a similaridade vetorial, pro
 
 | Abordagem | Encontra "carro" quando a consulta é "automóvel" | Correspondência exata de frase | Melhor para |
 |----------|--------|--------|---------|
-| Somente keyword | âŒ | âœ… | Busca de item conhecido |
-| Somente vetor | âœ… | âŒ | Similaridade semântica |
-| Híbrida | âœ… | âœ… | Cenários RAG em produção |
+| Somente keyword | ❌ | ✅ | Busca de item conhecido |
+| Somente vetor | ✅ | ❌ | Similaridade semântica |
+| Híbrida | ✅ | ✅ | Cenários RAG em produção |
 
 ## Pré-requisitos
 
@@ -496,9 +496,9 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
 | # | Cenário | Sintoma | Causa Raiz | Correção |
 |---|----------|---------|------------|-----|
 | 1 | Incompatibilidade de dimensões vetoriais | Upload falha: "Vector field dimension mismatch" | O vetor do documento tem 768 dimensões mas o índice espera 1536 | Use o mesmo modelo para indexação e consulta; combine `dimensions` no índice com a saída do modelo (ada-002=1536, 3-small padrão=1536) |
-| 2 | Ranking semântico não retorna captions | Resultados não possuem `@search.captions` | `queryAnswer` ou `queryCaption` não foi solicitado | Adicione `query_caption="extractive"` Ã s opções de pesquisa |
-| 3 | Pesquisa híbrida ignora o vetor | Resultados idênticos Ã  pesquisa somente por keyword | O array `vectorQueries` está vazio ou a propriedade `fields` não corresponde ao nome do campo no índice | Garanta que `fields` corresponda ao nome do campo vetorial no índice (`contentVector`) |
-| 4 | Erro "Semantic search not available" | HTTP 400 mencionando configuração semântica | O serviço de pesquisa é tier Free â€” semântico requer Basic+ | Faça upgrade para o tier Basic ou superior |
+| 2 | Ranking semântico não retorna captions | Resultados não possuem `@search.captions` | `queryAnswer` ou `queryCaption` não foi solicitado | Adicione `query_caption="extractive"` às opções de pesquisa |
+| 3 | Pesquisa híbrida ignora o vetor | Resultados idênticos à pesquisa somente por keyword | O array `vectorQueries` está vazio ou a propriedade `fields` não corresponde ao nome do campo no índice | Garanta que `fields` corresponda ao nome do campo vetorial no índice (`contentVector`) |
+| 4 | Erro "Semantic search not available" | HTTP 400 mencionando configuração semântica | O serviço de pesquisa é tier Free — semântico requer Basic+ | Faça upgrade para o tier Basic ou superior |
 | 5 | Relevância ruim na pesquisa vetorial | Resultados irrelevantes retornados | O texto da consulta foi embeddado com modelo diferente dos documentos | Use o mesmo embedding model tanto para indexação quanto para consultas |
 
 ## Verificação de Conhecimento
@@ -520,10 +520,10 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
     id: "ai102-44-q2",
     question: "Você configura um campo vetorial com dimensions: 1536 e vectorSearchProfile: 'my-profile'. O perfil usa o algoritmo HNSW. O que significa HNSW e o que ele otimiza?",
     options: [
-      "Hierarchical Navigable Small World â€” otimiza a velocidade de busca aproximada de vizinhos mais próximos",
-      "High-dimensional Nearest Scalar Weighted â€” otimiza o cálculo exato de distância",
-      "Hybrid Neural Search Weight â€” otimiza a pontuação de relevância semântica",
-      "Hierarchical Normalized Similarity Weighting â€” otimiza a precisão da distância de cosseno"
+      "Hierarchical Navigable Small World — otimiza a velocidade de busca aproximada de vizinhos mais próximos",
+      "High-dimensional Nearest Scalar Weighted — otimiza o cálculo exato de distância",
+      "Hybrid Neural Search Weight — otimiza a pontuação de relevância semântica",
+      "Hierarchical Normalized Similarity Weighting — otimiza a precisão da distância de cosseno"
     ],
     correctIndex: 0,
     explanation: "HNSW (Hierarchical Navigable Small World) é um algoritmo baseado em grafo para busca aproximada de vizinhos mais próximos (ANN). Ele constrói um grafo multicamadas permitindo buscas rápidas de similaridade vetorial com complexidade O(log n), trocando uma pequena quantidade de recall por melhoria significativa de velocidade."
@@ -538,7 +538,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
       "São o mesmo recurso com nomes diferentes"
     ],
     correctIndex: 1,
-    explanation: "O ranking semântico é um RERANKER â€” ele pega os resultados iniciais de keyword e os reordena usando compreensão de linguagem. A pesquisa vetorial é um RETRIEVER â€” ela encontra documentos com base na distância de embeddings. Eles podem ser combinados: a pesquisa vetorial recupera candidatos, depois o ranking semântico os reordena."
+    explanation: "O ranking semântico é um RERANKER — ele pega os resultados iniciais de keyword e os reordena usando compreensão de linguagem. A pesquisa vetorial é um RETRIEVER — ela encontra documentos com base na distância de embeddings. Eles podem ser combinados: a pesquisa vetorial recupera candidatos, depois o ranking semântico os reordena."
   },
   {
     id: "ai102-44-q4",
@@ -559,7 +559,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
       "5 (k sobrescreve top)",
       "8 (k + top combinados)",
       "3 (top limita a resposta final)",
-      "Erro â€” k e top não podem ser usados juntos"
+      "Erro — k e top não podem ser usados juntos"
     ],
     correctIndex: 2,
     explanation: "O parâmetro 'k' controla quantos vizinhos mais próximos a pesquisa vetorial recupera internamente, enquanto 'top' limita o número final de resultados retornados ao cliente. Com k=5 e top=3, a pesquisa vetorial recupera 5 candidatos mas apenas os 3 melhores (após pontuação/classificação) são retornados."

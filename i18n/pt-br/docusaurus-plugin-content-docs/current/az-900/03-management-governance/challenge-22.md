@@ -18,7 +18,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Visão Geral
 
-**Azure Resource Manager (ARM)** é a camada de gerenciamento que lida com todas as requisições ao Azure. Seja usando o Portal, CLI, PowerShell ou REST API â€” tudo passa pelo ARM. **ARM templates** permitem definir infraestrutura como código (JSON ou Bicep). **Azure Arc** estende o gerenciamento do Azure para recursos executando fora do Azure (on-premises, outras nuvens).
+**Azure Resource Manager (ARM)** é a camada de gerenciamento que lida com todas as requisições ao Azure. Seja usando o Portal, CLI, PowerShell ou REST API — tudo passa pelo ARM. **ARM templates** permitem definir infraestrutura como código (JSON ou Bicep). **Azure Arc** estende o gerenciamento do Azure para recursos executando fora do Azure (on-premises, outras nuvens).
 
 ## Explorar
 
@@ -27,10 +27,10 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 ARM é o serviço de implantação e gerenciamento do Azure:
 
 ```text
-Azure Portal â”€â”€â”
-Azure CLI    â”€â”€â”¼â”€â”€â†’ Azure Resource Manager â”€â”€â†’ Azure Services
-PowerShell   â”€â”€â”¤           (ARM)
-REST API     â”€â”€â”˜
+Azure Portal ──┐
+Azure CLI    ──┼──→ Azure Resource Manager ──→ Azure Services
+PowerShell   ──┤           (ARM)
+REST API     ──┘
 ```
 
 **Recursos principais do ARM:**
@@ -130,7 +130,7 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
 
 | Conceito | Descrição |
 |----------|-----------|
-| **ARM** | Azure Resource Manager â€” camada de gerenciamento para todas as operações Azure |
+| **ARM** | Azure Resource Manager — camada de gerenciamento para todas as operações Azure |
 | **ARM template** | Arquivo JSON definindo infraestrutura Azure declarativamente |
 | **Bicep** | Linguagem simplificada que compila para ARM templates |
 | **Infrastructure as Code (IaC)** | Gerenciar infraestrutura através de arquivos versionados |
@@ -161,14 +161,14 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
       question: 'Qual é o propósito do Azure Arc?',
       options: ['Criar cópias de backup de recursos Azure', 'Estender gerenciamento Azure para recursos on-premises e multi-cloud', 'Acelerar conexões de rede', 'Reduzir custos Azure'],
       correctAnswer: 1,
-      explanation: 'Azure Arc estende gerenciamento, governança e serviços Azure para recursos executando fora do Azure â€” servidores on-premises, outros provedores de nuvem e ambientes de borda.'
+      explanation: 'Azure Arc estende gerenciamento, governança e serviços Azure para recursos executando fora do Azure — servidores on-premises, outros provedores de nuvem e ambientes de borda.'
     },
     {
       id: 'az900-22-q4',
       question: 'Qual é a relação entre Bicep e ARM templates?',
       options: ['São produtos concorrentes', 'Bicep é uma sintaxe mais simples que compila para ARM JSON templates', 'ARM templates compilam para Bicep', 'Bicep substitui ARM completamente'],
       correctAnswer: 1,
-      explanation: 'Bicep é uma linguagem de domínio específico com sintaxe mais simples e legível que compila (transpila) para ARM JSON templates padrão. Ã‰ construída sobre o ARM, não o substitui.'
+      explanation: 'Bicep é uma linguagem de domínio específico com sintaxe mais simples e legível que compila (transpila) para ARM JSON templates padrão. É construída sobre o ARM, não o substitui.'
     },
     {
       id: 'az900-22-q5',
@@ -182,7 +182,7 @@ az connectedmachine list 2>/dev/null || echo "No Arc-enabled machines (expected 
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe features and tools for managing and deploying Azure resources](https://learn.microsoft.com/en-us/training/modules/describe-features-tools-manage-deploy-azure-resources/)
 - [ARM templates documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/)
 - [Azure Arc documentation](https://learn.microsoft.com/en-us/azure/azure-arc/)

@@ -30,7 +30,7 @@ Sua missão: implementar políticas de gerenciamento de ciclo de vida para contr
 - Configurar políticas de gerenciamento de ciclo de vida
 - Configurar replicação de objetos entre storage accounts
 
-## Referência sysadmin â†” Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -217,18 +217,18 @@ az storage account management-policy create \
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Vá para sua **Storage account** â†’ **Data management** â†’ **Lifecycle management**
+1. Vá para sua **Storage account** → **Data management** → **Lifecycle management**
 2. Clique em **+ Add a rule**
 3. **Regra 1**: Nome: `MoveToCoolAfter30Days`
-   - Escopo: Limitar blobs com filtros â†’ Prefixo: `app-logs/`
-   - Base blobs: Mover para armazenamento Cool â†’ 30 dias após última modificação
+   - Escopo: Limitar blobs com filtros → Prefixo: `app-logs/`
+   - Base blobs: Mover para armazenamento Cool → 30 dias após última modificação
 4. **Regra 2**: Nome: `MoveToArchiveAfter90Days`
-   - Mesmo filtro â†’ Mover para armazenamento Archive â†’ 90 dias após última modificação
+   - Mesmo filtro → Mover para armazenamento Archive → 90 dias após última modificação
 5. **Regra 3**: Nome: `DeleteAfter365Days`
-   - Mesmo filtro â†’ Excluir o blob â†’ 365 dias após última modificação
+   - Mesmo filtro → Excluir o blob → 365 dias após última modificação
 6. **Regra 4**: Nome: `CleanupSnapshots`
-   - Sem filtro de prefixo â†’ Excluir snapshots â†’ 90 dias após criação
-   - Excluir versões â†’ 90 dias após criação
+   - Sem filtro de prefixo → Excluir snapshots → 90 dias após criação
+   - Excluir versões → 90 dias após criação
 
 </TabItem>
 </Tabs>
@@ -280,7 +280,7 @@ A autenticação completa via Entra ID Kerberos para Azure Files requer configur
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Vá para sua **Storage account** â†’ **File shares** â†’ **Active Directory**
+1. Vá para sua **Storage account** → **File shares** → **Active Directory**
 2. Em **Identity-based access**, clique em **Set up** ao lado de **Microsoft Entra Kerberos**
 3. Siga o assistente para habilitar a autenticação do Entra ID
 
@@ -350,10 +350,10 @@ az storage account or-policy create \
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Vá para a storage account de **destino** â†’ **Data management** â†’ **Object replication**
+1. Vá para a storage account de **destino** → **Data management** → **Object replication**
 2. Clique em **Set up replication rules**
 3. Selecione a storage account de **origem**
-4. Emparelhe os containers: `replicated-data` (origem) â†’ `replicated-data` (destino)
+4. Emparelhe os containers: `replicated-data` (origem) → `replicated-data` (destino)
 5. Opcionalmente filtre por tempo de criação ou prefixo
 6. Clique em **Save**
 
@@ -566,7 +566,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
    - O blob está na camada Archive? (Blobs arquivados não são replicados.)
    - Tempo suficiente se passou? (A replicação é assíncrona, pode levar minutos.)
 
-3. **Token SAS ainda funciona após exclusão da política**: Você excluiu uma política de acesso armazenada, mas o token SAS daquela política deveria parar de funcionar. Teste isso. Se ainda funcionar, verifique se o SAS foi gerado com uma expiração explícita (SAS autônomo) ou se era realmente vinculado Ã  política.
+3. **Token SAS ainda funciona após exclusão da política**: Você excluiu uma política de acesso armazenada, mas o token SAS daquela política deveria parar de funcionar. Teste isso. Se ainda funcionar, verifique se o SAS foi gerado com uma expiração explícita (SAS autônomo) ou se era realmente vinculado à política.
 
 4. **Acesso baseado em identidade negado**: Um usuário tem `Storage File Data SMB Share Contributor` no nível do compartilhamento mas recebe "Access Denied" ao abrir uma pasta. O que está errado? (ACLs NTFS no nível do diretório podem estar restringindo o acesso | lembre-se do modelo de duas camadas.)
 

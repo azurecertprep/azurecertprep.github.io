@@ -30,14 +30,14 @@ On-Premises (172.16.0.0/16, 172.17.0.0/16)
    VPN Gateway (ASN 65010)
         |
   Hub VNet (10.0.0.0/16)
-   â”œâ”€â”€ GatewaySubnet (10.0.0.0/27)
-   â”œâ”€â”€ RouteServerSubnet (10.0.1.0/26)
-   â”œâ”€â”€ NVA Subnet (10.0.2.0/24) â€” NVA: 10.0.2.4
-   â””â”€â”€ Management Subnet (10.0.3.0/24)
+   ├── GatewaySubnet (10.0.0.0/27)
+   ├── RouteServerSubnet (10.0.1.0/26)
+   ├── NVA Subnet (10.0.2.0/24) — NVA: 10.0.2.4
+   └── Management Subnet (10.0.3.0/24)
         |
   Peered to:
   Spoke VNet (10.1.0.0/16)
-   â””â”€â”€ Workload Subnet (10.1.1.0/24) â€” VM: 10.1.1.4
+   └── Workload Subnet (10.1.1.0/24) — VM: 10.1.1.4
 ```
 
 ## Objetivos de aprendizagem
@@ -64,11 +64,11 @@ Após concluir este desafio, você será capaz de:
 |----------|---------|
 | RouteServerSubnet | Sub-rede dedicada; tamanho mínimo /27; não pode ter NSGs ou UDRs associados |
 | ASN do Route Server | Fixo em 65515; não pode ser alterado |
-| Restrição de ASN do NVA | O NVA NÃƒO deve usar 65515, 65517, 65518, 65519 ou 65520 (reservados pelo Azure) |
+| Restrição de ASN do NVA | O NVA NÃO deve usar 65515, 65517, 65518, 65519 ou 65520 (reservados pelo Azure) |
 | Limite de peers BGP | Máximo de 16 peers BGP por Route Server |
 | Limite de rotas por peer | Máximo de 4.000 rotas por peer BGP (sessão cai se excedido) |
 | Branch-to-branch | Quando habilitado, o Route Server troca rotas entre NVA e gateway VPN/ExpressRoute |
-| Apenas plano de controle | O Route Server troca rotas BGP, mas NÃƒO está no caminho de dados |
+| Apenas plano de controle | O Route Server troca rotas BGP, mas NÃO está no caminho de dados |
 | Peering de instância dupla | O NVA deve fazer peering com ambas as instâncias do Route Server para alta disponibilidade |
 | Propagação de rotas | Rotas aprendidas pelo Route Server são propagadas para todas as VMs na VNet e VNets emparelhadas |
 | Requisito de IP público | O Route Server requer um IP público SKU Standard para conectividade do plano de gerenciamento |
@@ -412,7 +412,7 @@ az network watcher show-next-hop \
 
 Esperado: o tipo de next hop é `VirtualAppliance` com IP de next hop `10.0.2.4` (o NVA).
 
-:::tip Diferença-chave em relação Ã s UDRs
+:::tip Diferença-chave em relação às UDRs
 
 Com o Route Server, essas rotas apareceram automaticamente quando o NVA as anunciou via BGP. Nenhuma criação manual de tabela de rotas ou associação de sub-rede foi necessária. Quando as rotas locais mudam, o NVA atualiza seu anúncio BGP e o Route Server propaga as mudanças automaticamente.
 

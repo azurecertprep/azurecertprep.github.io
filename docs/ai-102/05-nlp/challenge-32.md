@@ -265,7 +265,7 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
     options: [
       "Use a different API endpoint for each category",
       "Create a custom model trained on those categories only",
-      "PII detection always returns all categories â€” filter client-side",
+      "PII detection always returns all categories — filter client-side",
       "Pass a categories_filter parameter with the desired PiiEntityCategory values"
     ],
     correctAnswer: 3,
@@ -296,9 +296,9 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
   {
     question: "Can PII detection process multiple documents in a single request?",
     options: [
-      "No â€” only one document per request",
-      "Yes â€” unlimited documents per request",
-      "Yes â€” batch operations support up to 25 documents per request",
+      "No — only one document per request",
+      "Yes — unlimited documents per request",
+      "Yes — batch operations support up to 25 documents per request",
       "Only if documents are in the same language"
     ],
     correctAnswer: 2,

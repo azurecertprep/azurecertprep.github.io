@@ -272,7 +272,7 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
 | Resultado `NoMatch` | Nenhuma fala reconhecida | Áudio é silêncio, formato errado ou idioma errado | Verifique formato WAV (16kHz, 16-bit, mono PCM); verifique configuração de idioma |
-| `Canceled` com erro de autenticação | 401 Unauthorized | Chave ou região errada | Verifique se a chave corresponde Ã  região; verifique se o recurso está ativo |
+| `Canceled` com erro de autenticação | 401 Unauthorized | Chave ou região errada | Verifique se a chave corresponde à região; verifique se o recurso está ativo |
 | Reconhecimento truncado | Apenas primeira sentença | Usou `recognize_once` em vez de contínuo | Use `start_continuous_recognition` para áudio longo |
 | Palavras faltando | Transcrição incompleta | Vocabulário específico de domínio | Treine modelo Custom Speech com sua terminologia |
 | Alta latência | Resultados lentos | Rede ou chunks grandes de áudio | Use streaming/push de áudio; verifique conectividade de rede |
@@ -294,7 +294,7 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
   {
     question: "Qual formato de áudio o Speech SDK espera para entrada de arquivo?",
     options: [
-      "Qualquer formato de áudio â€” converte automaticamente",
+      "Qualquer formato de áudio — converte automaticamente",
       "Apenas MP3",
       "WAV com codificação PCM (padrão: 16kHz, 16-bit, mono)",
       "FLAC ou OGG Vorbis"
@@ -311,7 +311,7 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
       "Quando transcrever arquivos de áudio pré-gravados de forma assíncrona, especialmente gravações longas ou múltiplos arquivos"
     ],
     correctAnswer: 3,
-    explanation: "A transcrição em lote é para arquivos pré-gravados processados de forma assíncrona via REST API. Ã‰ ideal para gravações longas, múltiplos arquivos e quando resultados em tempo real não são necessários."
+    explanation: "A transcrição em lote é para arquivos pré-gravados processados de forma assíncrona via REST API. É ideal para gravações longas, múltiplos arquivos e quando resultados em tempo real não são necessários."
   },
   {
     question: "O que a diarização fornece no speech-to-text?",
@@ -327,13 +327,13 @@ Welcome to the quarterly business review meeting. Today we'll discuss our progre
   {
     question: "Como você lida com CancellationReason.Error no reconhecimento de fala?",
     options: [
-      "Ignore â€” é apenas informativo",
+      "Ignore — é apenas informativo",
       "Reinicie o reconhecedor automaticamente",
       "Verifique cancellation_details.error_details para o erro específico (autenticação, rede, problema de formato) e corrija adequadamente",
       "Mude para um idioma diferente"
     ],
     correctAnswer: 2,
-    explanation: "CancellationReason.Error indica uma falha real. Verifique error_details para detalhes â€” causas comuns são credenciais inválidas, problemas de rede ou formato de áudio não suportado."
+    explanation: "CancellationReason.Error indica uma falha real. Verifique error_details para detalhes — causas comuns são credenciais inválidas, problemas de rede ou formato de áudio não suportado."
   }
 ]} />
 

@@ -25,7 +25,7 @@ A implementação de IA responsável garante que os sistemas de IA sejam seguros
 
 Neste desafio, você implementará um pipeline abrangente de segurança de conteúdo. Você chamará a API do Content Safety para analisar texto em busca de categorias de conteúdo prejudicial (ódio, violência, autolesão, sexual), configurará filtros de conteúdo do Azure OpenAI em diferentes níveis de severidade, criará blocklists personalizadas para capturar conteúdo proibido específico de domínio, e testará a API de prompt shield para detectar tentativas de jailbreak.
 
-Esses controles formam a abordagem de defesa em profundidade recomendada pela Microsoft para aplicações de IA em produção â€” combinando filtros no nível da plataforma com verificações no nível da aplicação para minimizar o risco de geração de conteúdo prejudicial.
+Esses controles formam a abordagem de defesa em profundidade recomendada pela Microsoft para aplicações de IA em produção — combinando filtros no nível da plataforma com verificações no nível da aplicação para minimizar o risco de geração de conteúdo prejudicial.
 
 ## Arquitetura
 
@@ -77,7 +77,7 @@ for text in texts_to_analyze:
         severity = category_result.severity
         category = category_result.category
         # Severity levels: 0=Safe, 2=Low, 4=Medium, 6=High
-        status = "âœ“ Safe" if severity == 0 else f"âš  Severity {severity}"
+        status = "✓ Safe" if severity == 0 else f"⚠ Severity {severity}"
         print(f"    {category}: {status}")
 
 # Analyze with specific categories and output type
@@ -127,7 +127,7 @@ foreach (string text in textsToAnalyze)
     
     foreach (TextCategoriesAnalysis category in response.CategoriesAnalysis)
     {
-        string status = category.Severity == 0 ? "âœ“ Safe" : $"âš  Severity {category.Severity}";
+        string status = category.Severity == 0 ? "✓ Safe" : $"⚠ Severity {category.Severity}";
         Console.WriteLine($"    {category.Category}: {status}");
     }
 }
@@ -252,13 +252,13 @@ request = AnalyzeTextOptions(
 
 response = safety_client.analyze_text(request)
 if response.blocklists_match:
-    print(f"\nâš  Blocklist match detected:")
+    print(f"\n⚠ Blocklist match detected:")
     for match in response.blocklists_match:
         print(f"  Blocklist: {match.blocklist_name}")
         print(f"  Matched text: '{match.blocklist_item_text}'")
         print(f"  Offset: {match.offset}, Length: {match.length}")
 else:
-    print("\nâœ“ No blocklist matches found")
+    print("\n✓ No blocklist matches found")
 ```
 
 </TabItem>
@@ -310,7 +310,7 @@ AnalyzeTextResult response = await safetyClient.AnalyzeTextAsync(options);
 
 if (response.BlocklistsMatch.Count > 0)
 {
-    Console.WriteLine("\nâš  Blocklist match detected:");
+    Console.WriteLine("\n⚠ Blocklist match detected:");
     foreach (var match in response.BlocklistsMatch)
     {
         Console.WriteLine($"  Blocklist: {match.BlocklistName}");
@@ -319,7 +319,7 @@ if (response.BlocklistsMatch.Count > 0)
 }
 else
 {
-    Console.WriteLine("\nâœ“ No blocklist matches");
+    Console.WriteLine("\n✓ No blocklist matches");
 }
 ```
 
@@ -428,9 +428,9 @@ for test in test_cases:
             print(f"  Document {i} attack detected: {doc_analysis.attack_detected}")
     
     if user_analysis.attack_detected:
-        print("  âš  ACTION: Block this request - jailbreak attempt detected")
+        print("  ⚠ ACTION: Block this request - jailbreak attempt detected")
     else:
-        print("  âœ“ Safe to proceed")
+        print("  ✓ Safe to proceed")
 ```
 
 </TabItem>
@@ -484,9 +484,9 @@ foreach (var test in testCases)
     }
     
     if (response.UserPromptAnalysis.AttackDetected)
-        Console.WriteLine("  âš  ACTION: Block - jailbreak detected");
+        Console.WriteLine("  ⚠ ACTION: Block - jailbreak detected");
     else
-        Console.WriteLine("  âœ“ Safe to proceed");
+        Console.WriteLine("  ✓ Safe to proceed");
 }
 ```
 
@@ -924,7 +924,7 @@ result = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
 
 Console.WriteLine("\n=== Hallucinated Response Test ===");
 Console.WriteLine($"  Ungrounded: {result.RootElement.GetProperty("ungroundedDetected")}");
-Console.WriteLine("  âš  Contains factual errors not supported by source material");
+Console.WriteLine("  ⚠ Contains factual errors not supported by source material");
 ```
 
 </TabItem>
@@ -974,31 +974,31 @@ curl -s -X POST "${ENDPOINT}/contentsafety/text:detectGroundedness?api-version=2
 === Text Analysis ===
 Text: 'The weather is beautiful today and I'm going for a walk...'
   Categories detected:
-    Hate: âœ“ Safe
-    Violence: âœ“ Safe
-    SelfHarm: âœ“ Safe
-    Sexual: âœ“ Safe
+    Hate: ✓ Safe
+    Violence: ✓ Safe
+    SelfHarm: ✓ Safe
+    Sexual: ✓ Safe
 
 Text: 'I want to hurt someone badly and make them suffer....'
   Categories detected:
-    Hate: âœ“ Safe
-    Violence: âš  Severity 4
-    SelfHarm: âœ“ Safe
-    Sexual: âœ“ Safe
+    Hate: ✓ Safe
+    Violence: ⚠ Severity 4
+    SelfHarm: ✓ Safe
+    Sexual: ✓ Safe
 
 === Blocklist Match ===
-âš  Blocklist match detected:
+⚠ Blocklist match detected:
   Blocklist: company-prohibited-terms
   Matched text: 'competitor-product-name'
 
 === Prompt Shield Results ===
-Normal Query: attackDetected = false âœ“
-Jailbreak Attempt: attackDetected = true âš 
-Indirect Injection: documentAttackDetected = true âš 
+Normal Query: attackDetected = false ✓
+Jailbreak Attempt: attackDetected = true ⚠
+Indirect Injection: documentAttackDetected = true ⚠
 
 === Groundedness Detection ===
-Grounded response: ungroundedDetected = false âœ“
-Hallucinated response: ungroundedDetected = true, 67% ungrounded âš 
+Grounded response: ungroundedDetected = false ✓
+Hallucinated response: ungroundedDetected = true, 67% ungrounded ⚠
 ```
 
 ## Quebra & conserta
@@ -1006,10 +1006,10 @@ Hallucinated response: ungroundedDetected = true, 67% ungrounded âš 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |----------|---------|------------|-----|
 | Filtro de conteúdo bloqueia conteúdo legítimo | Mensagens do usuário rejeitadas com erro content_filter | Severidade do filtro configurada de forma muito restritiva (Low bloqueia conteúdo limítrofe) | Aumente o allowedContentLevel para Medium para a categoria específica |
-| Blocklist não dispara | Termos proibidos passam sem detecção | Blocklist não associada Ã  requisição de análise | Inclua o parâmetro `blocklistNames` na requisição de análise |
+| Blocklist não dispara | Termos proibidos passam sem detecção | Blocklist não associada à requisição de análise | Inclua o parâmetro `blocklistNames` na requisição de análise |
 | Falsos positivos do prompt shield | Instruções normais sinalizadas como jailbreak | Prompts de sistema legítimos se assemelham a padrões de override | Reformule os prompts de sistema para evitar padrões de gatilho; use allowlists |
 | Verificação de groundedness retorna erros | 400 Bad Request na API de groundedness | Array groundingSources ausente ou vazio | Garanta que pelo menos uma fonte de grounding não vazia seja fornecida |
-| Filtro de conteúdo não aplicado Ã  implantação | Implantação gera conteúdo não filtrado | raiPolicyName não definido na implantação | Faça patch na implantação para definir `raiPolicyName` com sua política personalizada |
+| Filtro de conteúdo não aplicado à implantação | Implantação gera conteúdo não filtrado | raiPolicyName não definido na implantação | Faça patch na implantação para definir `raiPolicyName` com sua política personalizada |
 
 ## Verificação de Conhecimento
 
@@ -1045,7 +1045,7 @@ Hallucinated response: ungroundedDetected = true, 67% ungrounded âš 
       "Apenas conteúdo com severidade exatamente média é bloqueado"
     ],
     correctAnswer: 2,
-    explanation: "Definir allowedContentLevel como Medium significa que conteúdo com severidade Low é permitido, enquanto conteúdo com severidade Medium e acima (Medium, High) é bloqueado. Limites mais baixos são mais restritivos â€” 'Low' bloqueia tudo com severidade Low e acima."
+    explanation: "Definir allowedContentLevel como Medium significa que conteúdo com severidade Low é permitido, enquanto conteúdo com severidade Medium e acima (Medium, High) é bloqueado. Limites mais baixos são mais restritivos — 'Low' bloqueia tudo com severidade Low e acima."
   },
   {
     question: "Qual é o propósito da detecção de groundedness no Azure AI Content Safety?",
@@ -1056,7 +1056,7 @@ Hallucinated response: ungroundedDetected = true, 67% ungrounded âš 
       "Validar que o prompt segue regras de formatação adequadas"
     ],
     correctAnswer: 0,
-    explanation: "A detecção de groundedness verifica se uma resposta gerada por IA é factualmente suportada pelos documentos de origem/grounding fornecidos. Ela ajuda a detectar alucinações â€” declarações que parecem plausíveis mas não são suportadas pelo material de referência."
+    explanation: "A detecção de groundedness verifica se uma resposta gerada por IA é factualmente suportada pelos documentos de origem/grounding fornecidos. Ela ajuda a detectar alucinações — declarações que parecem plausíveis mas não são suportadas pelo material de referência."
   },
   {
     question: "Como as blocklists personalizadas diferem das categorias de segurança de conteúdo integradas?",

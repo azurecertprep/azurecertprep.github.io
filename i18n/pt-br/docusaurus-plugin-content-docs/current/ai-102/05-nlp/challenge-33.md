@@ -27,7 +27,7 @@ O Azure Translator fornece:
 | **Text Translation** | Tradução em tempo real de texto (até 50.000 caracteres) |
 | **Document Translation** | Traduzir documentos inteiros preservando o layout |
 | **Custom Translator** | Treinar modelos para terminologia de domínio |
-| **Transliteração** | Converter scripts (ex.: kanji japonês â†’ romaji) |
+| **Transliteração** | Converter scripts (ex.: kanji japonês → romaji) |
 | **Detecção de Idioma** | Detectar automaticamente o idioma de origem |
 | **Dicionário** | Buscar traduções alternativas |
 
@@ -113,7 +113,7 @@ for i, result in enumerate(results):
     if detected:
         print(f"  Detected language: {detected['language']} ({detected['score']:.2f})")
     for translation in result["translations"]:
-        print(f"  â†’ [{translation['to']}] {translation['text']}")
+        print(f"  → [{translation['to']}] {translation['text']}")
 ```
 
 </TabItem>
@@ -239,12 +239,12 @@ def transliterate(texts, language, from_script, to_script):
     return response.json()
 
 # Convert Japanese to Latin script
-results = transliterate(["ã“ã‚“ã«ã¡ã¯ä¸–ç•Œ"], "ja", "Jpan", "Latn")
+results = transliterate(["こんにちは世界"], "ja", "Jpan", "Latn")
 for r in results:
     print(f"Transliterated: {r['text']}")  # "konnichiwa sekai"
 
 # Convert Hindi Devanagari to Latin
-results = transliterate(["à¤¨à¤®à¤¸à¥à¤¤à¥‡ à¤¦à¥à¤¨à¤¿à¤¯à¤¾"], "hi", "Deva", "Latn")
+results = transliterate(["नमस्ते दुनिया"], "hi", "Deva", "Latn")
 for r in results:
     print(f"Transliterated: {r['text']}")  # "namaste duniya"
 ```
@@ -258,7 +258,7 @@ curl -s "https://api.cognitive.microsofttranslator.com/transliterate?api-version
   -H "Ocp-Apim-Subscription-Key: ${TRANSLATOR_KEY}" \
   -H "Ocp-Apim-Subscription-Region: ${REGION}" \
   -H "Content-Type: application/json" \
-  -d '[{"text": "ã“ã‚“ã«ã¡ã¯ä¸–ç•Œ"}]' | jq '.[0].text'
+  -d '[{"text": "こんにちは世界"}]' | jq '.[0].text'
 ```
 
 </TabItem>
@@ -269,15 +269,15 @@ curl -s "https://api.cognitive.microsofttranslator.com/transliterate?api-version
 ```text
 Source: 'Azure AI services make it easy to build intelligent applications.'
   Detected language: en (1.00)
-  â†’ [es] Los servicios de Azure AI facilitan la creación de aplicaciones inteligentes.
-  â†’ [fr] Les services Azure AI facilitent la création d'applications intelligentes.
-  â†’ [ja] Azure AIã‚µãƒ¼ãƒ“ã‚¹ã‚’ä½¿ç”¨ã™ã‚‹ã¨ã€ã‚¤ãƒ³ãƒ†ãƒªã‚¸ã‚§ãƒ³ãƒˆãªã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç°¡å˜ã«æ§‹ç¯‰ã§ãã¾ã™ã€‚
+  → [es] Los servicios de Azure AI facilitan la creación de aplicaciones inteligentes.
+  → [fr] Les services Azure AI facilitent la création d'applications intelligentes.
+  → [ja] Azure AIサービスを使用すると、インテリジェントなアプリケーションを簡単に構築できます。
 
 Source: 'The weather in Seattle is rainy today.'
   Detected language: en (1.00)
-  â†’ [es] El clima en Seattle está lluvioso hoy.
-  â†’ [fr] Le temps Ã  Seattle est pluvieux aujourd'hui.
-  â†’ [ja] ä»Šæ—¥ã®ã‚·ã‚¢ãƒˆãƒ«ã®å¤©æ°—ã¯é›¨ã§ã™ã€‚
+  → [es] El clima en Seattle está lluvioso hoy.
+  → [fr] Le temps à Seattle est pluvieux aujourd'hui.
+  → [ja] 今日のシアトルの天気は雨です。
 
 Transliterated: konnichiwa sekai
 Transliterated: namaste duniya
@@ -323,11 +323,11 @@ Transliterated: namaste duniya
     options: [
       "Document Translation é síncrono; Text Translation é assíncrono",
       "Document Translation suporta mais idiomas",
-      "Não há diferença â€” usam o mesmo endpoint",
+      "Não há diferença — usam o mesmo endpoint",
       "Document Translation traduz arquivos inteiros (preservando formatação) via Blob Storage; Text Translation lida com strings de texto puro"
     ],
     correctAnswer: 3,
-    explanation: "Document Translation é assíncrono â€” traduz arquivos inteiros (Word, PDF, etc.) entre contêineres Blob Storage preservando a formatação e layout originais."
+    explanation: "Document Translation é assíncrono — traduz arquivos inteiros (Word, PDF, etc.) entre contêineres Blob Storage preservando a formatação e layout originais."
   },
   {
     question: "O que a transliteração faz?",
@@ -338,7 +338,7 @@ Transliterated: namaste duniya
       "Corrige erros de ortografia em texto traduzido"
     ],
     correctAnswer: 1,
-    explanation: "A transliteração converte texto entre scripts sem mudar o idioma â€” ex.: kanji japonês â†’ Latim (romaji), Devanagari hindi â†’ Latim."
+    explanation: "A transliteração converte texto entre scripts sem mudar o idioma — ex.: kanji japonês → Latim (romaji), Devanagari hindi → Latim."
   },
   {
     question: "Quantos idiomas de destino você pode especificar em uma única requisição de tradução de texto?",

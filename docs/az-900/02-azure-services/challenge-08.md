@@ -24,9 +24,9 @@ Azure organizes resources in a four-level hierarchy. Understanding this hierarch
 
 ```text
 Management Groups
-  â””â”€â”€ Subscriptions
-        â””â”€â”€ Resource Groups
-              â””â”€â”€ Resources
+  └── Subscriptions
+        └── Resource Groups
+              └── Resources
 ```
 
 Each level inherits settings from the level above it. Policies applied at a management group flow down to all subscriptions, resource groups, and resources beneath it.
@@ -47,12 +47,12 @@ Each level inherits settings from the level above it. Policies applied at a mana
 1. In the Azure Portal, search for **Resource groups**
 2. Click **+ Create** to see the creation form:
    - Notice you choose a **Subscription** and a **Region**
-   - Resource groups are free â€” they're just containers
+   - Resource groups are free — they're just containers
 3. Create a resource group:
    - Name: `rg-az900-learning`
    - Region: Your nearest region
-   - Click **Review + create** â†’ **Create**
-4. Open your new resource group â€” notice it's empty (no cost!)
+   - Click **Review + create** → **Create**
+4. Open your new resource group — notice it's empty (no cost!)
 
 ### Task 3: Understand subscriptions
 
@@ -79,13 +79,13 @@ Each level inherits settings from the level above it. Policies applied at a mana
 **Hierarchy example for a large organization:**
 ```text
 Tenant Root Group
-â”œâ”€â”€ Production
-â”‚   â”œâ”€â”€ Subscription: Prod-East
-â”‚   â””â”€â”€ Subscription: Prod-West
-â”œâ”€â”€ Development
-â”‚   â””â”€â”€ Subscription: Dev-Team
-â””â”€â”€ Sandbox
-    â””â”€â”€ Subscription: Individual-Testing
+├── Production
+│   ├── Subscription: Prod-East
+│   └── Subscription: Prod-West
+├── Development
+│   └── Subscription: Dev-Team
+└── Sandbox
+    └── Subscription: Individual-Testing
 ```
 
 ### Task 5: Resource group rules
@@ -162,7 +162,7 @@ az group show --name rg-az900-learning --output table
     {
       id: 'az900-08-q5',
       question: 'A policy is applied at the management group level. Which resources does it affect?',
-      options: ['Only resources directly in the management group', 'Only the first subscription in the group', 'All resources in all subscriptions under that management group', 'None â€” policies only work at the subscription level'],
+      options: ['Only resources directly in the management group', 'Only the first subscription in the group', 'All resources in all subscriptions under that management group', 'None — policies only work at the subscription level'],
       correctAnswer: 2,
       explanation: 'Policies applied at the management group level are inherited by all subscriptions, resource groups, and resources beneath that management group in the hierarchy.'
     }
@@ -171,6 +171,6 @@ az group show --name rg-az900-learning --output table
 
 ## Learn More
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
 - [Microsoft Learn: Describe core architectural components](https://learn.microsoft.com/en-us/training/modules/describe-core-architectural-components-of-azure/)
 - [Azure Resource Manager overview](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)

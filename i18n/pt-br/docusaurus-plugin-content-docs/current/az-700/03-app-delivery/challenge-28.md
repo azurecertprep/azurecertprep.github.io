@@ -566,7 +566,7 @@ Get-AzApplicationGatewayBackendHealth `
 ### Portal
 
 1. Navegue até o recurso do Application Gateway
-2. Selecione **Integridade do back-end** no menu Ã  esquerda em **Monitoramento**
+2. Selecione **Integridade do back-end** no menu à esquerda em **Monitoramento**
 3. Revise o status de integridade de cada pool de back-end e servidores individuais
 4. Um servidor saudável mostra o código de status 200 e o status "Healthy"
 
@@ -655,7 +655,7 @@ O Application Gateway v2 cobra aproximadamente $0,27/hora enquanto implantado. S
 - O Application Gateway requer uma **sub-rede dedicada** sem outros recursos; /24 é o tamanho recomendado
 - Ouvintes multi-site diferenciam o tráfego usando o valor do **cabeçalho Host** nas solicitações de entrada
 - Regras de roteamento baseadas em caminho usam **mapas de caminho de URL** para direcionar solicitações a diferentes pools de back-end com base no caminho da URL
-- Padrões de caminho devem incluir **curingas** (ex.: `/api/*`) para corresponder subcaminhos; caminhos exatos correspondem apenas Ã  string literal
+- Padrões de caminho devem incluir **curingas** (ex.: `/api/*`) para corresponder subcaminhos; caminhos exatos correspondem apenas à string literal
 - Investigações de integridade personalizadas suportam **condições de correspondência** tanto para códigos de status quanto para conteúdo do corpo da resposta
 - Regras de roteamento requerem um valor de **prioridade**; números menores são avaliados primeiro
 - Cada ouvinte pode ser associado a apenas **uma regra de roteamento**

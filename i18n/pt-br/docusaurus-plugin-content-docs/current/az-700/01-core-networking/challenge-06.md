@@ -336,7 +336,7 @@ Você verá rotas para:
 - `10.1.0.0/16` (VNet local) com próximo salto `VnetLocal`
 - `10.0.0.0/16` (VNet hub via emparelhamento) com próximo salto `VNetPeering`
 
-Você NÃƒO verá uma rota para `10.2.0.0/16` (spoke2). Isso confirma a não transitividade: spoke1 pode alcançar o hub, mas não spoke2 através do hub.
+Você NÃO verá uma rota para `10.2.0.0/16` (spoke2). Isso confirma a não transitividade: spoke1 pode alcançar o hub, mas não spoke2 através do hub.
 
 ### Etapa 4: Tentar conectividade do spoke1 para spoke2
 
@@ -438,7 +438,7 @@ az network route-table route create \
     --next-hop-ip-address 10.0.1.4
 ```
 
-### Etapa 5: Associar tabelas de rotas Ã s sub-redes spoke
+### Etapa 5: Associar tabelas de rotas às sub-redes spoke
 
 ```bash
 az network vnet subnet update \

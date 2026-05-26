@@ -14,7 +14,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Cenário
 
-A força de trabalho remota da Contoso precisa de acesso seguro Ã s redes virtuais do Azure a partir de seus laptops pessoais e corporativos. A equipe de rede deve configurar a conectividade VPN ponto a site (P2S) em um gateway VPN existente, suportando múltiplos tipos de túnel para acomodar clientes Windows, macOS e Linux. Eles precisam gerar e distribuir pacotes de configuração de cliente VPN e entender quando recomendar cada tipo de túnel com base nos requisitos organizacionais.
+A força de trabalho remota da Contoso precisa de acesso seguro às redes virtuais do Azure a partir de seus laptops pessoais e corporativos. A equipe de rede deve configurar a conectividade VPN ponto a site (P2S) em um gateway VPN existente, suportando múltiplos tipos de túnel para acomodar clientes Windows, macOS e Linux. Eles precisam gerar e distribuir pacotes de configuração de cliente VPN e entender quando recomendar cada tipo de túnel com base nos requisitos organizacionais.
 
 ## Habilidades de exame abordadas
 
@@ -310,11 +310,11 @@ O arquivo ZIP baixado contém pastas para cada protocolo configurado:
 
 ```text
 VpnClientConfiguration.zip
-â”œâ”€â”€ OpenVPN/          # OpenVPN profile (.ovpn file)
-â”œâ”€â”€ WindowsAmd64/    # Windows 64-bit native client installer
-â”œâ”€â”€ WindowsX86/      # Windows 32-bit native client installer
-â”œâ”€â”€ Generic/         # Profile XML for manual configuration
-â””â”€â”€ AzureVPN/        # Azure VPN Client profile (azurevpnconfig.xml)
+├── OpenVPN/          # OpenVPN profile (.ovpn file)
+├── WindowsAmd64/    # Windows 64-bit native client installer
+├── WindowsX86/      # Windows 32-bit native client installer
+├── Generic/         # Profile XML for manual configuration
+└── AzureVPN/        # Azure VPN Client profile (azurevpnconfig.xml)
 ```
 
 | Cliente | Protocolo usado | Arquivo de configuração |
@@ -335,7 +335,7 @@ Azure Network Adapter é um recurso do Windows Admin Center que fornece uma expe
 
 | Recurso | Descrição |
 |---------|-----------|
-| Objetivo | Conectar Windows Server local Ã  VNet do Azure sem configuração complexa de VPN |
+| Objetivo | Conectar Windows Server local à VNet do Azure sem configuração complexa de VPN |
 | Interface | Plugin do Windows Admin Center |
 | Protocolo usado | VPN P2S IKEv2 |
 | Autenticação | Baseada em certificado (gerado automaticamente) |
@@ -351,7 +351,7 @@ Azure Network Adapter é um recurso do Windows Admin Center que fornece uma expe
 5. Windows Server 2012 R2 ou posterior na máquina local
 
 :::tip Dica de exame
-O Azure Network Adapter automatiza a geração de certificados, a configuração do gateway e a instalação do cliente. Você não precisa gerar certificados manualmente nem baixar pacotes de cliente ao usar este recurso. Ã‰ uma experiência baseada em "assistente" através do Windows Admin Center.
+O Azure Network Adapter automatiza a geração de certificados, a configuração do gateway e a instalação do cliente. Você não precisa gerar certificados manualmente nem baixar pacotes de cliente ao usar este recurso. É uma experiência baseada em "assistente" através do Windows Admin Center.
 :::
 
 ---
@@ -379,7 +379,7 @@ O SKU Basic suporta apenas o tipo de túnel SSTP (somente Windows). Ele não sup
 
 ### Cenário 1: Sobreposição de pool de endereços
 
-**Sintoma:** Os clientes se conectam Ã  VPN, mas não conseguem acessar recursos na VNet.
+**Sintoma:** Os clientes se conectam à VPN, mas não conseguem acessar recursos na VNet.
 
 **Causa raiz:** O pool de endereços P2S (172.16.201.0/24) se sobrepõe a uma sub-rede local ou outro espaço de endereço de VNet.
 
@@ -398,7 +398,7 @@ az network vnet-gateway update \
 
 **Causa raiz:** SSTP é exclusivo para Windows. O macOS requer IKEv2 ou OpenVPN.
 
-**Correção:** Adicione IKEv2 ou OpenVPN Ã  configuração do gateway:
+**Correção:** Adicione IKEv2 ou OpenVPN à configuração do gateway:
 
 ```bash
 az network vnet-gateway update \

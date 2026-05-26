@@ -15,32 +15,32 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Cenário
 
-A NovaTech Solutions, uma empresa ISV, construiu uma plataforma de API interna atrás de um Azure Standard Load Balancer. Eles desejam oferecer esse serviço de API a clientes externos (consumidores) usando o Azure Private Link, para que os consumidores possam acessar o serviço da NovaTech por meio de um private endpoint em suas próprias redes virtuais, sem qualquer exposição Ã  internet pública. Você é o engenheiro de rede responsável por configurar o Private Link Service do lado do provedor, gerenciar endereços IP NAT, configurar políticas de visibilidade e aprovação automática, e lidar com aprovações de conexão de consumidores.
+A NovaTech Solutions, uma empresa ISV, construiu uma plataforma de API interna atrás de um Azure Standard Load Balancer. Eles desejam oferecer esse serviço de API a clientes externos (consumidores) usando o Azure Private Link, para que os consumidores possam acessar o serviço da NovaTech por meio de um private endpoint em suas próprias redes virtuais, sem qualquer exposição à internet pública. Você é o engenheiro de rede responsável por configurar o Private Link Service do lado do provedor, gerenciar endereços IP NAT, configurar políticas de visibilidade e aprovação automática, e lidar com aprovações de conexão de consumidores.
 
 **Arquitetura:**
 
 ```text
     PROVIDER (NovaTech VNet: 10.0.0.0/16)            CONSUMER (Customer VNet: 10.1.0.0/16)
-    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”            â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-    â”‚                                    â”‚            â”‚                            â”‚
-    â”‚  snet-backend (10.0.1.0/24)        â”‚            â”‚  snet-consumer (10.1.1.0/24)â”‚
-    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”‚            â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”‚
-    â”‚  â”‚  VM-1   â”‚  â”‚  VM-2   â”‚         â”‚            â”‚  â”‚ consumer-vm  â”‚           â”‚
-    â”‚  â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”˜         â”‚            â”‚  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜           â”‚
-    â”‚       â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜              â”‚            â”‚         â”‚                   â”‚
-    â”‚              v                     â”‚            â”‚         v                   â”‚
-    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”           â”‚            â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”‚
-    â”‚  â”‚ Standard ILB        â”‚           â”‚            â”‚  â”‚  PE to PLS     â”‚         â”‚
-    â”‚  â”‚ frontend: 10.0.0.4  â”‚           â”‚            â”‚  â”‚  (10.1.1.5)    â”‚         â”‚
-    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜           â”‚            â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜         â”‚
-    â”‚             v                      â”‚            â”‚          â”‚                  â”‚
-    â”‚  snet-pls (10.0.2.0/24)           â”‚            â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”       â”‚                       â”‚
-    â”‚  â”‚ Private Link Service    â”‚â—„â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-    â”‚  â”‚ NAT IP: 10.0.2.4       â”‚       â”‚         Private Link connection
-    â”‚  â”‚ Alias: pls-novatech... â”‚       â”‚
-    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â”‚
-    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+    ┌────────────────────────────────────┐            ┌────────────────────────────────┐
+    │                                    │            │                            │
+    │  snet-backend (10.0.1.0/24)        │            │  snet-consumer (10.1.1.0/24)│
+    │  ┌─────────┐  ┌─────────┐         │            │  ┌──────────────┐           │
+    │  │  VM-1   │  │  VM-2   │         │            │  │ consumer-vm  │           │
+    │  └────┬────┘  └────┬────┘         │            │  └──────┬───────┘           │
+    │       └──────┬──────┘              │            │         │                   │
+    │              v                     │            │         v                   │
+    │  ┌─────────────────────┐           │            │  ┌────────────────┐         │
+    │  │ Standard ILB        │           │            │  │  PE to PLS     │         │
+    │  │ frontend: 10.0.0.4  │           │            │  │  (10.1.1.5)    │         │
+    │  └──────────┬──────────┘           │            │  └───────┬────────┘         │
+    │             v                      │            │          │                  │
+    │  snet-pls (10.0.2.0/24)           │            └──────────┼──────────────────┘
+    │  ┌─────────────────────────┐       │                       │
+    │  │ Private Link Service    │◄──────┼───────────────────────┘
+    │  │ NAT IP: 10.0.2.4       │       │         Private Link connection
+    │  │ Alias: pls-novatech... │       │
+    │  └─────────────────────────┘       │
+    └────────────────────────────────────┘
 ```
 
 ## Objetivos de aprendizagem
@@ -370,7 +370,7 @@ Set-AzPrivateLinkService -InputObject $pls
 
 - **Visibilidade** controla quais assinaturas podem descobrir o PLS e criar uma conexão PE com ele. Se vazio, todas as assinaturas podem se conectar. Se especificado, apenas as assinaturas listadas podem se conectar.
 - **Aprovação automática** é sempre um subconjunto da visibilidade. Assinaturas listadas têm suas conexões aprovadas automaticamente sem intervenção do provedor.
-- Uma assinatura na visibilidade, mas NÃƒO na aprovação automática, terá sua conexão no estado Pending até ser aprovada manualmente.
+- Uma assinatura na visibilidade, mas NÃO na aprovação automática, terá sua conexão no estado Pending até ser aprovada manualmente.
 
 :::
 

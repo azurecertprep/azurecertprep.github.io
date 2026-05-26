@@ -380,7 +380,7 @@ jobs:
 
 Após configurar as anotações, elas não aparecem nos gráficos de métricas do Application Insights.
 
-**Causa:** A chamada Ã  API de anotações usa o ID de recurso errado, ou o formato do timestamp está incorreto, ou o usuário não tem permissões de escrita no Application Insights.
+**Causa:** A chamada à API de anotações usa o ID de recurso errado, ou o formato do timestamp está incorreto, ou o usuário não tem permissões de escrita no Application Insights.
 
 **Diagnóstico:**
 

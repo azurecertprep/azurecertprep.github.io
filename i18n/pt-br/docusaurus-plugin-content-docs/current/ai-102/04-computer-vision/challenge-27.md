@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 O recurso **Read** do Azure AI Vision (parte do Image Analysis 4.0) extrai texto impresso e manuscrito de imagens e documentos. A hierarquia do texto:
 
 ```text
-Imagem â†’ Blocks â†’ Lines â†’ Words (com polígonos delimitadores e confiança)
+Imagem → Blocks → Lines → Words (com polígonos delimitadores e confiança)
 ```
 
 Características principais:
@@ -146,7 +146,7 @@ if result.read:
         for line in block.lines:
             # Check confidence - handwriting often has lower confidence
             avg_confidence = sum(w.confidence for w in line.words) / len(line.words)
-            confidence_indicator = "âœ“" if avg_confidence > 0.8 else "?"
+            confidence_indicator = "✓" if avg_confidence > 0.8 else "?"
             print(f"  [{confidence_indicator}] '{line.text}' (avg conf: {avg_confidence:.3f})")
 ```
 
@@ -238,9 +238,9 @@ Extracted Text:
       Word: 'Vision' (confidence: 0.9910)
 
 Handwritten Text Extracted:
-  [âœ“] 'Meeting notes - January 2024' (avg conf: 0.892)
+  [✓] 'Meeting notes - January 2024' (avg conf: 0.892)
   [?] 'discuss quarterly goals' (avg conf: 0.734)
-  [âœ“] 'Action items below' (avg conf: 0.856)
+  [✓] 'Action items below' (avg conf: 0.856)
 
 Document contains 3 pages
 --- Page 1 (8.5x11.0 inch) ---
@@ -264,13 +264,13 @@ Document contains 3 pages
   {
     question: "Qual é a hierarquia de texto retornada pelo recurso Read do Azure AI Vision?",
     options: [
-      "Document â†’ Paragraphs â†’ Sentences â†’ Words",
-      "Pages â†’ Columns â†’ Rows â†’ Characters",
-      "Blocks â†’ Lines â†’ Words (cada um com polígonos delimitadores e confiança)",
-      "Regions â†’ Paragraphs â†’ Lines â†’ Characters"
+      "Document → Paragraphs → Sentences → Words",
+      "Pages → Columns → Rows → Characters",
+      "Blocks → Lines → Words (cada um com polígonos delimitadores e confiança)",
+      "Regions → Paragraphs → Lines → Characters"
     ],
     correctAnswer: 2,
-    explanation: "O recurso Read retorna: Blocks (regiões de texto) â†’ Lines (linhas de texto) â†’ Words (palavras individuais com polígonos delimitadores e scores de confiança)."
+    explanation: "O recurso Read retorna: Blocks (regiões de texto) → Lines (linhas de texto) → Words (palavras individuais com polígonos delimitadores e scores de confiança)."
   },
   {
     question: "Qual é o tamanho máximo de imagem suportado pelo recurso Read do Image Analysis?",
@@ -303,7 +303,7 @@ Document contains 3 pages
       "Cada palavra tem um score de confiança (0.0-1.0); manuscrito tipicamente pontua mais baixo que impresso"
     ],
     correctAnswer: 3,
-    explanation: "Cada palavra inclui um score de confiança de 0.0 a 1.0. Texto manuscrito tipicamente retorna scores de confiança mais baixos que texto impresso devido Ã  variabilidade."
+    explanation: "Cada palavra inclui um score de confiança de 0.0 a 1.0. Texto manuscrito tipicamente retorna scores de confiança mais baixos que texto impresso devido à variabilidade."
   },
   {
     question: "Qual header Content-Type você deve usar ao enviar um arquivo de imagem local para OCR?",

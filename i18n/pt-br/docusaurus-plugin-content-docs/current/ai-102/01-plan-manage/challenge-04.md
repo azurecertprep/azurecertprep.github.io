@@ -22,9 +22,9 @@ import TabItem from '@theme/TabItem';
 
 ## Visão Geral
 
-Os Azure AI services podem ser consumidos via SDKs específicos de linguagem ou chamadas diretas Ã  REST API. O exame AI-102 testa sua capacidade de escolher o método de autenticação correto, entender a construção de endpoints e lidar com versionamento de API corretamente.
+Os Azure AI services podem ser consumidos via SDKs específicos de linguagem ou chamadas diretas à REST API. O exame AI-102 testa sua capacidade de escolher o método de autenticação correto, entender a construção de endpoints e lidar com versionamento de API corretamente.
 
-Existem dois padrões principais de autenticação: **baseado em chave** (usando `AzureKeyCredential` ou o cabeçalho `Ocp-Apim-Subscription-Key`) e **Microsoft Entra ID** (usando `DefaultAzureCredential` com tokens bearer OAuth2). A autenticação baseada em chave é mais simples, porém menos seguraâ€”chaves podem ser vazadas e não fornecem trilhas de auditoria baseadas em identidade. A autenticação via Entra ID requer um subdomínio personalizado e atribuições de role RBAC adequadas, mas oferece suporte a managed identity, acesso condicional e auditoria granular.
+Existem dois padrões principais de autenticação: **baseado em chave** (usando `AzureKeyCredential` ou o cabeçalho `Ocp-Apim-Subscription-Key`) e **Microsoft Entra ID** (usando `DefaultAzureCredential` com tokens bearer OAuth2). A autenticação baseada em chave é mais simples, porém menos segura—chaves podem ser vazadas e não fornecem trilhas de auditoria baseadas em identidade. A autenticação via Entra ID requer um subdomínio personalizado e atribuições de role RBAC adequadas, mas oferece suporte a managed identity, acesso condicional e auditoria granular.
 
 Este desafio guia você por ambos os métodos de autenticação usando o SDK Azure AI Text Analytics, demonstra chamadas REST API com cabeçalhos adequados e mostra como o `DefaultAzureCredential` percorre múltiplos tipos de credencial para um desenvolvimento local-para-nuvem transparente.
 
@@ -152,7 +152,7 @@ from azure.ai.textanalytics import TextAnalyticsClient
 # Entra ID authentication (requires custom subdomain on resource)
 endpoint = os.environ["AZURE_AI_ENDPOINT"]  # Must be custom: https://<name>.cognitiveservices.azure.com/
 
-# DefaultAzureCredential tries: Environment â†’ Managed Identity â†’ Azure CLI â†’ etc.
+# DefaultAzureCredential tries: Environment → Managed Identity → Azure CLI → etc.
 credential = DefaultAzureCredential()
 client = TextAnalyticsClient(endpoint=endpoint, credential=credential)
 
@@ -302,7 +302,7 @@ using Azure.Identity;
 using Azure.AI.TextAnalytics;
 
 // DefaultAzureCredential tries multiple sources automatically
-// Order: Environment â†’ Workload Identity â†’ Managed Identity â†’ Azure CLI â†’ etc.
+// Order: Environment → Workload Identity → Managed Identity → Azure CLI → etc.
 
 // For production with managed identity
 var productionCredential = new ManagedIdentityCredential();
@@ -406,7 +406,7 @@ Auth successful! Detected: English
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Autenticação Entra 401 | `AuthenticationFailed` | Atribuição de role RBAC ausente | Atribuir a role "Cognitive Services User" Ã  identidade |
+| Autenticação Entra 401 | `AuthenticationFailed` | Atribuição de role RBAC ausente | Atribuir a role "Cognitive Services User" à identidade |
 | Domínio personalizado ausente | `InvalidAuthentication` com bearer token | Recurso usa endpoint regional (sem subdomínio personalizado) | Recriar recurso com o parâmetro `--custom-domain` |
 | Audience do token incorreta | `401 Unauthorized` | Token solicitado para recurso errado | Usar `https://cognitiveservices.azure.com` como resource/scope |
 | Incompatibilidade de versão do SDK | `ApiVersionNotSupported` | Versão do SDK espera versão de API mais recente | Fixar versão da API ou atualizar pacote do SDK |
@@ -446,7 +446,7 @@ Auth successful! Detected: English
       "x-api-key"
     ],
     correctAnswer: 2,
-    explanation: "Os Azure AI services (Language, Vision, Speech, etc.) usam o cabeçalho 'Ocp-Apim-Subscription-Key' para autenticação baseada em chave. Nota: Azure OpenAI usa 'api-key' em vez dissoâ€”eles têm convenções de cabeçalho diferentes."
+    explanation: "Os Azure AI services (Language, Vision, Speech, etc.) usam o cabeçalho 'Ocp-Apim-Subscription-Key' para autenticação baseada em chave. Nota: Azure OpenAI usa 'api-key' em vez disso—eles têm convenções de cabeçalho diferentes."
   },
   {
     question: "DefaultAzureCredential falha localmente com 'No credential in this chain provided a token'. Qual é a correção mais provável?",
@@ -457,7 +457,7 @@ Auth successful! Detected: English
       "Reiniciar a aplicação com privilégios de administrador"
     ],
     correctAnswer: 1,
-    explanation: "DefaultAzureCredential tenta múltiplas fontes de credencial em ordem. Localmente, ele geralmente depende do AzureCliCredentialâ€”se você não executou 'az login' ou sua sessão expirou, nenhuma credencial na cadeia pode fornecer um token."
+    explanation: "DefaultAzureCredential tenta múltiplas fontes de credencial em ordem. Localmente, ele geralmente depende do AzureCliCredential—se você não executou 'az login' ou sua sessão expirou, nenhuma credencial na cadeia pode fornecer um token."
   },
   {
     question: "Você precisa chamar o Azure AI Language com a versão de API '2023-04-01', mas o SDK mais recente usa '2024-04-01' como padrão. Como você deve lidar com isso?",

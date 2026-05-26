@@ -27,10 +27,10 @@ O Custom Vision permite treinar modelos de classificação de imagens específic
 | Tipo | Caso de Uso | Saída |
 |------|-------------|-------|
 | **Classificação - Multiclass** | Imagem pertence a UMA categoria | Uma tag por imagem |
-| **Classificação - Multilabel** | Imagem pode ter MÃšLTIPLAS categorias | Múltiplas tags por imagem |
+| **Classificação - Multilabel** | Imagem pode ter MÚLTIPLAS categorias | Múltiplas tags por imagem |
 | **Detecção de Objetos** | Localizar objetos com bounding boxes | Tags + coordenadas |
 
-O treinamento produz iterações com métricas: **Precision** (das predições positivas, quantas estão corretas), **Recall** (dos positivos reais, quantos foram encontrados) e **AP** (Average Precision â€” área sob a curva precision-recall).
+O treinamento produz iterações com métricas: **Precision** (das predições positivas, quantas estão corretas), **Recall** (dos positivos reais, quantos foram encontrados) e **AP** (Average Precision — área sob a curva precision-recall).
 
 ## Pré-requisitos
 - Assinatura Azure

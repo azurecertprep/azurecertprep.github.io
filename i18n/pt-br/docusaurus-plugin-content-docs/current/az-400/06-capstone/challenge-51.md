@@ -503,7 +503,7 @@ jobs:
 | Ambiente | Regras |
 |----------|--------|
 | staging | Sem aprovações, deploy a cada push para main |
-| production | Requer 2 aprovações (de `@contoso/release-managers`), temporizador de espera de 5 minutos, restrito Ã  branch `main` |
+| production | Requer 2 aprovações (de `@contoso/release-managers`), temporizador de espera de 5 minutos, restrito à branch `main` |
 
 ### 5.3 Procedimento de rollback
 
@@ -791,7 +791,7 @@ jobs:
 
 1. Verificar o alerta de pico de erros do Application Insights que disparou
 2. Examinar a telemetria de exceções -- você encontra: `SqlException: Invalid column name 'PaymentMethodToken'`
-3. Revisar o diff do deployment -- uma nova coluna foi adicionada Ã  tabela `Payments` no código, mas a migration do Entity Framework nunca foi aplicada ao banco de dados de produção
+3. Revisar o diff do deployment -- uma nova coluna foi adicionada à tabela `Payments` no código, mas a migration do Entity Framework nunca foi aplicada ao banco de dados de produção
 4. O ambiente de staging tinha a migration aplicada manualmente durante o desenvolvimento, mas não existe um passo automatizado de migration no pipeline de CD
 
 
@@ -889,7 +889,7 @@ public static bool IsValidCardNumber(string cardNumber)
 
 ### Cenário 3: Hotfix de emergência para falhas de pagamento em produção
 
-**Situação:** Ã€s 2:00 da manhã, o SRE de plantão recebe um alerta do PagerDuty: o processamento de pagamentos está falhando para todas as transações. O Application Insights mostra que o gateway de pagamento externo está retornando `401 Unauthorized`. A investigação revela que a chave da API do gateway foi rotacionada pelo provedor, mas o segredo no Key Vault não foi atualizado.
+**Situação:** Às 2:00 da manhã, o SRE de plantão recebe um alerta do PagerDuty: o processamento de pagamentos está falhando para todas as transações. O Application Insights mostra que o gateway de pagamento externo está retornando `401 Unauthorized`. A investigação revela que a chave da API do gateway foi rotacionada pelo provedor, mas o segredo no Key Vault não foi atualizado.
 
 **Resposta necessária:**
 
@@ -1054,6 +1054,6 @@ Antes de considerar este desafio completo, verifique:
       "Histórico de execução de workflows do GitHub Actions e alertas do Dependabot"
     ],
     correctIndex: 1,
-    explanation: "PCI-DSS requer evidências de controle de mudanças (proteção de branch + aprovações de PR), testes (resultados de CI), autorização (work items vinculados), trilha de auditoria de deployment (logs de deployment) e controle de acesso (auditoria do Key Vault). Esta combinação fornece rastreabilidade de ponta a ponta do requisito Ã  produção."
+    explanation: "PCI-DSS requer evidências de controle de mudanças (proteção de branch + aprovações de PR), testes (resultados de CI), autorização (work items vinculados), trilha de auditoria de deployment (logs de deployment) e controle de acesso (auditoria do Key Vault). Esta combinação fornece rastreabilidade de ponta a ponta do requisito à produção."
   }
 ]} />

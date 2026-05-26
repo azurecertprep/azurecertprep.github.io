@@ -35,11 +35,11 @@ Azure Storage mantém múltiplas cópias dos seus dados para proteger contra fal
 
 **Representação visual:**
 ```yaml
-LRS:    [Copy1][Copy2][Copy3]  â† Todos em UM datacenter
+LRS:    [Copy1][Copy2][Copy3]  ← Todos em UM datacenter
 
-ZRS:    [Zone1]  [Zone2]  [Zone3]  â† Cada um em um datacenter DIFERENTE
+ZRS:    [Zone1]  [Zone2]  [Zone3]  ← Cada um em um datacenter DIFERENTE
 
-GRS:    [Primary: 3 copies] â†â†’ [Secondary region: 3 copies]
+GRS:    [Primary: 3 copies] ←→ [Secondary region: 3 copies]
 
 RA-GRS: Same as GRS, but secondary is READABLE
 ```
@@ -58,11 +58,11 @@ RA-GRS: Same as GRS, but secondary is READABLE
 | Camada | Frequência de acesso | Custo de armazenamento | Custo de acesso | Duração mínima |
 |--------|---------------------|----------------------|-----------------|----------------|
 | **Hot** | Acesso frequente | Maior | Menor | Nenhuma |
-| **Cool** | Acesso infrequente (â‰¥30 dias) | Menor | Maior | 30 dias |
-| **Cold** | Acesso raro (â‰¥90 dias) | Menor ainda | Maior ainda | 90 dias |
-| **Archive** | Quase nunca (â‰¥180 dias) | Menor de todos | Maior + tempo de reidratação | 180 dias |
+| **Cool** | Acesso infrequente (≥30 dias) | Menor | Maior | 30 dias |
+| **Cold** | Acesso raro (≥90 dias) | Menor ainda | Maior ainda | 90 dias |
+| **Archive** | Quase nunca (≥180 dias) | Menor de todos | Maior + tempo de reidratação | 180 dias |
 
-**Trade-off de custo**: Mais barato para armazenar â†” Mais caro para acessar
+**Trade-off de custo**: Mais barato para armazenar ↔ Mais caro para acessar
 
 ### Tarefa 4: Cenários de camadas de acesso
 
@@ -77,11 +77,11 @@ RA-GRS: Same as GRS, but secondary is READABLE
 - Dados são armazenados offline
 - Reidratação pode levar horas (até 15 horas para padrão)
 - Reidratação prioritária disponível (menos de 1 hora, custa mais)
-- Não é possível ler dados diretamente â€” deve reidratar primeiro
+- Não é possível ler dados diretamente — deve reidratar primeiro
 
 ### Tarefa 5: Explorar no Portal
 
-1. No Azure Portal, pesquise por **Storage accounts** â†’ **+ Create**
+1. No Azure Portal, pesquise por **Storage accounts** → **+ Create**
 2. Na aba **Basics**, observe:
    - Dropdown de **Redundancy**: LRS, ZRS, GRS, RA-GRS, GZRS, RA-GZRS
 3. Na aba **Advanced**, observe:
@@ -106,7 +106,7 @@ az storage account list --query "[].{Name:name, Redundancy:sku.name}" --output t
 | **LRS** | 3 cópias em um datacenter (mais barato, menos durável) |
 | **ZRS** | 3 cópias entre zonas de disponibilidade |
 | **GRS** | 3 locais + 3 na região pareada (proteção entre regiões) |
-| **RA-GRS** | GRS + acesso de leitura Ã  região secundária |
+| **RA-GRS** | GRS + acesso de leitura à região secundária |
 | **Camada Hot** | Otimizada para acesso frequente |
 | **Camada Cool** | Custo de armazenamento menor, custo de acesso maior (mínimo 30 dias) |
 | **Camada Cold** | Custo de armazenamento ainda menor (mínimo 90 dias) |
@@ -119,7 +119,7 @@ az storage account list --query "[].{Name:name, Redundancy:sku.name}" --output t
     {
       id: 'az900-14-q1',
       question: 'Uma empresa precisa garantir que seus dados sobrevivam a uma interrupção regional completa. Qual opção mínima de redundância devem escolher?',
-      options: ['LRS', 'ZRS', 'GRS', 'Nenhuma â€” o Azure sempre protege contra interrupções regionais'],
+      options: ['LRS', 'ZRS', 'GRS', 'Nenhuma — o Azure sempre protege contra interrupções regionais'],
       correctAnswer: 2,
       explanation: 'GRS (Geo-Redundant Storage) replica dados para uma região secundária a centenas de quilômetros de distância. Isso protege contra interrupções regionais completas. LRS e ZRS protegem apenas dentro de uma única região.'
     },
@@ -149,13 +149,13 @@ az storage account list --query "[].{Name:name, Redundancy:sku.name}" --output t
       question: 'Qual é a diferença entre GRS e RA-GRS?',
       options: ['GRS é mais rápido', 'RA-GRS permite leitura da região secundária', 'GRS tem mais cópias', 'RA-GRS é mais barato'],
       correctAnswer: 1,
-      explanation: 'Tanto GRS quanto RA-GRS mantêm 6 cópias (3 primárias + 3 na região secundária). A diferença é que RA-GRS fornece acesso de LEITURA Ã  região secundária o tempo todo, mesmo quando a primária está saudável.'
+      explanation: 'Tanto GRS quanto RA-GRS mantêm 6 cópias (3 primárias + 3 na região secundária). A diferença é que RA-GRS fornece acesso de LEITURA à região secundária o tempo todo, mesmo quando a primária está saudável.'
     }
   ]}
 />
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe Azure storage services](https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/)
 - [Azure Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)

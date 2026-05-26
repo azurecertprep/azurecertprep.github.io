@@ -24,7 +24,7 @@ Monitorar recursos do Azure AI é essencial para manter a confiabilidade, rastre
 
 Neste desafio, você vai configurar definições de diagnóstico para rotear logs e métricas para um workspace do Log Analytics, escrever consultas KQL para analisar o comportamento do serviço e configurar regras de alerta para limites críticos. Você vai trabalhar com métricas-chave como `TotalCalls`, `TotalErrors`, `Latency` e `TokenTransaction`.
 
-Entender o pipeline de monitoramento â€” desde as definições de diagnóstico, passando pelo Log Analytics até os alertas â€” é uma habilidade essencial para gerenciar implantações de IA em produção em escala.
+Entender o pipeline de monitoramento — desde as definições de diagnóstico, passando pelo Log Analytics até os alertas — é uma habilidade essencial para gerenciar implantações de IA em produção em escala.
 
 ## Arquitetura
 
@@ -761,7 +761,7 @@ token-spike-alert       3         True     total TokenTransaction > 100000
 |---------|---------|------------|----------|
 | Nenhum log aparecendo no Log Analytics | Consultas KQL retornam resultados vazios | Definições de diagnóstico não habilitadas ou recentes (atraso de ingestão de 5-15 min) | Verifique se as definições de diagnóstico existem; aguarde o atraso de ingestão |
 | Alerta de métrica nunca dispara | Nenhuma notificação de alerta apesar da alta latência | Namespace de métrica ou tipo de agregação incorreto | Verifique o namespace `Microsoft.CognitiveServices/accounts` e a agregação correta |
-| Erro "No access" na consulta do Log Analytics | 403 ao consultar o workspace | Role `Log Analytics Reader` ausente no workspace | Atribua a role `Log Analytics Reader` Ã  identidade que está consultando |
+| Erro "No access" na consulta do Log Analytics | 403 ao consultar o workspace | Role `Log Analytics Reader` ausente no workspace | Atribua a role `Log Analytics Reader` à identidade que está consultando |
 | Dados de métricas incompletos | Algumas métricas mostram lacunas | O SKU do recurso não emite todas as métricas | Verifique o tier S0; o tier gratuito tem emissão limitada de métricas |
 | Alerta dispara com muita frequência | Ruído/fadiga de alertas | Tamanho da janela muito pequeno ou limite muito baixo | Aumente o `window-size` ou ajuste o limite para reduzir falsos positivos |
 

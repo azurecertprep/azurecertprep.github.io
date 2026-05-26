@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 O Azure AI Agent Service fornece uma plataforma gerenciada para construir agentes de IA. Ele gerencia threads, execução de ferramentas (file search, code interpreter, funções personalizadas), ciclo de vida de runs e gerenciamento de arquivos.
 
-A arquitetura: criar um agente â†’ criar uma thread â†’ adicionar mensagens â†’ criar um run â†’ fazer polling até completar â†’ ler respostas.
+A arquitetura: criar um agente → criar uma thread → adicionar mensagens → criar um run → fazer polling até completar → ler respostas.
 
 ## Pré-requisitos
 - Assinatura Azure
@@ -229,13 +229,13 @@ Monthly Cost Breakdown:
   {
     question: "Qual é a sequência correta para usar o Azure AI Agent Service?",
     options: [
-      "Criar agente â†’ Criar thread â†’ Adicionar mensagem â†’ Criar run",
-      "Criar thread â†’ Criar agente â†’ Adicionar mensagem â†’ Criar run",
-      "Criar run â†’ Criar agente â†’ Criar thread â†’ Adicionar mensagem",
-      "Criar agente â†’ Criar run â†’ Criar thread â†’ Adicionar mensagem"
+      "Criar agente → Criar thread → Adicionar mensagem → Criar run",
+      "Criar thread → Criar agente → Adicionar mensagem → Criar run",
+      "Criar run → Criar agente → Criar thread → Adicionar mensagem",
+      "Criar agente → Criar run → Criar thread → Adicionar mensagem"
     ],
     correctAnswer: 0,
-    explanation: "O fluxo correto: criar um agente (define comportamento e ferramentas), criar uma thread (container de conversação), adicionar mensagens Ã  thread, e então criar um run (dispara o processamento do agente)."
+    explanation: "O fluxo correto: criar um agente (define comportamento e ferramentas), criar uma thread (container de conversação), adicionar mensagens à thread, e então criar um run (dispara o processamento do agente)."
   },
   {
     question: "O que a ferramenta file_search fornece no Azure AI Agent Service?",
@@ -265,7 +265,7 @@ Monthly Cost Breakdown:
       "Cancelar e retentar o run",
       "Criar um novo run com parâmetros diferentes",
       "Enviar outputs de ferramentas para as chamadas de função solicitadas",
-      "Aguardar â€” ele se resolve automaticamente"
+      "Aguardar — ele se resolve automaticamente"
     ],
     correctAnswer: 2,
     explanation: "Quando o status é 'requires_action', o agente precisa de resultados de funções. Execute as funções solicitadas e envie os outputs via submit_tool_outputs."
@@ -273,7 +273,7 @@ Monthly Cost Breakdown:
   {
     question: "Qual é a relação entre agentes e threads?",
     options: [
-      "Agentes e threads são independentes â€” qualquer agente pode executar em qualquer thread",
+      "Agentes e threads são independentes — qualquer agente pode executar em qualquer thread",
       "Cada agente só pode processar uma thread",
       "Cada thread é permanentemente vinculada a um agente",
       "Threads são criadas automaticamente quando agentes são criados"

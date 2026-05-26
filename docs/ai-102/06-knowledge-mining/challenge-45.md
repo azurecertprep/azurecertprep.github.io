@@ -1,13 +1,13 @@
 ---
 sidebar_position: 7
-title: "Challenge 45: Azure Document Intelligence â€” Prebuilt Models"
+title: "Challenge 45: Azure Document Intelligence — Prebuilt Models"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Challenge 45: Azure Document Intelligence â€” Prebuilt Models
+# Challenge 45: Azure Document Intelligence — Prebuilt Models
 
 :::info Estimated Time
 **45-60 min** | **Cost**: ~$1.00 (Document Intelligence S0 tier + transactions) | **Domain**: Knowledge Mining & Extraction (15-20%)
@@ -122,7 +122,7 @@ for document in result.documents:
             item_fields = item.value_object
             desc = item_fields.get("Description", {})
             amount = item_fields.get("Amount", {})
-            print(f"    {i+1}. {desc.value_string if desc else 'N/A'} â€” ${amount.value_currency.amount if amount else 'N/A'}")
+            print(f"    {i+1}. {desc.value_string if desc else 'N/A'} — ${amount.value_currency.amount if amount else 'N/A'}")
 ```
 
 </TabItem>
@@ -366,10 +366,10 @@ Confidence: 95.20%
   Due: 2024-02-15
 
   Line Items (4 items):
-    1. Consulting Services â€” $1500.00
-    2. Software License â€” $1200.00
-    3. Support Plan â€” $800.00
-    4. Training â€” $300.00
+    1. Consulting Services — $1500.00
+    2. Software License — $1200.00
+    3. Support Plan — $800.00
+    4. Training — $300.00
 ```
 
 ## Break & fix
@@ -401,7 +401,7 @@ Confidence: 95.20%
     id: "ai102-45-q2",
     question: "The Document Intelligence analyze operation returns immediately with an Operation-Location header. What does this indicate?",
     options: [
-      "The operation is asynchronous â€” you must poll the Operation-Location URL for results",
+      "The operation is asynchronous — you must poll the Operation-Location URL for results",
       "The document was too large and was rejected",
       "The analysis is complete and results are in the header",
       "The request was redirected to another endpoint"
@@ -419,7 +419,7 @@ Confidence: 95.20%
       "Accept the value since any extraction is better than manual entry"
     ],
     correctIndex: 2,
-    explanation: "Best practice is to set a confidence threshold (typically 0.8 or 80%) and flag fields below it for human review. A 45% confidence suggests the model is uncertain. Don't reject the whole document â€” other fields may have high confidence."
+    explanation: "Best practice is to set a confidence threshold (typically 0.8 or 80%) and flag fields below it for human review. A 45% confidence suggests the model is uncertain. Don't reject the whole document — other fields may have high confidence."
   },
   {
     id: "ai102-45-q4",

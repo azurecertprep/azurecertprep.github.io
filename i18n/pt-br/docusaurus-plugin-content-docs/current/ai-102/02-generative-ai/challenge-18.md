@@ -19,11 +19,11 @@ import TabItem from '@theme/TabItem';
 
 ## Visão Geral
 
-O Azure OpenAI fornece acesso a capacidades de IA multimodal através de dois recursos principais: **DALL-E 3** para geração de imagens e **GPT-4o** para compreensão visual. O DALL-E 3 gera imagens a partir de descrições textuais, suportando tamanhos de 1024Ã—1024, 1024Ã—1792 e 1792Ã—1024 com configurações de qualidade ajustáveis (standard ou HD). Cada requisição de geração produz uma imagem única com uma URL temporária válida por 24 horas.
+O Azure OpenAI fornece acesso a capacidades de IA multimodal através de dois recursos principais: **DALL-E 3** para geração de imagens e **GPT-4o** para compreensão visual. O DALL-E 3 gera imagens a partir de descrições textuais, suportando tamanhos de 1024×1024, 1024×1792 e 1792×1024 com configurações de qualidade ajustáveis (standard ou HD). Cada requisição de geração produz uma imagem única com uma URL temporária válida por 24 horas.
 
 As capacidades de visão do GPT-4o permitem que o modelo analise imagens fornecidas como URLs ou dados codificados em base64. O modelo pode descrever conteúdo de imagens, extrair texto (OCR), interpretar gráficos e diagramas, comparar múltiplas imagens e responder perguntas sobre conteúdo visual. As imagens são processadas como partes de conteúdo especiais dentro da API de chat completions, mantendo a estrutura de mensagens familiar.
 
-Ao trabalhar com entradas multimodais, entender os custos de tokens é importante: os custos de análise de imagens variam por resolução. O parâmetro `detail` controla o processamento: `low` usa 85 tokens fixos independente do tamanho, enquanto `high` processa a imagem em resolução completa com custos proporcionais ao número de blocos 512Ã—512 necessários para cobrir a imagem.
+Ao trabalhar com entradas multimodais, entender os custos de tokens é importante: os custos de análise de imagens variam por resolução. O parâmetro `detail` controla o processamento: `low` usa 85 tokens fixos independente do tamanho, enquanto `high` processa a imagem em resolução completa com custos proporcionais ao número de blocos 512×512 necessários para cobrir a imagem.
 
 ## Arquitetura
 

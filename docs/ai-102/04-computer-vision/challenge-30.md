@@ -34,7 +34,7 @@ Azure AI Vision Spatial Analysis processes real-time video from cameras to under
 | `cognitiveservices.vision.spatialanalysis-persondistance` | Monitor social distancing |
 | `cognitiveservices.vision.spatialanalysis-personzonedwelltime` | Measure time spent in zones |
 
-Deployment model: Video â†’ IoT Edge device (Spatial Analysis container) â†’ IoT Hub â†’ Application
+Deployment model: Video → IoT Edge device (Spatial Analysis container) → IoT Hub → Application
 
 ## Prerequisites
 - Azure subscription
@@ -378,7 +378,7 @@ class SpatialEventProcessor:
             print(f"[{timestamp}] ZONE '{zone}': {count} people")
             
             if count > 5:
-                print(f"  âš ï¸ ALERT: Zone '{zone}' exceeds capacity!")
+                print(f"  ⚠️ ALERT: Zone '{zone}' exceeds capacity!")
         
         elif event_type == "personCrossingLineEvent":
             direction = props["direction"]

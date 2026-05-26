@@ -663,7 +663,7 @@ az acr run --registry contosoregistry --cmd "acr purge \
       "Artefatos de produção devem ser excluídos imediatamente após o deploy para economizar espaço"
     ],
     correctIndex: 1,
-    explanation: "Artefatos de CI e PR são transitórios e necessários apenas durante o ciclo de revisão/merge (alguns dias no máximo). Artefatos de release de produção podem ser necessários para rollback, auditoria ou conformidade e devem ser retidos por meses ou anos dependendo dos requisitos regulatórios. Essa abordagem em camadas otimiza custos de armazenamento enquanto atende Ã s necessidades de conformidade."
+    explanation: "Artefatos de CI e PR são transitórios e necessários apenas durante o ciclo de revisão/merge (alguns dias no máximo). Artefatos de release de produção podem ser necessários para rollback, auditoria ou conformidade e devem ser retidos por meses ou anos dependendo dos requisitos regulatórios. Essa abordagem em camadas otimiza custos de armazenamento enquanto atende às necessidades de conformidade."
   },
   {
     question: "Qual é a abordagem recomendada para gerenciar a retenção de imagens de contêiner no Azure Container Registry?",

@@ -19,7 +19,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 **Azure Monitor** é a solução abrangente de monitoramento para o Azure. Ele coleta, analisa e age sobre telemetria dos seus ambientes em nuvem e on-premises. Dentro do Azure Monitor, **Log Analytics** fornece capacidades poderosas de consulta, **Alerts** notificam você sobre problemas, e **Application Insights** monitora aplicações web em tempo real.
 
-Este é o desafio final â€” ele reúne conceitos de monitoramento que se aplicam a tudo o que você aprendeu.
+Este é o desafio final — ele reúne conceitos de monitoramento que se aplicam a tudo o que você aprendeu.
 
 ## Explorar
 
@@ -27,12 +27,12 @@ Este é o desafio final â€” ele reúne conceitos de monitoramento que se ap
 
 ```text
 Data Sources               Azure Monitor              Actions
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€             â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€             â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-Applications    â”€â”€â”       â”Œâ”€ Metrics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’  Dashboards
-VMs/Containers  â”€â”€â”¼â”€â”€â†’    â”‚  (numbers,           Alerts
-Networks        â”€â”€â”¤       â”‚   time-series)       Autoscale
-Custom sources  â”€â”€â”˜       â”‚
-                          â””â”€ Logs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’  Log Analytics
+─────────────             ─────────────             ───────────
+Applications    ──┐       ┌─ Metrics ──────────→  Dashboards
+VMs/Containers  ──┼──→    │  (numbers,           Alerts
+Networks        ──┤       │   time-series)       Autoscale
+Custom sources  ──┘       │
+                          └─ Logs ─────────────→  Log Analytics
                              (detailed,           Workbooks
                               rich data)          Export
 ```
@@ -51,13 +51,13 @@ Custom sources  â”€â”€â”˜       â”‚
    - **Logs**: Consulte logs com KQL (Kusto Query Language)
    - **Alerts**: Configure e visualize alertas
    - **Insights**: Monitoramento pré-construído para VMs, armazenamento, redes
-3. Clique em **Metrics** â€” mesmo sem recursos, observe a interface
+3. Clique em **Metrics** — mesmo sem recursos, observe a interface
 
 ### Tarefa 3: Entender o Log Analytics
 
 Log Analytics é a ferramenta para consultar Azure Monitor Logs:
 
-- Usa **KQL (Kusto Query Language)** â€” uma linguagem de consulta somente leitura
+- Usa **KQL (Kusto Query Language)** — uma linguagem de consulta somente leitura
 - Coleta dados de: recursos Azure, VMs (via agentes), aplicações
 - Armazena dados em um **Log Analytics workspace**
 
@@ -128,7 +128,7 @@ az monitor activity-log list --max-events 5 --query "[].{Time:eventTimestamp, Op
 | **Metrics** | Dados numéricos em série temporal (CPU %, memória, requisições) |
 | **Logs** | Dados detalhados de eventos e diagnóstico |
 | **Log Analytics** | Ferramenta para consultar logs usando KQL |
-| **KQL** | Kusto Query Language â€” linguagem somente leitura para análise de logs |
+| **KQL** | Kusto Query Language — linguagem somente leitura para análise de logs |
 | **Alerts** | Notificações disparadas por condições (métrica/log/atividade) |
 | **Action groups** | Definem quem é notificado e como quando alertas disparam |
 | **Application Insights** | Ferramenta APM para monitorar aplicações web em tempo real |
@@ -186,7 +186,7 @@ Você completou todos os 24 desafios do AZ-900! Aqui está o que fazer em seguid
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe monitoring tools in Azure](https://learn.microsoft.com/en-us/training/modules/describe-monitoring-tools-azure/)
 - [Azure Monitor documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/)
 - [Application Insights documentation](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)

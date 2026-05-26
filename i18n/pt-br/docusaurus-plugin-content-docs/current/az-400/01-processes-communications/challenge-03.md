@@ -17,7 +17,7 @@ Comparação (GitHub e Azure DevOps)
 
 ## Cenário
 
-Na última quinta-feira Ã s 2:47 da manhã, o serviço de pagamentos em produção da Contoso Ltd começou a retornar erros 500 para 12% das transações. O engenheiro de plantão identificou o sintoma em minutos, mas a equipe levou quatro horas para rastrear o erro até um commit específico, entender por que ele foi aprovado e determinar qual work item autorizou a mudança. A causa raiz era uma migração de banco de dados que passou em todos os testes isoladamente, mas entrou em conflito com uma alteração de schema concorrente de outra equipe. O CTO determinou rastreabilidade completa de ponta a ponta: do relatório de bug passando por work item, pull request, commit, artefato de build e deployment, sem lacunas na cadeia de auditoria.
+Na última quinta-feira às 2:47 da manhã, o serviço de pagamentos em produção da Contoso Ltd começou a retornar erros 500 para 12% das transações. O engenheiro de plantão identificou o sintoma em minutos, mas a equipe levou quatro horas para rastrear o erro até um commit específico, entender por que ele foi aprovado e determinar qual work item autorizou a mudança. A causa raiz era uma migração de banco de dados que passou em todos os testes isoladamente, mas entrou em conflito com uma alteração de schema concorrente de outra equipe. O CTO determinou rastreabilidade completa de ponta a ponta: do relatório de bug passando por work item, pull request, commit, artefato de build e deployment, sem lacunas na cadeia de auditoria.
 
 ---
 
@@ -590,7 +590,7 @@ PRs automatizados do Dependabot não contêm referências a issues.
       "'AB#1234' vincula ao Azure Boards; 'Fixes AB#1234' vincula ao GitHub Issues"
     ],
     correctIndex: 1,
-    explanation: "AB#1234 cria um link de associação entre o commit e o work item sem alterar seu estado. Fixes AB#1234 adicionalmente transiciona o work item para o estado Resolved ou Done quando o commit chega Ã  branch padrão."
+    explanation: "AB#1234 cria um link de associação entre o commit e o work item sem alterar seu estado. Fixes AB#1234 adicionalmente transiciona o work item para o estado Resolved ou Done quando o commit chega à branch padrão."
   },
   {
     question: "Qual componente do Conventional Commits indica uma breaking change?",

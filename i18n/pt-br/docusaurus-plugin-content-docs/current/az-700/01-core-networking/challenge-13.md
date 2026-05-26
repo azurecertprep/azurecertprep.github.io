@@ -14,7 +14,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::danger Aviso de custo
 
-DDoS Network Protection custa **$2.944/mês** (taxa fixa por plano). NÃƒO implante um plano DDoS Protection em uma assinatura de laboratório. Este desafio usa **DDoS IP Protection** ($199/recurso/mês) como alternativa acessível e mostra comandos de Network Protection apenas para referência.
+DDoS Network Protection custa **$2.944/mês** (taxa fixa por plano). NÃO implante um plano DDoS Protection em uma assinatura de laboratório. Este desafio usa **DDoS IP Protection** ($199/recurso/mês) como alternativa acessível e mostra comandos de Network Protection apenas para referência.
 
 :::
 
@@ -27,13 +27,13 @@ As aplicações web voltadas ao público da Contoso têm sido alvo de ataques DD
 ```text
 Internet
     |
-[Public IP: pip-web-frontend]  â†  DDoS IP Protection enabled
+[Public IP: pip-web-frontend]  ←  DDoS IP Protection enabled
     |
 [Application Gateway / Load Balancer]
     |
   VNet (10.0.0.0/16)
-    â”œâ”€â”€ snet-frontend (10.0.1.0/24)
-    â””â”€â”€ snet-backend  (10.0.2.0/24)
+    ├── snet-frontend (10.0.1.0/24)
+    └── snet-backend  (10.0.2.0/24)
 ```
 
 ## Objetivos de aprendizagem
@@ -89,7 +89,7 @@ Antes de implantar qualquer proteção, entenda as três camadas disponíveis no
 
 :::tip Nota para o exame
 
-O exame testa se você consegue identificar qual camada fornece um recurso específico. Diferenciadores-chave: apenas Network Protection inclui garantias de proteção de custos e acesso Ã  equipe DDoS Rapid Response. IP Protection é ideal para implantações pequenas (menos de 15 IPs públicos, onde o custo por IP é menor que a taxa fixa de Network Protection).
+O exame testa se você consegue identificar qual camada fornece um recurso específico. Diferenciadores-chave: apenas Network Protection inclui garantias de proteção de custos e acesso à equipe DDoS Rapid Response. IP Protection é ideal para implantações pequenas (menos de 15 IPs públicos, onde o custo por IP é menor que a taxa fixa de Network Protection).
 
 :::
 
@@ -97,7 +97,7 @@ O exame testa se você consegue identificar qual camada fornece um recurso espec
 
 ## Tarefa 2: Criar um plano DDoS Protection (referência de Network Protection)
 
-:::danger NÃƒO execute isto em uma assinatura de laboratório
+:::danger NÃO execute isto em uma assinatura de laboratório
 
 Os comandos a seguir criam um plano DDoS Network Protection que custa $2.944/mês imediatamente após a criação. Esses comandos são fornecidos apenas para referência de preparação para o exame.
 
@@ -106,7 +106,7 @@ Os comandos a seguir criam um plano DDoS Network Protection que custa $2.944/mê
 ### Etapa 1: Criar um plano DDoS Protection (apenas referência)
 
 ```bash
-# REFERENCE ONLY â€” costs $2,944/month
+# REFERENCE ONLY — costs $2,944/month
 az network ddos-protection create \
     --resource-group rg-ddos-lab \
     --name ddos-plan-contoso \
@@ -116,7 +116,7 @@ az network ddos-protection create \
 ### Etapa 2: Associar o plano a uma VNet (apenas referência)
 
 ```bash
-# REFERENCE ONLY â€” associates the paid plan with a VNet
+# REFERENCE ONLY — associates the paid plan with a VNet
 az network vnet update \
     --resource-group rg-ddos-lab \
     --name vnet-contoso \
@@ -181,9 +181,9 @@ az network public-ip create \
 :::note
 
 O parâmetro `--ddos-protection-mode` aceita três valores:
-- **Enabled** â€” DDoS IP Protection está ativo neste IP público ($199/mês)
-- **Disabled** â€” apenas Infrastructure Protection gratuito (padrão para novos IPs)
-- **VirtualNetworkInherited** â€” herda a proteção de um plano DDoS Network Protection na VNet
+- **Enabled** — DDoS IP Protection está ativo neste IP público ($199/mês)
+- **Disabled** — apenas Infrastructure Protection gratuito (padrão para novos IPs)
+- **VirtualNetworkInherited** — herda a proteção de um plano DDoS Network Protection na VNet
 
 :::
 
@@ -267,9 +267,9 @@ az monitor diagnostic-settings create \
 
 :::note Categorias de log explicadas
 
-- **DDoSProtectionNotifications** â€” alertas quando a mitigação inicia e para (ataque detectado/resolvido)
-- **DDoSMitigationFlowLogs** â€” detalhes por fluxo de pacotes descartados e encaminhados durante a mitigação ativa
-- **DDoSMitigationReports** â€” relatórios resumidos pós-ataque com estatísticas agregadas
+- **DDoSProtectionNotifications** — alertas quando a mitigação inicia e para (ataque detectado/resolvido)
+- **DDoSMitigationFlowLogs** — detalhes por fluxo de pacotes descartados e encaminhados durante a mitigação ativa
+- **DDoSMitigationReports** — relatórios resumidos pós-ataque com estatísticas agregadas
 
 :::
 
@@ -321,7 +321,7 @@ As métricas DDoS são expostas no recurso de **endereço IP público** (namespa
 
 ## Tarefa 5: Revisar recomendações de segurança de rede no Defender for Cloud
 
-O Microsoft Defender for Cloud avalia continuamente seu ambiente em relação Ã s melhores práticas de segurança e produz recomendações que afetam seu Secure Score.
+O Microsoft Defender for Cloud avalia continuamente seu ambiente em relação às melhores práticas de segurança e produz recomendações que afetam seu Secure Score.
 
 ### Etapa 1: Listar avaliações de segurança via Azure Resource Graph
 
@@ -407,7 +407,7 @@ az graph query -q "
 
 :::tip Nota para o exame
 
-Os **caminhos de ataque** do Defender for Cloud mostram cadeias de vulnerabilidades que um atacante poderia explorar para alcançar recursos sensíveis. Por exemplo: VM exposta Ã  internet com regra NSG aberta, executando software desatualizado, com acesso a uma conta de armazenamento contendo dados sensíveis. Os caminhos de ataque são visualizados no portal em Defender for Cloud > Attack path analysis. O acesso via CLI é limitado; este é principalmente um recurso baseado no portal testado conceitualmente no exame.
+Os **caminhos de ataque** do Defender for Cloud mostram cadeias de vulnerabilidades que um atacante poderia explorar para alcançar recursos sensíveis. Por exemplo: VM exposta à internet com regra NSG aberta, executando software desatualizado, com acesso a uma conta de armazenamento contendo dados sensíveis. Os caminhos de ataque são visualizados no portal em Defender for Cloud > Attack path analysis. O acesso via CLI é limitado; este é principalmente um recurso baseado no portal testado conceitualmente no exame.
 
 :::
 
@@ -478,7 +478,7 @@ az graph query -q "
 
 :::tip Nota para o exame
 
-O **Cloud Security Explorer** no Defender for Cloud usa um modelo de grafos onde você pode consultar relacionamentos como "IP público está exposto Ã  internet E está vinculado a uma VM E a VM possui vulnerabilidades de alta severidade." Isso é diferente do Azure Resource Graph, que consulta metadados de recursos. O exame pode perguntar sobre cenários de consulta do Security Explorer conceitualmente, não sobre sintaxe de consulta específica.
+O **Cloud Security Explorer** no Defender for Cloud usa um modelo de grafos onde você pode consultar relacionamentos como "IP público está exposto à internet E está vinculado a uma VM E a VM possui vulnerabilidades de alta severidade." Isso é diferente do Azure Resource Graph, que consulta metadados de recursos. O exame pode perguntar sobre cenários de consulta do Security Explorer conceitualmente, não sobre sintaxe de consulta específica.
 
 :::
 

@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 Engenharia de prompt é a prática de projetar e otimizar entradas para modelos de linguagem para obter as saídas desejadas. A API de chat completions do Azure OpenAI usa um formato de mensagem estruturado com três papéis: **system** (define o comportamento e as restrições), **user** (fornece a solicitação) e **assistant** (modela respostas anteriores para contexto). Entender como configurar essas mensagens de forma eficaz é fundamental para construir aplicações de IA confiáveis.
 
-Parâmetros-chave controlam a geração de resposta: **temperature** (0-2, controla a aleatoriedade), **top_p** (limiar de amostragem por núcleo), **max_tokens** (limite de comprimento da saída), **frequency_penalty** (-2 a 2, reduz repetição) e **presence_penalty** (-2 a 2, incentiva diversidade de tópicos). Esses parâmetros interagem entre si â€” por exemplo, temperature e top_p ambos afetam a aleatoriedade, então a Microsoft recomenda ajustar um de cada vez.
+Parâmetros-chave controlam a geração de resposta: **temperature** (0-2, controla a aleatoriedade), **top_p** (limiar de amostragem por núcleo), **max_tokens** (limite de comprimento da saída), **frequency_penalty** (-2 a 2, reduz repetição) e **presence_penalty** (-2 a 2, incentiva diversidade de tópicos). Esses parâmetros interagem entre si — por exemplo, temperature e top_p ambos afetam a aleatoriedade, então a Microsoft recomenda ajustar um de cada vez.
 
 Técnicas avançadas incluem **few-shot prompting** (fornecer exemplos no prompt), **chain-of-thought** (solicitar raciocínio passo a passo) e **structured outputs** (usar modo JSON ou response_format para garantir saída parseável). Templates de prompt permitem padrões reutilizáveis com substituição de variáveis, possibilitando comportamento consistente em diferentes cenários de aplicação.
 
@@ -674,8 +674,8 @@ Classification: Account Management
 
 Chain-of-thought:
 Step 1: Calculate total items
-- 3 shelves Ã— 4 boxes = 12 boxes
-- 12 boxes Ã— 6 items = 72 items total
+- 3 shelves × 4 boxes = 12 boxes
+- 12 boxes × 6 items = 72 items total
 
 Step 2: Subtract sold items
 - 72 items - 15 sold = 57 items remaining
@@ -754,7 +754,7 @@ Summary: The reviewer finds Azure AI Studio excellent for its ease of use and po
       "frequency_penalty"
     ],
     correctAnswer: 3,
-    explanation: "frequency_penalty (intervalo de -2 a 2) reduz a repetição proporcionalmente Ã  frequência com que um token apareceu. Quanto mais uma palavra é repetida, mais ela é penalizada. presence_penalty penaliza tokens que apareceram de qualquer forma (independente da frequência), incentivando novos tópicos."
+    explanation: "frequency_penalty (intervalo de -2 a 2) reduz a repetição proporcionalmente à frequência com que um token apareceu. Quanto mais uma palavra é repetida, mais ela é penalizada. presence_penalty penaliza tokens que apareceram de qualquer forma (independente da frequência), incentivando novos tópicos."
   },
   {
     id: "ch17-q5",

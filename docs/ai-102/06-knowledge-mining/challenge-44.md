@@ -30,7 +30,7 @@ Semantic ranking requires **Basic tier or higher** for Azure AI Search. Vector s
 ## Overview
 
 ### Semantic ranking
-Semantic ranking re-ranks initial keyword search results using deep learning models that understand the meaning and context of queries and documents. It doesn't change which documents match â€” it re-orders the top results for better relevance.
+Semantic ranking re-ranks initial keyword search results using deep learning models that understand the meaning and context of queries and documents. It doesn't change which documents match — it re-orders the top results for better relevance.
 
 ### Vector search
 Vector search finds documents based on mathematical similarity between vector embeddings (dense numerical representations). Unlike keyword search, it finds semantically similar content even without shared terms.
@@ -40,9 +40,9 @@ Combines keyword (BM25) scoring with vector similarity, producing the best of bo
 
 | Approach | Finds "car" when query is "automobile" | Exact phrase matching | Best for |
 |----------|--------|--------|---------|
-| Keyword only | âŒ | âœ… | Known-item lookup |
-| Vector only | âœ… | âŒ | Semantic similarity |
-| Hybrid | âœ… | âœ… | Production RAG scenarios |
+| Keyword only | ❌ | ✅ | Known-item lookup |
+| Vector only | ✅ | ❌ | Semantic similarity |
+| Hybrid | ✅ | ✅ | Production RAG scenarios |
 
 ## Prerequisites
 
@@ -498,7 +498,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
 | 1 | Vector field dimension mismatch | Upload fails: "Vector field dimension mismatch" | Document vector has 768 dimensions but index expects 1536 | Use the same model for indexing and querying; match `dimensions` in index to model output (ada-002=1536, 3-small default=1536) |
 | 2 | Semantic ranker returns no captions | Results lack `@search.captions` | `queryAnswer` or `queryCaption` not requested | Add `query_caption="extractive"` to search options |
 | 3 | Hybrid search ignores vector | Results identical to keyword-only | `vectorQueries` array is empty or `fields` property doesn't match index field name | Ensure `fields` matches the vector field name in index (`contentVector`) |
-| 4 | "Semantic search not available" error | HTTP 400 mentioning semantic configuration | Search service is Free tier â€” semantic requires Basic+ | Upgrade to Basic tier or higher |
+| 4 | "Semantic search not available" error | HTTP 400 mentioning semantic configuration | Search service is Free tier — semantic requires Basic+ | Upgrade to Basic tier or higher |
 | 5 | Poor vector search relevance | Irrelevant results returned | Query text is embedded with different model than documents | Use the same embedding model for both indexing and querying |
 
 ## Knowledge Check
@@ -520,10 +520,10 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
     id: "ai102-44-q2",
     question: "You configure a vector field with dimensions: 1536 and vectorSearchProfile: 'my-profile'. The profile uses HNSW algorithm. What does HNSW stand for and what does it optimize?",
     options: [
-      "Hierarchical Navigable Small World â€” optimizes approximate nearest neighbor search speed",
-      "High-dimensional Nearest Scalar Weighted â€” optimizes exact distance calculation",
-      "Hybrid Neural Search Weight â€” optimizes semantic relevance scoring",
-      "Hierarchical Normalized Similarity Weighting â€” optimizes cosine distance precision"
+      "Hierarchical Navigable Small World — optimizes approximate nearest neighbor search speed",
+      "High-dimensional Nearest Scalar Weighted — optimizes exact distance calculation",
+      "Hybrid Neural Search Weight — optimizes semantic relevance scoring",
+      "Hierarchical Normalized Similarity Weighting — optimizes cosine distance precision"
     ],
     correctIndex: 0,
     explanation: "HNSW (Hierarchical Navigable Small World) is a graph-based algorithm for approximate nearest neighbor (ANN) search. It builds a multi-layer graph enabling fast vector similarity lookups with O(log n) complexity, trading a small amount of recall for significant speed improvement."
@@ -538,7 +538,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
       "They are the same feature with different names"
     ],
     correctIndex: 1,
-    explanation: "Semantic ranking is a RERANKER â€” it takes the initial keyword results and re-orders them using language understanding. Vector search is a RETRIEVER â€” it finds documents based on embedding distance. They can be combined: vector search retrieves candidates, then semantic ranking re-orders them."
+    explanation: "Semantic ranking is a RERANKER — it takes the initial keyword results and re-orders them using language understanding. Vector search is a RETRIEVER — it finds documents based on embedding distance. They can be combined: vector search retrieves candidates, then semantic ranking re-orders them."
   },
   {
     id: "ai102-44-q4",
@@ -559,7 +559,7 @@ curl -s -X POST "https://${SEARCH_SERVICE}.search.windows.net/indexes/vector-ind
       "5 (k overrides top)",
       "8 (k + top combined)",
       "3 (top limits the final response)",
-      "Error â€” k and top cannot be used together"
+      "Error — k and top cannot be used together"
     ],
     correctIndex: 2,
     explanation: "The 'k' parameter controls how many nearest neighbors the vector search retrieves internally, while 'top' limits the final number of results returned to the client. With k=5 and top=3, vector search retrieves 5 candidates but only the top 3 (after scoring/ranking) are returned."

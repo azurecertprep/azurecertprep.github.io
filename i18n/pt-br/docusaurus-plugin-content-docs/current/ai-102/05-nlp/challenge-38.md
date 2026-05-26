@@ -347,7 +347,7 @@ Q: What vision services are available?
       "Adicione prompts de acompanhamento (dialog.prompts) a pares QA que referenciam outros IDs de pares QA",
       "Crie projetos separados para cada turno",
       "Escreva scripts de conversa em um arquivo separado",
-      "Multi-turno é automático â€” nenhuma configuração necessária"
+      "Multi-turno é automático — nenhuma configuração necessária"
     ],
     correctAnswer: 0,
     explanation: "Multi-turno é criado adicionando dialog.prompts a pares QA. Cada prompt tem displayText (mostrado ao usuário) e qnaId (a resposta alvo), criando uma árvore de diálogo."

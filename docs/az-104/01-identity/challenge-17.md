@@ -27,7 +27,7 @@ Contoso Ltd. is growing fast. What started as a single Azure subscription has ba
 | Implement resource locks across subscriptions | Medium |
 | Apply RBAC at management group scope | High |
 
-## Sysadmin â†” Azure reference
+## Sysadmin ↔ Azure reference
 
 | On-Prem / Sysadmin | Azure Equivalent | Notes |
 |---------------------|------------------|-------|
@@ -46,13 +46,13 @@ Design and create the following management group structure:
 
 ```text
 Tenant Root Group
-â””â”€â”€ mg-contoso (Contoso Ltd.)
-    â”œâ”€â”€ mg-production (Production)
-    â”‚   â”œâ”€â”€ mg-prod-it (IT Production)
-    â”‚   â””â”€â”€ mg-prod-finance (Finance Production)
-    â””â”€â”€ mg-nonproduction (Non-Production)
-        â”œâ”€â”€ mg-dev (Development)
-        â””â”€â”€ mg-sandbox (Sandbox)
+└── mg-contoso (Contoso Ltd.)
+    ├── mg-production (Production)
+    │   ├── mg-prod-it (IT Production)
+    │   └── mg-prod-finance (Finance Production)
+    └── mg-nonproduction (Non-Production)
+        ├── mg-dev (Development)
+        └── mg-sandbox (Sandbox)
 ```
 
 ```bash

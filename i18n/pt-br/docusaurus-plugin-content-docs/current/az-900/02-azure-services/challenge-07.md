@@ -21,7 +21,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 A infraestrutura global do Azure é a base física de todos os serviços em nuvem. Ela consiste em mais de 60 regiões ao redor do mundo, cada uma contendo um ou mais datacenters conectados por uma rede dedicada de baixa latência.
 
-Entender como o Azure organiza sua infraestrutura â€” de datacenters individuais a availability zones e regiões â€” é essencial para projetar soluções em nuvem confiáveis e de alto desempenho.
+Entender como o Azure organiza sua infraestrutura — de datacenters individuais a availability zones e regiões — é essencial para projetar soluções em nuvem confiáveis e de alto desempenho.
 
 ## Explorar
 
@@ -58,7 +58,7 @@ Entender como o Azure organiza sua infraestrutura â€” de datacenters indivi
 1. No Portal Azure, pesquise por **Virtual Machine** e clique em **Create**
 2. No dropdown **Availability options**, procure por **Availability zone**
 3. Observe que você pode escolher Zone 1, 2 ou 3
-4. **Cancele** â€” não crie a VM
+4. **Cancele** — não crie a VM
 
 **O que são availability zones?**
 - Localizações fisicamente separadas dentro de uma região
@@ -68,9 +68,9 @@ Entender como o Azure organiza sua infraestrutura â€” de datacenters indivi
 
 ```text
 Region: East US
-â”œâ”€â”€ Availability Zone 1 (Datacenter A)
-â”œâ”€â”€ Availability Zone 2 (Datacenter B)
-â””â”€â”€ Availability Zone 3 (Datacenter C)
+├── Availability Zone 1 (Datacenter A)
+├── Availability Zone 2 (Datacenter B)
+└── Availability Zone 3 (Datacenter C)
 ```
 
 ### Tarefa 4: Entender sovereign regions
@@ -119,7 +119,7 @@ az account list-locations --query "[?availabilityZoneMappings != null].{Name:dis
     {
       id: 'az900-07-q2',
       question: 'Por que o Azure usa region pairs?',
-      options: ['Para reduzir custos compartilhando recursos', 'Para garantir que atualizações de plataforma e recuperação sejam coordenadas entre regiões pareadas', 'Para fornecer acesso mais rápido Ã  internet', 'Para cumprir apenas com o GDPR'],
+      options: ['Para reduzir custos compartilhando recursos', 'Para garantir que atualizações de plataforma e recuperação sejam coordenadas entre regiões pareadas', 'Para fornecer acesso mais rápido à internet', 'Para cumprir apenas com o GDPR'],
       correctAnswer: 1,
       explanation: 'Region pairs garantem que atualizações planejadas sejam implantadas em uma região por vez, e a recuperação é priorizada para regiões pareadas durante grandes indisponibilidades. Elas também mantêm a residência de dados dentro da mesma geografia.'
     },
@@ -142,13 +142,13 @@ az account list-locations --query "[?availabilityZoneMappings != null].{Name:dis
       question: 'Qual oferta do Azure é projetada especificamente para agências e contratantes do governo dos EUA?',
       options: ['Azure region pair', 'Azure Government', 'Azure availability zone', 'Azure Premium tier'],
       correctAnswer: 1,
-      explanation: 'Azure Government é uma sovereign region que é física e logicamente separada da nuvem Azure pública. Ã‰ operada por pessoal autorizado dos EUA e atende aos requisitos de conformidade do governo americano.'
+      explanation: 'Azure Government é uma sovereign region que é física e logicamente separada da nuvem Azure pública. É operada por pessoal autorizado dos EUA e atende aos requisitos de conformidade do governo americano.'
     }
   ]}
 />
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe core architectural components](https://learn.microsoft.com/en-us/training/modules/describe-core-architectural-components-of-azure/)
 - [Azure global infrastructure](https://azure.microsoft.com/explore/global-infrastructure/)

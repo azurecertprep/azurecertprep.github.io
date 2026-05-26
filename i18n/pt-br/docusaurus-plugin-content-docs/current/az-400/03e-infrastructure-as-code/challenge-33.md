@@ -740,7 +740,7 @@ az role assignment create \
     question: "Qual é o principal benefício de criar ambientes efêmeros por pull request?",
     options: [
       "Elimina a necessidade de revisão de código pois os ambientes são testados automaticamente",
-      "Fornece ambientes isolados e semelhantes Ã  produção para testar alterações do PR sem afetar ambientes compartilhados",
+      "Fornece ambientes isolados e semelhantes à produção para testar alterações do PR sem afetar ambientes compartilhados",
       "Reduz o número de branches no repositório",
       "Faz merge automático de pull requests quando os testes passam"
     ],

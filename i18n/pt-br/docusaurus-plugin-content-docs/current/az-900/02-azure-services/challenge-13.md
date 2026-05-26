@@ -20,7 +20,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 Azure Storage é uma solução de armazenamento em nuvem para cenários modernos de armazenamento de dados. Uma **conta de armazenamento** é o contêiner de nível superior que fornece um namespace exclusivo para seus dados. Dentro de uma conta de armazenamento, você pode usar quatro serviços diferentes: Blob, File, Queue e Table.
 
-Cada serviço atende a uma necessidade diferente de armazenamento â€” desde dados binários não estruturados (blobs) até dados NoSQL semiestruturados (tables).
+Cada serviço atende a uma necessidade diferente de armazenamento — desde dados binários não estruturados (blobs) até dados NoSQL semiestruturados (tables).
 
 ## Explorar
 
@@ -41,7 +41,7 @@ Cada serviço atende a uma necessidade diferente de armazenamento â€” desde
    - **Performance**: Standard (HDD) ou Premium (SSD)
    - **Redundancy**: LRS, ZRS, GRS, RA-GRS (coberto no Desafio 14)
    - **Account kind**: StorageV2 (recomendado)
-4. Clique em **Cancel** â€” não crie
+4. Clique em **Cancel** — não crie
 
 ### Tarefa 3: Entender tipos de Blob Storage
 
@@ -56,13 +56,13 @@ Blob Storage possui três tipos de blobs:
 **Blob containers** organizam blobs dentro de uma conta de armazenamento:
 ```text
 Storage Account: mystorageaccount
-â”œâ”€â”€ Container: images
-â”‚   â”œâ”€â”€ photo1.jpg
-â”‚   â””â”€â”€ photo2.png
-â”œâ”€â”€ Container: backups
-â”‚   â””â”€â”€ db-backup-2024.bak
-â””â”€â”€ Container: logs
-    â””â”€â”€ app-log-01.txt
+├── Container: images
+│   ├── photo1.jpg
+│   └── photo2.png
+├── Container: backups
+│   └── db-backup-2024.bak
+└── Container: logs
+    └── app-log-01.txt
 ```
 
 ### Tarefa 4: Entender Azure Files
@@ -73,7 +73,7 @@ Azure Files fornece compartilhamentos de arquivos totalmente gerenciados:
 - Compatível com fluxos de trabalho de compartilhamento de arquivos on-premises
 - Suporta Azure File Sync (armazena em cache arquivos acessados frequentemente on-premises)
 
-**Cenário principal**: Substituir um servidor de arquivos on-premises com Azure Files â€” mesma experiência do usuário, menos hardware.
+**Cenário principal**: Substituir um servidor de arquivos on-premises com Azure Files — mesma experiência do usuário, menos hardware.
 
 ### Tarefa 5: Nomenclatura de conta de armazenamento
 
@@ -117,14 +117,14 @@ az storage account list --query "[].{Name:name, Location:location, Kind:kind}" -
       question: 'Uma empresa precisa armazenar milhares de arquivos de imagem que serão servidos a uma aplicação web. Qual serviço de armazenamento Azure eles devem usar?',
       options: ['Azure Files', 'Azure Blob Storage', 'Azure Queue Storage', 'Azure Table Storage'],
       correctAnswer: 1,
-      explanation: 'Azure Blob Storage é projetado para armazenar dados não estruturados como imagens, vídeos e documentos. Ã‰ otimizado para servir grandes quantidades de dados para aplicações web.'
+      explanation: 'Azure Blob Storage é projetado para armazenar dados não estruturados como imagens, vídeos e documentos. É otimizado para servir grandes quantidades de dados para aplicações web.'
     },
     {
       id: 'az900-13-q2',
       question: 'Uma empresa quer substituir seu servidor de arquivos on-premises com uma solução em nuvem que os usuários possam montar como uma unidade de rede. Qual serviço devem usar?',
       options: ['Azure Blob Storage', 'Azure Files', 'Azure Queue Storage', 'Azure Cosmos DB'],
       correctAnswer: 1,
-      explanation: 'Azure Files fornece compartilhamentos de arquivos SMB e NFS totalmente gerenciados que podem ser montados como unidades de rede no Windows, Linux e macOS â€” assim como um servidor de arquivos tradicional.'
+      explanation: 'Azure Files fornece compartilhamentos de arquivos SMB e NFS totalmente gerenciados que podem ser montados como unidades de rede no Windows, Linux e macOS — assim como um servidor de arquivos tradicional.'
     },
     {
       id: 'az900-13-q3',
@@ -145,13 +145,13 @@ az storage account list --query "[].{Name:name, Location:location, Kind:kind}" -
       question: 'Qual é a relação entre uma conta de armazenamento e blob containers?',
       options: ['Um blob container pode abranger múltiplas contas de armazenamento', 'Uma conta de armazenamento pode conter múltiplos blob containers', 'São a mesma coisa', 'Um blob container é um tipo de conta de armazenamento'],
       correctAnswer: 1,
-      explanation: 'Uma conta de armazenamento é o recurso de nível superior. Dentro dela, você pode criar múltiplos blob containers, cada um contendo múltiplos blobs. A hierarquia é: Storage Account â†’ Containers â†’ Blobs.'
+      explanation: 'Uma conta de armazenamento é o recurso de nível superior. Dentro dela, você pode criar múltiplos blob containers, cada um contendo múltiplos blobs. A hierarquia é: Storage Account → Containers → Blobs.'
     }
   ]}
 />
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe Azure storage services](https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/)
 - [Azure Storage documentation](https://learn.microsoft.com/en-us/azure/storage/)

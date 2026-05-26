@@ -28,7 +28,7 @@ Após concluir este desafio, você será capaz de:
 
 A Contoso usa o Microsoft 365 e serviços Azure PaaS (Azure Storage, Azure SQL Database) extensivamente. Eles querem rotear o tráfego para esses serviços pelo circuito ExpressRoute existente, em vez da internet pública, aproveitando a largura de banda dedicada e a latência previsível.
 
-Eles também possuem uma conexão ExpressRoute Direct que requer criptografia MACsec para conformidade regulatória â€” todos os dados que trafegam pelo link físico devem ser criptografados na Camada 2.
+Eles também possuem uma conexão ExpressRoute Direct que requer criptografia MACsec para conformidade regulatória — todos os dados que trafegam pelo link físico devem ser criptografados na Camada 2.
 
 ---
 
@@ -273,7 +273,7 @@ Uma vez desanexado, nenhum prefixo é anunciado através da sessão BGP para o M
 - Prefixos específicos /24 ou mais longos para seus intervalos de IP público
 - Apenas sub-redes que precisam se comunicar diretamente com serviços Microsoft
 
-### O que você NÃƒO deve anunciar
+### O que você NÃO deve anunciar
 
 | Anti-padrão | Risco |
 |---|---|
@@ -573,7 +573,7 @@ az network route-filter rule update \
 
 **Sintoma:** O link do ExpressRoute Direct mostra `adminState: Enabled`, mas nenhum tráfego passa. O LED do link físico está ligado, mas os frames de dados são descartados.
 
-**Causa raiz:** A cifra MACsec configurada no lado do Azure (ex.: GcmAes256) não corresponde Ã  cifra configurada no seu roteador CE (ex.: GcmAes128). Ambos os lados devem usar o mesmo conjunto de cifras e valores CKN/CAK correspondentes.
+**Causa raiz:** A cifra MACsec configurada no lado do Azure (ex.: GcmAes256) não corresponde à cifra configurada no seu roteador CE (ex.: GcmAes128). Ambos os lados devem usar o mesmo conjunto de cifras e valores CKN/CAK correspondentes.
 
 **Resolução:** Verifique e alinhe a cifra em ambos os lados:
 

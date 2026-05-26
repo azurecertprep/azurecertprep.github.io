@@ -28,23 +28,23 @@ Key concepts:
 - **Memory**: Maintaining conversation context and state across interactions
 - **Grounding**: Connecting the model to real-time data sources
 
-This challenge implements function calling with Azure OpenAI â€” the foundation of all agent architectures.
+This challenge implements function calling with Azure OpenAI — the foundation of all agent architectures.
 
 ## Architecture
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   User       â”‚â”€â”€â”€â”€â–¶â”‚  Azure OpenAI    â”‚â”€â”€â”€â”€â–¶â”‚  Tool Execution  â”‚
-â”‚   Prompt     â”‚â—€â”€â”€â”€â”€â”‚  (GPT-4o)        â”‚â—€â”€â”€â”€â”€â”‚  (Functions)     â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚                         â”‚
-                           â”‚  1. Analyze intent       â”‚
-                           â”‚  2. Select tool          â”‚
-                           â”‚  3. Generate arguments   â”‚
-                           â”‚                         â”‚
-                           â”‚         4. Execute â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚         5. Return result
-                           â”‚  6. Synthesize response
+┌──────────────┐     ┌──────────────────┐     ┌──────────────────┐
+│   User       │────▶│  Azure OpenAI    │────▶│  Tool Execution  │
+│   Prompt     │◀────│  (GPT-4o)        │◀────│  (Functions)     │
+└──────────────┘     └──────────────────┘     └──────────────────┘
+                           │                         │
+                           │  1. Analyze intent       │
+                           │  2. Select tool          │
+                           │  3. Generate arguments   │
+                           │                         │
+                           │         4. Execute ──────┘
+                           │         5. Return result
+                           │  6. Synthesize response
 ```
 
 ## Prerequisites
@@ -493,7 +493,7 @@ if (parallelCompletion.FinishReason == ChatFinishReason.ToolCalls)
 Test 1: Weather query (should trigger get_weather)
 ============================================================
   [Agent] Calling: get_weather({"location": "Seattle, WA", "unit": "celsius"})
-Agent: The current weather in Seattle is 22Â°C and partly cloudy with 65% humidity.
+Agent: The current weather in Seattle is 22°C and partly cloudy with 65% humidity.
 
 ============================================================
 Test 2: Product search (should trigger search_products)
@@ -534,7 +534,7 @@ Parallel tool calls made: 2
       "Agents maintain conversation history while chatbots are stateless"
     ],
     correctAnswer: 1,
-    explanation: "The defining feature of an AI agent is its ability to take actions through tool/function calling, execute code, and interact with external systems â€” not just generate text responses."
+    explanation: "The defining feature of an AI agent is its ability to take actions through tool/function calling, execute code, and interact with external systems — not just generate text responses."
   },
   {
     question: "In Azure OpenAI function calling, what happens when tool_choice is set to 'auto'?",
@@ -552,7 +552,7 @@ Parallel tool calls made: 2
     options: [
       "The tool_call_id and the function result as a JSON string",
       "The function name and a new system prompt",
-      "Only the function result â€” the model tracks the call internally",
+      "Only the function result — the model tracks the call internally",
       "The original user message and the function result"
     ],
     correctAnswer: 0,
@@ -561,7 +561,7 @@ Parallel tool calls made: 2
   {
     question: "How does Azure OpenAI handle multiple tool calls in a single response?",
     options: [
-      "It is not supported â€” only one tool can be called per turn",
+      "It is not supported — only one tool can be called per turn",
       "You must enable parallel_tool_calls=true in the request",
       "Multiple tools are called sequentially with intermediate responses",
       "The model returns multiple tool_calls in the same response; you execute all and return all results before the next completion"

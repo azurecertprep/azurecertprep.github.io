@@ -30,9 +30,9 @@ Conversational Language Understanding (CLU) is the replacement for LUIS (Languag
 | **Utterance** | Sample text mapped to intents/entities for training |
 
 Entity types:
-- **Learned** â€” Machine-learned from labeled examples
-- **List** â€” Defined set of values with synonyms
-- **Prebuilt** â€” Pre-trained types (datetime, number, temperature, etc.)
+- **Learned** — Machine-learned from labeled examples
+- **List** — Defined set of values with synonyms
+- **Prebuilt** — Pre-trained types (datetime, number, temperature, etc.)
 
 CLU uses the Language service endpoint at: `https://{endpoint}.cognitiveservices.azure.com/language/`
 

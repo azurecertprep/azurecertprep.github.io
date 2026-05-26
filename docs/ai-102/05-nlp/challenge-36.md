@@ -243,7 +243,7 @@ Recognized (en): The quarterly results exceeded expectations with a fifteen perc
 Translations:
   [es] Los resultados trimestrales superaron las expectativas con un aumento del quince por ciento.
   [fr] Les résultats trimestriels ont dépassé les attentes avec une augmentation de quinze pour cent.
-  [de] Die Quartalsergebnisse Ã¼bertrafen die Erwartungen mit einem Anstieg von fÃ¼nfzehn Prozent.
+  [de] Die Quartalsergebnisse übertrafen die Erwartungen mit einem Anstieg von fünfzehn Prozent.
   [ja] 四半期の結果は15パーセントの増加で期待を上回りました。
 
 Starting continuous translation...

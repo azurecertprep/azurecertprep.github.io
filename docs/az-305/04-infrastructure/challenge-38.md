@@ -140,12 +140,12 @@ The recommended pattern for priority messaging uses Service Bus Topics with SQL 
 
 ```text
 Topic: orders
-â”œâ”€â”€ Subscription: premium-orders
-â”‚   â””â”€â”€ SQL Filter: CustomerTier = 'Premium'
-â”‚   â””â”€â”€ 8 competing consumers
-â”œâ”€â”€ Subscription: standard-orders
-â”‚   â””â”€â”€ SQL Filter: CustomerTier = 'Standard'
-â”‚   â””â”€â”€ 4 competing consumers
+├── Subscription: premium-orders
+│   └── SQL Filter: CustomerTier = 'Premium'
+│   └── 8 competing consumers
+├── Subscription: standard-orders
+│   └── SQL Filter: CustomerTier = 'Standard'
+│   └── 4 competing consumers
 ```
 
 Benefits over separate queues:

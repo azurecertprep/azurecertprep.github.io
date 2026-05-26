@@ -28,10 +28,10 @@ O Azure AI Language (Text Analytics) fornece capacidades de NLP:
 | **Análise de Sentimento** | Positivo/neutro/negativo com confiança + mineração de opinião |
 | **Extração de Frases-chave** | Identificar os principais pontos de discussão |
 | **Reconhecimento de Entidades Nomeadas (NER)** | Detectar entidades (Pessoa, Local, Organização, DateTime, etc.) |
-| **Vinculação de Entidades** | Vincular entidades Ã  base de conhecimento da Wikipedia |
+| **Vinculação de Entidades** | Vincular entidades à base de conhecimento da Wikipedia |
 | **Detecção de Idioma** | Identificar o idioma do texto |
 
-O cliente suporta **operações em lote** â€” envie múltiplos documentos em uma única requisição para eficiência.
+O cliente suporta **operações em lote** — envie múltiplos documentos em uma única requisição para eficiência.
 
 ## Pré-requisitos
 - Assinatura do Azure
@@ -309,7 +309,7 @@ Doc 0:
 
 <KnowledgeCheck questions={[
   {
-    question: "O que a mineração de opinião adiciona Ã  análise de sentimento padrão?",
+    question: "O que a mineração de opinião adiciona à análise de sentimento padrão?",
     options: [
       "Fornece pontuações de sentimento geral mais precisas",
       "Traduz o texto antes de analisar o sentimento",
@@ -346,7 +346,7 @@ Doc 0:
     options: [
       "Capturar uma única exceção para o lote inteiro",
       "Verificar a propriedade is_error em cada resultado de documento individual",
-      "Erros nunca são retornados â€” documentos que falharam são ignorados silenciosamente",
+      "Erros nunca são retornados — documentos que falharam são ignorados silenciosamente",
       "Reenviar o lote inteiro se qualquer documento falhar"
     ],
     correctAnswer: 1,

@@ -61,7 +61,7 @@ Antes de implementar, você deve selecionar o serviço correto para cada camada.
 
 | Camada | Requisito | Serviço selecionado | Justificativa |
 |--------|-----------|--------------------|--------------| 
-| Web (HTTP global) | Aceleração HTTP global, cache, WAF na borda | **Azure Front Door** | Ãšnico serviço que fornece aceleração HTTP global baseada em anycast com cache na borda |
+| Web (HTTP global) | Aceleração HTTP global, cache, WAF na borda | **Azure Front Door** | Único serviço que fornece aceleração HTTP global baseada em anycast com cache na borda |
 | API (L7 regional) | Roteamento por caminho, WAF, autoescala | **Application Gateway v2** | Roteamento por caminho de URL nativo, WAF integrado e autoescala dentro de uma região |
 | Dados (L4 interno) | HA L4 privado, sem exposição pública | **Internal Load Balancer** | Balanceamento L4 dentro da VNet; sem necessidade de IP público |
 | Não-HTTP (global) | Failover DNS para serviços TCP/SMTP | **Traffic Manager** | Distribuição baseada em DNS funciona com qualquer protocolo; única opção global para não-HTTP |
@@ -314,7 +314,7 @@ $poolInventory = New-AzApplicationGatewayBackendAddressPool -Name "pool-inventor
 
 ## Tarefa 3: Implementar Internal Load Balancer para a camada de dados
 
-O balanceador de carga interno distribui o tráfego entre réplicas de banco de dados e nós de cache sem qualquer exposição Ã  internet pública.
+O balanceador de carga interno distribui o tráfego entre réplicas de banco de dados e nós de cache sem qualquer exposição à internet pública.
 
 ### Azure CLI
 

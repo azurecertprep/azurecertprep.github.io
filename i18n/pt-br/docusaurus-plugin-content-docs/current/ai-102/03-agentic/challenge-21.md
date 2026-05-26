@@ -28,23 +28,23 @@ Conceitos-chave:
 - **Memória**: Manter contexto de conversação e estado entre interações
 - **Grounding**: Conectar o modelo a fontes de dados em tempo real
 
-Este desafio implementa function calling com Azure OpenAI â€” a base de todas as arquiteturas de agentes.
+Este desafio implementa function calling com Azure OpenAI — a base de todas as arquiteturas de agentes.
 
 ## Arquitetura
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   User       â”‚â”€â”€â”€â”€â–¶â”‚  Azure OpenAI    â”‚â”€â”€â”€â”€â–¶â”‚  Tool Execution  â”‚
-â”‚   Prompt     â”‚â—€â”€â”€â”€â”€â”‚  (GPT-4o)        â”‚â—€â”€â”€â”€â”€â”‚  (Functions)     â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚                         â”‚
-                           â”‚  1. Analyze intent       â”‚
-                           â”‚  2. Select tool          â”‚
-                           â”‚  3. Generate arguments   â”‚
-                           â”‚                         â”‚
-                           â”‚         4. Execute â”€â”€â”€â”€â”€â”€â”˜
-                           â”‚         5. Return result
-                           â”‚  6. Synthesize response
+┌──────────────┐     ┌──────────────────┐     ┌──────────────────┐
+│   User       │────▶│  Azure OpenAI    │────▶│  Tool Execution  │
+│   Prompt     │◀────│  (GPT-4o)        │◀────│  (Functions)     │
+└──────────────┘     └──────────────────┘     └──────────────────┘
+                           │                         │
+                           │  1. Analyze intent       │
+                           │  2. Select tool          │
+                           │  3. Generate arguments   │
+                           │                         │
+                           │         4. Execute ──────┘
+                           │         5. Return result
+                           │  6. Synthesize response
 ```
 
 ## Pré-requisitos
@@ -493,7 +493,7 @@ if (parallelCompletion.FinishReason == ChatFinishReason.ToolCalls)
 Test 1: Weather query (should trigger get_weather)
 ============================================================
   [Agent] Calling: get_weather({"location": "Seattle, WA", "unit": "celsius"})
-Agent: The current weather in Seattle is 22Â°C and partly cloudy with 65% humidity.
+Agent: The current weather in Seattle is 22°C and partly cloudy with 65% humidity.
 
 ============================================================
 Test 2: Product search (should trigger search_products)
@@ -534,7 +534,7 @@ Parallel tool calls made: 2
       "Agentes mantêm histórico de conversação enquanto chatbots são stateless"
     ],
     correctAnswer: 1,
-    explanation: "A característica definidora de um agente de IA é sua capacidade de tomar ações através de tool/function calling, executar código e interagir com sistemas externos â€” não apenas gerar respostas de texto."
+    explanation: "A característica definidora de um agente de IA é sua capacidade de tomar ações através de tool/function calling, executar código e interagir com sistemas externos — não apenas gerar respostas de texto."
   },
   {
     question: "No function calling do Azure OpenAI, o que acontece quando tool_choice é definido como 'auto'?",
@@ -552,16 +552,16 @@ Parallel tool calls made: 2
     options: [
       "O tool_call_id e o resultado da função como uma string JSON",
       "O nome da função e um novo system prompt",
-      "Apenas o resultado da função â€” o modelo rastreia a chamada internamente",
+      "Apenas o resultado da função — o modelo rastreia a chamada internamente",
       "A mensagem original do usuário e o resultado da função"
     ],
     correctAnswer: 0,
-    explanation: "Cada mensagem de resposta de ferramenta deve incluir o tool_call_id (correspondendo Ã  chamada específica) e o resultado da função serializado como uma string JSON no campo content."
+    explanation: "Cada mensagem de resposta de ferramenta deve incluir o tool_call_id (correspondendo à chamada específica) e o resultado da função serializado como uma string JSON no campo content."
   },
   {
     question: "Como o Azure OpenAI lida com múltiplas chamadas de ferramenta em uma única resposta?",
     options: [
-      "Não é suportado â€” apenas uma ferramenta pode ser chamada por turno",
+      "Não é suportado — apenas uma ferramenta pode ser chamada por turno",
       "Você deve habilitar parallel_tool_calls=true na requisição",
       "Múltiplas ferramentas são chamadas sequencialmente com respostas intermediárias",
       "O modelo retorna múltiplos tool_calls na mesma resposta; você executa todos e retorna todos os resultados antes da próxima completion"

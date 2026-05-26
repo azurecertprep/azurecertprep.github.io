@@ -20,11 +20,11 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Overview
 
-Optical Character Recognition (OCR) is the technology that **extracts text from images and documents**. Any time you photograph a document, scan a receipt, or point your phone at a sign and it "reads" the text â€” that's OCR in action.
+Optical Character Recognition (OCR) is the technology that **extracts text from images and documents**. Any time you photograph a document, scan a receipt, or point your phone at a sign and it "reads" the text — that's OCR in action.
 
-Think of OCR like teaching a computer to read. When you look at a photo of a restaurant menu, you instantly recognize letters and words. OCR does the same thing â€” it identifies the shapes of characters in an image and converts them into machine-readable text that applications can process, search, and store.
+Think of OCR like teaching a computer to read. When you look at a photo of a restaurant menu, you instantly recognize letters and words. OCR does the same thing — it identifies the shapes of characters in an image and converts them into machine-readable text that applications can process, search, and store.
 
-Azure provides OCR through two main services: **Azure AI Vision** (Read API) for general text extraction from images, and **Azure AI Document Intelligence** for structured document processing. The Read API handles printed and handwritten text from any image. Document Intelligence goes further â€” it understands document structure (fields, tables, key-value pairs) from specific document types like invoices, receipts, and forms.
+Azure provides OCR through two main services: **Azure AI Vision** (Read API) for general text extraction from images, and **Azure AI Document Intelligence** for structured document processing. The Read API handles printed and handwritten text from any image. Document Intelligence goes further — it understands document structure (fields, tables, key-value pairs) from specific document types like invoices, receipts, and forms.
 
 ## Explore
 
@@ -38,7 +38,7 @@ Azure provides OCR through two main services: **Azure AI Vision** (Read API) for
 | **Use case** | Read a sign, extract text from a screenshot | Process 10,000 invoices and extract totals, dates, vendors |
 | **Analogy** | Reading text out loud | Filling in a spreadsheet from a form |
 
-**Key distinction**: OCR reads text character by character. Document Intelligence UNDERSTANDS document structure â€” it knows which number is the "total" and which is the "date."
+**Key distinction**: OCR reads text character by character. Document Intelligence UNDERSTANDS document structure — it knows which number is the "total" and which is the "date."
 
 ### Task 2: Try the Azure AI Vision OCR demo
 
@@ -57,17 +57,17 @@ The Read API returns a hierarchical structure:
 
 ```text
 Read Result
-â”œâ”€â”€ Page 1
-â”‚   â”œâ”€â”€ Line 1: "Invoice #12345"
-â”‚   â”‚   â”œâ”€â”€ Word: "Invoice" (confidence: 0.99, position: [x,y,w,h])
-â”‚   â”‚   â””â”€â”€ Word: "#12345" (confidence: 0.97, position: [x,y,w,h])
-â”‚   â”œâ”€â”€ Line 2: "Date: January 15, 2024"
-â”‚   â”‚   â”œâ”€â”€ Word: "Date:" (confidence: 0.99)
-â”‚   â”‚   â”œâ”€â”€ Word: "January" (confidence: 0.98)
-â”‚   â”‚   â””â”€â”€ ...
-â”‚   â””â”€â”€ ...
-â””â”€â”€ Page 2 (if multi-page document)
-    â””â”€â”€ ...
+├── Page 1
+│   ├── Line 1: "Invoice #12345"
+│   │   ├── Word: "Invoice" (confidence: 0.99, position: [x,y,w,h])
+│   │   └── Word: "#12345" (confidence: 0.97, position: [x,y,w,h])
+│   ├── Line 2: "Date: January 15, 2024"
+│   │   ├── Word: "Date:" (confidence: 0.99)
+│   │   ├── Word: "January" (confidence: 0.98)
+│   │   └── ...
+│   └── ...
+└── Page 2 (if multi-page document)
+    └── ...
 ```
 
 **Key features of the Read API**:
@@ -113,8 +113,8 @@ az cognitiveservices account show \
 | Read API | Azure AI Vision capability that extracts printed and handwritten text |
 | Azure AI Document Intelligence | Service that extracts structured data (fields, tables) from documents |
 | Bounding box/polygon | Coordinates indicating where each word/line appears in the image |
-| Printed text | Machine-generated text (fonts) â€” higher accuracy |
-| Handwritten text | Human-written text â€” more challenging, lower accuracy |
+| Printed text | Machine-generated text (fonts) — higher accuracy |
+| Handwritten text | Human-written text — more challenging, lower accuracy |
 | Prebuilt model | Pre-trained Document Intelligence model for specific document types |
 | Custom model | User-trained Document Intelligence model for unique document formats |
 | Confidence score | Reliability measure (0-1) for each extracted word |
@@ -123,7 +123,7 @@ az cognitiveservices account show \
 
 | Misconception | Reality |
 |---------------|---------|
-| "OCR and Document Intelligence are the same thing" | OCR extracts raw text (characters and words). Document Intelligence understands document STRUCTURE â€” it knows which text is a date, which is a total, and which is a vendor name |
+| "OCR and Document Intelligence are the same thing" | OCR extracts raw text (characters and words). Document Intelligence understands document STRUCTURE — it knows which text is a date, which is a total, and which is a vendor name |
 | "OCR only works with printed text" | Azure's Read API handles both printed and handwritten text. Printed text typically has higher accuracy, but handwriting recognition has improved dramatically |
 | "OCR requires perfectly clear, straight images" | Modern OCR handles rotated, skewed, and even partially obscured text. The Read API compensates for imperfect image quality |
 | "Document Intelligence requires custom training for every document type" | Prebuilt models work immediately for common documents (invoices, receipts, IDs). Custom training is only needed for unique/proprietary document formats |
@@ -166,7 +166,7 @@ az cognitiveservices account show \
       question: 'What is the key difference between OCR (Read API) and Document Intelligence?',
       options: ['OCR extracts raw text; Document Intelligence extracts structured fields and understands document layout', 'OCR is faster; Document Intelligence is slower', 'Document Intelligence only works with PDFs', 'OCR requires more training data'],
       correctAnswer: 0,
-      explanation: 'OCR (Read API) extracts text as-is from images. Document Intelligence goes further â€” it understands document structure and extracts named, structured fields (like "InvoiceTotal" or "VendorName") from specific document types.'
+      explanation: 'OCR (Read API) extracts text as-is from images. Document Intelligence goes further — it understands document structure and extracts named, structured fields (like "InvoiceTotal" or "VendorName") from specific document types.'
     }
   ]}
 />

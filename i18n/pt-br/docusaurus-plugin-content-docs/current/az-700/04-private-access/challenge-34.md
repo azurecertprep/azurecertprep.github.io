@@ -21,28 +21,28 @@ A MedSecure Health, uma empresa de saúde, está migrando seus serviços PaaS pa
 
 ```text
                     Azure VNet (10.0.0.0/16)
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚                                              â”‚
-                    â”‚  snet-workloads (10.0.1.0/24)                â”‚
-                    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                                â”‚
-                    â”‚  â”‚  vm-test  â”‚ â”€â”€ nslookup â”€â”€â”               â”‚
-                    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                â”‚               â”‚
-                    â”‚                              v               â”‚
-                    â”‚  snet-pe (10.0.2.0/24)                       â”‚
-                    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                â”‚
-                    â”‚  â”‚ pe-storage (10.0.2.4)    â”‚                â”‚
-                    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                â”‚
-                    â”‚              â”‚                                â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                                   â”‚ Private connection
+                    ┌──────────────────────────────────────────────┐
+                    │                                              │
+                    │  snet-workloads (10.0.1.0/24)                │
+                    │  ┌──────────┐                                │
+                    │  │  vm-test  │ ── nslookup ──┐               │
+                    │  └──────────┘                │               │
+                    │                              v               │
+                    │  snet-pe (10.0.2.0/24)                       │
+                    │  ┌──────────────────────────┐                │
+                    │  │ pe-storage (10.0.2.4)    │                │
+                    │  └──────────────────────────┘                │
+                    │              │                                │
+                    └──────────────┼────────────────────────────────┘
+                                   │ Private connection
                                    v
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚  stmedsecure.blob.core...    â”‚
-                    â”‚  (Storage Account - Blob)    â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                    ┌──────────────────────────────┐
+                    │  stmedsecure.blob.core...    │
+                    │  (Storage Account - Blob)    │
+                    └──────────────────────────────┘
 
     Private DNS Zone: privatelink.blob.core.windows.net
-    A record: stmedsecure â†’ 10.0.2.4
+    A record: stmedsecure → 10.0.2.4
 ```
 
 ## Objetivos de aprendizagem
@@ -84,11 +84,11 @@ Quando um cliente em uma VNet vinculada resolve `stmedsecure.blob.core.windows.n
 3. O Azure DNS verifica as zonas DNS privadas vinculadas
 4. A zona privatelink retorna o registro A apontando para o IP privado (ex.: 10.0.2.4)
 
-Sem a zona DNS privada vinculada Ã  VNet, a resolução cai para o IP público.
+Sem a zona DNS privada vinculada à VNet, a resolução cai para o IP público.
 
 :::tip Nota de exame
 
-O exame frequentemente testa a cadeia de resolução DNS. Lembre-se de que o DNS público sempre retorna um CNAME para o subdomínio `privatelink`. Ã‰ a zona DNS privada (vinculada Ã  VNet) que resolve esse CNAME para o IP privado. Se a zona não estiver vinculada, a consulta resolve para o IP público.
+O exame frequentemente testa a cadeia de resolução DNS. Lembre-se de que o DNS público sempre retorna um CNAME para o subdomínio `privatelink`. É a zona DNS privada (vinculada à VNet) que resolve esse CNAME para o IP privado. Se a zona não estiver vinculada, a consulta resolve para o IP público.
 
 :::
 
@@ -246,7 +246,7 @@ Ao criar um PE para um recurso em sua própria assinatura, a conexão é aprovad
 
 ---
 
-## Tarefa 4: Configurar zona DNS privada e vincular Ã  VNet
+## Tarefa 4: Configurar zona DNS privada e vincular à VNet
 
 ### Azure CLI
 
@@ -305,7 +305,7 @@ New-AzPrivateDnsZoneGroup `
 
 :::tip Por que registration-enabled é false
 
-O parâmetro `--registration-enabled false` significa que VMs na VNet vinculada NÃƒO registrarão automaticamente seus próprios registros DNS nesta zona. Isso é correto para zonas privatelink â€” você deseja apenas os registros A do ponto de extremidade privado aqui, não os nomes de host das VMs. Defina registration como true apenas em zonas destinadas ao registro automático de VMs (ex.: `contoso.internal`).
+O parâmetro `--registration-enabled false` significa que VMs na VNet vinculada NÃO registrarão automaticamente seus próprios registros DNS nesta zona. Isso é correto para zonas privatelink — você deseja apenas os registros A do ponto de extremidade privado aqui, não os nomes de host das VMs. Defina registration como true apenas em zonas destinadas ao registro automático de VMs (ex.: `contoso.internal`).
 
 :::
 
@@ -386,7 +386,7 @@ $vnet | Set-AzVirtualNetwork
 :::warning Dupla negação na CLI
 
 O parâmetro da Azure CLI `--disable-private-endpoint-network-policies` usa uma dupla negação:
-- `--disable-private-endpoint-network-policies true` = políticas estão DESABILITADAS (padrão, NSGs NÃƒO se aplicam)
+- `--disable-private-endpoint-network-policies true` = políticas estão DESABILITADAS (padrão, NSGs NÃO se aplicam)
 - `--disable-private-endpoint-network-policies false` = políticas estão HABILITADAS (NSGs SE aplicam)
 
 O equivalente em PowerShell é mais claro: `-PrivateEndpointNetworkPoliciesFlag "Enabled"` ou `"Disabled"`.
@@ -460,7 +460,7 @@ az network private-dns link vnet list \
     --output table
 ```
 
-**Causa raiz:** A zona DNS privada não está vinculada Ã  VNet onde a VM cliente reside.
+**Causa raiz:** A zona DNS privada não está vinculada à VNet onde a VM cliente reside.
 
 **Correção:**
 

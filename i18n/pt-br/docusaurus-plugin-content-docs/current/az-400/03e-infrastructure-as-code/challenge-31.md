@@ -963,7 +963,7 @@ terraform force-unlock a1b2c3d4-e5f6-7890-abcd-ef1234567890
       "Arquivos de estado locais são grandes demais para runners de pipeline",
       "Backends remotos fornecem backup e criptografia automáticos",
       "Múltiplas execuções de pipeline podem corromper o estado sem bloqueio, e o estado deve persistir entre execuções",
-      "O Terraform requer acesso Ã  rede para ler arquivos de estado"
+      "O Terraform requer acesso à rede para ler arquivos de estado"
     ],
     correctIndex: 2,
     explanation: "Arquivos de estado rastreiam o mapeamento entre definições de IaC e recursos reais. Sem um backend remoto, o estado seria perdido entre execuções do pipeline (cada execução recebe um workspace limpo). Sem bloqueio, execuções concorrentes poderiam ler/gravar o estado simultaneamente, levando a corrupção ou criação duplicada de recursos."

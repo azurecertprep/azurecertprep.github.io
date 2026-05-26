@@ -24,7 +24,7 @@ Managing costs for Azure AI services requires understanding multiple pricing mod
 
 In this challenge, you'll learn to estimate token costs using the `tiktoken` library, query Azure Cost Management for AI spending analysis, create budget alerts to prevent overspending, and implement caching strategies to reduce redundant API calls. These skills are critical for operating AI solutions at scale within budget constraints.
 
-Understanding the trade-offs between pay-as-you-go and PTU pricing helps architects choose the right model â€” PTU provides predictable costs and guaranteed throughput for sustained workloads, while pay-per-call is more economical for bursty or low-volume scenarios.
+Understanding the trade-offs between pay-as-you-go and PTU pricing helps architects choose the right model — PTU provides predictable costs and guaranteed throughput for sustained workloads, while pay-per-call is more economical for bursty or low-volume scenarios.
 
 ## Architecture
 
@@ -464,9 +464,9 @@ Console.WriteLine("=== Creating AI Services Budget ===");
 Console.WriteLine("Budget: $500/month");
 Console.WriteLine("Scope: Cognitive Services + Azure OpenAI Service");
 Console.WriteLine("Alerts:");
-Console.WriteLine("  - 80% actual spend â†’ ai-team@contoso.com");
-Console.WriteLine("  - 100% actual spend â†’ ai-team + finance");
-Console.WriteLine("  - 120% forecasted â†’ ai-team + finance");
+Console.WriteLine("  - 80% actual spend → ai-team@contoso.com");
+Console.WriteLine("  - 100% actual spend → ai-team + finance");
+Console.WriteLine("  - 120% forecasted → ai-team + finance");
 
 // Note: For full implementation, use Azure.ResourceManager.Consumption
 // or direct REST API call as shown in the REST tab

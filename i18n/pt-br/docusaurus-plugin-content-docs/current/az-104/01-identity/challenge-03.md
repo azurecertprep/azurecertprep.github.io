@@ -34,7 +34,7 @@ Azure Policy é seu mecanismo de aplicação. Pense nele como Group Policy para 
 - Configurar e gerenciar recomendações do Azure Advisor
 - Configurar e gerenciar orçamentos e alertas de custo
 
-## Referência sysadmin â†” Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -155,13 +155,13 @@ az consumption budget create \
 
 :::note
 
-Alertas de orçamento via CLI requerem configuração adicional para limites de notificação. Ã‰ mais fácil configurá-los no Portal em **Cost Management + Billing** â†’ **Budgets**.
+Alertas de orçamento via CLI requerem configuração adicional para limites de notificação. É mais fácil configurá-los no Portal em **Cost Management + Billing** → **Budgets**.
 
 :::
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Vá para **Cost Management + Billing** â†’ **Budgets**
+1. Vá para **Cost Management + Billing** → **Budgets**
 2. Clique em **+ Add**
 3. Defina **Amount** como $50, **Time grain** como Monthly
 4. Adicione uma condição de alerta em **80%** do orçamento
@@ -317,7 +317,7 @@ Após completar o desafio, tente estes cenários de solução de problemas:
 
 3. **Política não está funcionando**: Você atribuiu uma política Deny há 2 minutos e ela não está bloqueando nada ainda. Por quê? (A avaliação de política pode levar até 15 minutos para novas atribuições. Acione uma verificação sob demanda com `az policy state trigger-scan`.)
 
-4. **Confusão com tag herdada**: Você marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele não têm a tag. Isso é esperado? (Sim | tags NÃƒO são herdadas de grupos de recursos para recursos por padrão. Use a política `Inherit a tag from the resource group` para habilitar isso.)
+4. **Confusão com tag herdada**: Você marcou um grupo de recursos com `Environment=Production`, mas os recursos dentro dele não têm a tag. Isso é esperado? (Sim | tags NÃO são herdadas de grupos de recursos para recursos por padrão. Use a política `Inherit a tag from the resource group` para habilitar isso.)
 
 ## Teste seus conhecimentos
 
@@ -350,13 +350,13 @@ Uma **iniciativa de política** (também chamada de **conjunto de políticas**) 
 
 ```text
 Root Management Group (Tenant Root)
-â”œâ”€â”€ MG-Production
-â”‚   â”œâ”€â”€ Sub-Prod-01
-â”‚   â””â”€â”€ Sub-Prod-02
-â”œâ”€â”€ MG-Development
-â”‚   â””â”€â”€ Sub-Dev-01
-â””â”€â”€ MG-Sandbox
-    â””â”€â”€ Sub-Sandbox-01
+├── MG-Production
+│   ├── Sub-Prod-01
+│   └── Sub-Prod-02
+├── MG-Development
+│   └── Sub-Dev-01
+└── MG-Sandbox
+    └── Sub-Sandbox-01
 ```
 
 - Cada assinatura pertence a **exatamente um** management group
@@ -381,7 +381,7 @@ Bloqueios são herdados | um bloqueio no nível do grupo de recursos se aplica a
 <details>
 <summary>5. Tags são herdadas de grupos de recursos para recursos?</summary>
 
-**Não!** Tags em um grupo de recursos **NÃƒO** são automaticamente herdadas pelos recursos dentro dele. Esta é uma pergunta de exame muito comum.
+**Não!** Tags em um grupo de recursos **NÃO** são automaticamente herdadas pelos recursos dentro dele. Esta é uma pergunta de exame muito comum.
 
 Para aplicar herança de tags, use a política interna **"Inherit a tag from the resource group"** com o efeito **Modify**. Esta política copiará automaticamente tags do grupo de recursos para novos recursos criados dentro dele.
 

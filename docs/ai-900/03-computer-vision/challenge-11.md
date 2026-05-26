@@ -22,7 +22,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 Object detection goes beyond image classification by not only identifying WHAT objects are in an image but also WHERE they are located. For each detected object, the model returns a **bounding box** (rectangle coordinates) and a **confidence score**. One image can contain multiple objects of different types.
 
-Think of object detection like a wildlife photographer cataloging animals in a photo. Classification says "this photo contains elephants." Object detection says "there are 3 elephants: one in the upper-left, one in the center, and one in the lower-right" â€” each marked with a rectangle and a confidence level.
+Think of object detection like a wildlife photographer cataloging animals in a photo. Classification says "this photo contains elephants." Object detection says "there are 3 elephants: one in the upper-left, one in the center, and one in the lower-right" — each marked with a rectangle and a confidence level.
 
 The key difference from classification: classification labels the entire image as one thing. Object detection finds multiple individual objects within the image and tells you exactly where each one is. This is critical for applications like autonomous driving (where is each car, pedestrian, and traffic sign?) or retail analytics (how many people are in each aisle?).
 
@@ -33,15 +33,15 @@ The key difference from classification: classification labels the entire image a
 A bounding box defines the location of a detected object using coordinates:
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                                 â”‚
-â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                 â”‚
-â”‚    â”‚  Dog     â”‚   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚
-â”‚    â”‚  0.94    â”‚   â”‚  Cat   â”‚   â”‚
-â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚  0.87  â”‚   â”‚
-â”‚                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
-â”‚                                 â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────────────────────┐
+│                                 │
+│    ┌──────────┐                 │
+│    │  Dog     │   ┌────────┐   │
+│    │  0.94    │   │  Cat   │   │
+│    └──────────┘   │  0.87  │   │
+│                   └────────┘   │
+│                                 │
+└─────────────────────────────────┘
 ```
 
 Each detection includes:
@@ -89,9 +89,9 @@ Each detection includes:
 
 :::tip Exam strategy
 Look for these keywords in exam scenarios:
-- "Locate", "find where", "bounding box", "position" â†’ Object Detection
-- "How many of X are in the image" â†’ Object Detection (counting requires locating each instance)
-- "What is this image of?" (whole image) â†’ Classification
+- "Locate", "find where", "bounding box", "position" → Object Detection
+- "How many of X are in the image" → Object Detection (counting requires locating each instance)
+- "What is this image of?" (whole image) → Classification
 :::
 
 ## Key Concepts
@@ -110,11 +110,11 @@ Look for these keywords in exam scenarios:
 
 | Misconception | Reality |
 |---------------|---------|
-| "Object detection is just image classification with locations" | They are related but distinct. Classification labels the whole image. Object detection finds and locates individual objects â€” it handles multiple objects, overlapping objects, and objects of different types in one image |
+| "Object detection is just image classification with locations" | They are related but distinct. Classification labels the whole image. Object detection finds and locates individual objects — it handles multiple objects, overlapping objects, and objects of different types in one image |
 | "Object detection can only find one object at a time" | Object detection finds ALL objects in an image simultaneously. A street scene might return 5 cars, 3 people, 2 traffic lights, all with separate bounding boxes |
-| "Bounding boxes are always perfectly aligned with objects" | Bounding boxes are rectangles â€” they approximate the object's location. For irregular shapes, the box includes some background. Instance segmentation provides pixel-precise outlines |
+| "Bounding boxes are always perfectly aligned with objects" | Bounding boxes are rectangles — they approximate the object's location. For irregular shapes, the box includes some background. Instance segmentation provides pixel-precise outlines |
 | "You need video for object detection" | Object detection works on single images. When applied to video, it processes individual frames. Real-time video is just fast image processing |
-| "Higher confidence threshold is always better" | Higher thresholds mean fewer false positives but more missed detections. The right threshold depends on the use case â€” a self-driving car needs to detect ALL pedestrians (lower threshold, higher recall) |
+| "Higher confidence threshold is always better" | Higher thresholds mean fewer false positives but more missed detections. The right threshold depends on the use case — a self-driving car needs to detect ALL pedestrians (lower threshold, higher recall) |
 
 ## Knowledge Check
 
@@ -146,14 +146,14 @@ Look for these keywords in exam scenarios:
       question: 'What is the KEY feature that distinguishes object detection from image classification?',
       options: ['Object detection is more accurate', 'Object detection only works with Custom Vision', 'Object detection can only detect one object type', 'Object detection provides the location (bounding box) of each object, not just labels'],
       correctAnswer: 3,
-      explanation: 'The defining feature of object detection is localization â€” it tells you WHERE each object is (bounding box coordinates), not just what the image contains. Classification labels the whole image; detection locates individual objects.'
+      explanation: 'The defining feature of object detection is localization — it tells you WHERE each object is (bounding box coordinates), not just what the image contains. Classification labels the whole image; detection locates individual objects.'
     },
     {
       id: 'ai900-11-q5',
       question: 'A single image processed by an object detection model shows a street scene. Which result is most likely?',
       options: ['One label: "street scene"', 'One bounding box around the entire image', 'Multiple bounding boxes: 3 cars, 2 people, 1 traffic light, each with separate confidence scores', 'A text description of the image'],
       correctAnswer: 2,
-      explanation: 'Object detection returns multiple bounding boxes â€” one for each detected object. A street scene would have separate detections for each car, person, sign, etc., each with its own label, bounding box, and confidence score.'
+      explanation: 'Object detection returns multiple bounding boxes — one for each detected object. A street scene would have separate detections for each car, person, sign, etc., each with its own label, bounding box, and confidence score.'
     }
   ]}
 />

@@ -28,10 +28,10 @@ A VPN site a site da Contoso estabelecida no Challenge 14 usa uma única instân
 On-prem Site A (Dallas)           Azure (East US)              On-prem Site B (Chicago)
 (10.10.0.0/16)                   (10.1.0.0/16)               (10.20.0.0/16)
                                        |
-[VPN Device A]  â”€â”€â”€ Tunnel 1 â”€â”€â–º [pip-vgw-1]                [VPN Device B]
+[VPN Device A]  ─── Tunnel 1 ──► [pip-vgw-1]                [VPN Device B]
   203.0.113.10                        |                        198.51.100.25
                                   [VPN Gateway]
-[VPN Device A]  â”€â”€â”€ Tunnel 2 â”€â”€â–º [pip-vgw-2]                [VPN Device B]
+[VPN Device A]  ─── Tunnel 2 ──► [pip-vgw-2]                [VPN Device B]
   203.0.113.10                        |                        198.51.100.25
                                   Active-Active
                                (VpnGw2AZ, Zone 1+2)
@@ -137,7 +137,7 @@ az network public-ip create \
 
 :::note IPs públicos com redundância de zona
 
-Ao usar SKUs de gateway com redundância de zona (terminados em AZ), os IPs públicos devem ser de SKU Standard. Especificar `--zone 1 2 3` torna o IP com redundância de zona, o que significa que ele sobrevive Ã  falha de qualquer zona de disponibilidade individual.
+Ao usar SKUs de gateway com redundância de zona (terminados em AZ), os IPs públicos devem ser de SKU Standard. Especificar `--zone 1 2 3` torna o IP com redundância de zona, o que significa que ele sobrevive à falha de qualquer zona de disponibilidade individual.
 
 :::
 
@@ -580,7 +580,7 @@ az network vnet-gateway create \
 
 ### Cenário 3: SKU não-AZ em configuração com redundância de zona
 
-**Sintoma:** O gateway é implantado, mas não sobrevive Ã  falha de zona de disponibilidade. A inspeção mostra instâncias em uma única zona.
+**Sintoma:** O gateway é implantado, mas não sobrevive à falha de zona de disponibilidade. A inspeção mostra instâncias em uma única zona.
 
 **Causa raiz:** Um SKU não-AZ (ex.: VpnGw2 em vez de VpnGw2AZ) foi usado. SKUs não-AZ implantam ambas as instâncias na mesma zona ou sem zona específica.
 

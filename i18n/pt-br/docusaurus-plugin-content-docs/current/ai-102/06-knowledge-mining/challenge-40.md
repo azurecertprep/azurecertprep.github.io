@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
-title: "Desafio 40: Azure AI Search â€” Índice e Skillset"
+title: "Desafio 40: Azure AI Search — Índice e Skillset"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Desafio 40: Azure AI Search â€” Índice e Skillset
+# Desafio 40: Azure AI Search — Índice e Skillset
 
 :::info Tempo Estimado
 **60-75 min** | **Custo**: ~$0.50 (Tier gratuito Search + Storage) | **Domínio**: Knowledge Mining & Extraction (15-20%)
@@ -28,7 +28,7 @@ import TabItem from '@theme/TabItem';
 
 Azure AI Search é um serviço de busca em nuvem que fornece capacidades de indexação e consulta sobre conteúdo heterogêneo. O pipeline de enriquecimento segue esta arquitetura:
 
-**Data Source** â†’ **Indexer** â†’ **Skillset** (enriquecimento com IA) â†’ **Index** (armazenamento pesquisável)
+**Data Source** → **Indexer** → **Skillset** (enriquecimento com IA) → **Index** (armazenamento pesquisável)
 
 Conceitos-chave:
 - **Data source**: Conexão com o conteúdo (Blob Storage, SQL Database, Cosmos DB, Table Storage)
@@ -39,15 +39,15 @@ Conceitos-chave:
 ## Arquitetura
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ Blob Storageâ”‚â”€â”€â”€â”€â–¶â”‚ Indexer  â”‚â”€â”€â”€â”€â–¶â”‚  Skillset  â”‚â”€â”€â”€â”€â–¶â”‚  Index  â”‚
-â”‚ (PDFs, imgs)â”‚     â”‚          â”‚     â”‚ (AI Skills)â”‚     â”‚(search) â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                                           â”‚
-                                     â”Œâ”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”
-                                     â”‚ AI Servicesâ”‚
-                                     â”‚ (multi)    â”‚
-                                     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────┐     ┌──────────┐     ┌────────────┐     ┌─────────┐
+│ Blob Storage│────▶│ Indexer  │────▶│  Skillset  │────▶│  Index  │
+│ (PDFs, imgs)│     │          │     │ (AI Skills)│     │(search) │
+└─────────────┘     └──────────┘     └────────────┘     └─────────┘
+                                           │
+                                     ┌─────┴─────┐
+                                     │ AI Services│
+                                     │ (multi)    │
+                                     └───────────┘
 ```
 
 ## Pré-requisitos
@@ -550,8 +550,8 @@ Após a conclusão do indexador, consultar o índice deve retornar documentos en
 | 1 | Indexador falha com "Could not execute skill" | Status do indexador mostra `transientFailure` | A chave do AI Services é inválida ou o recurso está em uma região diferente do serviço de busca | Certifique-se de que o AI Services está na mesma região; atualize a chave no skillset |
 | 2 | Campos enriquecidos estão nulos no índice | Documentos são indexados mas `keyphrases` e `organizations` estão vazios | Os mapeamentos de campos de saída usam caminhos de origem incorretos (ex.: prefixo `/document/` ausente) | Corrija os caminhos de origem em `outputFieldMappings` para corresponder ao `targetName` da saída do skillset com o prefixo `/document/` |
 | 3 | Indexador não consegue conectar ao Blob Storage | `StorageException: Access denied` | A connection string do armazenamento é inválida ou o container não existe | Verifique a connection string e o nome do container na definição da fonte de dados |
-| 4 | Criação do índice falha com "analyzer not found" | HTTP 400 na criação do índice | Nome do analyzer digitado incorretamente (ex.: `en.Microsoft` em vez de `en.microsoft`) | Use o nome correto do analyzer â€” eles são case-sensitive |
-| 5 | Documentos duplicados no índice após re-execução | Contagem de documentos dobra a cada execução | Mapeamento de chave do documento ausente ou incorreto â€” `metadata_storage_path` precisa de codificação Base64 | Use `metadata_storage_path` com a função de mapeamento `base64Encode` como chave |
+| 4 | Criação do índice falha com "analyzer not found" | HTTP 400 na criação do índice | Nome do analyzer digitado incorretamente (ex.: `en.Microsoft` em vez de `en.microsoft`) | Use o nome correto do analyzer — eles são case-sensitive |
+| 5 | Documentos duplicados no índice após re-execução | Contagem de documentos dobra a cada execução | Mapeamento de chave do documento ausente ou incorreto — `metadata_storage_path` precisa de codificação Base64 | Use `metadata_storage_path` com a função de mapeamento `base64Encode` como chave |
 
 ## Knowledge Check
 

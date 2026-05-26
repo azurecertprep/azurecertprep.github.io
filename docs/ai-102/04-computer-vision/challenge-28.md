@@ -211,7 +211,7 @@ faces = client.detect(
 print(f"Found {len(faces)} faces in group photo")
 for i, face in enumerate(faces):
     quality = face.face_attributes.quality_for_recognition
-    print(f"  Face {i+1}: quality={quality} {'âœ“' if quality == 'high' else 'âš '}")
+    print(f"  Face {i+1}: quality={quality} {'✓' if quality == 'high' else '⚠'}")
 ```
 
 </TabItem>
@@ -232,11 +232,11 @@ Face 1:
   Quality for recognition: high
 
 Found 5 faces in group photo
-  Face 1: quality=high âœ“
-  Face 2: quality=high âœ“
-  Face 3: quality=medium âš 
-  Face 4: quality=high âœ“
-  Face 5: quality=low âš 
+  Face 1: quality=high ✓
+  Face 2: quality=high ✓
+  Face 3: quality=medium ⚠
+  Face 4: quality=high ✓
+  Face 5: quality=low ⚠
 ```
 
 ## Break & fix
@@ -294,14 +294,14 @@ Found 5 faces in group photo
       "Whether the image meets minimum size requirements"
     ],
     correctAnswer: 1,
-    explanation: "qualityForRecognition indicates whether the face image quality is sufficient for recognition (identification/verification) â€” rated as low, medium, or high based on pose, blur, and occlusion."
+    explanation: "qualityForRecognition indicates whether the face image quality is sufficient for recognition (identification/verification) — rated as low, medium, or high based on pose, blur, and occlusion."
   },
   {
     question: "What is the difference between face detection and face identification?",
     options: [
       "Detection is faster; identification is more accurate",
       "Detection works on video; identification works on images",
-      "There is no difference â€” they are the same operation",
+      "There is no difference — they are the same operation",
       "Detection locates faces and returns attributes; identification matches faces against a known person group"
     ],
     correctAnswer: 3,

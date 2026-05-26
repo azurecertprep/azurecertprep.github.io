@@ -8,7 +8,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::info Tempo e custo estimados
 
-**60â€“90 minutos** | **~$0,36/h** (Virtual WAN Standard + gateways) | **Peso no exame: 20â€“25%**
+**60–90 minutos** | **~$0,36/h** (Virtual WAN Standard + gateways) | **Peso no exame: 20–25%**
 
 :::
 
@@ -32,23 +32,23 @@ Seus requisitos:
 ## Visão geral da arquitetura
 
 ```text
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚         Virtual Hub (East US)            â”‚
-                    â”‚                                         â”‚
-                    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-                    â”‚  â”‚ RT_PROD     â”‚  â”‚ RT_DEV           â”‚ â”‚
-                    â”‚  â”‚ (label:prod)â”‚  â”‚ (label:dev)      â”‚ â”‚
-                    â”‚  â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-                    â”‚         â”‚                   â”‚           â”‚
-                    â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
-                    â”‚  â”‚         NVA / Azure Firewall       â”‚  â”‚
-                    â”‚  â”‚  (routing intent: 0.0.0.0/0)      â”‚  â”‚
-                    â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€-â”˜  â”‚
-                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                                 â”‚              â”‚
-                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                    â”‚            â”‚  â”‚     â”‚     â”‚            â”‚
-                 prod-1      prod-2â”‚  dev-1   dev-2
+                    ┌─────────────────────────────────────────┐
+                    │         Virtual Hub (East US)            │
+                    │                                         │
+                    │  ┌─────────────┐  ┌──────────────────┐ │
+                    │  │ RT_PROD     │  │ RT_DEV           │ │
+                    │  │ (label:prod)│  │ (label:dev)      │ │
+                    │  └──────┬──────┘  └────────┬─────────┘ │
+                    │         │                   │           │
+                    │  ┌──────┴───────────────────┴────────┐  │
+                    │  │         NVA / Azure Firewall       │  │
+                    │  │  (routing intent: 0.0.0.0/0)      │  │
+                    │  └───────────────────────────────────-┘  │
+                    └────────────┬──────────────┬──────────────┘
+                                 │              │
+                    ┌────────────┼──┐     ┌─────┼────────────┐
+                    │            │  │     │     │            │
+                 prod-1      prod-2│  dev-1   dev-2
                  (RT_PROD)  (RT_PROD)  (RT_DEV)  (RT_DEV)
 ```
 
@@ -57,7 +57,7 @@ Seus requisitos:
 ### Comportamento padrão de roteamento do Virtual WAN
 
 Quando uma conexão VNet é criada sem configuração explícita de roteamento:
-- Ela é **associada** Ã  `defaultRouteTable`
+- Ela é **associada** à `defaultRouteTable`
 - Ela **propaga** rotas para a `defaultRouteTable`
 - Todos os spokes aprendem as rotas uns dos outros (conectividade full mesh)
 
@@ -304,7 +304,7 @@ New-AzVirtualHubVnetConnection `
 
 ## Tarefa 4: Adicionar rotas estáticas a uma tabela de rotas do hub
 
-Adicione uma rota estática para forçar o tráfego destinado Ã  internet (0.0.0.0/0) por meio de um NVA ou Azure Firewall. O próximo salto é especificado como um ID de recurso.
+Adicione uma rota estática para forçar o tráfego destinado à internet (0.0.0.0/0) por meio de um NVA ou Azure Firewall. O próximo salto é especificado como um ID de recurso.
 
 ### Azure CLI
 
@@ -407,7 +407,7 @@ Quando a intenção de roteamento está habilitada em um hub:
 
 ## Tarefa 6: Implantação de NVA no hub virtual (conceitual)
 
-NVAs de terceiros podem ser implantados diretamente no hub virtual a partir do Azure Marketplace. Isso é diferente de implantar um NVA em uma VNet spoke â€” NVAs integrados ao hub participam diretamente na infraestrutura de roteamento do hub.
+NVAs de terceiros podem ser implantados diretamente no hub virtual a partir do Azure Marketplace. Isso é diferente de implantar um NVA em uma VNet spoke — NVAs integrados ao hub participam diretamente na infraestrutura de roteamento do hub.
 
 ### Parceiros NVA suportados (exemplos)
 

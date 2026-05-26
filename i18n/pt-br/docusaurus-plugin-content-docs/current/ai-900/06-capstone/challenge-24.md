@@ -21,15 +21,15 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Visão geral
 
-Este desafio capstone reúne tudo que você aprendeu em todos os cinco domínios do AI-900. Você analisará um cenário de negócios realista â€” uma empresa de varejo chamada **Contoso Retail** que quer implementar IA em múltiplos departamentos â€” e mapeará seus requisitos para serviços Azure AI apropriados.
+Este desafio capstone reúne tudo que você aprendeu em todos os cinco domínios do AI-900. Você analisará um cenário de negócios realista — uma empresa de varejo chamada **Contoso Retail** que quer implementar IA em múltiplos departamentos — e mapeará seus requisitos para serviços Azure AI apropriados.
 
 No exame real, você encontrará perguntas baseadas em cenários que exigem que você entenda não apenas serviços individuais, mas como eles se encaixam para resolver problemas de negócios. Este desafio exercita essa habilidade: dado uma necessidade de negócio, qual serviço Azure AI é o encaixe certo? Quais são as considerações de IA responsável? Como as peças se conectam?
 
-Esta é sua oportunidade de pensar como um arquiteto de soluções â€” entendendo o panorama completo das capacidades Azure AI e quando aplicar cada uma. O desafio cobre todos os cinco domínios do exame e prepara você para as perguntas entre domínios que frequentemente aparecem no exame AI-900.
+Esta é sua oportunidade de pensar como um arquiteto de soluções — entendendo o panorama completo das capacidades Azure AI e quando aplicar cada uma. O desafio cobre todos os cinco domínios do exame e prepara você para as perguntas entre domínios que frequentemente aparecem no exame AI-900.
 
 ## Explorar
 
-### Tarefa 1: Cenário â€” Suporte ao Cliente (NLP)
+### Tarefa 1: Cenário — Suporte ao Cliente (NLP)
 
 **Requisito de negócio**: A Contoso Retail recebe 10.000 emails de suporte ao cliente diariamente em 15 idiomas. Eles querem:
 - Entender sobre o que os clientes estão reclamando
@@ -49,20 +49,20 @@ Esta é sua oportunidade de pensar como um arquiteto de soluções â€” ente
 
 **Fluxo de arquitetura**:
 ```text
-Customer email â†’ Language Detection â†’ Sentiment Analysis â†’ Key Phrase Extraction
-                                           â†“
+Customer email → Language Detection → Sentiment Analysis → Key Phrase Extraction
+                                           ↓
                                    High negative sentiment?
-                                   YES â†’ Priority queue
-                                   NO â†’ Standard queue
-                                           â†“
-                              Custom Classification â†’ Route to team
-                                           â†“
+                                   YES → Priority queue
+                                   NO → Standard queue
+                                           ↓
+                              Custom Classification → Route to team
+                                           ↓
                               Reply in customer's language (Translator)
 ```
 
 **Sua tarefa**: O que aconteceria se você pulasse a etapa de detecção de idioma? (Resposta: A análise de sentimento pode ser menos precisa porque funciona melhor quando sabe o idioma da entrada.)
 
-### Tarefa 2: Cenário â€” Gestão de Inventário (Computer Vision)
+### Tarefa 2: Cenário — Gestão de Inventário (Computer Vision)
 
 **Requisito de negócio**: A Contoso Retail tem 200 armazéns. Eles querem:
 - Contar produtos nas prateleiras automaticamente usando câmeras
@@ -84,9 +84,9 @@ Customer email â†’ Language Detection â†’ Sentiment Analysis â†’ 
 - **Pré-construído vs. Personalizado**: Contagem de produtos e detecção de danos precisam de modelos personalizados (treinados em seus produtos específicos). OCR usa a Read API pré-construída.
 - **Tempo real vs. Lote**: Monitoramento de segurança precisa de análise de vídeo em tempo real. Contagem de inventário pode ser processada em lote a partir de fotos periódicas.
 
-**Sua tarefa**: A Contoso deveria usar classificação de imagem ou detecção de objetos para contar produtos? (Resposta: Detecção de objetos â€” porque precisam localizar E contar múltiplos itens individuais em uma única imagem, não apenas classificar a imagem inteira.)
+**Sua tarefa**: A Contoso deveria usar classificação de imagem ou detecção de objetos para contar produtos? (Resposta: Detecção de objetos — porque precisam localizar E contar múltiplos itens individuais em uma única imagem, não apenas classificar a imagem inteira.)
 
-### Tarefa 3: Cenário â€” Previsão de Vendas (Machine Learning)
+### Tarefa 3: Cenário — Previsão de Vendas (Machine Learning)
 
 **Requisito de negócio**: A Contoso Retail quer prever:
 - Quais produtos venderão bem no próximo trimestre
@@ -105,13 +105,13 @@ Customer email â†’ Language Detection â†’ Sentiment Analysis â†’ 
 1. Coletar dados históricos (vendas, comportamento do cliente)
 2. Usar **Automated ML (AutoML)** para treinar modelos
 3. Avaliar com métricas apropriadas:
-   - Regressão: RÂ², MAE, RMSE
+   - Regressão: R², MAE, RMSE
    - Classificação: Accuracy, Precision, Recall, F1, AUC
 4. Implantar como endpoints para a aplicação de varejo consumir
 
-**Sua tarefa**: Se a Contoso quisesse agrupar clientes em segmentos (econômico, intermediário, premium) com base em padrões de compra sem pré-definir os grupos, qual tipo de ML seria? (Resposta: Clustering â€” aprendizado não supervisionado que encontra agrupamentos naturais nos dados.)
+**Sua tarefa**: Se a Contoso quisesse agrupar clientes em segmentos (econômico, intermediário, premium) com base em padrões de compra sem pré-definir os grupos, qual tipo de ML seria? (Resposta: Clustering — aprendizado não supervisionado que encontra agrupamentos naturais nos dados.)
 
-### Tarefa 4: Cenário â€” Criação de Conteúdo (IA Generativa)
+### Tarefa 4: Cenário — Criação de Conteúdo (IA Generativa)
 
 **Requisito de negócio**: A equipe de marketing da Contoso Retail quer:
 - Gerar descrições de produtos para 50.000 itens
@@ -123,7 +123,7 @@ Customer email â†’ Language Detection â†’ Sentiment Analysis â†’ 
 
 | Requisito | Serviço Azure AI | Abordagem |
 |-----------|-----------------|-----------|
-| Descrições de produtos | Azure OpenAI (GPT-4o) | Prompt com especificações do produto â†’ gerar descrição |
+| Descrições de produtos | Azure OpenAI (GPT-4o) | Prompt com especificações do produto → gerar descrição |
 | Posts de redes sociais | Azure OpenAI + Translator | Gerar em inglês, traduzir para outros idiomas |
 | Q&A de funcionários sobre políticas | Azure OpenAI + AI Search (RAG) | Fundamentar respostas em documentos de política |
 | Respostas de email para clientes | Azure OpenAI + AI Language | Detectar intenção, gerar resposta fundamentada |
@@ -134,7 +134,7 @@ Customer email â†’ Language Detection â†’ Sentiment Analysis â†’ 
 - **Grounding (RAG)** para qualquer resposta que deve ser factualmente precisa
 - **Exemplos few-shot** para manter consistência da voz da marca
 
-### Tarefa 5: Decisão de Arquitetura â€” Mapeando serviços para cenários
+### Tarefa 5: Decisão de Arquitetura — Mapeando serviços para cenários
 
 Complete o mapeamento para o portfólio completo de IA da Contoso:
 
@@ -163,13 +163,13 @@ Para cada cenário, identifique as considerações de IA responsável:
 | Conteúdo gerado por IA | **Transparência**: Divulgar conteúdo gerado por IA. **Responsabilidade**: Revisão humana antes da publicação. **Prevenção de danos**: Filtragem de conteúdo para texto gerado. |
 | Q&A de políticas para funcionários | **Fundamentação**: Deve responder apenas a partir de documentos de política (sem alucinações). **Privacidade**: Não expor dados entre departamentos. |
 
-**Os 6 Princípios de IA Responsável da Microsoft** (aplicados Ã  Contoso):
-1. **Justiça** â€” IA não discrimina entre dados demográficos de clientes
-2. **Confiabilidade & Segurança** â€” Monitoramento de segurança nunca tem falsos negativos perigosos
-3. **Privacidade & Segurança** â€” Dados de clientes protegidos, modelos não vazam informações
-4. **Inclusão** â€” Suporte em 15 idiomas, acessível a todos os clientes
-5. **Transparência** â€” Clientes sabem quando IA está envolvida
-6. **Responsabilidade** â€” Supervisão humana para todas as decisões críticas
+**Os 6 Princípios de IA Responsável da Microsoft** (aplicados à Contoso):
+1. **Justiça** — IA não discrimina entre dados demográficos de clientes
+2. **Confiabilidade & Segurança** — Monitoramento de segurança nunca tem falsos negativos perigosos
+3. **Privacidade & Segurança** — Dados de clientes protegidos, modelos não vazam informações
+4. **Inclusão** — Suporte em 15 idiomas, acessível a todos os clientes
+5. **Transparência** — Clientes sabem quando IA está envolvida
+6. **Responsabilidade** — Supervisão humana para todas as decisões críticas
 
 ## Conceitos-Chave
 
@@ -186,11 +186,11 @@ Para cada cenário, identifique as considerações de IA responsável:
 
 | Equívoco | Realidade |
 |----------|-----------|
-| Um serviço de IA pode resolver todos os problemas | Diferentes tipos de problemas requerem diferentes serviços â€” visão para imagens, linguagem para texto, ML para predições |
+| Um serviço de IA pode resolver todos os problemas | Diferentes tipos de problemas requerem diferentes serviços — visão para imagens, linguagem para texto, ML para predições |
 | IA generativa substitui todos os outros serviços de IA | IA tradicional (classificação, detecção, predição) ainda é melhor para tarefas estruturadas e bem definidas |
 | Você só precisa de IA responsável para sistemas voltados ao cliente | IA responsável se aplica igualmente a sistemas internos (ferramentas de funcionários, IA operacional) |
-| Mais IA é sempre melhor | Ã€s vezes um sistema simples baseado em regras é mais apropriado que IA â€” use IA onde ela agrega valor genuíno |
-| Serviços Azure AI funcionam isoladamente | As soluções mais poderosas combinam múltiplos serviços â€” ex.: Vision + Language + OpenAI |
+| Mais IA é sempre melhor | Às vezes um sistema simples baseado em regras é mais apropriado que IA — use IA onde ela agrega valor genuíno |
+| Serviços Azure AI funcionam isoladamente | As soluções mais poderosas combinam múltiplos serviços — ex.: Vision + Language + OpenAI |
 
 ## Verificação de Conhecimento
 
@@ -213,7 +213,7 @@ Para cada cenário, identifique as considerações de IA responsável:
     {
       id: 'ai900-24-q3',
       question: 'Um sistema de suporte ao cliente precisa detectar o idioma dos emails recebidos, analisar sentimento e traduzir respostas. Em que ordem essas capacidades devem ser aplicadas?',
-      options: ['Sentimento â†’ Tradução â†’ Detecção de idioma', 'Detecção de idioma â†’ Análise de sentimento â†’ Tradução', 'Tradução â†’ Detecção de idioma â†’ Sentimento', 'Sentimento â†’ Detecção de idioma â†’ Tradução'],
+      options: ['Sentimento → Tradução → Detecção de idioma', 'Detecção de idioma → Análise de sentimento → Tradução', 'Tradução → Detecção de idioma → Sentimento', 'Sentimento → Detecção de idioma → Tradução'],
       correctAnswer: 1,
       explanation: 'Detecção de idioma deve vir primeiro (você precisa saber o idioma antes de analisá-lo), depois análise de sentimento (para priorizar), depois tradução (para responder no idioma do cliente). Cada etapa se baseia na anterior.'
     },
@@ -243,7 +243,7 @@ Para cada cenário, identifique as considerações de IA responsável:
       question: 'Uma empresa implanta IA para monitoramento de segurança de armazém (detectar saídas de incêndio bloqueadas). Qual princípio de IA responsável é MAIS crítico para este cenário?',
       options: ['Confiabilidade e Segurança', 'Transparência', 'Inclusão', 'Justiça'],
       correctAnswer: 0,
-      explanation: 'Para aplicações críticas de segurança como detectar saídas de incêndio bloqueadas, Confiabilidade e Segurança é o princípio mais importante. O sistema não deve deixar de detectar perigos genuínos (falsos negativos perigosos) â€” uma detecção perdida poderia colocar vidas em risco.'
+      explanation: 'Para aplicações críticas de segurança como detectar saídas de incêndio bloqueadas, Confiabilidade e Segurança é o princípio mais importante. O sistema não deve deixar de detectar perigos genuínos (falsos negativos perigosos) — uma detecção perdida poderia colocar vidas em risco.'
     },
     {
       id: 'ai900-24-q8',

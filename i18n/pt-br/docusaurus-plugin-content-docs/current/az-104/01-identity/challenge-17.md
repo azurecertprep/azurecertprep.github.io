@@ -27,12 +27,12 @@ A Contoso Ltd. está crescendo rápido. O que começou como uma única assinatur
 | Implementar bloqueios de recursos entre assinaturas | Médio |
 | Aplicar RBAC no escopo do grupo de gerenciamento | Alto |
 
-## Referência sysadmin â†” Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente Azure | Notas |
 |---------------------|-------------------|-------|
 | OUs do Active Directory | Grupos de gerenciamento | Contêineres hierárquicos de governança |
-| Group Policy vinculada Ã  OU | Azure Policy no escopo do MG | Herdada por todas as assinaturas filhas |
+| Group Policy vinculada à OU | Azure Policy no escopo do MG | Herdada por todas as assinaturas filhas |
 | Admin de domínio sobre árvore de OUs | RBAC no escopo do MG | Cascateia para assinaturas e recursos |
 | Mover computadores entre OUs | Mover assinaturas entre MGs | Políticas de governança mudam imediatamente |
 | Administração delegada de OU | RBAC no nível da assinatura | Acesso administrativo com escopo |
@@ -46,13 +46,13 @@ Projete e crie a seguinte estrutura de grupos de gerenciamento:
 
 ```text
 Tenant Root Group
-â””â”€â”€ mg-contoso (Contoso Ltd.)
-    â”œâ”€â”€ mg-production (Production)
-    â”‚   â”œâ”€â”€ mg-prod-it (IT Production)
-    â”‚   â””â”€â”€ mg-prod-finance (Finance Production)
-    â””â”€â”€ mg-nonproduction (Non-Production)
-        â”œâ”€â”€ mg-dev (Development)
-        â””â”€â”€ mg-sandbox (Sandbox)
+└── mg-contoso (Contoso Ltd.)
+    ├── mg-production (Production)
+    │   ├── mg-prod-it (IT Production)
+    │   └── mg-prod-finance (Finance Production)
+    └── mg-nonproduction (Non-Production)
+        ├── mg-dev (Development)
+        └── mg-sandbox (Sandbox)
 ```
 
 ```bash
@@ -199,7 +199,7 @@ az account management-group show \
 <SuccessChecklist
   storageKey="az104-challenge-17"
   items={[
-    "A hierarquia de grupos de gerenciamento corresponde Ã  estrutura específicada (5 grupos sob mg-contoso)",
+    "A hierarquia de grupos de gerenciamento corresponde à estrutura específicada (5 grupos sob mg-contoso)",
     "Pelo menos uma assinatura está posicionada dentro de um grupo de gerenciamento",
     "Azure Policy está atribuída no escopo mg-production",
     "Atribuição de função RBAC existe no escopo mg-contoso",

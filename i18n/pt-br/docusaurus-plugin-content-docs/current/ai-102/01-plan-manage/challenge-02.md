@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 ## Visão Geral
 
-Criar e configurar recursos do Azure AI corretamente é a base de todo cenário do AI-102. Este desafio vai além de clicar em "Criar" no portalâ€”você provisionará recursos programaticamente, configurará restrições de rede, recuperará e rotacionará chaves, e validará a conectividade do endpoint.
+Criar e configurar recursos do Azure AI corretamente é a base de todo cenário do AI-102. Este desafio vai além de clicar em "Criar" no portal—você provisionará recursos programaticamente, configurará restrições de rede, recuperará e rotacionará chaves, e validará a conectividade do endpoint.
 
 Entender a relação entre tipos de recursos, SKUs, endpoints e chaves é crítico. Um recurso multi-serviço expõe um único endpoint como `https://<region>.api.cognitive.microsoft.com/` enquanto recursos de serviço único podem ter padrões de endpoint específicos do serviço. Você precisa saber qual formato de endpoint cada serviço usa e como configurar regras de rede virtual e private endpoints para cargas de trabalho de produção.
 
@@ -30,7 +30,7 @@ Este desafio também cobre a configuração de definições de diagnóstico, nom
 
 ## Arquitetura
 
-Você criará recursos com subdomínios personalizados, configurará regras de rede, validará a conectividade e configurará logging de diagnósticoâ€”simulando uma implantação de serviços de IA pronta para produção.
+Você criará recursos com subdomínios personalizados, configurará regras de rede, validará a conectividade e configurará logging de diagnóstico—simulando uma implantação de serviços de IA pronta para produção.
 
 ![Topologia do Desafio 02](/img/ai-102/challenge-02-topology.svg)
 
@@ -167,7 +167,7 @@ new_keys = client.accounts.regenerate_key(
     parameters=RegenerateKeyParameters(key_name=KeyName.KEY1)
 )
 print(f"New Key 1: {new_keys.key1[:8]}...")
-print("Key 2 unchangedâ€”zero-downtime rotation complete")
+print("Key 2 unchanged—zero-downtime rotation complete")
 ```
 
 </TabItem>
@@ -186,7 +186,7 @@ Console.WriteLine($"Key 2: {keys.Value.Key2[..8]}...");
 var regenerated = await resource.RegenerateKeyAsync(
     new RegenerateKeyContent(CognitiveServicesKeyName.Key1));
 Console.WriteLine($"New Key 1: {regenerated.Value.Key1[..8]}...");
-Console.WriteLine("Key 2 unchangedâ€”zero-downtime rotation complete");
+Console.WriteLine("Key 2 unchanged—zero-downtime rotation complete");
 ```
 
 </TabItem>
@@ -342,7 +342,7 @@ Custom domain: https://ai102-mycompany-ai.cognitiveservices.azure.com/
 Key 1: a3f8b2c1...
 Key 2: 7d9e4f6a...
 New Key 1: x1y2z3w4...
-Key 2 unchangedâ€”zero-downtime rotation complete
+Key 2 unchanged—zero-downtime rotation complete
 
 Network rules applied: default action = Deny
 Allowed IPs: 203.0.113.0/24, 198.51.100.42
@@ -354,7 +354,7 @@ Public access: Enabled
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
 | Conflito de subdomínio personalizado | Erro `SubdomainAlreadyInUse` | Outro recurso usa o mesmo subdomínio globalmente | Escolha um nome de subdomínio único |
-| Rede bloqueada | `403 Forbidden` após aplicar regras | IP do cliente não está na lista de permissões | Adicione o IP do cliente Ã s regras de rede ou use private endpoint |
+| Rede bloqueada | `403 Forbidden` após aplicar regras | IP do cliente não está na lista de permissões | Adicione o IP do cliente às regras de rede ou use private endpoint |
 | Rotação de chave quebra o app | `401 Unauthorized` após regeneração | App ainda usando a chave antiga | Atualize para a nova chave, ou use a Key 2 durante a rotação da Key 1 |
 | Autenticação Entra falha | `401` com bearer token | Recurso sem subdomínio personalizado | Subdomínio personalizado é obrigatório para autenticação Microsoft Entra; recrie com `--custom-domain` |
 | Formato de endpoint errado | `404 Not Found` | Usando formato de endpoint regional com recurso de subdomínio personalizado | Use o formato `https://<subdomain>.cognitiveservices.azure.com/` |
@@ -371,13 +371,13 @@ Public access: Enabled
       "Endpoints regionais não suportam HTTPS para autenticação baseada em token"
     ],
     correctAnswer: 2,
-    explanation: "A autenticação Microsoft Entra ID requer um subdomínio personalizado porque a validação de token está vinculada Ã  URL única do endpoint. Endpoints regionais compartilhados (como eastus.api.cognitive.microsoft.com) suportam apenas autenticação baseada em chave."
+    explanation: "A autenticação Microsoft Entra ID requer um subdomínio personalizado porque a validação de token está vinculada à URL única do endpoint. Endpoints regionais compartilhados (como eastus.api.cognitive.microsoft.com) suportam apenas autenticação baseada em chave."
   },
   {
     question: "Você precisa rotacionar as chaves de API de um recurso Azure AI em produção sem nenhum tempo de inatividade. Qual é o procedimento correto?",
     options: [
       "Regenerar ambas as chaves simultaneamente, depois atualizar todas as aplicações",
-      "Usar managed identity em vez dissoâ€”a rotação de chaves sempre causa tempo de inatividade",
+      "Usar managed identity em vez disso—a rotação de chaves sempre causa tempo de inatividade",
       "Criar um novo recurso, migrar o tráfego, depois excluir o recurso antigo",
       "Atualizar todos os apps para usar a Key 2, regenerar a Key 1, atualizar os apps para a Key 1, regenerar a Key 2"
     ],
@@ -415,7 +415,7 @@ Public access: Enabled
       "P1 (Premium) para acesso a todas as APIs"
     ],
     correctAnswer: 2,
-    explanation: "Recursos multi-serviço (kind: AIServices) usam o SKU S0. Não existe F0 free tier para recursos multi-serviçoâ€”free tiers estão disponíveis apenas para recursos individuais de serviço único. S0 é o SKU padrão e único disponível para multi-serviço."
+    explanation: "Recursos multi-serviço (kind: AIServices) usam o SKU S0. Não existe F0 free tier para recursos multi-serviço—free tiers estão disponíveis apenas para recursos individuais de serviço único. S0 é o SKU padrão e único disponível para multi-serviço."
   }
 ]} />
 

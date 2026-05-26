@@ -149,15 +149,14 @@ steps:
 Enable flaky test management in Azure DevOps project settings:
 
 ```bash
-# Azure DevOps REST API - Enable flaky test detection
-# Project Settings > Test Management > Flaky test detection
-az devops invoke \
-  --area testflakiness \
-  --resource settings \
-  --org https://dev.azure.com/contoso \
-  --route-parameters project=ContosoAPI \
-  --http-method PATCH \
-  --in-file flaky-settings.json
+# Enable flaky test detection via Azure DevOps REST API
+# Navigate: Project Settings > Pipelines > Test Management > Flaky test detection
+# Or use the REST API directly:
+curl -X PATCH \
+  "https://dev.azure.com/contoso/ContosoAPI/_apis/test/ResultRetentionSettings?api-version=7.1" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $AZURE_DEVOPS_PAT" \
+  -d @flaky-settings.json
 
 # flaky-settings.json content:
 # {

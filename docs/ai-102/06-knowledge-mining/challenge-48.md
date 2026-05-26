@@ -14,7 +14,7 @@ import TabItem from '@theme/TabItem';
 :::
 
 :::tip Domain 6 Capstone
-This challenge integrates all Domain 6 concepts: AI Search indexing, skillsets, Document Intelligence, Content Understanding, and knowledge store â€” into a complete end-to-end document processing pipeline.
+This challenge integrates all Domain 6 concepts: AI Search indexing, skillsets, Document Intelligence, Content Understanding, and knowledge store — into a complete end-to-end document processing pipeline.
 :::
 
 ## Exam skills covered
@@ -32,18 +32,18 @@ This challenge integrates all Domain 6 concepts: AI Search indexing, skillsets, 
 Enterprise document processing requires handling diverse content types through a unified pipeline:
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  Source Content  â”‚
-â”‚  - PDFs         â”‚â”€â”€â”
-â”‚  - Images       â”‚  â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  - Audio files  â”‚  â”œâ”€â”€â”€â–¶â”‚  Processing   â”‚â”€â”€â”€â”€â–¶â”‚  Enrichment  â”‚â”€â”€â”€â”€â–¶â”‚   Output    â”‚
-â”‚  - Office docs  â”‚  â”‚    â”‚  (Doc Intel)  â”‚     â”‚  (AI Search) â”‚     â”‚  (Index +   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚  Knowledge  â”‚
-                     â”‚                                                â”‚   Store)    â”‚
-                     â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                     â””â”€â”€â”€â–¶â”‚ Content Under â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                          â”‚  standing     â”‚
-                          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────┐
+│  Source Content  │
+│  - PDFs         │──┐
+│  - Images       │  │    ┌───────────────┐     ┌──────────────┐     ┌─────────────┐
+│  - Audio files  │  ├───▶│  Processing   │────▶│  Enrichment  │────▶│   Output    │
+│  - Office docs  │  │    │  (Doc Intel)  │     │  (AI Search) │     │  (Index +   │
+└─────────────────┘  │    └───────────────┘     └──────────────┘     │  Knowledge  │
+                     │                                                │   Store)    │
+                     │    ┌───────────────┐                          └─────────────┘
+                     └───▶│ Content Under │─────────────────────────────────┘
+                          │  standing     │
+                          └───────────────┘
 ```
 
 ### Pipeline components:
@@ -586,7 +586,7 @@ Results:
       "Add a new vector field for the new model while keeping the old one"
     ],
     correctIndex: 1,
-    explanation: "Embedding models produce vectors in different spaces. You cannot mix vectors from different models in the same field â€” similarity calculations would be meaningless. You must re-embed all existing documents with the new model and re-index. Adding a new field (option D) works but wastes storage."
+    explanation: "Embedding models produce vectors in different spaces. You cannot mix vectors from different models in the same field — similarity calculations would be meaningless. You must re-embed all existing documents with the new model and re-index. Adding a new field (option D) works but wastes storage."
   },
   {
     id: "ai102-48-q3",
@@ -618,7 +618,7 @@ Results:
     options: [
       "Use batch processing with concurrent API calls respecting rate limits",
       "Deploy multiple Document Intelligence resources in different regions",
-      "Upgrade to a higher SKU (S0 already â€” request quota increase)",
+      "Upgrade to a higher SKU (S0 already — request quota increase)",
       "All of the above are valid scaling strategies"
     ],
     correctIndex: 3,

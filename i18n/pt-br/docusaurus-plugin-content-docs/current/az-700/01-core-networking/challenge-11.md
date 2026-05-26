@@ -22,11 +22,11 @@ A equipe de operações da Contoso recebe chamados sobre VMs que não conseguem 
   Internet
       |
   VNet (10.0.0.0/16)
-   â”œâ”€â”€ snet-web (10.0.1.0/24)
-   â”‚    â””â”€â”€ vm-web: 10.0.1.4 (NSG: nsg-web)
-   â”œâ”€â”€ snet-app (10.0.2.0/24)
-   â”‚    â””â”€â”€ vm-app: 10.0.2.4 (NSG: nsg-app)
-   â””â”€â”€ Route Table: rt-app (attached to snet-app)
+   ├── snet-web (10.0.1.0/24)
+   │    └── vm-web: 10.0.1.4 (NSG: nsg-web)
+   ├── snet-app (10.0.2.0/24)
+   │    └── vm-app: 10.0.2.4 (NSG: nsg-app)
+   └── Route Table: rt-app (attached to snet-app)
 ```
 
 ## Objetivos de aprendizagem
@@ -139,7 +139,7 @@ az network nsg rule create \
     --destination-port-ranges '*'
 ```
 
-### Etapa 4: Associar NSGs Ã s sub-redes
+### Etapa 4: Associar NSGs às sub-redes
 
 ```bash
 az network vnet subnet update \
@@ -310,7 +310,7 @@ Os parâmetros `--local` e `--remote` usam o formato `IP:PORTA`. Use `*` para a 
 
 O next hop avalia as rotas efetivas de uma VM e retorna para onde o tráfego para um destino específico será enviado.
 
-### Etapa 1: Verificar o próximo salto para tráfego com destino Ã  internet a partir de vm-app
+### Etapa 1: Verificar o próximo salto para tráfego com destino à internet a partir de vm-app
 
 ```bash
 az network watcher show-next-hop \
@@ -395,7 +395,7 @@ az network watcher test-connectivity \
     --dest-port 443
 ```
 
-Resultado esperado: `connectionStatus: Reachable` -- vm-web não possui regra de negação de saída, então o acesso Ã  internet funciona.
+Resultado esperado: `connectionStatus: Reachable` -- vm-web não possui regra de negação de saída, então o acesso à internet funciona.
 
 :::note
 

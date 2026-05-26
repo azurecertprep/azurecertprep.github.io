@@ -1,11 +1,11 @@
 ---
 sidebar_position: 3
-title: "Desafio 12: Reconhecimento Ã“ptico de Caracteres (OCR)"
+title: "Desafio 12: Reconhecimento Óptico de Caracteres (OCR)"
 ---
 
 import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
-# Desafio 12: Reconhecimento Ã“ptico de Caracteres (OCR)
+# Desafio 12: Reconhecimento Óptico de Caracteres (OCR)
 
 :::info Tempo Estimado
 **25-35 min** | **Custo**: Gratuito | **Domínio**: Visão Computacional no Azure (15-20%)
@@ -20,11 +20,11 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Visão geral
 
-Reconhecimento Ã“ptico de Caracteres (OCR) é a tecnologia que **extrai texto de imagens e documentos**. Sempre que você fotografa um documento, digitaliza um recibo ou aponta seu celular para uma placa e ele "lê" o texto â€” isso é OCR em ação.
+Reconhecimento Óptico de Caracteres (OCR) é a tecnologia que **extrai texto de imagens e documentos**. Sempre que você fotografa um documento, digitaliza um recibo ou aponta seu celular para uma placa e ele "lê" o texto — isso é OCR em ação.
 
-Pense no OCR como ensinar um computador a ler. Quando você olha para uma foto de um menu de restaurante, você instantaneamente reconhece letras e palavras. O OCR faz a mesma coisa â€” identifica as formas dos caracteres em uma imagem e os converte em texto legível por máquina que aplicações podem processar, pesquisar e armazenar.
+Pense no OCR como ensinar um computador a ler. Quando você olha para uma foto de um menu de restaurante, você instantaneamente reconhece letras e palavras. O OCR faz a mesma coisa — identifica as formas dos caracteres em uma imagem e os converte em texto legível por máquina que aplicações podem processar, pesquisar e armazenar.
 
-O Azure fornece OCR através de dois serviços principais: **Azure AI Vision** (Read API) para extração geral de texto de imagens, e **Azure AI Document Intelligence** para processamento estruturado de documentos. A Read API lida com texto impresso e manuscrito de qualquer imagem. O Document Intelligence vai além â€” ele compreende a estrutura do documento (campos, tabelas, pares chave-valor) de tipos específicos de documentos como faturas, recibos e formulários.
+O Azure fornece OCR através de dois serviços principais: **Azure AI Vision** (Read API) para extração geral de texto de imagens, e **Azure AI Document Intelligence** para processamento estruturado de documentos. A Read API lida com texto impresso e manuscrito de qualquer imagem. O Document Intelligence vai além — ele compreende a estrutura do documento (campos, tabelas, pares chave-valor) de tipos específicos de documentos como faturas, recibos e formulários.
 
 ## Explorar
 
@@ -38,7 +38,7 @@ O Azure fornece OCR através de dois serviços principais: **Azure AI Vision** (
 | **Caso de uso** | Ler uma placa, extrair texto de um screenshot | Processar 10.000 faturas e extrair totais, datas, fornecedores |
 | **Analogia** | Ler texto em voz alta | Preencher uma planilha a partir de um formulário |
 
-**Distinção principal**: OCR lê texto caractere por caractere. Document Intelligence COMPREENDE a estrutura do documento â€” ele sabe qual número é o "total" e qual é a "data."
+**Distinção principal**: OCR lê texto caractere por caractere. Document Intelligence COMPREENDE a estrutura do documento — ele sabe qual número é o "total" e qual é a "data."
 
 ### Tarefa 2: Experimente o demo de OCR do Azure AI Vision
 
@@ -57,17 +57,17 @@ A Read API retorna uma estrutura hierárquica:
 
 ```text
 Read Result
-â”œâ”€â”€ Page 1
-â”‚   â”œâ”€â”€ Line 1: "Invoice #12345"
-â”‚   â”‚   â”œâ”€â”€ Word: "Invoice" (confidence: 0.99, position: [x,y,w,h])
-â”‚   â”‚   â””â”€â”€ Word: "#12345" (confidence: 0.97, position: [x,y,w,h])
-â”‚   â”œâ”€â”€ Line 2: "Date: January 15, 2024"
-â”‚   â”‚   â”œâ”€â”€ Word: "Date:" (confidence: 0.99)
-â”‚   â”‚   â”œâ”€â”€ Word: "January" (confidence: 0.98)
-â”‚   â”‚   â””â”€â”€ ...
-â”‚   â””â”€â”€ ...
-â””â”€â”€ Page 2 (if multi-page document)
-    â””â”€â”€ ...
+├── Page 1
+│   ├── Line 1: "Invoice #12345"
+│   │   ├── Word: "Invoice" (confidence: 0.99, position: [x,y,w,h])
+│   │   └── Word: "#12345" (confidence: 0.97, position: [x,y,w,h])
+│   ├── Line 2: "Date: January 15, 2024"
+│   │   ├── Word: "Date:" (confidence: 0.99)
+│   │   ├── Word: "January" (confidence: 0.98)
+│   │   └── ...
+│   └── ...
+└── Page 2 (if multi-page document)
+    └── ...
 ```
 
 **Recursos principais da Read API**:
@@ -109,12 +109,12 @@ az cognitiveservices account show \
 
 | Conceito | Definição |
 |----------|-----------|
-| OCR (Reconhecimento Ã“ptico de Caracteres) | Tecnologia que extrai texto de imagens e documentos digitalizados |
+| OCR (Reconhecimento Óptico de Caracteres) | Tecnologia que extrai texto de imagens e documentos digitalizados |
 | Read API | Capacidade do Azure AI Vision que extrai texto impresso e manuscrito |
 | Azure AI Document Intelligence | Serviço que extrai dados estruturados (campos, tabelas) de documentos |
 | Caixa/polígono delimitador | Coordenadas indicando onde cada palavra/linha aparece na imagem |
-| Texto impresso | Texto gerado por máquina (fontes) â€” maior precisão |
-| Texto manuscrito | Texto escrito Ã  mão â€” mais desafiador, menor precisão |
+| Texto impresso | Texto gerado por máquina (fontes) — maior precisão |
+| Texto manuscrito | Texto escrito à mão — mais desafiador, menor precisão |
 | Modelo pré-construído | Modelo pré-treinado do Document Intelligence para tipos específicos de documentos |
 | Modelo personalizado | Modelo treinado pelo usuário do Document Intelligence para formatos únicos de documentos |
 | Score de confiança | Medida de confiabilidade (0-1) para cada palavra extraída |
@@ -123,7 +123,7 @@ az cognitiveservices account show \
 
 | Equívoco | Realidade |
 |----------|-----------|
-| "OCR e Document Intelligence são a mesma coisa" | OCR extrai texto bruto (caracteres e palavras). Document Intelligence compreende a ESTRUTURA do documento â€” ele sabe qual texto é uma data, qual é um total e qual é o nome de um fornecedor |
+| "OCR e Document Intelligence são a mesma coisa" | OCR extrai texto bruto (caracteres e palavras). Document Intelligence compreende a ESTRUTURA do documento — ele sabe qual texto é uma data, qual é um total e qual é o nome de um fornecedor |
 | "OCR só funciona com texto impresso" | A Read API do Azure lida com texto impresso e manuscrito. Texto impresso tipicamente tem maior precisão, mas o reconhecimento de manuscrito melhorou dramaticamente |
 | "OCR requer imagens perfeitamente claras e retas" | OCR moderno lida com texto rotacionado, inclinado e até parcialmente obstruído. A Read API compensa qualidade de imagem imperfeita |
 | "Document Intelligence requer treinamento personalizado para cada tipo de documento" | Modelos pré-construídos funcionam imediatamente para documentos comuns (faturas, recibos, IDs). Treinamento personalizado só é necessário para formatos de documentos únicos/proprietários |
@@ -166,7 +166,7 @@ az cognitiveservices account show \
       question: 'Qual é a diferença principal entre OCR (Read API) e Document Intelligence?',
       options: ['OCR extrai texto bruto; Document Intelligence extrai campos estruturados e compreende o layout do documento', 'OCR é mais rápido; Document Intelligence é mais lento', 'Document Intelligence só funciona com PDFs', 'OCR requer mais dados de treinamento'],
       correctAnswer: 0,
-      explanation: 'OCR (Read API) extrai texto como está das imagens. Document Intelligence vai além â€” ele compreende a estrutura do documento e extrai campos nomeados e estruturados (como "TotalFatura" ou "NomeFornecedor") de tipos específicos de documentos.'
+      explanation: 'OCR (Read API) extrai texto como está das imagens. Document Intelligence vai além — ele compreende a estrutura do documento e extrai campos nomeados e estruturados (como "TotalFatura" ou "NomeFornecedor") de tipos específicos de documentos.'
     }
   ]}
 />

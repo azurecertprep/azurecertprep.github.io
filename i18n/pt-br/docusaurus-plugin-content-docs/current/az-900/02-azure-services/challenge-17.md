@@ -19,7 +19,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ## Visão Geral
 
-Uma vez que os usuários estão autenticados (provaram quem são), o Azure precisa controlar **o que eles podem fazer**. Ã‰ aqui que o RBAC (Role-Based Access Control) entra. **Conditional Access** adiciona políticas sensíveis ao contexto (onde, quando, como o usuário está fazendo login). **Identidades externas** permitem colaboração com pessoas fora da sua organização.
+Uma vez que os usuários estão autenticados (provaram quem são), o Azure precisa controlar **o que eles podem fazer**. É aqui que o RBAC (Role-Based Access Control) entra. **Conditional Access** adiciona políticas sensíveis ao contexto (onde, quando, como o usuário está fazendo login). **Identidades externas** permitem colaboração com pessoas fora da sua organização.
 
 ## Explorar
 
@@ -39,33 +39,33 @@ RBAC responde: "Quem pode fazer o quê, em quais recursos?"
 |--------|-----------|
 | **Owner** | Acesso total + pode atribuir funções a outros |
 | **Contributor** | Acesso total EXCETO atribuir funções |
-| **Reader** | Apenas visualização â€” não pode alterar nada |
+| **Reader** | Apenas visualização — não pode alterar nada |
 | **User Access Administrator** | Gerenciar apenas acesso de usuários |
 
 ### Tarefa 2: Explorar RBAC no Portal
 
 1. No Azure Portal, navegue até sua **Subscription**
-2. Clique em **Access control (IAM)** no menu Ã  esquerda
-3. Clique na aba **Roles** â€” navegue pelas funções disponíveis
-4. Clique na aba **Role assignments** â€” veja quem tem acesso
-5. Clique em **Check access** â€” veja o que um usuário específico pode fazer
+2. Clique em **Access control (IAM)** no menu à esquerda
+3. Clique na aba **Roles** — navegue pelas funções disponíveis
+4. Clique na aba **Role assignments** — veja quem tem acesso
+5. Clique em **Check access** — veja o que um usuário específico pode fazer
 6. Esta é uma exploração somente leitura
 
 **Herança de RBAC:**
 ```text
-Management Group (Owner) â†’ applies to all below
-  â””â”€â”€ Subscription (Contributor) â†’ applies to all RGs and resources
-        â””â”€â”€ Resource Group (Reader) â†’ applies to all resources in this RG
-              â””â”€â”€ Resource (custom) â†’ applies to this resource only
+Management Group (Owner) → applies to all below
+  └── Subscription (Contributor) → applies to all RGs and resources
+        └── Resource Group (Reader) → applies to all resources in this RG
+              └── Resource (custom) → applies to this resource only
 ```
 
 ### Tarefa 3: Entender Conditional Access
 
 Políticas de Conditional Access são regras "se-então":
 
-**SE** (condição) â†’ **ENTÃƒO** (ação)
+**SE** (condição) → **ENTÃO** (ação)
 
-| Sinal (SE) | Ação (ENTÃƒO) |
+| Sinal (SE) | Ação (ENTÃO) |
 |------------|--------------|
 | Usuário em localização arriscada | Exigir MFA |
 | Dispositivo não está em conformidade | Bloquear acesso |
@@ -82,18 +82,18 @@ Políticas de Conditional Access são regras "se-então":
 ### Tarefa 4: Explorar Conditional Access no Portal
 
 1. No Azure Portal, pesquise por **Conditional Access**
-2. Ou navegue: **Microsoft Entra ID** â†’ **Security** â†’ **Conditional Access**
+2. Ou navegue: **Microsoft Entra ID** → **Security** → **Conditional Access**
 3. Navegue pela seção **Policies**
 4. Clique em **+ New policy** para ver quais opções existem:
    - **Assignments**: Usuários, apps, condições
    - **Access controls**: Grant, Block, Require MFA
-5. Clique em **Cancel** â€” não crie uma política
+5. Clique em **Cancel** — não crie uma política
 
 ### Tarefa 5: Entender identidades externas
 
 **B2B (Business-to-Business)** permite convidar usuários externos:
 - Funcionários de parceiros colaboram no seu ambiente
-- Eles usam sua PRÃ“PRIA identidade (email da empresa deles)
+- Eles usam sua PRÓPRIA identidade (email da empresa deles)
 - Você controla o que podem acessar via RBAC
 - Eles aparecem como usuários "Guest" no seu diretório
 
@@ -117,9 +117,9 @@ az role definition list --query "[?roleType=='BuiltInRole'] | [0:10].{Name:roleN
 
 | Conceito | Descrição |
 |----------|-----------|
-| **RBAC** | Controle de acesso baseado em função â€” atribuir permissões a funções, funções a usuários |
+| **RBAC** | Controle de acesso baseado em função — atribuir permissões a funções, funções a usuários |
 | **Role assignment** | Combinação de security principal + role + scope |
-| **Scope** | Onde a função se aplica (management group â†’ subscription â†’ RG â†’ recurso) |
+| **Scope** | Onde a função se aplica (management group → subscription → RG → recurso) |
 | **Conditional Access** | Políticas se-então que avaliam contexto de login |
 | **B2B** | Convidar usuários externos para colaborar usando sua própria identidade |
 | **B2C** | Gerenciamento de identidade voltado ao cliente para apps |
@@ -153,7 +153,7 @@ az role definition list --query "[?roleType=='BuiltInRole'] | [0:10].{Name:roleN
     {
       id: 'az900-17-q4',
       question: 'Se uma função Contributor é atribuída no nível da subscription, a que o usuário tem acesso?',
-      options: ['Apenas Ã s configurações daquela subscription', 'Todos os resource groups e recursos dentro daquela subscription', 'Apenas ao primeiro resource group', 'Nada â€” Contributor requer atribuição no nível do recurso'],
+      options: ['Apenas às configurações daquela subscription', 'Todos os resource groups e recursos dentro daquela subscription', 'Apenas ao primeiro resource group', 'Nada — Contributor requer atribuição no nível do recurso'],
       correctAnswer: 1,
       explanation: 'Permissões RBAC são herdadas para baixo. Uma função Contributor no nível da subscription dá acesso total (exceto atribuições de função) a TODOS os resource groups e recursos dentro daquela subscription.'
     },
@@ -169,6 +169,6 @@ az role definition list --query "[?roleType=='BuiltInRole'] | [0:10].{Name:roleN
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe Azure identity, access, and security](https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/)
 - [Azure RBAC documentation](https://learn.microsoft.com/en-us/azure/role-based-access-control/)

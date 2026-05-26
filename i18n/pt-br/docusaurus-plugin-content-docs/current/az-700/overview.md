@@ -21,11 +21,11 @@ Como engenheiro de rede do Azure, suas responsabilidades incluem otimizar o dese
 
 | Domínio | Peso | Desafios |
 |---------|------|----------|
-| Projetar e implementar infraestrutura de rede principal | 25â€“30% | 01â€“13 |
-| Projetar, implementar e gerenciar serviços de conectividade | 20â€“25% | 14â€“24 |
-| Projetar e implementar serviços de entrega de aplicações | 15â€“20% | 25â€“33 |
-| Projetar e implementar acesso privado a serviços do Azure | 10â€“15% | 34â€“39 |
-| Projetar e implementar serviços de segurança de rede do Azure | 15â€“20% | 40â€“48 |
+| Projetar e implementar infraestrutura de rede principal | 25–30% | 01–13 |
+| Projetar, implementar e gerenciar serviços de conectividade | 20–25% | 14–24 |
+| Projetar e implementar serviços de entrega de aplicações | 15–20% | 25–33 |
+| Projetar e implementar acesso privado a serviços do Azure | 10–15% | 34–39 |
+| Projetar e implementar serviços de segurança de rede do Azure | 15–20% | 40–48 |
 | Capstone entre domínios | Todos | 49 |
 
 :::tip Estrutura dos Desafios
@@ -50,7 +50,7 @@ Cada desafio segue um formato consistente:
 
 ## Pré-requisitos
 
-- **Certificação AZ-104 (recomendada)** â€” Este exame se baseia no conhecimento de Azure Administrator
+- **Certificação AZ-104 (recomendada)** — Este exame se baseia no conhecimento de Azure Administrator
 - Assinatura do Azure com pelo menos a função de Contributor
 - Familiaridade com fundamentos de rede (TCP/IP, DNS, protocolos de roteamento, sub-redes)
 - Azure CLI ou Azure PowerShell instalados e autenticados
@@ -64,11 +64,11 @@ Alguns desafios neste exame envolvem recursos que geram custos significativos:
 
 | Recurso | Custo aproximado | Desafios |
 |---------|-----------------|----------|
-| VPN Gateway (VpnGw1) | ~$0,19/hora | 14â€“18, 24 |
-| Azure Firewall | ~$1,25/hora | 42â€“44 |
-| ExpressRoute | $55â€“$10.000+/mês | 19â€“21 (apenas SIMULAÃ‡ÃƒO) |
-| Application Gateway | ~$0,27/hora | 28â€“30 |
-| Azure Front Door | ~$35/mês base | 31â€“32 |
+| VPN Gateway (VpnGw1) | ~$0,19/hora | 14–18, 24 |
+| Azure Firewall | ~$1,25/hora | 42–44 |
+| ExpressRoute | $55–$10.000+/mês | 19–21 (apenas SIMULAÇÃO) |
+| Application Gateway | ~$0,27/hora | 28–30 |
+| Azure Front Door | ~$35/mês base | 31–32 |
 | DDoS Network Protection | ~$2.944/mês | 13 (usa alternativa IP Protection) |
 
 **Sempre execute os scripts de limpeza imediatamente após concluir um desafio.** Os desafios de ExpressRoute são baseados em simulação (você pratica o conhecimento de configuração sem implantar circuitos reais).
@@ -79,10 +79,10 @@ Alguns desafios neste exame envolvem recursos que geram custos significativos:
 
 ```text
 AZ-900 (Fundamentos)
-   â†“
-AZ-104 (Administrador) â†â”€â”€ conhecimento pré-requisito
-   â†“
-AZ-700 (Engenheiro de Rede) â†â”€â”€ VOCÃŠ ESTÁ AQUI
-   â†“
-AZ-305 (Arquiteto de Soluções) â€” perspectiva mais ampla de design
+   ↓
+AZ-104 (Administrador) ←── conhecimento pré-requisito
+   ↓
+AZ-700 (Engenheiro de Rede) ←── VOCÊ ESTÁ AQUI
+   ↓
+AZ-305 (Arquiteto de Soluções) — perspectiva mais ampla de design
 ```

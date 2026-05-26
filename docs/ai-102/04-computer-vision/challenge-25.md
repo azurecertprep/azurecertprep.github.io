@@ -30,7 +30,7 @@ Custom Vision enables training domain-specific image classification models witho
 | **Classification - Multilabel** | Image can have MULTIPLE categories | Multiple tags per image |
 | **Object Detection** | Locate objects with bounding boxes | Tags + coordinates |
 
-Training produces iterations with metrics: **Precision** (of predicted positives, how many are correct), **Recall** (of actual positives, how many were found), and **AP** (Average Precision â€” area under precision-recall curve).
+Training produces iterations with metrics: **Precision** (of predicted positives, how many are correct), **Recall** (of actual positives, how many were found), and **AP** (Average Precision — area under precision-recall curve).
 
 ## Prerequisites
 - Azure subscription

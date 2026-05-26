@@ -40,7 +40,7 @@ On-Premises DNS Server
 
 ### Conceitos-chave
 
-- **Ponto de extremidade de entrada**: Recebe consultas DNS do ambiente local (ou de outras VNets) e as resolve usando o Azure DNS (incluindo zonas do Private DNS vinculadas Ã  VNet).
+- **Ponto de extremidade de entrada**: Recebe consultas DNS do ambiente local (ou de outras VNets) e as resolve usando o Azure DNS (incluindo zonas do Private DNS vinculadas à VNet).
 - **Ponto de extremidade de saída**: Envia consultas DNS do Azure para servidores DNS externos (como DNS local) com base em regras de encaminhamento.
 - **Conjunto de regras de encaminhamento**: Uma coleção de regras que mapeia nomes de domínio para servidores DNS de destino para encaminhamento condicional.
 - **Delegação de sub-rede**: Ambos os pontos de extremidade de entrada e saída requerem sub-redes dedicadas delegadas a `Microsoft.Network/dnsResolvers`. O tamanho mínimo é /28.

@@ -343,10 +343,10 @@ Quando a push protection bloqueia um commit:
 ```text
 remote: error: GH013: Repository rule violations found for refs/heads/main.
 remote: - GITHUB PUSH PROTECTION
-remote:   â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+remote:   —————————————————————————————————————————
 remote:   Resolve the following violations before pushing again
 remote:
-remote:   â€” Push cannot contain secrets â€”
+remote:   — Push cannot contain secrets —
 remote:
 remote:   locations:
 remote:     - commit: abc123def

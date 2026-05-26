@@ -358,7 +358,7 @@ $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
 ### Portal
 
 1. Navegue até o recurso do Application Gateway
-2. Selecione **Configurações de backend** no menu Ã  esquerda
+2. Selecione **Configurações de backend** no menu à esquerda
 3. Selecione as configurações HTTP que deseja modificar
 4. Role até **Connection draining** e alterne para **Sim**
 5. Defina o valor de **Drain timeout** em segundos (1-3600)

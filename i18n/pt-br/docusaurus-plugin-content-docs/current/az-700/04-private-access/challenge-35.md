@@ -21,29 +21,29 @@ A Contoso Enterprise está padronizando o acesso privado para todos os serviços
 
 ```text
                          Azure VNet: vnet-enterprise (10.0.0.0/16)
-                         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                         â”‚  snet-app (10.0.1.0/24)                     â”‚
-                         â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                         â”‚
-                         â”‚  â”‚  App VMs/AKS   â”‚                         â”‚
-                         â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                         â”‚
-                         â”‚                                             â”‚
-                         â”‚  snet-pe (10.0.2.0/24)                      â”‚
-                         â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”         â”‚
-                         â”‚  â”‚ PE-Blob  â”‚ PE-File  â”‚ PE-SQL   â”‚         â”‚
-                         â”‚  â”‚ .2.4     â”‚ .2.5     â”‚ .2.6     â”‚         â”‚
-                         â”‚  â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤         â”‚
-                         â”‚  â”‚ PE-KV    â”‚ PE-Web   â”‚ PE-Cosmosâ”‚         â”‚
-                         â”‚  â”‚ .2.7     â”‚ .2.8     â”‚ .2.9     â”‚         â”‚
-                         â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜         â”‚
-                         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                         ┌─────────────────────────────────────────────┐
+                         │  snet-app (10.0.1.0/24)                     │
+                         │  ┌────────────────┐                         │
+                         │  │  App VMs/AKS   │                         │
+                         │  └────────────────┘                         │
+                         │                                             │
+                         │  snet-pe (10.0.2.0/24)                      │
+                         │  ┌──────────┬──────────┬──────────┐         │
+                         │  │ PE-Blob  │ PE-File  │ PE-SQL   │         │
+                         │  │ .2.4     │ .2.5     │ .2.6     │         │
+                         │  ├──────────┼──────────┼──────────┤         │
+                         │  │ PE-KV    │ PE-Web   │ PE-Cosmos│         │
+                         │  │ .2.7     │ .2.8     │ .2.9     │         │
+                         │  └──────────┴──────────┴──────────┘         │
+                         └─────────────────────────────────────────────┘
 
     Private DNS Zones:
-    â”œâ”€â”€ privatelink.blob.core.windows.net
-    â”œâ”€â”€ privatelink.file.core.windows.net
-    â”œâ”€â”€ privatelink.database.windows.net
-    â”œâ”€â”€ privatelink.vaultcore.azure.net
-    â”œâ”€â”€ privatelink.azurewebsites.net
-    â””â”€â”€ privatelink.documents.azure.com
+    ├── privatelink.blob.core.windows.net
+    ├── privatelink.file.core.windows.net
+    ├── privatelink.database.windows.net
+    ├── privatelink.vaultcore.azure.net
+    ├── privatelink.azurewebsites.net
+    └── privatelink.documents.azure.com
 ```
 
 ## Objetivos de aprendizagem
@@ -442,27 +442,27 @@ az network private-endpoint dns-zone-group create \
 
 # Storage Blob
 nslookup stcontosope01.blob.core.windows.net
-# Expected: stcontosope01.privatelink.blob.core.windows.net â†’ 10.0.2.x
+# Expected: stcontosope01.privatelink.blob.core.windows.net → 10.0.2.x
 
 # Storage File
 nslookup stcontosope01.file.core.windows.net
-# Expected: stcontosope01.privatelink.file.core.windows.net â†’ 10.0.2.x
+# Expected: stcontosope01.privatelink.file.core.windows.net → 10.0.2.x
 
 # SQL Database
 nslookup sql-contoso-pe01.database.windows.net
-# Expected: sql-contoso-pe01.privatelink.database.windows.net â†’ 10.0.2.x
+# Expected: sql-contoso-pe01.privatelink.database.windows.net → 10.0.2.x
 
 # Key Vault
 nslookup kv-contoso-pe01.vault.azure.net
-# Expected: kv-contoso-pe01.privatelink.vaultcore.azure.net â†’ 10.0.2.x
+# Expected: kv-contoso-pe01.privatelink.vaultcore.azure.net → 10.0.2.x
 
 # Web App
 nslookup webapp-contoso-pe01.azurewebsites.net
-# Expected: webapp-contoso-pe01.privatelink.azurewebsites.net â†’ 10.0.2.x
+# Expected: webapp-contoso-pe01.privatelink.azurewebsites.net → 10.0.2.x
 
 # Cosmos DB
 nslookup cosmos-contoso-pe01.documents.azure.com
-# Expected: cosmos-contoso-pe01.privatelink.documents.azure.com â†’ 10.0.2.x
+# Expected: cosmos-contoso-pe01.privatelink.documents.azure.com → 10.0.2.x
 ```
 
 ---

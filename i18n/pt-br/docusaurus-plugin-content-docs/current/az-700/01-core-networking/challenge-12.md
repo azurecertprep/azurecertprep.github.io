@@ -21,13 +21,13 @@ A equipe do NOC da Contoso precisa de visibilidade ponta a ponta em sua rede Azu
 ```text
 Source VM (East US)
     |
-    â”œâ”€â”€ TCP test â†’ Load Balancer (East US) â†’ Backend VMs
-    â”œâ”€â”€ HTTP test â†’ Web App endpoint
-    â””â”€â”€ ICMP test â†’ VM in West US
+    ├── TCP test → Load Balancer (East US) → Backend VMs
+    ├── HTTP test → Web App endpoint
+    └── ICMP test → VM in West US
             |
-All results â†’ Log Analytics Workspace
+All results → Log Analytics Workspace
             |
-    Alerts â†’ Action Group (NOC email)
+    Alerts → Action Group (NOC email)
 ```
 
 ## Objetivos de aprendizagem
@@ -301,7 +301,7 @@ az network watcher flow-log create \
 
 :::caution NSG flow logs vs configurações de diagnóstico
 
-Os NSG flow logs NÃƒO são enviados diretamente para o Log Analytics. Eles são armazenados em uma Storage Account. Para consultar dados de fluxo no Log Analytics, você deve habilitar o Traffic Analytics, que processa os flow logs e escreve dados resumidos na tabela `AzureNetworkAnalytics_CL`. O parâmetro `--traffic-analytics true` e o parâmetro `--workspace` habilitam esse pipeline.
+Os NSG flow logs NÃO são enviados diretamente para o Log Analytics. Eles são armazenados em uma Storage Account. Para consultar dados de fluxo no Log Analytics, você deve habilitar o Traffic Analytics, que processa os flow logs e escreve dados resumidos na tabela `AzureNetworkAnalytics_CL`. O parâmetro `--traffic-analytics true` e o parâmetro `--workspace` habilitam esse pipeline.
 
 :::
 
@@ -451,7 +451,7 @@ az network watcher show-topology \
 
 :::note Capacidades do Network Insights
 
-O Network Insights não requer instalação de agente nem configuração adicional. Ele descobre automaticamente recursos em todas as assinaturas Ã s quais você tem acesso. No entanto, os dados do Connection Monitor só aparecem após você configurar os testes do Connection Monitor (conforme feito nas Tarefas 1-2). A visualização de topologia é atualizada aproximadamente a cada 5 minutos.
+O Network Insights não requer instalação de agente nem configuração adicional. Ele descobre automaticamente recursos em todas as assinaturas às quais você tem acesso. No entanto, os dados do Connection Monitor só aparecem após você configurar os testes do Connection Monitor (conforme feito nas Tarefas 1-2). A visualização de topologia é atualizada aproximadamente a cada 5 minutos.
 
 :::
 
@@ -612,7 +612,7 @@ az network watcher connection-monitor output add \
 
 **Sintoma:** Os testes de conectividade mostram falhas no painel do Connection Monitor, mas o alerta configurado nunca dispara.
 
-**Causa raiz:** O limite do alerta está definido muito alto (por exemplo, `ChecksFailedPercent > 95` quando as falhas reais são 60%), ou a janela de avaliação é muito grande em relação Ã  duração da falha.
+**Causa raiz:** O limite do alerta está definido muito alto (por exemplo, `ChecksFailedPercent > 95` quando as falhas reais são 60%), ou a janela de avaliação é muito grande em relação à duração da falha.
 
 **Diagnóstico:**
 

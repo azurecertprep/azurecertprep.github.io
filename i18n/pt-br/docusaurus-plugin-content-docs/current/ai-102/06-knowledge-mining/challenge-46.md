@@ -333,7 +333,7 @@ print(f"Component models: {len(composed_model.doc_types)} document types")
 for doc_type in composed_model.doc_types:
     print(f"  - {doc_type}")
 
-# Use the composed model â€” it auto-classifies the document
+# Use the composed model — it auto-classifies the document
 poller = client.begin_analyze_document(
     "composed-documents-model",
     AnalyzeDocumentRequest(url_source=test_url)
@@ -387,7 +387,7 @@ curl -s -i -X POST \
 </TabItem>
 </Tabs>
 
-### Tarefa 5: Gerenciamento de modelos â€” listar, obter, excluir
+### Tarefa 5: Gerenciamento de modelos — listar, obter, excluir
 
 <Tabs>
 <TabItem value="python" label="Python SDK">
@@ -522,7 +522,7 @@ Document type: purchase-order-model
       "Blade do Document Intelligence no Portal Azure"
     ],
     correctIndex: 0,
-    explanation: "O Document Intelligence Studio (documentintelligence.ai.azure.com) fornece uma interface visual de rotulagem onde você desenha caixas delimitadoras e atribui nomes de campos Ã s regiões nos seus documentos. Os rótulos são armazenados como arquivos JSON junto aos seus dados de treinamento."
+    explanation: "O Document Intelligence Studio (documentintelligence.ai.azure.com) fornece uma interface visual de rotulagem onde você desenha caixas delimitadoras e atribui nomes de campos às regiões nos seus documentos. Os rótulos são armazenados como arquivos JSON junto aos seus dados de treinamento."
   },
   {
     id: "ai102-46-q5",

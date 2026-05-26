@@ -23,7 +23,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 A percepção chave é que LLMs respondem a **contexto**. Uma system message define os limites comportamentais ("Você é um editor profissional de emails"). **Exemplos few-shot** mostram ao modelo qual formato você espera. Instruções específicas ("Responda em tópicos, limite a 3 itens") restringem a saída. E **dados de grounding** (documentos ou fatos relevantes) dão ao modelo informações precisas para referenciar em vez de depender de dados de treinamento potencialmente desatualizados.
 
-Engenharia de prompt não é sobre "enganar" a IA â€” é sobre comunicação clara. Pense nisso como dar instruções a um novo funcionário: quanto mais contexto, exemplos e restrições você fornecer, melhor o resultado. Os parâmetros do Azure OpenAI (temperatura, top-p, max tokens) ajustam ainda mais o comportamento do modelo.
+Engenharia de prompt não é sobre "enganar" a IA — é sobre comunicação clara. Pense nisso como dar instruções a um novo funcionário: quanto mais contexto, exemplos e restrições você fornecer, melhor o resultado. Os parâmetros do Azure OpenAI (temperatura, top-p, max tokens) ajustam ainda mais o comportamento do modelo.
 
 ## Explorar
 
@@ -38,19 +38,19 @@ Um prompt eficaz tipicamente inclui alguns ou todos estes elementos:
 | **Instrução** | Dizer ao modelo o que fazer | "Resuma o seguinte em 3 tópicos." |
 | **Dados de entrada** | O conteúdo a processar | [O texto a resumir] |
 | **Formato de saída** | Especificar estrutura desejada | "Formate como lista numerada" ou "Responda em JSON" |
-| **Exemplos few-shot** | Mostrar comportamento esperado | "Exemplo: Entrada: X â†’ Saída: Y" |
+| **Exemplos few-shot** | Mostrar comportamento esperado | "Exemplo: Entrada: X → Saída: Y" |
 | **Restrições** | Definir limites | "Máximo 100 palavras. Não inclua opiniões." |
 
 ### Tarefa 2: Comparar prompts bons vs. ruins
 
 **Cenário**: Você quer uma descrição de produto para um novo fone de ouvido sem fio.
 
-âŒ **Prompt ruim**:
+❌ **Prompt ruim**:
 > "Escreva sobre fones de ouvido."
 
 Resultado: Texto genérico e sem foco sobre fones de ouvido em geral.
 
-âœ… **Prompt bom**:
+✅ **Prompt bom**:
 > "Escreva uma descrição de produto de 50 palavras para fones de ouvido sem fio com cancelamento de ruído voltados para viajantes de negócios. Enfatize conforto para voos longos, duração da bateria e cancelamento de ruído. Tom: profissional mas amigável."
 
 Resultado: Descrição focada e específica que atende aos requisitos.
@@ -65,13 +65,13 @@ Resultado: Descrição focada e específica que atende aos requisitos.
 
 ### Tarefa 3: Pratique prompting few-shot
 
-**Zero-shot** â€” Sem exemplos (modelo depende do treinamento):
+**Zero-shot** — Sem exemplos (modelo depende do treinamento):
 ```python
 Classify the following review as Positive, Negative, or Neutral:
 "The product arrived on time and works exactly as described."
 ```
 
-**One-shot** â€” Um exemplo:
+**One-shot** — Um exemplo:
 ```python
 Classify reviews as Positive, Negative, or Neutral.
 
@@ -84,7 +84,7 @@ Review: "The product arrived on time and works exactly as described."
 Classification:
 ```
 
-**Few-shot** â€” Múltiplos exemplos:
+**Few-shot** — Múltiplos exemplos:
 ```python
 Classify reviews as Positive, Negative, or Neutral.
 
@@ -116,16 +116,16 @@ Estes parâmetros controlam a aleatoriedade e criatividade das saídas:
 | 0.7-1.0 | Criativo, respostas variadas | Escrita criativa, brainstorming, storytelling |
 | >1.0 | Muito aleatório, potencialmente incoerente | Raramente útil em produção |
 
-**Top-p** (0 a 1) â€” Amostragem de núcleo:
-- Top-p 0.1: Considera apenas os 10% de tokens mais prováveis â†’ muito focado
-- Top-p 0.9: Considera os 90% de tokens mais prováveis â†’ mais diverso
-- Funciona como alternativa Ã  temperatura (use um ou outro, não ambos)
+**Top-p** (0 a 1) — Amostragem de núcleo:
+- Top-p 0.1: Considera apenas os 10% de tokens mais prováveis → muito focado
+- Top-p 0.9: Considera os 90% de tokens mais prováveis → mais diverso
+- Funciona como alternativa à temperatura (use um ou outro, não ambos)
 
 **Sua tarefa**: Para cada cenário, qual temperatura você recomendaria?
-1. Extrair datas de um contrato jurídico â†’ **0** (precisão importa, sem criatividade)
-2. Escrever taglines de marketing â†’ **0.8-1.0** (criatividade desejada)
-3. Responder perguntas FAQ de clientes â†’ **0.3** (consistente mas natural)
-4. Gerar poesia â†’ **1.0+** (máxima criatividade)
+1. Extrair datas de um contrato jurídico → **0** (precisão importa, sem criatividade)
+2. Escrever taglines de marketing → **0.8-1.0** (criatividade desejada)
+3. Responder perguntas FAQ de clientes → **0.3** (consistente mas natural)
+4. Gerar poesia → **1.0+** (máxima criatividade)
 
 ### Tarefa 5: Entender grounding e janelas de contexto
 
@@ -149,7 +149,7 @@ Esta abordagem (chamada **Retrieval-Augmented Generation / RAG**) é preferida p
 - Fornece informações atualizadas (não limitado a dados de treinamento)
 - Permite respostas verificáveis (você pode conferir com a fonte)
 
-**Janela de contexto** â€” o total de tokens que um modelo pode lidar (entrada + saída):
+**Janela de contexto** — o total de tokens que um modelo pode lidar (entrada + saída):
 | Modelo | Janela de Contexto |
 |--------|-------------------|
 | GPT-4o | 128.000 tokens |
@@ -176,9 +176,9 @@ Para o exame, lembre-se: system messages definem comportamento, exemplos few-sho
 | Equívoco | Realidade |
 |----------|-----------|
 | Prompts mais longos sempre produzem melhores resultados | Prompts concisos e claros com o contexto certo frequentemente superam os verbosos; comprimento desnecessário desperdiça tokens |
-| Temperatura 0 significa que o modelo não vai errar | Temperatura 0 torna a saída determinística (mesma entrada â†’ mesma saída) mas não garante precisão factual |
-| Exemplos few-shot ensinam o modelo permanentemente | Exemplos se aplicam apenas Ã  conversa atual; o modelo não retém aprendizado entre sessões |
-| Você deve sempre usar a janela de contexto máxima | Incluir contexto irrelevante pode na verdade confundir o modelo; inclua apenas o necessário para responder Ã  pergunta |
+| Temperatura 0 significa que o modelo não vai errar | Temperatura 0 torna a saída determinística (mesma entrada → mesma saída) mas não garante precisão factual |
+| Exemplos few-shot ensinam o modelo permanentemente | Exemplos se aplicam apenas à conversa atual; o modelo não retém aprendizado entre sessões |
+| Você deve sempre usar a janela de contexto máxima | Incluir contexto irrelevante pode na verdade confundir o modelo; inclua apenas o necessário para responder à pergunta |
 | Engenharia de prompt é uma tarefa única | Prompts eficazes requerem testes iterativos e refinamento com base nas saídas reais |
 
 ## Verificação de Conhecimento
@@ -204,7 +204,7 @@ Para o exame, lembre-se: system messages definem comportamento, exemplos few-sho
       question: 'Uma aplicação precisa extrair pontos de dados específicos de faturas com alta precisão. Qual configuração de temperatura é mais apropriada?',
       options: ['Temperatura 0 (determinística)', 'Temperatura 0.7 (equilibrada)', 'Temperatura 1.0 (criativa)', 'Temperatura 2.0 (aleatoriedade máxima)'],
       correctAnswer: 0,
-      explanation: 'Temperatura 0 produz saída determinística e focada â€” ideal para tarefas de extração de dados onde precisão e consistência importam mais que criatividade. Temperaturas mais altas introduzem aleatoriedade que poderia produzir extrações incorretas.'
+      explanation: 'Temperatura 0 produz saída determinística e focada — ideal para tarefas de extração de dados onde precisão e consistência importam mais que criatividade. Temperaturas mais altas introduzem aleatoriedade que poderia produzir extrações incorretas.'
     },
     {
       id: 'ai900-22-q4',
@@ -227,6 +227,6 @@ Para o exame, lembre-se: system messages definem comportamento, exemplos few-sho
 
 - [Técnicas de engenharia de prompt](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering)
 - [Framework de system message](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/system-message)
-- [Introdução Ã  engenharia de prompt](https://learn.microsoft.com/en-us/training/modules/introduction-prompt-engineering-with-github-copilot/)
+- [Introdução à engenharia de prompt](https://learn.microsoft.com/en-us/training/modules/introduction-prompt-engineering-with-github-copilot/)
 - [Melhores práticas para engenharia de prompt](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering)
 - [RAG com Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data)

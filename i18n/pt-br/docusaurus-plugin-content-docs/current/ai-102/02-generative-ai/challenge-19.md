@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 
 ## Visão Geral
 
-Otimizar soluções de IA generativa requer atenção Ã  latência, custo, qualidade e observabilidade. Respostas com **streaming** melhoram a latência percebida entregando tokens de forma incremental em vez de esperar pela geração completa. **Otimização de tokens** usando bibliotecas como `tiktoken` permite estimativa precisa de custos e compressão de prompts. Juntas, essas técnicas reduzem tanto o tempo de resposta real quanto o percebido.
+Otimizar soluções de IA generativa requer atenção à latência, custo, qualidade e observabilidade. Respostas com **streaming** melhoram a latência percebida entregando tokens de forma incremental em vez de esperar pela geração completa. **Otimização de tokens** usando bibliotecas como `tiktoken` permite estimativa precisa de custos e compressão de prompts. Juntas, essas técnicas reduzem tanto o tempo de resposta real quanto o percebido.
 
 **Observabilidade** é crítica para sistemas de IA em produção. O Azure OpenAI integra-se com o Application Insights através do OpenTelemetry, fornecendo rastreamento de ponta a ponta de requisições, uso de tokens, distribuições de latência e taxas de erro. Spans e atributos customizados permitem rastrear métricas específicas do negócio, como uso de templates de prompt e scores de qualidade de resposta.
 
@@ -739,7 +739,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Streaming retorna chunks vazios | Sem conteúdo no delta | Normal â€” alguns chunks contêm apenas role/metadata | Filtrar chunks onde `delta.content` não é None/null |
+| Streaming retorna chunks vazios | Sem conteúdo no delta | Normal — alguns chunks contêm apenas role/metadata | Filtrar chunks onde `delta.content` não é None/null |
 | Contagem de tokens divergente | Contagem local difere da API | Versão do tokenizer incompatível ou overhead de mensagem | Usar `tiktoken` com o modelo correto; considerar overhead de 3 tokens por mensagem |
 | Job de fine-tuning falha | Status: `failed` | Formato de dados de treinamento inválido ou menos de 10 exemplos | Validar formato JSONL; garantir mínimo de 10 exemplos de treinamento |
 | Traces não aparecem | Sem dados no Application Insights | Connection string mal configurada ou atraso na ingestão | Verificar connection string; aguardar 2-5 minutos para ingestão |
@@ -774,7 +774,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
   },
   {
     id: "ch19-q3",
-    question: "Qual biblioteca é usada para contar tokens localmente para GPT-4o antes de fazer chamadas Ã  API?",
+    question: "Qual biblioteca é usada para contar tokens localmente para GPT-4o antes de fazer chamadas à API?",
     options: [
       "transformers",
       "sentencepiece",
@@ -782,7 +782,7 @@ Fine-tuned model: ft:gpt-4o-mini-2024-07-18:azure-billing:abc123
       "tiktoken"
     ],
     correctAnswer: 3,
-    explanation: "tiktoken é a biblioteca oficial de tokenização da OpenAI para Python. O GPT-4o usa o encoding o200k_base. A contagem local de tokens com tiktoken permite estimativa de custos, otimização de prompts e gerenciamento da janela de contexto antes de fazer chamadas Ã  API."
+    explanation: "tiktoken é a biblioteca oficial de tokenização da OpenAI para Python. O GPT-4o usa o encoding o200k_base. A contagem local de tokens com tiktoken permite estimativa de custos, otimização de prompts e gerenciamento da janela de contexto antes de fazer chamadas à API."
   },
   {
     id: "ch19-q4",

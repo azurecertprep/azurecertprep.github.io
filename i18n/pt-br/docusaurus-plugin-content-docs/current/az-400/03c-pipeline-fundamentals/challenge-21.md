@@ -34,7 +34,7 @@ A configuração atual usa runners hospedados pelo GitHub para tudo, resultando 
 | Taxa macOS | Multiplicador de 10x sobre minutos Linux | Hardware próprio a custo fixo |
 | Manutenção | Gerenciado pelo GitHub (atualizado automaticamente) | Autogerenciado (patches de SO, atualizações de ferramentas) |
 | Ambiente limpo | VM nova a cada job | Persistente (necessário gerenciar limpeza) |
-| Acesso Ã  rede | Apenas internet pública | Pode acessar redes privadas |
+| Acesso à rede | Apenas internet pública | Pode acessar redes privadas |
 | Tempo de inicialização | 15-45 segundos (fila + provisionamento) | Quase instantâneo (já em execução) |
 | Personalização | Limitado a ferramentas pré-instaladas | Controle total sobre software instalado |
 | Cache | actions/cache (round-trip de rede) | Cache em filesystem local (mais rápido) |
@@ -47,7 +47,7 @@ Comparação com Azure DevOps:
 | Custo | 1 job paralelo gratuito, depois $40/job paralelo/mês | $15/job paralelo/mês (licenciamento) + infra |
 | Manutenção | Gerenciado pela Microsoft | Autogerenciado |
 | Ambiente limpo | VM nova a cada job | Persistente |
-| Acesso Ã  rede | Apenas internet pública | Acesso a rede privada |
+| Acesso à rede | Apenas internet pública | Acesso a rede privada |
 | Tempo de inicialização | Pode ser lento devido ao provisionamento | Rápido (pré-provisionado) |
 
 ## Tarefa 2: Configurar um runner self-hosted do GitHub no Linux
@@ -491,7 +491,7 @@ sudo ./svc.sh start
   {
     question: "No Azure DevOps, o que determina se um agente self-hosted pode executar um pipeline específico?",
     options: [
-      "O nome do agente deve corresponder Ã  configuração do pipeline",
+      "O nome do agente deve corresponder à configuração do pipeline",
       "O agente deve estar no pool correto e satisfazer todas as 'demands' especificadas no pipeline",
       "O agente deve ter a mesma assinatura Azure que o pipeline",
       "O SO do agente deve corresponder ao 'vmImage' especificado no pipeline"

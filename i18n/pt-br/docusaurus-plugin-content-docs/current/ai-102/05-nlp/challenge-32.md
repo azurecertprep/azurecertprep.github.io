@@ -265,11 +265,11 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
     options: [
       "Use um endpoint de API diferente para cada categoria",
       "Crie um modelo personalizado treinado apenas nessas categorias",
-      "A detecção de PII sempre retorna todas as categorias â€” filtre no lado do cliente",
+      "A detecção de PII sempre retorna todas as categorias — filtre no lado do cliente",
       "Passe um parâmetro categories_filter com os valores de PiiEntityCategory desejados"
     ],
     correctAnswer: 3,
-    explanation: "O parâmetro categories_filter (SDK) ou piiCategories (REST) limita a detecção apenas Ã s categorias especificadas, reduzindo ruído de detecções indesejadas."
+    explanation: "O parâmetro categories_filter (SDK) ou piiCategories (REST) limita a detecção apenas às categorias especificadas, reduzindo ruído de detecções indesejadas."
   },
   {
     question: "Para que o filtro de domínio 'phi' é usado?",
@@ -296,9 +296,9 @@ Redacted: Patient ********, MRN: *****, was diagnosed with diabetes on *********
   {
     question: "A detecção de PII pode processar múltiplos documentos em uma única requisição?",
     options: [
-      "Não â€” apenas um documento por requisição",
-      "Sim â€” documentos ilimitados por requisição",
-      "Sim â€” operações em lote suportam até 25 documentos por requisição",
+      "Não — apenas um documento por requisição",
+      "Sim — documentos ilimitados por requisição",
+      "Sim — operações em lote suportam até 25 documentos por requisição",
       "Apenas se os documentos estiverem no mesmo idioma"
     ],
     correctAnswer: 2,

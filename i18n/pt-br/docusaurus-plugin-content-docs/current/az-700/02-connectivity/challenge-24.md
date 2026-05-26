@@ -8,7 +8,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 :::info Tempo e custo estimados
 
-**60â€“90 minutos** | **~$0,19/h** (Gateway VPN) + **~$1,20/h** (Circuito ER) | **Peso no exame: 20â€“25%**
+**60–90 minutos** | **~$0,19/h** (Gateway VPN) + **~$1,20/h** (Circuito ER) | **Peso no exame: 20–25%**
 
 :::
 
@@ -580,24 +580,24 @@ Após a atualização, verifique se o ARP resolve dentro de 1-2 minutos e se as 
 
 ```text
 Túnel VPN Inativo?
-â”œâ”€â”€ Verificar connectionStatus
-â”‚   â”œâ”€â”€ NotConnected â†’ Verificar acessibilidade do dispositivo local (UDP 500/4500)
-â”‚   â”œâ”€â”€ Connecting â†’ Negociação IKE falhando
-â”‚   â”‚   â”œâ”€â”€ Verificar correspondência de chave compartilhada
-â”‚   â”‚   â”œâ”€â”€ Verificar alinhamento de política IKE/IPsec
-â”‚   â”‚   â””â”€â”€ Executar solução de problemas do Network Watcher
-â”‚   â””â”€â”€ Connected mas sem tráfego â†’ Verificar roteamento (UDR, BGP, NSG)
-â”‚
+├── Verificar connectionStatus
+│   ├── NotConnected → Verificar acessibilidade do dispositivo local (UDP 500/4500)
+│   ├── Connecting → Negociação IKE falhando
+│   │   ├── Verificar correspondência de chave compartilhada
+│   │   ├── Verificar alinhamento de política IKE/IPsec
+│   │   └── Executar solução de problemas do Network Watcher
+│   └── Connected mas sem tráfego → Verificar roteamento (UDR, BGP, NSG)
+│
 VPN P2S Falhando?
-â”œâ”€â”€ Erro de certificado â†’ Verificar cert raiz carregado, cert cliente não revogado
-â”œâ”€â”€ Erro de tipo de túnel â†’ Alinhar protocolo do cliente com config do gateway (IKEv2/OpenVPN/SSTP)
-â””â”€â”€ Sem IPs disponíveis â†’ Expandir pool de endereços
-â”‚
+├── Erro de certificado → Verificar cert raiz carregado, cert cliente não revogado
+├── Erro de tipo de túnel → Alinhar protocolo do cliente com config do gateway (IKEv2/OpenVPN/SSTP)
+└── Sem IPs disponíveis → Expandir pool de endereços
+│
 ExpressRoute Não Funcionando?
-â”œâ”€â”€ Estado do Provedor = NotProvisioned â†’ Contatar provedor
-â”œâ”€â”€ Estado do Peering = Disabled â†’ Verificar configuração de peering
-â”œâ”€â”€ Tabela ARP vazia â†’ Incompatibilidade de VLAN ou problema L2 com provedor
-â””â”€â”€ Rotas ausentes â†’ Incompatibilidade de ASN BGP ou filtragem de prefixo
+├── Estado do Provedor = NotProvisioned → Contatar provedor
+├── Estado do Peering = Disabled → Verificar configuração de peering
+├── Tabela ARP vazia → Incompatibilidade de VLAN ou problema L2 com provedor
+└── Rotas ausentes → Incompatibilidade de ASN BGP ou filtragem de prefixo
 ```
 
 ---

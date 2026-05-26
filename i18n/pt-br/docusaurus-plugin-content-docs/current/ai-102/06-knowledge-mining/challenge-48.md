@@ -14,7 +14,7 @@ import TabItem from '@theme/TabItem';
 :::
 
 :::tip Capstone do Domínio 6
-Este desafio integra todos os conceitos do Domínio 6: indexação do AI Search, skillsets, Document Intelligence, Content Understanding e knowledge store â€” em um pipeline completo de processamento de documentos de ponta a ponta.
+Este desafio integra todos os conceitos do Domínio 6: indexação do AI Search, skillsets, Document Intelligence, Content Understanding e knowledge store — em um pipeline completo de processamento de documentos de ponta a ponta.
 :::
 
 ## Habilidades do exame cobertas
@@ -32,18 +32,18 @@ Este desafio integra todos os conceitos do Domínio 6: indexação do AI Search,
 O processamento de documentos empresariais requer o tratamento de diversos tipos de conteúdo por meio de um pipeline unificado:
 
 ```text
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  Source Content  â”‚
-â”‚  - PDFs         â”‚â”€â”€â”
-â”‚  - Images       â”‚  â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  - Audio files  â”‚  â”œâ”€â”€â”€â–¶â”‚  Processing   â”‚â”€â”€â”€â”€â–¶â”‚  Enrichment  â”‚â”€â”€â”€â”€â–¶â”‚   Output    â”‚
-â”‚  - Office docs  â”‚  â”‚    â”‚  (Doc Intel)  â”‚     â”‚  (AI Search) â”‚     â”‚  (Index +   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚  Knowledge  â”‚
-                     â”‚                                                â”‚   Store)    â”‚
-                     â”‚    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                     â””â”€â”€â”€â–¶â”‚ Content Under â”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                          â”‚  standing     â”‚
-                          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────┐
+│  Source Content  │
+│  - PDFs         │──┐
+│  - Images       │  │    ┌───────────────┐     ┌──────────────┐     ┌─────────────┐
+│  - Audio files  │  ├───▶│  Processing   │────▶│  Enrichment  │────▶│   Output    │
+│  - Office docs  │  │    │  (Doc Intel)  │     │  (AI Search) │     │  (Index +   │
+└─────────────────┘  │    └───────────────┘     └──────────────┘     │  Knowledge  │
+                     │                                                │   Store)    │
+                     │    ┌───────────────┐                          └─────────────┘
+                     └───▶│ Content Under │─────────────────────────────────┘
+                          │  standing     │
+                          └───────────────┘
 ```
 
 ### Componentes do pipeline:
@@ -586,7 +586,7 @@ Results:
       "Adicionar um novo campo de vetor para o novo modelo mantendo o antigo"
     ],
     correctIndex: 1,
-    explanation: "Modelos de embedding produzem vetores em espaços diferentes. Você não pode misturar vetores de modelos diferentes no mesmo campo â€” os cálculos de similaridade seriam sem sentido. Você deve regenerar o embedding de todos os documentos existentes com o novo modelo e reindexar. Adicionar um novo campo (opção D) funciona mas desperdiça armazenamento."
+    explanation: "Modelos de embedding produzem vetores em espaços diferentes. Você não pode misturar vetores de modelos diferentes no mesmo campo — os cálculos de similaridade seriam sem sentido. Você deve regenerar o embedding de todos os documentos existentes com o novo modelo e reindexar. Adicionar um novo campo (opção D) funciona mas desperdiça armazenamento."
   },
   {
     id: "ai102-48-q3",
@@ -618,7 +618,7 @@ Results:
     options: [
       "Usar processamento em lote com chamadas de API concorrentes respeitando os limites de taxa",
       "Implantar múltiplos recursos de Document Intelligence em regiões diferentes",
-      "Fazer upgrade para um SKU superior (S0 já está â€” solicitar aumento de cota)",
+      "Fazer upgrade para um SKU superior (S0 já está — solicitar aumento de cota)",
       "Todas as alternativas acima são estratégias válidas de escalabilidade"
     ],
     correctIndex: 3,

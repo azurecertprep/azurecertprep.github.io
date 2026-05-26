@@ -347,7 +347,7 @@ Q: What vision services are available?
       "Add follow-up prompts (dialog.prompts) to QA pairs that reference other QA pair IDs",
       "Create separate projects for each turn",
       "Write conversation scripts in a separate file",
-      "Multi-turn is automatic â€” no configuration needed"
+      "Multi-turn is automatic — no configuration needed"
     ],
     correctAnswer: 0,
     explanation: "Multi-turn is created by adding dialog.prompts to QA pairs. Each prompt has displayText (shown to user) and qnaId (the target answer), creating a dialogue tree."

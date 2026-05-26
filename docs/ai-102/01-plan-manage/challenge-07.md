@@ -24,7 +24,7 @@ Monitoring Azure AI resources is essential for maintaining reliability, tracking
 
 In this challenge, you'll configure diagnostic settings to route logs and metrics to a Log Analytics workspace, write KQL queries to analyze service behavior, and set up alert rules for critical thresholds. You'll work with key metrics like `TotalCalls`, `TotalErrors`, `Latency`, and `TokenTransaction`.
 
-Understanding the monitoring pipeline â€” from diagnostic settings through Log Analytics to alerts â€” is a core skill for managing production AI deployments at scale.
+Understanding the monitoring pipeline — from diagnostic settings through Log Analytics to alerts — is a core skill for managing production AI deployments at scale.
 
 ## Architecture
 

@@ -43,7 +43,7 @@ Diferente do Active Directory tradicional (que roda no Windows Server), o Entra 
    - **Users**: Todos os usuários no seu tenant
    - **Groups**: Grupos de segurança e grupos Microsoft 365
    - **Enterprise applications**: Apps SaaS integrados
-4. Esta é uma exploração somente leitura â€” sem custo
+4. Esta é uma exploração somente leitura — sem custo
 
 ### Tarefa 3: Entender métodos de autenticação
 
@@ -65,10 +65,10 @@ Diferente do Active Directory tradicional (que roda no Windows Server), o Entra 
 
 ```text
 User logs in ONCE to Entra ID
-    â†’ Access Microsoft 365 âœ“
-    â†’ Access Salesforce âœ“
-    â†’ Access GitHub âœ“
-    â†’ Access custom apps âœ“
+    → Access Microsoft 365 ✓
+    → Access Salesforce ✓
+    → Access GitHub ✓
+    → Access custom apps ✓
 ```
 
 Benefícios:
@@ -143,7 +143,7 @@ az account show --query "{TenantId:tenantId, Name:name}" --output table
       question: 'Uma organização tem uma aplicação legada que requer autenticação LDAP e Kerberos. Eles querem executá-la no Azure sem gerenciar controladores de domínio. O que devem usar?',
       options: ['Microsoft Entra ID', 'Microsoft Entra Domain Services', 'Azure Virtual Machines com AD', 'Azure Functions'],
       correctAnswer: 1,
-      explanation: 'Microsoft Entra Domain Services fornece serviços de domínio gerenciados (LDAP, Kerberos, NTLM, Group Policy) sem implantar ou gerenciar controladores de domínio. Ã‰ projetado para apps legados no Azure.'
+      explanation: 'Microsoft Entra Domain Services fornece serviços de domínio gerenciados (LDAP, Kerberos, NTLM, Group Policy) sem implantar ou gerenciar controladores de domínio. É projetado para apps legados no Azure.'
     },
     {
       id: 'az900-16-q5',
@@ -157,6 +157,6 @@ az account show --query "{TenantId:tenantId, Name:name}" --output table
 
 ## Saiba Mais
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Materiais de estudo selecionados
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Materiais de estudo selecionados
 - [Microsoft Learn: Describe Azure identity, access, and security](https://learn.microsoft.com/en-us/training/modules/describe-azure-identity-access-security/)
 - [Microsoft Entra ID documentation](https://learn.microsoft.com/en-us/entra/fundamentals/)

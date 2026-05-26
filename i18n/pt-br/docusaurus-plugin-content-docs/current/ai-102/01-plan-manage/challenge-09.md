@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 
 Proteger recursos do Azure AI envolve múltiplas camadas: proteger chaves de acesso, implementar isolamento de rede, usar identidades gerenciadas para autenticação sem chave e aplicar controle de acesso baseado em função. Um comprometimento das chaves de serviços de IA pode levar a uso não autorizado, exfiltração de dados e impacto financeiro significativo.
 
-Neste desafio, você implementará uma postura de segurança abrangente para Azure AI Services. Você armazenará chaves no Azure Key Vault, implementará rotação de chaves sem tempo de inatividade, configurará regras de rede com private endpoints e fará a transição de autenticação baseada em chave para identidade gerenciada â€” a abordagem recomendada para cargas de trabalho em produção.
+Neste desafio, você implementará uma postura de segurança abrangente para Azure AI Services. Você armazenará chaves no Azure Key Vault, implementará rotação de chaves sem tempo de inatividade, configurará regras de rede com private endpoints e fará a transição de autenticação baseada em chave para identidade gerenciada — a abordagem recomendada para cargas de trabalho em produção.
 
 A abordagem de defesa em profundidade combina identidade (identidade gerenciada + RBAC), rede (private endpoints + regras de IP) e gerenciamento de segredos (Key Vault + rotação) para criar um limite de segurança robusto em torno dos seus serviços de IA.
 
@@ -245,9 +245,9 @@ def rotate_key_zero_downtime(key_to_rotate: str = "Key1"):
     """
     Zero-downtime key rotation strategy:
     1. Applications use Key1 (active)
-    2. Regenerate Key2 (inactive) â†’ new Key2
+    2. Regenerate Key2 (inactive) → new Key2
     3. Update applications to use Key2
-    4. Regenerate Key1 â†’ new Key1
+    4. Regenerate Key1 → new Key1
     5. Applications now use Key2, Key1 is fresh backup
     """
     print(f"=== Starting Zero-Downtime Key Rotation ===")
@@ -291,7 +291,7 @@ def rotate_key_zero_downtime(key_to_rotate: str = "Key1"):
         parameters={"keyName": active_key_name.capitalize()}
     )
     
-    print(f"\nâœ“ Rotation complete. Active key: {inactive_key_name}")
+    print(f"\n✓ Rotation complete. Active key: {inactive_key_name}")
 
 # Initialize active key tracking
 secret_client.set_secret("ai-services-active-key", "key1")
@@ -359,7 +359,7 @@ async Task RotateKeyZeroDowntime()
         : ServiceAccountKeyName.Key2;
     await account.Value.RegenerateKeyAsync(new ServiceAccountRegenerateKeyContent(oldKeyNameEnum));
     
-    Console.WriteLine($"\nâœ“ Rotation complete. Active key: {inactiveKeyName}");
+    Console.WriteLine($"\n✓ Rotation complete. Active key: {inactiveKeyName}");
 }
 
 await RotateKeyZeroDowntime();
@@ -432,7 +432,7 @@ else
     --name $AI_ACCOUNT --resource-group $RESOURCE_GROUP --key-name Key2
 fi
 
-echo "âœ“ Rotation complete. Active key: $INACTIVE_KEY"
+echo "✓ Rotation complete. Active key: $INACTIVE_KEY"
 ```
 
 </TabItem>
@@ -748,7 +748,7 @@ response = client.detect_language(documents=documents)
 for doc in response:
     if not doc.is_error:
         print(f"\nLanguage detected: {doc.primary_language.name}")
-        print("  âœ“ Authenticated via Managed Identity (keyless)")
+        print("  ✓ Authenticated via Managed Identity (keyless)")
 ```
 
 </TabItem>
@@ -803,7 +803,7 @@ foreach (var result in response)
     if (!result.HasError)
     {
         Console.WriteLine($"\nLanguage: {result.PrimaryLanguage.Name}");
-        Console.WriteLine("  âœ“ Authenticated via Managed Identity (keyless)");
+        Console.WriteLine("  ✓ Authenticated via Managed Identity (keyless)");
     }
 }
 ```
@@ -889,7 +889,7 @@ Step 3: Updating Key Vault with new key2...
 Step 4: Switching active key to key2...
 Step 5: Waiting for cache expiry...
 Step 6: Regenerating old key1...
-âœ“ Rotation complete. Active key: key2
+✓ Rotation complete. Active key: key2
 
 Managed Identity created: id-ai-services-reader
   Client ID: 12345678-abcd-efgh-ijkl-123456789012
@@ -897,18 +897,18 @@ Managed Identity created: id-ai-services-reader
 Role assigned: Cognitive Services User
 
 Language detected: English
-  âœ“ Authenticated via Managed Identity (keyless)
+  ✓ Authenticated via Managed Identity (keyless)
 ```
 
 ## Quebra & conserta
 
 | Cenário | Sintoma | Causa Raiz | Correção |
 |---------|---------|------------|----------|
-| Acesso negado ao Key Vault | 403 Forbidden ao ler segredos | Função RBAC ou política de acesso do Key Vault ausente | Atribua a função `Key Vault Secrets User` Ã  identidade chamadora |
-| Private endpoint não resolve | Resolução DNS retorna IP público | Zona DNS Privada ou link de VNet ausente | Crie a zona DNS `privatelink.cognitiveservices.azure.com` e vincule Ã  VNet |
+| Acesso negado ao Key Vault | 403 Forbidden ao ler segredos | Função RBAC ou política de acesso do Key Vault ausente | Atribua a função `Key Vault Secrets User` à identidade chamadora |
+| Private endpoint não resolve | Resolução DNS retorna IP público | Zona DNS Privada ou link de VNet ausente | Crie a zona DNS `privatelink.cognitiveservices.azure.com` e vincule à VNet |
 | Autenticação de identidade gerenciada falha | 401 "InvalidAuthenticationToken" | Atribuição de função RBAC não propagada (até 5 min) | Aguarde 5 minutos para propagação da atribuição de função; verifique o principalId correto |
 | Rotação de chave causa tempo de inatividade | Requisições falham com 401 durante a rotação | Aplicação armazena chaves em cache e não atualiza | Implemente cache de chaves com TTL; rotacione a chave inativa primeiro (estratégia de duas chaves) |
-| Regra de rede bloqueia tráfego legítimo | 403 de endereço IP permitido | IP está atrás de NAT/proxy com IP de saída diferente | Adicione o IP de saída real Ã  lista de permissões; use `curl ifconfig.me` para encontrá-lo |
+| Regra de rede bloqueia tráfego legítimo | 403 de endereço IP permitido | IP está atrás de NAT/proxy com IP de saída diferente | Adicione o IP de saída real à lista de permissões; use `curl ifconfig.me` para encontrá-lo |
 
 ## Verificação de Conhecimento
 
@@ -928,9 +928,9 @@ Language detected: English
     question: "Durante a rotação de chaves sem tempo de inatividade, qual chave você deve regenerar PRIMEIRO?",
     options: [
       "A chave atualmente usada pelas aplicações (chave ativa)",
-      "A chave que NÃƒO está em uso pelas aplicações (chave inativa)",
+      "A chave que NÃO está em uso pelas aplicações (chave inativa)",
       "Ambas as chaves simultaneamente",
-      "Não importa â€” qualquer chave pode ser regenerada primeiro"
+      "Não importa — qualquer chave pode ser regenerada primeiro"
     ],
     correctAnswer: 1,
     explanation: "Sempre regenere a chave inativa primeiro. Isso garante que as aplicações continuem funcionando com a chave ativa enquanto a chave inativa é regenerada com segurança. Após atualizar as aplicações para usar a nova chave, você pode então regenerar a chave ativa antiga."
@@ -944,7 +944,7 @@ Language detected: English
       "internal.ai.azure.com"
     ],
     correctAnswer: 1,
-    explanation: "Private endpoints do Azure Cognitive Services requerem a zona DNS 'privatelink.cognitiveservices.azure.com' para resolução de nomes adequada. Esta zona deve ser vinculada Ã  VNet onde o private endpoint reside."
+    explanation: "Private endpoints do Azure Cognitive Services requerem a zona DNS 'privatelink.cognitiveservices.azure.com' para resolução de nomes adequada. Esta zona deve ser vinculada à VNet onde o private endpoint reside."
   },
   {
     question: "Qual é o método de autenticação recomendado para cargas de trabalho de produção do Azure AI executando no Azure?",
@@ -961,12 +961,12 @@ Language detected: English
     question: "Quando você define 'publicNetworkAccess' como 'Disabled' em um recurso do Azure AI, o que acontece com as requisições existentes baseadas em chave de API vindas da internet?",
     options: [
       "Elas continuam funcionando porque a chave ainda é válida",
-      "Elas são bloqueadas â€” apenas tráfego via private endpoint é permitido",
+      "Elas são bloqueadas — apenas tráfego via private endpoint é permitido",
       "Elas são limitadas a 1 requisição por minuto",
       "Elas são redirecionadas automaticamente para o private endpoint"
     ],
     correctAnswer: 1,
-    explanation: "Desabilitar o acesso Ã  rede pública bloqueia TODO o tráfego da internet pública, independentemente de chaves de API válidas serem apresentadas. Apenas tráfego através de private endpoints configurados ou faixas de IP aprovadas (se existirem regras) é permitido."
+    explanation: "Desabilitar o acesso à rede pública bloqueia TODO o tráfego da internet pública, independentemente de chaves de API válidas serem apresentadas. Apenas tráfego através de private endpoints configurados ou faixas de IP aprovadas (se existirem regras) é permitido."
   }
 ]} />
 

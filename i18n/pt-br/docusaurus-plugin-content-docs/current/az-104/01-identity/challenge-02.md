@@ -31,7 +31,7 @@ RBAC é o guardião do Azure. Cada ação | criar uma VM, ler uma conta de armaz
 - Criar e atribuir funções personalizadas
 - Gerenciar atribuições de funções do Microsoft Entra
 
-## Referência sysadmin â†” Azure
+## Referência sysadmin ↔ Azure
 
 | On-Prem / Sysadmin | Equivalente no Azure | Observações |
 |---------------------|----------------------|-------------|
@@ -144,10 +144,10 @@ Get-AzRoleDefinition -Name "Contributor" | Select-Object -ExpandProperty Actions
 </TabItem>
 <TabItem value="portal" label="Portal">
 
-1. Vá para sua **Subscription** â†’ **Access control (IAM)**
+1. Vá para sua **Subscription** → **Access control (IAM)**
 2. Clique na aba **Roles**
 3. Pesquise por "Owner", "Contributor", "Reader"
-4. Clique em qualquer função â†’ **View** para ver suas permissões
+4. Clique em qualquer função → **View** para ver suas permissões
 
 </TabItem>
 </Tabs>
@@ -276,7 +276,7 @@ A função **Owner** pode fazer tudo que o **Contributor** pode, além de poder 
 
 **NotActions** simplesmente subtraem permissões da lista de `Actions` dentro de uma definição de função. Elas não negam explicitamente nada | se outra função conceder a permissão, o usuário ainda a terá.
 
-**Ordem de precedência**: Deny Explícito â†’ NotActions â†’ Allow
+**Ordem de precedência**: Deny Explícito → NotActions → Allow
 
 </details>
 
@@ -286,7 +286,7 @@ A função **Owner** pode fazer tudo que o **Contributor** pode, além de poder 
 RBAC usa uma **hierarquia de escopos**:
 
 ```text
-Management Group â†’ Subscription â†’ Resource Group â†’ Resource
+Management Group → Subscription → Resource Group → Resource
 ```
 
 Uma função atribuída em um **escopo superior** é herdada por todos os **escopos inferiores**. Por exemplo:

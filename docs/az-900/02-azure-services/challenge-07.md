@@ -21,7 +21,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 Azure's global infrastructure is the physical foundation of all cloud services. It consists of 60+ regions worldwide, each containing one or more datacenters connected by a dedicated, low-latency network.
 
-Understanding how Azure organizes its infrastructure â€” from individual datacenters to availability zones to regions â€” is essential for designing reliable and performant cloud solutions.
+Understanding how Azure organizes its infrastructure — from individual datacenters to availability zones to regions — is essential for designing reliable and performant cloud solutions.
 
 ## Explore
 
@@ -58,7 +58,7 @@ Understanding how Azure organizes its infrastructure â€” from individual da
 1. In the Azure Portal, search for **Virtual Machine** and click **Create**
 2. In the **Availability options** dropdown, look for **Availability zone**
 3. Notice you can choose Zone 1, 2, or 3
-4. **Cancel** â€” don't create the VM
+4. **Cancel** — don't create the VM
 
 **What are availability zones?**
 - Physically separate locations within a region
@@ -68,9 +68,9 @@ Understanding how Azure organizes its infrastructure â€” from individual da
 
 ```text
 Region: East US
-â”œâ”€â”€ Availability Zone 1 (Datacenter A)
-â”œâ”€â”€ Availability Zone 2 (Datacenter B)
-â””â”€â”€ Availability Zone 3 (Datacenter C)
+├── Availability Zone 1 (Datacenter A)
+├── Availability Zone 2 (Datacenter B)
+└── Availability Zone 3 (Datacenter C)
 ```
 
 ### Task 4: Understand sovereign regions
@@ -149,6 +149,6 @@ az account list-locations --query "[?availabilityZoneMappings != null].{Name:dis
 
 ## Learn More
 
-- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) â€” Curated study materials
+- ðŸ“š [Study Guide AZ-900](https://github.com/ricmmartins/study-guide-az900) — Curated study materials
 - [Microsoft Learn: Describe core architectural components](https://learn.microsoft.com/en-us/training/modules/describe-core-architectural-components-of-azure/)
 - [Azure global infrastructure](https://azure.microsoft.com/explore/global-infrastructure/)

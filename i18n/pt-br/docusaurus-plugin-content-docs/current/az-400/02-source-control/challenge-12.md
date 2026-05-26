@@ -41,39 +41,39 @@ Documente os trade-offs para a situação específica da Contoso:
 - Granularidade de permissões é limitada (mais difícil restringir acesso por serviço)
 - Ponto único de falha (indisponibilidade do repo afeta todas as equipes)
 - Conflitos de merge em arquivos compartilhados (package.json, configuração de CI)
-- Operações Git ficam lentas Ã  medida que o histórico cresce
+- Operações Git ficam lentas à medida que o histórico cresce
 - Todas as equipes devem concordar com a estratégia de branching
 
 Exemplo de estrutura de mono-repo:
 
 ```text
 contoso-platform/
-â”œâ”€â”€ services/
-â”‚   â”œâ”€â”€ user-service/
-â”‚   â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ tests/
-â”‚   â”‚   â”œâ”€â”€ Dockerfile
-â”‚   â”‚   â””â”€â”€ package.json
-â”‚   â”œâ”€â”€ order-service/
-â”‚   â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ tests/
-â”‚   â”‚   â”œâ”€â”€ Dockerfile
-â”‚   â”‚   â””â”€â”€ package.json
-â”‚   â””â”€â”€ payment-service/
-â”‚       â””â”€â”€ ...
-â”œâ”€â”€ libs/
-â”‚   â”œâ”€â”€ shared-types/
-â”‚   â”œâ”€â”€ common-utils/
-â”‚   â””â”€â”€ auth-middleware/
-â”œâ”€â”€ infrastructure/
-â”‚   â”œâ”€â”€ terraform/
-â”‚   â””â”€â”€ kubernetes/
-â”œâ”€â”€ tools/
-â”‚   â”œâ”€â”€ scripts/
-â”‚   â””â”€â”€ generators/
-â”œâ”€â”€ .github/workflows/
-â”œâ”€â”€ package.json (workspace root)
-â””â”€â”€ nx.json (or turborepo.json)
+├── services/
+│   ├── user-service/
+│   │   ├── src/
+│   │   ├── tests/
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── order-service/
+│   │   ├── src/
+│   │   ├── tests/
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   └── payment-service/
+│       └── ...
+├── libs/
+│   ├── shared-types/
+│   ├── common-utils/
+│   └── auth-middleware/
+├── infrastructure/
+│   ├── terraform/
+│   └── kubernetes/
+├── tools/
+│   ├── scripts/
+│   └── generators/
+├── .github/workflows/
+├── package.json (workspace root)
+└── nx.json (or turborepo.json)
 ```
 
 ### Tarefa 2: Vantagens e desvantagens do multi-repo
@@ -682,7 +682,7 @@ git commit -m "chore: update shared-libs submodule to latest"
       "O pipeline é acionado mas pula a etapa de build e executa apenas os testes"
     ],
     correctIndex: 1,
-    explanation: "Os triggers por caminho do Azure Pipelines filtram quais pushes ativam um pipeline. Quando trigger.paths.include está configurado, o pipeline só executa se pelo menos um arquivo alterado corresponder aos padrões de inclusão. Uma alteração em libs/shared-types/index.ts só aciona pipelines que incluem libs/shared-types/ ou libs/ em seu filtro de caminho. Outros pipelines (por exemplo, aqueles que só observam services/user-service/) não serão acionados. Ã‰ assim que mono-repos alcançam eficiência de CI por serviço."
+    explanation: "Os triggers por caminho do Azure Pipelines filtram quais pushes ativam um pipeline. Quando trigger.paths.include está configurado, o pipeline só executa se pelo menos um arquivo alterado corresponder aos padrões de inclusão. Uma alteração em libs/shared-types/index.ts só aciona pipelines que incluem libs/shared-types/ ou libs/ em seu filtro de caminho. Outros pipelines (por exemplo, aqueles que só observam services/user-service/) não serão acionados. É assim que mono-repos alcançam eficiência de CI por serviço."
   }
 ]} />
 

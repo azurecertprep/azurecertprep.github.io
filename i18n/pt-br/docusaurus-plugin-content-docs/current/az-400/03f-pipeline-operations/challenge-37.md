@@ -784,7 +784,7 @@ O ponto-chave: Em pipelines classic, aprovações e gates são configurados por 
     question: "Qual é a abordagem faseada recomendada para migrar de classic para YAML?",
     options: [
       "Deletar o classic imediatamente e criar YAML do zero",
-      "Executar ambos em paralelo, validar que o YAML corresponde Ã  saída do classic, depois desabilitar e arquivar o classic",
+      "Executar ambos em paralelo, validar que o YAML corresponde à saída do classic, depois desabilitar e arquivar o classic",
       "Converter apenas pipelines de build para YAML e manter pipelines de release como classic indefinidamente",
       "Esperar até a Microsoft remover o suporte ao classic, depois migrar tudo de uma vez"
     ],

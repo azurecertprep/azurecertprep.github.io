@@ -31,9 +31,9 @@ On-premises datacenter                     Azure
 [VPN Device: 203.0.113.50] ---IPsec--- [VPN Gateway: vgw-hub]
                                               |
                                          vnet-hub
-                                           â”œâ”€â”€ GatewaySubnet (10.1.255.0/27)
-                                           â”œâ”€â”€ snet-workloads (10.1.1.0/24)
-                                           â””â”€â”€ snet-mgmt (10.1.2.0/24)
+                                           ├── GatewaySubnet (10.1.255.0/27)
+                                           ├── snet-workloads (10.1.1.0/24)
+                                           └── snet-mgmt (10.1.2.0/24)
 ```
 
 ## Objetivos de aprendizagem
@@ -429,7 +429,7 @@ az network vpn-connection create \
 
 **Sintoma:** O status da conexão permanece `Connecting` indefinidamente.
 
-**Causa raiz:** A chave compartilhada na conexão Azure não corresponde Ã  chave configurada no dispositivo local.
+**Causa raiz:** A chave compartilhada na conexão Azure não corresponde à chave configurada no dispositivo local.
 
 **Comando de diagnóstico:**
 
