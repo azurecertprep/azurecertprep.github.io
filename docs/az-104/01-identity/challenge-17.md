@@ -44,16 +44,8 @@ Contoso Ltd. is growing fast. What started as a single Azure subscription has ba
 
 Design and create the following management group structure:
 
-```text
-Tenant Root Group
-└── mg-contoso (Contoso Ltd.)
-    ├── mg-production (Production)
-    │   ├── mg-prod-it (IT Production)
-    │   └── mg-prod-finance (Finance Production)
-    └── mg-nonproduction (Non-Production)
-        ├── mg-dev (Development)
-        └── mg-sandbox (Sandbox)
-```
+![Challenge 17 - Management Group Structure](/img/az-104/challenge-17-topology.svg)
+
 
 ```bash
 # Create the top-level management group

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 23 content safety pipeline</title>
+  <desc id="desc">Pipeline diagram showing user input passing through input filters to the model, then through output filters before a safe response is returned. Harmful content is blocked at either filter stage.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+    <style><![CDATA[
+      .title { font: 700 14px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .desc { font: 10px 'Segoe UI', Arial, sans-serif; fill: #333333; }
+      .line { stroke: #666666; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    ]]></style>
+  </defs>
+
+  <text x="24" y="24" class="title">Challenge 23 — content safety pipeline</text>
+
+  <rect x="18" y="78" width="112" height="52" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="74" y="101" text-anchor="middle" class="label">User input</text>
+  <text x="74" y="117" text-anchor="middle" class="desc">Prompt enters service</text>
+
+  <rect x="152" y="66" width="124" height="76" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="214" y="89" text-anchor="middle" class="label">Input filter</text>
+  <text x="214" y="106" text-anchor="middle" class="desc">Hate · Sexual</text>
+  <text x="214" y="121" text-anchor="middle" class="desc">Violence · Self-harm</text>
+
+  <rect x="294" y="78" width="104" height="52" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="346" y="101" text-anchor="middle" class="label">Model</text>
+  <text x="346" y="117" text-anchor="middle" class="desc">Generates output</text>
+
+  <rect x="416" y="66" width="124" height="76" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="478" y="89" text-anchor="middle" class="label">Output filter</text>
+  <text x="478" y="106" text-anchor="middle" class="desc">Checks completion</text>
+  <text x="478" y="121" text-anchor="middle" class="desc">Blocks unsafe content</text>
+
+  <rect x="558" y="78" width="84" height="52" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="600" y="101" text-anchor="middle" class="label">Response</text>
+  <text x="600" y="117" text-anchor="middle" class="desc">Safe output</text>
+
+  <path d="M130 104 H152" class="line"/>
+  <path d="M276 104 H294" class="line"/>
+  <path d="M398 104 H416" class="line"/>
+  <path d="M540 104 H558" class="line"/>
+
+  <path d="M214 142 V168" class="line"/>
+  <path d="M478 142 V168" class="line"/>
+
+  <rect x="150" y="168" width="128" height="34" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="214" y="190" text-anchor="middle" class="desc">Blocked → error returned</text>
+
+  <rect x="414" y="168" width="128" height="34" rx="6" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+  <text x="478" y="190" text-anchor="middle" class="desc">Blocked → error returned</text>
+</svg>

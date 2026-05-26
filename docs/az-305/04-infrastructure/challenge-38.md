@@ -138,15 +138,8 @@ Important: This only prevents duplicate sends. To prevent duplicate processing, 
 
 The recommended pattern for priority messaging uses Service Bus Topics with SQL filter subscriptions:
 
-```text
-Topic: orders
-├── Subscription: premium-orders
-│   └── SQL Filter: CustomerTier = 'Premium'
-│   └── 8 competing consumers
-├── Subscription: standard-orders
-│   └── SQL Filter: CustomerTier = 'Standard'
-│   └── 4 competing consumers
-```
+![Challenge 38 - Service Bus Topic Architecture](/img/az-305/challenge-38-topology.svg)
+
 
 Benefits over separate queues:
 - Single publisher (does not need routing logic)

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 295" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 48 - Multi-Source Indexing Architecture</title>
+  <desc id="desc">Unified enrichment pipeline for PDFs, images, audio, and Office documents using AI Search skillsets.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="658" height="293" rx="14" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="330.0" y="24" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1f2937">Challenge 48 - Multi-Source Indexing Architecture</text>
+<rect x="20" y="100" width="150" height="165" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="95.0" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Source Content</text>
+<text x="95.0" y="139" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">PDFs</text>
+<text x="95.0" y="153" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Images</text>
+<text x="95.0" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Audio files</text>
+<text x="95.0" y="181" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Office docs</text>
+<rect x="225" y="95" width="165" height="70" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="307.5" y="117" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">Document Intelligence</text>
+<text x="307.5" y="134" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Layout + text extraction</text>
+<rect x="225" y="195" width="165" height="70" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="307.5" y="217" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">Content Understanding</text>
+<text x="307.5" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Image + audio analysis</text>
+<rect x="445" y="100" width="190" height="165" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="540.0" y="122" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">AI Search Enrichment</text>
+<text x="540.0" y="139" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Skillset orchestration</text>
+<text x="540.0" y="153" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Entity extraction</text>
+<text x="540.0" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Key phrases</text>
+<text x="540.0" y="181" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Vector-ready output</text>
+<line x1="170" y1="150" x2="225" y2="130" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="170" y1="215" x2="225" y2="230" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="390" y1="130" x2="445" y2="150" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="390" y1="230" x2="445" y2="215" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="470" y="188" width="140" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="540.0" y="210" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">Search Index</text>
+<text x="540.0" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Queries + RAG</text>
+<rect x="470" y="235" width="140" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="540.0" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">Knowledge Store</text>
+<text x="540.0" y="274" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Analytics output</text>
+</svg>

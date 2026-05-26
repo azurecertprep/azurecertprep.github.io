@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 390" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 12 - Monorepo Structure</title>
+  <desc id="desc">Contoso platform monorepo organized by services, shared libraries, infrastructure, and tools.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="658" height="388" rx="14" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="330.0" y="24" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1f2937">Challenge 12 - Monorepo Structure</text>
+<rect x="230" y="28" width="200" height="54" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="330.0" y="50" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">contoso-platform/</text>
+<text x="330.0" y="67" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Mono-repo root</text>
+<rect x="20" y="105" width="145" height="215" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="92.5" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">services/</text>
+<text x="92.5" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Independent apps</text>
+<rect x="180" y="105" width="145" height="215" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="252.5" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">libs/</text>
+<text x="252.5" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Reusable code</text>
+<rect x="340" y="105" width="145" height="215" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="412.5" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">infrastructure/</text>
+<text x="412.5" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Platform assets</text>
+<rect x="500" y="105" width="140" height="215" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="570.0" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">tools/</text>
+<text x="570.0" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Developer tooling</text>
+<rect x="32" y="150" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="92.0" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">user-service/</text>
+<text x="92.0" y="189" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">src • tests</text>
+<rect x="32" y="205" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="92.0" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">order-service/</text>
+<text x="92.0" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Dockerfile</text>
+<rect x="32" y="260" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="92.0" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">payment-service/</text>
+<text x="92.0" y="299" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">package.json</text>
+<rect x="192" y="150" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="252.0" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">shared-types/</text>
+<rect x="192" y="205" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="252.0" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">common-utils/</text>
+<rect x="192" y="260" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="252.0" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">auth-middleware/</text>
+<rect x="352" y="165" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="412.0" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">terraform/</text>
+<rect x="352" y="225" width="120" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="412.0" y="247" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">kubernetes/</text>
+<rect x="512" y="165" width="115" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="569.5" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">scripts/</text>
+<rect x="512" y="225" width="115" height="42" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="569.5" y="247" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">generators/</text>
+<line x1="330" y1="82" x2="92" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="330" y1="82" x2="252" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="330" y1="82" x2="412" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="330" y1="82" x2="570" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="55" y="340" width="550" height="34" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="330.0" y="362" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">.github/workflows • package.json (workspace root) • nx.json / turborepo.json</text>
+</svg>

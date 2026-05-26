@@ -47,12 +47,7 @@ Think of a VNet like your own private network in the cloud — similar to a trad
 
 ### Task 3: Understand IP addressing
 
-```text
-VNet: 10.0.0.0/16 (65,536 addresses)
-├── Subnet: web-subnet      10.0.1.0/24 (251 usable addresses)
-├── Subnet: app-subnet      10.0.2.0/24 (251 usable addresses)
-└── Subnet: db-subnet       10.0.3.0/24 (251 usable addresses)
-```
+![Challenge 11 - Virtual Network Topology](/img/az-900/challenge-11-topology.svg)
 
 **Note**: Azure reserves 5 IPs in each subnet (first 4 + last 1), so a /24 has 251 usable addresses.
 

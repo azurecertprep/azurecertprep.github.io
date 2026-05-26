@@ -26,12 +26,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 ARM is the deployment and management service for Azure:
 
-```text
-Azure Portal ──┐
-Azure CLI    ──┼──→ Azure Resource Manager ──→ Azure Services
-PowerShell   ──┤           (ARM)
-REST API     ──┘
-```
+![Challenge 22 - Azure Resource Manager Architecture](/img/az-900/challenge-22-topology.svg)
 
 **Key ARM features:**
 - All management requests go through the same API layer

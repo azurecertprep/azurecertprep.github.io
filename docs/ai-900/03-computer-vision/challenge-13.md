@@ -76,19 +76,7 @@ Visit the [Azure AI Vision demo](https://portal.vision.cognitive.azure.com/) and
 
 A typical Face Detection API response looks like this conceptually:
 
-```text
-Detection Results:
-├── Face 1
-│   ├── Bounding box: { left: 120, top: 80, width: 200, height: 250 }
-│   ├── Face landmarks: { pupilLeft: {x, y}, pupilRight: {x, y}, noseTip: {x, y}, ... }
-│   ├── Head pose: { roll: -2.1, yaw: 5.3, pitch: -1.8 }
-│   ├── Accessories: { glasses: "ReadingGlasses" }
-│   ├── Blur: { value: 0.1, blurLevel: "low" }
-│   └── Occlusion: { foreheadOccluded: false, eyeOccluded: false }
-├── Face 2
-│   ├── Bounding box: { left: 450, top: 95, width: 180, height: 230 }
-│   └── ...
-```
+![Challenge 13 - Face Detection Results](/img/ai-900/challenge-13-topology.svg)
 
 **Key points**:
 - Multiple faces can be detected in one image

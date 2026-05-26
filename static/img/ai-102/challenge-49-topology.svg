@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 390" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 49 - Capstone Architecture</title>
+  <desc id="desc">End-to-end enterprise document intelligence architecture connecting ingestion, enrichment, AI Search, and Azure OpenAI.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="678" height="388" rx="14" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="340.0" y="24" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1f2937">Challenge 49 - Capstone Architecture</text>
+<rect x="20" y="90" width="110" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="75.0" y="112" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Blob Storage</text>
+<text x="75.0" y="129" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Contracts + reports</text>
+<rect x="20" y="190" width="110" height="60" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="75.0" y="212" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Multimodal Input</text>
+<text x="75.0" y="229" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Images + audio</text>
+<rect x="170" y="65" width="145" height="58" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="242.5" y="87" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Doc Intelligence</text>
+<text x="242.5" y="104" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">OCR + tables</text>
+<rect x="170" y="150" width="145" height="58" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="242.5" y="172" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Translation</text>
+<text x="242.5" y="189" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Normalize to English</text>
+<rect x="170" y="235" width="145" height="58" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="242.5" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Vision &amp; Speech</text>
+<text x="242.5" y="274" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Image + speech analysis</text>
+<rect x="355" y="108" width="145" height="58" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="427.5" y="130" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">NLP Enrichment</text>
+<text x="427.5" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Sentiment • PII • NER</text>
+<rect x="355" y="205" width="145" height="58" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+<text x="427.5" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Content Safety</text>
+<text x="427.5" y="244" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Moderation layer</text>
+<rect x="525" y="95" width="135" height="92" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="592.5" y="117" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Azure AI Search</text>
+<text x="592.5" y="134" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Full-text</text>
+<text x="592.5" y="148" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Vector</text>
+<text x="592.5" y="162" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Semantic</text>
+<text x="592.5" y="176" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Knowledge store</text>
+<rect x="525" y="230" width="135" height="58" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="592.5" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Azure OpenAI</text>
+<text x="592.5" y="269" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Grounded RAG chat</text>
+<rect x="525" y="320" width="135" height="46" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="592.5" y="342" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Client Apps</text>
+<text x="592.5" y="359" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Analysts + copilots</text>
+<line x1="130" y1="120" x2="170" y2="94" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="130" y1="220" x2="170" y2="264" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="242" y1="123" x2="242" y2="150" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="242" y1="208" x2="242" y2="235" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="315" y1="94" x2="355" y2="126" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="315" y1="179" x2="355" y2="137" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="315" y1="264" x2="355" y2="234" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="500" y1="137" x2="525" y2="141" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="500" y1="234" x2="525" y2="141" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="592" y1="187" x2="592" y2="230" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="592" y1="288" x2="592" y2="320" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

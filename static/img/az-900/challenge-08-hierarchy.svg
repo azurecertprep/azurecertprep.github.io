@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 08 - Azure Resource Hierarchy</title>
+  <desc id="desc">The Azure hierarchy flows from management groups to subscriptions, resource groups, and individual resources.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+  </defs>
+  <style>
+    .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #1f1f1f; }
+    .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1f1f1f; }
+    .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; fill: #333333; }
+    .line { stroke: #666666; stroke-width: 2; fill: none; }
+  </style>
+
+  <text x="150" y="24" class="title">Azure Resource Hierarchy</text>
+
+  <rect x="140" y="40" width="240" height="54" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="205" y="63" class="label">Management Groups</text>
+  <text x="179" y="79" class="desc">Apply policy and governance at scale</text>
+
+  <line x1="260" y1="94" x2="260" y2="116" class="line" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="124" width="240" height="54" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="223" y="147" class="label">Subscriptions</text>
+  <text x="181" y="163" class="desc">Billing and access control boundaries</text>
+
+  <line x1="260" y1="178" x2="260" y2="200" class="line" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="208" width="240" height="54" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="216" y="231" class="label">Resource Groups</text>
+  <text x="191" y="247" class="desc">Logical containers for related services</text>
+
+  <line x1="260" y1="262" x2="260" y2="284" class="line" marker-end="url(#arrow)"/>
+
+  <rect x="140" y="292" width="240" height="40" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="228" y="316" class="label">Resources</text>
+</svg>

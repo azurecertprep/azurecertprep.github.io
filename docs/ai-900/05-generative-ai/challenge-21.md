@@ -31,22 +31,7 @@ A standout feature is the **model catalog** — a curated collection of AI model
 
 Azure AI Foundry uses a hierarchical structure for organization:
 
-```text
-Azure AI Foundry
-└── Hub (shared resources, security, governance)
-    ├── Project A (team 1 - customer chatbot)
-    │   ├── Model deployments
-    │   ├── Prompt flows
-    │   └── Evaluations
-    ├── Project B (team 2 - document processing)
-    │   ├── Model deployments
-    │   ├── Prompt flows
-    │   └── Evaluations
-    └── Shared Resources
-        ├── Compute instances
-        ├── Connections (to data sources, APIs)
-        └── Security settings
-```
+![Challenge 21 - Azure AI Foundry Architecture](/img/ai-900/challenge-21-topology.svg)
 
 | Component | Purpose | Analogy |
 |----------|---------|---------|

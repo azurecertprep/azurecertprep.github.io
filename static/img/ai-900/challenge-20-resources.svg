@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 240" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 20 Azure OpenAI resource structure</title>
+  <desc id="desc">Hierarchy diagram showing an Azure OpenAI resource containing multiple named deployments, each mapped to a specific model.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+    <style><![CDATA[
+      .title { font: 700 14px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .desc { font: 10px 'Segoe UI', Arial, sans-serif; fill: #333333; }
+      .line { stroke: #666666; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .connector { stroke: #666666; stroke-width: 2; fill: none; }
+    ]]></style>
+  </defs>
+
+  <text x="24" y="24" class="title">Challenge 20 — Azure OpenAI resource hierarchy</text>
+
+  <rect x="210" y="38" width="240" height="52" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="330" y="61" text-anchor="middle" class="label">Azure OpenAI Resource</text>
+  <text x="330" y="77" text-anchor="middle" class="desc">my-openai-resource</text>
+
+  <path d="M330 90 V114 H94 V126" class="connector"/>
+  <path d="M330 90 V114 H330 V126" class="connector"/>
+  <path d="M330 90 V114 H566 V126" class="connector"/>
+
+  <rect x="24" y="126" width="140" height="58" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="94" y="148" text-anchor="middle" class="label">Deployment</text>
+  <text x="94" y="164" text-anchor="middle" class="desc">gpt4o-chat</text>
+  <text x="94" y="178" text-anchor="middle" class="desc">Model: GPT-4o</text>
+
+  <rect x="260" y="126" width="140" height="58" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="330" y="148" text-anchor="middle" class="label">Deployment</text>
+  <text x="330" y="164" text-anchor="middle" class="desc">gpt35-support</text>
+  <text x="330" y="178" text-anchor="middle" class="desc">Model: GPT-3.5-Turbo</text>
+
+  <rect x="496" y="126" width="140" height="58" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="566" y="148" text-anchor="middle" class="label">Deployment</text>
+  <text x="566" y="164" text-anchor="middle" class="desc">dalle3-images</text>
+  <text x="566" y="178" text-anchor="middle" class="desc">Model: DALL-E 3</text>
+
+  <rect x="106" y="202" width="448" height="24" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="330" y="218" text-anchor="middle" class="desc">Applications call deployment-specific endpoints under the same Azure resource</text>
+</svg>

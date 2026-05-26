@@ -201,17 +201,8 @@ project_client.agents.delete_agent(code_agent.id)
 
 ## Expected Output
 
-```text
-Created agent: asst_ABC123
-Assistant: Based on the pricing document, Azure OpenAI GPT-4o costs $2.50 per 1 million input tokens.
+![Challenge 22 - Multi-Agent Conversation Flow](/img/ai-102/challenge-22-topology.svg)
 
-Monthly Cost Breakdown:
-| Service       | Usage          | Monthly Cost |
-|--------------|----------------|--------------|
-| GPT-4o Input | 15M tokens/mo  | $37.50       |
-| GPT-4o Output| 3M tokens/mo   | $30.00       |
-| Total        |                | $67.50       |
-```
 
 ## Break & fix
 

@@ -233,15 +233,8 @@ jobs:
 
 ### Service dependency graph
 
-```text
-Contoso.Payments.Core (shared library)
-    |
-    +--- PaymentService API (depends on Core v2.4.x)
-    |        |
-    |        +--- Frontend (depends on PaymentService API)
-    |
-    +--- NotificationService (depends on Core v2.4.x)
-```
+![Challenge 30 - Package Dependency Architecture](/img/az-400/challenge-30-topology.svg)
+
 
 ### Azure Pipelines with dependency ordering
 

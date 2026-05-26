@@ -31,20 +31,8 @@ This challenge integrates all Domain 6 concepts: AI Search indexing, skillsets, 
 
 Enterprise document processing requires handling diverse content types through a unified pipeline:
 
-```text
-┌─────────────────┐
-│  Source Content  │
-│  - PDFs         │──┐
-│  - Images       │  │    ┌───────────────┐     ┌──────────────┐     ┌─────────────┐
-│  - Audio files  │  ├───▶│  Processing   │────▶│  Enrichment  │────▶│   Output    │
-│  - Office docs  │  │    │  (Doc Intel)  │     │  (AI Search) │     │  (Index +   │
-└─────────────────┘  │    └───────────────┘     └──────────────┘     │  Knowledge  │
-                     │                                                │   Store)    │
-                     │    ┌───────────────┐                          └─────────────┘
-                     └───▶│ Content Under │─────────────────────────────────┘
-                          │  standing     │
-                          └───────────────┘
-```
+![Challenge 48 - Multi-Source Indexing Architecture](/img/ai-102/challenge-48-topology.svg)
+
 
 ### Pipeline components:
 1. **Ingestion**: Upload multi-format documents to Blob Storage

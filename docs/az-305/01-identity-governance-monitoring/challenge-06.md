@@ -36,17 +36,8 @@ The CTO has mandated a zero-trust authorization model: least privilege by defaul
 
 1. Design the RBAC scope hierarchy for Fabrikam:
 
-```text
-Management Group (Fabrikam Root)
-  |-- Subscription: Development
-  |     |-- RG: team-alpha-compute-dev
-  |     |-- RG: team-alpha-data-dev
-  |     |-- RG: shared-services-dev
-  |-- Subscription: Staging
-  |-- Subscription: Production
-        |-- RG: team-alpha-compute-prod
-        |-- RG: shared-services-prod
-```
+![Challenge 06 - Management Group Design](/img/az-305/challenge-06-topology.svg)
+
 
 2. Determine at which scope each role assignment should be made:
    - Platform team (full infrastructure management across all subscriptions)

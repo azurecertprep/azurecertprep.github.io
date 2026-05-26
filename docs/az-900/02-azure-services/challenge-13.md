@@ -54,16 +54,7 @@ Blob Storage has three types of blobs:
 | **Page blobs** | Random read/write (up to 8 TiB) | VM disks (VHDs) |
 
 **Blob containers** organize blobs within a storage account:
-```text
-Storage Account: mystorageaccount
-├── Container: images
-│   ├── photo1.jpg
-│   └── photo2.png
-├── Container: backups
-│   └── db-backup-2024.bak
-└── Container: logs
-    └── app-log-01.txt
-```
+![Challenge 13 - Storage Account Structure](/img/az-900/challenge-13-topology.svg)
 
 ### Task 4: Understand Azure Files
 

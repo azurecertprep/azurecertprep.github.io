@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" role="img" aria-labelledby="title desc">
+  <title id="title">Azure AI services hierarchy</title>
+  <desc id="desc">Tree diagram showing Azure AI services under the Azure AI services umbrella and Azure Machine Learning as a separate platform.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+    <style><![CDATA[
+      .title { font: 700 14px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .desc { font: 10px 'Segoe UI', Arial, sans-serif; fill: #333333; }
+      .line { stroke: #666666; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .connector { stroke: #666666; stroke-width: 2; fill: none; }
+    ]]></style>
+  </defs>
+
+  <text x="24" y="24" class="title">Azure AI services overview</text>
+
+  <rect x="245" y="38" width="190" height="50" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="340" y="59" text-anchor="middle" class="label">Azure AI services</text>
+  <text x="340" y="75" text-anchor="middle" class="desc">Umbrella for prebuilt AI capabilities</text>
+
+  <path d="M340 88 V104 H78 V116" class="connector"/>
+  <path d="M340 88 V104 H208 V116" class="connector"/>
+  <path d="M340 88 V104 H338 V116" class="connector"/>
+  <path d="M340 88 V104 H468 V116" class="connector"/>
+  <path d="M340 88 V104 H598 V116" class="connector"/>
+  <path d="M340 88 V152 H208 V164" class="connector"/>
+  <path d="M340 88 V152 H338 V164" class="connector"/>
+  <path d="M340 88 V152 H468 V164" class="connector"/>
+
+  <rect x="18" y="116" width="120" height="42" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="78" y="141" text-anchor="middle" class="label">Vision</text>
+
+  <rect x="148" y="116" width="120" height="42" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="208" y="141" text-anchor="middle" class="label">Language</text>
+
+  <rect x="278" y="116" width="120" height="42" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="338" y="141" text-anchor="middle" class="label">Speech</text>
+
+  <rect x="408" y="116" width="120" height="42" rx="6" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="468" y="136" text-anchor="middle" class="label">Document</text>
+  <text x="468" y="149" text-anchor="middle" class="label">Intelligence</text>
+
+  <rect x="538" y="116" width="120" height="42" rx="6" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="598" y="136" text-anchor="middle" class="label">OpenAI</text>
+  <text x="598" y="149" text-anchor="middle" class="label">Service</text>
+
+  <rect x="148" y="164" width="120" height="42" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="208" y="189" text-anchor="middle" class="label">Translator</text>
+
+  <rect x="278" y="164" width="120" height="42" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="338" y="189" text-anchor="middle" class="label">Content Safety</text>
+
+  <rect x="408" y="164" width="120" height="42" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="468" y="189" text-anchor="middle" class="label">Decision</text>
+
+  <rect x="150" y="240" width="380" height="54" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="340" y="261" text-anchor="middle" class="label">Azure Machine Learning</text>
+  <text x="340" y="278" text-anchor="middle" class="desc">Separate platform: Workspace → Compute → Pipelines → AutoML → Models</text>
+  <path d="M340 206 V228" class="line"/>
+</svg>

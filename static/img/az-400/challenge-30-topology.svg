@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 330" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 30 - Package Dependency Architecture</title>
+  <desc id="desc">Dependency graph showing the shared payments library feeding backend services and the frontend.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="658" height="328" rx="14" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="330.0" y="24" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1f2937">Challenge 30 - Package Dependency Architecture</text>
+<rect x="220" y="32" width="220" height="58" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="330.0" y="54" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Contoso.Payments.Core</text>
+<text x="330.0" y="71" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Shared NuGet package</text>
+<rect x="80" y="145" width="200" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+<text x="180.0" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">PaymentService API</text>
+<text x="180.0" y="184" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Depends on Core v2.4.x</text>
+<rect x="360" y="145" width="200" height="60" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="460.0" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">NotificationService</text>
+<text x="460.0" y="184" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Depends on Core v2.4.x</text>
+<rect x="110" y="250" width="180" height="56" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="200.0" y="272" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Frontend</text>
+<text x="200.0" y="289" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Depends on PaymentService API</text>
+<line x1="330" y1="90" x2="180" y2="145" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="330" y1="90" x2="460" y2="145" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="180" y1="205" x2="200" y2="250" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="345" y="260" width="220" height="28" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="455.0" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">Publish the shared library before deploying dependent services.</text>
+</svg>

@@ -32,20 +32,8 @@ This challenge implements function calling with Azure OpenAI — the foundation 
 
 ## Architecture
 
-```text
-┌──────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   User       │────▶│  Azure OpenAI    │────▶│  Tool Execution  │
-│   Prompt     │◀────│  (GPT-4o)        │◀────│  (Functions)     │
-└──────────────┘     └──────────────────┘     └──────────────────┘
-                           │                         │
-                           │  1. Analyze intent       │
-                           │  2. Select tool          │
-                           │  3. Generate arguments   │
-                           │                         │
-                           │         4. Execute ──────┘
-                           │         5. Return result
-                           │  6. Synthesize response
-```
+![Challenge 21 - AI Agent Architecture](/img/ai-102/challenge-21-topology.svg)
+
 
 ## Prerequisites
 - Azure subscription with Azure OpenAI access

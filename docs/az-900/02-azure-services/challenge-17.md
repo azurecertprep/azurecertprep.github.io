@@ -52,12 +52,7 @@ RBAC answers: "Who can do what, on which resources?"
 6. This is read-only exploration
 
 **RBAC inheritance:**
-```text
-Management Group (Owner) → applies to all below
-  └── Subscription (Contributor) → applies to all RGs and resources
-        └── Resource Group (Reader) → applies to all resources in this RG
-              └── Resource (custom) → applies to this resource only
-```
+![Challenge 17 - RBAC Inheritance](/img/az-900/challenge-17-topology.svg)
 
 ### Task 3: Understand Conditional Access
 

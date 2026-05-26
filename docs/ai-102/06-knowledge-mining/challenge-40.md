@@ -38,17 +38,8 @@ Key concepts:
 
 ## Architecture
 
-```text
-┌─────────────┐     ┌──────────┐     ┌────────────┐     ┌─────────┐
-│ Blob Storage│────▶│ Indexer  │────▶│  Skillset  │────▶│  Index  │
-│ (PDFs, imgs)│     │          │     │ (AI Skills)│     │(search) │
-└─────────────┘     └──────────┘     └────────────┘     └─────────┘
-                                           │
-                                     ┌─────┴─────┐
-                                     │ AI Services│
-                                     │ (multi)    │
-                                     └───────────┘
-```
+![Challenge 40 - AI Search Indexing Pipeline](/img/ai-102/challenge-40-topology.svg)
+
 
 ## Prerequisites
 

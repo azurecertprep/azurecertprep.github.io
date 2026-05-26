@@ -66,12 +66,7 @@ Understanding how Azure organizes its infrastructure — from individual datacen
 - Minimum of 3 zones in enabled regions
 - Designed to survive datacenter failures
 
-```text
-Region: East US
-├── Availability Zone 1 (Datacenter A)
-├── Availability Zone 2 (Datacenter B)
-└── Availability Zone 3 (Datacenter C)
-```
+![Challenge 07 - Azure Regions and Availability Zones](/img/az-900/challenge-07-topology.svg)
 
 ### Task 4: Understand sovereign regions
 

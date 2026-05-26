@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 370" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 06 - Management Group Design</title>
+  <desc id="desc">RBAC scope hierarchy for Fabrikam with development, staging, and production subscriptions and their resource groups.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="658" height="368" rx="14" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="330.0" y="24" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1f2937">Challenge 06 - Management Group Design</text>
+<rect x="250" y="28" width="160" height="52" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="330.0" y="50" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Fabrikam Root</text>
+<text x="330.0" y="67" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Management Group</text>
+<rect x="30" y="105" width="160" height="54" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="110.0" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Development</text>
+<text x="110.0" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Subscription</text>
+<rect x="250" y="105" width="160" height="54" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="330.0" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Staging</text>
+<text x="330.0" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Subscription</text>
+<rect x="470" y="105" width="160" height="54" rx="8" fill="#f8cecc" stroke="#b85450" stroke-width="2"/>
+<text x="550.0" y="127" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Production</text>
+<text x="550.0" y="144" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Subscription</text>
+<rect x="25" y="195" width="170" height="46" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="110.0" y="217" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#333">team-alpha-compute-dev</text>
+<text x="110.0" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Resource Group</text>
+<rect x="25" y="250" width="170" height="46" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="110.0" y="272" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#333">team-alpha-data-dev</text>
+<text x="110.0" y="289" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Resource Group</text>
+<rect x="25" y="305" width="170" height="46" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="110.0" y="327" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#333">shared-services-dev</text>
+<text x="110.0" y="344" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Resource Group</text>
+<rect x="465" y="220" width="170" height="46" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="550.0" y="242" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#333">team-alpha-compute-prod</text>
+<text x="550.0" y="259" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Resource Group</text>
+<rect x="465" y="275" width="170" height="46" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="550.0" y="297" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#333">shared-services-prod</text>
+<text x="550.0" y="314" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">Resource Group</text>
+<line x1="330" y1="80" x2="110" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="330" y1="80" x2="330" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="330" y1="80" x2="550" y2="105" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="110" y1="159" x2="110" y2="195" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="110" y1="159" x2="110" y2="250" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="110" y1="159" x2="110" y2="305" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="550" y1="159" x2="550" y2="220" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="550" y1="159" x2="550" y2="275" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

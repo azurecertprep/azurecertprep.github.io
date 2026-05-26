@@ -7,19 +7,7 @@ title: "Azure AI Services Cheat Sheet"
 
 ## Azure AI services hierarchy
 
-```text
-Azure AI services (umbrella)
-├── Azure AI Vision
-├── Azure AI Language
-├── Azure AI Speech
-├── Azure AI Document Intelligence
-├── Azure AI Translator
-├── Azure AI Content Safety
-└── Azure OpenAI Service (separate resource)
-
-Azure Machine Learning (separate platform)
-└── Workspace → Compute → Pipelines → AutoML → Models
-```
+![Azure AI Services Overview](/img/ai-900/ai-services-tree.svg)
 
 ## Vision services
 

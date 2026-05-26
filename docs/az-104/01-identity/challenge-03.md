@@ -363,16 +363,8 @@ A **policy initiative** (also called a **policy set**) is a collection of policy
 <details>
 <summary>3. How does the management group hierarchy work?</summary>
 
-```text
-Root Management Group (Tenant Root)
-├── MG-Production
-│   ├── Sub-Prod-01
-│   └── Sub-Prod-02
-├── MG-Development
-│   └── Sub-Dev-01
-└── MG-Sandbox
-    └── Sub-Sandbox-01
-```
+![Challenge 03 - Management Group Hierarchy](/img/az-104/challenge-03-topology.svg)
+
 
 - Every subscription belongs to **exactly one** management group
 - Policies and RBAC assigned at a management group are **inherited** by all child management groups and subscriptions

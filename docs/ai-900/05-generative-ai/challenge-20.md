@@ -46,22 +46,7 @@ Azure OpenAI offers several model families for different use cases:
 The **Azure OpenAI Studio Playground** (accessible at [oai.azure.com](https://oai.azure.com)) lets you interact with deployed models. Here's what you'd see:
 
 **Chat Playground interface**:
-```text
-┌─────────────────────────────────────────────────────────┐
-│ System message:                                          │
-│ ┌─────────────────────────────────────────────────────┐ │
-│ │ You are a helpful AI assistant that provides         │ │
-│ │ concise, accurate information.                       │ │
-│ └─────────────────────────────────────────────────────┘ │
-│                                                          │
-│ Parameters:              │ Chat:                         │
-│  Temperature: 0.7        │  User: What is Azure?         │
-│  Max tokens: 800         │  AI: Azure is Microsoft's     │
-│  Top-p: 0.95            │      cloud computing           │
-│  Deployment: gpt-4o     │      platform...               │
-│                          │                               │
-└─────────────────────────────────────────────────────────┘
-```
+![Challenge 20 - Chat Completion Structure](/img/ai-900/challenge-20-topology.svg)
 
 **Key playground components**:
 - **System message** — Instructions that define the AI's behavior and persona
@@ -74,12 +59,7 @@ The **Azure OpenAI Studio Playground** (accessible at [oai.azure.com](https://oa
 
 Azure OpenAI uses a deployment model to manage access:
 
-```text
-Azure OpenAI Resource (my-openai-resource)
-├── Deployment: "gpt4o-chat" (model: gpt-4o)
-├── Deployment: "gpt35-support" (model: gpt-3.5-turbo)
-└── Deployment: "dalle3-images" (model: dall-e-3)
-```
+![Challenge 20 - Azure OpenAI Resource Structure](/img/ai-900/challenge-20-resources.svg)
 
 **Key concepts**:
 - **Resource** — The Azure resource that holds your deployments

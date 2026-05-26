@@ -22,12 +22,7 @@ import KnowledgeCheck from '@site/src/components/KnowledgeCheck';
 
 Azure organizes resources in a four-level hierarchy. Understanding this hierarchy is critical because it controls access (RBAC), policy enforcement, and billing.
 
-```text
-Management Groups
-  └── Subscriptions
-        └── Resource Groups
-              └── Resources
-```
+![Challenge 08 - Azure Resource Hierarchy](/img/az-900/challenge-08-hierarchy.svg)
 
 Each level inherits settings from the level above it. Policies applied at a management group flow down to all subscriptions, resource groups, and resources beneath it.
 
@@ -77,16 +72,7 @@ Each level inherits settings from the level above it. Policies applied at a mana
 3. All subscriptions are nested under management groups
 
 **Hierarchy example for a large organization:**
-```text
-Tenant Root Group
-├── Production
-│   ├── Subscription: Prod-East
-│   └── Subscription: Prod-West
-├── Development
-│   └── Subscription: Dev-Team
-└── Sandbox
-    └── Subscription: Individual-Testing
-```
+![Challenge 08 - Management Group Structure](/img/az-900/challenge-08-topology.svg)
 
 ### Task 5: Resource group rules
 

@@ -46,35 +46,8 @@ Document the trade-offs for Contoso's specific situation:
 
 Example mono-repo structure:
 
-```text
-contoso-platform/
-├── services/
-│   ├── user-service/
-│   │   ├── src/
-│   │   ├── tests/
-│   │   ├── Dockerfile
-│   │   └── package.json
-│   ├── order-service/
-│   │   ├── src/
-│   │   ├── tests/
-│   │   ├── Dockerfile
-│   │   └── package.json
-│   └── payment-service/
-│       └── ...
-├── libs/
-│   ├── shared-types/
-│   ├── common-utils/
-│   └── auth-middleware/
-├── infrastructure/
-│   ├── terraform/
-│   └── kubernetes/
-├── tools/
-│   ├── scripts/
-│   └── generators/
-├── .github/workflows/
-├── package.json (workspace root)
-└── nx.json (or turborepo.json)
-```
+![Challenge 12 - Monorepo Structure](/img/az-400/challenge-12-topology.svg)
+
 
 ### Task 2: Multi-repo advantages and disadvantages
 

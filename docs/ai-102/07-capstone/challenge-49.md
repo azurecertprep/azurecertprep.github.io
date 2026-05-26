@@ -40,36 +40,8 @@ You are building an **Enterprise Document Intelligence Platform** for a global f
 6. **Indexes** everything in Azure AI Search with vector embeddings
 7. **Serves** a conversational RAG interface using Azure OpenAI
 
-```text
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                     Enterprise Document Intelligence Platform                           │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                        │
-│  ┌─────────┐     ┌──────────────┐     ┌───────────────┐     ┌─────────────────┐      │
-│  │  Blob   │────▶│  Doc Intel   │────▶│  Translation  │────▶│  NLP Enrichment │      │
-│  │ Storage │     │  + OCR       │     │  (Translator) │     │  (Text Analytics│      │
-│  └─────────┘     └──────────────┘     └───────────────┘     │  + Custom NER)  │      │
-│       │                                                       └────────┬────────┘      │
-│       │                                                                │               │
-│       │          ┌──────────────┐     ┌───────────────┐               │               │
-│       └─────────▶│  Vision API  │     │ Content Safety│◀──────────────┤               │
-│                  │  (Images)    │     │  (Moderation) │               │               │
-│                  └──────┬───────┘     └───────────────┘               │               │
-│                         │                                              │               │
-│                         ▼                                              ▼               │
-│                  ┌──────────────────────────────────────────────────────┐              │
-│                  │              Azure AI Search                          │              │
-│                  │  (Full-text + Vector + Semantic + Knowledge Store)   │              │
-│                  └──────────────────────────┬───────────────────────────┘              │
-│                                             │                                          │
-│                                             ▼                                          │
-│                  ┌──────────────────────────────────────────────────────┐              │
-│                  │              Azure OpenAI (GPT-4o)                    │              │
-│                  │  RAG Chat Interface with grounded responses          │              │
-│                  └──────────────────────────────────────────────────────┘              │
-│                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
+![Challenge 49 - Capstone Architecture](/img/ai-102/challenge-49-topology.svg)
+
 
 ## Prerequisites
 

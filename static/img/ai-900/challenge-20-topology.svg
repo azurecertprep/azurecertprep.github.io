@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 280" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 20 chat completion structure</title>
+  <desc id="desc">Diagram showing system and user messages flowing into an Azure OpenAI chat completion deployment, producing an assistant response and consuming prompt and completion tokens.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+    <style><![CDATA[
+      .title { font: 700 14px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .desc { font: 10px 'Segoe UI', Arial, sans-serif; fill: #333333; }
+      .line { stroke: #666666; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    ]]></style>
+  </defs>
+
+  <text x="24" y="24" class="title">Challenge 20 — chat completion structure</text>
+
+  <rect x="24" y="40" width="180" height="196" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="114" y="62" text-anchor="middle" class="label">messages[]</text>
+
+  <rect x="40" y="76" width="148" height="48" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="54" y="97" class="label">system</text>
+  <text x="54" y="112" class="desc">Sets behavior and boundaries</text>
+
+  <rect x="40" y="136" width="148" height="52" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="54" y="157" class="label">user</text>
+  <text x="54" y="172" class="desc">Prompt or question</text>
+
+  <text x="114" y="212" text-anchor="middle" class="desc">Prompt tokens = all input message content</text>
+
+  <rect x="242" y="42" width="190" height="50" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="337" y="63" text-anchor="middle" class="label">Parameters</text>
+  <text x="337" y="79" text-anchor="middle" class="desc">temperature · max tokens · top-p · deployment</text>
+
+  <rect x="252" y="108" width="170" height="72" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="337" y="134" text-anchor="middle" class="label">Azure OpenAI</text>
+  <text x="337" y="150" text-anchor="middle" class="desc">Chat completion model</text>
+  <text x="337" y="166" text-anchor="middle" class="desc">Processes messages in role order</text>
+
+  <path d="M188 132 H252" class="line"/>
+  <text x="220" y="124" text-anchor="middle" class="desc">prompt tokens</text>
+
+  <path d="M422 144 H478" class="line"/>
+  <text x="450" y="136" text-anchor="middle" class="desc">completion tokens</text>
+
+  <rect x="478" y="96" width="176" height="92" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="566" y="120" text-anchor="middle" class="label">assistant</text>
+  <text x="566" y="138" text-anchor="middle" class="desc">Generated response</text>
+  <text x="566" y="154" text-anchor="middle" class="desc">Returned to the chat client</text>
+  <text x="566" y="170" text-anchor="middle" class="desc">Billed by output token count</text>
+
+  <rect x="252" y="202" width="402" height="44" rx="6" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="453" y="222" text-anchor="middle" class="label">Token accounting</text>
+  <text x="453" y="238" text-anchor="middle" class="desc">Total usage = prompt tokens + completion tokens across the request</text>
+</svg>

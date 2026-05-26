@@ -55,20 +55,7 @@ Azure provides OCR through two main services: **Azure AI Vision** (Read API) for
 
 The Read API returns a hierarchical structure:
 
-```text
-Read Result
-├── Page 1
-│   ├── Line 1: "Invoice #12345"
-│   │   ├── Word: "Invoice" (confidence: 0.99, position: [x,y,w,h])
-│   │   └── Word: "#12345" (confidence: 0.97, position: [x,y,w,h])
-│   ├── Line 2: "Date: January 15, 2024"
-│   │   ├── Word: "Date:" (confidence: 0.99)
-│   │   ├── Word: "January" (confidence: 0.98)
-│   │   └── ...
-│   └── ...
-└── Page 2 (if multi-page document)
-    └── ...
-```
+![Challenge 12 - OCR Read Result Structure](/img/ai-900/challenge-12-topology.svg)
 
 **Key features of the Read API**:
 - Handles **printed** and **handwritten** text

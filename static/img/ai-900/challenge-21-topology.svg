@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 21 Azure AI Foundry architecture</title>
+  <desc id="desc">Architecture diagram showing Azure AI Foundry organized as a hub with projects, model selections, and deployments for team workloads.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+    <style><![CDATA[
+      .title { font: 700 14px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .label { font: 700 12px 'Segoe UI', Arial, sans-serif; fill: #1f1f1f; }
+      .desc { font: 10px 'Segoe UI', Arial, sans-serif; fill: #333333; }
+      .line { stroke: #666666; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    ]]></style>
+  </defs>
+
+  <text x="24" y="24" class="title">Challenge 21 — Azure AI Foundry architecture</text>
+
+  <rect x="20" y="122" width="118" height="60" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="79" y="146" text-anchor="middle" class="label">AI Foundry</text>
+  <text x="79" y="162" text-anchor="middle" class="desc">Unified AI platform</text>
+
+  <path d="M138 152 H188" class="line"/>
+
+  <rect x="188" y="112" width="130" height="80" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="253" y="140" text-anchor="middle" class="label">Hub</text>
+  <text x="253" y="156" text-anchor="middle" class="desc">Shared governance,</text>
+  <text x="253" y="170" text-anchor="middle" class="desc">security, connections</text>
+
+  <path d="M318 152 H372" class="line"/>
+
+  <rect x="372" y="44" width="132" height="92" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="438" y="70" text-anchor="middle" class="label">Project A</text>
+  <text x="438" y="86" text-anchor="middle" class="desc">Customer chatbot</text>
+  <rect x="392" y="98" width="92" height="24" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="438" y="114" text-anchor="middle" class="desc">Prompt flows</text>
+
+  <rect x="372" y="170" width="132" height="92" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="438" y="196" text-anchor="middle" class="label">Project B</text>
+  <text x="438" y="212" text-anchor="middle" class="desc">Document processing</text>
+  <rect x="392" y="224" width="92" height="24" rx="6" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="438" y="240" text-anchor="middle" class="desc">Evaluations</text>
+
+  <path d="M504 90 H548" class="line"/>
+  <path d="M504 216 H548" class="line"/>
+
+  <rect x="548" y="44" width="112" height="92" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="604" y="68" text-anchor="middle" class="label">Models</text>
+  <text x="604" y="84" text-anchor="middle" class="desc">GPT-4o</text>
+  <text x="604" y="98" text-anchor="middle" class="desc">Phi · Llama · Mistral</text>
+  <rect x="562" y="108" width="84" height="18" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="604" y="121" text-anchor="middle" class="desc">Deployment</text>
+
+  <rect x="548" y="170" width="112" height="92" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="604" y="194" text-anchor="middle" class="label">Models</text>
+  <text x="604" y="210" text-anchor="middle" class="desc">Document AI choices</text>
+  <text x="604" y="224" text-anchor="middle" class="desc">Embeddings + chat</text>
+  <rect x="562" y="234" width="84" height="18" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="604" y="247" text-anchor="middle" class="desc">Deployment</text>
+
+  <rect x="188" y="260" width="330" height="34" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+  <text x="353" y="282" text-anchor="middle" class="desc">Shared resources: compute, connections, policies, monitoring</text>
+</svg>

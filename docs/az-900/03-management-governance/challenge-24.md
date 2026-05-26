@@ -25,17 +25,7 @@ This is the final challenge — it brings together monitoring concepts that appl
 
 ### Task 1: Understand Azure Monitor architecture
 
-```text
-Data Sources               Azure Monitor              Actions
-─────────────             ─────────────             ───────────
-Applications    ──┐       ┌─ Metrics ──────────→  Dashboards
-VMs/Containers  ──┼──→    │  (numbers,           Alerts
-Networks        ──┤       │   time-series)       Autoscale
-Custom sources  ──┘       │
-                          └─ Logs ─────────────→  Log Analytics
-                             (detailed,           Workbooks
-                              rich data)          Export
-```
+![Challenge 24 - Azure Monitor Architecture](/img/az-900/challenge-24-topology.svg)
 
 | Data type | What it is | Example | Query with |
 |-----------|-----------|---------|-----------|

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 17 - RBAC Inheritance</title>
+  <desc id="desc">RBAC assignments flow from management groups to subscriptions, resource groups, and individual resources unless overridden at a lower scope.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/>
+    </marker>
+  </defs>
+  <style>
+    .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #1f1f1f; }
+    .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1f1f1f; }
+    .desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; fill: #333333; }
+    .line { stroke: #666666; stroke-width: 2; fill: none; }
+  </style>
+
+  <text x="188" y="24" class="title">RBAC Inheritance Flow</text>
+
+  <rect x="110" y="40" width="300" height="52" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+  <text x="187" y="63" class="label">Management Group</text>
+  <text x="242" y="79" class="desc">Owner role</text>
+
+  <line x1="260" y1="92" x2="260" y2="118" class="line" marker-end="url(#arrow)"/>
+
+  <rect x="110" y="126" width="300" height="52" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="202" y="149" class="label">Subscription</text>
+  <text x="231" y="165" class="desc">Contributor role</text>
+
+  <line x1="260" y1="178" x2="260" y2="204" class="line" marker-end="url(#arrow)"/>
+
+  <rect x="110" y="212" width="300" height="52" rx="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="194" y="235" class="label">Resource Group</text>
+  <text x="240" y="251" class="desc">Reader role</text>
+
+  <line x1="260" y1="264" x2="260" y2="290" class="line" marker-end="url(#arrow)"/>
+
+  <rect x="110" y="298" width="300" height="52" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+  <text x="219" y="321" class="label">Resource</text>
+  <text x="218" y="337" class="desc">Custom role assignment</text>
+</svg>

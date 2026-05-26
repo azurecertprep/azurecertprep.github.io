@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 305" role="img" aria-labelledby="title desc">
+  <title id="title">Challenge 38 - Service Bus Topic Architecture</title>
+  <desc id="desc">Orders topic routes premium and standard messages to separate subscriptions using SQL filters.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="658" height="303" rx="14" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="330.0" y="24" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#1f2937">Challenge 38 - Service Bus Topic Architecture</text>
+<rect x="235" y="40" width="180" height="56" rx="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="2"/>
+<text x="325.0" y="62" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#333">Service Bus Topic</text>
+<text x="325.0" y="79" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">orders</text>
+<rect x="70" y="135" width="220" height="100" rx="8" fill="#d5e8d4" stroke="#82b366" stroke-width="2"/>
+<text x="180.0" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">Subscription: premium-orders</text>
+<text x="180.0" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">SQL Filter</text>
+<text x="180.0" y="188" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">CustomerTier = &#x27;Premium&#x27;</text>
+<text x="180.0" y="202" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">8 competing consumers</text>
+<rect x="370" y="135" width="220" height="100" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+<text x="480.0" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#333">Subscription: standard-orders</text>
+<text x="480.0" y="174" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">SQL Filter</text>
+<text x="480.0" y="188" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">CustomerTier = &#x27;Standard&#x27;</text>
+<text x="480.0" y="202" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="400" fill="#444">4 competing consumers</text>
+<line x1="325" y1="96" x2="180" y2="135" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="325" y1="96" x2="480" y2="135" stroke="#6c8ebf" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="110" y="255" width="440" height="30" rx="8" fill="#f5f5f5" stroke="#666666" stroke-width="2"/>
+<text x="330.0" y="277" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" fill="#333">Server-side SQL filters route one published message to the correct consumer pool.</text>
+</svg>
