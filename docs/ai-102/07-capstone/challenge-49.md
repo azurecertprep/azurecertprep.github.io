@@ -184,8 +184,8 @@ az storage account create \
   --location $LOCATION \
   --sku Standard_LRS
 
-az storage container create --name "documents" --account-name "stcapstone${UNIQUE_ID}"
-az storage container create --name "images" --account-name "stcapstone${UNIQUE_ID}"
+az storage container create --name "documents" --account-name "stcapstone${UNIQUE_ID}" --auth-mode login
+az storage container create --name "images" --account-name "stcapstone${UNIQUE_ID}" --auth-mode login
 
 # Get all connection info
 SEARCH_ENDPOINT="https://search-${UNIQUE_ID}.search.windows.net"

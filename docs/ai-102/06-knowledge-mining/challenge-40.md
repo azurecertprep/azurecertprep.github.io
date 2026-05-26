@@ -90,7 +90,8 @@ az storage account create \
 
 az storage container create \
   --name $CONTAINER \
-  --account-name $STORAGE_ACCOUNT
+  --account-name $STORAGE_ACCOUNT \
+  --auth-mode login
 
 # Upload sample documents (create a sample text file)
 echo "Azure AI services provide cloud-based AI capabilities. Microsoft Azure offers cognitive services for vision, speech, language, and decision." > sample-doc.txt
@@ -98,7 +99,8 @@ az storage blob upload \
   --account-name $STORAGE_ACCOUNT \
   --container-name $CONTAINER \
   --name "sample-doc.txt" \
-  --file "sample-doc.txt"
+  --file "sample-doc.txt" \
+  --auth-mode login
 
 # Create Azure AI Services (multi-service) for skillset
 az cognitiveservices account create \

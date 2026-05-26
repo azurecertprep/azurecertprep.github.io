@@ -213,8 +213,8 @@ recognizer = speechsdk.translation.TranslationRecognizer(
 # Handle synthesized audio
 def synthesis_handler(evt):
     """Handle translated speech audio output"""
-    if evt.result.reason == speechsdk.ResultReason.SynthesizingAudio:
-        audio_data = evt.result.audio
+    if evt.result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+        audio_data = evt.result.audio_data
         print(f"  Synthesized audio: {len(audio_data)} bytes")
         # Save to file
         with open("translated-speech-es.wav", "ab") as f:

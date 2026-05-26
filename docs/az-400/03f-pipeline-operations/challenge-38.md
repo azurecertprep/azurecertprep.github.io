@@ -443,7 +443,7 @@ jobs:
           az deployment group validate \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
-            --parameters infrastructure/environments/staging.bicepparam \
+            --parameters @infrastructure/environments/staging.bicepparam \
             --parameters imageTag=${{ needs['build-image'].outputs.image_version }}
 
       - name: What-if analysis
@@ -451,7 +451,7 @@ jobs:
           az deployment group what-if \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
-            --parameters infrastructure/environments/staging.bicepparam \
+            --parameters @infrastructure/environments/staging.bicepparam \
             --parameters imageTag=${{ needs['build-image'].outputs.image_version }}
 
   # ============================================================
@@ -480,7 +480,7 @@ jobs:
           az deployment group create \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
-            --parameters infrastructure/environments/staging.bicepparam \
+            --parameters @infrastructure/environments/staging.bicepparam \
             --parameters imageTag=${{ needs['build-image'].outputs.image_version }} \
             --name "staging-$(date +%Y%m%d-%H%M%S)"
 
@@ -552,7 +552,7 @@ jobs:
           az deployment group create \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --template-file infrastructure/main.bicep \
-            --parameters infrastructure/environments/production.bicepparam \
+            --parameters @infrastructure/environments/production.bicepparam \
             --parameters imageTag=${{ needs['build-image'].outputs.image_version }} \
             --name "prod-$(date +%Y%m%d-%H%M%S)"
 

@@ -75,7 +75,8 @@ az storage account create \
 # Create container
 az storage container create \
   --name $CONTAINER \
-  --account-name $STORAGE_ACCOUNT
+  --account-name $STORAGE_ACCOUNT \
+  --auth-mode login
 
 # Enable CORS for Document Intelligence Studio
 az storage cors add \
@@ -103,7 +104,8 @@ Ship To: 123 Main St, Seattle WA 98101" > "po-sample-${i}.txt"
     --account-name $STORAGE_ACCOUNT \
     --container-name $CONTAINER \
     --name "po-sample-${i}.txt" \
-    --file "po-sample-${i}.txt"
+    --file "po-sample-${i}.txt" \
+  --auth-mode login
 done
 
 # Get SAS URL for Document Intelligence Studio

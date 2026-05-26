@@ -211,7 +211,7 @@ jobs:
           az deployment sub validate \
             --location eastus2 \
             --template-file main.bicep \
-            --parameters environments/dev.bicepparam
+            --parameters @environments/dev.bicepparam
 
   what-if:
     name: What-if analysis
@@ -234,7 +234,7 @@ jobs:
           RESULT=$(az deployment sub what-if \
             --location eastus2 \
             --template-file main.bicep \
-            --parameters environments/dev.bicepparam \
+            --parameters @environments/dev.bicepparam \
             --no-pretty-print 2>&1)
           echo "whatif_output<<EOF" >> $GITHUB_OUTPUT
           echo "$RESULT" >> $GITHUB_OUTPUT
@@ -279,7 +279,7 @@ jobs:
           az deployment sub create \
             --location eastus2 \
             --template-file main.bicep \
-            --parameters environments/dev.bicepparam \
+            --parameters @environments/dev.bicepparam \
             --name "deploy-dev-$(date +%Y%m%d-%H%M%S)"
 
   deploy-prod:
@@ -303,7 +303,7 @@ jobs:
           az deployment sub create \
             --location eastus2 \
             --template-file main.bicep \
-            --parameters environments/prod-east.bicepparam \
+            --parameters @environments/prod-east.bicepparam \
             --name "deploy-prod-$(date +%Y%m%d-%H%M%S)"
 ```
 
@@ -724,7 +724,7 @@ jobs:
           RESULT=$(az deployment sub what-if \
             --location eastus2 \
             --template-file main.bicep \
-            --parameters environments/prod-east.bicepparam \
+            --parameters @environments/prod-east.bicepparam \
             --no-pretty-print 2>&1)
 
           if echo "$RESULT" | grep -q "noChange"; then
@@ -889,7 +889,7 @@ jobs:
       - run: |
           az deployment sub create \
             --template-file main.bicep \
-            --parameters environments/dev.bicepparam \
+            --parameters @environments/dev.bicepparam \
             --location eastus2
 ```
 

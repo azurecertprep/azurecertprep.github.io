@@ -71,7 +71,7 @@ az network manager create \
   --location $LOCATION \
   --description "Enterprise network security manager" \
   --scope-accesses "SecurityAdmin" \
-  --network-manager-scopes subscriptions="/subscriptions/$SUBSCRIPTION_ID"
+  --network-manager-scopes subscriptions=$SUBSCRIPTION_ID
 
 # Create VNets for the lab
 az network vnet create \
@@ -110,7 +110,7 @@ $subscriptionId = (Get-AzContext).Subscription.Id
 New-AzResourceGroup -Name $rg -Location $location
 
 # Create AVNM
-$scope = New-AzNetworkManagerScope -Subscription @("/subscriptions/$subscriptionId")
+$scope = New-AzNetworkManagerScope -Subscription @($subscriptionId)
 
 New-AzNetworkManager -Name "avnm-enterprise" -ResourceGroupName $rg `
   -Location $location -Description "Enterprise network security manager" `

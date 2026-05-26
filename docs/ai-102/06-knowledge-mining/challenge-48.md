@@ -95,9 +95,9 @@ az storage account create \
   --sku Standard_LRS
 
 # Create containers for different content types
-az storage container create --name "pdfs" --account-name $STORAGE_ACCOUNT
-az storage container create --name "images" --account-name $STORAGE_ACCOUNT
-az storage container create --name "processed" --account-name $STORAGE_ACCOUNT
+az storage container create --name "pdfs" --account-name $STORAGE_ACCOUNT --auth-mode login
+az storage container create --name "images" --account-name $STORAGE_ACCOUNT --auth-mode login
+az storage container create --name "processed" --account-name $STORAGE_ACCOUNT --auth-mode login
 
 # AI Services (multi-service)
 az cognitiveservices account create \
