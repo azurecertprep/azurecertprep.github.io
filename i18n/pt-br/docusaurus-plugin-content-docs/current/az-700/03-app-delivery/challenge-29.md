@@ -554,24 +554,8 @@ az network application-gateway ssl-cert update \
   --name cert-woodgrove \
   --cert-file ./server-fullchain.pfx \
   --cert-password "AppGwP@ss123"
-```
+![Challenge 29 - Topologia de Rede](/img/az-700/challenge-29-topology.svg)
 
-### Problema 2: Condição de reescrita não avaliada (nome de variável incorreto)
-
-**Sintoma**: A regra de reescrita de URL está configurada, mas as requisições para `/v1/api/users` não estão sendo reescritas para `/v2/api/users`. A regra parece não ter efeito.
-
-**Causa raiz**: A condição usa `uri_path` (sem o prefixo `var_`) como nome da variável de servidor. As condições de reescrita do Application Gateway exigem o formato correto da variável: `var_uri_path` para o caminho do URI.
-
-**Correção**: Atualize a condição da regra de reescrita para usar o nome de variável correto:
-
-```bash
-az network application-gateway rewrite-rule update \
-  --resource-group rg-appgw-lab \
-  --gateway-name appgw-multisite \
-  --rule-set-name rewrite-set-headers \
-  --name rewrite-legacy-url \
-  --conditions "[{\"variable\":\"var_uri_path\",\"pattern\":\"/v1/api/(.*)\",\"ignore-case\":true,\"negate\":false}]"
-```
 
 As variáveis de servidor comuns para condições de reescrita incluem: `var_uri_path`, `var_query_string`, `var_host`, `var_request_uri`, `var_server_name`, e cabeçalhos HTTP acessados como `http_req_HeaderName`.
 

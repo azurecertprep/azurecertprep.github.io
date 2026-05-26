@@ -24,19 +24,8 @@ A VPN site a site da Contoso estabelecida no Challenge 14 usa uma única instân
 
 **Arquitetura:**
 
-```text
-On-prem Site A (Dallas)           Azure (East US)              On-prem Site B (Chicago)
-(10.10.0.0/16)                   (10.1.0.0/16)               (10.20.0.0/16)
-                                       |
-[VPN Device A]  ─── Tunnel 1 ──► [pip-vgw-1]                [VPN Device B]
-  203.0.113.10                        |                        198.51.100.25
-                                  [VPN Gateway]
-[VPN Device A]  ─── Tunnel 2 ──► [pip-vgw-2]                [VPN Device B]
-  203.0.113.10                        |                        198.51.100.25
-                                  Active-Active
-                               (VpnGw2AZ, Zone 1+2)
-                                  BGP ASN: 65010
-```
+![Challenge 15 - Topologia de Rede](/img/az-700/challenge-15-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

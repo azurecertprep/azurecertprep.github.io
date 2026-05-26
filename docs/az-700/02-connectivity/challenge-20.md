@@ -57,17 +57,8 @@ az network express-route show \
   --name er-circuit-contoso-dc \
   --query "{Name:name, PeeringLocation:serviceProviderProperties.peeringLocation, Peerings:peerings[].name}" \
   --output json
-```
+![Challenge 20 - Network Topology](/img/az-700/challenge-20-topology.svg)
 
-**Expected output:**
-
-```json
-{
-  "Name": "er-circuit-contoso-dc",
-  "PeeringLocation": "Washington DC",
-  "Peerings": ["AzurePrivatePeering"]
-}
-```
 
 ```bash
 # Circuit 2: Europe

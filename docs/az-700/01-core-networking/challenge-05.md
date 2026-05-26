@@ -135,26 +135,8 @@ az dns-resolver show \
     --name dnspr-hub-eastus2 \
     --resource-group rg-dns-resolver-lab \
     --output table
-```
+![Challenge 05 - Network Topology](/img/az-700/challenge-05-topology.svg)
 
-The resolver state should show `Succeeded` in the provisioning state.
-
----
-
-## Task 3: Configure the inbound endpoint
-
-The inbound endpoint provides an IP address that on-premises DNS servers can forward queries to. This allows on-premises clients to resolve records in Azure Private DNS zones.
-
-### Step 1: Create the inbound endpoint
-
-```bash
-az dns-resolver inbound-endpoint create \
-    --dns-resolver-name dnspr-hub-eastus2 \
-    --name ie-inbound \
-    --resource-group rg-dns-resolver-lab \
-    --location eastus2 \
-    --ip-configurations "[{private-ip-allocation-method:Dynamic,id:/subscriptions/<subscription-id>/resourceGroups/rg-dns-resolver-lab/providers/Microsoft.Network/virtualNetworks/vnet-hub/subnets/snet-dns-inbound}]"
-```
 
 The `--ip-configurations` parameter accepts a JSON array specifying the subnet and IP allocation method. Use `Dynamic` to let Azure assign an available IP from the subnet, or `Static` with a `private-ip-address` field to pin a specific address.
 

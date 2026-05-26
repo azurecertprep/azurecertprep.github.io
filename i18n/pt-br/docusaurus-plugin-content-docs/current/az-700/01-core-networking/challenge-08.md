@@ -24,21 +24,8 @@ A equipe de segurança da Contoso exige que TODO o tráfego destinado à interne
 
 **Topologia de rede:**
 
-```text
-On-Premises (192.168.0.0/16)
-        |
-   VPN Gateway (with BGP)
-        |
-  Hub VNet (10.0.0.0/16)
-   ├── GatewaySubnet (10.0.0.0/27)
-   ├── NVA-A Subnet (10.0.1.0/24) — NVA-A: 10.0.1.4
-   └── NVA-B Subnet (10.0.2.0/24) — NVA-B: 10.0.2.4
-        |
-  Peered to:
-  Spoke VNet (10.1.0.0/16)
-   ├── Workload Subnet (10.1.1.0/24)
-   └── App Subnet (10.1.2.0/24)
-```
+![Challenge 08 - Topologia de Rede](/img/az-700/challenge-08-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

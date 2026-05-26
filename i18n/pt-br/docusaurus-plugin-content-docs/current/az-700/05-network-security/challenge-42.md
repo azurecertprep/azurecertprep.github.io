@@ -161,50 +161,8 @@ $pip = New-AzPublicIpAddress `
   -Location $location `
   -Sku Standard `
   -AllocationMethod Static
-```
+![Challenge 42 - Topologia de Rede](/img/az-700/challenge-42-topology.svg)
 
-## Tarefa 2: Criar uma política de firewall e implantar o Azure Firewall
-
-Políticas de firewall são a maneira recomendada de gerenciar regras do Azure Firewall (substituindo a configuração clássica de regras). Políticas suportam herança, que é abordada no Challenge 43.
-
-### Azure CLI
-
-```bash
-# Create firewall policy
-az network firewall policy create \
-  --resource-group $RG \
-  --name policy-hub-firewall \
-  --location $LOCATION \
-  --sku Standard \
-  --threat-intel-mode Alert
-
-# Deploy Azure Firewall with policy
-az network firewall create \
-  --resource-group $RG \
-  --name fw-hub \
-  --location $LOCATION \
-  --sku AZFW_VNet \
-  --tier Standard \
-  --vnet-name vnet-hub \
-  --firewall-policy policy-hub-firewall
-
-# Configure the firewall IP configuration
-az network firewall ip-config create \
-  --resource-group $RG \
-  --firewall-name fw-hub \
-  --name fw-ipconfig \
-  --public-ip-address pip-firewall \
-  --vnet-name vnet-hub
-
-# Get the firewall private IP (needed for UDR)
-FW_PRIVATE_IP=$(az network firewall show \
-  --resource-group $RG \
-  --name fw-hub \
-  --query "ipConfigurations[0].privateIpAddress" \
-  --output tsv)
-
-echo "Firewall private IP: $FW_PRIVATE_IP"
-```
 
 ### Azure PowerShell
 

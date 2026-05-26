@@ -159,19 +159,8 @@ az network manager group static-member create \
     --network-manager avnm-contoso \
     --resource-group rg-avnm-lab \
     --resource-id "/subscriptions/<subscriptionID>/resourceGroups/rg-avnm-lab/providers/Microsoft.Network/virtualNetworks/vnet-spoke-02"
-```
+![Challenge 07 - Network Topology](/img/az-700/challenge-07-topology.svg)
 
-### Step 5: (Optional) Create dynamic membership with Azure Policy
-
-Dynamic membership uses Azure Policy to automatically add VNets matching certain conditions. This policy adds all VNets tagged with `Environment=Prod`:
-
-```bash
-az policy definition create \
-    --name "avnm-prod-vnets" \
-    --description "Add Prod VNets to AVNM network group" \
-    --rules "{\"if\":{\"allOf\":[{\"field\":\"type\",\"equals\":\"Microsoft.Network/virtualNetworks\"},{\"field\":\"tags['Environment']\",\"equals\":\"Prod\"}]},\"then\":{\"effect\":\"addToNetworkGroup\",\"details\":{\"networkGroupId\":\"/subscriptions/<subscriptionID>/resourceGroups/rg-avnm-lab/providers/Microsoft.Network/networkManagers/avnm-contoso/networkGroups/ng-spokes-prod\"}}}" \
-    --mode "Microsoft.Network.Data"
-```
 
 Assign the policy to the subscription scope:
 

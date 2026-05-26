@@ -506,38 +506,8 @@ New-AzApplicationGateway `
   -BackendHttpSettingsCollection $backendSettings `
   -RequestRoutingRules $rule `
   -FirewallPolicy $wafPolicy
-```
+![Challenge 45 - Network Topology](/img/az-700/challenge-45-topology.svg)
 
-## Task 6: Enable WAF logs and verify rule evaluation
-
-### Azure CLI
-
-```bash
-# Create Log Analytics workspace
-az monitor log-analytics workspace create \
-  --resource-group $RG \
-  --workspace-name law-tailwind-waf \
-  --location $LOCATION
-
-LAW_ID=$(az monitor log-analytics workspace show \
-  --resource-group $RG \
-  --workspace-name law-tailwind-waf \
-  --query id -o tsv)
-
-# Get Application Gateway resource ID
-APPGW_ID=$(az network application-gateway show \
-  --resource-group $RG \
-  --name appgw-tailwind \
-  --query id -o tsv)
-
-# Enable WAF diagnostic logs
-az monitor diagnostic-settings create \
-  --name waf-diagnostics \
-  --resource $APPGW_ID \
-  --workspace $LAW_ID \
-  --logs '[{"category":"ApplicationGatewayFirewallLog","enabled":true},{"category":"ApplicationGatewayAccessLog","enabled":true}]' \
-  --metrics '[{"category":"AllMetrics","enabled":true}]'
-```
 
 ### Azure PowerShell
 

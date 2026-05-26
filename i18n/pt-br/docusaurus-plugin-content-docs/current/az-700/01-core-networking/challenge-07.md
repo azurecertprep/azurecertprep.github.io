@@ -159,19 +159,8 @@ az network manager group static-member create \
     --network-manager avnm-contoso \
     --resource-group rg-avnm-lab \
     --resource-id "/subscriptions/<subscriptionID>/resourceGroups/rg-avnm-lab/providers/Microsoft.Network/virtualNetworks/vnet-spoke-02"
-```
+![Challenge 07 - Topologia de Rede](/img/az-700/challenge-07-topology.svg)
 
-### Etapa 5: (Opcional) Criar associação dinâmica com Azure Policy
-
-A associação dinâmica usa o Azure Policy para adicionar automaticamente VNets que correspondam a determinadas condições. Esta política adiciona todas as VNets marcadas com `Environment=Prod`:
-
-```bash
-az policy definition create \
-    --name "avnm-prod-vnets" \
-    --description "Add Prod VNets to AVNM network group" \
-    --rules "{\"if\":{\"allOf\":[{\"field\":\"type\",\"equals\":\"Microsoft.Network/virtualNetworks\"},{\"field\":\"tags['Environment']\",\"equals\":\"Prod\"}]},\"then\":{\"effect\":\"addToNetworkGroup\",\"details\":{\"networkGroupId\":\"/subscriptions/<subscriptionID>/resourceGroups/rg-avnm-lab/providers/Microsoft.Network/networkManagers/avnm-contoso/networkGroups/ng-spokes-prod\"}}}" \
-    --mode "Microsoft.Network.Data"
-```
 
 Atribua a política ao escopo da assinatura:
 

@@ -27,20 +27,8 @@ A força de trabalho remota da Contoso precisa de acesso seguro às redes virtua
 
 ## Visão geral da arquitetura
 
-```text
-Remote Clients                        Azure
-+------------------+                  +---------------------------+
-| Windows laptop   |---[OpenVPN]----->|                           |
-| macOS laptop     |---[IKEv2]------->|   VPN Gateway (VpnGw1)   |
-| Linux laptop     |---[OpenVPN]----->|   P2S Address Pool:       |
-| Windows (corp)   |---[SSTP]-------->|   172.16.201.0/24         |
-+------------------+                  +---------------------------+
-                                              |
-                                      +-------+-------+
-                                      |  VNet         |
-                                      | 10.60.0.0/16  |
-                                      +---------------+
-```
+![Challenge 17 - Topologia de Rede](/img/az-700/challenge-17-topology.svg)
+
 
 ## Pré-requisitos
 

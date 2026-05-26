@@ -554,31 +554,8 @@ az vm create \
     --generate-ssh-keys \
     --location westeurope \
     --no-wait
-```
+![Challenge 06 - Topologia de Rede](/img/az-700/challenge-06-topology.svg)
 
-O tráfego de emparelhamento entre regiões percorre a rede backbone da Microsoft. Espere latência mais alta (tipicamente 30-80ms entre Leste dos EUA e Oeste da Europa) comparado ao emparelhamento na mesma região (menos de 2ms).
-
-:::tip Nota para o exame
-
-O emparelhamento global de VNet suporta todos os recursos do emparelhamento regional com estas ressalvas: (1) VPN Gateways com SKU Basic não suportam trânsito de gateway sobre emparelhamento global (VpnGw1 ou superior é necessário), (2) balanceadores de carga internos Basic não são acessíveis sobre emparelhamento global (use SKU Standard), e (3) a largura de banda pode ser menor que o emparelhamento na mesma região dependendo dos tamanhos das VMs.
-
-:::
-
----
-
-## Tarefa 6: Verificar status do emparelhamento, rotas efetivas e conectividade
-
-Confirme que a topologia geral funciona revisando o status do emparelhamento em todas as conexões e validando a propagação de rotas.
-
-### Etapa 1: Listar todos os emparelhamentos na VNet hub
-
-```bash
-az network vnet peering list \
-    --resource-group rg-peering-lab \
-    --vnet-name vnet-hub \
-    --query '[].{Name:name, State:peeringState, GatewayTransit:allowGatewayTransit, ForwardedTraffic:allowForwardedTraffic}' \
-    --output table
-```
 
 ### Etapa 2: Verificar rotas efetivas na perspectiva do NVA hub
 

@@ -16,6 +16,8 @@ Contoso Financial Services is migrating workloads to Azure. The network team mus
 
 Your job is to plan the IP address scheme, create the VNets with correctly sized subnets, create a public IP prefix for predictable outbound IPs, and allocate individual public IPs from that prefix.
 
+![Challenge 01 - Network Topology](/img/az-700/challenge-01-topology.svg)
+
 ## Exam skills covered
 
 | Skill | Weight |

@@ -532,21 +532,8 @@ az vm run-command invoke \
   --name vm-test-01 \
   --command-id RunShellScript \
   --scripts "curl -s https://www.microsoft.com > /dev/null; curl -s https://azure.microsoft.com > /dev/null"
-```
+![Challenge 41 - Topologia de Rede](/img/az-700/challenge-41-topology.svg)
 
-### Formato dos logs de fluxo (versão 2)
-
-Os logs de fluxo versão 2 incluem estado do fluxo e contagem de bytes/pacotes:
-
-```json
-{
-  "time": "2024-01-15T10:00:00.000Z",
-  "macAddress": "00224D11CAFE",
-  "flowTuples": [
-    "1705312800,10.0.1.4,13.107.42.14,49152,443,T,O,A,B,1024,2048,10,15"
-  ]
-}
-```
 
 Campos na tupla de fluxo: `timestamp,sourceIP,destIP,sourcePort,destPort,protocol,trafficFlow,decision,flowState,packetsSrcToDst,bytesSrcToDst,packetsDstToSrc,bytesDstToSrc`
 

@@ -19,32 +19,8 @@ A Contoso Enterprise está padronizando o acesso privado para todos os serviços
 
 **Arquitetura:**
 
-```text
-                         Azure VNet: vnet-enterprise (10.0.0.0/16)
-                         ┌─────────────────────────────────────────────┐
-                         │  snet-app (10.0.1.0/24)                     │
-                         │  ┌────────────────┐                         │
-                         │  │  App VMs/AKS   │                         │
-                         │  └────────────────┘                         │
-                         │                                             │
-                         │  snet-pe (10.0.2.0/24)                      │
-                         │  ┌──────────┬──────────┬──────────┐         │
-                         │  │ PE-Blob  │ PE-File  │ PE-SQL   │         │
-                         │  │ .2.4     │ .2.5     │ .2.6     │         │
-                         │  ├──────────┼──────────┼──────────┤         │
-                         │  │ PE-KV    │ PE-Web   │ PE-Cosmos│         │
-                         │  │ .2.7     │ .2.8     │ .2.9     │         │
-                         │  └──────────┴──────────┴──────────┘         │
-                         └─────────────────────────────────────────────┘
+![Challenge 35 - Topologia de Rede](/img/az-700/challenge-35-topology.svg)
 
-    Private DNS Zones:
-    ├── privatelink.blob.core.windows.net
-    ├── privatelink.file.core.windows.net
-    ├── privatelink.database.windows.net
-    ├── privatelink.vaultcore.azure.net
-    ├── privatelink.azurewebsites.net
-    └── privatelink.documents.azure.com
-```
 
 ## Objetivos de aprendizagem
 

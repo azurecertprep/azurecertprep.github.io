@@ -554,31 +554,8 @@ az vm create \
     --generate-ssh-keys \
     --location westeurope \
     --no-wait
-```
+![Challenge 06 - Network Topology](/img/az-700/challenge-06-topology.svg)
 
-Cross-region peering traffic traverses the Microsoft backbone network. Expect higher latency (typically 30-80ms between US East and West Europe) compared to same-region peering (sub-2ms).
-
-:::tip Exam note
-
-Global VNet peering supports all features of regional peering with these caveats: (1) Basic SKU VPN Gateways do not support gateway transit over global peering (VpnGw1 or higher is required), (2) Basic internal load balancers are not accessible over global peering (use Standard SKU), and (3) bandwidth may be lower than same-region peering depending on VM sizes.
-
-:::
-
----
-
-## Task 6: Verify peering status, effective routes, and connectivity
-
-Confirm the overall topology works by reviewing peering status across all connections and validating route propagation.
-
-### Step 1: List all peerings on the hub VNet
-
-```bash
-az network vnet peering list \
-    --resource-group rg-peering-lab \
-    --vnet-name vnet-hub \
-    --query '[].{Name:name, State:peeringState, GatewayTransit:allowGatewayTransit, ForwardedTraffic:allowForwardedTraffic}' \
-    --output table
-```
 
 ### Step 2: Check effective routes from the hub NVA perspective
 

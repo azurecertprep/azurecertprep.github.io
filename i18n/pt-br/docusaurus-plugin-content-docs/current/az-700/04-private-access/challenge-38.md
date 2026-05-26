@@ -345,41 +345,8 @@ az network service-endpoint policy-definition create \
   --name "allow-specific-storage" \
   --service "Microsoft.Storage" \
   --service-resources $CORRECT_ID
-```
+![Challenge 38 - Topologia de Rede](/img/az-700/challenge-38-topology.svg)
 
-**Insight principal**: O parâmetro `--service-resources` deve ser o ID completo do recurso ARM no formato `/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Storage/storageAccounts/{name}`. IDs parciais ou nomes não funcionarão.
-
----
-
-### Cenário 2: Regra de VNet não entrando em vigor
-
-**Sintoma**: O firewall da conta de armazenamento tem uma regra de VNet configurada, mas o tráfego da sub-rede ainda está sendo negado com uma resposta 403 (AuthorizationFailure).
-
-**Causa raiz**: O service endpoint para `Microsoft.Storage` não foi habilitado na sub-rede antes de adicionar a regra de VNet. A regra de VNet requer um service endpoint ativo.
-
-**Correção**:
-
-```bash
-# Verify service endpoint is enabled on the subnet
-az network vnet subnet show \
-  --resource-group $RG \
-  --vnet-name $VNET_NAME \
-  --name $SUBNET_NAME \
-  --query "serviceEndpoints[].service" -o tsv
-
-# If Microsoft.Storage is not listed, enable it
-az network vnet subnet update \
-  --resource-group $RG \
-  --vnet-name $VNET_NAME \
-  --name $SUBNET_NAME \
-  --service-endpoints Microsoft.Storage
-
-# Verify the VNet rule on the storage account
-az storage account network-rule list \
-  --resource-group $RG \
-  --account-name $ALLOWED_STORAGE \
-  --query "virtualNetworkRules[].{subnet:virtualNetworkResourceId, state:state}" -o table
-```
 
 **Insight principal**: Service endpoints e regras de VNet funcionam juntos. O service endpoint na sub-rede otimiza a rota, e a regra de VNet na conta de armazenamento concede o acesso. Ambos devem estar configurados.
 

@@ -23,28 +23,8 @@ A critical requirement is that traffic returning from on-premises via the VPN ga
 
 ## Architecture overview
 
-```text
-                    +-----------+
-                    |  Internet |
-                    +-----+-----+
-                          |
-              +-----------+-----------+
-              |     Hub VNet          |
-              |   10.0.0.0/16        |
-              |                       |
-              |  +------+ +------+   |
-              |  | NVA1 | | NVA2 |   |
-              |  +--+---+ +--+---+   |
-              |     |   ILB   |      |
-              |     +----+----+      |
-              |  GatewaySubnet       |
-              +-+--------+--------+--+
-                |                 |
-       +--------+---+     +------+------+
-       | Spoke1 VNet|     | Spoke2 VNet |
-       | 10.1.0.0/16|     | 10.2.0.0/16 |
-       +------------+     +-------------+
-```
+![Challenge 47 - Network Topology](/img/az-700/challenge-47-topology.svg)
+
 
 ---
 

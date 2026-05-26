@@ -23,28 +23,8 @@ Um requisito crítico é que o tráfego retornando do ambiente local via gateway
 
 ## Visão geral da arquitetura
 
-```text
-                    +-----------+
-                    |  Internet |
-                    +-----+-----+
-                          |
-              +-----------+-----------+
-              |     Hub VNet          |
-              |   10.0.0.0/16        |
-              |                       |
-              |  +------+ +------+   |
-              |  | NVA1 | | NVA2 |   |
-              |  +--+---+ +--+---+   |
-              |     |   ILB   |      |
-              |     +----+----+      |
-              |  GatewaySubnet       |
-              +-+--------+--------+--+
-                |                 |
-       +--------+---+     +------+------+
-       | Spoke1 VNet|     | Spoke2 VNet |
-       | 10.1.0.0/16|     | 10.2.0.0/16 |
-       +------------+     +-------------+
-```
+![Challenge 47 - Topologia de Rede](/img/az-700/challenge-47-topology.svg)
+
 
 ---
 

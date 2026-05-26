@@ -18,17 +18,8 @@ A equipe do NOC da Contoso precisa de visibilidade ponta a ponta em sua rede Azu
 
 **Topologia de monitoramento:**
 
-```text
-Source VM (East US)
-    |
-    ├── TCP test → Load Balancer (East US) → Backend VMs
-    ├── HTTP test → Web App endpoint
-    └── ICMP test → VM in West US
-            |
-All results → Log Analytics Workspace
-            |
-    Alerts → Action Group (NOC email)
-```
+![Challenge 12 - Topologia de Rede](/img/az-700/challenge-12-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

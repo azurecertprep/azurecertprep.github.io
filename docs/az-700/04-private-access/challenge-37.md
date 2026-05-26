@@ -21,22 +21,8 @@ Your task is to deploy Azure DNS Private Resolver to enable bidirectional DNS re
 
 ### Architecture overview
 
-```text
-On-Premises DNS Server
-    |
-    | Conditional forwarder: privatelink.blob.core.windows.net -> Inbound Endpoint IP
-    |
-[VPN Gateway] <---> [Azure VNet]
-                        |
-                  [DNS Private Resolver]
-                   /              \
-        Inbound Endpoint    Outbound Endpoint
-        (snet-inbound)      (snet-outbound)
-              |                    |
-    Receives queries        Forwarding Ruleset
-    from on-prem            -> on-prem DNS for
-                               contoso.local
-```
+![Challenge 37 - Network Topology](/img/az-700/challenge-37-topology.svg)
+
 
 ### Key concepts
 

@@ -312,34 +312,8 @@ New-AzPrivateDnsZoneGroup `
     -PrivateEndpointName "pe-storage-blob" `
     -Name "zone-group-blob" `
     -PrivateDnsZoneConfig $dnsZoneConfig
-```
+![Challenge 34 - Network Topology](/img/az-700/challenge-34-topology.svg)
 
-:::tip Why registration-enabled is false
-
-The `--registration-enabled false` parameter means VMs in the linked VNet will NOT auto-register their own DNS records in this zone. This is correct for privatelink zones -- you only want the private endpoint A records here, not VM hostnames. Set registration to true only on zones meant for VM auto-registration (e.g., `contoso.internal`).
-
-:::
-
----
-
-## Task 5: Verify DNS resolution
-
-### Azure CLI
-
-```bash
-# Check the private endpoint's private IP
-az network private-endpoint show \
-    --resource-group rg-pe-lab \
-    --name pe-storage-blob \
-    --query "customDnsConfigs[0].ipAddresses[0]" \
-    --output tsv
-
-# List DNS records in the private zone
-az network private-dns record-set a list \
-    --resource-group rg-pe-lab \
-    --zone-name "privatelink.blob.core.windows.net" \
-    --output table
-```
 
 ### From a VM inside the VNet
 

@@ -21,22 +21,8 @@ Sua tarefa é implantar o Azure DNS Private Resolver para habilitar a resoluçã
 
 ### Visão geral da arquitetura
 
-```text
-On-Premises DNS Server
-    |
-    | Conditional forwarder: privatelink.blob.core.windows.net -> Inbound Endpoint IP
-    |
-[VPN Gateway] <---> [Azure VNet]
-                        |
-                  [DNS Private Resolver]
-                   /              \
-        Inbound Endpoint    Outbound Endpoint
-        (snet-inbound)      (snet-outbound)
-              |                    |
-    Receives queries        Forwarding Ruleset
-    from on-prem            -> on-prem DNS for
-                               contoso.local
-```
+![Challenge 37 - Topologia de Rede](/img/az-700/challenge-37-topology.svg)
+
 
 ### Conceitos-chave
 

@@ -24,21 +24,8 @@ A Contoso implanta NVAs de terceiros (Cisco, Palo Alto) em sua VNet hub para ins
 
 **Topologia de rede:**
 
-```text
-On-Premises (172.16.0.0/16, 172.17.0.0/16)
-        |
-   VPN Gateway (ASN 65010)
-        |
-  Hub VNet (10.0.0.0/16)
-   ├── GatewaySubnet (10.0.0.0/27)
-   ├── RouteServerSubnet (10.0.1.0/26)
-   ├── NVA Subnet (10.0.2.0/24) — NVA: 10.0.2.4
-   └── Management Subnet (10.0.3.0/24)
-        |
-  Peered to:
-  Spoke VNet (10.1.0.0/16)
-   └── Workload Subnet (10.1.1.0/24) — VM: 10.1.1.4
-```
+![Challenge 09 - Topologia de Rede](/img/az-700/challenge-09-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

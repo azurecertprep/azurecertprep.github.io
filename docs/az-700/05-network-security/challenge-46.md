@@ -86,45 +86,8 @@ $wafPolicy = New-AzFrontDoorWafPolicy `
   -Mode Prevention `
   -EnabledState Enabled `
   -RedirectUrl "https://www.woodgrovebank.com/blocked"
-```
+![Challenge 46 - Network Topology](/img/az-700/challenge-46-topology.svg)
 
-### Azure portal
-
-1. Search for **Web Application Firewall policies** and select **Create**.
-2. Set policy for to **Azure Front Door**, tier **Premium**.
-3. Set subscription, resource group, policy name **wafpolicywoodgrove**.
-4. On the Policy settings tab, set Mode to **Prevention**, State to **Enabled**.
-5. Set redirect URL for blocked requests.
-6. Select **Review + create**, then **Create**.
-
-:::warning Front Door Standard vs Premium for WAF
-- **Standard tier**: Supports custom rules only (geo-filtering, rate limiting, custom match rules).
-- **Premium tier**: Supports custom rules AND managed rulesets (DRS, bot protection). If you need managed rules, you must use Premium.
-:::
-
-## Task 2: Configure geo-filtering rule
-
-Geo-filtering blocks or allows traffic based on the country of origin (determined by client IP geolocation). Use ISO 3166-1 alpha-2 country codes.
-
-### Azure CLI
-
-```bash
-# Create geo-filtering custom rule to block embargoed countries
-az network front-door waf-policy rule create \
-  --policy-name $WAF_POLICY \
-  --resource-group $RG \
-  --name BlockEmbargoedCountries \
-  --priority 100 \
-  --rule-type MatchRule \
-  --action Block \
-  --match-condition "{match-variable:RemoteAddr,operator:GeoMatch,match-value:[KP,IR,CU,SY,RU]}"
-
-# Verify the rule was created
-az network front-door waf-policy rule list \
-  --policy-name $WAF_POLICY \
-  --resource-group $RG \
-  -o table
-```
 
 ### Azure PowerShell
 

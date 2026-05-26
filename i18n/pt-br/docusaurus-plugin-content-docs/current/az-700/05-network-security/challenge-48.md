@@ -27,27 +27,8 @@ Você deve demonstrar que:
 
 ## Visão geral da arquitetura
 
-```text
-   +--------------------------------------------------+
-   |         Azure Virtual Network Manager             |
-   |  (Security Admin Rules - deny by default)         |
-   +--------------------------------------------------+
-                          |
-          +---------------+----------------+
-          |                                |
-   +------+------+                  +------+------+
-   | Network     |                  | Network     |
-   | Group: Prod |                  | Group: Dev  |
-   | (tag-based) |                  | (tag-based) |
-   +------+------+                  +------+------+
-          |                                |
-   +------+------+                  +------+------+
-   | VNet-Prod   |                  | VNet-Dev    |
-   | 10.1.0.0/16 |                  | 10.2.0.0/16 |
-   +------+------+                  +------+------+
-          |                                |
-   [Bastion + JIT]                  [Bastion + JIT]
-```
+![Challenge 48 - Topologia de Rede](/img/az-700/challenge-48-topology.svg)
+
 
 ---
 

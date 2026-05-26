@@ -191,21 +191,8 @@ az vm create \
     --public-ip-sku Standard \
     --admin-username azureuser \
     --generate-ssh-keys
-```
+![Challenge 09 - Network Topology](/img/az-700/challenge-09-topology.svg)
 
-Enable IP forwarding on the NVA NIC (required for routing traffic):
-
-```bash
-NVA_NIC_ID=$(az vm show \
-    --resource-group rg-routeserver-lab \
-    --name vm-nva \
-    --query "networkProfile.networkInterfaces[0].id" \
-    --output tsv)
-
-az network nic update \
-    --ids "$NVA_NIC_ID" \
-    --ip-forwarding true
-```
 
 ### Step 7: Deploy a workload VM in the spoke
 

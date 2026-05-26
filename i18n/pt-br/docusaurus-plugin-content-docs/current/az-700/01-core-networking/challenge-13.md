@@ -24,17 +24,8 @@ As aplicações web voltadas ao público da Contoso têm sido alvo de ataques DD
 
 **Arquitetura:**
 
-```text
-Internet
-    |
-[Public IP: pip-web-frontend]  ←  DDoS IP Protection enabled
-    |
-[Application Gateway / Load Balancer]
-    |
-  VNet (10.0.0.0/16)
-    ├── snet-frontend (10.0.1.0/24)
-    └── snet-backend  (10.0.2.0/24)
-```
+![Challenge 13 - Topologia de Rede](/img/az-700/challenge-13-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

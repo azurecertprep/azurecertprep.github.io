@@ -19,29 +19,8 @@ A NovaTech Solutions, uma empresa ISV, construiu uma plataforma de API interna a
 
 **Arquitetura:**
 
-```text
-    PROVIDER (NovaTech VNet: 10.0.0.0/16)            CONSUMER (Customer VNet: 10.1.0.0/16)
-    ┌────────────────────────────────────┐            ┌────────────────────────────────┐
-    │                                    │            │                            │
-    │  snet-backend (10.0.1.0/24)        │            │  snet-consumer (10.1.1.0/24)│
-    │  ┌─────────┐  ┌─────────┐         │            │  ┌──────────────┐           │
-    │  │  VM-1   │  │  VM-2   │         │            │  │ consumer-vm  │           │
-    │  └────┬────┘  └────┬────┘         │            │  └──────┬───────┘           │
-    │       └──────┬──────┘              │            │         │                   │
-    │              v                     │            │         v                   │
-    │  ┌─────────────────────┐           │            │  ┌────────────────┐         │
-    │  │ Standard ILB        │           │            │  │  PE to PLS     │         │
-    │  │ frontend: 10.0.0.4  │           │            │  │  (10.1.1.5)    │         │
-    │  └──────────┬──────────┘           │            │  └───────┬────────┘         │
-    │             v                      │            │          │                  │
-    │  snet-pls (10.0.2.0/24)           │            └──────────┼──────────────────┘
-    │  ┌─────────────────────────┐       │                       │
-    │  │ Private Link Service    │◄──────┼───────────────────────┘
-    │  │ NAT IP: 10.0.2.4       │       │         Private Link connection
-    │  │ Alias: pls-novatech... │       │
-    │  └─────────────────────────┘       │
-    └────────────────────────────────────┘
-```
+![Challenge 36 - Topologia de Rede](/img/az-700/challenge-36-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

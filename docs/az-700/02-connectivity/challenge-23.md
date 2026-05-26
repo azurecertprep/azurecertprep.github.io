@@ -375,31 +375,8 @@ Update-AzVHubRouteTable `
   -VirtualHubName $HubName `
   -Name "RT_PROD" `
   -Route @($route)
-```
+![Challenge 23 - Network Topology](/img/az-700/challenge-23-topology.svg)
 
----
-
-## Task 5: Configure routing intent and routing policies
-
-Routing intent provides a declarative way to configure routing policies that apply to all connections in the hub. This is the recommended approach for sending traffic through a security solution.
-
-### Azure CLI
-
-```bash
-# Create routing intent with both Internet and Private traffic policies
-# The next-hop must be an Azure Firewall or supported NVA resource ID
-az network vhub routing-intent create \
-  --name "RoutingIntent-EastUS" \
-  --resource-group $RG \
-  --vhub $HUB_NAME \
-  --routing-policies "[{name:InternetTraffic,destinations:[Internet],next-hop:$FIREWALL_ID},{name:PrivateTrafficPolicy,destinations:[PrivateTraffic],next-hop:$FIREWALL_ID}]"
-
-# Verify routing intent configuration
-az network vhub routing-intent show \
-  --name "RoutingIntent-EastUS" \
-  --resource-group $RG \
-  --vhub $HUB_NAME
-```
 
 ### Azure PowerShell
 

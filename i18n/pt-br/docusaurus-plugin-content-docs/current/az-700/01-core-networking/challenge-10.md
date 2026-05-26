@@ -18,16 +18,8 @@ A Contoso executa mais de 200 VMs atrás de um Load Balancer interno para proces
 
 **Topologia atual:**
 
-```text
-Internet
-    X (SNAT exhaustion)
-    |
-Internal Load Balancer (no outbound rules)
-    |
-Backend Subnet (10.0.1.0/24)
-    ├── VM-1 ... VM-200+
-    └── No public IPs, no NAT Gateway
-```
+![Challenge 10 - Topologia de Rede](/img/az-700/challenge-10-topology.svg)
+
 
 **Topologia desejada:**
 

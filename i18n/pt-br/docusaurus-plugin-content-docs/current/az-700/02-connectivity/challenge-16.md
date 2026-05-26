@@ -18,16 +18,8 @@ A Contoso precisa se conectar a um parceiro de serviços financeiros (Woodgrove 
 
 **Arquitetura:**
 
-```text
-Contoso Azure (10.1.0.0/16)              Woodgrove Bank (172.16.0.0/12)
-                                         Compliance requirement:
-[VPN Gateway: VpnGw3]                      - IKE: AES256 / SHA384 / DHGroup14
-     |                                     - IPsec: GCMAES256 / GCMAES256
-     |──── Custom IPsec Policy ────────── [Partner VPN Device]
-     |                                       198.51.100.100
-  vnet-hub
-    └── GatewaySubnet (10.1.255.0/27)
-```
+![Challenge 16 - Topologia de Rede](/img/az-700/challenge-16-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

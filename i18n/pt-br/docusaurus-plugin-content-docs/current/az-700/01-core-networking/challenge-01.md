@@ -204,56 +204,8 @@ New-AzVirtualNetwork `
   -Location $location `
   -AddressPrefix "10.2.0.0/16" `
   -Subnet $devWebSubnet, $devAppSubnet
-```
+![Challenge 01 - Topologia de Rede](/img/az-700/challenge-01-topology.svg)
 
-## Tarefa 3: Criar um prefixo de IP público e alocar endereços
-
-Um prefixo de IP público reserva um bloco contíguo de endereços IP públicos. Isso fornece à Contoso IPs de saída previsíveis para listas de permissão de firewall por parceiros. Um prefixo /28 fornece 16 endereços.
-
-:::tip Quando usar um prefixo de IP público
-Use um prefixo de IP público quando precisar de endereços IP previsíveis e contíguos para regras de firewall, listas de permissão de parceiros ou requisitos de conformidade. Todos os IPs de um prefixo compartilham as mesmas propriedades de alocação e zona.
-:::
-
-### Azure CLI
-
-```bash
-# Create a zone-redundant public IP prefix (/28 = 16 IPs)
-az network public-ip prefix create \
-  --resource-group $RG \
-  --name pip-prefix-contoso-eastus2 \
-  --location $LOCATION \
-  --length 28 \
-  --sku Standard \
-  --version IPv4 \
-  --zone 1 2 3
-
-# Allocate a public IP from the prefix (for firewall)
-az network public-ip create \
-  --resource-group $RG \
-  --name pip-fw-contoso-01 \
-  --sku Standard \
-  --allocation-method Static \
-  --version IPv4 \
-  --zone 1 2 3 \
-  --public-ip-prefix pip-prefix-contoso-eastus2
-
-# Allocate a second public IP from the prefix (for VPN gateway)
-az network public-ip create \
-  --resource-group $RG \
-  --name pip-vpngw-contoso-01 \
-  --sku Standard \
-  --allocation-method Static \
-  --version IPv4 \
-  --zone 1 2 3 \
-  --public-ip-prefix pip-prefix-contoso-eastus2
-
-# Verify the prefix and its allocated IPs
-az network public-ip prefix show \
-  --resource-group $RG \
-  --name pip-prefix-contoso-eastus2 \
-  --query "{name:name, prefix:ipPrefix, publicIPs:publicIpAddresses[].id}" \
-  --output table
-```
 
 ### Azure PowerShell
 

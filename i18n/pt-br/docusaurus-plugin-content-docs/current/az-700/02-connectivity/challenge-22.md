@@ -30,26 +30,8 @@ A arquitetura atual exige dezenas de relações de peering e tabelas de rotas. A
 
 ## Visão geral da arquitetura
 
-```text
-On-premises Branch
-       |
-   [VPN Site]
-       |
-  ┌────┴────────────────────────────────────┐
-  │        Virtual WAN (Standard)            │
-  │                                          │
-  │  ┌──────────────┐  ┌──────────────────┐ │
-  │  │  Hub East US │  │  Hub West Europe  │ │
-  │  │  10.1.0.0/24 │  │  10.2.0.0/24     │ │
-  │  │              │  │                   │ │
-  │  │ [VPN GW]     │  │  [VPN GW]        │ │
-  │  └──────┬───────┘  └────────┬─────────┘ │
-  └─────────┼────────────────────┼───────────┘
-            │                    │
-     ┌──────┼──────┐      ┌─────┼──────┐
-     │      │      │      │     │      │
-  Spoke1  Spoke2  Spoke3  Spoke4  Spoke5
-```
+![Challenge 22 - Topologia de Rede](/img/az-700/challenge-22-topology.svg)
+
 
 ## Conceitos-chave
 

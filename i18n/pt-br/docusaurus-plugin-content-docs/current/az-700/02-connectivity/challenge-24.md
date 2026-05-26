@@ -158,41 +158,8 @@ Start-AzNetworkWatcherResourceTroubleshooting `
   -TargetResourceId $gw.Id `
   -StorageId $StorageAccount.Id `
   -StoragePath "https://stdiagcontoso.blob.core.windows.net/vpn-diagnostics"
-```
+![Challenge 24 - Topologia de Rede](/img/az-700/challenge-24-topology.svg)
 
-### Códigos de erro IKE comuns nos diagnósticos
-
-| Erro | Significado | Resolução |
-|-------|---------|------------|
-| ERROR_IPSEC_IKE_NO_POLICY | Incompatibilidade de política IKE Fase 1 | Alinhar criptografia, integridade, grupo DH em ambos os lados |
-| ERROR_IPSEC_IKE_TIMED_OUT | Peer não responde | Verificar acessibilidade do dispositivo local, regras de firewall para UDP 500/4500 |
-| ERROR_IPSEC_IKE_AUTH_FAIL | Incompatibilidade de chave pré-compartilhada | Verificar se a chave compartilhada é igual em ambos os lados |
-| ERROR_IPSEC_IKE_DH_FAIL | Incompatibilidade de grupo DH | Garantir que ambos os lados usem o mesmo grupo Diffie-Hellman |
-| ERROR_IPSEC_IKE_SA_DELETED | Tempo de vida da SA expirou, rekey falhou | Verificar configurações de tempo de vida da SA; padrão do Azure é 28800s (8h) para IKE |
-
----
-
-## Tarefa 3: Solucionar problemas de autenticação da VPN P2S
-
-Problemas de P2S geralmente se enquadram em três categorias: problemas de certificado, incompatibilidade de tipo de túnel ou esgotamento do pool de endereços.
-
-### Verificar configuração P2S
-
-#### Azure CLI
-
-```bash
-# Show the VPN gateway P2S configuration
-az network vnet-gateway show \
-  --name $GW_NAME \
-  --resource-group $RG \
-  --query "{
-    vpnClientConfiguration: vpnClientConfiguration.vpnClientProtocols,
-    addressPool: vpnClientConfiguration.vpnClientAddressPool,
-    rootCertificates: vpnClientConfiguration.vpnClientRootCertificates[].name,
-    revokedCertificates: vpnClientConfiguration.vpnClientRevokedCertificates[].name,
-    authenticationTypes: vpnClientConfiguration.vpnAuthenticationTypes
-  }"
-```
 
 #### Azure PowerShell
 

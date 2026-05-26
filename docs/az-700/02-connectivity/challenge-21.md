@@ -71,43 +71,8 @@ az network express-route peering create \
   --advertised-public-prefixes 203.0.113.0/24 \
   --customer-asn 65020 \
   --routing-registry-name ARIN
-```
+![Challenge 21 - Network Topology](/img/az-700/challenge-21-topology.svg)
 
-**Parameter details:**
-
-| Parameter | Value | Purpose |
-|---|---|---|
-| `--peering-type` | MicrosoftPeering | Specifies Microsoft peering (not private) |
-| `--primary-peer-subnet` | 203.0.113.0/30 | Public /30 for primary BGP link |
-| `--secondary-peer-subnet` | 203.0.113.4/30 | Public /30 for secondary BGP link |
-| `--advertised-public-prefixes` | 203.0.113.0/24 | Prefixes you own and want to advertise |
-| `--customer-asn` | 65020 | Your ASN registered with the routing registry |
-| `--routing-registry-name` | ARIN | Where your prefixes are registered |
-
-**Expected output:**
-
-```json
-{
-  "azureASN": 12076,
-  "id": "/subscriptions/.../peerings/MicrosoftPeering",
-  "microsoftPeeringConfig": {
-    "advertisedCommunities": [],
-    "advertisedPublicPrefixes": ["203.0.113.0/24"],
-    "advertisedPublicPrefixesState": "ValidationNeeded",
-    "customerASN": 65020,
-    "legacyMode": 0,
-    "routingRegistryName": "ARIN"
-  },
-  "name": "MicrosoftPeering",
-  "peerASN": 65020,
-  "peeringType": "MicrosoftPeering",
-  "primaryPeerAddressPrefix": "203.0.113.0/30",
-  "provisioningState": "Succeeded",
-  "secondaryPeerAddressPrefix": "203.0.113.4/30",
-  "state": "Enabled",
-  "vlanId": 300
-}
-```
 
 **Important:** The `advertisedPublicPrefixesState` field shows `ValidationNeeded`. Microsoft validates that you own the advertised prefixes by checking against RIR/IRR records. This validation can take minutes to days depending on the registry.
 

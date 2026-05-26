@@ -554,24 +554,8 @@ az network application-gateway ssl-cert update \
   --name cert-woodgrove \
   --cert-file ./server-fullchain.pfx \
   --cert-password "AppGwP@ss123"
-```
+![Challenge 29 - Network Topology](/img/az-700/challenge-29-topology.svg)
 
-### Issue 2: Rewrite condition not evaluating (wrong variable name)
-
-**Symptom**: URL rewrite rule is configured but requests to `/v1/api/users` are not being rewritten to `/v2/api/users`. The rule appears to have no effect.
-
-**Root cause**: The condition uses `uri_path` (without the `var_` prefix) as the server variable name. Application Gateway rewrite conditions require the correct variable format: `var_uri_path` for the URI path.
-
-**Fix**: Update the rewrite rule condition to use the correct variable name:
-
-```bash
-az network application-gateway rewrite-rule update \
-  --resource-group rg-appgw-lab \
-  --gateway-name appgw-multisite \
-  --rule-set-name rewrite-set-headers \
-  --name rewrite-legacy-url \
-  --conditions "[{\"variable\":\"var_uri_path\",\"pattern\":\"/v1/api/(.*)\",\"ignore-case\":true,\"negate\":false}]"
-```
 
 Common server variables for rewrite conditions include: `var_uri_path`, `var_query_string`, `var_host`, `var_request_uri`, `var_server_name`, and HTTP headers accessed as `http_req_HeaderName`.
 

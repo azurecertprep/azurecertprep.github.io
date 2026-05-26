@@ -158,41 +158,8 @@ Start-AzNetworkWatcherResourceTroubleshooting `
   -TargetResourceId $gw.Id `
   -StorageId $StorageAccount.Id `
   -StoragePath "https://stdiagcontoso.blob.core.windows.net/vpn-diagnostics"
-```
+![Challenge 24 - Network Topology](/img/az-700/challenge-24-topology.svg)
 
-### Common IKE error codes in diagnostics
-
-| Error | Meaning | Resolution |
-|-------|---------|------------|
-| ERROR_IPSEC_IKE_NO_POLICY | IKE Phase 1 policy mismatch | Align encryption, integrity, DH group on both sides |
-| ERROR_IPSEC_IKE_TIMED_OUT | Peer not responding | Check on-premises device reachability, firewall rules for UDP 500/4500 |
-| ERROR_IPSEC_IKE_AUTH_FAIL | Pre-shared key mismatch | Verify shared key matches on both sides |
-| ERROR_IPSEC_IKE_DH_FAIL | DH group mismatch | Ensure both sides use the same Diffie-Hellman group |
-| ERROR_IPSEC_IKE_SA_DELETED | SA lifetime expired, rekey failed | Check SA lifetime settings; Azure default is 28800s (8h) for IKE |
-
----
-
-## Task 3: Troubleshoot P2S VPN authentication
-
-P2S issues typically fall into three categories: certificate problems, tunnel type mismatches, or address pool exhaustion.
-
-### Check P2S configuration
-
-#### Azure CLI
-
-```bash
-# Show the VPN gateway P2S configuration
-az network vnet-gateway show \
-  --name $GW_NAME \
-  --resource-group $RG \
-  --query "{
-    vpnClientConfiguration: vpnClientConfiguration.vpnClientProtocols,
-    addressPool: vpnClientConfiguration.vpnClientAddressPool,
-    rootCertificates: vpnClientConfiguration.vpnClientRootCertificates[].name,
-    revokedCertificates: vpnClientConfiguration.vpnClientRevokedCertificates[].name,
-    authenticationTypes: vpnClientConfiguration.vpnAuthenticationTypes
-  }"
-```
 
 #### Azure PowerShell
 

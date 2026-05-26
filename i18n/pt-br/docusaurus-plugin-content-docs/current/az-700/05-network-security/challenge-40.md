@@ -450,84 +450,8 @@ $vnet = Get-AzVirtualNetwork -ResourceGroupName $rg -Name "vnet-threetier"
 $dbSubnetConfig = Get-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "snet-db"
 $dbSubnetConfig.NetworkSecurityGroup = $nsgDb
 Set-AzVirtualNetwork -VirtualNetwork $vnet
-```
+![Challenge 40 - Topologia de Rede](/img/az-700/challenge-40-topology.svg)
 
-## Tarefa 5: Criar VMs e atribuir NICs aos ASGs
-
-Crie uma VM por camada e atribua a NIC ao ASG correspondente. O parâmetro `--asgs` em `az network nic create` realiza a atribuição do ASG no momento da criação da NIC.
-
-### Azure CLI
-
-```bash
-# Create web tier VM
-az vm create \
-  --resource-group $RG \
-  --name vm-web-01 \
-  --location $LOCATION \
-  --vnet-name vnet-threetier \
-  --subnet snet-web \
-  --nsg "" \
-  --image Ubuntu2204 \
-  --size Standard_B1s \
-  --admin-username azureuser \
-  --generate-ssh-keys \
-  --no-wait
-
-# Create app tier VM
-az vm create \
-  --resource-group $RG \
-  --name vm-app-01 \
-  --location $LOCATION \
-  --vnet-name vnet-threetier \
-  --subnet snet-app \
-  --nsg "" \
-  --image Ubuntu2204 \
-  --size Standard_B1s \
-  --admin-username azureuser \
-  --generate-ssh-keys \
-  --no-wait
-
-# Create db tier VM
-az vm create \
-  --resource-group $RG \
-  --name vm-db-01 \
-  --location $LOCATION \
-  --vnet-name vnet-threetier \
-  --subnet snet-db \
-  --nsg "" \
-  --image Ubuntu2204 \
-  --size Standard_B1s \
-  --admin-username azureuser \
-  --generate-ssh-keys
-
-# Assign NICs to their ASGs
-# Get NIC names
-WEB_NIC=$(az vm show --resource-group $RG --name vm-web-01 \
-  --query "networkProfile.networkInterfaces[0].id" --output tsv | xargs basename)
-APP_NIC=$(az vm show --resource-group $RG --name vm-app-01 \
-  --query "networkProfile.networkInterfaces[0].id" --output tsv | xargs basename)
-DB_NIC=$(az vm show --resource-group $RG --name vm-db-01 \
-  --query "networkProfile.networkInterfaces[0].id" --output tsv | xargs basename)
-
-# Update NICs with ASG membership
-az network nic ip-config update \
-  --resource-group $RG \
-  --nic-name $WEB_NIC \
-  --name ipconfig1 \
-  --application-security-groups asg-web
-
-az network nic ip-config update \
-  --resource-group $RG \
-  --nic-name $APP_NIC \
-  --name ipconfig1 \
-  --application-security-groups asg-app
-
-az network nic ip-config update \
-  --resource-group $RG \
-  --nic-name $DB_NIC \
-  --name ipconfig1 \
-  --application-security-groups asg-db
-```
 
 ### Azure PowerShell
 

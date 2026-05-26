@@ -159,16 +159,8 @@ az network vnet subnet update \
   --vnet-name $VNET_NAME \
   --name ApimSubnet \
   --delegations Microsoft.ApiManagement/service
-```
+![Challenge 02 - Topologia de Rede](/img/az-700/challenge-02-topology.svg)
 
-Para listar os serviços de delegação disponíveis para uma região:
-
-```bash
-az network vnet subnet list-available-delegations \
-  --location $LOCATION \
-  --query "[].serviceName" \
-  --output tsv
-```
 
 :::tip Fatos importantes para o exame
 

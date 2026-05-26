@@ -207,35 +207,8 @@ az network vnet-gateway create \
   --sku ErGw1AZ \
   --public-ip-addresses pip-er-gateway \
   --no-wait
-```
+![Challenge 19 - Topologia de Rede](/img/az-700/challenge-19-topology.svg)
 
-**Saída esperada (após a implantação ser concluída, ~25--45 minutos):**
-
-```json
-{
-  "activeActive": false,
-  "gatewayType": "ExpressRoute",
-  "id": "/subscriptions/aaaa0000-bb11-2222-33cc-444444dddddd/resourceGroups/rg-contoso-network/providers/Microsoft.Network/virtualNetworkGateways/gw-expressroute-hub",
-  "ipConfigurations": [
-    {
-      "privateIpAllocationMethod": "Dynamic",
-      "publicIpAddress": {
-        "id": "/subscriptions/.../publicIPAddresses/pip-er-gateway"
-      },
-      "subnet": {
-        "id": "/subscriptions/.../subnets/GatewaySubnet"
-      }
-    }
-  ],
-  "name": "gw-expressroute-hub",
-  "provisioningState": "Succeeded",
-  "sku": {
-    "capacity": 2,
-    "name": "ErGw1AZ",
-    "tier": "ErGw1AZ"
-  }
-}
-```
 
 ---
 

@@ -135,26 +135,8 @@ az dns-resolver show \
     --name dnspr-hub-eastus2 \
     --resource-group rg-dns-resolver-lab \
     --output table
-```
+![Challenge 05 - Topologia de Rede](/img/az-700/challenge-05-topology.svg)
 
-O estado do resolver deve mostrar `Succeeded` no estado de provisionamento.
-
----
-
-## Tarefa 3: Configurar o ponto de extremidade de entrada
-
-O ponto de extremidade de entrada fornece um endereço IP para o qual os servidores DNS locais podem encaminhar consultas. Isso permite que clientes locais resolvam registros em zonas Azure Private DNS.
-
-### Etapa 1: Criar o ponto de extremidade de entrada
-
-```bash
-az dns-resolver inbound-endpoint create \
-    --dns-resolver-name dnspr-hub-eastus2 \
-    --name ie-inbound \
-    --resource-group rg-dns-resolver-lab \
-    --location eastus2 \
-    --ip-configurations "[{private-ip-allocation-method:Dynamic,id:/subscriptions/<subscription-id>/resourceGroups/rg-dns-resolver-lab/providers/Microsoft.Network/virtualNetworks/vnet-hub/subnets/snet-dns-inbound}]"
-```
 
 O parâmetro `--ip-configurations` aceita um array JSON especificando a sub-rede e o método de alocação de IP. Use `Dynamic` para permitir que o Azure atribua um IP disponível da sub-rede, ou `Static` com um campo `private-ip-address` para fixar um endereço específico.
 

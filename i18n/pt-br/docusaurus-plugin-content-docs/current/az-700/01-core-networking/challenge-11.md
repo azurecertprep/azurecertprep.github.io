@@ -18,16 +18,8 @@ A equipe de operações da Contoso recebe chamados sobre VMs que não conseguem 
 
 **Topologia de rede:**
 
-```text
-  Internet
-      |
-  VNet (10.0.0.0/16)
-   ├── snet-web (10.0.1.0/24)
-   │    └── vm-web: 10.0.1.4 (NSG: nsg-web)
-   ├── snet-app (10.0.2.0/24)
-   │    └── vm-app: 10.0.2.4 (NSG: nsg-app)
-   └── Route Table: rt-app (attached to snet-app)
-```
+![Challenge 11 - Topologia de Rede](/img/az-700/challenge-11-topology.svg)
+
 
 ## Objetivos de aprendizagem
 

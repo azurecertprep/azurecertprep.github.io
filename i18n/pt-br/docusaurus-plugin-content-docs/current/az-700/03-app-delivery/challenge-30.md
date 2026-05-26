@@ -396,50 +396,8 @@ $appgw = Get-AzApplicationGateway -ResourceGroupName "rg-appgw-scale-lab" -Name 
 $appgw.EnableHttp2 = $true
 
 $appgw = Set-AzApplicationGateway -ApplicationGateway $appgw
-```
+![Challenge 30 - Topologia de Rede](/img/az-700/challenge-30-topology.svg)
 
-### Pontos-chave sobre WebSocket e HTTP/2
-
-- Conexões WebSocket são encaminhadas de forma transparente pelo Application Gateway; nenhuma configuração especial é necessária
-- O timeout das configurações HTTP do backend deve ser definido acima do padrão (ex.: 120 segundos) para conexões WebSocket de longa duração
-- O HTTP/2 é suportado apenas na conexão **cliente-para-gateway**; o gateway se comunica com backends via HTTP/1.1
-- WebSocket e HTTP/2 podem coexistir no mesmo listener
-
----
-
-## Tarefa 5: Configurar diagnósticos e logs
-
-O Application Gateway gera logs de diagnóstico para eventos de acesso, desempenho e firewall. Esses logs devem ser explicitamente configurados para coleta.
-
-### Azure CLI
-
-```bash
-# Create Log Analytics workspace
-az monitor log-analytics workspace create \
-  --resource-group rg-appgw-scale-lab \
-  --workspace-name law-appgw-diagnostics \
-  --location eastus2
-
-# Get the Application Gateway resource ID
-APPGW_ID=$(az network application-gateway show \
-  --resource-group rg-appgw-scale-lab \
-  --name appgw-autoscale \
-  --query id --output tsv)
-
-# Get the Log Analytics workspace ID
-WORKSPACE_ID=$(az monitor log-analytics workspace show \
-  --resource-group rg-appgw-scale-lab \
-  --workspace-name law-appgw-diagnostics \
-  --query id --output tsv)
-
-# Create diagnostic settings to send all logs and metrics
-az monitor diagnostic-settings create \
-  --name "appgw-diagnostics" \
-  --resource "$APPGW_ID" \
-  --workspace "$WORKSPACE_ID" \
-  --logs '[{"categoryGroup":"allLogs","enabled":true}]' \
-  --metrics '[{"category":"AllMetrics","enabled":true}]'
-```
 
 ### Azure PowerShell
 

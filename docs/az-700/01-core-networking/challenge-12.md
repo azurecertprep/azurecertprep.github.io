@@ -263,24 +263,8 @@ WORKSPACE_ID=$(az monitor log-analytics workspace show \
     --workspace-name $WORKSPACE_NAME \
     --query "id" \
     --output tsv)
-```
+![Challenge 12 - Network Topology](/img/az-700/challenge-12-topology.svg)
 
-### Step 2: Enable diagnostic settings for the Load Balancer
-
-```bash
-LB_ID=$(az network lb show \
-    --resource-group $RESOURCE_GROUP \
-    --name "lb-contoso-web" \
-    --query "id" \
-    --output tsv)
-
-az monitor diagnostic-settings create \
-    --name "diag-lb-to-law" \
-    --resource $LB_ID \
-    --workspace $WORKSPACE_ID \
-    --logs '[{"category":"LoadBalancerAlertEvent","enabled":true},{"category":"LoadBalancerProbeHealthStatus","enabled":true}]' \
-    --metrics '[{"category":"AllMetrics","enabled":true}]'
-```
 
 ### Step 3: Enable diagnostic settings for the VPN Gateway
 

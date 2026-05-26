@@ -27,27 +27,8 @@ You must demonstrate that:
 
 ## Architecture overview
 
-```text
-   +--------------------------------------------------+
-   |         Azure Virtual Network Manager             |
-   |  (Security Admin Rules - deny by default)         |
-   +--------------------------------------------------+
-                          |
-          +---------------+----------------+
-          |                                |
-   +------+------+                  +------+------+
-   | Network     |                  | Network     |
-   | Group: Prod |                  | Group: Dev  |
-   | (tag-based) |                  | (tag-based) |
-   +------+------+                  +------+------+
-          |                                |
-   +------+------+                  +------+------+
-   | VNet-Prod   |                  | VNet-Dev    |
-   | 10.1.0.0/16 |                  | 10.2.0.0/16 |
-   +------+------+                  +------+------+
-          |                                |
-   [Bastion + JIT]                  [Bastion + JIT]
-```
+![Challenge 48 - Network Topology](/img/az-700/challenge-48-topology.svg)
+
 
 ---
 

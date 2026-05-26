@@ -19,31 +19,8 @@ A MedSecure Health, uma empresa de saúde, está migrando seus serviços PaaS pa
 
 **Arquitetura:**
 
-```text
-                    Azure VNet (10.0.0.0/16)
-                    ┌──────────────────────────────────────────────┐
-                    │                                              │
-                    │  snet-workloads (10.0.1.0/24)                │
-                    │  ┌──────────┐                                │
-                    │  │  vm-test  │ ── nslookup ──┐               │
-                    │  └──────────┘                │               │
-                    │                              v               │
-                    │  snet-pe (10.0.2.0/24)                       │
-                    │  ┌──────────────────────────┐                │
-                    │  │ pe-storage (10.0.2.4)    │                │
-                    │  └──────────────────────────┘                │
-                    │              │                                │
-                    └──────────────┼────────────────────────────────┘
-                                   │ Private connection
-                                   v
-                    ┌──────────────────────────────┐
-                    │  stmedsecure.blob.core...    │
-                    │  (Storage Account - Blob)    │
-                    └──────────────────────────────┘
+![Challenge 34 - Topologia de Rede](/img/az-700/challenge-34-topology.svg)
 
-    Private DNS Zone: privatelink.blob.core.windows.net
-    A record: stmedsecure → 10.0.2.4
-```
 
 ## Objetivos de aprendizagem
 

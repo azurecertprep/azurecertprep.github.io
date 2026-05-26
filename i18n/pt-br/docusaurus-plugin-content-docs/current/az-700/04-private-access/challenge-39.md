@@ -47,85 +47,8 @@ A migração deve ser realizada com tempo de inatividade zero. Tanto os service 
 
 [Final State]
   Subnet -> Private Endpoint -> Storage (private IP only)
-```
+![Challenge 39 - Topologia de Rede](/img/az-700/challenge-39-topology.svg)
 
-:::caution Risco de migração
-Nunca remova o service endpoint ou as regras de VNet antes de validar que a resolução DNS do Private Endpoint está funcionando. Durante a coexistência, o tráfego utilizará qualquer caminho para o qual o DNS resolver. Se o DNS ainda apontar para o IP público, remover a regra de VNet interromperá a conectividade.
-:::
-
----
-
-## Tarefa 1: Documentar a configuração atual de service endpoint
-
-Antes de migrar, capture a configuração existente para planejamento de rollback.
-
-### Azure CLI
-
-```bash
-# Variables
-RG="rg-challenge39"
-LOCATION="eastus"
-VNET_NAME="vnet-production"
-SUBNET_NAME="snet-app"
-STORAGE_NAME="stwoodgrovec39$(shuf -i 1000-9999 -n 1)"
-
-# Create the lab environment (simulating existing SE setup)
-az group create --name $RG --location $LOCATION
-
-az storage account create \
-  --resource-group $RG \
-  --name $STORAGE_NAME \
-  --location $LOCATION \
-  --sku Standard_LRS \
-  --kind StorageV2
-
-az network vnet create \
-  --resource-group $RG \
-  --name $VNET_NAME \
-  --location $LOCATION \
-  --address-prefixes "10.2.0.0/16" \
-  --subnet-name $SUBNET_NAME \
-  --subnet-prefixes "10.2.0.0/24"
-
-# Enable service endpoint (existing state)
-az network vnet subnet update \
-  --resource-group $RG \
-  --vnet-name $VNET_NAME \
-  --name $SUBNET_NAME \
-  --service-endpoints Microsoft.Storage
-
-# Configure VNet rule on storage (existing state)
-az storage account update \
-  --resource-group $RG \
-  --name $STORAGE_NAME \
-  --default-action Deny
-
-az storage account network-rule add \
-  --resource-group $RG \
-  --account-name $STORAGE_NAME \
-  --vnet-name $VNET_NAME \
-  --subnet $SUBNET_NAME
-
-# Document current state
-echo "=== Current Subnet Service Endpoints ==="
-az network vnet subnet show \
-  --resource-group $RG \
-  --vnet-name $VNET_NAME \
-  --name $SUBNET_NAME \
-  --query "serviceEndpoints[].service" -o tsv
-
-echo "=== Current Storage Network Rules ==="
-az storage account network-rule list \
-  --resource-group $RG \
-  --account-name $STORAGE_NAME \
-  --query "virtualNetworkRules[].{subnet:virtualNetworkResourceId, state:state}" -o table
-
-echo "=== Current Default Action ==="
-az storage account show \
-  --resource-group $RG \
-  --name $STORAGE_NAME \
-  --query "networkRuleSet.defaultAction" -o tsv
-```
 
 ### Azure PowerShell
 

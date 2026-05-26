@@ -86,45 +86,8 @@ $wafPolicy = New-AzFrontDoorWafPolicy `
   -Mode Prevention `
   -EnabledState Enabled `
   -RedirectUrl "https://www.woodgrovebank.com/blocked"
-```
+![Challenge 46 - Topologia de Rede](/img/az-700/challenge-46-topology.svg)
 
-### Portal do Azure
-
-1. Pesquise por **Web Application Firewall policies** e selecione **Create**.
-2. Defina policy for como **Azure Front Door**, tier **Premium**.
-3. Defina assinatura, grupo de recursos, nome da política **wafpolicywoodgrove**.
-4. Na aba Policy settings, defina Mode como **Prevention**, State como **Enabled**.
-5. Defina a URL de redirecionamento para requisições bloqueadas.
-6. Selecione **Review + create** e depois **Create**.
-
-:::warning Front Door Standard vs Premium para WAF
-- **Tier Standard**: Suporta apenas regras personalizadas (filtragem geográfica, limitação de taxa, regras de correspondência personalizadas).
-- **Tier Premium**: Suporta regras personalizadas E conjuntos de regras gerenciados (DRS, proteção contra bots). Se você precisa de regras gerenciadas, deve usar o Premium.
-:::
-
-## Tarefa 2: Configurar regra de filtragem geográfica
-
-A filtragem geográfica bloqueia ou permite tráfego com base no país de origem (determinado pela geolocalização do IP do cliente). Use códigos de país ISO 3166-1 alpha-2.
-
-### Azure CLI
-
-```bash
-# Create geo-filtering custom rule to block embargoed countries
-az network front-door waf-policy rule create \
-  --policy-name $WAF_POLICY \
-  --resource-group $RG \
-  --name BlockEmbargoedCountries \
-  --priority 100 \
-  --rule-type MatchRule \
-  --action Block \
-  --match-condition "{match-variable:RemoteAddr,operator:GeoMatch,match-value:[KP,IR,CU,SY,RU]}"
-
-# Verify the rule was created
-az network front-door waf-policy rule list \
-  --policy-name $WAF_POLICY \
-  --resource-group $RG \
-  -o table
-```
 
 ### Azure PowerShell
 

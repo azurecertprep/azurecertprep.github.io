@@ -356,32 +356,8 @@ $appRCG = New-AzFirewallPolicyRuleCollectionGroup `
   -Name "DefaultApplicationRuleCollectionGroup" `
   -Priority 300 `
   -RuleCollection $appRule
-```
+![Challenge 44 - Network Topology](/img/az-700/challenge-44-topology.svg)
 
-## Task 5: Configure routing intent
-
-Routing intent is the mechanism that tells the Virtual WAN hub to route all internet-bound and/or private traffic through Azure Firewall (or a supported NVA). This replaces the need to manually configure route tables on each spoke connection.
-
-There are two routing policies:
-- **InternetTraffic**: Forces all internet-bound traffic through the firewall.
-- **PrivateTraffic**: Forces all inter-spoke and branch-to-VNet traffic through the firewall.
-
-### Azure CLI
-
-```bash
-# Create routing intent with both Internet and Private traffic policies
-az network vhub routing-intent create \
-  --name ri-hub-eastus2 \
-  --resource-group $RG \
-  --vhub $HUB_NAME \
-  --routing-policies "[{name:InternetTraffic,destinations:[Internet],next-hop:$FW_ID},{name:PrivateTrafficPolicy,destinations:[PrivateTraffic],next-hop:$FW_ID}]"
-
-# Verify routing intent was created
-az network vhub routing-intent show \
-  --name ri-hub-eastus2 \
-  --resource-group $RG \
-  --vhub $HUB_NAME
-```
 
 ### Azure PowerShell
 

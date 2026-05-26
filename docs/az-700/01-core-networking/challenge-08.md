@@ -568,31 +568,8 @@ az network nic update \
     --resource-group rg-routing-lab \
     --name vm-nva-aVMNic \
     --ip-forwarding true
-```
+![Challenge 08 - Network Topology](/img/az-700/challenge-08-topology.svg)
 
-### Scenario 2: Internet access completely broken
-
-**Symptom:** Forced tunneling route (0.0.0.0/0 to VirtualAppliance) is configured but the NVA is powered off or not performing NAT.
-
-**Root cause:** When forced tunneling is active, all internet traffic must traverse the NVA. If the NVA is down, there is no path to the internet.
-
-**Diagnosis:**
-
-```bash
-# Check NVA status
-az vm get-instance-view \
-    --resource-group rg-routing-lab \
-    --name vm-nva-a \
-    --query "instanceView.statuses[1].displayStatus" \
-    --output tsv
-
-# Verify the effective route still points to the NVA
-az network watcher show-next-hop \
-    --resource-group rg-routing-lab \
-    --vm vm-workload \
-    --source-ip 10.1.1.4 \
-    --dest-ip 8.8.8.8
-```
 
 **Fix:** Start the NVA, or temporarily remove the forced tunneling route:
 

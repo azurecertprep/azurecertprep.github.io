@@ -27,23 +27,8 @@ Contoso has three distinct user groups that require point-to-site VPN access wit
 
 ## Architecture overview
 
-```text
-Authentication Methods for P2S VPN
-                                          +-------------------+
-  Admins (cert)  ----[Client Cert]------->|                   |
-                                          |                   |
-  Employees      ----[Entra ID/OAuth]--->|   VPN Gateway     |
-                                          |   (VpnGw1)        |
-  Contractors    ----[RADIUS]----------->|                   |
-                      |                   +-------------------+
-                      v                          |
-              +---------------+           +------+------+
-              | NPS Server    |           | VNet        |
-              | (RADIUS)      |           | 10.60.0.0/16|
-              +---------------+           +-------------+
+![Challenge 18 - Network Topology](/img/az-700/challenge-18-topology.svg)
 
-  Executives   ----[Always On / IKEv2 + Machine Cert]---->
-```
 
 ## Prerequisites
 

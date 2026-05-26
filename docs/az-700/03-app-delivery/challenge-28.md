@@ -28,21 +28,8 @@ Your task is to deploy an Application Gateway v2 instance with multi-site listen
 
 ## Architecture overview
 
-```text
-Internet
-   |
-   v
-[Public IP] --> [Application Gateway v2]
-                     |
-         +-----------+-----------+
-         |                       |
-   [Listener:                [Listener:
-    contoso.com]              fabrikam.com]
-         |                       |
-    [Path Map]              [Path Map]
-    /api/* -> API Pool      /hooks/* -> Hooks Pool
-    /*    -> Web Pool       /*      -> Docs Pool
-```
+![Challenge 28 - Network Topology](/img/az-700/challenge-28-topology.svg)
+
 
 ## Prerequisites
 

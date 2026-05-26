@@ -31,26 +31,8 @@ Seus requisitos:
 
 ## Visão geral da arquitetura
 
-```text
-                    ┌─────────────────────────────────────────┐
-                    │         Virtual Hub (East US)            │
-                    │                                         │
-                    │  ┌─────────────┐  ┌──────────────────┐ │
-                    │  │ RT_PROD     │  │ RT_DEV           │ │
-                    │  │ (label:prod)│  │ (label:dev)      │ │
-                    │  └──────┬──────┘  └────────┬─────────┘ │
-                    │         │                   │           │
-                    │  ┌──────┴───────────────────┴────────┐  │
-                    │  │         NVA / Azure Firewall       │  │
-                    │  │  (routing intent: 0.0.0.0/0)      │  │
-                    │  └───────────────────────────────────-┘  │
-                    └────────────┬──────────────┬──────────────┘
-                                 │              │
-                    ┌────────────┼──┐     ┌─────┼────────────┐
-                    │            │  │     │     │            │
-                 prod-1      prod-2│  dev-1   dev-2
-                 (RT_PROD)  (RT_PROD)  (RT_DEV)  (RT_DEV)
-```
+![Challenge 23 - Topologia de Rede](/img/az-700/challenge-23-topology.svg)
+
 
 ## Conceitos-chave
 

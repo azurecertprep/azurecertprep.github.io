@@ -441,69 +441,8 @@ $firewall = New-AzFirewall `
 $policy = Get-AzFirewallPolicy -ResourceGroupName $rg -Name "policy-child-eastus2"
 $policy.IntrusionDetection = New-AzFirewallPolicyIntrusionDetection -Mode "Deny"
 $policy | Set-AzFirewallPolicy
-```
+![Challenge 43 - Network Topology](/img/az-700/challenge-43-topology.svg)
 
-### IDPS modes
-
-| Mode | Behavior |
-|------|----------|
-| Off | IDPS disabled |
-| Alert | Detects and logs intrusion patterns but does not block traffic |
-| Deny | Detects, logs, and actively blocks traffic matching intrusion signatures |
-
-## Task 4: Configure TLS inspection
-
-TLS inspection decrypts outbound HTTPS traffic, inspects it against application and IDPS rules, then re-encrypts it. This requires an intermediate CA certificate stored in Azure Key Vault.
-
-:::warning TLS inspection requirements
-- Requires Azure Firewall Premium SKU
-- Requires an intermediate CA certificate (not a self-signed leaf cert)
-- Certificate must be stored in Azure Key Vault
-- Firewall's managed identity must have access to the Key Vault
-- Client machines must trust the intermediate CA (add to trusted root store)
-- Breaking TLS for some applications (certificate pinning) will cause connection failures
-:::
-
-### Azure CLI
-
-```bash
-# Create Key Vault for TLS certificate
-KV_NAME="kv-fwtls-${RANDOM}"
-
-az keyvault create \
-  --resource-group $RG \
-  --name $KV_NAME \
-  --location $LOCATION_PRIMARY \
-  --enable-rbac-authorization false
-
-# Generate a self-signed intermediate CA certificate (for lab purposes only)
-# In production, use a proper intermediate CA from your PKI
-az keyvault certificate create \
-  --vault-name $KV_NAME \
-  --name "fw-intermediate-ca" \
-  --policy @- <<EOF
-{
-  "issuerParameters": { "name": "Self" },
-  "keyProperties": { "exportable": true, "keySize": 2048, "keyType": "RSA" },
-  "x509CertificateProperties": {
-    "subject": "CN=Contoso Firewall Intermediate CA",
-    "validityInMonths": 12,
-    "keyUsage": ["keyCertSign", "cRLSign"],
-    "basicConstraints": { "ca": true }
-  }
-}
-EOF
-
-# Get the Key Vault secret ID for TLS inspection configuration
-KV_SECRET_ID=$(az keyvault secret show --vault-name $KV_NAME --name "fw-intermediate-ca" --query id -o tsv)
-
-# Configure TLS inspection on the policy
-az network firewall policy update \
-  --resource-group $RG \
-  --name policy-child-eastus2 \
-  --cert-name "fw-intermediate-ca" \
-  --key-vault-secret-id $KV_SECRET_ID
-```
 
 ### Azure PowerShell
 

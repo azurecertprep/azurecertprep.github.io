@@ -28,21 +28,8 @@ Sua tarefa é implantar uma instância do Application Gateway v2 com ouvintes mu
 
 ## Visão geral da arquitetura
 
-```text
-Internet
-   |
-   v
-[Public IP] --> [Application Gateway v2]
-                     |
-         +-----------+-----------+
-         |                       |
-   [Listener:                [Listener:
-    contoso.com]              fabrikam.com]
-         |                       |
-    [Path Map]              [Path Map]
-    /api/* -> API Pool      /hooks/* -> Hooks Pool
-    /*    -> Web Pool       /*      -> Docs Pool
-```
+![Challenge 28 - Topologia de Rede](/img/az-700/challenge-28-topology.svg)
+
 
 ## Pré-requisitos
 

@@ -24,17 +24,8 @@ A Contoso possui uma rede virtual hub no Azure (`vnet-hub`, 10.1.0.0/16) e um da
 
 **Arquitetura:**
 
-```text
-On-premises datacenter                     Azure
-(192.168.0.0/16)                          (10.1.0.0/16)
+![Challenge 14 - Topologia de Rede](/img/az-700/challenge-14-topology.svg)
 
-[VPN Device: 203.0.113.50] ---IPsec--- [VPN Gateway: vgw-hub]
-                                              |
-                                         vnet-hub
-                                           ├── GatewaySubnet (10.1.255.0/27)
-                                           ├── snet-workloads (10.1.1.0/24)
-                                           └── snet-mgmt (10.1.2.0/24)
-```
 
 ## Objetivos de aprendizagem
 

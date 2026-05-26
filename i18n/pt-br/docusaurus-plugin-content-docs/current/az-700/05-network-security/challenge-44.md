@@ -356,32 +356,8 @@ $appRCG = New-AzFirewallPolicyRuleCollectionGroup `
   -Name "DefaultApplicationRuleCollectionGroup" `
   -Priority 300 `
   -RuleCollection $appRule
-```
+![Challenge 44 - Topologia de Rede](/img/az-700/challenge-44-topology.svg)
 
-## Tarefa 5: Configurar intenção de roteamento
-
-A intenção de roteamento é o mecanismo que instrui o hub Virtual WAN a rotear todo o tráfego destinado à internet e/ou tráfego privado pelo Azure Firewall (ou um NVA suportado). Isso substitui a necessidade de configurar manualmente tabelas de rotas em cada conexão spoke.
-
-Existem duas políticas de roteamento:
-- **InternetTraffic**: Força todo o tráfego destinado à internet pelo firewall.
-- **PrivateTraffic**: Força todo o tráfego entre spokes e de branch para VNet pelo firewall.
-
-### Azure CLI
-
-```bash
-# Create routing intent with both Internet and Private traffic policies
-az network vhub routing-intent create \
-  --name ri-hub-eastus2 \
-  --resource-group $RG \
-  --vhub $HUB_NAME \
-  --routing-policies "[{name:InternetTraffic,destinations:[Internet],next-hop:$FW_ID},{name:PrivateTrafficPolicy,destinations:[PrivateTraffic],next-hop:$FW_ID}]"
-
-# Verify routing intent was created
-az network vhub routing-intent show \
-  --name ri-hub-eastus2 \
-  --resource-group $RG \
-  --vhub $HUB_NAME
-```
 
 ### Azure PowerShell
 
