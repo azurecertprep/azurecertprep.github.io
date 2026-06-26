@@ -414,7 +414,7 @@ This configures VMs in the VNet to use the specified IP addresses (such as domai
 az network vnet update \
     --resource-group rg-dns-lab \
     --name vnet-contoso \
-    --dns-servers ""
+    --dns-servers null
 ```
 
 Passing an empty string resets the VNet to use Azure-provided DNS (168.63.129.16).
@@ -482,5 +482,5 @@ After updating an A record from the old IP to the new IP, users still reach the 
 
 ```bash
 az group delete --name rg-dns-lab --yes --no-wait
-![Challenge 03 - Network Topology](/img/az-700/challenge-03-topology.svg)
+![Challenge 03 - Network Topology](/static/img/az-700/challenge-03-topology.svg)
 
