@@ -31,7 +31,7 @@ Connections are the mechanism by which hubs and projects access external service
 
 The AI Foundry resource hierarchy follows a hub → project model with shared dependent resources and configurable connections to AI services.
 
-![Challenge 11 topology](/img/AI-103/challenge-11-topology.svg)
+![Challenge 11 topology](/img/ai-103/challenge-11-topology.svg)
 
 ## Prerequisites
 

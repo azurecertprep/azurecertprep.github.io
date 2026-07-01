@@ -46,7 +46,7 @@ Azure OpenAI includes built-in content filtering that operates on both inputs an
 - **High** — Severe, clearly harmful content
 
 **How filtering works**:
-![Challenge 23 - Content Safety Pipeline](/img/AI-901/challenge-23-topology.svg)
+![Challenge 23 - Content Safety Pipeline](/img/ai-901/challenge-23-topology.svg)
 
 ### Task 2: Review content filter documentation
 

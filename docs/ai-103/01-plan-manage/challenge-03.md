@@ -31,7 +31,7 @@ Capacity planning is a key exam topic—you need to understand how TPM translate
 
 You'll create an Azure OpenAI resource, deploy multiple models with different deployment types and capacities, then validate their availability and compare their behaviors.
 
-![Challenge 03 topology](/img/AI-103/challenge-03-topology.svg)
+![Challenge 03 topology](/img/ai-103/challenge-03-topology.svg)
 
 ## Prerequisites
 - Azure subscription with Azure OpenAI access approved

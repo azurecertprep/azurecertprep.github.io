@@ -30,7 +30,7 @@ Advanced techniques include **few-shot prompting** (providing examples in the pr
 
 This challenge explores prompt construction, parameter tuning, and template-based approaches for building consistent and reliable generative AI interactions.
 
-![Challenge 17 topology](/img/AI-103/challenge-17-topology.svg)
+![Challenge 17 topology](/img/ai-103/challenge-17-topology.svg)
 
 ## Prerequisites
 - Azure OpenAI resource with GPT-4o deployed (from Challenge 16)

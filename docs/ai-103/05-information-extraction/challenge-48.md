@@ -31,7 +31,7 @@ This challenge integrates all Domain 6 concepts: AI Search indexing, skillsets, 
 
 Enterprise document processing requires handling diverse content types through a unified pipeline:
 
-![Challenge 48 - Multi-Source Indexing Architecture](/img/AI-103/challenge-48-topology.svg)
+![Challenge 48 - Multi-Source Indexing Architecture](/img/ai-103/challenge-48-topology.svg)
 
 
 ### Pipeline components:

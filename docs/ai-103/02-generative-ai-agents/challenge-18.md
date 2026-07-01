@@ -29,7 +29,7 @@ When working with multimodal inputs, understanding token costs is important: ima
 
 This challenge generates images with DALL-E 3, analyzes images with GPT-4o vision, and explores OCR and chart understanding capabilities.
 
-![Challenge 18 topology](/img/AI-103/challenge-18-topology.svg)
+![Challenge 18 topology](/img/ai-103/challenge-18-topology.svg)
 
 ## Prerequisites
 - Azure OpenAI resource with DALL-E 3 model deployed (deployment name: `dall-e-3`)

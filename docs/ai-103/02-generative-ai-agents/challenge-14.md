@@ -31,7 +31,7 @@ The architecture flow is: User Query → Azure OpenAI (with data source config) 
 
 The RAG pattern connects Azure OpenAI to Azure AI Search, enabling the model to retrieve relevant document chunks before generating responses.
 
-![Challenge 14 topology](/img/AI-103/challenge-14-topology.svg)
+![Challenge 14 topology](/img/ai-103/challenge-14-topology.svg)
 
 ## Prerequisites
 

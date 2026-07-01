@@ -31,7 +31,7 @@ The basic RAG pattern uses keyword (lexical) search, which works well when users
 
 The advanced RAG pattern adds vector embeddings, hybrid search, and semantic ranking to improve retrieval quality, with evaluation metrics to measure end-to-end quality.
 
-![Challenge 15 topology](/img/AI-103/challenge-15-topology.svg)
+![Challenge 15 topology](/img/ai-103/challenge-15-topology.svg)
 
 ## Prerequisites
 

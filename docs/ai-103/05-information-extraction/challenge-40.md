@@ -38,7 +38,7 @@ Key concepts:
 
 ## Architecture
 
-![Challenge 40 - AI Search Indexing Pipeline](/img/AI-103/challenge-40-topology.svg)
+![Challenge 40 - AI Search Indexing Pipeline](/img/ai-103/challenge-40-topology.svg)
 
 
 ## Prerequisites

@@ -76,7 +76,7 @@ Visit the [Azure AI Vision demo](https://portal.vision.cognitive.azure.com/) and
 
 A typical Face Detection API response looks like this conceptually:
 
-![Challenge 13 - Face Detection Results](/img/AI-901/challenge-13-topology.svg)
+![Challenge 13 - Face Detection Results](/img/ai-901/challenge-13-topology.svg)
 
 **Key points**:
 - Multiple faces can be detected in one image

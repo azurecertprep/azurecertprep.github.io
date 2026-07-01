@@ -30,7 +30,7 @@ For edge deployment scenarios, Azure AI containers package models for offline or
 
 This challenge implements a model router, configures function calling with tools, builds a multi-step orchestration pipeline, and deploys a containerized model endpoint.
 
-![Challenge 20 topology](/img/AI-103/challenge-20-topology.svg)
+![Challenge 20 topology](/img/ai-103/challenge-20-topology.svg)
 
 ## Prerequisites
 - Azure OpenAI resource with both GPT-4o and GPT-4o-mini deployed

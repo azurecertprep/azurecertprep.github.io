@@ -46,7 +46,7 @@ Azure OpenAI offers several model families for different use cases:
 The **Azure OpenAI Studio Playground** (accessible at [oai.azure.com](https://oai.azure.com)) lets you interact with deployed models. Here's what you'd see:
 
 **Chat Playground interface**:
-![Challenge 20 - Chat Completion Structure](/img/AI-901/challenge-20-topology.svg)
+![Challenge 20 - Chat Completion Structure](/img/ai-901/challenge-20-topology.svg)
 
 **Key playground components**:
 - **System message** — Instructions that define the AI's behavior and persona
@@ -59,7 +59,7 @@ The **Azure OpenAI Studio Playground** (accessible at [oai.azure.com](https://oa
 
 Azure OpenAI uses a deployment model to manage access:
 
-![Challenge 20 - Azure OpenAI Resource Structure](/img/AI-901/challenge-20-resources.svg)
+![Challenge 20 - Azure OpenAI Resource Structure](/img/ai-901/challenge-20-resources.svg)
 
 **Key concepts**:
 - **Resource** — The Azure resource that holds your deployments

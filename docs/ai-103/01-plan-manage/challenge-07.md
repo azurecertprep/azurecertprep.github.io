@@ -30,7 +30,7 @@ Understanding the monitoring pipeline — from diagnostic settings through Log A
 
 Diagnostic settings route metrics and logs from Azure AI services to Log Analytics, enabling KQL queries and alert rules.
 
-![Challenge 07 topology](/img/AI-103/challenge-07-topology.svg)
+![Challenge 07 topology](/img/ai-103/challenge-07-topology.svg)
 
 ## Prerequisites
 

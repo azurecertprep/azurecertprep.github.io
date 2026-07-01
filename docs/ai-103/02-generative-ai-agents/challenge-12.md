@@ -31,7 +31,7 @@ Understanding quotas is essential—each subscription has TPM limits per model p
 
 The deployment architecture connects your application to Azure OpenAI endpoints through model deployments configured with specific SKUs and quota allocations.
 
-![Challenge 12 topology](/img/AI-103/challenge-12-topology.svg)
+![Challenge 12 topology](/img/ai-103/challenge-12-topology.svg)
 
 ## Prerequisites
 

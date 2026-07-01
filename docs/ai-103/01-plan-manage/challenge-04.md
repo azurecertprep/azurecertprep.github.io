@@ -32,7 +32,7 @@ This challenge walks you through both authentication methods using the Azure AI 
 
 You'll authenticate to Azure AI Language using both key-based and Entra ID methods, make the same API call with each, and compare the request patterns.
 
-![Challenge 04 topology](/img/AI-103/challenge-04-topology.svg)
+![Challenge 04 topology](/img/ai-103/challenge-04-topology.svg)
 
 ## Prerequisites
 - Azure subscription with an Azure AI Language resource (with custom subdomain)

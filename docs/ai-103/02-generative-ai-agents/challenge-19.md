@@ -32,7 +32,7 @@ Optimizing generative AI solutions requires attention to latency, cost, quality,
 
 This challenge implements streaming responses, configures OpenTelemetry tracing, optimizes token usage, and prepares a fine-tuning workflow.
 
-![Challenge 19 topology](/img/AI-103/challenge-19-topology.svg)
+![Challenge 19 topology](/img/ai-103/challenge-19-topology.svg)
 
 ## Prerequisites
 - Azure OpenAI resource with GPT-4o deployed

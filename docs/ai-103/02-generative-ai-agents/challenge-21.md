@@ -32,7 +32,7 @@ This challenge implements function calling with Azure OpenAI — the foundation 
 
 ## Architecture
 
-![Challenge 21 - AI Agent Architecture](/img/AI-103/challenge-21-topology.svg)
+![Challenge 21 - AI Agent Architecture](/img/ai-103/challenge-21-topology.svg)
 
 
 ## Prerequisites

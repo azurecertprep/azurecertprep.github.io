@@ -32,7 +32,7 @@ This challenge also covers the configuration of diagnostic settings, custom subd
 
 You'll create resources with custom subdomains, configure network rules, validate connectivity, and set up diagnostic logging—simulating a production-ready AI services deployment.
 
-![Challenge 02 topology](/img/AI-103/challenge-02-topology.svg)
+![Challenge 02 topology](/img/ai-103/challenge-02-topology.svg)
 
 ## Prerequisites
 - Azure subscription with Contributor role

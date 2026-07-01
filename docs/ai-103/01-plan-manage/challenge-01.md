@@ -33,7 +33,7 @@ Understanding the tradeoffs between service types—pricing tiers, regional avai
 
 You'll create both a multi-service Azure AI resource and individual single-service resources, then programmatically enumerate their capabilities and compare their endpoints.
 
-![Challenge 01 topology](/img/AI-103/challenge-01-topology.svg)
+![Challenge 01 topology](/img/ai-103/challenge-01-topology.svg)
 
 ## Prerequisites
 - Azure subscription with Azure AI services access

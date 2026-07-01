@@ -31,7 +31,7 @@ These controls form the defense-in-depth approach recommended by Microsoft for p
 
 The responsible AI architecture layers Content Safety APIs, content filters, blocklists, and prompt shields to provide multi-level content protection.
 
-![Challenge 10 topology](/img/AI-103/challenge-10-topology.svg)
+![Challenge 10 topology](/img/ai-103/challenge-10-topology.svg)
 
 ## Prerequisites
 

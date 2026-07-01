@@ -30,7 +30,7 @@ API versions follow the format `YYYY-MM-DD` with preview suffixes for pre-GA fea
 
 This challenge provisions an Azure OpenAI resource, deploys models with specific capacity configurations, and tests rate-limiting behavior and retry strategies.
 
-![Challenge 16 topology](/img/AI-103/challenge-16-topology.svg)
+![Challenge 16 topology](/img/ai-103/challenge-16-topology.svg)
 
 ## Prerequisites
 - Azure subscription with Azure OpenAI access approved

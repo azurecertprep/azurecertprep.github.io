@@ -30,7 +30,7 @@ Understanding the trade-offs between pay-as-you-go and PTU pricing helps archite
 
 Cost management combines Azure Cost Management APIs, budget alerts, and application-level caching to optimize AI spending.
 
-![Challenge 08 topology](/img/AI-103/challenge-08-topology.svg)
+![Challenge 08 topology](/img/ai-103/challenge-08-topology.svg)
 
 ## Prerequisites
 

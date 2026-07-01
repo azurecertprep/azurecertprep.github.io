@@ -31,7 +31,7 @@ The defense-in-depth approach combines identity (managed identity + RBAC), netwo
 
 The secure architecture uses Key Vault for secrets management, managed identity for authentication, and private endpoints for network isolation.
 
-![Challenge 09 topology](/img/AI-103/challenge-09-topology.svg)
+![Challenge 09 topology](/img/ai-103/challenge-09-topology.svg)
 
 ## Prerequisites
 

@@ -31,7 +31,7 @@ There are three primary **flow types**: **Standard flows** for general-purpose L
 
 Prompt flow orchestrates LLM calls, Python processing, and prompt templates as connected nodes in a DAG, with connections to external AI services.
 
-![Challenge 13 topology](/img/AI-103/challenge-13-topology.svg)
+![Challenge 13 topology](/img/ai-103/challenge-13-topology.svg)
 
 ## Prerequisites
 

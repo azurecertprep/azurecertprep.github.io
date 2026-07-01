@@ -30,7 +30,7 @@ Understanding the billing model is essential — containers must phone home to A
 
 The container deployment connects local Docker containers to Azure AI services for billing while processing data locally.
 
-![Challenge 06 topology](/img/AI-103/challenge-06-topology.svg)
+![Challenge 06 topology](/img/ai-103/challenge-06-topology.svg)
 
 ## Prerequisites
 

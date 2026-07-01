@@ -40,7 +40,7 @@ You are building an **Enterprise Document Intelligence Platform** for a global f
 6. **Indexes** everything in Azure AI Search with vector embeddings
 7. **Serves** a conversational RAG interface using Azure OpenAI
 
-![Challenge 49 - Capstone Architecture](/img/AI-103/challenge-49-topology.svg)
+![Challenge 49 - Capstone Architecture](/img/ai-103/challenge-49-topology.svg)
 
 
 ## Prerequisites

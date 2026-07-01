@@ -201,7 +201,7 @@ project_client.agents.delete_agent(code_agent.id)
 
 ## Expected Output
 
-![Challenge 22 - Multi-Agent Conversation Flow](/img/AI-103/challenge-22-topology.svg)
+![Challenge 22 - Multi-Agent Conversation Flow](/img/ai-103/challenge-22-topology.svg)
 
 
 ## Break & fix

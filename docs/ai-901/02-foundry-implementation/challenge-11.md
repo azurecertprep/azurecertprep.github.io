@@ -32,7 +32,7 @@ The key difference from classification: classification labels the entire image a
 
 A bounding box defines the location of a detected object using coordinates:
 
-![Challenge 11 - Image Analysis Pipeline](/img/AI-901/challenge-11-topology.svg)
+![Challenge 11 - Image Analysis Pipeline](/img/ai-901/challenge-11-topology.svg)
 
 Each detection includes:
 - **Class/label**: What the object is ("dog", "cat")

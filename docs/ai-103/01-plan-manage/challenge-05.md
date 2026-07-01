@@ -32,7 +32,7 @@ Key exam concepts include using service principals for pipeline authentication, 
 
 You'll create a complete CI/CD pipeline that provisions Azure AI infrastructure, deploys models, and validates the deployment—all triggered by code changes.
 
-![Challenge 05 topology](/img/AI-103/challenge-05-topology.svg)
+![Challenge 05 topology](/img/ai-103/challenge-05-topology.svg)
 
 ## Prerequisites
 - GitHub repository with Actions enabled

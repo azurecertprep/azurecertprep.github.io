@@ -55,7 +55,7 @@ Azure provides OCR through two main services: **Azure AI Vision** (Read API) for
 
 The Read API returns a hierarchical structure:
 
-![Challenge 12 - OCR Read Result Structure](/img/AI-901/challenge-12-topology.svg)
+![Challenge 12 - OCR Read Result Structure](/img/ai-901/challenge-12-topology.svg)
 
 **Key features of the Read API**:
 - Handles **printed** and **handwritten** text
