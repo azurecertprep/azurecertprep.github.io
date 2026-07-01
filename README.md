@@ -9,8 +9,8 @@
 [![SC-500](https://img.shields.io/badge/SC--500-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/sc-500/coverage-matrix)
 [![AZ-900](https://img.shields.io/badge/AZ--900-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-900/coverage-matrix)
 [![AZ-700](https://img.shields.io/badge/AZ--700-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/az-700/overview)
-[![AI-900](https://img.shields.io/badge/AI--900-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/ai-900/overview)
-[![AI-102](https://img.shields.io/badge/AI--102-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/ai-102/overview)
+[![AI-901](https://img.shields.io/badge/AI--901-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/ai-901/overview)
+[![AI-103](https://img.shields.io/badge/AI--103-100%25%20Coverage-0078d4?logo=microsoftazure&logoColor=white)](https://azurecertprep.github.io/docs/ai-103/overview)
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open%20Lab-181717?logo=github&logoColor=white)](https://codespaces.new/azurecertprep/azurecertprep.github.io?quickstart=1)
 
 ### Don't just study — build it.
@@ -43,8 +43,8 @@ Your Codespace comes pre-configured with:
 | **AZ-400** | DevOps Engineer Expert | 51 | Available |
 | **SC-500** | Cloud and AI Security Engineer | 52 | Available |
 | **AZ-700** | Azure Network Engineer Associate | 49 | Available |
-| **AI-900** | Azure AI Fundamentals | 24 | Available |
-| **AI-102** | Azure AI Engineer Associate | 49 | Available |
+| **AI-901** | Azure AI Fundamentals | 24 | Available |
+| **AI-103** | Azure AI Apps and Agents Developer | 49 | Available |
 
 ## AZ-900: Azure Fundamentals
 
@@ -124,37 +124,32 @@ Your Codespace comes pre-configured with:
 
 **Estimated total cost: ~$20-50** (VPN Gateways, ExpressRoute simulations)
 
-## AI-900: Azure AI Fundamentals
+## AI-901: Azure AI Fundamentals
 
-24 exploration-based challenges covering **100% of the exam domains** (as of May 2026):
-
-| Domain | Weight | Challenges | Topics |
-|--------|--------|-----------|--------|
-| AI Workloads & Considerations | 15-20% | 01-04 | AI patterns, responsible AI, Azure AI services overview |
-| Machine Learning on Azure | 20-25% | 05-09 | Regression, classification, clustering, deep learning, Azure ML |
-| Computer Vision | 15-20% | 10-13 | Image classification, object detection, OCR, face detection |
-| Natural Language Processing | 15-20% | 14-18 | Text analytics, sentiment, speech, translation, Language services |
-| Generative AI | 20-25% | 19-24 | GenAI fundamentals, Azure OpenAI, AI Foundry, prompt engineering |
-
-**Format**: Exploration-based, $0 cost. Includes KnowledgeCheck quiz questions.
-
-## AI-102: Azure AI Engineer Associate
-
-49 hands-on challenges covering **100% of the exam domains** (as of May 2026):
+24 exploration-based challenges covering **100% of the exam domains** (replaces AI-900, retired Jun 2026):
 
 | Domain | Weight | Challenges | Topics |
 |--------|--------|-----------|--------|
-| Plan & Manage AI Solutions | 20-25% | 01-10 | Service selection, provisioning, SDKs, CI/CD, monitoring, security |
-| Generative AI Solutions | 15-20% | 11-20 | AI Foundry, model deployment, RAG, prompt engineering, orchestration |
-| AI Agent Solutions | 5-10% | 21-23 | Agent architecture, Azure AI Agent Service, multi-agent |
+| AI Concepts & Capabilities | 40-45% | 01-09 | Responsible AI, ML types, computer vision, NLP, GenAI, service categories |
+| Implement AI with Azure Foundry | 55-60% | 10-24 | Foundry portal, model deployment, agents, Content Understanding, multimodal, prompts |
+
+**Format**: Exploration + Foundry implementation, mostly $0 cost. Includes KnowledgeCheck quiz questions. Basic Python reading helpful.
+
+## AI-103: Azure AI Apps and Agents Developer
+
+49 hands-on challenges covering **100% of the exam domains** (replaces AI-102, retired Jun 2026):
+
+| Domain | Weight | Challenges | Topics |
+|--------|--------|-----------|--------|
+| Plan & Manage AI Solutions | 15-20% | 01-10 | Architecture, provisioning, monitoring, security, compliance |
+| Generative AI & Agentic Solutions | 35-40% | 11-23 | Azure OpenAI, Foundry, RAG, agent orchestration, prompt engineering |
 | Computer Vision Solutions | 10-15% | 24-30 | Image analysis, Custom Vision, OCR, Face, Video Indexer |
-| NLP Solutions | 15-20% | 31-39 | Text analytics, PII, translation, speech, CLU, custom QA |
-| Knowledge Mining & Document Intelligence | 15-20% | 40-48 | AI Search, skillsets, vector search, Document Intelligence |
-| Capstone | All | 49 | End-to-end enterprise AI solution |
+| Text Analysis Solutions | 15-20% | 31-39 | Sentiment, entities, PII, speech, translation, CLU |
+| Information Extraction Solutions | 15-20% | 40-49 | AI Search, vector search, Document Intelligence, Content Understanding |
 
 **Estimated total cost: ~$20-50** (Azure OpenAI, AI Search, Document Intelligence)
 
-> ⚠️ **Note:** AI-102 retires June 30, 2026. Plan your preparation accordingly.
+> ⚠️ **Note:** AI-103 launched July 2026 (replacing AI-102). Content is being updated to reflect new Foundry-first patterns.
 
 ### Challenge Format
 

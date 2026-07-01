@@ -105,15 +105,15 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'ai900Sidebar',
+            sidebarId: 'ai901Sidebar',
             position: 'left',
-            label: 'AI-900',
+            label: 'AI-901',
           },
           {
             type: 'docSidebar',
-            sidebarId: 'ai102Sidebar',
+            sidebarId: 'ai103Sidebar',
             position: 'left',
-            label: 'AI-102',
+            label: 'AI-103',
           },
           {
             type: 'localeDropdown',
@@ -167,12 +167,12 @@ const config = {
                 to: '/docs/az-700/overview',
               },
               {
-                label: 'AI-900: Azure AI Fundamentals',
-                to: '/docs/ai-900/overview',
+                label: 'AI-901: Azure AI Fundamentals',
+                to: '/docs/ai-901/overview',
               },
               {
-                label: 'AI-102: Azure AI Engineer',
-                to: '/docs/ai-102/overview',
+                label: 'AI-103: Azure AI Apps & Agents Developer',
+                to: '/docs/ai-103/overview',
               },
             ],
           },
@@ -204,12 +204,12 @@ const config = {
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-network-engineer-associate/',
               },
               {
-                label: 'Microsoft Learn — AI-900',
+                label: 'Microsoft Learn — AI-901',
                 href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/',
               },
               {
-                label: 'Microsoft Learn — AI-102',
-                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/',
+                label: 'Microsoft Learn — AI-103',
+                href: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-apps-and-agents-developer-associate/',
               },
               {
                 label: 'Free Practice Assessment',

@@ -347,30 +347,30 @@ const ai900DomainLabels = {
 };
 
 const ai900Challenges = [
-  { num: '01', title: 'Identificar Cargas de Trabalho de IA', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-01' },
-  { num: '02', title: 'Princípios de IA Responsável', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-02' },
-  { num: '03', title: 'Padrões e Casos de Uso de IA', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-03' },
-  { num: '04', title: 'Visão Geral dos Serviços Azure AI', domain: 'ai-workloads', href: '/docs/ai-900/ai-workloads/challenge-04' },
-  { num: '05', title: 'Regressão em Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-05' },
-  { num: '06', title: 'Classificação em Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-06' },
-  { num: '07', title: 'Clustering em Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-07' },
-  { num: '08', title: 'Deep Learning e Transformers', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-08' },
-  { num: '09', title: 'Workspace do Azure Machine Learning', domain: 'machine-learning', href: '/docs/ai-900/machine-learning/challenge-09' },
-  { num: '10', title: 'Classificação de Imagens', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-10' },
-  { num: '11', title: 'Detecção de Objetos', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-11' },
-  { num: '12', title: 'Reconhecimento Óptico de Caracteres (OCR)', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-12' },
-  { num: '13', title: 'Detecção e Análise de Rosto', domain: 'computer-vision', href: '/docs/ai-900/computer-vision/challenge-13' },
-  { num: '14', title: 'Análise de Texto: Frases-chave e Entidades', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-14' },
-  { num: '15', title: 'Análise de Sentimento e Detecção de Idioma', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-15' },
-  { num: '16', title: 'Reconhecimento e Síntese de Fala', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-16' },
-  { num: '17', title: 'Tradução de Idiomas', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-17' },
-  { num: '18', title: 'Serviços Azure AI Language e Speech', domain: 'nlp', href: '/docs/ai-900/nlp/challenge-18' },
-  { num: '19', title: 'Fundamentos de IA Generativa', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-19' },
-  { num: '20', title: 'Azure OpenAI Service', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-20' },
-  { num: '21', title: 'Azure AI Foundry', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-21' },
-  { num: '22', title: 'Noções Básicas de Engenharia de Prompt', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-22' },
-  { num: '23', title: 'IA Responsável para IA Generativa', domain: 'generative-ai', href: '/docs/ai-900/generative-ai/challenge-23' },
-  { num: '24', title: 'Ponta a Ponta: Portfólio Azure AI', domain: 'capstone', href: '/docs/ai-900/capstone/challenge-24' },
+  { num: '01', title: 'Identificar Cargas de Trabalho de IA', domain: 'ai-workloads', href: '/docs/ai-901/ai-concepts/challenge-01' },
+  { num: '02', title: 'Princípios de IA Responsável', domain: 'ai-workloads', href: '/docs/ai-901/ai-concepts/challenge-02' },
+  { num: '03', title: 'Padrões e Casos de Uso de IA', domain: 'ai-workloads', href: '/docs/ai-901/ai-concepts/challenge-03' },
+  { num: '04', title: 'Visão Geral dos Serviços Azure AI', domain: 'ai-workloads', href: '/docs/ai-901/ai-concepts/challenge-04' },
+  { num: '05', title: 'Regressão em Machine Learning', domain: 'machine-learning', href: '/docs/ai-901/ai-concepts/challenge-05' },
+  { num: '06', title: 'Classificação em Machine Learning', domain: 'machine-learning', href: '/docs/ai-901/ai-concepts/challenge-06' },
+  { num: '07', title: 'Clustering em Machine Learning', domain: 'machine-learning', href: '/docs/ai-901/ai-concepts/challenge-07' },
+  { num: '08', title: 'Deep Learning e Transformers', domain: 'machine-learning', href: '/docs/ai-901/ai-concepts/challenge-08' },
+  { num: '09', title: 'Workspace do Azure Machine Learning', domain: 'machine-learning', href: '/docs/ai-901/ai-concepts/challenge-09' },
+  { num: '10', title: 'Classificação de Imagens', domain: 'computer-vision', href: '/docs/ai-901/foundry-implementation/challenge-10' },
+  { num: '11', title: 'Detecção de Objetos', domain: 'computer-vision', href: '/docs/ai-901/foundry-implementation/challenge-11' },
+  { num: '12', title: 'Reconhecimento Óptico de Caracteres (OCR)', domain: 'computer-vision', href: '/docs/ai-901/foundry-implementation/challenge-12' },
+  { num: '13', title: 'Detecção e Análise de Rosto', domain: 'computer-vision', href: '/docs/ai-901/foundry-implementation/challenge-13' },
+  { num: '14', title: 'Análise de Texto: Frases-chave e Entidades', domain: 'nlp', href: '/docs/ai-901/foundry-implementation/challenge-14' },
+  { num: '15', title: 'Análise de Sentimento e Detecção de Idioma', domain: 'nlp', href: '/docs/ai-901/foundry-implementation/challenge-15' },
+  { num: '16', title: 'Reconhecimento e Síntese de Fala', domain: 'nlp', href: '/docs/ai-901/foundry-implementation/challenge-16' },
+  { num: '17', title: 'Tradução de Idiomas', domain: 'nlp', href: '/docs/ai-901/foundry-implementation/challenge-17' },
+  { num: '18', title: 'Serviços Azure AI Language e Speech', domain: 'nlp', href: '/docs/ai-901/foundry-implementation/challenge-18' },
+  { num: '19', title: 'Fundamentos de IA Generativa', domain: 'generative-ai', href: '/docs/ai-901/foundry-implementation/challenge-19' },
+  { num: '20', title: 'Azure OpenAI Service', domain: 'generative-ai', href: '/docs/ai-901/foundry-implementation/challenge-20' },
+  { num: '21', title: 'Azure AI Foundry', domain: 'generative-ai', href: '/docs/ai-901/foundry-implementation/challenge-21' },
+  { num: '22', title: 'Noções Básicas de Engenharia de Prompt', domain: 'generative-ai', href: '/docs/ai-901/foundry-implementation/challenge-22' },
+  { num: '23', title: 'IA Responsável para IA Generativa', domain: 'generative-ai', href: '/docs/ai-901/foundry-implementation/challenge-23' },
+  { num: '24', title: 'Ponta a Ponta: Portfólio Azure AI', domain: 'capstone', href: '/docs/ai-901/capstone/challenge-24' },
 ];
 
 const ai102DomainLabels = {
@@ -384,55 +384,55 @@ const ai102DomainLabels = {
 };
 
 const ai102Challenges = [
-  { num: '01', title: 'Selecionar o Serviço Azure AI Correto', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-01' },
-  { num: '02', title: 'Criar e Configurar Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-02' },
-  { num: '03', title: 'Implantar Modelos de IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-03' },
-  { num: '04', title: 'SDKs, REST APIs e Autenticação', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-04' },
-  { num: '05', title: 'CI/CD para Soluções de IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-05' },
-  { num: '06', title: 'Implantação em Contêiner para IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-06' },
-  { num: '07', title: 'Monitorar Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-07' },
-  { num: '08', title: 'Gerenciamento de Custos para Serviços de IA', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-08' },
-  { num: '09', title: 'Proteger Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-09' },
-  { num: '10', title: 'Implementação de IA Responsável', domain: 'plan-manage', href: '/docs/ai-102/plan-manage/challenge-10' },
-  { num: '11', title: 'Configuração do Azure AI Foundry', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-11' },
-  { num: '12', title: 'Implantar Modelos de IA Generativa', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-12' },
-  { num: '13', title: 'Prompt Flow', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-13' },
-  { num: '14', title: 'Padrão RAG: Básico', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-14' },
-  { num: '15', title: 'Padrão RAG: Avançado', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-15' },
-  { num: '16', title: 'Azure OpenAI: Provisionamento e Configuração', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-16' },
-  { num: '17', title: 'Engenharia de Prompt e Templates', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-17' },
-  { num: '18', title: 'DALL-E e Modelos Multimodais', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-18' },
-  { num: '19', title: 'Otimizar Soluções de IA Generativa', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-19' },
-  { num: '20', title: 'Orquestração Multi-Modelo', domain: 'generative-ai', href: '/docs/ai-102/generative-ai/challenge-20' },
-  { num: '21', title: 'Fundamentos e Arquitetura de Agentes', domain: 'agentic', href: '/docs/ai-102/agentic/challenge-21' },
-  { num: '22', title: 'Azure AI Agent Service', domain: 'agentic', href: '/docs/ai-102/agentic/challenge-22' },
-  { num: '23', title: 'Orquestração Multi-Agente', domain: 'agentic', href: '/docs/ai-102/agentic/challenge-23' },
-  { num: '24', title: 'Azure AI Vision - Análise de Imagem', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-24' },
-  { num: '25', title: 'Custom Vision - Classificação de Imagens', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-25' },
-  { num: '26', title: 'Custom Vision - Detecção de Objetos', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-26' },
-  { num: '27', title: 'OCR - Extrair Texto de Imagens', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-27' },
-  { num: '28', title: 'Detecção e Análise de Rosto', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-28' },
-  { num: '29', title: 'Análise de Vídeo com Video Indexer', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-29' },
-  { num: '30', title: 'Análise Espacial', domain: 'computer-vision', href: '/docs/ai-102/computer-vision/challenge-30' },
-  { num: '31', title: 'Análise de Texto - Frases-chave, Entidades, Sentimento', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-31' },
-  { num: '32', title: 'Detecção e Redação de PII', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-32' },
-  { num: '33', title: 'Tradução de Texto e Documentos', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-33' },
-  { num: '34', title: 'Fala para Texto', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-34' },
-  { num: '35', title: 'Texto para Fala e SSML', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-35' },
-  { num: '36', title: 'Tradução de Fala', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-36' },
-  { num: '37', title: 'Compreensão de Linguagem Conversacional (CLU)', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-37' },
-  { num: '38', title: 'Respostas a Perguntas Personalizadas', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-38' },
-  { num: '39', title: 'Modelos de Tradução Personalizados', domain: 'nlp', href: '/docs/ai-102/nlp/challenge-39' },
-  { num: '40', title: 'Azure AI Search — Índice e Skillset', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-40' },
-  { num: '41', title: 'Skills Personalizadas no Azure AI Search', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-41' },
-  { num: '42', title: 'Consultas de Pesquisa — Sintaxe e Filtros', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-42' },
-  { num: '43', title: 'Projeções de Knowledge Store', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-43' },
-  { num: '44', title: 'Pesquisa Semântica e Vetorial', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-44' },
-  { num: '45', title: 'Azure Document Intelligence — Modelos Pré-construídos', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-45' },
-  { num: '46', title: 'Modelos Personalizados de Document Intelligence', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-46' },
-  { num: '47', title: 'Azure Content Understanding — Análise Multimodal', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-47' },
-  { num: '48', title: 'Pipeline de Processamento Multi-Formato', domain: 'knowledge-mining', href: '/docs/ai-102/knowledge-mining/challenge-48' },
-  { num: '49', title: 'Solução Empresarial de IA Ponta a Ponta', domain: 'capstone', href: '/docs/ai-102/capstone/challenge-49' },
+  { num: '01', title: 'Selecionar o Serviço Azure AI Correto', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-01' },
+  { num: '02', title: 'Criar e Configurar Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-02' },
+  { num: '03', title: 'Implantar Modelos de IA', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-03' },
+  { num: '04', title: 'SDKs, REST APIs e Autenticação', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-04' },
+  { num: '05', title: 'CI/CD para Soluções de IA', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-05' },
+  { num: '06', title: 'Implantação em Contêiner para IA', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-06' },
+  { num: '07', title: 'Monitorar Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-07' },
+  { num: '08', title: 'Gerenciamento de Custos para Serviços de IA', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-08' },
+  { num: '09', title: 'Proteger Recursos Azure AI', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-09' },
+  { num: '10', title: 'Implementação de IA Responsável', domain: 'plan-manage', href: '/docs/ai-103/plan-manage/challenge-10' },
+  { num: '11', title: 'Configuração do Azure AI Foundry', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-11' },
+  { num: '12', title: 'Implantar Modelos de IA Generativa', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-12' },
+  { num: '13', title: 'Prompt Flow', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-13' },
+  { num: '14', title: 'Padrão RAG: Básico', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-14' },
+  { num: '15', title: 'Padrão RAG: Avançado', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-15' },
+  { num: '16', title: 'Azure OpenAI: Provisionamento e Configuração', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-16' },
+  { num: '17', title: 'Engenharia de Prompt e Templates', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-17' },
+  { num: '18', title: 'DALL-E e Modelos Multimodais', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-18' },
+  { num: '19', title: 'Otimizar Soluções de IA Generativa', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-19' },
+  { num: '20', title: 'Orquestração Multi-Modelo', domain: 'generative-ai', href: '/docs/ai-103/generative-ai-agents/challenge-20' },
+  { num: '21', title: 'Fundamentos e Arquitetura de Agentes', domain: 'agentic', href: '/docs/ai-103/generative-ai-agents/challenge-21' },
+  { num: '22', title: 'Azure AI Agent Service', domain: 'agentic', href: '/docs/ai-103/generative-ai-agents/challenge-22' },
+  { num: '23', title: 'Orquestração Multi-Agente', domain: 'agentic', href: '/docs/ai-103/generative-ai-agents/challenge-23' },
+  { num: '24', title: 'Azure AI Vision - Análise de Imagem', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-24' },
+  { num: '25', title: 'Custom Vision - Classificação de Imagens', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-25' },
+  { num: '26', title: 'Custom Vision - Detecção de Objetos', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-26' },
+  { num: '27', title: 'OCR - Extrair Texto de Imagens', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-27' },
+  { num: '28', title: 'Detecção e Análise de Rosto', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-28' },
+  { num: '29', title: 'Análise de Vídeo com Video Indexer', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-29' },
+  { num: '30', title: 'Análise Espacial', domain: 'computer-vision', href: '/docs/ai-103/computer-vision/challenge-30' },
+  { num: '31', title: 'Análise de Texto - Frases-chave, Entidades, Sentimento', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-31' },
+  { num: '32', title: 'Detecção e Redação de PII', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-32' },
+  { num: '33', title: 'Tradução de Texto e Documentos', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-33' },
+  { num: '34', title: 'Fala para Texto', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-34' },
+  { num: '35', title: 'Texto para Fala e SSML', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-35' },
+  { num: '36', title: 'Tradução de Fala', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-36' },
+  { num: '37', title: 'Compreensão de Linguagem Conversacional (CLU)', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-37' },
+  { num: '38', title: 'Respostas a Perguntas Personalizadas', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-38' },
+  { num: '39', title: 'Modelos de Tradução Personalizados', domain: 'nlp', href: '/docs/ai-103/text-analysis/challenge-39' },
+  { num: '40', title: 'Azure AI Search — Índice e Skillset', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-40' },
+  { num: '41', title: 'Skills Personalizadas no Azure AI Search', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-41' },
+  { num: '42', title: 'Consultas de Pesquisa — Sintaxe e Filtros', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-42' },
+  { num: '43', title: 'Projeções de Knowledge Store', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-43' },
+  { num: '44', title: 'Pesquisa Semântica e Vetorial', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-44' },
+  { num: '45', title: 'Azure Document Intelligence — Modelos Pré-construídos', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-45' },
+  { num: '46', title: 'Modelos Personalizados de Document Intelligence', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-46' },
+  { num: '47', title: 'Azure Content Understanding — Análise Multimodal', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-47' },
+  { num: '48', title: 'Pipeline de Processamento Multi-Formato', domain: 'knowledge-mining', href: '/docs/ai-103/information-extraction/challenge-48' },
+  { num: '49', title: 'Solução Empresarial de IA Ponta a Ponta', domain: 'capstone', href: '/docs/ai-103/capstone/challenge-49' },
 ];
 
 const coverageData = [
@@ -512,10 +512,10 @@ const coverageData = [
     ],
   },
   {
-    exam: 'AI-900',
+    exam: 'AI-901',
     title: 'Azure AI Fundamentals',
     challenges: 24,
-    href: '/docs/ai-900/overview',
+    href: '/docs/ai-901/overview',
     domains: [
       { name: 'Cargas de IA', weight: 17, color: 'var(--coverage-cloud-concepts)' },
       { name: 'Machine Learning', weight: 22, color: 'var(--coverage-compute)' },
@@ -525,10 +525,10 @@ const coverageData = [
     ],
   },
   {
-    exam: 'AI-102',
-    title: 'Azure AI Engineer',
+    exam: 'AI-103',
+    title: 'AI Apps & Agents Developer',
     challenges: 49,
-    href: '/docs/ai-102/overview',
+    href: '/docs/ai-103/overview',
     domains: [
       { name: 'Planejar & Gerenciar', weight: 20, color: 'var(--coverage-identity)' },
       { name: 'IA Generativa', weight: 20, color: 'var(--coverage-compute)' },
@@ -653,21 +653,21 @@ const examCards = [
   },
   {
     icon: '🧠',
-    code: 'AI-900',
+    code: 'AI-901',
     level: 'Fundamentals',
     role: 'Azure AI Fundamentals',
     tagline: 'ML, Visão, NLP e IA Generativa',
     challenges: 24,
-    href: '/docs/ai-900/overview',
+    href: '/docs/ai-901/overview',
   },
   {
     icon: '🤖',
-    code: 'AI-102',
+    code: 'AI-103',
     level: 'Associate',
-    role: 'Azure AI Engineer',
+    role: 'AI Apps & Agents Developer',
     tagline: 'OpenAI, Search, Vision e Agentes',
     challenges: 49,
-    href: '/docs/ai-102/overview',
+    href: '/docs/ai-103/overview',
   },
   {
     icon: '🧪',
@@ -897,7 +897,7 @@ function AI900ChallengeGrid() {
     <section style={{padding: '2rem 0', background: 'var(--ifm-color-emphasis-100)'}}>
       <div className="container">
         <div className="section-heading">
-          <Heading as="h2">AI-900: Azure AI Fundamentals</Heading>
+          <Heading as="h2">AI-901: Azure AI Fundamentals</Heading>
           <p>24 desafios de exploração — ML, Visão Computacional, PLN e conceitos de IA Generativa. Custo $0.</p>
         </div>
         <div className="row">
@@ -925,7 +925,7 @@ function AI102ChallengeGrid() {
     <section style={{padding: '2rem 0'}}>
       <div className="container">
         <div className="section-heading">
-          <Heading as="h2">AI-102: Azure AI Engineer Associate</Heading>
+          <Heading as="h2">AI-103: Azure AI Engineer Associate</Heading>
           <p>49 desafios práticos — OpenAI, Search, Visão, PLN, Agentes e soluções empresariais de IA.</p>
         </div>
         <div className="row">
@@ -1035,12 +1035,12 @@ function ExamRoadmap() {
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (49 desafios)</span></td>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}><strong>AI-900</strong></td>
+              <td style={{textAlign: 'center'}}><strong>AI-901</strong></td>
               <td style={{textAlign: 'center'}}>Azure AI Fundamentals</td>
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (24 desafios)</span></td>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}><strong>AI-102</strong></td>
+              <td style={{textAlign: 'center'}}><strong>AI-103</strong></td>
               <td style={{textAlign: 'center'}}>Azure AI Engineer</td>
               <td style={{textAlign: 'center'}}><span style={{color: '#27ae60', fontWeight: 600}}>Disponível (49 desafios)</span></td>
             </tr>
@@ -1055,7 +1055,7 @@ export default function Home() {
   return (
     <Layout
       title="Preparação Hands-on para Certificação Azure"
-      description="Não estude apenas — construa. Desafios práticos para certificações Azure. AZ-900, AZ-104, AZ-305, AZ-400, SC-500, AZ-700, AI-900 e AI-102 disponíveis.">
+      description="Não estude apenas — construa. Desafios práticos para certificações Azure. AZ-900, AZ-104, AZ-305, AZ-400, SC-500, AZ-700, AI-901 e AI-103 disponíveis.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
