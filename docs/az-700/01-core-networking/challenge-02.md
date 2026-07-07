@@ -159,7 +159,7 @@ az network vnet subnet update \
   --vnet-name $VNET_NAME \
   --name ApimSubnet \
   --delegations Microsoft.ApiManagement/service
-![Challenge 02 - Network Topology](/img/az-700/challenge-02-topology.svg)
+![Challenge 02 - Network Topology](/static/img/az-700/challenge-02-topology.svg)
 
 
 :::tip Key facts for the exam
@@ -383,7 +383,7 @@ az network vnet subnet update \
   --resource-group $RG \
   --vnet-name $VNET_NAME \
   --name AciSubnet \
-  --delegations ""
+  --remove delegations
 ```
 
 ---
