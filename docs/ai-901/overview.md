@@ -100,9 +100,9 @@ Most challenges cost $0 using Azure AI services free tiers and Foundry explorati
 | Learning Path | Focus |
 |---------------|-------|
 | [Get started with AI on Azure](https://learn.microsoft.com/en-us/training/paths/get-started-with-artificial-intelligence-on-azure/) | AI fundamentals and concepts |
-| [Introduction to Azure AI Foundry](https://learn.microsoft.com/en-us/training/paths/introduction-azure-ai-foundry/) | Foundry portal and capabilities |
+| [Introduction to Azure AI Foundry](https://learn.microsoft.com/en-us/training/paths/ai-concepts/) | Foundry portal and capabilities |
 | [Explore generative AI with Azure](https://learn.microsoft.com/en-us/training/paths/introduction-generative-ai/) | GenAI concepts and Azure OpenAI |
-| [Build AI apps with Azure AI Foundry](https://learn.microsoft.com/en-us/training/paths/build-ai-apps-azure-ai-foundry/) | Hands-on Foundry implementation |
+| [Build AI apps with Azure AI Foundry](https://learn.microsoft.com/en-us/training/paths/get-started-ai-apps-agents/) | Hands-on Foundry implementation |
 
 ## What changed from AI-901?
 
